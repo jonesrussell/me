@@ -6,16 +6,16 @@
 	import { base } from '$app/paths';
 </script>
 
-<nav class="flex max-w-[10rem] flex-col space-y-4 p-4">
+<nav class="flex max-w-[10rem] flex-col space-y-4 p-4 items-center">
 	<ul class="list-none">
 		<li>
-			<a href={base} class="flex flex-col items-start space-y-2">
+			<a href={base} class="flex flex-col items-center space-y-2">
 				<img src={logo} alt="Logo" title="Home" class="h-10 w-10" />
 				<span>RAM Disk</span>
 			</a>
 		</li>
 		<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-			<a href="{base}/" class="flex flex-col items-start space-y-2">
+			<a href="{base}/" class="flex flex-col items-center space-y-2">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -34,7 +34,7 @@
 			</a>
 		</li>
 		<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-			<a href="{base}/about" class="flex flex-col items-start space-y-2">
+			<a href="{base}/about" class="flex flex-col items-center space-y-2">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -57,7 +57,7 @@
 				href="https://github.com/jonesrussell"
 				target="_blank"
 				rel="noopener"
-				class="flex flex-col items-start space-y-2"
+				class="flex flex-col items-center space-y-2"
 			>
 				<img src={github} alt="GitHub" class="h-10 w-10" />
 				<span>GitHub</span>
