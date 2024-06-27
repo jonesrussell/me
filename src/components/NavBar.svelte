@@ -1,7 +1,7 @@
 <script>
 	import '../app.css';
 	import { page } from '$app/stores';
-	import logo from '$lib/images/cartoon-russell.jpg';
+	import logo from '$lib/images/rej-logo.png';
 	import github from '$lib/images/github.svg';
 	import { base } from '$app/paths';
 </script>
