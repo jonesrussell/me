@@ -1,34 +1,26 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import Moveable from "svelte-moveable";
 	import WindowHeader from './WindowHeader.svelte';
 	import WindowFooter from './WindowFooter.svelte';
-	import { calculateInitialPosition, makeElementDraggable } from './windowUtils';
-
-	let x = 0;
-	let y = 0;
-	let winHeader: HTMLElement;
 
 	export let title: string = '';
 
-	onMount(() => {
-		const interval = setInterval(() => {
-			if (winHeader) {
-				calculateInitialPosition(winHeader, (newX, newY) => {
-					x = newX;
-					y = newY;
-				});
-				clearInterval(interval);
-			}
-		}, 100);
-	});
+	let winHeader: HTMLElement;
+	let targetRef = null;
+
+	const draggable = true;
+	const throttleDrag = 1;
+	const edgeDraggable = false;
+	const startDragRotate = 0;
+	const throttleDragRotate = 0;
 </script>
 
 <section
 	aria-label={title}
 	class="absolute transform border border-gray-500 bg-gray-200 shadow-lg md:w-1/2"
-	style="transform: translate3d({x}px, {y}px, 0);"
+	bind:this={targetRef}
 >
-	<div bind:this={winHeader} use:makeElementDraggable={{ x, y, header: winHeader }}>
+	<div bind:this={winHeader}>
 		<WindowHeader {title} />
 	</div>
 
@@ -37,4 +29,16 @@
 	</div>
 
 	<WindowFooter />
+
+	<Moveable
+		target={targetRef}
+		draggable={draggable}
+		throttleDrag={throttleDrag}
+		edgeDraggable={edgeDraggable}
+		startDragRotate={startDragRotate}
+		throttleDragRotate={throttleDragRotate}
+		on:drag={({ detail: e }) => {
+			targetRef.style.transform = e.transform;
+		}}
+	/>
 </section>
