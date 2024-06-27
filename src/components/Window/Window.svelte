@@ -6,7 +6,7 @@
 	export let title: string = '';
 
 	let winHeader: HTMLElement;
-	let targetRef = null;
+	let targetRef: HTMLElement | null = null;
 
 	const draggable = true;
 	const throttleDrag = 1;
@@ -38,7 +38,9 @@
 		startDragRotate={startDragRotate}
 		throttleDragRotate={throttleDragRotate}
 		on:drag={({ detail: e }) => {
-			targetRef.style.transform = e.transform;
+			if (targetRef) {
+				targetRef.style.transform = e.transform;
+			}
 		}}
 	/>
 </section>
