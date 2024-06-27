@@ -1,3 +1,8 @@
+// Utility function to limit a value within a range
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(Math.max(value, min), max);
+}
+
 export function calculateInitialPosition(
   header: HTMLElement,
   setPosition: (x: number, y: number) => void
@@ -42,15 +47,9 @@ export function makeElementDraggable(
 
   function limitMovementWithinViewport(node: HTMLElement) {
     if (node.parentNode instanceof HTMLElement) {
-      if (x < 0) x = 0;
-      if (x > window.innerWidth - node.parentNode.offsetWidth) {
-        x = window.innerWidth - node.parentNode.offsetWidth;
-      }
+      x = clamp(x, 0, window.innerWidth - node.parentNode.offsetWidth);
       if (header) {
-        if (y < header.offsetHeight) y = header.offsetHeight;
-        if (y > window.innerHeight - node.parentNode.offsetHeight) {
-          y = window.innerHeight - node.parentNode.offsetHeight;
-        }
+        y = clamp(y, header.offsetHeight, window.innerHeight - node.parentNode.offsetHeight);
       }
     }
   }
