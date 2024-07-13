@@ -10,13 +10,7 @@
 		"sourceMap": true,
 		"strict": true,
 		"moduleResolution": "bundler",
-		"types": [
-			"jest",
-			"jest-dom"
-		],
-		"typeRoots": [
-			"node_modules/@types",
-			"node_modules/@testing-library"
-		]
+		"types": ["jest", "jest-dom"],
+		"typeRoots": ["node_modules/@types", "node_modules/@testing-library"]
 	}
 }
