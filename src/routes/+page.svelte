@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import NewsletterSignupForm from './sections/NewsletterSignupForm.svelte';
-	import BlogCards from './sections/BlogCards.svelte';
+	import WinSignupNews from './sections/WinSignupNews.svelte';
+	import WinBlog from './sections/WinBlog.svelte';
 
 	let newsletterX = 0;
 	let newsletterY = 0;
@@ -22,6 +22,6 @@
 </svelte:head>
 
 <section>
-	<NewsletterSignupForm x={newsletterX} y={newsletterY} />
-	<BlogCards x={blogCardsX} y={blogCardsY} />
+	<WinSignupNews x={newsletterX} y={newsletterY} />
+	<WinBlog x={blogCardsX} y={blogCardsY} />
 </section>
