@@ -3,16 +3,26 @@
 	import WinSignupNews from './sections/WinSignupNews.svelte';
 	import WinBlog from './sections/WinBlog.svelte';
 
-	let newsletterX = 0;
-	let newsletterY = 0;
-	let blogCardsX = 0;
-	let blogCardsY = 0;
+	let windows = [
+		{
+			component: WinSignupNews,
+			x: 0,
+			y: 0
+		},
+		{
+			component: WinBlog,
+			x: 0,
+			y: 0
+		}
+		// Add more windows here...
+	];
 
 	onMount(() => {
-		newsletterX = Math.random() * window.innerWidth;
-		newsletterY = Math.random() * window.innerHeight;
-		blogCardsX = Math.random() * window.innerWidth;
-		blogCardsY = Math.random() * window.innerHeight;
+		windows = windows.map(win => ({
+			...win,
+			x: Math.random() * window.innerWidth,
+			y: Math.random() * window.innerHeight
+		}));
 	});
 </script>
 
@@ -22,6 +32,7 @@
 </svelte:head>
 
 <section>
-	<WinSignupNews x={newsletterX} y={newsletterY} />
-	<WinBlog x={blogCardsX} y={blogCardsY} />
+	{#each windows as { component: Window, x, y }}
+		<svelte:component this={Window} {x} {y} />
+	{/each}
 </section>
