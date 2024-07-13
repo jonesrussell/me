@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Moveable from 'svelte-moveable';
-	import WindowHeader from './WindowHeader.svelte';
-	import WindowFooter from './WindowFooter.svelte';
+	import AppWindowHeader from './AppWindowHeader.svelte';
+	import AppWindowFooter from './AppWindowFooter.svelte';
 
 	export let title: string = '';
 	export let x: number;
@@ -34,14 +34,14 @@
 	style={`max-width: ${maxWidth};max-height: ${maxHeight};min-width: ${minWidth};min-height: ${minHeight}; left: ${x}px; top: ${y}px;`}
 >
 	<div bind:this={winHeader}>
-		<WindowHeader {title} />
+		<AppWindowHeader {title} />
 	</div>
 
 	<div class="border-l-[16px] border-r-[16px] border-gray-500 p-4">
 		<slot />
 	</div>
 
-	<WindowFooter />
+	<AppWindowFooter />
 </section>
 
 <Moveable
