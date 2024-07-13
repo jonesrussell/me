@@ -1,6 +1,9 @@
 <script lang="ts">
 	import Window from '../../components/Window/Window.svelte';
 
+	export let x: number;
+	export let y: number;
+
 	let email = '';
 	let name = '';
 
@@ -10,7 +13,7 @@
 	}
 </script>
 
-<Window title="Newsletter">
+<Window title="Newsletter" x={x} y={y}>
 	<form on:submit|preventDefault={handleSubmit} class="space-y-4">
 		<div>
 			<label for="email" class="mb-2 block text-sm font-bold text-gray-700">Email:</label>

@@ -4,6 +4,8 @@
 	import WindowFooter from './WindowFooter.svelte';
 
 	export let title: string = '';
+	export let x: number;
+	export let y: number;
 
 	let winHeader: HTMLElement;
 	let targetRef: HTMLElement | null = null;
@@ -29,7 +31,7 @@
 	aria-label={title}
 	class="target absolute transform border border-gray-500 bg-gray-200 shadow-lg md:w-1/2"
 	bind:this={targetRef}
-	style={`max-width: ${maxWidth};max-height: ${maxHeight};min-width: ${minWidth};min-height: ${minHeight};`}
+	style={`max-width: ${maxWidth};max-height: ${maxHeight};min-width: ${minWidth};min-height: ${minHeight}; left: ${x}px; top: ${y}px;`}
 >
 	<div bind:this={winHeader}>
 		<WindowHeader {title} />
