@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Window from '../../components/Window/Window.svelte';
+	import AppWindow from '../../components/AppWindow/AppWindow.svelte';
 
 	export let x: number;
 	export let y: number;
 </script>
 
-<Window title="Blog" x={x} y={y}>Blogger</Window>
+<AppWindow title="Blog" x={x} y={y}>Blogger</AppWindow>
