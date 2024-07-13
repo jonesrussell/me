@@ -6,7 +6,7 @@
 	import { base } from '$app/paths';
 </script>
 
-<nav class="flex max-w-[10rem] flex-col space-y-4 p-4 items-center">
+<nav class="flex max-w-[10rem] flex-col items-center space-y-4 p-4">
 	<ul class="list-none">
 		<li>
 			<a href={base} class="flex flex-col items-center space-y-2">
