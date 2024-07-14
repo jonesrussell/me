@@ -13,7 +13,7 @@
 	}
 </script>
 
-<AppWindow title="Newsletter" x={x} y={y}>
+<AppWindow title="Newsletter" {x} {y}>
 	<form on:submit|preventDefault={handleSubmit} class="space-y-4">
 		<div>
 			<label for="email" class="mb-2 block text-sm font-bold text-gray-700">Email:</label>
