@@ -1,7 +1,12 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+  import { onMount } from 'svelte';
+  import { blogPosts, fetchFeed } from '../../services/blogService';
 	import AppWindow from '../../components/AppWindow/AppWindow.svelte';
-	import { blogPosts } from '../../services/blogService';
+
+  onMount(async () => {
+    const posts = await fetchFeed();
+    blogPosts.set(posts);
+  });
 
 	export let x: number;
 	export let y: number;

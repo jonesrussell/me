@@ -7,7 +7,7 @@ type Post = {
 	description: string;
 };
 
-async function fetchFeed() {
+export async function fetchFeed() {
 	const response = await fetch('https://jonesrussell.github.io/blog/feed.xml');
 	const text = await response.text();
 	const parser = new DOMParser();
@@ -20,8 +20,4 @@ async function fetchFeed() {
 	return items;
 }
 
-export const blogPosts = writable<Post[]>([], () => {
-	fetchFeed().then((posts) => {
-		blogPosts.set(posts);
-	});
-});
+export const blogPosts = writable<Post[]>([]);
