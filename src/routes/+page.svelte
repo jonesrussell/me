@@ -18,7 +18,7 @@
 	];
 
 	onMount(() => {
-		windows = windows.map(win => ({
+		windows = windows.map((win) => ({
 			...win,
 			x: Math.random() * window.innerWidth,
 			y: Math.random() * window.innerHeight
