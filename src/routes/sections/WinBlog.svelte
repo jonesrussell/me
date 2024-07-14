@@ -1,12 +1,7 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { blogPosts, fetchFeed } from '../../services/blogService';
+	import { onMount } from 'svelte';
+	import { blogPosts, fetchFeed } from '../../services/blogService';
 	import AppWindow from '../../components/AppWindow/AppWindow.svelte';
-
-  onMount(async () => {
-    const posts = await fetchFeed();
-    blogPosts.set(posts);
-  });
 
 	export let x: number;
 	export let y: number;
@@ -17,8 +12,20 @@
 		description: string;
 	}[] = [];
 
-	onMount(async () => {
-		posts = $blogPosts;
+	onMount(() => {
+		console.log('in onMount')
+		fetchFeed().then(fetchedPosts => {
+			posts = fetchedPosts;
+		});
+		let unsubscribe: () => void | undefined;
+
+		return () => {
+			console.log('in onMount return')
+			if (unsubscribe) {
+				console.log('unsubscribe')
+				unsubscribe();
+			}
+		};
 	});
 </script>
 
