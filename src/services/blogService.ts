@@ -3,6 +3,7 @@ import { writable } from 'svelte/store';
 
 type Post = {
 	title: string;
+  published: string;
 	link: string;
 	description: string;
 };
@@ -14,9 +15,10 @@ export async function fetchFeed() {
   const doc = parser.parseFromString(text, 'application/xml');
   const items = Array.from(doc.querySelectorAll('entry')).map((entry) => {
     const title = entry.querySelector('title')?.textContent || '';
+    const published =  entry.querySelector('published')?.textContent || '';
     const link = entry.querySelector('link')?.getAttribute('href') || '';
     const description = entry.querySelector('summary')?.textContent || '';
-    return { title, link, description };
+    return { title, published, link, description };
   });
   return items;
 }
