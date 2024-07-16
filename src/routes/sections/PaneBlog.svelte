@@ -5,6 +5,8 @@
 
 	export let x: number;
 	export let y: number;
+	export let width: number;
+	export let height: number;
 
 	onMount(async () => {
 		const fetchedPosts = await fetchFeed();
@@ -12,7 +14,7 @@
 	});
 </script>
 
-<Pane title="Blog" {x} {y}>
+<Pane title="Blog" {x} {y} {width} {height}>
 	{#each $blogPosts as post} <!-- Subscribe to the blogPosts store -->
 		<article class="p-4 my-4 border border-gray-300 rounded">
 			<h2 class="mb-2 text-lg"><a class="text-gray-700 underline" href={post.link}>{post.title}</a></h2>

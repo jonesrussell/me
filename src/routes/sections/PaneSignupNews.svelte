@@ -3,6 +3,8 @@
 
 	export let x: number;
 	export let y: number;
+	export let width: number;
+	export let height: number;
 
 	let email = '';
 	let name = '';
@@ -13,7 +15,7 @@
 	}
 </script>
 
-<Pane title="Newsletter" {x} {y}>
+<Pane title="Newsletter" {x} {y} {width} {height}>
 	<form on:submit|preventDefault={handleSubmit} class="space-y-4">
 		<div>
 			<label for="email" class="mb-2 block text-sm font-bold text-gray-700">Email:</label>

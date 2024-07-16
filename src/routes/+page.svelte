@@ -1,29 +1,86 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
+	import { writable } from 'svelte/store';
+	import { get } from 'svelte/store';
 	import PaneSignupNews from './sections/PaneSignupNews.svelte';
 	import PaneBlog from './sections/PaneBlog.svelte';
+	import paneManager from '../lib/PaneManager';
+	import type { PaneType } from '../lib/types';
 
-	let panes = [
+	const INITIAL_PANES: PaneType[] = [
 		{
-			component: PaneSignupNews,
-			x: 0,
-			y: 0
+			id: 'signup-news',
+			obj: writable({
+				x: 0,
+				y: 0,
+				width: 320,
+				height: 300
+			})
 		},
 		{
-			component: PaneBlog,
-			x: 0,
-			y: 0
-		},
-		// Add more panes here...
+			id: 'blog',
+			obj: writable({
+				x: 0,
+				y: 0,
+				width: 320,
+				height: 480
+			})
+		}
 	];
 
+	let panes = writable<PaneType[]>(INITIAL_PANES);
+
+	const debounce = (func: (...args: any[]) => void, delay: number) => {
+		let timer: number | undefined;
+
+		return (...args: any[]) => {
+			clearTimeout(timer);
+			timer = window.setTimeout(() => func(...args), delay);
+		};
+	};
+
+	const setPanesPosition = () => {
+		const bodySize = { width: window.innerWidth, height: window.innerHeight };
+		$panes.forEach((pane) => {
+			const { obj } = pane;
+			obj.update((value) => {
+				const { x, y, width, height } = value;
+				const newX = Math.min(x, bodySize.width - width);
+				const newY = Math.min(y, bodySize.height - height);
+				return { ...value, x: newX, y: newY };
+			});
+		});
+	};
+
+	const debouncedSetPanesPosition = debounce(setPanesPosition, 300);
+
 	onMount(() => {
-		panes = panes.map((pane) => ({
-			...pane,
-			x: Math.random() * window.innerWidth,
-			y: Math.random() * window.innerHeight
-		}));
+		INITIAL_PANES.forEach((pane) =>
+			paneManager.createPane(
+				pane.id,
+				get(pane.obj).x,
+				get(pane.obj).y,
+				get(pane.obj).width,
+				get(pane.obj).height
+			)
+		);
+
+		const unsubscribe = paneManager.subscribe((value) => {
+			panes.set(value);
+		});
+
+		window.addEventListener('resize', debouncedSetPanesPosition);
+
+		return () => {
+			unsubscribe();
+			window.removeEventListener('resize', debouncedSetPanesPosition);
+		};
 	});
+
+	const COMPONENTS: { [key: string]: typeof PaneSignupNews | typeof PaneBlog } = {
+		'signup-news': PaneSignupNews,
+		blog: PaneBlog
+	};
 </script>
 
 <svelte:head>
@@ -32,7 +89,13 @@
 </svelte:head>
 
 <div>
-	{#each panes as { component: Pane, x, y }}
-		<svelte:component this={Pane} {x} {y} />
+	{#each $panes as pane (pane.id)}
+		<svelte:component
+			this={COMPONENTS[pane.id]}
+			x={get(pane.obj).x}
+			y={get(pane.obj).y}
+			width={get(pane.obj).width}
+			height={get(pane.obj).height}
+		/>
 	{/each}
 </div>
