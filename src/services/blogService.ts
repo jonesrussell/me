@@ -19,13 +19,13 @@ export async function fetchFeed() {
   const items = Array.from(doc.querySelectorAll('entry')).map((entry) => {
     const title = entry.querySelector('title')?.textContent || '';
     const link = entry.querySelector('link')?.getAttribute('href') || '';
-    const description = entry.querySelector('content,summary')?.textContent || '';
+    // Prioritize 'summary' over 'content'
+    const description = entry.querySelector('summary')?.textContent || '';
     console.log('Processed entry:', { title, link, description });
     return { title, link, description };
   });
   console.log('All entries processed:', items);
   return items;
 }
-
 
 export const blogPosts = writable<Post[]>([]);
