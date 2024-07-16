@@ -26,30 +26,6 @@
 
 	let panes = writable<PaneType[]>(INITIAL_PANES);
 
-	const debounce = (func: (...args: any[]) => void, delay: number) => {
-		let timer: number | undefined;
-
-		return (...args: any[]) => {
-			clearTimeout(timer);
-			timer = window.setTimeout(() => func(...args), delay);
-		};
-	};
-
-	const setPanesPosition = () => {
-		const bodySize = { width: window.innerWidth, height: window.innerHeight };
-		$panes.forEach((pane) => {
-			const { obj } = pane;
-			obj.update((value) => {
-				const { x, y } = value;
-				const newX = Math.min(x, bodySize.width);
-				const newY = Math.min(y, bodySize.height);
-				return { ...value, x: newX, y: newY };
-			});
-		});
-	};
-
-	const debouncedSetPanesPosition = debounce(setPanesPosition, 300);
-
 	onMount(() => {
 		INITIAL_PANES.forEach((pane) =>
 			paneManager.createPane(
@@ -63,11 +39,8 @@
 			panes.set(value);
 		});
 
-		window.addEventListener('resize', debouncedSetPanesPosition);
-
 		return () => {
 			unsubscribe();
-			window.removeEventListener('resize', debouncedSetPanesPosition);
 		};
 	});
 
