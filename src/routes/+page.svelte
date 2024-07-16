@@ -31,8 +31,8 @@
 	<meta name="description" content="Russell Jones" />
 </svelte:head>
 
-<section>
+<div>
 	{#each panes as { component: Pane, x, y }}
 		<svelte:component this={Pane} {x} {y} />
 	{/each}
-</section>
+</div>
