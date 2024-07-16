@@ -6,37 +6,19 @@
 	export let x: number;
 	export let y: number;
 
-	let posts: {
-		title: string;
-		link: string;
-		description: string;
-	}[] = [];
-
-	onMount(() => {
-		console.log('in onMount')
-		fetchFeed().then(fetchedPosts => {
-			posts = fetchedPosts;
-		});
-		let unsubscribe: () => void | undefined;
-
-		return () => {
-			console.log('in onMount return')
-			if (unsubscribe) {
-				console.log('unsubscribe')
-				unsubscribe();
-			}
-		};
+	onMount(async () => {
+		const fetchedPosts = await fetchFeed();
+		blogPosts.set(fetchedPosts); // Update the blogPosts store with the fetched posts
 	});
 </script>
 
 <AppWindow title="Blog" {x} {y}>
-	{#each posts as post}
+	{#each $blogPosts as post} <!-- Subscribe to the blogPosts store -->
 		<article class="p-4 my-4 border border-gray-300 rounded">
-			<h2 class="mb-2 text-lg"><a class="text-gray-700 no-underline" href={post.link}>{post.title}</a></h2>
+			<h2 class="mb-2 text-lg"><a class="text-gray-700 underline" href={post.link}>{post.title}</a></h2>
 			<div class="mb-4">
 				{@html post.description}
 			</div>
-			<a class="text-blue-500 no-underline" href="{post.link}">Read more</a>
 		</article>
 	{/each}
 </AppWindow>
