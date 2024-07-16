@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AppWindow from '../../components/AppWindow/AppWindow.svelte';
+	import Pane from '../../components/Pane/Pane.svelte';
 
 	export let x: number;
 	export let y: number;
@@ -13,7 +13,7 @@
 	}
 </script>
 
-<AppWindow title="Newsletter" {x} {y}>
+<Pane title="Newsletter" {x} {y}>
 	<form on:submit|preventDefault={handleSubmit} class="space-y-4">
 		<div>
 			<label for="email" class="mb-2 block text-sm font-bold text-gray-700">Email:</label>
@@ -42,4 +42,4 @@
 			Sign Up
 		</button>
 	</form>
-</AppWindow>
+</Pane>
