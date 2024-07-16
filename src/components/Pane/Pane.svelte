@@ -6,6 +6,8 @@
 	export let title: string = '';
 	export let x: number;
 	export let y: number;
+	export let width: number;
+	export let height: number;
 
 	let paneHeader: HTMLElement;
 	let paneFooter: HTMLElement;
@@ -41,7 +43,7 @@
 	aria-label={title}
 	class="target absolute transform border border-gray-500 bg-gray-200 shadow-lg md:w-1/2"
 	bind:this={targetRef}
-	style={`max-width: ${maxWidth};max-height: ${maxHeight};min-width: ${minWidth};min-height: ${minHeight}; left: ${x}px; top: ${y}px;`}
+	style={`max-width: ${maxWidth};max-height: ${maxHeight};min-width: ${minWidth};min-height: ${minHeight}; left: ${x}px; top: ${y}px;width: ${width}px;height: ${height}px;`}
 >
 	<div bind:this={paneHeader}>
 		<PaneHeader {title} />
