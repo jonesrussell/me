@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { get } from 'svelte/store';
 	import PaneSignupNews from './sections/PaneSignupNews.svelte';
@@ -11,19 +11,15 @@
 		{
 			id: 'signup-news',
 			obj: writable({
-				x: 0,
-				y: 0,
-				width: 320,
-				height: 300
+				x: 500,
+				y: 200,
 			})
 		},
 		{
 			id: 'blog',
 			obj: writable({
-				x: 0,
-				y: 0,
-				width: 320,
-				height: 480
+				x: 150,
+				y: 100,
 			})
 		}
 	];
@@ -44,9 +40,9 @@
 		$panes.forEach((pane) => {
 			const { obj } = pane;
 			obj.update((value) => {
-				const { x, y, width, height } = value;
-				const newX = Math.min(x, bodySize.width - width);
-				const newY = Math.min(y, bodySize.height - height);
+				const { x, y } = value;
+				const newX = Math.min(x, bodySize.width);
+				const newY = Math.min(y, bodySize.height);
 				return { ...value, x: newX, y: newY };
 			});
 		});
@@ -60,8 +56,6 @@
 				pane.id,
 				get(pane.obj).x,
 				get(pane.obj).y,
-				get(pane.obj).width,
-				get(pane.obj).height
 			)
 		);
 
@@ -94,8 +88,6 @@
 			this={COMPONENTS[pane.id]}
 			x={get(pane.obj).x}
 			y={get(pane.obj).y}
-			width={get(pane.obj).width}
-			height={get(pane.obj).height}
 		/>
 	{/each}
 </div>

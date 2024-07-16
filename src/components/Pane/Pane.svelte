@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Moveable from 'svelte-moveable';
 	import PaneHeader from './PaneHeader.svelte';
 	import PaneFooter from './PaneFooter.svelte';
@@ -6,14 +7,12 @@
 	export let title: string = '';
 	export let x: number;
 	export let y: number;
-	export let width: number;
-	export let height: number;
 
 	let paneHeader: HTMLElement;
 	let paneFooter: HTMLElement;
-	
+
 	let targetRef: HTMLElement | null = null;
-	let moveableRef = null;
+	let moveableRef: Moveable | null = null;
 
 	const draggable = true;
 	const throttleDrag = 1;
@@ -24,26 +23,46 @@
 	const maxWidth = 'auto';
 	const maxHeight = 'auto';
 	const minWidth = 'auto';
-	const minHeight = 'auto';
+	
 	const resizable = true;
 	const keepRatio = false;
 	const throttleResize = 1;
 	const renderDirections = ['nw', 'n', 'ne', 'w', 'e', 'sw', 's', 'se'];
 
-	let contentHeight: string;
+	let maxContentHeight: string;
 
 	$: {
 		if (targetRef && paneHeader && paneFooter) {
-			contentHeight = `${window.innerHeight - paneHeader.offsetHeight - paneFooter.offsetHeight}px`;
+			maxContentHeight = `${window.innerHeight - paneHeader.offsetHeight - paneFooter.offsetHeight}px`;
 		}
 	}
+
+	onMount(() => {
+		const handleResize = () => {
+			if (moveableRef) {
+				moveableRef.updateRect();
+			}
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	});
 </script>
 
 <section
 	aria-label={title}
 	class="target absolute transform border border-gray-500 bg-gray-200 shadow-lg md:w-1/2"
 	bind:this={targetRef}
-	style={`max-width: ${maxWidth};max-height: ${maxHeight};min-width: ${minWidth};min-height: ${minHeight}; left: ${x}px; top: ${y}px;width: ${width}px;height: ${height}px;`}
+	style={`
+		max-width: ${maxWidth};
+		max-height: ${maxHeight};
+		min-width: ${minWidth};
+		left: ${x}px;
+		top: ${y}px;
+	`}
 >
 	<div bind:this={paneHeader}>
 		<PaneHeader {title} />
@@ -51,7 +70,7 @@
 
 	<div
 		class="overflow-auto border-l-[16px] border-r-[16px] border-gray-500 p-4"
-		style={`max-height: ${contentHeight};`}
+		style={`max-height: ${maxContentHeight};`}
 	>
 		<slot />
 	</div>
@@ -77,8 +96,8 @@
 		e.target.style.transform = e.transform;
 	}}
 	on:resize={({ detail: e }) => {
-		e.target.style.width = `${e.width}px`;
-		e.target.style.height = `${e.height}px`;
-		e.target.style.transform = e.drag.transform;
+		// e.target.style.width = `${e.width}px`;
+		// e.target.style.height = `${e.height}px`;
+		// e.target.style.transform = e.drag.transform;
 	}}
 />
