@@ -6,7 +6,5 @@ export type PaneType = {
 	obj: Writable<{
 		x: number;
 		y: number;
-		width: number;
-		height: number;
 	}>;
 };
