@@ -19,7 +19,6 @@ export async function fetchFeed() {
   const items = Array.from(doc.querySelectorAll('entry')).map((entry) => {
     const title = entry.querySelector('title')?.textContent || '';
     const link = entry.querySelector('link')?.getAttribute('href') || '';
-    // Prioritize 'summary' over 'content'
     const description = entry.querySelector('summary')?.textContent || '';
     console.log('Processed entry:', { title, link, description });
     return { title, link, description };
