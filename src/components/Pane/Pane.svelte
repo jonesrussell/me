@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, createEventDispatcher } from 'svelte';
 	import Moveable from 'svelte-moveable';
 	import PaneHeader from './PaneHeader.svelte';
 	import PaneFooter from './PaneFooter.svelte';
@@ -37,7 +37,11 @@
 		}
 	}
 
+	const dispatch = createEventDispatcher();
+
 	onMount(() => {
+		dispatch('update', () => moveableRef?.updateRect());
+
 		const handleResize = () => {
 			if (moveableRef) {
 				moveableRef.updateRect();
