@@ -3,10 +3,10 @@ import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { expect, test } from 'vitest';
 
-import WinSignupNews from './WinSignupNews.svelte';
+import PaneSignupNews from './PaneSignupNews.svelte';
 
 test('initial form state', () => {
-	render(WinSignupNews);
+	render(PaneSignupNews);
 
 	const emailInput = screen.getByLabelText('Email:');
 	const nameInput = screen.getByLabelText('Name:');
@@ -19,7 +19,7 @@ test('initial form state', () => {
 
 test('form submission', async () => {
 	const user = userEvent.setup();
-	render(WinSignupNews);
+	render(PaneSignupNews);
 
 	const emailInput = screen.getByLabelText('Email:');
 	const nameInput = screen.getByLabelText('Name:');

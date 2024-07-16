@@ -1,25 +1,25 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import WinSignupNews from './sections/WinSignupNews.svelte';
-	import WinBlog from './sections/WinBlog.svelte';
+	import PaneSignupNews from './sections/PaneSignupNews.svelte';
+	import PaneBlog from './sections/PaneBlog.svelte';
 
-	let windows = [
+	let panes = [
 		{
-			component: WinSignupNews,
+			component: PaneSignupNews,
 			x: 0,
 			y: 0
 		},
 		{
-			component: WinBlog,
+			component: PaneBlog,
 			x: 0,
 			y: 0
-		}
-		// Add more windows here...
+		},
+		// Add more panes here...
 	];
 
 	onMount(() => {
-		windows = windows.map((win) => ({
-			...win,
+		panes = panes.map((pane) => ({
+			...pane,
 			x: Math.random() * window.innerWidth,
 			y: Math.random() * window.innerHeight
 		}));
@@ -32,7 +32,7 @@
 </svelte:head>
 
 <section>
-	{#each windows as { component: Window, x, y }}
-		<svelte:component this={Window} {x} {y} />
+	{#each panes as { component: Pane, x, y }}
+		<svelte:component this={Pane} {x} {y} />
 	{/each}
 </section>
