@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { writable } from 'svelte/store';
-	import { get } from 'svelte/store';
+	import { get, writable } from 'svelte/store';
 	import PaneSignupNews from './sections/PaneSignupNews.svelte';
 	import PaneBlog from './sections/PaneBlog.svelte';
 	import paneManager from '../lib/PaneManager';
@@ -42,10 +41,9 @@
 		};
 	});
 
-	const COMPONENTS: { [key: string]: typeof PaneSignupNews | typeof PaneBlog } = {
-		'signup-news': PaneSignupNews,
-		blog: PaneBlog
-	};
+	const COMPONENTS = new Map<string, typeof PaneSignupNews | typeof PaneBlog>();
+	COMPONENTS.set('signup-news', PaneSignupNews);
+	COMPONENTS.set('blog', PaneBlog);
 </script>
 
 <svelte:head>
@@ -56,11 +54,9 @@
 <div>
 	{#each $panes as pane (pane.id)}
 		<svelte:component
-			this={COMPONENTS[pane.id]}
-			x={get(pane.obj).x}
-			y={get(pane.obj).y}
+			this={COMPONENTS.get(pane.id)}
+			{...get(pane.obj)}
 			id={pane.id}
-			zIndex={get(pane.obj).zIndex}
 			onBringToFront={() => {
 				console.log('Bringing pane to front:', pane.id);
 				paneManager.updateZIndex(pane.id);

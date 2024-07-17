@@ -17,19 +17,17 @@ let maxZIndex = 5; // Keep track of the highest z-index
 const updatePane = (id: string, x: number, y: number) => {
   maxZIndex += 1; // increment maxZIndex
 
-  console.log('maxZIndex', maxZIndex);
-
   update(panes => {
-    const paneIndex = panes.findIndex(pane => pane.id === id);
-    if (paneIndex !== -1) {
-      panes[paneIndex].obj.update(value => {
-        return { ...value, x, y, zIndex: maxZIndex };
-      });
-    }
-    return panes;
+    return panes.map(pane => {
+      if (pane.id === id) {
+        pane.obj.update(value => {
+          return { ...value, x, y, zIndex: maxZIndex };
+        });
+      }
+      return pane;
+    });
   });
 };
-
 
 // Function to remove a pane
 const removePane = (id: string) => update(panes => {
@@ -48,23 +46,15 @@ const createPane = (id: string, x: number, y: number, zIndex: number) => {
 const updateZIndex = (id: string) => {
   maxZIndex += 1; // increment maxZIndex
 
-  console.log(`Updated z-index of pane ${id} to ${maxZIndex}`);
-
   update(panes => {
-    const paneIndex = panes.findIndex(pane => pane.id === id);
-    if (paneIndex !== -1) {
-      console.log(`Found pane ${id} at index ${paneIndex}`); // Log the index of the pane
-
-      panes[paneIndex].obj.update(value => {
-        console.log(`Updating pane ${id} from`, value); // Log the old value
-        const newValue = { ...value, zIndex: maxZIndex };
-        console.log(`Updating pane ${id} to`, newValue); // Log the new value
-        return newValue;
-      });
-    } else {
-      console.log(`Pane ${id} not found`); // Log if the pane is not found
-    }
-    return panes;
+    return panes.map(pane => {
+      if (pane.id === id) {
+        pane.obj.update(value => {
+          return { ...value, zIndex: maxZIndex };
+        });
+      }
+      return pane;
+    });
   });
 };
 
