@@ -3,6 +3,8 @@
 
 	export let x: number;
 	export let y: number;
+	export let id: string;
+	export let zIndex: number;
 
 	let email = '';
 	let name = '';
@@ -11,9 +13,11 @@
 		console.log('Email:', email);
 		console.log('Name:', name);
 	}
+
+	export let onBringToFront = () => {};
 </script>
 
-<Pane title="Newsletter" {x} {y}>
+<Pane title="Newsletter" {id} {x} {y} {zIndex} {onBringToFront}>
 	<form on:submit|preventDefault={handleSubmit} class="space-y-4">
 		<div>
 			<label for="email" class="mb-2 block text-sm font-bold text-gray-700">Email:</label>
