@@ -1,10 +1,10 @@
 <script>
 	import '../app.css';
+	import { base } from '$app/paths';
 	import { page } from '$app/stores';
-	import logo from '$lib/images/rej-logo.png';
 	import blogIcon from '$lib/images/blog-icon.png';
 	import github from '$lib/images/github.svg';
-	import { base } from '$app/paths';
+	import logo from '$lib/images/rej-logo.png';
 </script>
 
 <nav class="flex max-w-[10rem] flex-col items-center p-4">
