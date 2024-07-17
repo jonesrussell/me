@@ -8,12 +8,6 @@
 
 <nav class="flex max-w-[10rem] flex-col items-center space-y-4 p-4">
 	<ul class="list-none">
-		<li>
-			<a href={base} class="flex flex-col items-center space-y-2">
-				<img src={logo} alt="Logo" title="Home" class="h-10 w-10" />
-				<span>RAM Disk</span>
-			</a>
-		</li>
 		<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
 			<a href="{base}/" class="flex flex-col items-center space-y-2">
 				<svg
@@ -35,20 +29,7 @@
 		</li>
 		<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
 			<a href="{base}/about" class="flex flex-col items-center space-y-2">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-					class="h-10 w-10"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-					/>
-				</svg>
+				<img src={logo} alt="Logo" title="Home" class="h-10 w-10" />
 				<span>About</span>
 			</a>
 		</li>

@@ -18,13 +18,9 @@
 
 	const draggable = true;
 	const throttleDrag = 1;
-	const edgeDraggable = false;
+	const edgeDraggable = true;
 	const startDragRotate = 0;
 	const throttleDragRotate = 0;
-
-	const maxWidth = 'auto';
-	const maxHeight = 'auto';
-	const minWidth = 'auto';
 
 	const resizable = true;
 	const keepRatio = false;
@@ -64,20 +60,6 @@
 	});
 </script>
 
-<style>
-	.target {
-		position: absolute;
-		transform: translate3d(0, 0, 0);
-		border: 1px solid #ccc;
-		background-color: #fff;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-		width: 50%;
-		max-width: var(--max-width);
-		max-height: var(--max-height);
-		min-width: var(--min-width);
-	}
-</style>
-
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <section
 	{id}
@@ -109,14 +91,17 @@
 	{draggable}
 	{throttleDrag}
 	{edgeDraggable}
+	edge={['w', 'e']}
 	{startDragRotate}
 	{throttleDragRotate}
 	{resizable}
 	{keepRatio}
 	{throttleResize}
 	{renderDirections}
+	originDraggable={false}
 	on:drag={({ detail: e }) => {
 		e.target.style.transform = e.transform;
+
 		if (process.env.NODE_ENV === 'development') {
 			console.log(`Pane ${title} is being dragged.`);
 			console.log(`Pane ${title} z-index: ${e.target.style.zIndex}`); // Log z-index on drag
@@ -126,9 +111,24 @@
 		e.target.style.width = `${e.width}px`;
 		e.target.style.height = `${e.height}px`;
 		e.target.style.transform = e.drag.transform;
+
 		if (process.env.NODE_ENV === 'development') {
 			console.log(`Pane ${title} is being resized.`);
 			console.log(`Pane ${title} z-index: ${e.target.style.zIndex}`); // Log z-index on resize
 		}
 	}}
 />
+
+<style>
+	.target {
+		position: absolute;
+		transform: translate3d(0, 0, 0);
+		border: 1px solid #ccc;
+		background-color: #fff;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		width: 50%;
+		max-width: var(--max-width);
+		max-height: var(--max-height);
+		min-width: var(--min-width);
+	}
+</style>
