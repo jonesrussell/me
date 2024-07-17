@@ -64,21 +64,28 @@
 	});
 </script>
 
+<style>
+	.target {
+		position: absolute;
+		transform: translate3d(0, 0, 0);
+		border: 1px solid #ccc;
+		background-color: #fff;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		width: 50%;
+		max-width: var(--max-width);
+		max-height: var(--max-height);
+		min-width: var(--min-width);
+	}
+</style>
+
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <section
 	{id}
 	aria-label={title}
-	class="target absolute transform border border-gray-500 bg-gray-200 shadow-lg md:w-1/2"
+	class="target"
 	bind:this={targetRef}
 	on:mousedown={handleMouseDown}
-	style={`
-		max-width: ${maxWidth};
-		max-height: ${maxHeight};
-		min-width: ${minWidth};
-		left: ${x}px;
-		top: ${y}px;
-		z-index: ${zIndex};
-	`}
+	style={`left: ${x}px; top: ${y}px; z-index: ${zIndex};`}
 >
 	<div bind:this={paneHeader}>
 		<PaneHeader {title} />
@@ -110,14 +117,18 @@
 	{renderDirections}
 	on:drag={({ detail: e }) => {
 		e.target.style.transform = e.transform;
-		console.log(`Pane ${title} is being dragged.`);
-		console.log(`Pane ${title} z-index: ${e.target.style.zIndex}`); // Log z-index on drag
+		if (process.env.NODE_ENV === 'development') {
+			console.log(`Pane ${title} is being dragged.`);
+			console.log(`Pane ${title} z-index: ${e.target.style.zIndex}`); // Log z-index on drag
+		}
 	}}
 	on:resize={({ detail: e }) => {
 		e.target.style.width = `${e.width}px`;
 		e.target.style.height = `${e.height}px`;
 		e.target.style.transform = e.drag.transform;
-		console.log(`Pane ${title} is being resized.`);
-		console.log(`Pane ${title} z-index: ${e.target.style.zIndex}`); // Log z-index on resize
+		if (process.env.NODE_ENV === 'development') {
+			console.log(`Pane ${title} is being resized.`);
+			console.log(`Pane ${title} z-index: ${e.target.style.zIndex}`); // Log z-index on resize
+		}
 	}}
 />
