@@ -25,14 +25,6 @@
 				zIndex: 1
 			})
 		},
-		{
-			id: 'blog',
-			obj: writable({
-				x: 150,
-				y: 100,
-				zIndex: 1
-			})
-		},
 	];
 
 	let panes = writable<PaneType[]>(INITIAL_PANES);
@@ -70,10 +62,10 @@
 <div class="app flex h-full flex-col bg-gray-200">
 	<Header />
 
-	<div class="flex flex-grow flex-col sm:flex-row">
+	<div class="flex flex-grow flex-col sm:flex-row bg-gradient-to-b from-blue-500 via-blue-700 to-green-500">
 		<NavBar />
 
-		<main class="flex-grow bg-gradient-to-b from-blue-500 via-blue-700 to-green-500">
+		<main class="flex-grow">
 			<slot />
 		</main>
 	</div>
