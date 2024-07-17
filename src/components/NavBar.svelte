@@ -2,14 +2,15 @@
 	import '../app.css';
 	import { page } from '$app/stores';
 	import logo from '$lib/images/rej-logo.png';
+	import blogIcon from '$lib/images/blog-icon.png';
 	import github from '$lib/images/github.svg';
 	import { base } from '$app/paths';
 </script>
 
-<nav class="flex max-w-[10rem] flex-col items-center space-y-4 p-4">
-	<ul class="list-none">
+<nav class="flex max-w-[10rem] flex-col items-center p-4">
+	<ul class="list-none space-y-4">
 		<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-			<a href="{base}/" class="flex flex-col items-center space-y-2">
+			<a href="{base}/" class="flex flex-col items-center">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -28,9 +29,15 @@
 			</a>
 		</li>
 		<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-			<a href="{base}/about" class="flex flex-col items-center space-y-2">
+			<a href="{base}/about" class="flex flex-col items-center">
 				<img src={logo} alt="Logo" title="Home" class="h-10 w-10" />
 				<span>About</span>
+			</a>
+		</li>
+		<li aria-current={$page.url.pathname === '/blog' ? 'page' : undefined}>
+			<a href="{base}/blog" class="flex flex-col items-center">
+				<img src={blogIcon} alt="Blog icon" title="Blog" class="h-10 w-10" />
+				<span>Blog</span>
 			</a>
 		</li>
 		<li>
@@ -38,7 +45,7 @@
 				href="https://github.com/jonesrussell"
 				target="_blank"
 				rel="noopener"
-				class="flex flex-col items-center space-y-2"
+				class="flex flex-col items-center"
 			>
 				<img src={github} alt="GitHub" class="h-10 w-10" />
 				<span>GitHub</span>
