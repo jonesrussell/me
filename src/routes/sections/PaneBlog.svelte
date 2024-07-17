@@ -5,6 +5,8 @@
 
 	export let x: number;
 	export let y: number;
+	export let id;
+	export let zIndex: number;
 
 	let updateRect: (() => void) | null = null;
 
@@ -27,9 +29,11 @@
 		const date = new Date(dateString);
 		return date.toLocaleDateString('en-US');
 	}
+
+	export let onBringToFront = () => {};
 </script>
 
-<Pane title="Web Developer Blog" {x} {y} on:update={handleUpdate}>
+<Pane title="Web Developer Blog" {id} {x} {y} {zIndex} {onBringToFront} on:update={handleUpdate}>
 	{#each $blogPosts as post}
 		<!-- Subscribe to the blogPosts store -->
 		<article
