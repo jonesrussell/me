@@ -17,11 +17,6 @@
 	export let onBringToFront = () => {};
 </script>
 
-<svelte:head>
-	<title>Newsletter</title>
-	<meta name="description" content="Newsletter" />
-</svelte:head>
-
 <Pane title="Newsletter" {id} {x} {y} {zIndex} {onBringToFront}>
 	<form on:submit|preventDefault={handleSubmit} class="space-y-4">
 		<div>
