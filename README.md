@@ -1,40 +1,29 @@
-# My create-svelte website
+# Personal Website
 
-https://jonesrussell.github.io/me/
+You can visit the website at https://jonesrussell.github.io/me/.
 
-Everything I needed to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This is my personal website, developed to resemble the look and behavior of Amiga Workbench 3.1, the last version I remember using on my Amiga 4000.
 
-## Created project
+The website is built with Svelte, powered by create-svelte.
 
-If you're seeing this, I already did this step. Hooray!
+## Deploy to Github Pages
 
-```bash
-# created a new project in myapp
-npm create svelte@latest myapp
-```
+See the deployment configuration in .github/workflows/deploy.yml
 
-## Developing
+## Resources
 
-Once I created a project I installed dependencies with `npm install`, then started a development server:
+Here are some resources I used during the development:
 
-```bash
-npm run dev
-```
+- Svelte Introduction: https://svelte.dev/docs/introduction
+- Microsoft Copilot: https://copilot.microsoft.com
+- Application State Management with Svelte: https://blog.logrocket.com/application-state-management-svelte/
+- Moveable Storybook: https://daybrush.com/moveable/storybook/?path=/story/introduction--page
+- Amiga Workbench 3.1 Image: https://heatdamer.weebly.com/uploads/1/2/7/2/127209368/527788026_orig.png
 
-## Building
-
-I create production versions of my app:
-
-```bash
-npm run build
-```
-
-Sometimes I preview the production build with `npm run preview`.
-
-> To deploy my app, I installed a Github pages [adapter](https://www.sveltesociety.dev/packages?category=sveltekit-adapters#svelte-adapter-github) for your target environment.
 
 ## AI Prompt
-I've found it useful to have a prompt ready to go when prodding GPTs. I also find it useful not to give the bots instructions up front when a bot isn't producing working code.
+
+Sometimes I find it useful to have a prompt ready to go when prodding GPTs. I also find it useful not to give the bots instructions up front. I pretty much throw shit at the wall and see if useable code is produced.
 
 ```
 My app is Svelte 4.2 and it is adaptive to iniital browser sizes, devices, etc, and reactive to any changes like on resize.
@@ -80,6 +69,3 @@ $ tree -L 3 -I 'node_modules|build|static'
 ├── vite.config.mts
 └── vitest-setup.mjs
 ```
-
-## Resources
-- https://blog.logrocket.com/application-state-management-svelte/
