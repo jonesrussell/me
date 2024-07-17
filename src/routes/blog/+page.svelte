@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { onMount, afterUpdate } from 'svelte';
-	import { blogPosts, fetchFeed } from '../../services/blogService';
+	import { blogPosts, fetchFeed } from '$services/blogService';
 	import Pane from '../../components/Pane/Pane.svelte';
 
-	export let x: number;
-	export let y: number;
-	export let id;
-	export let zIndex: number;
+	export let x: number = 150;
+	export let y: number = 100;
+	export let id: string = 'blog';
+	export let zIndex: number = 2;
 
 	let updateRect: (() => void) | null = null;
 

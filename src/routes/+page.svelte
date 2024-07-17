@@ -2,7 +2,7 @@
 	import Pane from '../components/Pane/Pane.svelte';
 
 	export let x: number = 100;
-  export let y: number = 150;
+  export let y: number = 50;
   export let zIndex: number = 2;
 	export let id: string = 'home';
 
