@@ -20,8 +20,7 @@
 		{
 			id: 'signup-news',
 			obj: writable({
-				x: 500,
-				y: 200,
+				position: { x: 500, y: 200 },
 				zIndex: 1
 			})
 		}
@@ -29,19 +28,17 @@
 
 	let panes = writable<PaneType[]>(INITIAL_PANES);
 
-	let isDevelopment = process.env.NODE_ENV === 'development';
-
 	onMount(() => {
 		const unsubscribe = session.subscribe((value: any) => {
 			sessionData = value;
 		});
 
 		if (sessionData.openAboutInPane) {
-			paneManager.createPane('about', 100, 100, 1);
+			paneManager.createPane('about', { x: 100, y: 100 }, 1);
 		}
 
 		INITIAL_PANES.forEach((pane) => {
-			paneManager.createPane(pane.id, get(pane.obj).x, get(pane.obj).y, get(pane.obj).zIndex);
+			paneManager.createPane(pane.id, get(pane.obj).position, get(pane.obj).zIndex);
 		});
 
 		const unsubscribePane = paneManager.subscribe((value) => {
@@ -74,32 +71,20 @@
 
 		<main class="flex-grow">
 			<slot />
+
+			{#each $panes as pane (pane.id)}
+				<svelte:component
+					this={COMPONENTS.get(pane.id)}
+					{...get(pane.obj)}
+					id={pane.id}
+					onBringToFront={() => {
+						console.log('Bringing pane to front:', pane.id);
+						paneManager.updateZIndex(pane.id);
+					}}
+				/>
+			{/each}
 		</main>
 	</div>
 
 	<Footer />
-
-	{#each $panes as pane (pane.id)}
-		<svelte:component
-			this={COMPONENTS.get(pane.id)}
-			{...get(pane.obj)}
-			id={pane.id}
-			onBringToFront={() => {
-				console.log('Bringing pane to front:', pane.id);
-				paneManager.updateZIndex(pane.id);
-			}}
-		/>
-	{/each}
-
-	{#if isDevelopment}
-		<div
-			class="debug-info"
-			style="position: fixed; bottom: 0; right: 0; background: white; padding: 1em;"
-		>
-			<h2>Debug Info</h2>
-			{#each Object.entries($session) as [key, value]}
-				<p><strong>{key}:</strong> {JSON.stringify(value)}</p>
-			{/each}
-		</div>
-	{/if}
 </div>

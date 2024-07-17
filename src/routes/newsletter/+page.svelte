@@ -1,10 +1,9 @@
 <script lang="ts">
-	import Pane from '../../components/Pane/Pane.svelte';
+	import Pane from '../../components/Pane.svelte';
 
-	export let x: number;
-	export let y: number;
-	export let id: string;
-	export let zIndex: number;
+	export let position = { x: 100, y: 50 };
+	export let id: string = 'newsletter';
+	export let zIndex: number = 2;
 
 	let email = '';
 	let name = '';
@@ -17,7 +16,12 @@
 	export let onBringToFront = () => {};
 </script>
 
-<Pane title="Newsletter" {id} {x} {y} {zIndex} {onBringToFront}>
+<svelte:head>
+	<title>Newsletter</title>
+	<meta name="description" content="Sign up for our newsletter" />
+</svelte:head>
+
+<Pane title="Newsletter" {id} {position} {zIndex} {onBringToFront}>
 	<form on:submit|preventDefault={handleSubmit} class="space-y-4">
 		<div>
 			<label for="email" class="mb-2 block text-sm font-bold text-gray-700">Email:</label>

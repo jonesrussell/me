@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { onMount, afterUpdate } from 'svelte';
 	import { blogPosts, fetchFeed } from '$services/blogService';
-	import Pane from '../../components/Pane/Pane.svelte';
+	import Pane from '../../components/Pane.svelte';
 
-	export let x: number = 150;
-	export let y: number = 100;
+	export let position: { x: number; y: number } = { x: 150, y: 100 };
 	export let id: string = 'blog';
 	export let zIndex: number = 2;
 
@@ -33,7 +32,7 @@
 	export let onBringToFront = () => {};
 </script>
 
-<Pane title="Web Developer Blog" {id} {x} {y} {zIndex} {onBringToFront} on:update={handleUpdate}>
+<Pane title="Web Developer Blog" {id} {position} {zIndex} {onBringToFront} on:update={handleUpdate}>
 	{#each $blogPosts as post}
 		<!-- Subscribe to the blogPosts store -->
 		<article
