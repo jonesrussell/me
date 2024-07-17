@@ -8,9 +8,9 @@
 		"vscode": {
 			"extensions": [
 				"svelte.svelte-vscode",
-				"phind.phind",
 				"github.vscode-github-actions",
-				"ms-azuretools.vscode-docker"
+				"ms-azuretools.vscode-docker",
+				"TabNine.tabnine-vscode"
 			]
 		}
 	},
