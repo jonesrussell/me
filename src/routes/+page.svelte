@@ -1,49 +1,12 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { get, writable } from 'svelte/store';
-	import PaneSignupNews from './sections/PaneSignupNews.svelte';
-	import PaneBlog from './sections/PaneBlog.svelte';
-	import paneManager from '../lib/PaneManager';
-	import type { PaneType } from '../lib/types';
+	import Pane from '../components/Pane/Pane.svelte';
 
-	const INITIAL_PANES: PaneType[] = [
-		{
-			id: 'signup-news',
-			obj: writable({
-				x: 500,
-				y: 200,
-				zIndex: 1
-			})
-		},
-		{
-			id: 'blog',
-			obj: writable({
-				x: 150,
-				y: 100,
-				zIndex: 1
-			})
-		}
-	];
+	export let x: number = 100;
+  export let y: number = 150;
+  export let zIndex: number = 2;
+	export let id: string = 'home';
 
-	let panes = writable<PaneType[]>(INITIAL_PANES);
-
-	onMount(() => {
-		INITIAL_PANES.forEach((pane) => {
-			paneManager.createPane(pane.id, get(pane.obj).x, get(pane.obj).y, get(pane.obj).zIndex);
-		});
-
-		const unsubscribe = paneManager.subscribe((value) => {
-			panes.set(value);
-		});
-
-		return () => {
-			unsubscribe();
-		};
-	});
-
-	const COMPONENTS = new Map<string, typeof PaneSignupNews | typeof PaneBlog>();
-	COMPONENTS.set('signup-news', PaneSignupNews);
-	COMPONENTS.set('blog', PaneBlog);
+	export let onBringToFront = () => {};
 </script>
 
 <svelte:head>
@@ -51,16 +14,10 @@
 	<meta name="description" content="Russell Jones" />
 </svelte:head>
 
-<div>
-	{#each $panes as pane (pane.id)}
-		<svelte:component
-			this={COMPONENTS.get(pane.id)}
-			{...get(pane.obj)}
-			id={pane.id}
-			onBringToFront={() => {
-				console.log('Bringing pane to front:', pane.id);
-				paneManager.updateZIndex(pane.id);
-			}}
-		/>
-	{/each}
-</div>
+<Pane title="Home" {id} {x} {y} {zIndex} {onBringToFront}>
+	<div class="text-column">
+		<h1>Home of dev.</h1>
+	
+		<p>Dev home.</p>
+	</div>	
+</Pane>
