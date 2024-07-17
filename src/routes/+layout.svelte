@@ -52,7 +52,10 @@
 		};
 	});
 
-	const COMPONENTS = new Map<string, typeof PaneHome | typeof PaneSignupNews | typeof PaneBlog | typeof PaneAbout>();
+	const COMPONENTS = new Map<
+		string,
+		typeof PaneHome | typeof PaneSignupNews | typeof PaneBlog | typeof PaneAbout
+	>();
 	COMPONENTS.set('home', PaneHome);
 	COMPONENTS.set('signup-news', PaneSignupNews);
 	COMPONENTS.set('blog', PaneBlog);
@@ -62,7 +65,9 @@
 <div class="app flex h-full flex-col bg-gray-200">
 	<Header />
 
-	<div class="flex flex-grow flex-col sm:flex-row bg-gradient-to-b from-blue-500 via-blue-700 to-green-500">
+	<div
+		class="flex flex-grow flex-col bg-gradient-to-b from-blue-500 via-blue-700 to-green-500 sm:flex-row"
+	>
 		<NavBar />
 
 		<main class="flex-grow">
@@ -83,4 +88,14 @@
 			}}
 		/>
 	{/each}
+
+	<div
+		class="debug-info"
+		style="position: fixed; bottom: 0; right: 0; background: white; padding: 1em;"
+	>
+		<h2>Debug Info</h2>
+		{#each Object.entries($session) as [key, value]}
+			<p><strong>{key}:</strong> {JSON.stringify(value)}</p>
+		{/each}
+	</div>
 </div>
