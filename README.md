@@ -80,3 +80,6 @@ $ tree -L 3 -I 'node_modules|build|static'
 ├── vite.config.mts
 └── vitest-setup.mjs
 ```
+
+## Resources
+- https://blog.logrocket.com/application-state-management-svelte/
