@@ -11,7 +11,7 @@ interface PaneStore extends Writable<PaneType[]> {
 // Create the store with an empty array
 const { subscribe, update }: PaneStore = writable<PaneType[]>([]) as PaneStore;
 
-let maxZIndex = 5; // Keep track of the highest z-index
+let maxZIndex = 1; // Keep track of the highest z-index
 
 // Function to update a pane
 const updatePane = (id: string, x: number, y: number) => {
