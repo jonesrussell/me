@@ -24,10 +24,12 @@
 				y: 200,
 				zIndex: 1
 			})
-		},
+		}
 	];
 
 	let panes = writable<PaneType[]>(INITIAL_PANES);
+
+	let isDevelopment = process.env.NODE_ENV === 'development';
 
 	onMount(() => {
 		const unsubscribe = session.subscribe((value: any) => {
@@ -89,13 +91,15 @@
 		/>
 	{/each}
 
-	<div
-		class="debug-info"
-		style="position: fixed; bottom: 0; right: 0; background: white; padding: 1em;"
-	>
-		<h2>Debug Info</h2>
-		{#each Object.entries($session) as [key, value]}
-			<p><strong>{key}:</strong> {JSON.stringify(value)}</p>
-		{/each}
-	</div>
+	{#if isDevelopment}
+		<div
+			class="debug-info"
+			style="position: fixed; bottom: 0; right: 0; background: white; padding: 1em;"
+		>
+			<h2>Debug Info</h2>
+			{#each Object.entries($session) as [key, value]}
+				<p><strong>{key}:</strong> {JSON.stringify(value)}</p>
+			{/each}
+		</div>
+	{/if}
 </div>
