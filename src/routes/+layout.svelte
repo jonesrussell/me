@@ -71,8 +71,6 @@
 		<slot />
 	</main>
 
-	<Footer />
-
 	{#each $panes as pane (pane.id)}
 		<svelte:component
 			this={COMPONENTS.get(pane.id)}
@@ -83,6 +81,8 @@
 			}}
 		/>
 	{/each}
+
+	<Footer />
 </div>
 
 <style>
