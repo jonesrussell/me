@@ -1,13 +1,14 @@
 <script lang="ts">
 	import ThemeToggle from './ThemeToggle.svelte';
+	import { base } from '$app/paths';
 </script>
 
 <header class="site-header">
 	<div class="header-content">
 		<span class="title">Russell Jones</span>
 		<nav class="header-nav">
-			<a href="/blog">Blog</a>
-			<a href="/about">About</a>
+			<a href="{base}/blog">Blog</a>
+			<a href="{base}/about">About</a>
 			<a href="https://github.com/jonesrussell">GitHub</a>
 			<ThemeToggle />
 		</nav>
