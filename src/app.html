@@ -15,5 +15,12 @@
 
 	<body data-sveltekit-preload-data="hover" class="h-screen">
 		<div style="display: contents">%sveltekit.body%</div>
+		<script>
+			// Check for saved theme preference or system preference
+			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+			const savedTheme = localStorage.getItem('theme');
+			const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+			document.documentElement.setAttribute('data-theme', theme);
+		</script>
 	</body>
 </html>

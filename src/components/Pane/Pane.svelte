@@ -79,11 +79,14 @@
 <style>
 	.pane {
 		position: absolute;
-		background: #fff;
-		border: 1px solid #000;
+		background: var(--pane-bg);
+		border: 1px solid var(--pane-border);
 		min-width: 300px;
 		max-width: 800px;
 		font-family: var(--font-mono);
+		transition:
+			background-color 0.3s ease,
+			border-color 0.3s ease;
 	}
 
 	.pane-header {
@@ -94,8 +97,8 @@
 	.pane-content {
 		padding: 1rem;
 		overflow: auto;
-		background: #fff;
-		border-left: 1px solid #000;
-		border-right: 1px solid #000;
+		background: var(--pane-bg);
+		border-left: 1px solid var(--pane-border);
+		border-right: 1px solid var(--pane-border);
 	}
 </style>

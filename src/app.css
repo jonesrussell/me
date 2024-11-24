@@ -6,19 +6,63 @@
 
 :root {
 	--font-mono: 'JetBrains Mono', 'Fira Code', 'IBM Plex Mono', monospace;
+
+	/* Light mode */
+	--bg-color: #ffffff;
+	--text-color: #333333;
+	--border-color: #eaeaea;
+	--header-bg: #ffffff;
+	--header-text: #333333;
+	--pane-bg: #ffffff;
+	--pane-border: #000000;
+}
+
+:root[data-theme='dark'] {
+	/* Dark mode */
+	--bg-color: #1a1a1a;
+	--text-color: #ffffff;
+	--border-color: #333333;
+	--header-bg: #000000;
+	--header-text: #ffffff;
+	--pane-bg: #2d2d2d;
+	--pane-border: #404040;
 }
 
 body {
+	margin: 0;
+	padding: 0;
 	font-family: var(--font-mono);
 	line-height: 1.6;
-	max-width: 80ch;
-	margin: 0 auto;
-	padding: 1rem;
+	background: var(--bg-color);
+	color: var(--text-color);
+	transition:
+		background-color 0.3s ease,
+		color 0.3s ease;
 }
 
 pre,
 code {
 	font-family: var(--font-mono);
+}
+
+/* Add some basic typography styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: 700;
+	line-height: 1.2;
+}
+
+a {
+	color: #0066cc;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
 }
 
 .moveable-control {
