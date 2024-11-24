@@ -64,15 +64,12 @@
 	COMPONENTS.set('about', PaneAbout);
 </script>
 
-<div class="app flex h-full flex-col bg-gray-200">
+<div class="app">
 	<Header />
 
-	<div
-		class="flex flex-grow flex-col bg-gradient-to-b from-blue-500 via-blue-700 to-green-500 sm:flex-row"
-	>
+	<div class="main-container">
 		<NavBar />
-
-		<main class="flex-grow">
+		<main class="content">
 			<slot />
 		</main>
 	</div>
@@ -85,21 +82,33 @@
 			{...get(pane.obj)}
 			id={pane.id}
 			onBringToFront={() => {
-				console.log('Bringing pane to front:', pane.id);
 				paneManager.updateZIndex(pane.id);
 			}}
 		/>
 	{/each}
-
-	{#if isDevelopment}
-		<div
-			class="debug-info"
-			style="position: fixed; bottom: 0; right: 0; background: white; padding: 1em;"
-		>
-			<h2>Debug Info</h2>
-			{#each Object.entries($session) as [key, value]}
-				<p><strong>{key}:</strong> {JSON.stringify(value)}</p>
-			{/each}
-		</div>
-	{/if}
 </div>
+
+<style>
+	.app {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		font-family: var(--font-mono);
+		background: var(--bg-color);
+	}
+
+	.main-container {
+		display: flex;
+		flex: 1;
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 2rem;
+		gap: 2rem;
+		background: var(--bg-color);
+	}
+
+	.content {
+		flex: 1;
+		max-width: 80ch;
+	}
+</style>
