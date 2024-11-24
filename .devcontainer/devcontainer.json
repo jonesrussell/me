@@ -1,63 +1,25 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
-	"name": "SvelteKit Development",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+	"name": "SvelteKit + Go Dev Container",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspace",
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"svelte.svelte-vscode",
-				"github.vscode-github-actions",
-				"ms-azuretools.vscode-docker",
-				"TabNine.tabnine-vscode",
-				"eamodio.gitlens",
-				"esbenp.prettier-vscode",
+				"golang.go",
 				"dbaeumer.vscode-eslint",
-				"streetsidesoftware.code-spell-checker",
-				"christian-kohler.path-intellisense",
-				"formulahendry.auto-rename-tag",
-				"bradlc.vscode-tailwindcss",
-				"csstools.postcss",
-				"ardenivanov.svelte-intellisense",
-				"fivethree.vscode-svelte-snippets",
-				"vitest.explorer"
-			],
-			"settings": {
-				"svelte.enable-ts-plugin": true,
-				"editor.formatOnSave": true,
-				"editor.defaultFormatter": "esbenp.prettier-vscode",
-				"[svelte]": {
-					"editor.defaultFormatter": "svelte.svelte-vscode"
-				},
-				"tailwindCSS.includeLanguages": {
-					"svelte": "html"
-				}
-			}
+				"esbenp.prettier-vscode"
+			]
 		}
 	},
-	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
-		"ghcr.io/devcontainers/features/git:1": {},
-		"ghcr.io/devcontainers/features/github-cli:1": {},
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
-		"ghcr.io/devcontainers/features/common-utils:2": {
-			"installZsh": true,
-			"configureZshAsDefaultShell": true,
-			"installOhMyZsh": true,
-			"upgradePackages": true
+		"ghcr.io/devcontainers/features/go:1": {
+			"version": "1.21"
+		},
+		"ghcr.io/devcontainers/features/node:1": {
+			"version": "20"
 		}
 	},
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [5173, 4173],
-	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "npm install -g npm@10.8.1 && npm exec playwright install-deps --yes && npm exec playwright install --yes && echo 'export HISTFILE=/commandhistory/.zsh_history' >> ~/.zshrc",
-	// Added SSH and history persistence
-	"mounts": [
-		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached",
-		"source=sveltekit-bashhistory,target=/commandhistory,type=volume"
-	],
-	// Added recommended settings
-	"remoteUser": "node",
-	"updateRemoteUserUID": true
+	"postCreateCommand": "go mod download && npm install"
 }

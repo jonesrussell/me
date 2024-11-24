@@ -9,7 +9,9 @@
 	--line-height: 1.5;
 	--measure: 66ch;
 	--spacing: calc(var(--line-height) * 1rem);
-
+	--grid-cell: 30ch;
+	--grid-gap: var(--spacing);
+	font-family: var(--font-mono);
 	/* Light mode */
 	--bg-color: #ffffff;
 	--text-color: #333333;
@@ -98,6 +100,8 @@ h3 {
 /* Grid layout */
 .grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(min(100%, 30ch), 1fr));
-	gap: var(--spacing);
+	grid-template-columns: repeat(auto-fit, minmax(var(--grid-cell), 1fr));
+	gap: var(--grid-gap);
+	width: fit-content;
+	margin: 0 auto;
 }
