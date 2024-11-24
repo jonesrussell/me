@@ -1,8 +1,7 @@
 <script lang="ts">
 	import '../app.css';
-	import { get, writable } from 'svelte/store';
-	import { onMount } from 'svelte';
-	import { session } from '../stores';
+	import '@fontsource/ibm-plex-mono/400.css';
+	import '@fontsource/ibm-plex-mono/600.css';
 	import Footer from '../components/Footer.svelte';
 	import Header from '../components/Header.svelte';
 	import NavBar from '../components/NavBar.svelte';
@@ -64,17 +63,19 @@
 	COMPONENTS.set('about', PaneAbout);
 </script>
 
-<div class="app flex h-full flex-col bg-gray-200">
+<div class="min-h-screen">
 	<Header />
-
-	<div
-		class="flex flex-grow flex-col bg-gradient-to-b from-blue-500 via-blue-700 to-green-500 sm:flex-row"
-	>
-		<NavBar />
-
-		<main class="flex-grow">
-			<slot />
-		</main>
+	
+	<div class="container mx-auto px-4 py-8">
+		<div class="flex flex-col gap-8 md:flex-row">
+			<aside class="md:w-64">
+				<NavBar />
+			</aside>
+			
+			<main class="flex-1">
+				<slot />
+			</main>
+		</div>
 	</div>
 
 	<Footer />
