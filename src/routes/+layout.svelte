@@ -64,15 +64,12 @@
 	COMPONENTS.set('about', PaneAbout);
 </script>
 
-<div class="app">
+<div class="layout">
 	<Header />
 
-	<div class="main-container">
-		<NavBar />
-		<main class="content">
-			<slot />
-		</main>
-	</div>
+	<main class="content">
+		<slot />
+	</main>
 
 	<Footer />
 
@@ -89,26 +86,17 @@
 </div>
 
 <style>
-	.app {
+	.layout {
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
-		font-family: var(--font-mono);
-		background: var(--bg-color);
-	}
-
-	.main-container {
-		display: flex;
-		flex: 1;
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 2rem;
-		gap: 2rem;
-		background: var(--bg-color);
+		gap: var(--spacing);
 	}
 
 	.content {
 		flex: 1;
-		max-width: 80ch;
+		width: 100%;
+		max-width: var(--measure);
+		margin: 0 auto;
 	}
 </style>
