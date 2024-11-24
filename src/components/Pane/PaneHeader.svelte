@@ -1,26 +1,44 @@
 <script lang="ts">
-	import PaneButton from './PaneButton.svelte';
-
 	export let title: string = '';
 
 	function closePane() {
 		console.log('Close pane');
 	}
-
-	function minimizePane() {
-		console.log('Minimize pane');
-	}
-
-	function maximizePane() {
-		console.log('Maximize pane');
-	}
 </script>
 
-<header class="flex h-2 items-center justify-between border-b border-gray-400 bg-gray-300 p-2">
-	<PaneButton action={closePane} label="Close" />
-	<h2 class="text-left text-base font-normal">{title}</h2>
-	<div class="flex items-center justify-end space-x-2">
-		<PaneButton action={minimizePane} label="Minimize" />
-		<PaneButton action={maximizePane} label="Maximize" />
-	</div>
+<header class="header">
+	<button on:click={closePane}>×</button>
+	<h2>{title}</h2>
+	<div class="spacer"></div>
 </header>
+
+<style>
+	.header {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 0.5rem;
+		background: #000;
+		color: #fff;
+	}
+
+	button {
+		font-family: var(--font-mono);
+		background: none;
+		border: 1px solid #fff;
+		color: #fff;
+		width: 1.5rem;
+		height: 1.5rem;
+		cursor: pointer;
+	}
+
+	h2 {
+		margin: 0;
+		font-size: 1rem;
+		font-weight: normal;
+	}
+
+	.spacer {
+		flex: 1;
+	}
+</style>
