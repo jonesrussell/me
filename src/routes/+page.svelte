@@ -1,12 +1,12 @@
 <script lang="ts">
 	import Pane from '../components/Pane/Pane.svelte';
 
-	export let x: number = 100;
-	export let y: number = 50;
-	export let zIndex: number = 2;
-	export let id: string = 'home';
+	export const x: number = 100;
+	export const y: number = 50;
+	export const zIndex: number = 2;
+	export const id: string = 'home';
 
-	export let onBringToFront = () => {};
+	export const onBringToFront = () => {};
 </script>
 
 <svelte:head>
