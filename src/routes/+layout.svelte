@@ -11,6 +11,7 @@
 	import PaneHome from './+page.svelte';
 	import paneManager from '../lib/PaneManager';
 	import PaneSignupNews from './newsletter/+page.svelte';
+	import PaneDevResources from './dev-resources/+page.svelte';
 	import type { PaneType } from '../lib/types';
 	import type { SessionData } from '../stores';
 
@@ -62,6 +63,7 @@
 	COMPONENTS.set('signup-news', PaneSignupNews);
 	COMPONENTS.set('blog', PaneBlog);
 	COMPONENTS.set('about', PaneAbout);
+	COMPONENTS.set('dev-resources', PaneDevResources);
 </script>
 
 <div class="layout">
