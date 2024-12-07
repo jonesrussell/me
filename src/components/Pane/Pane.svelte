@@ -61,10 +61,22 @@
 	role="dialog"
 	aria-labelledby={`${id}-title`}
 	class="pane"
-	on:mousedown={handleMouseDown}
 	style="left: {x}px; top: {y}px; z-index: {zIndex};"
 >
-	<div class="pane-header" bind:this={paneHeader}>
+	<div 
+		class="pane-header" 
+		bind:this={paneHeader}
+		role="button"
+		tabindex="0"
+		aria-label="Drag to move window"
+		on:mousedown={handleMouseDown}
+		on:keydown={(e) => {
+			if (e.key === 'Enter' || e.key === ' ') {
+				e.preventDefault();
+				// Optional: Add keyboard navigation for the pane
+			}
+		}}
+	>
 		<PaneHeader {title} />
 	</div>
 
@@ -103,3 +115,4 @@
 		border-right: 1px solid var(--pane-border);
 	}
 </style>
+
