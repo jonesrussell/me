@@ -10,6 +10,7 @@
 			<a href="{base}/blog">Blog</a>
 			<a href="{base}/about">About</a>
 			<a href="https://github.com/jonesrussell">GitHub</a>
+			<a href="{base}/dev-resources">Dev Resources</a>
 			<ThemeToggle />
 		</nav>
 	</div>
