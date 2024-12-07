@@ -56,9 +56,10 @@
 	});
 </script>
 
-<section
+<div
 	{id}
-	aria-label={title}
+	role="dialog"
+	aria-labelledby={`${id}-title`}
 	class="pane"
 	on:mousedown={handleMouseDown}
 	style="left: {x}px; top: {y}px; z-index: {zIndex};"
@@ -74,7 +75,7 @@
 	<div bind:this={paneFooter}>
 		<PaneFooter />
 	</div>
-</section>
+</div>
 
 <style>
 	.pane {
