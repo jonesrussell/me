@@ -9,9 +9,7 @@
 		<nav class="header-nav">
 			<a href="{base}/">Home</a>
 			<a href="{base}/blog">Blog</a>
-			<a href="{base}/about">About</a>
 			<a href="{base}/resources">Resources</a>
-			<a href="https://github.com/jonesrussell" target="_blank" rel="noopener noreferrer">GitHub</a>
 
 			<ThemeToggle />
 		</nav>
