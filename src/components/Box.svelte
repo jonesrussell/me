@@ -4,7 +4,7 @@
 </script>
 
 <div class="box" style="--box-width: {width}ch">
-    ┌{'─'.repeat(width - 2)}┐
+    ╭{'─'.repeat(width - 2)}╮
     {#if title}
     │ {title.padEnd(width - 4)} │
     ├{'─'.repeat(width - 2)}┤
@@ -12,19 +12,20 @@
     <div class="content">
         <slot />
     </div>
-    └{'─'.repeat(width - 2)}┘
+    ╰{'─'.repeat(width - 2)}╯
 </div>
 
 <style>
     .box {
         font-family: var(--font-mono);
         width: var(--box-width);
-        margin: 0 auto;
         white-space: pre;
+        margin: 0 auto;
     }
 
     .content {
-        padding: 0 1ch;
-        margin: 1ch 0;
+        padding: 1ch;
+        white-space: normal;
+        text-align: inherit;
     }
 </style> 
