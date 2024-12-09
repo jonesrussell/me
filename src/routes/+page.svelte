@@ -22,28 +22,43 @@
 	<h1>Home of dev.</h1>
 
 	<div class="grid">
-		<div>
-			<h2>About</h2>
-			<p>Me dev.</p>
-		</div>
+		<Box title="About" width={30}>
+			Me dev.
+		</Box>
 
-		<div>
-			<h2>Blog</h2>
-			<p>Latest posts and thoughts.</p>
-			{#each $blogPosts.slice(0, 2) as post}
-				<article class="flex flex-col items-start space-y-2 border-b border-gray-300 py-2 md:flex-row md:items-center md:space-x-4 md:space-y-0">
-					<h3 class="flex-grow whitespace-nowrap text-sm">
-						<a class="text-gray-700 underline" href={post.link}>{post.title}</a>
-					</h3>
-					<span class="whitespace-nowrap text-xs text-gray-500">{formatDate(post.published)}</span>
-				</article>
+		<Box title="Blog" width={50}>
+			Latest posts and thoughts.
+
+			{#each posts as post}
+				<div class="post-line">
+					<a href={post.link}>{post.title}</a>
+					<span class="date">{post.date}</span>
+				</div>
 			{/each}
-			<a href="/blog" class="mt-4 inline-block text-sm underline">View all posts →</a>
-		</div>
 
-		<div>
-			<h2>Projects</h2>
-			<p>Current work and experiments.</p>
-		</div>
+			<a href="/blog" class="view-more">View all posts →</a>
+		</Box>
+
+		<Box title="Projects" width={40}>
+			Current work and experiments.
+		</Box>
 	</div>
 </section>
+
+<style>
+	.post-line {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: 2ch;
+		padding: 0.5ch 0;
+	}
+	
+	.date {
+		color: var(--text-muted);
+	}
+	
+	.view-more {
+		display: block;
+		margin-top: 2ch;
+	}
+</style>
