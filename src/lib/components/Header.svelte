@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ThemeToggle from './ThemeToggle.svelte';
+	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import { base } from '$app/paths';
 </script>
 

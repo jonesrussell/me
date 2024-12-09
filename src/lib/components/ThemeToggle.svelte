@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { darkMode } from '../stores';
+	import { theme } from '$lib/stores';
 
 	function toggleTheme() {
-		$darkMode = !$darkMode;
-		document.documentElement.setAttribute('data-theme', $darkMode ? 'dark' : 'light');
+		$theme = !$theme;
+		document.documentElement.setAttribute('data-theme', $theme ? 'dark' : 'light');
 	}
 </script>
 
 <button on:click={toggleTheme} class="theme-toggle" aria-label="Toggle theme">
-	{#if $darkMode}
+	{#if $theme}
 		🌞
 	{:else}
 		🌙
