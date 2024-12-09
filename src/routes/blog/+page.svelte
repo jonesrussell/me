@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import { blogPosts, fetchFeed } from '$services/blogService';
 	import { alignToGrid } from '$lib/utils/grid';
+	import Table from '$lib/components/Table.svelte';
 
 	onMount(async () => {
 		const fetchedPosts = await fetchFeed();
@@ -16,6 +17,14 @@
 	}
 
 	const postWidth = alignToGrid(80);
+
+	// Add headers and transform blog posts into table rows
+	$: tableHeaders = ['Title', 'Date', 'Description'];
+	$: tableRows = $blogPosts.map(post => [
+		post.title,
+		formatDate(post.published),
+		post.description
+	]);
 </script>
 
 <svelte:head>
@@ -24,25 +33,17 @@
 </svelte:head>
 
 <div class="blog">
-	<Box width={postWidth} title="Web Developer Blog">
-		<div class="blog-header">
-			Web Developer & Open Source Enthusiast
-		</div>
-	</Box>
+	<Table 
+		headers={['Web Developer Blog']}
+		rows={[['Web Developer & Open Source Enthusiast']]}
+		width={postWidth}
+	/>
 
-	{#each $blogPosts as post}
-		<Box width={postWidth}>
-			<div class="blog-post">
-				<a href={post.link} class="post-title">{post.title}</a>
-				<div class="post-meta">
-					<span class="date">{formatDate(post.published)}</span>
-				</div>
-				<div class="post-description">
-					{post.description}
-				</div>
-			</div>
-		</Box>
-	{/each}
+	<Table 
+		headers={tableHeaders}
+		rows={tableRows}
+		width={postWidth}
+	/>
 </div>
 
 <style>
@@ -52,39 +53,5 @@
 		gap: var(--ch2);
 		align-items: center;
 		width: 100%;
-	}
-
-	.blog-header {
-		text-align: center;
-		line-height: 1.2;
-		color: var(--text-muted);
-	}
-
-	.blog-post {
-		display: flex;
-		flex-direction: column;
-		gap: var(--ch);
-		line-height: 1.2;
-	}
-
-	.post-title {
-		font-weight: bold;
-		color: var(--link-color);
-		text-decoration: none;
-	}
-
-	.post-meta {
-		color: var(--text-muted);
-		font-size: 0.9em;
-	}
-
-	.post-description {
-		color: var(--text-color);
-		white-space: pre-wrap;
-	}
-
-	:global(.blog > :global(.box)) {
-		margin: 0;
-		width: var(--measure);
 	}
 </style>
