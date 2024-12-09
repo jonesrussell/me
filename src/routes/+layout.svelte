@@ -1,8 +1,8 @@
 <script lang="ts">
 	import '../app.css';
-	import Footer from '../components/Footer.svelte';
-	import Header from '../components/Header.svelte';
-	import NewsletterCTA from '../components/NewsletterCTA.svelte';
+	import Footer from '$lib/components/Footer.svelte';
+	import Header from '$lib/components/Header.svelte';
+	import NewsletterCTA from '$lib/components/NewsletterCTA.svelte';
 </script>
 
 <div class="layout">

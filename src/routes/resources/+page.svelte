@@ -1,4 +1,5 @@
 <script lang="ts">
+	import RuleViewer from '$components/RuleViewer.svelte';
 </script>
 
 <svelte:head>
@@ -12,14 +13,10 @@
 		
 		<div class="space-y-4">
 			<article>
-				<h3 class="mb-2 text-lg font-semibold">.cursorrules</h3>
-				<pre class="bg-gray-100 p-4 rounded overflow-x-auto"><code>{`{
-  "rules": [
-    // Your cursor rules here
-  ]
-}`}</code></pre>
+				<h3 class="mb-2 text-lg font-semibold">Development Rules</h3>
+				<RuleViewer />
 				<p class="mt-2 text-sm">
-					These are my custom cursor rules that I use for improved code navigation and editing.
+					These are my development rules that I use for improved code organization and consistency.
 				</p>
 			</article>
 		</div>

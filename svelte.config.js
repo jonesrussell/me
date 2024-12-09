@@ -33,8 +33,8 @@ const config = {
 			}
 		},
 		alias: {
-			$components: './src/components',
-			$services: './src/services'
+			$lib: './src/lib',
+			$components: './src/lib/components'
 		}
 	}
 };
