@@ -7,7 +7,10 @@
     
     // Helper function to pad content to full width
     function padContent(text: string): string {
-        return text.padEnd(contentWidth);
+        const paddedText = text.padEnd(contentWidth);
+        return paddedText.length > contentWidth 
+            ? paddedText.slice(0, contentWidth) 
+            : paddedText;
     }
 </script>
 
@@ -36,6 +39,8 @@
     .box {
         width: var(--box-width);
         margin: 0 auto;
+        font-family: var(--box-font);
+        line-height: var(--box-line-height);
     }
 
     .box-frame {
@@ -43,17 +48,21 @@
         flex-direction: column;
         white-space: pre;
         line-height: 1;
+        color: var(--box-border);
+        background: var(--box-bg);
     }
 
     .border-line {
         white-space: pre;
         line-height: 1;
-        height: 1em;
+        height: 1.2em;
+        display: flex;
+        align-items: center;
     }
 
     .content {
-        padding: 1ch 2ch;
-        white-space: normal;
+        padding: var(--box-padding);
+        white-space: pre-wrap;
         min-height: 1em;
         position: relative;
     }
@@ -67,6 +76,9 @@
         bottom: 0;
         white-space: pre;
         line-height: inherit;
+        height: 100%;
+        display: flex;
+        align-items: stretch;
     }
 
     .content::before {
@@ -75,5 +87,12 @@
 
     .content::after {
         right: 0;
+    }
+
+    /* Ensure content aligns with grid */
+    :global(.content > *) {
+        margin: 0;
+        padding: 0;
+        line-height: inherit;
     }
 </style> 

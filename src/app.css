@@ -20,6 +20,11 @@
 	--header-text: #333333;
 	--pane-bg: #ffffff;
 	--pane-border: #000000;
+	--box-border: var(--text-color);
+	--box-bg: transparent;
+	--box-padding: 2ch;
+	--box-line-height: 1.2;
+	--box-font: var(--font-mono);
 }
 
 :root[data-theme='dark'] {
