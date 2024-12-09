@@ -33,6 +33,7 @@ const config = {
 			}
 		},
 		alias: {
+			$components: './src/components',
 			$services: './src/services'
 		}
 	}
