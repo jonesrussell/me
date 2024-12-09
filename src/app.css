@@ -1,3 +1,6 @@
+@import './reset.css';
+@import url('https://fonts.cdnfonts.com/css/jetbrains-mono-2');
+
 :root {
 	/* Base units */
 	--ch: 1ch;
@@ -14,6 +17,10 @@
 	
 	/* Typography */
 	--font-mono: 'JetBrains Mono', 'Fira Code', 'IBM Plex Mono', monospace;
+	--font-family: "JetBrains Mono", monospace;
+	--font-weight-normal: 500;
+	--font-weight-medium: 600;
+	--font-weight-bold: 800;
 	
 	/* Colors - Light theme */
 	--bg-color: #ffffff;
@@ -35,30 +42,42 @@
 	--content-padding-x: var(--grid-2x);
 	--content-padding-y: var(--grid-base);
 	--content-gap: var(--grid-2x);
+	
+	/* Additional styles from master monospace repo */
+	--border-thickness: 2px;
+	--background-color: #fff;
+	--background-color-alt: #eee;
 }
 
 :root[data-theme='dark'] {
 	--bg-color: #1a1a1a;
-	--text-color: #ffffff;
-	--text-muted: #999999;
-	--border-color: #333333;
-	--header-bg: #000000;
+	--text-color: #e6e6e6;
+	--text-muted: #a6a6a6;
+	--border-color: #404040;
+	--header-bg: #1a1a1a;
 	--header-text: #ffffff;
 	--link-color: #66b3ff;
 	--link-hover: #99ccff;
+	
+	/* Dark theme overrides from master monospace repo */
+	--text-color: #fff;
+	--text-color-alt: #aaa;
+	--background-color: #000;
+	--background-color-alt: #111;
 }
 
 /* Base styles */
 body {
-	font-family: var(--font-mono);
+	font-family: var(--font-family);
 	line-height: var(--line-height);
 	background: var(--bg-color);
 	color: var(--text-color);
+	transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-	font-weight: 700;
+	font-weight: var(--font-weight-bold);
 	line-height: 1.2;
 }
 
@@ -97,4 +116,17 @@ a:hover {
             transparent 2ch
         );
     }
+}
+
+/* Improve input contrast in dark mode */
+[data-theme='dark'] input,
+[data-theme='dark'] textarea {
+    background-color: #2d2d2d;
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+/* Improve box visibility in dark mode */
+[data-theme='dark'] .box-frame {
+    color: var(--border-color);
 }
