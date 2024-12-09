@@ -14,6 +14,11 @@
 </span>
 
 <style>
+    :root {
+        --font-mono: 'Courier New', Courier, monospace;
+        --ch: 1ch;
+    }
+
     .badge {
         font-family: var(--font-mono);
         padding: 0 var(--ch);
