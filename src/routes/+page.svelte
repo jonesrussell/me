@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Box from '$lib/components/Box.svelte';
+	import Grid from '$lib/components/Grid.svelte';
 	import { onMount } from 'svelte';
 	import { blogPosts, fetchFeed } from '$services/blogService';
 
@@ -19,7 +20,7 @@
 	<meta name="description" content="Personal website of Russell Jones, web developer" />
 </svelte:head>
 
-<div class="home">
+<Grid cols={1} gap={4}>
 	<Box width={50}>
 		<div class="header-content">
 			<h1>Russell Jones</h1>
@@ -27,7 +28,7 @@
 		</div>
 	</Box>
 
-	<section class="content-section">
+	<Box width={60}>
 		<h2>Recent Posts</h2>
 		<div class="post-list">
 			{#each $blogPosts.slice(0, 3) as post}
@@ -42,36 +43,23 @@
 				<a href="/blog">View all posts →</a>
 			</div>
 		</div>
-	</section>
-</div>
+	</Box>
+</Grid>
 
 <style>
-	.home {
-		display: flex;
-		flex-direction: column;
-		gap: var(--ch4);
-		align-items: center;
-	}
-
 	.header-content {
 		text-align: center;
 		line-height: 1.2;
 	}
 
+	h1, p {
+		line-height: 1.2;
+		margin: 0;
+		padding: 0;
+	}
+
 	h1 {
 		margin-bottom: var(--ch);
-	}
-
-	.content-section {
-		width: 100%;
-		max-width: 60ch;
-		line-height: 1.2;
-	}
-
-	h2 {
-		margin-bottom: var(--ch2);
-		padding-bottom: var(--ch);
-		border-bottom: 1px solid var(--border-color);
 	}
 
 	.post-list {
@@ -84,6 +72,7 @@
 		display: flex;
 		justify-content: space-between;
 		gap: var(--ch2);
+		line-height: 1.2;
 	}
 
 	.title {
@@ -100,5 +89,6 @@
 	.view-more {
 		text-align: right;
 		padding-top: var(--ch2);
+		line-height: 1.2;
 	}
 </style>
