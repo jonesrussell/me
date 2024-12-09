@@ -7,7 +7,23 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				mono: ['JetBrains Mono', 'Fira Code', 'IBM Plex Mono', 'monospace']
+				mono: [
+					'Courier New',
+					'JetBrains Mono',
+					'IBM Plex Mono',
+					'SFMono-Regular',
+					'Menlo',
+					'monospace'
+				]
+			},
+			letterSpacing: {
+				'mono': '0em'
+			},
+			spacing: {
+				'ch': '1ch',
+				'ch2': '2ch',
+				'ch4': '4ch',
+				'ch8': '8ch'
 			},
 			typography: {
 				DEFAULT: {
@@ -18,6 +34,11 @@ export default {
 						},
 						'code::after': {
 							content: '""'
+						},
+						pre: {
+							padding: '2ch',
+							marginTop: '2ch',
+							marginBottom: '2ch'
 						}
 					}
 				}
