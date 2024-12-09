@@ -8,7 +8,7 @@
     $: alignedWidth = alignToGrid(width);
     
     function padContent(text: string): string {
-        return text.padEnd(alignedWidth - 4); // -4 accounts for borders and spacing
+        return text.padEnd(alignedWidth - 2);
     }
 </script>
 
@@ -18,8 +18,10 @@
     </div>
     
     {#if title}
-        <div class="box-title">
-            │ {padContent(title)} │
+        <div class="box-row">
+            <span class="border">│</span>
+            <span class="title">{padContent(title)}</span>
+            <span class="border">│</span>
         </div>
         
         <div class="box-border">
@@ -27,8 +29,10 @@
         </div>
     {/if}
     
-    <div class="box-content">
-        │ {padContent(content)} │
+    <div class="box-row">
+        <span class="border">│</span>
+        <span class="content">{padContent(content)}</span>
+        <span class="border">│</span>
     </div>
     
     <div class="box-border">
@@ -44,16 +48,20 @@
         white-space: pre;
     }
 
-    .box-border {
+    .box-border, .border {
         color: var(--border-color);
     }
 
-    .box-title {
+    .box-row {
+        display: flex;
+    }
+
+    .title {
         color: var(--text-color);
         font-weight: bold;
     }
 
-    .box-content {
+    .content {
         color: var(--text-color);
     }
 </style>
