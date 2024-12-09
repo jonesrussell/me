@@ -21,7 +21,7 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
-		gap: var(--spacing);
+		gap: var(--ch2);
 	}
 
 	.content {
@@ -29,6 +29,6 @@
 		width: 100%;
 		max-width: var(--measure);
 		margin: 0 auto;
-		padding: 0 clamp(1rem, 5%, var(--spacing));
+		padding: 0 var(--ch2);
 	}
 </style>

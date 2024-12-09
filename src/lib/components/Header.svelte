@@ -19,7 +19,7 @@
 <style>
 	.site-header {
 		border-bottom: 1px solid var(--border-color);
-		padding: 1rem;
+		padding: var(--ch2) 0;
 		background: var(--header-bg);
 		color: var(--header-text);
 		width: 100%;
@@ -28,12 +28,11 @@
 	.header-content {
 		max-width: var(--measure);
 		margin: 0 auto;
-		padding: 0 clamp(1rem, 5%, 2rem);
+		padding: 0 var(--ch2);
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		flex-wrap: wrap;
-		gap: 1rem;
+		gap: var(--ch2);
 	}
 
 	.title {
@@ -43,7 +42,7 @@
 
 	.header-nav {
 		display: flex;
-		gap: 2rem;
+		gap: var(--ch4);
 	}
 
 	.header-nav a {
