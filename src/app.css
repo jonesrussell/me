@@ -1,14 +1,14 @@
 :root {
 	/* Base units */
-	--ch: var(--grid-base);
-	--ch2: var(--grid-2x);
-	--ch4: var(--grid-4x);
-	--ch8: var(--grid-8x);
-	--line-height: 1.5;
+	--ch: 1ch;
+	--ch2: calc(var(--ch) * 2);
+	--ch4: calc(var(--ch) * 4);
+	--ch8: calc(var(--ch) * 8);
+	--line-height: 1.2;
 	
 	/* Layout */
 	--measure: 80ch;
-	--spacing: var(--ch2);
+	--content-padding: var(--ch2);
 	--grid-cell: 40ch;
 	--grid-gap: var(--ch2);
 	
