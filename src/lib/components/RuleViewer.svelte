@@ -22,60 +22,63 @@
 
 <div class="rule-viewer">
     <div class="controls">
-        <button on:click={prevFile}>←</button>
+        <button class="control-btn" on:click={prevFile}>←</button>
         <span class="filename">{currentFile.title}</span>
-        <button on:click={nextFile}>→</button>
+        <button class="control-btn" on:click={nextFile}>→</button>
     </div>
 
     <Terminal title={currentFile.title}>
         {#each currentFile.categories as category}
-            # {category.name}
-            {#each category.rules as rule}
-            - {rule}
-            {/each}
-
+            <div class="category">
+                <h3 class="category-title"># {category.name}</h3>
+                {#each category.rules as rule}
+                    <div class="rule">- {rule}</div>
+                {/each}
+            </div>
         {/each}
-
-        {#if currentFile.examples?.length}
-            # Examples
-            {#each currentFile.examples as example}
-            {example.title}:
-            {example.code}
-
-            {/each}
-        {/if}
     </Terminal>
 </div>
 
 <style>
     .rule-viewer {
-        font-family: var(--font-mono);
+        width: 100%;
+        max-width: var(--measure);
     }
 
     .controls {
         display: flex;
-        gap: 2ch;
         align-items: center;
-        justify-content: center;
-        margin-bottom: 1ch;
+        gap: var(--ch2);
+        margin-bottom: var(--ch2);
     }
 
-    button {
-        font-family: inherit;
-        background: none;
-        border: none;
+    .control-btn {
+        padding: var(--ch) var(--ch2);
+        border: 1px solid var(--border-color);
+        background: transparent;
         color: var(--text-color);
         cursor: pointer;
-        padding: 0.5ch 1ch;
     }
 
-    button:hover {
-        background: var(--text-color);
-        color: var(--bg-color);
+    .control-btn:hover {
+        background: var(--border-color);
     }
 
     .filename {
-        min-width: 20ch;
+        flex: 1;
         text-align: center;
+    }
+
+    .category {
+        margin-bottom: var(--ch2);
+    }
+
+    .category-title {
+        margin-bottom: var(--ch);
+        color: var(--text-muted);
+    }
+
+    .rule {
+        padding-left: var(--ch2);
     }
 </style> 

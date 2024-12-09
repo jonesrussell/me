@@ -1,31 +1,28 @@
 <script lang="ts">
-	import { theme } from '$lib/stores';
+	let theme = 'light';
 
 	function toggleTheme() {
-		$theme = !$theme;
-		document.documentElement.setAttribute('data-theme', $theme ? 'dark' : 'light');
+		theme = theme === 'light' ? 'dark' : 'light';
+		document.documentElement.setAttribute('data-theme', theme);
+		localStorage.setItem('theme', theme);
 	}
 </script>
 
-<button on:click={toggleTheme} class="theme-toggle" aria-label="Toggle theme">
-	{#if $theme}
-		🌞
-	{:else}
-		🌙
-	{/if}
+<button class="theme-toggle" on:click={toggleTheme}>
+	[{theme === 'light' ? '☀' : '☾'}]
 </button>
 
 <style>
 	.theme-toggle {
-		background: none;
-		border: 1px solid var(--border-color);
-		padding: 0.5rem;
+		font-family: var(--font-mono);
+		background: transparent;
+		border: none;
+		color: var(--text-color);
 		cursor: pointer;
-		border-radius: 4px;
-		font-size: 1.2rem;
+		padding: var(--ch) var(--ch2);
 	}
 
 	.theme-toggle:hover {
-		background: var(--border-color);
+		color: var(--text-muted);
 	}
 </style>
