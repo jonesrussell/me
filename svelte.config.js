@@ -23,9 +23,18 @@ const config = {
 		paths: {
 			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
 		},
+		prerender: {
+			handleHttpError: ({ message }) => {
+				// Ignore 404s during prerendering
+				if (message.includes('404')) {
+					return;
+				}
+				throw new Error(message);
+			}
+		},
 		alias: {
-      $services: './src/services'
-    }
+			$services: './src/services'
+		}
 	}
 };
 
