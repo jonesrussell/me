@@ -18,18 +18,67 @@
 	<meta name="description" content="Russell Jones's Blog" />
 </svelte:head>
 
-<section>
+<section class="blog-section">
 	<h1>Web Developer Blog</h1>
 	
 	{#each $blogPosts as post}
-		<article class="flex flex-col items-start space-y-2 border-b border-gray-300 py-2 md:flex-row md:items-center md:space-x-4 md:space-y-0">
-			<h2 class="flex-grow whitespace-nowrap text-sm">
-				<a class="text-gray-700 underline" href={post.link}>{post.title}</a>
+		<article class="blog-post">
+			<h2 class="title">
+				<a href={post.link}>{post.title}</a>
 			</h2>
-			<p class="overflow-hidden overflow-ellipsis whitespace-nowrap text-xs text-gray-500 md:flex-grow">
+			<p class="description">
 				{post.description}
 			</p>
-			<span class="whitespace-nowrap text-xs text-gray-500">{formatDate(post.published)}</span>
+			<span class="date">{formatDate(post.published)}</span>
 		</article>
 	{/each}
 </section>
+
+<style>
+	.blog-section {
+		max-width: var(--measure);
+		margin: 0 auto;
+	}
+
+	.blog-post {
+		display: grid;
+		grid-template-columns: minmax(20ch, 30ch) minmax(30ch, 1fr) 15ch;
+		gap: var(--ch2);
+		padding: var(--ch2) 0;
+		border-bottom: 1px solid var(--border-color);
+		line-height: var(--line-height);
+	}
+
+	.title {
+		font-size: 1em;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.description {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		color: var(--text-muted);
+		font-size: 0.9em;
+	}
+
+	.date {
+		text-align: right;
+		white-space: nowrap;
+		color: var(--text-muted);
+		font-size: 0.9em;
+	}
+
+	@media (max-width: 80ch) {
+		.blog-post {
+			grid-template-columns: 1fr;
+			gap: var(--ch);
+		}
+
+		.date {
+			text-align: left;
+		}
+	}
+</style>

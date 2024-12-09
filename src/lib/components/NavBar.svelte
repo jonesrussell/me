@@ -7,16 +7,15 @@
 	import logo from '$lib/images/rej-logo.png';
 </script>
 
-<nav class="flex max-w-[10rem] flex-col items-center p-4">
-	<ul class="list-none space-y-4">
+<nav class="nav-bar">
+	<ul class="nav-list">
 		<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-			<a href="{base}/" class="flex flex-col items-center">
+			<a href="{base}/" class="nav-link">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
-					fill="none"
 					viewBox="0 0 24 24"
 					stroke="currentColor"
-					class="h-10 w-10"
+					class="nav-icon"
 				>
 					<path
 						stroke-linecap="round"
@@ -29,14 +28,14 @@
 			</a>
 		</li>
 		<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-			<a href="{base}/about" class="flex flex-col items-center">
-				<img src={logo} alt="Logo" title="Home" class="h-10 w-10" />
+			<a href="{base}/about" class="nav-link">
+				<img src={logo} alt="Logo" title="Home" class="nav-icon" />
 				<span>About</span>
 			</a>
 		</li>
 		<li aria-current={$page.url.pathname === '/blog' ? 'page' : undefined}>
-			<a href="{base}/blog" class="flex flex-col items-center">
-				<img src={blogIcon} alt="Blog icon" title="Blog" class="h-10 w-10" />
+			<a href="{base}/blog" class="nav-link">
+				<img src={blogIcon} alt="Blog icon" title="Blog" class="nav-icon" />
 				<span>Blog</span>
 			</a>
 		</li>
@@ -45,11 +44,42 @@
 				href="https://github.com/jonesrussell"
 				target="_blank"
 				rel="noopener"
-				class="flex flex-col items-center"
+				class="nav-link"
 			>
-				<img src={github} alt="GitHub" class="h-10 w-10" />
+				<img src={github} alt="GitHub" class="nav-icon" />
 				<span>GitHub</span>
 			</a>
 		</li>
 	</ul>
 </nav>
+
+<style>
+	.nav-bar {
+		max-width: 20ch;
+		padding: var(--ch4);
+	}
+
+	.nav-list {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: var(--ch4);
+	}
+
+	.nav-link {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--ch);
+		text-decoration: none;
+	}
+
+	.nav-icon {
+		height: 10ch;
+		width: 10ch;
+	}
+
+	[aria-current='page'] .nav-link {
+		color: var(--link-color);
+	}
+</style>
