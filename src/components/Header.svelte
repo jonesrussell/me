@@ -19,18 +19,21 @@
 <style>
 	.site-header {
 		border-bottom: 1px solid var(--border-color);
-		padding: 1rem 0;
+		padding: 1rem;
 		background: var(--header-bg);
 		color: var(--header-text);
+		width: 100%;
 	}
 
 	.header-content {
-		max-width: 1200px;
+		max-width: var(--measure);
 		margin: 0 auto;
-		padding: 0 2rem;
+		padding: 0 clamp(1rem, 5%, 2rem);
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		flex-wrap: wrap;
+		gap: 1rem;
 	}
 
 	.title {
