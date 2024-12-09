@@ -61,9 +61,9 @@
     }
 
     .content {
-        padding: var(--box-padding);
+        padding: var(--ch2);
         white-space: pre-wrap;
-        min-height: 1em;
+        min-height: 1.2em;
         position: relative;
     }
 

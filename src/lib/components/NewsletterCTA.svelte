@@ -58,11 +58,11 @@
 <style>
     .newsletter-content {
         text-align: center;
-        line-height: 1.5;
+        line-height: var(--line-height);
     }
 
     .form-line {
-        margin-top: 2ch;
+        margin-top: var(--ch2);
         white-space: pre;
     }
 
@@ -72,7 +72,7 @@
         border: none;
         background: transparent;
         color: var(--text-color);
-        width: 20ch;
+        width: 30ch;
     }
 
     button {
@@ -81,7 +81,7 @@
         color: var(--text-color);
         border: none;
         cursor: pointer;
-        padding: 1ch 0;
+        padding: var(--ch) var(--ch2);
     }
 
     button:disabled {
@@ -90,7 +90,7 @@
     }
 
     .message {
-        margin-top: 2ch;
+        margin-top: var(--ch2);
         white-space: pre;
     }
 
