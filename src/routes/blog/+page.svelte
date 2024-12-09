@@ -1,10 +1,9 @@
 <script lang="ts">
-	import Grid from '$lib/components/Grid.svelte';
-	import Box from '$lib/components/Box.svelte';
 	import { onMount } from 'svelte';
 	import { blogPosts, fetchFeed } from '$services/blogService';
 	import { alignToGrid } from '$lib/utils/grid';
 	import Table from '$lib/components/Table.svelte';
+	import Box from '$lib/components/Box.svelte';
 
 	onMount(async () => {
 		const fetchedPosts = await fetchFeed();
@@ -33,9 +32,9 @@
 </svelte:head>
 
 <div class="blog">
-	<Table 
-		headers={['Web Developer Blog']}
-		rows={[['Web Developer & Open Source Enthusiast']]}
+	<Box 
+		title="Web Developer Blog"
+		content="Web Developer & Open Source Enthusiast"
 		width={postWidth}
 	/>
 
