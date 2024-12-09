@@ -1,84 +1,87 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import Terminal from './Terminal.svelte';
-    import Menu from './Menu.svelte';
+    import Box from './Box.svelte';
+    import { alignToGrid } from '$lib/utils/grid';
     
-    // Import all rule files
-    import cursorRules from '$lib/rules/cursor.rules';
+    let rules = '';
+    let editing = false;
+
+    const viewerWidth = alignToGrid(76); // 76 characters wide
     
-    const ruleFiles = [cursorRules];
-    let currentFileIndex = 0;
-    
-    $: currentFile = ruleFiles[currentFileIndex];
-    
-    function nextFile() {
-        currentFileIndex = (currentFileIndex + 1) % ruleFiles.length;
+    async function loadRules() {
+        const response = await fetch('/rules.txt');
+        rules = await response.text();
     }
-    
-    function prevFile() {
-        currentFileIndex = (currentFileIndex - 1 + ruleFiles.length) % ruleFiles.length;
+
+    function toggleEdit() {
+        editing = !editing;
     }
 </script>
 
-<div class="rule-viewer">
-    <div class="controls">
-        <button class="control-btn" on:click={prevFile}>←</button>
-        <span class="filename">{currentFile.title}</span>
-        <button class="control-btn" on:click={nextFile}>→</button>
+<div class="rule-viewer" style="--viewer-width: {viewerWidth}ch">
+    <div class="viewer-header">
+        <span class="filename">rules.txt</span>
+        <button on:click={toggleEdit}>
+            [{editing ? 'View' : 'Edit'}]
+        </button>
     </div>
 
-    <Terminal title={currentFile.title}>
-        {#each currentFile.categories as category}
-            <div class="category">
-                <h3 class="category-title"># {category.name}</h3>
-                {#each category.rules as rule}
-                    <div class="rule">- {rule}</div>
-                {/each}
-            </div>
-        {/each}
-    </Terminal>
+    {#if editing}
+        <textarea
+            bind:value={rules}
+            spellcheck="false"
+            rows={rules.split('\n').length}
+        ></textarea>
+    {:else}
+        <pre class="rules-display">{rules}</pre>
+    {/if}
 </div>
 
 <style>
     .rule-viewer {
-        width: 100%;
-        max-width: var(--measure);
+        width: var(--viewer-width);
+        font-family: var(--font-mono);
+        line-height: 1.2;
     }
 
-    .controls {
+    .viewer-header {
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        gap: var(--ch2);
-        margin-bottom: var(--ch2);
-    }
-
-    .control-btn {
         padding: var(--ch) var(--ch2);
-        border: 1px solid var(--border-color);
-        background: transparent;
-        color: var(--text-color);
-        cursor: pointer;
-    }
-
-    .control-btn:hover {
-        background: var(--border-color);
+        border-bottom: 1px solid var(--border-color);
     }
 
     .filename {
-        flex: 1;
-        text-align: center;
-    }
-
-    .category {
-        margin-bottom: var(--ch2);
-    }
-
-    .category-title {
-        margin-bottom: var(--ch);
         color: var(--text-muted);
     }
 
-    .rule {
-        padding-left: var(--ch2);
+    button {
+        font-family: inherit;
+        background: none;
+        border: none;
+        color: var(--link-color);
+        cursor: pointer;
+    }
+
+    textarea {
+        width: 100%;
+        font-family: inherit;
+        background: var(--bg-color);
+        color: var(--text-color);
+        border: none;
+        padding: var(--ch2);
+        line-height: 1.2;
+        resize: none;
+    }
+
+    textarea:focus {
+        outline: none;
+    }
+
+    .rules-display {
+        margin: 0;
+        padding: var(--ch2);
+        white-space: pre-wrap;
+        line-height: 1.2;
     }
 </style> 

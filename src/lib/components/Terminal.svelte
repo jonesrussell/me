@@ -1,45 +1,81 @@
 <script lang="ts">
-    export let title = '';
+    import { alignToGrid } from '$lib/utils/grid';
+    
+    export let title = 'terminal';
+    export let width = 60;
+    export let prompt = '$';
+    
+    $: alignedWidth = alignToGrid(width);
+    $: contentWidth = alignedWidth - 4;
+
+    let commands: string[] = [];
+    let currentCommand = '';
+
+    function handleKeydown(event: KeyboardEvent) {
+        if (event.key === 'Enter') {
+            commands = [...commands, currentCommand];
+            currentCommand = '';
+        }
+    }
 </script>
 
-<div class="terminal">
-    {#if title}
-    <div class="title-bar">
-        ┌─ {title} ───────────────────────┐
+<div class="terminal" style="--term-width: {alignedWidth}ch">
+    <div class="term-header">
+        <div class="controls">
+            <span class="circle red">●</span>
+            <span class="circle yellow">●</span>
+            <span class="circle green">●</span>
+        </div>
+        <div class="title">{title}</div>
     </div>
-    {/if}
-    <div class="content">
-        <slot />
-    </div>
-    <div class="bottom-bar">
-        └────────────────────────────────┘
+    
+    <div class="term-content">
+        {#each commands as command}
+            <div class="command-line">
+                <span class="prompt">{prompt}</span>
+                <span class="command">{command}</span>
+            </div>
+        {/each}
+        <div class="command-line">
+            <span class="prompt">{prompt}</span>
+            <input
+                type="text"
+                bind:value={currentCommand}
+                on:keydown={handleKeydown}
+                style="width: {contentWidth - prompt.length - 1}ch"
+            />
+        </div>
     </div>
 </div>
 
 <style>
     .terminal {
+        width: var(--term-width);
         font-family: var(--font-mono);
-        background: var(--bg-color);
-        border: 1px solid var(--border-color);
-        white-space: pre;
+        background: #1a1a1a;
+        border-radius: 6px;
+        overflow: hidden;
         line-height: 1.2;
     }
 
-    .title-bar {
+    .term-header {
+        background: #2a2a2a;
         padding: var(--ch) var(--ch2);
-        border-bottom: 1px solid var(--border-color);
-        font-size: 0.9em;
-        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: var(--ch2);
     }
 
-    .content {
-        padding: var(--ch2);
-        white-space: pre-wrap;
-        min-height: var(--ch4);
+    .controls {
+        display: flex;
+        gap: var(--ch);
     }
 
-    .bottom-bar {
-        padding: 0 var(--ch2);
-        color: var(--text-muted);
+    .circle {
+        font-size: 0.8em;
     }
+
+    .red { color: #ff5f56; }
+    .yellow { color: #ffbd2e; }
+    .green { color: #27c93f; }
 </style> 
