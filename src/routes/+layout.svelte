@@ -29,6 +29,6 @@
 		width: 100%;
 		max-width: var(--measure);
 		margin: 0 auto;
-		padding: 0 var(--spacing);
+		padding: 0 clamp(1rem, 5%, var(--spacing));
 	}
 </style>

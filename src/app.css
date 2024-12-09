@@ -7,9 +7,9 @@
 :root {
 	--font-mono: 'JetBrains Mono', 'Fira Code', 'IBM Plex Mono', monospace;
 	--line-height: 1.5;
-	--measure: 66ch;
+	--measure: min(90%, 1200px);
 	--spacing: calc(var(--line-height) * 1rem);
-	--grid-cell: 30ch;
+	--grid-cell: clamp(250px, 30%, 400px);
 	--grid-gap: var(--spacing);
 	font-family: var(--font-mono);
 	/* Light mode */
@@ -36,9 +36,10 @@
 body {
 	font-family: var(--font-mono);
 	line-height: var(--line-height);
+	width: 100%;
 	max-width: var(--measure);
 	margin: 0 auto;
-	padding: var(--spacing);
+	padding: clamp(1rem, 5%, var(--spacing));
 	background: var(--bg-color);
 	color: var(--text-color);
 	transition:
@@ -100,4 +101,20 @@ h3 {
 	gap: var(--grid-gap);
 	width: fit-content;
 	margin: 0 auto;
+}
+
+.site-header {
+	border-bottom: 1px solid var(--border-color);
+	padding: 1rem 0;
+	background: var(--header-bg);
+	color: var(--header-text);
+}
+
+.header-content {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 2rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
