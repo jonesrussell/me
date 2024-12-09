@@ -27,14 +27,18 @@
 	</Box>
 
 	<Box title="Blog" width={60}>
-		Latest posts and thoughts.
-		{#each $blogPosts as post}
-			<div class="post-line">
-				<a href={post.link}>{post.title}</a>
-				<span class="date">{formatDate(post.published)}</span>
+		<div class="blog-content">
+			Latest posts and thoughts.
+			{#each $blogPosts as post}
+				<div class="post-line">
+					<span class="title">{post.title.padEnd(40)}</span>
+					<span class="date">{formatDate(post.published)}</span>
+				</div>
+			{/each}
+			<div class="view-more-line">
+				<span>View all posts →</span>
 			</div>
-		{/each}
-		<a href="/blog" class="view-more">View all posts →</a>
+		</div>
 	</Box>
 
 	<Box title="Projects" width={40}>
@@ -58,25 +62,33 @@
 	}
 
 	.post-line {
-		display: grid;
-		grid-template-columns: 1fr auto;
-		gap: 2ch;
+		display: flex;
+		justify-content: space-between;
 		padding: 0.5ch 0;
-		text-align: left;
 	}
-	
+
+	.title {
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
 	.date {
 		color: var(--text-muted);
-		white-space: nowrap;
 	}
-	
-	.view-more {
-		display: block;
-		margin-top: 2ch;
+
+	.view-more-line {
 		text-align: right;
+		padding-top: 1ch;
 	}
 
 	:global(.box) {
 		text-align: center;
+	}
+
+	.blog-content {
+		text-align: left;
+		width: 100%;
+		white-space: pre;
+		line-height: 1.5;
 	}
 </style>
