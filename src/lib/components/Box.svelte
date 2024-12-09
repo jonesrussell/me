@@ -3,6 +3,7 @@
     
     export let title: string | undefined = undefined;
     export let width = 40;
+    export let color = 'var(--box-border)';
     
     // Ensure width is aligned to grid
     $: alignedWidth = alignToGrid(width);
@@ -14,7 +15,7 @@
     }
 </script>
 
-<div class="box" style="--box-width: {alignedWidth}ch">
+<div class="box" style="--box-width: {alignedWidth}ch; --box-color: {color}">
     <div class="box-frame">
         <div class="border-line">╭{'─'.repeat(alignedWidth - 2)}╮</div>
         
@@ -24,7 +25,9 @@
         {/if}
         
         <div class="content">
-            <slot />
+            <div class="content-inner">
+                <slot />
+            </div>
         </div>
         
         <div class="border-line">╰{'─'.repeat(alignedWidth - 2)}╯</div>
@@ -36,13 +39,14 @@
         width: var(--box-width);
         font-family: var(--font-mono);
         line-height: 1.2;
+        margin: 0 auto;
     }
 
     .box-frame {
         display: flex;
         flex-direction: column;
         white-space: pre;
-        color: var(--box-border);
+        color: var(--box-color);
     }
 
     .border-line {
@@ -55,9 +59,13 @@
 
     .content {
         padding: var(--ch2);
-        white-space: pre-wrap;
         min-height: 1.2em;
         position: relative;
+    }
+
+    .content-inner {
+        white-space: normal;
+        width: 100%;
     }
 
     .content::before,
@@ -69,6 +77,8 @@
         line-height: 1.2;
         display: flex;
         align-items: stretch;
+        white-space: pre;
+        color: var(--box-color);
     }
 
     .content::before { left: 0; }
