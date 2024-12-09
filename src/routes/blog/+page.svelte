@@ -23,47 +23,68 @@
 	<meta name="description" content="Russell Jones's Blog" />
 </svelte:head>
 
-<Grid cols={1} gap={4}>
-	<Box width={postWidth}>
-		<h1>Web Developer Blog</h1>
+<div class="blog">
+	<Box width={postWidth} title="Web Developer Blog">
+		<div class="blog-header">
+			Web Developer & Open Source Enthusiast
+		</div>
 	</Box>
-	
+
 	{#each $blogPosts as post}
 		<Box width={postWidth}>
-			<article class="blog-post">
-				<h2 class="title">
-					<a href={post.link}>{post.title}</a>
-				</h2>
-				<p class="description">
+			<div class="blog-post">
+				<a href={post.link} class="post-title">{post.title}</a>
+				<div class="post-meta">
+					<span class="date">{formatDate(post.published)}</span>
+				</div>
+				<div class="post-description">
 					{post.description}
-				</p>
-				<span class="date">{formatDate(post.published)}</span>
-			</article>
+				</div>
+			</div>
 		</Box>
 	{/each}
-</Grid>
+</div>
 
 <style>
-	.blog-post {
-		display: grid;
-		grid-template-columns: 1fr auto;
+	.blog {
+		display: flex;
+		flex-direction: column;
 		gap: var(--ch2);
+		align-items: center;
+		width: 100%;
+	}
+
+	.blog-header {
+		text-align: center;
+		line-height: 1.2;
+		color: var(--text-muted);
+	}
+
+	.blog-post {
+		display: flex;
+		flex-direction: column;
+		gap: var(--ch);
 		line-height: 1.2;
 	}
 
-	.title {
-		grid-column: 1 / -1;
-		margin: 0;
-		padding: 0;
+	.post-title {
+		font-weight: bold;
+		color: var(--link-color);
+		text-decoration: none;
 	}
 
-	.description {
-		margin: 0;
-		padding: 0;
-	}
-
-	.date {
+	.post-meta {
 		color: var(--text-muted);
-		white-space: nowrap;
+		font-size: 0.9em;
+	}
+
+	.post-description {
+		color: var(--text-color);
+		white-space: pre-wrap;
+	}
+
+	:global(.blog > :global(.box)) {
+		margin: 0;
+		width: var(--measure);
 	}
 </style>
