@@ -1,10 +1,11 @@
 # General Rules
 - Be liberal with comments
-- Be liberal with whitespace
-- Be liberal with newlines
-- Be liberal with semicolons
-- Be liberal with single quotes
-- Be liberal with backticks
+- Use semicolons
+
+# TypeScript Guidelines
+- TypeScript Types: Ensure you define types for your variables and functions for better type safety.
+- CSS Variables: Use CSS variables to manage your styles more effectively.
+- Template Literals: Use template literals for cleaner string concatenation.
 
 # Monospace Web Guidelines
 - Use monospace fonts for all text content
@@ -16,6 +17,28 @@
 - Ensure consistent spacing in character units
 - Format tables to auto-adjust to monospace grid
 - Keep media objects aligned to character boundaries
+
+# CSS 2024 Best Practices
+- Use CSS Container Queries for component-level responsive design
+- Implement :has() selector for parent-based styling
+- Utilize CSS Nesting for cleaner selector organization
+- Apply CSS Custom Highlight API for advanced text highlighting
+- Use CSS Subgrid for aligned nested grid layouts
+- Implement CSS Scroll Timeline for scroll-based animations
+- Apply CSS @layer for cascade management
+- Use CSS Color Level 4 for modern color manipulation
+- Implement CSS View Transitions API for page transitions
+- Utilize CSS Anchor Positioning for dynamic element placement
+- Apply CSS @property for custom property type checking
+- Use CSS Relative Color Syntax for color relationships
+- Implement CSS Cascade Layers for style conflict resolution
+- Utilize CSS :focus-visible for improved focus indicators
+- Apply CSS :is() and :where() for selector grouping
+- Use CSS Grid Level 3 for advanced grid layouts
+- Implement CSS Containment for performance optimization
+- Utilize CSS Logical Properties for internationalization
+- Apply CSS Custom Media Queries for reusable breakpoints
+- Use CSS Overscroll Behavior for scroll chaining control
 
 # ECMAScript 2024 Standards
 - Use Promise.withResolvers() instead of manual promise creation
