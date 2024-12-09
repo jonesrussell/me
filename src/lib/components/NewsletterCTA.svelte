@@ -28,92 +28,72 @@
     }
 </script>
 
-<section class="newsletter">
-    <div class="newsletter-container">
-        <Box title="Newsletter Signup" width={32}>
-            <div class="newsletter-content">
-                Stay updated with latest posts
-                and projects.
-                
-                <form on:submit|preventDefault={handleSubmit}>
-                    <div class="form-grid">
-                        <input
-                            type="email"
-                            bind:value={email}
-                            placeholder="Enter your email"
-                            required
-                            disabled={submitting}
-                        />
-                        <button type="submit" disabled={submitting}>
-                            [{submitting ? '...' : 'Subscribe'}]
-                        </button>
-                    </div>
-                </form>
+<Box title="Newsletter Signup" width={32}>
+    <div class="newsletter-content">
+        Stay updated with latest
+        posts and projects.
+        
+        <div class="form-line">
+            ┌────────────────────────┐
+            │<input type="email" 
+                   bind:value={email}
+                   placeholder="Enter email"/>│
+            └────────────────────────┘
+            
+            <button on:click={handleSubmit} disabled={submitting}>
+                [{submitting ? '...' : 'Subscribe'}]
+            </button>
+        </div>
 
-                {#if success}
-                    <pre class="message success">✓ Thanks for subscribing!</pre>
-                {/if}
+        {#if success}
+            <div class="message success">✓ Thanks for subscribing!</div>
+        {/if}
 
-                {#if error}
-                    <pre class="message error">✗ {error}</pre>
-                {/if}
-            </div>
-        </Box>
+        {#if error}
+            <div class="message error">✗ {error}</div>
+        {/if}
     </div>
-</section>
+</Box>
 
 <style>
-    .newsletter {
-        font-family: var(--font-mono);
-        padding: 2ch;
-        margin: 2ch 0;
-    }
-
-    .newsletter-container {
-        max-width: 40ch;
-        margin: 0 auto;
-        text-align: center;
-    }
-
     .newsletter-content {
         text-align: center;
         line-height: 1.5;
     }
 
-    .form-grid {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 1ch;
+    .form-line {
         margin-top: 2ch;
+        white-space: pre;
     }
 
     input {
         font-family: inherit;
-        padding: 1ch;
-        border: 1px solid var(--border-color);
+        padding: 0;
+        border: none;
         background: transparent;
         color: var(--text-color);
+        width: 20ch;
     }
 
     button {
         font-family: inherit;
-        padding: 1ch;
         background: transparent;
         color: var(--text-color);
         border: none;
         cursor: pointer;
+        padding: 1ch 0;
+    }
+
+    button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
     }
 
     .message {
         margin-top: 2ch;
+        white-space: pre;
     }
 
     .success { color: #22c55e; }
     .error { color: #ef4444; }
-
-    @media (max-width: 40ch) {
-        .form-grid {
-            grid-template-columns: 1fr;
-        }
-    }
 </style> 
