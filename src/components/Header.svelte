@@ -7,9 +7,10 @@
 	<div class="header-content">
 		<span class="title">Russell Jones</span>
 		<nav class="header-nav">
+			<a href="{base}/">Home</a>
 			<a href="{base}/blog">Blog</a>
-			<a href="{base}/about">About</a>
-			<a href="https://github.com/jonesrussell">GitHub</a>
+			<a href="{base}/resources">Resources</a>
+
 			<ThemeToggle />
 		</nav>
 	</div>
