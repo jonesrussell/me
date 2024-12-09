@@ -2,6 +2,7 @@
 	import '../app.css';
 	import Footer from '../components/Footer.svelte';
 	import Header from '../components/Header.svelte';
+	import NewsletterCTA from '../components/NewsletterCTA.svelte';
 </script>
 
 <div class="layout">
@@ -11,6 +12,7 @@
 		<slot />
 	</main>
 
+	<NewsletterCTA />
 	<Footer />
 </div>
 

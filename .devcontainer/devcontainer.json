@@ -32,7 +32,14 @@
 
 	"mounts": [
 		"type=bind,source=/home/${localEnv:USER}/.ssh,target=/home/node/.ssh,readonly"
-	]
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"svelte.svelte-vscode"
+			]
+		}
+	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
