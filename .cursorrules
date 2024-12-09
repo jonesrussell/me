@@ -1,0 +1,358 @@
+#### Overview
+
+Svelte 5 introduces runes, a set of advanced primitives for controlling reactivity.
+
+#### $state
+
+- **Purpose:** Declare reactive state.
+- **Usage:**
+
+```javascript
+<script>let count = $state(0);</script>
+```
+
+- **Class Fields:**
+
+```javascript
+class Todo {
+	done = $state(false);
+	text = $state();
+	constructor(text) {
+		this.text = text;
+	}
+}
+```
+
+- **Deep Reactivity:** Only plain objects and arrays become deeply reactive.
+
+#### $state.raw
+
+- **Purpose:** Declare state that cannot be mutated, only reassigned.
+- **Usage:**
+
+```javascript
+<script>let numbers = $state.raw([1, 2, 3]);</script>
+```
+
+- **Performance:** Improves with large arrays and objects.
+
+#### $state.snapshot
+
+- **Purpose:** Take a static snapshot of $state.
+- **Usage:**
+
+```javascript
+<script>
+	let counter = $state({ count: 0 });
+
+	function onClick() {
+		console.log($state.snapshot(counter));
+	}
+</script>
+```
+
+#### $derived
+
+- **Purpose:** Declare derived state.
+- **Usage:**
+
+```javascript
+<script>let count = $state(0); let doubled = $derived(count * 2);</script>
+```
+
+#### $derived.by
+
+- **Purpose:** Create complex derivations with a function.
+- **Usage:**
+
+```javascript
+<script>
+	let numbers = $state([1, 2, 3]); 
+	let total = $derived.by(() => numbers.reduce((a, b) => a + b, 0));
+</script>
+```
+
+#### $effect
+
+- **Purpose:** Run side-effects when values change.
+- **Usage:**
+
+```javascript
+<script>
+	let size = $state(50);
+	let color = $state('#ff3e00');
+
+	$effect(() => {
+		const context = canvas.getContext('2d');
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		context.fillStyle = color;
+		context.fillRect(0, 0, size, size);
+	});
+</script>
+```
+
+#### $effect.pre
+
+- **Purpose:** Run code before the DOM updates.
+- **Usage:**
+
+```javascript
+<script>
+	$effect.pre(() => {
+		// logic here
+	});
+</script>
+```
+
+#### $effect.tracking
+
+- **Purpose:** Check if code is running inside a tracking context.
+- **Usage:**
+
+```javascript
+<script>console.log('tracking:', $effect.tracking());</script>
+```
+
+#### $props
+
+- **Purpose:** Declare component props.
+- **Usage:**
+
+```javascript
+<script>let { prop1, prop2 } = $props();</script>
+```
+
+#### $bindable
+
+- **Purpose:** Declare bindable props.
+- **Usage:**
+
+```javascript
+<script>let { bindableProp = $bindable('fallback') } = $props();</script>
+```
+
+#### $inspect
+
+- **Purpose:** Equivalent to `console.log` but re-runs when its argument changes.
+- **Usage:**
+
+```javascript
+<script>let count = $state(0); $inspect(count);</script>
+```
+
+#### $host
+
+- **Purpose:** Retrieve the this reference of the custom element.
+- **Usage:**
+
+```javascript
+<script>
+	function greet(greeting) {
+		$host().dispatchEvent(new CustomEvent('greeting', { detail: greeting }));
+	}
+</script>
+```
+
+#### Snippets in Svelte 5
+
+Snippets help create reusable chunks of markup inside components.
+
+- **Definition:**
+
+```javascript
+{#snippet figure(image)}
+	<figure>
+		<img src={image.src} alt={image.caption} width={image.width} height={image.height} />
+		<figcaption>{image.caption}</figcaption>
+	</figure>
+{/snippet}
+```
+
+- **Invocation:**
+
+```javascript
+{@render figure(image)}
+```
+
+#### Event Handling
+
+```javascript
+<script>
+	let count = $state(0);
+	
+	function handleClick() {
+		count++;
+	}
+</script>
+
+<button onclick={() => count++}>
+	clicks: {count}
+</button>
+
+<!-- or using shorthand -->
+<button {handleClick}>
+	clicks: {count}
+</button>
+```
+
+#### Component Events
+
+```javascript
+<script>
+	let size = $state(15);
+	let burst = $state(false);
+
+	function reset() {
+		size = 15;
+		burst = false;
+	}
+</script>
+
+<Pump
+	inflate={(power) => { 
+		size += power; 
+		if (size > 75) burst = true; 
+	}}
+	deflate={(power) => { 
+		if (size > 0) size -= power; 
+	}}
+/>
+```
+
+#### Testing in Svelte 5
+
+##### Vitest Unit Testing
+
+```javascript
+import { expect, test } from 'vitest';
+import { render } from '@testing-library/svelte';
+import Counter from './Counter.svelte';
+
+test('increments counter when button is clicked', async () => {
+  const { getByText } = render(Counter);
+  const button = getByText('clicks: 0');
+  await button.click();
+  expect(getByText('clicks: 1')).toBeInTheDocument();
+});
+```
+
+##### Playwright Integration Testing
+
+```javascript
+import { test, expect } from '@playwright/test';
+
+test('counter increments', async ({ page }) => {
+  await page.goto('/');
+  await page.click('button:has-text("clicks: 0")');
+  await expect(page.locator('button')).toHaveText('clicks: 1');
+});
+```
+
+#### TailwindCSS with Svelte 5
+
+```svelte
+<script>
+  let isActive = $state(false);
+</script>
+
+<div class={`
+  rounded-lg 
+  p-4 
+  ${isActive ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-800'}
+  transition-colors
+  duration-200
+`}>
+  Dynamic Tailwind Classes
+</div>
+```
+
+#### Typography with @tailwindcss/typography
+
+```svelte
+<article class="prose prose-slate lg:prose-lg">
+  <h1>Article Title</h1>
+  <p>Article content with beautiful typography...</p>
+</article>
+```
+
+#### ESLint and Prettier Integration
+
+**.prettierrc**
+
+```json
+{
+  "useTabs": true,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "printWidth": 100,
+  "plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"]
+}
+```
+
+**ESLint Configuration**
+
+```javascript
+// eslint.config.js
+import js from '@eslint/js';
+import ts from 'typescript-eslint';
+import svelte from 'eslint-plugin-svelte';
+
+export default [
+  js.configs.recommended,
+  ...ts.configs.recommended,
+  ...svelte.configs['flat/recommended']
+];
+```
+
+#### TypeScript Support
+
+```typescript
+// Component Props Type Definition
+interface Props {
+  title: string;
+  count?: number;
+}
+
+// In Component
+<script lang="ts">
+  let { title, count = 0 } = $props<Props>();
+  let doubled = $derived(count * 2);
+</script>
+```
+
+#### Development Tools
+
+- **Hot Module Replacement (HMR)**
+
+```javascript
+// vite.config.ts
+import { defineConfig } from 'vite';
+import { sveltekit } from '@sveltejs/kit/vite';
+
+export default defineConfig({
+  plugins: [sveltekit()],
+  server: {
+    hmr: true
+  }
+});
+```
+
+- **Development Server**
+
+```bash
+# Start dev server with host access
+npm run dev -- --host
+```
+
+#### Jest-DOM Assertions
+
+```javascript
+import '@testing-library/jest-dom';
+
+test('element has correct classes', () => {
+  const element = screen.getByRole('button');
+  expect(element).toHaveClass('bg-blue-500');
+  expect(element).toBeVisible();
+  expect(element).not.toBeDisabled();
+});
+```

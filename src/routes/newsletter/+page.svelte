@@ -1,9 +1,4 @@
 <script lang="ts">
-	export let x: number;
-	export let y: number;
-	export let id: string;
-	export let zIndex: number;
-
 	let email = '';
 	let name = '';
 
@@ -11,8 +6,6 @@
 		console.log('Email:', email);
 		console.log('Name:', name);
 	}
-
-	export let onBringToFront = () => {};
 </script>
 
 <svelte:head>
