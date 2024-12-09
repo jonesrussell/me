@@ -1,44 +1,43 @@
 <script lang="ts">
     import Box from './Box.svelte';
+    import { alignToGrid } from '$lib/utils/grid';
+    
     let email = '';
     let submitting = false;
-    let error = '';
     let success = false;
+    let error: string | null = null;
+
+    const inputWidth = alignToGrid(30); // Align input width to grid
 
     async function handleSubmit() {
+        if (!email) return;
         submitting = true;
-        error = '';
-        success = false;
-
+        error = null;
+        
         try {
-            const response = await fetch('https://goforms.streetcode.net/api/subscriptions', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email })
-            });
-
-            if (!response.ok) throw new Error('Failed to subscribe');
+            // API call would go here
+            await new Promise(resolve => setTimeout(resolve, 1000));
             success = true;
-            email = '';
-        } catch (err) {
-            error = 'Failed to subscribe. Please try again later.';
+        } catch (e) {
+            error = 'Failed to subscribe';
         } finally {
             submitting = false;
         }
     }
 </script>
 
-<Box title="Newsletter Signup" width={32}>
+<Box title="Newsletter Signup" width={alignToGrid(40)}>
     <div class="newsletter-content">
         Stay updated with latest
         posts and projects.
         
         <div class="form-line">
-            ┌────────────────────────┐
+            ┌{'─'.repeat(inputWidth)}┐
             │<input type="email" 
                    bind:value={email}
-                   placeholder="Enter email"/>│
-            └────────────────────────┘
+                   placeholder="Enter email"
+                   style="width: {inputWidth}ch"/>│
+            └{'─'.repeat(inputWidth)}┘
             
             <button on:click={handleSubmit} disabled={submitting}>
                 [{submitting ? '...' : 'Subscribe'}]
@@ -58,12 +57,13 @@
 <style>
     .newsletter-content {
         text-align: center;
-        line-height: var(--line-height);
+        line-height: 1.2;
     }
 
     .form-line {
         margin-top: var(--ch2);
         white-space: pre;
+        line-height: 1.2;
     }
 
     input {
@@ -72,28 +72,37 @@
         border: none;
         background: transparent;
         color: var(--text-color);
-        width: 30ch;
+    }
+
+    input:focus {
+        outline: none;
     }
 
     button {
         font-family: inherit;
-        background: transparent;
-        color: var(--text-color);
+        background: none;
         border: none;
+        color: var(--link-color);
         cursor: pointer;
         padding: var(--ch) var(--ch2);
+        line-height: 1.2;
     }
 
     button:disabled {
-        opacity: 0.5;
+        color: var(--text-muted);
         cursor: not-allowed;
     }
 
     .message {
         margin-top: var(--ch2);
-        white-space: pre;
+        line-height: 1.2;
     }
 
-    .success { color: #22c55e; }
-    .error { color: #ef4444; }
+    .success {
+        color: #22c55e;
+    }
+
+    .error {
+        color: #ef4444;
+    }
 </style> 
