@@ -1,20 +1,28 @@
 <script lang="ts">
-	import { top, bottom, divider, sides } from '$lib/utils/boxDrawing';
-	import { alignToGrid } from '$lib/utils/grid';
+	import { top, bottom, divider } from '$lib/utils/boxDrawing';
+	import { alignToGrid, chToGridUnits } from '$lib/utils/grid';
+
+	const LINE_HEIGHT = 1.2;
+	type BoxVariant = 'default' | 'primary' | 'secondary';
 
 	let {
 		title,
-		width = 40,
+		width = 80,
 		color = 'var(--box-border)',
-		children
+		variant = 'default',
+		children,
+		padding = 2
 	} = $props<{
 		title?: string;
 		width?: number;
 		color?: string;
+		variant?: BoxVariant;
 		children?: () => any;
+		padding?: number;
 	}>();
 
 	let alignedWidth = $derived(alignToGrid(width));
+	let paddingInCh = $derived(chToGridUnits(padding));
 
 	function padContent(text: string): string {
 		const paddingWidth = Math.max(0, alignedWidth - text.length - 2);
@@ -22,7 +30,16 @@
 	}
 </script>
 
-<div class="box" style="--box-width: {alignedWidth}ch; --box-color: {color}">
+<div 
+	class="box"
+	style="
+		--box-width: {alignedWidth}ch; 
+		--box-padding: {paddingInCh};
+		--box-color: {color};
+		--box-line-height: {LINE_HEIGHT};
+	"
+	data-variant={variant}
+>
 	<div class="box-frame">
 		<div class="border-line">{top({ width: alignedWidth })}</div>
 
@@ -45,8 +62,9 @@
 	.box {
 		width: var(--box-width);
 		font-family: var(--font-mono);
-		line-height: 1.2;
+		line-height: var(--box-line-height);
 		margin: 0 auto;
+		container-type: inline-size;
 	}
 
 	.box-frame {
@@ -54,50 +72,46 @@
 		flex-direction: column;
 		white-space: pre;
 		color: var(--box-color);
-	}
-
-	.border-line {
-		white-space: pre;
-		line-height: 1.2;
-		height: 1.2em;
-		display: flex;
-		align-items: center;
+		
+		& .border-line {
+			white-space: pre;
+			line-height: var(--box-line-height);
+			height: calc(1em * var(--box-line-height));
+			display: flex;
+			align-items: center;
+		}
 	}
 
 	.content {
-		padding: 0 var(--ch2);
-		min-height: 1.2em;
+		padding-inline: var(--box-padding);
+		min-height: calc(1em * var(--box-line-height));
 		position: relative;
+		
+		&::before,
+		&::after {
+				content: '│';
+				position: absolute;
+				inset-block: 0;
+				line-height: var(--box-line-height);
+				display: flex;
+				align-items: stretch;
+				white-space: pre;
+				color: var(--box-color);
+			}
+		
+		&::before { inset-inline-start: 0; }
+		&::after { inset-inline-end: 0; }
 	}
 
-	.content-inner {
-		white-space: normal;
-		width: 100%;
-	}
-
-	.content::before,
-	.content::after {
-		content: '│';
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		line-height: 1.2;
-		display: flex;
-		align-items: stretch;
-		white-space: pre;
-		color: var(--box-color);
-	}
-
-	.content::before {
-		left: 0;
-	}
-	.content::after {
-		right: 0;
-	}
-
-	:global(.content > *) {
+	:where(.content > *) {
 		margin: 0;
 		padding: 0;
-		line-height: 1.2;
+		line-height: var(--box-line-height);
+	}
+
+	@container (max-width: 40ch) {
+		.content {
+			padding-inline: var(--grid-base);
+		}
 	}
 </style>
