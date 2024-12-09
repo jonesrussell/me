@@ -17,19 +17,6 @@
 - Format tables to auto-adjust to monospace grid
 - Keep media objects aligned to character boundaries
 
-# ASCII Art Examples
-```ascii
-╭─────────────────╮
-│ CODE BLOCK      │
-╰─────────────────╯
-
-┌───────┐
-│Block 1│
-└───┬───┘
-    │
-    ▼
-```
-
 # ECMAScript 2024 Standards
 - Use Promise.withResolvers() instead of manual promise creation
 - Utilize RegExp v flag for Unicode operations
