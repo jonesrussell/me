@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Box from './Box.svelte';
     let email = '';
     let submitting = false;
     let error = '';
@@ -12,16 +13,11 @@
         try {
             const response = await fetch('https://goforms.streetcode.net/api/subscriptions', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to subscribe');
-            }
-
+            if (!response.ok) throw new Error('Failed to subscribe');
             success = true;
             email = '';
         } catch (err) {
@@ -32,35 +28,94 @@
     }
 </script>
 
-<section class="my-8 max-w-xl mx-auto px-4">
-    <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg">
-        <h2 class="text-xl font-bold mb-4 dark:text-white">Subscribe to my Newsletter</h2>
-        <p class="mb-4 dark:text-gray-300">Stay updated with my latest posts and projects.</p>
+<section class="newsletter">
+    <div class="newsletter-container">
+        <Box title="Newsletter Signup" width={32}>
+            Stay updated with
+            latest posts
+            and projects.
+            
+            <form on:submit|preventDefault={handleSubmit}>
+                <div class="form-grid">
+                    <input
+                        type="email"
+                        bind:value={email}
+                        placeholder="Enter your email"
+                        required
+                        disabled={submitting}
+                        class="email-input"
+                    />
+                    <button type="submit" disabled={submitting} class="submit-btn">
+                        [{submitting ? '...' : 'Subscribe'}]
+                    </button>
+                </div>
+            </form>
 
-        {#if success}
-            <p class="text-green-600 dark:text-green-400 mb-4">Thanks for subscribing!</p>
-        {/if}
+            {#if success}
+                <pre class="success">✓ Thanks for subscribing!</pre>
+            {/if}
 
-        {#if error}
-            <p class="text-red-600 dark:text-red-400 mb-4">{error}</p>
-        {/if}
-
-        <form on:submit|preventDefault={handleSubmit} class="flex gap-2">
-            <input
-                type="email"
-                bind:value={email}
-                placeholder="Enter your email"
-                required
-                class="flex-1 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-3 py-2 rounded focus:outline-none focus:border-blue-500 dark:focus:border-blue-400"
-                disabled={submitting}
-            />
-            <button
-                type="submit"
-                class="bg-blue-600 px-4 py-2 text-white rounded hover:bg-blue-700 focus:outline-none disabled:opacity-50"
-                disabled={submitting}
-            >
-                {submitting ? 'Signing up...' : 'Subscribe'}
-            </button>
-        </form>
+            {#if error}
+                <pre class="error">✗ {error}</pre>
+            {/if}
+        </Box>
     </div>
-</section> 
+</section>
+
+<style>
+    .newsletter {
+        font-family: var(--font-mono);
+        padding: 2ch;
+        margin: 2ch 0;
+    }
+
+    .newsletter-container {
+        max-width: 40ch;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 1ch;
+        margin-top: 2ch;
+    }
+
+    .email-input {
+        font-family: inherit;
+        padding: 1ch;
+        border: 1px solid var(--border-color);
+        background: transparent;
+        color: var(--text-color);
+        width: 100%;
+    }
+
+    .submit-btn {
+        font-family: inherit;
+        padding: 1ch;
+        background: transparent;
+        color: var(--text-color);
+        border: none;
+        cursor: pointer;
+    }
+
+    .submit-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    pre {
+        margin: 2ch 0;
+        font-family: inherit;
+    }
+
+    .success { color: #22c55e; }
+    .error { color: #ef4444; }
+
+    @media (max-width: 40ch) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style> 
