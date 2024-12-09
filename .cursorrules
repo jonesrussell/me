@@ -1,3 +1,50 @@
+# General Rules
+- Be liberal with comments
+- Be liberal with whitespace
+- Be liberal with newlines
+- Be liberal with semicolons
+- Be liberal with single quotes
+- Be liberal with backticks
+
+# ECMAScript 2024 Standards
+- Use Promise.withResolvers() instead of manual promise creation
+- Utilize RegExp v flag for Unicode operations
+- Prefer Array.fromAsync() for async iterables
+- Use String.isWellFormed() and toWellFormed() for Unicode string handling
+- Implement Atomics.waitAsync for shared memory operations
+- Use Object.groupBy and Map.groupBy for data grouping
+- Utilize resizable ArrayBuffers when dynamic memory allocation is needed
+
+# Code Style Examples
+```javascript
+// Promise handling
+const { promise, resolve, reject } = Promise.withResolvers();
+
+// Unicode operations
+const unicodeRegex = /[\p{ASCII}&&\p{Decimal_Number}]/v;
+
+// Async array operations
+const asyncArray = await Array.fromAsync(asyncIterable);
+
+// String validation
+if (!str.isWellFormed()) {
+    str = str.toWellFormed();
+}
+
+// Data grouping
+const grouped = Object.groupBy(items, ({ category }) => category);
+
+// Dynamic buffers
+const buffer = new ArrayBuffer(1024, { maxByteLength: 2048 });
+```
+
+# Best Practices
+- Always use async/await with Promise.withResolvers()
+- Include proper error handling for Unicode operations
+- Consider memory implications when using resizable buffers
+- Add type annotations when using groupBy operations
+- Document any Unicode-specific string manipulations
+
 #### Overview
 
 Svelte 5 introduces runes, a set of advanced primitives for controlling reactivity.
