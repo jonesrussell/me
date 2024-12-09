@@ -21,8 +21,10 @@
 
 <div class="home">
 	<Box width={50}>
-		<h1>Russell Jones</h1>
-		<p>Web Developer & Open Source Enthusiast</p>
+		<div class="header-content">
+			<h1>Russell Jones</h1>
+			<p>Web Developer & Open Source Enthusiast</p>
+		</div>
 	</Box>
 
 	<section class="content-section">
@@ -51,14 +53,19 @@
 		align-items: center;
 	}
 
-	h1 {
+	.header-content {
 		text-align: center;
-		margin-bottom: var(--ch2);
+		line-height: 1.2;
+	}
+
+	h1 {
+		margin-bottom: var(--ch);
 	}
 
 	.content-section {
 		width: 100%;
 		max-width: 60ch;
+		line-height: 1.2;
 	}
 
 	h2 {
