@@ -6,6 +6,30 @@
 - Be liberal with single quotes
 - Be liberal with backticks
 
+# Monospace Web Guidelines
+- Use monospace fonts for all text content
+- Align text and elements to a character-sized grid
+- Keep layouts responsive in character-sized steps
+- Use ASCII art for diagrams when appropriate
+- Maintain semantic HTML structure
+- Use box-drawing characters for borders and frames
+- Ensure consistent spacing in character units
+- Format tables to auto-adjust to monospace grid
+- Keep media objects aligned to character boundaries
+
+# ASCII Art Examples
+```ascii
+╭─────────────────╮
+│ CODE BLOCK      │
+╰─────────────────╯
+
+┌───────┐
+│Block 1│
+└───┬───┘
+    │
+    ▼
+```
+
 # ECMAScript 2024 Standards
 - Use Promise.withResolvers() instead of manual promise creation
 - Utilize RegExp v flag for Unicode operations
@@ -23,19 +47,20 @@ const { promise, resolve, reject } = Promise.withResolvers();
 // Unicode operations
 const unicodeRegex = /[\p{ASCII}&&\p{Decimal_Number}]/v;
 
-// Async array operations
-const asyncArray = await Array.fromAsync(asyncIterable);
+// Monospace-aligned object
+const config = {
+    name:     'example',
+    version:  '1.0.0',
+    author:   'dev',
+    license:  'MIT'
+};
 
-// String validation
-if (!str.isWellFormed()) {
-    str = str.toWellFormed();
-}
-
-// Data grouping
-const grouped = Object.groupBy(items, ({ category }) => category);
-
-// Dynamic buffers
-const buffer = new ArrayBuffer(1024, { maxByteLength: 2048 });
+// Grid-aligned array
+const matrix = [
+    [1, 0, 0],
+    [0, 1, 0],
+    [0, 0, 1]
+];
 ```
 
 # Best Practices
@@ -44,10 +69,13 @@ const buffer = new ArrayBuffer(1024, { maxByteLength: 2048 });
 - Consider memory implications when using resizable buffers
 - Add type annotations when using groupBy operations
 - Document any Unicode-specific string manipulations
+- Align code blocks to character grid
+- Use consistent character spacing for readability
+- Maintain monospace formatting in comments
+- Utilize ASCII art for visual documentation
+- Keep layouts responsive in character units
 
-#### Overview
-
-Svelte 5 introduces runes, a set of advanced primitives for controlling reactivity.
+# Svelte 5 introduces runes, a set of advanced primitives for controlling reactivity.
 
 #### $state
 
