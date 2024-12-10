@@ -9,7 +9,9 @@
 <Box width={60} title="Welcome">
 	<div class="welcome">
 		<h1>Russell Jones</h1>
-		<p>Web Developer & Open Source Enthusiast</p>
+		<p>Full Stack Developer & Open Source Enthusiast 🚀</p>
+
+		<div class="intro">I create web applications and contribute to open source from Canada 🇨🇦</div>
 	</div>
 </Box>
 
@@ -24,7 +26,12 @@
 	}
 
 	p {
-		margin: 0;
+		margin: 0 0 var(--ch2) 0;
 		color: var(--text-muted);
+	}
+
+	.intro {
+		margin-top: var(--ch2);
+		line-height: 1.4;
 	}
 </style>
