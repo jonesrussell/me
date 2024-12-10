@@ -40,12 +40,7 @@
 			</a>
 		</li>
 		<li>
-			<a
-				href="https://github.com/jonesrussell"
-				target="_blank"
-				rel="noopener"
-				class="nav-link"
-			>
+			<a href="https://github.com/jonesrussell" target="_blank" rel="noopener" class="nav-link">
 				<img src={github} alt="GitHub" class="nav-icon" />
 				<span>GitHub</span>
 			</a>

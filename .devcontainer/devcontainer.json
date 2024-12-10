@@ -30,15 +30,10 @@
 		"ghcr.io/stuartleeks/dev-container-features/shell-history:0": {}
 	},
 
-	"mounts": [
-		"type=bind,source=/home/${localEnv:USER}/.ssh,target=/home/node/.ssh,readonly"
-	],
+	"mounts": ["type=bind,source=/home/${localEnv:USER}/.ssh,target=/home/node/.ssh,readonly"],
 	"customizations": {
 		"vscode": {
-			"extensions": [
-				"svelte.svelte-vscode",
-				"github.vscode-github-actions"
-			]
+			"extensions": ["svelte.svelte-vscode", "github.vscode-github-actions"]
 		}
 	}
 

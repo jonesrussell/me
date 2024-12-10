@@ -1,67 +1,41 @@
 <script lang="ts">
-    import { alignToGrid } from '$lib/utils/grid';
-    
-    export let title: string = '';
-    export let content: string = '';
-    export let width = 60;
-    
-    $: alignedWidth = alignToGrid(width);
-    
-    function padContent(text: string): string {
-        return text.padEnd(alignedWidth - 2);
-    }
+	interface BoxProps {
+		title?: string;
+		content?: string;
+		width?: number;
+		// No need to explicitly define children as it's handled by Svelte slots
+	}
+
+	export let title: BoxProps['title'] = undefined;
+	export let content: BoxProps['content'] = undefined;
+	export let width: BoxProps['width'] = undefined;
 </script>
 
-<div class="box" style="--box-width: {alignedWidth}ch">
-    <div class="box-border">
-        ┌{('─').repeat(alignedWidth - 2)}┐
-    </div>
-    
-    {#if title}
-        <div class="box-row">
-            <span class="border">│</span>
-            <span class="title">{padContent(title)}</span>
-            <span class="border">│</span>
-        </div>
-        
-        <div class="box-border">
-            ├{('─').repeat(alignedWidth - 2)}┤
-        </div>
-    {/if}
-    
-    <div class="box-row">
-        <span class="border">│</span>
-        <span class="content">{padContent(content)}</span>
-        <span class="border">│</span>
-    </div>
-    
-    <div class="box-border">
-        └{('─').repeat(alignedWidth - 2)}┘
-    </div>
+<div class="box" style:width={width ? `${width}ch` : undefined}>
+	{#if title}
+		<div class="title">{title}</div>
+	{/if}
+	{#if content}
+		<div class="content">{content}</div>
+	{/if}
+	<slot />
+	<!-- This allows for child content -->
 </div>
 
 <style>
-    .box {
-        width: var(--box-width);
-        font-family: var(--font-mono);
-        line-height: 1.2;
-        white-space: pre;
-    }
+	.box {
+		width: var(--box-width);
+		font-family: var(--font-mono);
+		line-height: 1.2;
+		white-space: pre;
+	}
 
-    .box-border, .border {
-        color: var(--border-color);
-    }
+	.title {
+		color: var(--text-color);
+		font-weight: bold;
+	}
 
-    .box-row {
-        display: flex;
-    }
-
-    .title {
-        color: var(--text-color);
-        font-weight: bold;
-    }
-
-    .content {
-        color: var(--text-color);
-    }
+	.content {
+		color: var(--text-color);
+	}
 </style>
