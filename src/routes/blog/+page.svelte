@@ -29,7 +29,7 @@
 	</header>
 
 	{#each $blogPosts as post}
-		<Box 
+		<Box
 			title={`${post.title} (${formatDate(post.published)})`}
 			content={post.description}
 			width={postWidth}

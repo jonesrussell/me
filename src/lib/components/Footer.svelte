@@ -5,7 +5,11 @@
 			Source Code
 		</a>
 		| Licensed under
-		<a href="https://github.com/jonesrussell/me/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">
+		<a
+			href="https://github.com/jonesrussell/me/blob/main/LICENSE"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
 			MIT
 		</a>
 	</p>

@@ -40,7 +40,8 @@
 </Grid>
 
 <style>
-	h1, h2 {
+	h1,
+	h2 {
 		margin: 0 0 var(--ch2) 0;
 		padding: 0;
 		line-height: 1.2;

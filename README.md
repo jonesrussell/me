@@ -15,18 +15,23 @@ Visit the website at https://jonesrussell.github.io/me/
 ## Components
 
 ### Box
+
 ASCII box drawing component for content sections
 
 ### Terminal
+
 Code and configuration file display component
 
 ### Tree
+
 File structure and hierarchy visualization
 
 ### Table
+
 Monospace-aligned data display
 
 ### Menu
+
 Navigation component with ASCII indicators
 
 ## Development

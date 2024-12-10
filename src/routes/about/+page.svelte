@@ -12,10 +12,10 @@
 		<h1>About Me</h1>
 		<div class="content">
 			<p>
-				Hello! I'm Russell Jones, a web developer focused on building
-				clean, efficient, and user-friendly applications.
+				Hello! I'm Russell Jones, a web developer focused on building clean, efficient, and
+				user-friendly applications.
 			</p>
-			
+
 			<h2>Skills</h2>
 			<pre class="skills">
 ┌─────────┬─────────┬─────────┐

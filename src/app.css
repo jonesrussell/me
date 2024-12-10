@@ -8,20 +8,20 @@
 	--ch4: calc(var(--ch) * 4);
 	--ch8: calc(var(--ch) * 8);
 	--line-height: 1.2;
-	
+
 	/* Layout */
 	--measure: 80ch;
 	--content-padding: var(--ch2);
 	--grid-cell: 40ch;
 	--grid-gap: var(--ch2);
-	
+
 	/* Typography */
 	--font-mono: 'JetBrains Mono', 'Fira Code', 'IBM Plex Mono', monospace;
-	--font-family: "JetBrains Mono", monospace;
+	--font-family: 'JetBrains Mono', monospace;
 	--font-weight-normal: 500;
 	--font-weight-medium: 600;
 	--font-weight-bold: 800;
-	
+
 	/* Colors - Light theme */
 	--bg-color: #ffffff;
 	--text-color: #333333;
@@ -31,18 +31,18 @@
 	--header-text: #333333;
 	--link-color: #0066cc;
 	--link-hover: #0044aa;
-	
+
 	/* Base Grid */
 	--grid-base: 1ch;
 	--grid-2x: calc(var(--grid-base) * 2);
 	--grid-4x: calc(var(--grid-base) * 4);
 	--grid-8x: calc(var(--grid-base) * 8);
-	
+
 	/* Content Spacing */
 	--content-padding-x: var(--grid-2x);
 	--content-padding-y: var(--grid-base);
 	--content-gap: var(--grid-2x);
-	
+
 	/* Additional styles from master monospace repo */
 	--border-thickness: 2px;
 	--background-color: #fff;
@@ -58,7 +58,7 @@
 	--header-text: #ffffff;
 	--link-color: #66b3ff;
 	--link-hover: #99ccff;
-	
+
 	/* Dark theme overrides from master monospace repo */
 	--text-color: #fff;
 	--text-color-alt: #aaa;
@@ -72,11 +72,18 @@ body {
 	line-height: var(--line-height);
 	background: var(--bg-color);
 	color: var(--text-color);
-	transition: background-color 0.3s ease, color 0.3s ease;
+	transition:
+		background-color 0.3s ease,
+		color 0.3s ease;
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
 	font-weight: var(--font-weight-bold);
 	line-height: 1.2;
 }
@@ -92,41 +99,61 @@ a:hover {
 }
 
 /* Utility classes */
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
+.text-center {
+	text-align: center;
+}
+.text-left {
+	text-align: left;
+}
+.text-right {
+	text-align: right;
+}
 
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.justify-between { justify-content: space-between; }
+.flex {
+	display: flex;
+}
+.flex-col {
+	flex-direction: column;
+}
+.items-center {
+	align-items: center;
+}
+.justify-between {
+	justify-content: space-between;
+}
 
-.mb-ch { margin-bottom: var(--ch); }
-.mb-ch2 { margin-bottom: var(--ch2); }
-.mb-ch4 { margin-bottom: var(--ch4); }
+.mb-ch {
+	margin-bottom: var(--ch);
+}
+.mb-ch2 {
+	margin-bottom: var(--ch2);
+}
+.mb-ch4 {
+	margin-bottom: var(--ch4);
+}
 
 /* Only in development */
 @media (max-width: 9999px) {
-    [data-debug-grid] {
-        background: linear-gradient(
-            to right,
-            rgba(255,0,0,0.1) 0,
-            rgba(255,0,0,0.1) 1ch,
-            transparent 1ch,
-            transparent 2ch
-        );
-    }
+	[data-debug-grid] {
+		background: linear-gradient(
+			to right,
+			rgba(255, 0, 0, 0.1) 0,
+			rgba(255, 0, 0, 0.1) 1ch,
+			transparent 1ch,
+			transparent 2ch
+		);
+	}
 }
 
 /* Improve input contrast in dark mode */
 [data-theme='dark'] input,
 [data-theme='dark'] textarea {
-    background-color: #2d2d2d;
-    color: var(--text-color);
-    border-color: var(--border-color);
+	background-color: #2d2d2d;
+	color: var(--text-color);
+	border-color: var(--border-color);
 }
 
 /* Improve box visibility in dark mode */
 [data-theme='dark'] .box-frame {
-    color: var(--border-color);
+	color: var(--border-color);
 }
