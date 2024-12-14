@@ -3,7 +3,7 @@
 
 	// Track if we're in auto mode
 	let isAuto = $state(browser ? localStorage.getItem('themeMode') === 'auto' : true);
-	
+
 	// Function to get current theme based on system preference when in auto mode
 	function getSystemTheme(): 'light' | 'dark' {
 		if (!browser) return 'light';
@@ -13,7 +13,7 @@
 	// Function to update theme
 	function updateTheme(mode: App.ThemeMode): void {
 		if (!browser) return;
-		
+
 		const theme = mode === 'auto' ? getSystemTheme() : mode;
 		document.documentElement.style.colorScheme = mode === 'auto' ? 'light dark' : theme;
 		document.documentElement.setAttribute('data-theme', theme);
@@ -24,7 +24,7 @@
 	// Toggle between auto, light, and dark
 	function toggleTheme(): void {
 		if (!browser) return;
-		
+
 		if (isAuto) {
 			updateTheme('light');
 		} else if (document.documentElement.getAttribute('data-theme') === 'light') {
@@ -48,7 +48,7 @@
 				updateTheme('auto');
 			}
 		};
-		
+
 		mediaQuery.addEventListener('change', handleChange);
 		return () => mediaQuery.removeEventListener('change', handleChange);
 	});
@@ -56,15 +56,11 @@
 	// Get current theme for display
 	function getCurrentTheme(): 'light' | 'dark' {
 		if (!browser) return 'light';
-		return document.documentElement.getAttribute('data-theme') as 'light' | 'dark' || 'light';
+		return (document.documentElement.getAttribute('data-theme') as 'light' | 'dark') || 'light';
 	}
 </script>
 
-<button 
-	class="theme-toggle" 
-	onclick={toggleTheme}
-	aria-label="Toggle theme"
->
+<button class="theme-toggle" onclick={toggleTheme} aria-label="Toggle theme">
 	[{#if isAuto}
 		'⚡'
 	{:else if getCurrentTheme() === 'light'}
