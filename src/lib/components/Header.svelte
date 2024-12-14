@@ -16,6 +16,9 @@
 			<a href="{base}/projects" class:active={$page.url.pathname.startsWith('/projects')}>
 				Projects
 			</a>
+			<a href="{base}/contact" class:active={$page.url.pathname.startsWith('/contact')}>
+				Contact
+			</a>
 
 			<ThemeToggle />
 		</nav>
