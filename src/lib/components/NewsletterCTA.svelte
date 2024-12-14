@@ -1,10 +1,4 @@
 <script lang="ts">
-	import Box from './Box.svelte';
-	import { alignToGrid } from '$lib/utils/grid';
-
-	const width = alignToGrid(40);
-	const inputWidth = alignToGrid(30);
-
 	let email = '';
 	let submitting = false;
 	let success = false;
@@ -14,13 +8,23 @@
 		if (!email) return;
 		submitting = true;
 		error = null;
+		success = false;
 
 		try {
-			// API call would go here
-			await new Promise((resolve) => setTimeout(resolve, 1000));
+			const response = await fetch(
+				'https://goforms.streetcode.net/api/subscriptions',
+				{
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ email })
+				}
+			);
+
+			if (!response.ok) throw new Error('Failed to subscribe');
 			success = true;
+			email = '';
 		} catch (e) {
-			error = 'Failed to subscribe';
+			error = 'Failed to subscribe. Please try again later.';
 		} finally {
 			submitting = false;
 		}

@@ -20,7 +20,7 @@
 
 		try {
 			const response = await fetch(
-				'https://goforms.streetcode.net/v1/contact',
+				'https://goforms.streetcode.net/app/contact',
 				{
 					method: 'POST',
 					headers: {
