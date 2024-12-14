@@ -1,25 +1,32 @@
 <script lang="ts">
-	interface BoxProps {
-		title?: string;
-		content?: string;
-		width?: number;
-		// No need to explicitly define children as it's handled by Svelte slots
-	}
+	import { alignToGrid } from '$lib/utils/grid';
 
-	export let title: BoxProps['title'] = undefined;
-	export let content: BoxProps['content'] = undefined;
-	export let width: BoxProps['width'] = undefined;
+	export let title: string | undefined = undefined;
+	export let width = 40;
+	export let style = '';
+
+	$: alignedWidth = alignToGrid(width);
+	$: contentWidth = alignedWidth - 4; // Account for borders
+
+	function createLine(char: string): string {
+		return char.repeat(contentWidth);
+	}
 </script>
 
-<div class="box" style:width={width ? `${width}ch` : undefined}>
-	{#if title}
-		<div class="title">{title}</div>
-	{/if}
-	{#if content}
-		<div class="content">{content}</div>
-	{/if}
-	<slot />
-	<!-- This allows for child content -->
+<div class="box" style="--box-width: {alignedWidth}ch; {style}">
+	<div class="box-frame">
+		{#if title}
+			<div class="header">╭──── {title} {createLine('─')}╮</div>
+		{:else}
+			<div class="header">╭{createLine('─')}╮</div>
+		{/if}
+
+		<div class="content">
+			<slot />
+		</div>
+
+		<div class="footer">╰{createLine('─')}╯</div>
+	</div>
 </div>
 
 <style>
@@ -27,15 +34,19 @@
 		width: var(--box-width);
 		font-family: var(--font-mono);
 		line-height: 1.2;
+	}
+
+	.box-frame {
+		color: var(--text-muted);
+	}
+
+	.header,
+	.footer {
 		white-space: pre;
 	}
 
-	.title {
-		color: var(--text-color);
-		font-weight: bold;
-	}
-
 	.content {
+		padding: var(--ch2) var(--ch4);
 		color: var(--text-color);
 	}
 </style>

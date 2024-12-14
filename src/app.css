@@ -6,8 +6,11 @@
 	/* Base units */
 	--ch: 1ch;
 	--ch2: calc(var(--ch) * 2);
+	--ch3: calc(var(--ch) * 3);
 	--ch4: calc(var(--ch) * 4);
+	--ch6: calc(var(--ch) * 6);
 	--ch8: calc(var(--ch) * 8);
+	--ch12: calc(var(--ch) * 12);
 	--line-height: 1.2;
 
 	/* Layout */
@@ -49,6 +52,10 @@
 	--background-color: light-dark(#fff, #000);
 	--background-color-alt: light-dark(#eee, #111);
 	--text-color-alt: light-dark(#666, #aaa);
+
+	--color-success: #4ade80;
+	--color-info: #60a5fa;
+	--color-warning: #fbbf24;
 }
 
 /* Base styles */
