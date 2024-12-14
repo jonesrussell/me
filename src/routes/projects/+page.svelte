@@ -43,6 +43,14 @@
 	];
 </script>
 
+<svelte:head>
+	<title>Projects | Russell Jones</title>
+	<meta
+		name="description"
+		content="Open source projects by Russell Jones, featuring Go and modern web technologies"
+	/>
+</svelte:head>
+
 <section class="projects">
 	<h1>Open Source Projects</h1>
 

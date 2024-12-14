@@ -15,6 +15,14 @@
 	} as const;
 </script>
 
+<svelte:head>
+	<title>Russell Jones | Web Developer</title>
+	<meta
+		name="description"
+		content="Full Stack Developer from Canada specializing in JavaScript, Go, and Open Source"
+	/>
+</svelte:head>
+
 <section class="home">
 	<h1>Hey, I'm Web Developer Jones.</h1>
 
