@@ -2,24 +2,56 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="color-scheme" content="light dark" />
+		
 		<link rel="icon" href="%sveltekit.assets%/favicons/favicon.ico" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="apple-touch-icon" href="%sveltekit.assets%/favicons/apple-touch-icon.png" />
+		
+		<!-- Preconnect to font domains -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		
+		<!-- Optimized font loading -->
 		<link
 			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
+			
 			rel="stylesheet"
+			media="print"
+			onload="this.media='all'"
 		/>
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<!-- Font fallback for no-JS -->
+		<noscript>
+			<link
+				href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
+				rel="stylesheet"
+			/>
+		</noscript>
+		
 		%sveltekit.head%
 	</head>
 
 	<body>
 		<div>%sveltekit.body%</div>
 		<script>
-			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-			const savedTheme = localStorage.getItem('theme');
-			const theme = savedTheme || (prefersDark ? 'dark' : 'light');
-			document.documentElement.setAttribute('data-theme', theme);
+			(function() {
+				try {
+					const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+					const savedTheme = localStorage.getItem('theme');
+					const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+					document.documentElement.setAttribute('data-theme', theme);
+					
+					// Listen for system theme changes
+					window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+						if (!localStorage.getItem('theme')) {
+							document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+						}
+					});
+				} catch (e) {
+					console.warn('Theme initialization failed:', e);
+				}
+			})();
 		</script>
 	</body>
 </html>
