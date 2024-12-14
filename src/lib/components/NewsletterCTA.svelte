@@ -28,23 +28,23 @@
 </script>
 
 <section class="newsletter-section">
-	<div class="newsletter" style="--newsletter-width: {width}ch">
+	<div class="newsletter">
 		<div class="newsletter-content">
 			<h2 class="title">Newsletter Signup</h2>
 			<p class="description">Stay updated with latest posts and projects.</p>
 
 			<form class="signup-form" on:submit|preventDefault={handleSubmit}>
-				<div class="input-wrapper" style="--input-width: {inputWidth}ch">
+				<div class="input-wrapper">
 					<input
 						type="email"
 						bind:value={email}
 						placeholder="Enter email"
 						aria-label="Email address"
 					/>
-					<button type="submit" disabled={submitting}>
-						[{submitting ? '...' : 'Subscribe'}]
-					</button>
 				</div>
+				<button type="submit" disabled={submitting}>
+					[{submitting ? '...' : 'Subscribe'}]
+				</button>
 
 				{#if success}
 					<div class="message success">✓ Thanks for subscribing!</div>
@@ -67,7 +67,8 @@
 	}
 
 	.newsletter {
-		width: var(--newsletter-width);
+		width: 100%;
+		max-width: min(var(--measure), 95vw);
 		margin: 0 auto;
 		padding: 0 var(--ch2);
 	}
@@ -91,17 +92,17 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--ch2);
-	}
-
-	.input-wrapper {
-		display: flex;
-		gap: var(--ch2);
-		justify-content: center;
 		align-items: center;
 	}
 
+	.input-wrapper {
+		width: 100%;
+		max-width: min(40ch, 100%);
+		margin: 0 auto;
+	}
+
 	input {
-		width: var(--input-width);
+		width: 100%;
 		font-family: var(--font-mono);
 		padding: var(--ch);
 		border: 1px solid var(--border-color);
