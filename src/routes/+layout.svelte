@@ -13,9 +13,7 @@
 		<slot />
 	</main>
 
-	<section class="newsletter">
-		<NewsletterCTA />
-	</section>
+	<NewsletterCTA />
 
 	<Footer />
 </div>
@@ -34,9 +32,5 @@
 		max-width: var(--measure);
 		margin: 0 auto;
 		padding: 0 var(--ch2);
-	}
-
-	.newsletter {
-		margin-top: var(--ch2);
 	}
 </style>
