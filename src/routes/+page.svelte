@@ -16,7 +16,7 @@
 </script>
 
 <section class="home">
-	<h1>Hey, I'm Russell Jones.</h1>
+	<h1>Hey, I'm Web Developer Jones.</h1>
 
 	<div class="tagline">
 		I help build amazing web applications and contribute to open source.
