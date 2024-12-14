@@ -10,7 +10,9 @@
 	<Header />
 
 	<main class="content">
-		<slot />
+		<div class="content-inner">
+			<slot />
+		</div>
 	</main>
 
 	<NewsletterCTA />
@@ -23,14 +25,20 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
-		gap: var(--ch2);
+		width: 100%;
+		overflow-x: hidden;
 	}
 
 	.content {
 		flex: 1;
 		width: 100%;
-		max-width: var(--measure);
+		padding: 0 var(--content-padding);
+		box-sizing: border-box;
+	}
+
+	.content-inner {
+		max-width: min(var(--measure), 100%);
 		margin: 0 auto;
-		padding: 0 var(--ch2);
+		width: 100%;
 	}
 </style>

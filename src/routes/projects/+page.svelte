@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { alignToGrid } from '$lib/utils/grid';
-	const width = alignToGrid(80);
+	const width = alignToGrid(120);
 
 	interface Project {
 		title: string;
@@ -43,11 +43,12 @@
 	];
 </script>
 
-<section class="projects" style="--projects-width: {width}ch">
+<section class="projects">
 	<h1>Open Source Projects</h1>
 
 	<div class="intro">
-		Here are some of my open source projects. Most are built with Go and modern web technologies.
+		Here are some of my open source projects. Most are built with Go and modern
+		web technologies.
 	</div>
 
 	<div class="project-grid">
@@ -76,32 +77,44 @@
 
 <style>
 	.projects {
-		width: var(--projects-width);
+		width: 100%;
+		max-width: var(--projects-width);
 		margin: 0 auto;
+		padding: var(--ch4) var(--ch2);
 		font-family: var(--font-mono);
 		line-height: 1.4;
 	}
 
 	h1 {
-		margin: 0 0 var(--ch2) 0;
-		font-size: 1.8em;
-		font-weight: var(--font-weight-bold);
+		font-size: 2em;
+		line-height: 1.2;
+		margin: 0;
+		text-align: center;
 	}
 
 	.intro {
-		margin: var(--ch3) 0;
+		text-align: center;
+		margin: var(--ch2) 0 var(--ch4) 0;
 		color: var(--text-muted);
 	}
 
 	.project-grid {
 		display: grid;
 		gap: var(--ch4);
+		grid-template-columns: 1fr;
+	}
+
+	@media (min-width: 80ch) {
+		.project-grid {
+			grid-template-columns: repeat(auto-fit, minmax(50ch, 1fr));
+		}
 	}
 
 	.project {
+		width: 100%;
 		padding: var(--ch3);
 		border: 1px solid var(--border-color);
-		background: var(--bg-color);
+		background: color-mix(in srgb, var(--text-color) 5%, transparent);
 	}
 
 	.project-header {
@@ -119,11 +132,13 @@
 
 	.status {
 		font-size: 0.9em;
-		padding: 0 var(--ch);
+		padding: 0.2em var(--ch);
+		border-radius: 2px;
 	}
 
 	.status-active {
 		color: var(--color-success);
+		background: color-mix(in srgb, var(--color-success) 15%, transparent);
 	}
 
 	.status-stable {
@@ -132,6 +147,7 @@
 
 	.status-experimental {
 		color: var(--color-warning);
+		background: color-mix(in srgb, var(--color-warning) 15%, transparent);
 	}
 
 	.description {
@@ -148,9 +164,10 @@
 
 	.tech {
 		font-size: 0.9em;
-		padding: 0 var(--ch);
+		padding: 0.2em var(--ch);
+		background: color-mix(in srgb, var(--text-color) 10%, transparent);
 		border: 1px solid var(--border-color);
-		color: var(--text-muted);
+		border-radius: 2px;
 	}
 
 	a {
