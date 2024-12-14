@@ -1,38 +1,44 @@
-# Personal Website
+# Personal Website of Me
 
-My personal website built with SvelteKit, featuring a monospace-first design approach and interactive development tools.
+My personal website built with SvelteKit, featuring a monospace-first design approach and modern web development practices.
 
 Visit the website at https://jonesrussell.github.io/me/
 
 ## Features
 
 - Monospace-based design system
-- Interactive rule file viewer/editor
-- ASCII art components
 - Character-grid layouts
 - Dark/light theme support
+- Responsive design
+- GitHub Pages deployment
+- Modern CSS features
+  - CSS Container Queries
+  - CSS Color Level 4
+  - CSS Custom Properties
+  - CSS Grid
+  - CSS Transitions
 
-## Components
+## Tech Stack
 
-### Box
+- SvelteKit
+- TypeScript
+- Modern CSS
+- GitHub Pages
 
-ASCII box drawing component for content sections
+## Project Structure
 
-### Terminal
-
-Code and configuration file display component
-
-### Tree
-
-File structure and hierarchy visualization
-
-### Table
-
-Monospace-aligned data display
-
-### Menu
-
-Navigation component with ASCII indicators
+```
+src/
+├── lib/
+│   ├── components/     # Reusable components
+│   ├── utils/         # Utility functions
+│   └── styles/        # Global styles
+├── routes/           # SvelteKit routes
+│   ├── +page.svelte  # Home page
+│   ├── blog/         # Blog section
+│   └── projects/     # Projects showcase
+└── app.css          # Global CSS variables and styles
+```
 
 ## Development
 
@@ -50,16 +56,16 @@ npm run build
 npm run preview
 ```
 
-## Deploy to Github Pages
+## Deployment
 
-See the deployment configuration in .github/workflows/deploy.yml
+This site is automatically deployed to GitHub Pages using GitHub Actions. See the deployment configuration in `.github/workflows/deploy.yml`
 
 ## Resources
 
-- [Svelte Introduction](https://svelte.dev/docs/introduction)
-- [The Monospace Web](https://owickstrom.github.io/the-monospace-web/)
-- [Microsoft Copilot](https://copilot.microsoft.com)
-- [Application State Management with Svelte](https://blog.logrocket.com/application-state-management-svelte/)
+- [SvelteKit Documentation](https://kit.svelte.dev/docs)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+- [Modern CSS Features](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [GitHub Pages](https://pages.github.com/)
 
 ## License
 

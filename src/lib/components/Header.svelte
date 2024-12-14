@@ -2,17 +2,20 @@
 	import ThemeToggle from './ThemeToggle.svelte';
 	import { base } from '$app/paths';
 	import { alignToGrid } from '$lib/utils/grid';
+	import { page } from '$app/stores';
 
 	const headerWidth = alignToGrid(80);
 </script>
 
 <header class="site-header">
 	<div class="header-content" style="--header-width: {headerWidth}ch">
-		<span class="title">Russell Jones</span>
-		<nav class="header-nav">
-			<a href="{base}/">Home</a>
-			<a href="{base}/blog">Blog</a>
-			<a href="{base}/resources">Resources</a>
+		<a href="{base}/" class="title">Russell Jones</a>
+		<nav class="header-nav" aria-label="Main navigation">
+			<a href="{base}/" class:active={$page.url.pathname === '/'}> Home </a>
+			<a href="{base}/blog" class:active={$page.url.pathname.startsWith('/blog')}> Blog </a>
+			<a href="{base}/projects" class:active={$page.url.pathname.startsWith('/projects')}>
+				Projects
+			</a>
 
 			<ThemeToggle />
 		</nav>
@@ -27,6 +30,9 @@
 		color: var(--header-text);
 		width: 100%;
 		line-height: 1.2;
+		position: sticky;
+		top: 0;
+		z-index: 10;
 	}
 
 	.header-content {
@@ -42,6 +48,12 @@
 	.title {
 		font-weight: bold;
 		white-space: nowrap;
+		color: var(--header-text);
+		text-decoration: none;
+	}
+
+	.title:hover {
+		color: var(--link-hover);
 	}
 
 	.header-nav {
@@ -54,9 +66,17 @@
 		color: var(--text-color);
 		text-decoration: none;
 		white-space: nowrap;
+		padding: var(--ch) var(--ch2);
+		border-radius: 2px;
+		transition: background-color 0.2s ease;
 	}
 
 	.header-nav a:hover {
-		text-decoration: underline;
+		background: color-mix(in srgb, var(--text-color) 10%, transparent);
+	}
+
+	.header-nav a.active {
+		color: var(--link-color);
+		font-weight: var(--font-weight-medium);
 	}
 </style>
