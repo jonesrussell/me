@@ -14,6 +14,19 @@ type XMLPost = {
 	description: string;
 };
 
+function truncateDescription(text: string, maxLength = 280): string {
+	if (!text || text.length <= maxLength) return text;
+	// Try to find the last complete sentence within the limit
+	const truncated = text.slice(0, maxLength);
+	const lastSentence = truncated.match(/.*[.!?]/);
+	if (lastSentence) {
+		return lastSentence[0];
+	}
+	// If no sentence boundary found, truncate at last space to avoid cutting words
+	const lastSpace = truncated.lastIndexOf(' ');
+	return truncated.slice(0, lastSpace) + '...';
+}
+
 async function fetchXML(url: string): Promise<XMLDocument> {
 	const response = await fetch(url);
 	if (!response.ok) {
@@ -29,7 +42,12 @@ function parsePost(entry: Element): XMLPost {
 	const published = entry.querySelector('published')?.textContent || '';
 	const link = entry.querySelector('link')?.getAttribute('href') || '';
 	const description = entry.querySelector('summary')?.textContent || '';
-	return { title, published, link, description };
+	return {
+		title,
+		published,
+		link,
+		description: truncateDescription(description)
+	};
 }
 
 export async function fetchFeed(): Promise<Post[]> {
