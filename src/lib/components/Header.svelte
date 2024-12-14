@@ -11,7 +11,6 @@
 	<div class="header-content" style="--header-width: {headerWidth}ch">
 		<a href="{base}/" class="title">Russell Jones</a>
 		<nav class="header-nav" aria-label="Main navigation">
-			<a href="{base}/" class:active={$page.url.pathname === '/'}> Home </a>
 			<a href="{base}/blog" class:active={$page.url.pathname.startsWith('/blog')}> Blog </a>
 			<a href="{base}/projects" class:active={$page.url.pathname.startsWith('/projects')}>
 				Projects
