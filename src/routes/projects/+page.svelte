@@ -47,7 +47,8 @@
 	<h1>Open Source Projects</h1>
 
 	<div class="intro">
-		Here are some of my open source projects. Most are built with Go and modern web technologies.
+		Here are some of my open source projects. Most are built with Go and modern
+		web technologies.
 	</div>
 
 	<div class="project-grid">
@@ -96,9 +97,11 @@
 	.project-grid {
 		display: grid;
 		gap: var(--ch4);
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
 	}
 
 	.project {
+		width: 100%;
 		padding: var(--ch3);
 		border: 1px solid var(--border-color);
 		background: var(--bg-color);

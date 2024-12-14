@@ -3,24 +3,35 @@
 	import { base } from '$app/paths';
 	import { alignToGrid } from '$lib/utils/grid';
 	import { page } from '$app/stores';
-
-	const headerWidth = alignToGrid(80);
 </script>
 
 <header class="site-header">
-	<div class="header-content" style="--header-width: {headerWidth}ch">
-		<a href="{base}/" class="title">Russell Jones</a>
-		<nav class="header-nav" aria-label="Main navigation">
-			<a href="{base}/blog" class:active={$page.url.pathname.startsWith('/blog')}> Blog </a>
-			<a href="{base}/projects" class:active={$page.url.pathname.startsWith('/projects')}>
-				Projects
-			</a>
-			<a href="{base}/contact" class:active={$page.url.pathname.startsWith('/contact')}>
-				Contact
-			</a>
+	<div class="header-content">
+		<div class="header-main">
+			<a href="{base}/" class="title">Russell Jones</a>
+			<nav class="header-nav" aria-label="Main navigation">
+				<a
+					href="{base}/blog"
+					class:active={$page.url.pathname.startsWith('/blog')}
+				>
+					Blog
+				</a>
+				<a
+					href="{base}/projects"
+					class:active={$page.url.pathname.startsWith('/projects')}
+				>
+					Projects
+				</a>
+				<a
+					href="{base}/contact"
+					class:active={$page.url.pathname.startsWith('/contact')}
+				>
+					Contact
+				</a>
 
-			<ThemeToggle />
-		</nav>
+				<ThemeToggle />
+			</nav>
+		</div>
 	</div>
 </header>
 
@@ -38,9 +49,13 @@
 	}
 
 	.header-content {
-		width: var(--header-width);
-		margin: 0 auto;
+		width: 100%;
+		max-width: min(var(--measure), 95vw);
 		padding: 0 var(--ch2);
+		margin: 0 auto;
+	}
+
+	.header-main {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -60,8 +75,9 @@
 
 	.header-nav {
 		display: flex;
-		gap: var(--ch4);
+		gap: var(--ch2);
 		align-items: center;
+		flex-wrap: wrap;
 	}
 
 	.header-nav a {
@@ -80,5 +96,19 @@
 	.header-nav a.active {
 		color: var(--link-color);
 		font-weight: var(--font-weight-medium);
+	}
+
+	/* Mobile navigation */
+	@media (max-width: 40ch) {
+		.header-main {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: var(--ch);
+		}
+
+		.header-nav {
+			width: 100%;
+			gap: var(--ch);
+		}
 	}
 </style>

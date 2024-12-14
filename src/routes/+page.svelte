@@ -3,10 +3,12 @@
 	const width = alignToGrid(80);
 </script>
 
-<section class="home" style="--home-width: {width}ch">
+<section class="home">
 	<h1>Hey, I'm Russell Jones.</h1>
 
-	<div class="tagline">I help build amazing web applications and contribute to open source.</div>
+	<div class="tagline">
+		I help build amazing web applications and contribute to open source.
+	</div>
 
 	<div class="intro">
 		I'm a Full Stack Developer from Canada 🇨🇦 specializing in:
@@ -34,22 +36,20 @@
 
 <style>
 	.home {
-		width: var(--home-width);
+		max-width: min(var(--measure), 95vw);
 		margin: 0 auto;
-		font-family: var(--font-mono);
-		line-height: 1.4;
+		padding: var(--ch4) var(--ch2);
 	}
 
 	h1 {
-		margin: 0 0 var(--ch2) 0;
-		font-size: 1.8em;
-		font-weight: var(--font-weight-bold);
+		font-size: 2em;
+		line-height: 1.2;
+		margin: 0;
 	}
 
 	.tagline {
-		font-size: 1.2em;
-		margin: var(--ch2) 0;
 		color: var(--text-muted);
+		margin: var(--ch2) 0;
 	}
 
 	.intro {
@@ -59,39 +59,43 @@
 	.skills {
 		margin: var(--ch2) 0;
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: var(--ch4);
+		gap: var(--ch2);
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 30ch), 1fr));
 	}
 
 	.skill-group {
 		display: flex;
 		flex-direction: column;
-		gap: var(--ch2);
+		gap: var(--ch);
 	}
 
 	.skill {
-		padding: var(--ch) var(--ch2);
+		padding: var(--ch);
 		border: 1px solid var(--border-color);
-		background: var(--bg-color);
+		border-radius: 2px;
+		background: color-mix(in srgb, var(--text-color) 5%, transparent);
 	}
 
 	.navigation {
-		margin-top: var(--ch4);
+		margin-top: var(--ch3);
 		display: flex;
 		flex-direction: column;
 		gap: var(--ch2);
-		padding: var(--ch2);
-		border: 1px solid var(--border-color);
 	}
 
-	a {
+	.navigation a {
 		color: var(--link-color);
 		text-decoration: none;
-		border-bottom: 1px solid transparent;
 	}
 
-	a:hover {
-		color: var(--link-hover);
-		border-bottom-color: currentColor;
+	.navigation a:hover {
+		text-decoration: underline;
+	}
+
+	@media (min-width: 600px) {
+		.navigation {
+			flex-direction: row;
+			gap: var(--ch4);
+		}
 	}
 </style>
