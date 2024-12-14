@@ -187,12 +187,6 @@
 		}
 	}
 
-	@media (min-width: 768px) {
-		.dev-to-screenshot {
-			width: 150px;
-		}
-	}
-
 	.source-note {
 		margin: var(--ch2) 0;
 		font-size: 0.9em;
