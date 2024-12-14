@@ -2,6 +2,8 @@
 @import url('https://fonts.cdnfonts.com/css/jetbrains-mono-2');
 
 :root {
+	color-scheme: light dark;
+
 	/* Base units */
 	--ch: 1ch;
 	--ch2: calc(var(--ch) * 2);
@@ -22,15 +24,15 @@
 	--font-weight-medium: 600;
 	--font-weight-bold: 800;
 
-	/* Colors - Light theme */
-	--bg-color: #ffffff;
-	--text-color: #333333;
-	--text-muted: #666666;
-	--border-color: #eaeaea;
-	--header-bg: #ffffff;
-	--header-text: #333333;
-	--link-color: #0066cc;
-	--link-hover: #0044aa;
+	/* Colors using light-dark() */
+	--bg-color: light-dark(#ffffff, #1a1a1a);
+	--text-color: light-dark(#333333, #e6e6e6);
+	--text-muted: light-dark(#666666, #a6a6a6);
+	--border-color: light-dark(#eaeaea, #404040);
+	--header-bg: light-dark(#ffffff, #1a1a1a);
+	--header-text: light-dark(#333333, #ffffff);
+	--link-color: light-dark(#0066cc, #66b3ff);
+	--link-hover: light-dark(#0044aa, #99ccff);
 
 	/* Base Grid */
 	--grid-base: 1ch;
@@ -43,27 +45,11 @@
 	--content-padding-y: var(--grid-base);
 	--content-gap: var(--grid-2x);
 
-	/* Additional styles from master monospace repo */
+	/* Additional styles using light-dark() */
 	--border-thickness: 2px;
-	--background-color: #fff;
-	--background-color-alt: #eee;
-}
-
-:root[data-theme='dark'] {
-	--bg-color: #1a1a1a;
-	--text-color: #e6e6e6;
-	--text-muted: #a6a6a6;
-	--border-color: #404040;
-	--header-bg: #1a1a1a;
-	--header-text: #ffffff;
-	--link-color: #66b3ff;
-	--link-hover: #99ccff;
-
-	/* Dark theme overrides from master monospace repo */
-	--text-color: #fff;
-	--text-color-alt: #aaa;
-	--background-color: #000;
-	--background-color-alt: #111;
+	--background-color: light-dark(#fff, #000);
+	--background-color-alt: light-dark(#eee, #111);
+	--text-color-alt: light-dark(#666, #aaa);
 }
 
 /* Base styles */
@@ -145,15 +131,22 @@ a:hover {
 	}
 }
 
-/* Improve input contrast in dark mode */
-[data-theme='dark'] input,
-[data-theme='dark'] textarea {
-	background-color: #2d2d2d;
-	color: var(--text-color);
-	border-color: var(--border-color);
+/* Update dark mode input styles */
+@media (prefers-color-scheme: dark) {
+	input,
+	textarea {
+		background-color: color-mix(in srgb, var(--bg-color) 80%, white);
+		color: var(--text-color);
+		border-color: var(--border-color);
+	}
 }
 
-/* Improve box visibility in dark mode */
-[data-theme='dark'] .box-frame {
-	color: var(--border-color);
+/* Force dark mode when data-theme="dark" */
+[data-theme='dark'] {
+	color-scheme: dark;
+}
+
+/* Force light mode when data-theme="light" */
+[data-theme='light'] {
+	color-scheme: light;
 }
