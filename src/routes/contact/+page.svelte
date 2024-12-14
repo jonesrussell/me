@@ -50,6 +50,14 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Contact | Russell Jones</title>
+	<meta
+		name="description"
+		content="Get in touch with Russell Jones - Web Developer and Open Source Enthusiast"
+	/>
+</svelte:head>
+
 <section class="contact">
 	<header>
 		<h1>Get in Touch</h1>

@@ -18,7 +18,10 @@
 
 <svelte:head>
 	<title>Blog | Russell Jones</title>
-	<meta name="description" content="Russell Jones's Blog" />
+	<meta
+		name="description"
+		content="Russell Jones's Blog, featuring web development, open source, and personal reflections"
+	/>
 </svelte:head>
 
 <div class="blog">
