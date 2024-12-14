@@ -25,6 +25,18 @@
 	<header>
 		<h1>Web Developer Blog</h1>
 		<p class="subtitle">Web Developer & Open Source Enthusiast</p>
+		<p class="source-note">
+			This page and
+			<a href={devToUrl} target="_blank" rel="noopener noreferrer"> DEV.to </a>
+			are syndicated from my
+			<a
+				href="https://jonesrussell.github.io/blog/"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				Jekyll-powered blog
+			</a>
+		</p>
 	</header>
 
 	<div class="dev-to-section">
@@ -179,5 +191,20 @@
 		.dev-to-screenshot {
 			width: 150px;
 		}
+	}
+
+	.source-note {
+		margin: var(--ch2) 0;
+		font-size: 0.9em;
+		color: var(--text-muted);
+	}
+
+	.source-note a {
+		color: var(--link-color);
+		text-decoration: none;
+	}
+
+	.source-note a:hover {
+		text-decoration: underline;
 	}
 </style>
