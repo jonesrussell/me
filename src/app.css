@@ -27,6 +27,9 @@
 
 	/* Add box-sizing reset */
 	box-sizing: border-box;
+
+	/* Define breakpoint in character units */
+	--mobile-breakpoint: 75ch;
 }
 
 *, *:before, *:after {
@@ -34,7 +37,7 @@
 }
 
 /* Mobile adjustments */
-@media (max-width: 600px) {
+@container (max-width: var(--mobile-breakpoint)) {
 	:root {
 		--content-padding: var(--ch);
 		--measure: 100%;

@@ -4,16 +4,9 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import NewsletterCTA from '$lib/components/NewsletterCTA.svelte';
-	import { onMount } from 'svelte';
-
-	let mounted = false;
-
-	onMount(() => {
-		mounted = true;
-	});
 </script>
 
-<div class="layout" class:mounted>
+<div class="layout">
 	<Header />
 
 	<main class="content">
@@ -32,8 +25,6 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
-		opacity: 0;
-		transition: opacity 0.3s;
 		width: 100%;
 		overflow-x: hidden;
 	}
@@ -49,9 +40,5 @@
 		max-width: min(var(--measure), 100%);
 		margin: 0 auto;
 		width: 100%;
-	}
-
-	.mounted {
-		opacity: 1;
 	}
 </style>
