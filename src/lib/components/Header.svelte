@@ -1,7 +1,5 @@
 <script lang="ts">
-	import ThemeToggle from './ThemeToggle.svelte';
 	import { base } from '$app/paths';
-	import { alignToGrid } from '$lib/utils/grid';
 	import { page } from '$app/stores';
 </script>
 
@@ -28,8 +26,6 @@
 				>
 					Contact
 				</a>
-
-				<ThemeToggle />
 			</nav>
 		</div>
 	</div>
@@ -38,11 +34,10 @@
 <style>
 	.site-header {
 		border-bottom: 1px solid var(--border-color);
-		padding: var(--ch2) 0;
-		background: var(--header-bg);
-		color: var(--header-text);
+		padding: var(--ch) 0;
+		background: var(--bg-color);
+		color: var(--text-color);
 		width: 100%;
-		line-height: 1.2;
 		position: sticky;
 		top: 0;
 		z-index: 10;
@@ -59,56 +54,43 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		gap: var(--ch2);
 	}
 
 	.title {
 		font-weight: bold;
-		white-space: nowrap;
-		color: var(--header-text);
+		color: var(--text-color);
 		text-decoration: none;
-	}
-
-	.title:hover {
-		color: var(--link-hover);
 	}
 
 	.header-nav {
 		display: flex;
-		gap: var(--ch2);
-		align-items: center;
-		flex-wrap: wrap;
+		gap: var(--ch3);
 	}
 
 	.header-nav a {
-		color: var(--text-color);
+		color: var(--text-muted);
 		text-decoration: none;
-		white-space: nowrap;
-		padding: var(--ch) var(--ch2);
-		border-radius: 2px;
-		transition: background-color 0.2s ease;
+		transition: color 0.2s ease;
 	}
 
 	.header-nav a:hover {
-		background: color-mix(in srgb, var(--text-color) 10%, transparent);
+		color: var(--text-color);
+		text-decoration: none;
 	}
 
 	.header-nav a.active {
-		color: var(--link-color);
-		font-weight: var(--font-weight-medium);
+		color: var(--text-color);
 	}
 
-	/* Mobile navigation */
-	@media (max-width: 40ch) {
+	@media (max-width: 600px) {
 		.header-main {
 			flex-direction: column;
-			align-items: flex-start;
+			align-items: center;
 			gap: var(--ch);
 		}
 
 		.header-nav {
-			width: 100%;
-			gap: var(--ch);
+			gap: var(--ch4);
 		}
 	}
 </style>
