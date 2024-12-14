@@ -3,81 +3,54 @@
 :root {
 	color-scheme: light dark;
 
-	/* Base units */
+	/* Base units - use precise values */
 	--ch: 1ch;
-	--ch2: calc(var(--ch) * 2);
-	--ch3: calc(var(--ch) * 3);
-	--ch4: calc(var(--ch) * 4);
-	--ch6: calc(var(--ch) * 6);
-	--ch8: calc(var(--ch) * 8);
-	--ch12: calc(var(--ch) * 12);
-	--line-height: 1.2;
-
-	/* Layout */
-	--measure: 80ch;
-	--content-padding: var(--ch2);
-	--grid-cell: 40ch;
-	--grid-gap: var(--ch2);
+	--ch2: 2ch;
+	--ch3: 3ch;
+	--ch4: 4ch;
 
 	/* Typography */
 	--font-mono: 'Fira Mono', monospace;
-	--font-family: 'Fira Mono', monospace;
-	--font-weight-normal: 500;
-	--font-weight-medium: 600;
-	--font-weight-bold: 800;
+	--font-size-base: 16px;
+	--line-height: 1.5;
 
-	/* Colors using light-dark() */
-	--bg-color: light-dark(#ffffff, #1a1a1a);
-	--text-color: light-dark(#333333, #e6e6e6);
-	--text-muted: light-dark(#666666, #a6a6a6);
-	--border-color: light-dark(#eaeaea, #404040);
-	--header-bg: light-dark(#ffffff, #1a1a1a);
-	--header-text: light-dark(#333333, #ffffff);
-	--link-color: light-dark(#0066cc, #66b3ff);
-	--link-hover: light-dark(#0044aa, #99ccff);
+	/* Layout - avoid decimal points */
+	--measure: 80ch;
+	--content-padding: var(--ch2);
 
-	/* Base Grid */
-	--grid-base: 1ch;
-	--grid-2x: calc(var(--grid-base) * 2);
-	--grid-4x: calc(var(--grid-base) * 4);
-	--grid-8x: calc(var(--grid-base) * 8);
+	/* Colors */
+	--bg-color: #1a1a1a;
+	--text-color: #ffffff;
+	--text-muted: #bfbfbf;
+	--border-color: #333333;
+	--link-color: #4a9eff;
 
-	/* Content Spacing */
-	--content-padding-x: var(--grid-2x);
-	--content-padding-y: var(--grid-base);
-	--content-gap: var(--grid-2x);
+	/* Add box-sizing reset */
+	box-sizing: border-box;
 
-	/* Additional styles using light-dark() */
-	--border-thickness: 2px;
-	--background-color: light-dark(#fff, #000);
-	--background-color-alt: light-dark(#eee, #111);
-	--text-color-alt: light-dark(#666, #aaa);
-
-	--color-success: #4ade80;
-	--color-info: #60a5fa;
-	--color-warning: #fbbf24;
+	/* Define breakpoint in character units */
+	--mobile-breakpoint: 75ch;
 }
 
-/* Base styles */
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+
+/* Mobile adjustments */
+@container (max-width: var(--mobile-breakpoint)) {
+	:root {
+		--content-padding: var(--ch);
+		--measure: 100%;
+	}
+}
+
 body {
-	font-family: var(--font-family);
+	margin: 0;
+	font-family: var(--font-mono);
+	font-size: var(--font-size-base);
 	line-height: var(--line-height);
 	background: var(--bg-color);
 	color: var(--text-color);
-	transition:
-		background-color 0.3s ease,
-		color 0.3s ease;
-}
-
-/* Typography */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	font-weight: var(--font-weight-bold);
-	line-height: 1.2;
 }
 
 a {
@@ -86,7 +59,6 @@ a {
 }
 
 a:hover {
-	color: var(--link-hover);
 	text-decoration: underline;
 }
 

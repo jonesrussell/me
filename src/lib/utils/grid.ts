@@ -1,32 +1,16 @@
 type GridUnit = number;
 
-export function calculateGridUnits(chars: number): GridUnit {
-	return Math.floor(chars / 2) * 2;
-}
-
 export function alignToGrid(value: number, gridSize: number = 2): number {
-	return Math.ceil(value / gridSize) * gridSize;
+	const windowWidth = typeof window !== 'undefined' ? Math.floor(window.innerWidth * 100) / 100 : 1024;
+	const minSize = Math.min(value, windowWidth / 16);
+	return Math.floor(minSize / gridSize) * gridSize;
 }
 
-export function getBoxDimensions(
-	content: string,
-	padding: number = 2
-): {
-	width: number;
-	height: number;
-} {
-	const lines = content.split('\n');
-	const maxLineLength = Math.max(...lines.map((line) => line.length));
-	return {
-		width: alignToGrid(maxLineLength + padding * 2),
-		height: lines.length + padding * 2
-	};
+export function getResponsiveValue(mobile: number, desktop: number): number {
+	if (typeof window === 'undefined') return mobile; // Default to mobile for SSR
+	return window.innerWidth < 640 ? mobile : desktop;
 }
 
-export function toGridUnits(value: number, base: number = 1): number {
-	return Math.ceil(value / base) * base;
-}
-
-export function chToGridUnits(chars: number): string {
-	return `${toGridUnits(chars)}ch`;
+export function getGridWidth(width: number): string {
+	return `${Math.floor(width * 100) / 100}px`;
 }
