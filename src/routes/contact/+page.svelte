@@ -19,7 +19,7 @@
 		errorMessage = '';
 
 		try {
-			const response = await fetch('https://goforms.streetcode.net/api/subscriptions', {
+			const response = await fetch('https://goforms.streetcode.net/v1/contact', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
