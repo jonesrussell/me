@@ -19,6 +19,7 @@
 - Keep media objects aligned to character boundaries
 
 # CSS 2024 Best Practices
+
 - Use CSS Container Queries for component-level responsive design
 - Implement :has() selector for parent-based styling
 - Utilize CSS Nesting for cleaner selector organization
@@ -74,6 +75,7 @@ const matrix = [
 ```
 
 # Best Practices
+
 - Always use async/await with Promise.withResolvers()
 - Include proper error handling for Unicode operations
 - Consider memory implications when using resizable buffers
@@ -84,6 +86,12 @@ const matrix = [
 - Maintain monospace formatting in comments
 - Utilize ASCII art for visual documentation
 - Keep layouts responsive in character units
+
+## Considerations for Svelte 5 and SvelteKit 2.9
+
+1. **Use SvelteKit's Routing and Data Loading**: Leverage SvelteKit's built-in features for routing and data loading to streamline your development process.
+2. **Optimize Performance**: Take advantage of Svelte 5's performance improvements by writing efficient code and minimizing reactivity where possible.
+3. **Stay Updated**: Keep an eye on the latest updates and documentation from the Svelte team to ensure you're following the most current best practices.
 
 # Svelte 5 introduces runes, a set of advanced primitives for controlling reactivity.
 
@@ -420,13 +428,6 @@ export default defineConfig({
     hmr: true
   }
 });
-```
-
-- **Development Server**
-
-```bash
-# Start dev server with host access
-npm run dev -- --host
 ```
 
 #### Jest-DOM Assertions
