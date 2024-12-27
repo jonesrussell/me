@@ -79,6 +79,40 @@
 			</article>
 		{/each}
 	</div>
+
+	<details class="syndication-diagram">
+		<summary>Syndication Process Flow Diagram</summary>
+		<pre>
+<!-- prettier-ignore -->
+[                            ]
+|      Content Source        |
+[            |              ]
+             |
+             ▼
+[                            ]
+|    Syndication Platform    |
+|                           |
+|  [        ]   [        ]  |
+|  | Format |   |Validate|  |
+|  |Content |──▶|Content |  |
+|  [        ]   [        ]  |
+|                           |
+[            |              ]
+             |
+     [       |       ]
+     ▼               ▼
+[            ]  [            ]
+|  Publisher |  |  Publisher |
+|  Channel 1 |  |  Channel 2 |
+[     |      ]  [     |      ]
+      |              |
+      ▼              ▼
+[            ]  [            ]
+|  Consumer  |  |  Consumer  |
+| Platform 1 |  | Platform 2 |
+[            ]  [            ]
+		</pre>
+	</details>
 </div>
 
 <style>
@@ -203,5 +237,35 @@
 
 	.source-note a:hover {
 		text-decoration: underline;
+	}
+
+	.syndication-diagram {
+		margin: var(--ch4) 0;
+		border: 1px solid var(--border-color);
+		border-radius: 2px;
+		background: color-mix(in srgb, var(--text-color) 3%, transparent);
+	}
+
+	.syndication-diagram summary {
+		cursor: pointer;
+		padding: var(--ch2);
+		font-family: var(--font-mono);
+		color: var(--text-muted);
+	}
+
+	.syndication-diagram summary:hover {
+		color: var(--text-color);
+	}
+
+	.syndication-diagram pre {
+		margin: 0;
+		padding: var(--ch2);
+		border-top: 1px solid var(--border-color);
+		overflow-x: auto;
+		color: var(--text-muted);
+	}
+
+	.syndication-diagram[open] summary {
+		border-bottom: none;
 	}
 </style>
