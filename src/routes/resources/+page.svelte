@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { alignToGrid } from '$lib/utils/grid';
-	const width = alignToGrid(120);
-
 	interface Resource {
 		title: string;
 		url: string;

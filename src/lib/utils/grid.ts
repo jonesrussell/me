@@ -1,5 +1,3 @@
-type GridUnit = number;
-
 export function alignToGrid(value: number, gridSize: number = 2): number {
 	const windowWidth =
 		typeof window !== 'undefined'
