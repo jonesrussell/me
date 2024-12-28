@@ -21,6 +21,12 @@
 					Projects
 				</a>
 				<a
+					href="{base}/resources"
+					class:active={$page.url.pathname.startsWith('/resources')}
+				>
+					Resources
+				</a>
+				<a
 					href="{base}/contact"
 					class:active={$page.url.pathname.startsWith('/contact')}
 				>
