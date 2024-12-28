@@ -6,7 +6,6 @@
 	export let width = 60;
 
 	$: alignedWidth = alignToGrid(width);
-	$: contentWidth = alignedWidth - 4;
 
 	// Get the content of the default slot
 	let content = '';

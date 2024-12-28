@@ -19,7 +19,7 @@
 		<div class="folder">
 			{getPrefix(false)}{data.name}/
 		</div>
-		{#each data.children as child, i}
+		{#each data.children as child}
 			<svelte:self data={child} level={level + 1} />
 		{/each}
 	{:else}
