@@ -14,12 +14,12 @@
 		"format": "NODE_ENV=development prettier --write .",
 		"test:integration": "NODE_ENV=development playwright test",
 		"test:unit": "NODE_ENV=development vitest --run",
-		"workflow": "act -P ubuntu-latest=catthehacker/ubuntu:act-latest",
+		"workflow": "act -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
 		"workflow:list": "act -l",
-		"workflow:test": "act -j test -P ubuntu-latest=catthehacker/ubuntu:act-latest",
-		"workflow:build": "act -j build -P ubuntu-latest=catthehacker/ubuntu:act-latest",
-		"workflow:deploy": "act -j deploy -P ubuntu-latest=catthehacker/ubuntu:act-latest",
-		"workflow:full": "act -P ubuntu-latest=catthehacker/ubuntu:act-latest --reuse"
+		"workflow:test": "act -j test -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
+		"workflow:build": "act -j build -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
+		"workflow:deploy": "act -j deploy -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
+		"workflow:full": "act -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy --reuse"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^3.2.2",
