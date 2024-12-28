@@ -105,6 +105,66 @@ svelte_5_considerations:
   - optimize_performance_with_svelte_5: true
   - stay_updated_with_latest_svelte_5_practices: true
 
+testing_guidelines:
+  - description: "Testing best practices for Svelte 5 components and applications."
+  - rules:
+      - use_testing_library_queries_over_selectors: true
+      - prefer_user_centric_queries:
+          - getByRole: true
+          - getByText: true
+          - getByLabelText: true
+          - getByPlaceholderText: true
+      - test_component_behavior_not_implementation: true
+      - use_state_snapshot_for_reactive_testing: true
+      - implement_proper_cleanup_in_beforeEach_and_afterEach: true
+      - mock_external_dependencies_consistently: true
+      - use_proper_async_test_patterns: true
+      - implement_proper_error_boundary_testing: true
+  - component_testing:
+      - test_props_reactivity: true
+      - verify_event_handlers: true
+      - check_accessibility_compliance: true
+      - validate_state_transitions: true
+  - integration_testing:
+      - test_component_interactions: true
+      - verify_routing_behavior: true
+      - validate_data_flow: true
+      - check_error_handling: true
+  - unit_testing:
+      - test_utility_functions: true
+      - validate_state_management: true
+      - verify_computed_values: true
+  - test_organization:
+      - group_related_tests: true
+      - use_descriptive_test_names: true
+      - maintain_test_isolation: true
+      - implement_proper_setup_and_teardown: true
+  - performance_testing:
+      - measure_component_render_time: true
+      - check_memory_usage: true
+      - validate_reactive_updates: true
+  - accessibility_testing:
+      - verify_aria_attributes: true
+      - test_keyboard_navigation: true
+      - validate_screen_reader_compatibility: true
+  - error_handling:
+      - test_boundary_conditions: true
+      - verify_error_messages: true
+      - validate_recovery_mechanisms: true
+  - mock_patterns:
+      - description: "Patterns for mocking in Svelte 5 tests"
+      - examples: |
+          // Mock $state
+          const mockState = $state(initialValue);
+          
+          // Mock $derived
+          const mockDerived = $derived(computation);
+          
+          // Mock $effect
+          $effect(() => {
+            // Mock side effect
+          });
+
 svelte_5_runes:
   - $state:
       description: "Declare reactive state."

@@ -20,7 +20,10 @@
 		"workflow:test": "act -j test -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
 		"workflow:build": "act -j build -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
 		"workflow:deploy": "act -j deploy -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
-		"workflow:full": "act -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy --reuse"
+		"workflow:full": "act -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy --reuse",
+		"test:watch": "vitest",
+		"test:ui": "vitest --ui",
+		"test:debug": "vitest --inspect-brk --no-threads"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^3.2.2",
@@ -39,12 +42,16 @@
 		"@sveltejs/enhanced-img": "^0.4.4",
 		"@sveltejs/kit": "^2.9.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
+		"@testing-library/jest-dom": "^6.6.3",
+		"@testing-library/svelte": "^5.2.6",
+		"@types/jsdom": "^21.1.7",
 		"@types/node": "^22.10.2",
 		"@vitest/coverage-v8": "^2.1.8",
 		"eslint": "^9.7.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.36.0",
 		"globals": "^15.0.0",
+		"jsdom": "^25.0.1",
 		"prettier": "^3.3.2",
 		"prettier-plugin-svelte": "^3.2.6",
 		"storybook": "^8.4.7",

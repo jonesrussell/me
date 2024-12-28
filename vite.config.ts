@@ -10,6 +10,9 @@ export default defineConfig(async () => {
 		test: {
 			...configDefaults,
 			include: ['src/**/*.{test,spec}.{js,ts}'],
+			globals: true,
+			environment: 'jsdom',
+			setupFiles: ['src/test/setup.ts'],
 			coverage: {
 				provider: 'v8',
 				reporter: ['text', 'html', 'lcov'],
