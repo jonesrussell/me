@@ -21,8 +21,18 @@
 ## Content Structure
 
 - [ ] Organize documentation by topic
-- [ ] Create consistent file naming scheme
-- [ ] Standardize component folder structure
+- [x] Create consistent file naming scheme:
+  - Use kebab-case for file names (e.g., `my-component.svelte`)
+  - Component files end with `.svelte`
+  - Test files end with `.test.ts`
+  - Utility files end with `.ts`
+- [x] Standardize component folder structure:
+  - `src/lib/components/` for reusable UI components
+  - `src/routes/` for page-specific components
+  - Component-specific utilities in same directory
+  - Tests alongside components
+- [ ] Add component documentation templates
+- [ ] Create component showcase pages
 
 ## Features
 
@@ -59,5 +69,11 @@
 - [x] Set up Playwright for integration tests
 - [x] Configure Vitest for unit testing
 - [ ] Add visual regression testing
-- [ ] Implement end-to-end testing scenarios
+- [ ] Implement end-to-end testing scenarios:
+  - [ ] Test rule file editing workflow
+  - [ ] Test theme switching
+  - [ ] Test component interactions
+  - [ ] Test responsive layouts
+  - [ ] Test keyboard navigation
+  - [ ] Test accessibility features
 - [ ] Add test coverage reporting

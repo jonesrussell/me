@@ -1,5 +1,49 @@
 # Svelte 5 Patterns and Solutions
 
+## Project Structure
+
+### Directory Organization
+```
+src/
+├── lib/            # Reusable, publishable code
+│   ├── components/ # Reusable UI components
+│   ├── utils/      # Utility functions
+│   ├── rules/      # Rule-related logic
+│   └── directives/ # Svelte directives
+├── routes/         # SvelteKit routes (pages)
+└── tests/         # Test files
+```
+
+### Component Organization
+
+Components should be organized based on their reusability and scope:
+
+✅ Place in `src/lib/components/`:
+- Generic UI elements (Badge, Button, etc.)
+- Components that could be published
+- Components with no app-specific logic
+- Components following Svelte 5 patterns
+
+✅ Place in `src/routes/`:
+- Page-specific components
+- Layout components
+- Components with app-specific logic
+- Components that use app-specific services
+
+### Import Aliases
+
+Use the defined aliases to maintain clean imports:
+```typescript
+// ✅ Good
+import Badge from '$components/Badge.svelte';
+import { someUtil } from '$lib/utils/some-util';
+import { someService } from '$services/some-service';
+
+// ❌ Avoid
+import Badge from '../../lib/components/Badge.svelte';
+import { someUtil } from '../../../lib/utils/some-util';
+```
+
 ## Props and Type Safety
 
 ### Basic Props with Type Safety
@@ -110,3 +154,61 @@ test('renders with props', () => {
 3. Use `$state` for internal state management
 4. Update tests to handle the new props system
 5. Remove any usage of `$$slots` or `$$props` 
+
+## Testing Challenges
+
+### Component Updates in Tests
+
+In Svelte 5, the way we test reactive updates has changed. Here are the key differences:
+
+❌ Old way (Svelte 4):
+```typescript
+const { component } = render(Badge);
+component.$set({ type: 'success' }); // No longer works in Svelte 5
+```
+
+✅ New way (Svelte 5):
+```typescript
+const { rerender } = render(Badge);
+await rerender({ type: 'success' }); // Use rerender instead
+```
+
+### Type Safety in Tests
+
+When testing typed components, you need to be explicit about the component's props:
+
+```typescript
+// Define your prop types
+type BadgeType = 'info' | 'success' | 'warning' | 'error';
+type BadgeProps = { 
+  type?: BadgeType;
+  content?: () => unknown;
+};
+
+// Use them in tests
+const { rerender } = render<SvelteComponent<BadgeProps>>(Badge);
+```
+
+### Testing Content Props
+
+When testing components that use the new content prop system:
+
+```typescript
+test('renders content', () => {
+  render(Badge, {
+    props: {
+      type: 'info',
+      content: () => 'Test Content'
+    }
+  });
+  
+  expect(screen.getByText('Test Content')).toBeInTheDocument();
+});
+```
+
+### Testing Gotchas
+
+1. `$set` is no longer available - use `rerender` instead
+2. Component types need to be explicitly defined for TypeScript
+3. Content props are functions that need to be called in the template
+4. State updates might require an `await tick()` to propagate 

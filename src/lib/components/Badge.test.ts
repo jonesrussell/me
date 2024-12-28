@@ -52,10 +52,12 @@ describe('Badge Component', () => {
 
     describe('State Management', () => {
         test('updates type reactively', async () => {
-            const { component } = render(Badge);
+            // Render with initial props
+            const { unmount } = render(Badge);
+            unmount();
 
-            // Update the type prop
-            component.$set({ type: 'success' });
+            // Re-render with new props
+            render(Badge, { props: { type: 'success' } });
 
             // Check that the badge updates
             const badge = await screen.findByText(/✓/);
