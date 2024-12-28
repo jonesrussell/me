@@ -17,6 +17,10 @@ Visit the website at https://jonesrussell.github.io/me/
   - CSS Custom Properties
   - CSS Grid
   - CSS Transitions
+- Optimized build pipeline
+  - Dependency caching
+  - Fast CI/CD with GitHub Actions
+  - Comprehensive testing suite
 
 ## Tech Stack
 
@@ -24,6 +28,10 @@ Visit the website at https://jonesrussell.github.io/me/
 - TypeScript
 - Modern CSS
 - GitHub Pages
+- Testing
+  - Playwright for integration tests
+  - Vitest for unit tests
+- ESLint + Prettier for code quality
 
 ## Project Structure
 
@@ -54,11 +62,28 @@ npm run build
 
 # Preview production build
 npm run preview
+
+# Run tests
+npm run test         # Run all tests
+npm run test:unit    # Run unit tests
+npm run test:integration  # Run integration tests
+
+# Check code quality
+npm run lint         # Run ESLint
+npm run format       # Run Prettier
 ```
 
 ## Deployment
 
-This site is automatically deployed to GitHub Pages using GitHub Actions. See the deployment configuration in `.github/workflows/deploy.yml`
+This site is automatically deployed to GitHub Pages using GitHub Actions. The deployment pipeline includes:
+
+- Dependency caching for faster builds
+- Comprehensive testing suite
+- Type checking
+- Linting and formatting checks
+- Automated deployment to GitHub Pages
+
+See the deployment configuration in `.github/workflows/deploy.yml`
 
 ## Resources
 
@@ -66,6 +91,8 @@ This site is automatically deployed to GitHub Pages using GitHub Actions. See th
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [Modern CSS Features](https://developer.mozilla.org/en-US/docs/Web/CSS)
 - [GitHub Pages](https://pages.github.com/)
+- [Playwright Documentation](https://playwright.dev)
+- [Vitest Documentation](https://vitest.dev)
 
 ## License
 
