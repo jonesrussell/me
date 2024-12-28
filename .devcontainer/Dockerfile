@@ -1,64 +1,40 @@
-FROM mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm as base
+FROM mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm
 
-# Install common utilities and zsh
+# Install Playwright dependencies
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
-    zsh \
+    libnss3 \
+    libnspr4 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libcups2 \
+    libdrm2 \
+    libdbus-1-3 \
+    libxkbcommon0 \
+    libatspi2.0-0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxrandr2 \
+    libgbm1 \
+    libpango-1.0-0 \
+    libcairo2 \
+    libasound2 \
+    libxcursor1 \
+    libgtk-3-0 \
+    libgdk-3-0 \
+    fonts-noto-color-emoji \
+    fonts-liberation \
+    fonts-freefont-ttf \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Docker CLI and Buildx
-FROM base as docker
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends \
-    ca-certificates \
-    curl \
-    gnupg \
-    && install -m 0755 -d /etc/apt/keyrings \
-    && curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg \
-    && chmod a+r /etc/apt/keyrings/docker.gpg \
-    && echo \
-    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
-    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-    tee /etc/apt/sources.list.d/docker.list > /dev/null \
-    && apt-get update \
-    && apt-get -y install --no-install-recommends \
-    docker-ce-cli \
-    docker-buildx-plugin \
-    && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install GitHub CLI
-FROM docker as github
-RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
-    && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-    && apt-get update \
-    && apt-get -y install --no-install-recommends \
-    gh \
-    && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Playwright dependencies and browsers
-FROM github as playwright
-RUN npx playwright install-deps chromium
-RUN npx playwright install chromium
-
-# Install latest npm
-RUN npm install -g npm@11.0.0
-
-# Install act for GitHub Actions local testing
-FROM playwright as act
-RUN curl https://raw.githubusercontent.com/nektos/act/master/install.sh | bash
-
-# Final stage
-FROM act as final
-
-# Set default shell to zsh
-RUN chsh -s $(which zsh)
-
-# Create workspace directory
-WORKDIR /workspaces/me
+# Install Playwright browser
+RUN npx playwright install chromium \
+    && npm cache clean --force
 
 # Set up environment
-ENV NODE_ENV=development 
+ENV NODE_ENV=development \
+    LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8 

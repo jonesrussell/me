@@ -20,7 +20,10 @@ test.describe('Resources page', () => {
 
 	test('should have working navigation link', async ({ page }) => {
 		await page.goto('/');
-		await page.click('nav a[href="/resources"]');
+		await page.waitForLoadState('networkidle');
+		const resourcesLink = page.locator('nav a[href="/resources"]');
+		await expect(resourcesLink).toBeVisible();
+		await resourcesLink.click();
 		await expect(page).toHaveURL('/resources');
 		await expect(page.locator('h1')).toHaveText('Development Resources');
 	});
