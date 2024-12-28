@@ -41,8 +41,8 @@ import { expect, test } from 'vitest';
 import { alignToGrid } from './grid';
 
 test('alignToGrid rounds up to nearest character unit', () => {
-  expect(alignToGrid(15.2)).toBe(16);
-  expect(alignToGrid(15.8)).toBe(16);
+	expect(alignToGrid(15.2)).toBe(16);
+	expect(alignToGrid(15.8)).toBe(16);
 });
 ```
 
@@ -55,9 +55,9 @@ Integration tests are located in the `tests` directory and use Playwright:
 import { test, expect } from '@playwright/test';
 
 test('navigation works correctly', async ({ page }) => {
-  await page.goto('/');
-  await page.click('a[href="/projects"]');
-  await expect(page).toHaveURL('/projects');
+	await page.goto('/');
+	await page.click('a[href="/projects"]');
+	await expect(page).toHaveURL('/projects');
 });
 ```
 
@@ -89,11 +89,13 @@ test('navigation works correctly', async ({ page }) => {
 ## Continuous Integration
 
 Tests run automatically on:
+
 - Pull requests
 - Pushes to main branch
 - Deployment to production
 
 The GitHub Actions workflow includes:
+
 - Dependency caching
 - Parallel test execution
 - Test result reporting
@@ -106,19 +108,20 @@ The GitHub Actions workflow includes:
 3. **Assert**: Verify the results
 
 Example:
+
 ```typescript
 test('newsletter subscription works', async () => {
-  // Arrange
-  const { getByRole } = render(NewsletterCTA);
-  const input = getByRole('textbox');
-  const button = getByRole('button');
+	// Arrange
+	const { getByRole } = render(NewsletterCTA);
+	const input = getByRole('textbox');
+	const button = getByRole('button');
 
-  // Act
-  await fireEvent.input(input, { target: { value: 'test@example.com' } });
-  await fireEvent.click(button);
+	// Act
+	await fireEvent.input(input, { target: { value: 'test@example.com' } });
+	await fireEvent.click(button);
 
-  // Assert
-  expect(getByText('Thanks for subscribing!')).toBeInTheDocument();
+	// Assert
+	expect(getByText('Thanks for subscribing!')).toBeInTheDocument();
 });
 ```
 
@@ -160,4 +163,4 @@ npm run test:integration -- --headed
 - [ ] Implement end-to-end testing
 - [ ] Add test coverage reporting
 - [ ] Add performance testing
-- [ ] Implement accessibility testing 
+- [ ] Implement accessibility testing
