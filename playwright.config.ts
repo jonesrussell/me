@@ -1,10 +1,26 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-	webServer: {
-		command: 'npm run build && npm run preview',
-		port: 4173
+	testDir: './tests',
+	testMatch: ['**/*.test.ts'],
+	fullyParallel: true,
+	forbidOnly: !!process.env.CI,
+	retries: process.env.CI ? 2 : 0,
+	workers: process.env.CI ? 1 : undefined,
+	reporter: 'list',
+	use: {
+		baseURL: 'http://localhost:5173',
+		trace: 'on-first-retry',
 	},
-
-	testDir: 'e2e'
+	webServer: {
+		command: 'npm run dev',
+		port: 5173,
+		reuseExistingServer: !process.env.CI,
+	},
+	projects: [
+		{
+			name: 'chromium',
+			use: { ...devices['Desktop Chrome'] },
+		},
+	],
 });
