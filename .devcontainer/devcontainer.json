@@ -29,7 +29,7 @@
 		"ghcr.io/dhoeric/features/act:1": {},
 		"ghcr.io/stuartleeks/dev-container-features/shell-history:0": {}
 	},
-	"postCreateCommand": "sudo npx playwright install-deps",
+	"postCreateCommand": "sudo npx playwright install-deps && npm install -g npm@11.0.0",
 	"mounts": [
 		"type=bind,source=/home/${localEnv:USER}/.ssh,target=/home/node/.ssh,readonly"
 	],
