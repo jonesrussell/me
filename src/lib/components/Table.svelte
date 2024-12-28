@@ -18,14 +18,14 @@
 	});
 </script>
 
-<div class="table" style="--table-width: {alignedWidth}ch">
+<div class="table" style="--table-width: {alignedWidth}ch" role="table">
 	<div class="table-border">
 		┌{columnWidths.map((w) => '─'.repeat(w + 2)).join('┬')}┐
 	</div>
 
-	<div class="header-row">
+	<div class="header-row" role="row">
 		│ {#each headers as header, i}
-			{padCell(header, columnWidths[i])} │
+			<span role="columnheader">{padCell(header, columnWidths[i])}</span> │
 		{/each}
 	</div>
 
@@ -34,9 +34,9 @@
 	</div>
 
 	{#each rows as row}
-		<div class="table-row">
+		<div class="table-row" role="row">
 			│ {#each row as cell, i}
-				{padCell(cell, columnWidths[i])} │
+				<span role="cell">{padCell(cell ?? '', columnWidths[i])}</span> │
 			{/each}
 		</div>
 	{/each}
