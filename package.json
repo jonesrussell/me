@@ -13,7 +13,13 @@
 		"lint": "NODE_ENV=development prettier --check . && NODE_ENV=development eslint .",
 		"format": "NODE_ENV=development prettier --write .",
 		"test:integration": "NODE_ENV=development playwright test",
-		"test:unit": "NODE_ENV=development vitest --run"
+		"test:unit": "NODE_ENV=development vitest --run",
+		"workflow": "act -P ubuntu-latest=node:20",
+		"workflow:list": "act -l",
+		"workflow:test": "act -j test -P ubuntu-latest=node:20",
+		"workflow:build": "act -j build -P ubuntu-latest=node:20",
+		"workflow:deploy": "act -j deploy -P ubuntu-latest=node:20",
+		"workflow:full": "act -P ubuntu-latest=node:20 --reuse"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^3.2.2",
