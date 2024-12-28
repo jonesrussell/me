@@ -77,3 +77,69 @@
   - [ ] Test keyboard navigation
   - [ ] Test accessibility features
 - [ ] Add test coverage reporting
+
+## Separation of Concerns Improvements
+
+### Services Layer
+- [ ] Create dedicated service files for different domains:
+  - [ ] Add userService for user-related operations
+  - [ ] Add themeService for theme management
+  - [ ] Add ruleService for rule processing
+  - [ ] Add analyticsService for tracking
+- [ ] Move business logic from components to services
+- [ ] Add TypeScript interfaces for service contracts
+- [ ] Implement service dependency injection pattern
+
+### State Management
+- [ ] Create `src/lib/stores` directory structure:
+  - [ ] Add applicationStore for app-wide state
+  - [ ] Add userStore for user preferences
+  - [ ] Add themeStore for theme state
+  - [ ] Add ruleStore for rule management
+- [ ] Implement store factories for reusable state patterns
+- [ ] Add store documentation and usage examples
+
+### Component Organization
+- [ ] Restructure components into subdirectories:
+  - [ ] `src/lib/components/layout` for layout components
+  - [ ] `src/lib/components/forms` for form elements
+  - [ ] `src/lib/components/common` for shared components
+  - [ ] `src/lib/components/terminal` for terminal-related components
+- [ ] Extract complex component logic into composables
+- [ ] Add component API documentation
+
+### Type System
+- [ ] Create `src/lib/types` directory:
+  - [ ] Add domain-specific types
+  - [ ] Add utility types
+  - [ ] Add service interfaces
+  - [ ] Add store types
+- [ ] Implement strict type checking
+- [ ] Add type documentation
+
+### Utils & Helpers
+- [ ] Create `src/lib/utils` directory:
+  - [ ] Add pure utility functions
+  - [ ] Add side-effect utilities
+  - [ ] Add type guards
+  - [ ] Add common formatters
+- [ ] Add unit tests for utilities
+- [ ] Document utility functions
+
+### Constants
+- [ ] Create `src/lib/constants` directory:
+  - [ ] Add configuration constants
+  - [ ] Add business constants
+  - [ ] Add theme constants
+  - [ ] Add validation constants
+- [ ] Add constant documentation
+- [ ] Implement constant type safety
+
+### API Layer
+- [ ] Create `src/lib/api` directory:
+  - [ ] Add API client abstraction
+  - [ ] Add request/response types
+  - [ ] Add error handling
+  - [ ] Add retry logic
+- [ ] Implement API documentation
+- [ ] Add API testing utilities
