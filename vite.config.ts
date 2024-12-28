@@ -9,7 +9,21 @@ export default defineConfig(async () => {
 		plugins: [images, sveltekit()],
 		test: {
 			...configDefaults,
-			include: ['src/**/*.{test,spec}.{js,ts}']
+			include: ['src/**/*.{test,spec}.{js,ts}'],
+			coverage: {
+				provider: 'v8',
+				reporter: ['text', 'html', 'lcov'],
+				exclude: [
+					'node_modules/**',
+					'.svelte-kit/**',
+					'build/**',
+					'**/types/**',
+					'**/*.d.ts',
+					'**/*.test.ts',
+					'**/*.config.ts',
+					'static/**'
+				]
+			}
 		}
 	};
 });
