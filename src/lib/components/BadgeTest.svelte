@@ -1,7 +1,9 @@
 <script lang="ts">
 	import Badge from './Badge.svelte';
-	export let type: 'info' | 'success' | 'warning' | 'error' = 'info';
-	export let content = '';
+	let {
+		type = $bindable<'info' | 'success' | 'warning' | 'error'>('info'),
+		content = $bindable('')
+	} = $props();
 </script>
 
-<Badge {type}>{content}</Badge>
+<Badge bind:type>{content}</Badge>

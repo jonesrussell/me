@@ -1,13 +1,13 @@
 <script lang="ts">
-	let formData = {
+	let formData = $state({
 		name: '',
 		email: '',
 		message: ''
-	};
+	});
 
-	let isSubmitting = false;
-	let submitStatus: 'idle' | 'success' | 'error' = 'idle';
-	let errorMessage = '';
+	let isSubmitting = $state(false);
+	let submitStatus = $state<'idle' | 'success' | 'error'>('idle');
+	let errorMessage = $state('');
 
 	const handleSubmit = async (event: SubmitEvent) => {
 		event.preventDefault();

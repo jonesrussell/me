@@ -1,12 +1,13 @@
 <script lang="ts">
-	export let type: 'info' | 'success' | 'warning' | 'error' = 'info';
+	let { type = $bindable<'info' | 'success' | 'warning' | 'error'>('info') } =
+		$props();
 
-	const symbols = {
+	const symbols = $state({
 		info: 'ℹ',
 		success: '✓',
 		warning: '⚠',
 		error: '✗'
-	};
+	});
 </script>
 
 <span class="badge {type}">

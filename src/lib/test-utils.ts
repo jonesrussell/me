@@ -1,50 +1,26 @@
-import { render, screen, within, type RenderResult } from '@testing-library/svelte';
+import { render, screen, within } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import type { ComponentProps, SvelteComponent } from 'svelte';
 import { tick } from 'svelte';
 import { expect, vi } from 'vitest';
-
-// Import the correct type from Testing Library
-type SvelteComponentConstructor<T extends SvelteComponent> = (new (args: { target: HTMLElement; props?: Record<string, unknown> }) => T) & {
-    render(props?: Record<string, unknown>): T;
-};
-
-type UserEvent = ReturnType<typeof userEvent.setup>;
-
-/**
- * Enhanced test context with user event simulation
- */
-interface TestContext<T extends SvelteComponent> {
-    user: UserEvent;
-    state: ReturnType<typeof createTestState<Record<string, unknown>>>;
-    within: typeof within;
-    findByRole: typeof screen.findByRole;
-    findByText: typeof screen.findByText;
-    testA11y: () => Promise<void>;
-    testKeyboard: (sequence: KeyboardSequence[]) => Promise<void>;
-    cleanup: () => void;
-    container: HTMLElement;
-    component: T;
-    rerender: (props: Partial<ComponentProps<T>>) => Promise<void>;
-    unmount: () => void;
-}
-
-interface KeyboardSequence {
-    key: string;
-    target?: string | RegExp;
-    expectation: () => Promise<void>;
-}
+import type {
+    BaseSvelteComponent,
+    KeyboardSequence,
+    RenderableComponent,
+    TestContext,
+    TestInteractions,
+    TestRenderResult,
+    TestState
+} from './test-types';
 
 /**
  * Creates a test context with enhanced user interaction capabilities
  */
-export function createTestContext<T extends SvelteComponent>(
-    Component: SvelteComponentConstructor<T>,
-    props?: ComponentProps<T>
+export function createTestContext<T extends BaseSvelteComponent>(
+    Component: RenderableComponent<T>,
+    props?: Record<string, unknown>
 ): TestContext<T> {
     const user = userEvent.setup();
-    // @ts-expect-error - Testing Library's type definitions are not fully compatible
-    const result = render(Component, { props });
+    const result = render(Component, { props }) as unknown as TestRenderResult<T>;
     const state = createTestState({});
 
     return {
@@ -54,28 +30,47 @@ export function createTestContext<T extends SvelteComponent>(
         findByRole: screen.findByRole,
         findByText: screen.findByText,
         async testA11y() {
-            await testAccessibility(result as unknown as RenderResult<SvelteComponent>);
+            await testAccessibility(result);
         },
         async testKeyboard(sequence) {
-            await testKeyboardInteractions(result as unknown as RenderResult<SvelteComponent>, sequence, user);
+            await testKeyboardInteractions(result, sequence, user);
         },
         cleanup() {
             result.unmount();
         },
         container: result.container,
-        component: result.component as T,
+        component: result.component,
         rerender: result.rerender,
         unmount: result.unmount
     };
 }
 
 /**
+ * Creates a reactive test wrapper with state management
+ */
+export function createTestState<T extends Record<string, unknown>>(initialState: T): TestState<T> {
+    const state = $state(initialState);
+    const snapshot = () => $state.snapshot(state) as Partial<T>;
+    const reset = () => Object.assign(state, initialState);
+
+    return {
+        state,
+        snapshot,
+        reset,
+        async waitForUpdate() {
+            await tick();
+            await new Promise(resolve => setTimeout(resolve, 0));
+        }
+    };
+}
+
+/**
  * Tests keyboard interactions using userEvent
  */
-async function testKeyboardInteractions(
-    result: RenderResult<SvelteComponent>,
+async function testKeyboardInteractions<T extends BaseSvelteComponent>(
+    result: TestRenderResult<T>,
     sequence: KeyboardSequence[],
-    user: UserEvent
+    user: ReturnType<typeof userEvent.setup>
 ) {
     const { container } = result;
 
@@ -96,28 +91,11 @@ async function testKeyboardInteractions(
 }
 
 /**
- * Creates a reactive test wrapper with state management
- */
-export function createTestState<T extends Record<string, unknown>>(initialState: T) {
-    const state = $state(initialState);
-    const snapshot = () => $state.snapshot(state);
-    const reset = () => Object.assign(state, initialState);
-
-    return {
-        state,
-        snapshot,
-        reset,
-        async waitForUpdate() {
-            await tick();
-            await new Promise(resolve => setTimeout(resolve, 0));
-        }
-    };
-}
-
-/**
  * Tests accessibility requirements
  */
-export async function testAccessibility(result: RenderResult<SvelteComponent>) {
+export async function testAccessibility<T extends BaseSvelteComponent>(
+    result: TestRenderResult<T>
+) {
     const { container } = result;
 
     // Check for ARIA attributes
@@ -141,16 +119,11 @@ export async function testAccessibility(result: RenderResult<SvelteComponent>) {
 /**
  * Tests component interactions using userEvent
  */
-export async function testInteractions<T extends SvelteComponent>(
-    Component: SvelteComponentConstructor<T>,
-    interactions: {
-        setup?: () => Promise<void>;
-        actions: ((user: UserEvent) => Promise<void>)[];
-        assertions: (() => void)[];
-    }
-) {
+export async function testInteractions<T extends BaseSvelteComponent>(
+    Component: RenderableComponent<T>,
+    interactions: TestInteractions
+): Promise<void> {
     const user = userEvent.setup();
-    // @ts-expect-error - Testing Library's type definitions are not fully compatible
     render(Component);
 
     if (interactions.setup) {
@@ -241,11 +214,10 @@ export function createMock<T extends (...args: unknown[]) => unknown>(
 /**
  * Tests error boundary behavior
  */
-export async function testErrorBoundary<T extends SvelteComponent>(
-    Component: SvelteComponentConstructor<T>,
+export async function testErrorBoundary<T extends BaseSvelteComponent>(
+    Component: RenderableComponent<T>,
     errorFn: () => void
 ) {
-    // @ts-expect-error - Testing Library's type definitions are not fully compatible
     render(Component);
     const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => { });
 
@@ -261,14 +233,13 @@ export async function testErrorBoundary<T extends SvelteComponent>(
  * Tests component state transitions
  */
 export async function testStateTransitions<
-    T extends SvelteComponent,
+    T extends BaseSvelteComponent,
     S extends Record<string, unknown>
 >(
-    Component: SvelteComponentConstructor<T>,
+    Component: RenderableComponent<T>,
     transitions: { state: Partial<S>; expectations: (() => void)[] }[]
 ) {
     const { state, waitForUpdate } = createTestState({} as S);
-    // @ts-expect-error - Testing Library's type definitions are not fully compatible
     render(Component, { props: { state } });
 
     for (const { state: newState, expectations } of transitions) {

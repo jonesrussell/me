@@ -1,21 +1,25 @@
 <script lang="ts">
 	import { alignToGrid } from '$lib/utils/grid';
 
-	export let headers: string[] = [];
-	export let rows: string[][] = [];
-	export let width = 60;
+	let {
+		headers = $bindable<string[]>([]),
+		rows = $bindable<string[][]>([]),
+		width = $bindable(60)
+	} = $props();
 
-	$: alignedWidth = alignToGrid(width);
+	let alignedWidth = $derived(alignToGrid(width));
 
 	function padCell(text: string, width: number): string {
 		return text.padEnd(width);
 	}
 
 	// Calculate column widths
-	$: columnWidths = headers.map((header, index) => {
-		const columnContent = [header, ...rows.map((row) => row[index])];
-		return Math.max(...columnContent.map((cell) => cell.length));
-	});
+	let columnWidths = $derived(
+		headers.map((header, index) => {
+			const columnContent = [header, ...rows.map((row) => row[index])];
+			return Math.max(...columnContent.map((cell) => cell?.length ?? 0));
+		})
+	);
 </script>
 
 <div class="table" style="--table-width: {alignedWidth}ch" role="table">
@@ -50,20 +54,15 @@
 	.table {
 		width: var(--table-width);
 		font-family: var(--font-mono);
-		line-height: 1.2;
 		white-space: pre;
+		line-height: 1.2;
 	}
 
 	.table-border {
-		color: var(--border-color);
+		color: var(--text-muted);
 	}
 
 	.header-row {
-		color: var(--text-color);
-		font-weight: bold;
-	}
-
-	.table-row {
-		color: var(--text-color);
+		font-weight: var(--font-weight-bold);
 	}
 </style>

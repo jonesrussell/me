@@ -121,7 +121,6 @@ describe('Badge Component', () => {
     describe('Error Handling', () => {
         test('handles invalid type gracefully', async () => {
             const ctx = createTestContext(Badge, {
-                // @ts-expect-error Testing invalid type
                 type: 'invalid'
             });
 

@@ -1,6 +1,8 @@
 <script lang="ts">
-	export let text: string;
-	export let position: 'top' | 'bottom' | 'left' | 'right' = 'top';
+	let {
+		text = $bindable(''),
+		position = $bindable<'top' | 'bottom' | 'left' | 'right'>('top')
+	} = $props();
 </script>
 
 <div class="tooltip-wrapper">
