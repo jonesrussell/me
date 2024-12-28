@@ -1,4 +1,4 @@
-import type { Matcher, MatcherOptions, queries, SelectorMatcherOptions, waitForOptions } from '@testing-library/dom';
+import type { Matcher, MatcherOptions, SelectorMatcherOptions, waitForOptions } from '@testing-library/dom';
 import type { RenderResult } from '@testing-library/svelte';
 import type { UserEvent } from '@testing-library/user-event';
 import type { ComponentProps, SvelteComponent } from 'svelte';
@@ -21,12 +21,12 @@ export type BaseSvelteComponent = SvelteComponent<BaseProps, BaseEvents>;
 /**
  * Type for Testing Library's render function
  */
-export type RenderableComponent<T extends BaseSvelteComponent> = new (...args: unknown[]) => T;
+export type RenderableComponent<T extends BaseSvelteComponent> = new (options: { target: HTMLElement; props?: ComponentProps<T> }) => T;
 
 /**
  * Enhanced type for Testing Library's render result
  */
-export type TestRenderResult<T extends BaseSvelteComponent> = RenderResult<T, typeof queries> & {
+export type TestRenderResult<T extends BaseSvelteComponent> = Omit<RenderResult<T>, 'component'> & {
     component: T;
     getByLabelText: (id: Matcher, options?: SelectorMatcherOptions) => HTMLElement;
     getAllByLabelText: (id: Matcher, options?: SelectorMatcherOptions) => HTMLElement[];

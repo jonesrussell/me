@@ -1,17 +1,25 @@
 <script lang="ts">
-	let { type = $bindable<'info' | 'success' | 'warning' | 'error'>('info') } =
-		$props();
+	type BadgeType = 'info' | 'success' | 'warning' | 'error';
 
-	const symbols = $state({
+	let {
+		type = 'info' as const satisfies BadgeType,
+		content = $bindable(() => null)
+	} = $props();
+
+	const symbols: Record<BadgeType, string> = $state({
 		info: 'ℹ',
 		success: '✓',
 		warning: '⚠',
 		error: '✗'
 	});
+
+	function getSymbol(t: BadgeType): string {
+		return symbols[t];
+	}
 </script>
 
 <span class="badge {type}">
-	[{symbols[type]}] <slot />
+	[{getSymbol(type)}] {@render content()}
 </span>
 
 <style>

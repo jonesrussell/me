@@ -235,10 +235,22 @@ svelte_5_runes:
       description: "Declare component props."
       usage: |
         <script>let { prop1, prop2 } = $props();</script>
+      type_safety: |
+        // For type-safe props with default values:
+        type BadgeType = 'info' | 'success' | 'warning' | 'error';
+        let { type = 'info' as const satisfies BadgeType } = $props();
+
+        // For bindable props with function types:
+        let { content = $bindable(() => null) } = $props();
   - $bindable:
       description: "Declare bindable props."
       usage: |
         <script>let { bindableProp = $bindable('fallback') } = $props();</script>
+      function_props: |
+        // For function props that can be rendered:
+        let { content = $bindable(() => null) } = $props();
+        // Then in template:
+        {@render content()}
   - $inspect:
       description: "Equivalent to `console.log` but re-runs when its argument changes."
       usage: |
