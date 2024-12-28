@@ -41,8 +41,8 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | d
 
 # Install Playwright dependencies and browsers
 FROM github as playwright
-RUN npx playwright install-deps \
-    && npx playwright install chromium
+RUN npx playwright install-deps chromium
+RUN npx playwright install chromium
 
 # Install latest npm
 RUN npm install -g npm@11.0.0
