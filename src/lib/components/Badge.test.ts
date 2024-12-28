@@ -1,67 +1,130 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/svelte';
+import { render } from '@testing-library/svelte';
 import { describe, expect, test } from 'vitest';
 import Badge from './Badge.svelte';
+
+type BadgeType = 'info' | 'success' | 'warning' | 'error';
 
 describe('Badge Component', () => {
 	describe('Rendering', () => {
 		test('renders with default type (info)', async () => {
-			render(Badge);
-			const badge = await screen.findByText(/ℹ/);
+			const { container } = render(Badge);
+			const badge = container.querySelector('.badge');
 
-			expect(badge.parentElement).toHaveClass('badge', 'info');
+			expect(badge).toHaveClass('badge', 'info');
+			expect(badge).toHaveTextContent(/ℹ/);
 		});
 
 		test('renders success badge', async () => {
-			render(Badge, { props: { type: 'success' } });
-			const badge = await screen.findByText(/✓/);
+			const { container } = render(Badge, {
+				props: { type: 'success' }
+			});
+			const badge = container.querySelector('.badge');
 
-			expect(badge.parentElement).toHaveClass('badge', 'success');
+			expect(badge).toHaveClass('badge', 'success');
+			expect(badge).toHaveTextContent(/✓/);
 		});
 
 		test('renders warning badge', async () => {
-			render(Badge, { props: { type: 'warning' } });
-			const badge = await screen.findByText(/⚠/);
+			const { container } = render(Badge, {
+				props: { type: 'warning' }
+			});
+			const badge = container.querySelector('.badge');
 
-			expect(badge.parentElement).toHaveClass('badge', 'warning');
+			expect(badge).toHaveClass('badge', 'warning');
+			expect(badge).toHaveTextContent(/⚠/);
 		});
 
 		test('renders error badge', async () => {
-			render(Badge, { props: { type: 'error' } });
-			const badge = await screen.findByText(/✗/);
+			const { container } = render(Badge, {
+				props: { type: 'error' }
+			});
+			const badge = container.querySelector('.badge');
 
-			expect(badge.parentElement).toHaveClass('badge', 'error');
+			expect(badge).toHaveClass('badge', 'error');
+			expect(badge).toHaveTextContent(/✗/);
+		});
+
+		test('renders custom content when provided', async () => {
+			const { container } = render(Badge, {
+				props: {
+					type: 'info',
+					content: () => 'Custom Content'
+				}
+			});
+			const badge = container.querySelector('.badge');
+
+			expect(badge).toHaveTextContent('Custom Content');
 		});
 	});
 
 	describe('Accessibility', () => {
-		test('has proper ARIA attributes and structure', async () => {
-			const { container } = render(Badge);
-
-			// Check that the badge is visible
+		test('has proper ARIA attributes', async () => {
+			const { container } = render(Badge, {
+				props: { type: 'info' }
+			});
 			const badge = container.querySelector('.badge');
+
+			expect(badge).toHaveAttribute('role', 'status');
 			expect(badge).toBeVisible();
+		});
 
-			// Check that the badge has proper contrast (via classes)
-			expect(badge).toHaveClass('badge');
+		test('conveys proper status for each type', async () => {
+			const types: BadgeType[] = ['info', 'success', 'warning', 'error'];
+			const ariaLabels = {
+				info: 'Information',
+				success: 'Success',
+				warning: 'Warning',
+				error: 'Error'
+			};
 
-			// Check that the text content is readable
-			expect(badge).toHaveTextContent(/ℹ/);
+			for (const type of types) {
+				const { container, unmount } = render(Badge, {
+					props: { type }
+				});
+				const badge = container.querySelector('.badge');
+
+				expect(badge).toHaveAttribute('aria-label', ariaLabels[type]);
+				unmount();
+			}
 		});
 	});
 
 	describe('State Management', () => {
 		test('updates type reactively', async () => {
-			// Render with initial props
-			const { unmount } = render(Badge);
-			unmount();
+			const { container, rerender } = render(Badge, {
+				props: { type: 'info' }
+			});
 
-			// Re-render with new props
-			render(Badge, { props: { type: 'success' } });
+			// Initial state
+			let badge = container.querySelector('.badge');
+			expect(badge).toHaveClass('info');
 
-			// Check that the badge updates
-			const badge = await screen.findByText(/✓/);
-			expect(badge.parentElement).toHaveClass('success');
+			// Update props
+			await rerender({ type: 'success' });
+			badge = container.querySelector('.badge');
+			expect(badge).toHaveClass('success');
+		});
+
+		test('updates content reactively', async () => {
+			const { container, rerender } = render(Badge, {
+				props: {
+					type: 'info',
+					content: () => 'Initial'
+				}
+			});
+
+			// Initial state
+			let badge = container.querySelector('.badge');
+			expect(badge).toHaveTextContent('Initial');
+
+			// Update content
+			await rerender({
+				type: 'info',
+				content: () => 'Updated'
+			});
+			badge = container.querySelector('.badge');
+			expect(badge).toHaveTextContent('Updated');
 		});
 	});
 });
