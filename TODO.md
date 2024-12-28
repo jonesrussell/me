@@ -3,6 +3,7 @@
 ## High Priority (In Progress)
 
 ### Component System
+
 - [ ] Convert existing code blocks to use new Terminal component
 - [ ] Create RuleViewer component for displaying cursor rules
   - [ ] Add cycling through different rule files
@@ -13,6 +14,7 @@
 - [ ] Add Menu component for improved navigation
 
 ### Core Architecture
+
 - [ ] Create `src/lib/stores` for state management:
   - [ ] Add themeStore (priority for dark/light mode)
   - [ ] Add ruleStore (for rule management)
@@ -26,6 +28,7 @@
   - [ ] Add store types
 
 ### Documentation & Testing
+
 - [ ] Document component usage (priority for new components)
 - [ ] Add examples for each component
 - [ ] Document rule file format
@@ -36,6 +39,7 @@
   - [ ] Test component interactions
 
 ### Svelte 5 Migration & Testing
+
 - [ ] Remove `test-types.ts` and update testing approach:
   - [ ] Migrate to Svelte 5's new testing patterns
   - [ ] Use built-in types from @testing-library/svelte@5
@@ -51,6 +55,7 @@
   - [ ] Set up proper test coverage reporting
 
 ## Completed Features ✅
+
 - [x] Convert all text content to use monospace font
 - [x] Align all elements to character grid
 - [x] Add responsive character-based layouts
@@ -70,6 +75,7 @@
 ## Future Enhancements
 
 ### Component Improvements
+
 - [ ] Implement ASCII art borders consistently
 - [ ] Create interactive ASCII art editor
 - [ ] Create component showcase pages
@@ -81,6 +87,7 @@
   - [ ] `terminal/` for terminal-related components
 
 ### Architecture & Infrastructure
+
 - [ ] Create `src/lib/utils` for shared utilities:
   - [ ] Add pure utility functions
   - [ ] Add type guards
@@ -95,6 +102,7 @@
 - [ ] Extract complex component logic into composables
 
 ### Testing & Performance
+
 - [ ] Add performance monitoring
 - [ ] Implement automated accessibility testing
 - [ ] Add bundle size monitoring
@@ -104,6 +112,7 @@
 - [ ] Test accessibility features
 
 ### Documentation
+
 - [ ] Create style guide for ASCII art
 - [ ] Add API documentation
 - [ ] Add store documentation and usage examples

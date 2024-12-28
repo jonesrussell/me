@@ -6,7 +6,8 @@ describe('grid utils', () => {
 
 	beforeEach(() => {
 		// Reset window before each test
-		global.window = originalWindow ?? (undefined as unknown as Window & typeof globalThis);
+		global.window =
+			originalWindow ?? (undefined as unknown as Window & typeof globalThis);
 	});
 
 	describe('Browser Environment', () => {
