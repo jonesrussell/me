@@ -4,7 +4,7 @@ This document outlines our testing strategy and setup for ensuring code quality 
 
 ## Testing Stack
 
-- **Unit Testing**: Vitest
+- **Unit Testing**: Vitest with @testing-library/svelte
 - **Integration Testing**: Playwright
 - **Type Checking**: TypeScript
 - **Linting**: ESLint
@@ -31,131 +31,129 @@ npm run lint
 
 ## Test Structure
 
-### Unit Tests
+### Component Tests
 
-Unit tests are located alongside the code they test with a `.test.ts` extension:
+Component tests should follow these patterns:
 
 ```typescript
-// Example unit test for grid utilities
-import { expect, test } from 'vitest';
-import { alignToGrid } from './grid';
+import '@testing-library/jest-dom';
+import { render } from '@testing-library/svelte';
+import { describe, expect, test } from 'vitest';
+import MyComponent from './MyComponent.svelte';
 
-test('alignToGrid rounds up to nearest character unit', () => {
-	expect(alignToGrid(15.2)).toBe(16);
-	expect(alignToGrid(15.8)).toBe(16);
+describe('MyComponent', () => {
+  describe('Rendering', () => {
+    test('renders with default props', () => {
+      const { container } = render(MyComponent);
+      // Use container.querySelector for DOM queries
+      // Use getBy* methods for accessibility-focused queries
+    });
+  });
+
+  describe('State Management', () => {
+    test('updates when props change', async () => {
+      const { container, rerender } = render(MyComponent, {
+        props: { initial: 'value' }
+      });
+
+      // Test initial state
+      expect(container).toHaveTextContent('value');
+
+      // Update props using rerender
+      await rerender({ initial: 'new value' });
+      expect(container).toHaveTextContent('new value');
+    });
+  });
 });
 ```
 
-### Integration Tests
+### Key Testing Patterns
 
-Integration tests are located in the `tests` directory and use Playwright:
+1. **Component Rendering**
+   - Use `render` from @testing-library/svelte
+   - Query elements using container.querySelector or testing-library queries
+   - Check for presence, content, and attributes
+
+2. **State Updates**
+   - Use `rerender` for prop updates (replaces $set)
+   - Test both initial state and after updates
+   - Always await rerender calls
+
+3. **Accessibility Testing**
+   - Use role-based queries when possible
+   - Test ARIA attributes
+   - Verify proper semantic structure
+
+4. **Event Handling**
+   - Use fireEvent for triggering events
+   - Test both event dispatch and handling
+   - Verify state changes after events
+
+### Utility Tests
+
+For utility functions:
 
 ```typescript
-// Example integration test
-import { test, expect } from '@playwright/test';
+import { describe, expect, test } from 'vitest';
 
-test('navigation works correctly', async ({ page }) => {
-	await page.goto('/');
-	await page.click('a[href="/projects"]');
-	await expect(page).toHaveURL('/projects');
+describe('utility', () => {
+  describe('specific function', () => {
+    test('expected behavior', () => {
+      // Arrange
+      const input = 'test';
+
+      // Act
+      const result = utilityFunction(input);
+
+      // Assert
+      expect(result).toBe('expected');
+    });
+  });
 });
 ```
 
-## Testing Guidelines
+## Best Practices
 
-### Unit Tests
+1. **Test Organization**
+   - Co-locate tests with components
+   - Use descriptive test names
+   - Group related tests using describe blocks
+   - Follow AAA pattern (Arrange, Act, Assert)
 
-- Test each utility function
-- Test component logic
-- Mock external dependencies
-- Keep tests focused and isolated
-- Use descriptive test names
+2. **Component Testing**
+   - Test both default and custom props
+   - Verify reactive updates
+   - Check accessibility features
+   - Test error states and edge cases
 
-### Integration Tests
+3. **Query Selection**
+   - Prefer role-based queries (getByRole)
+   - Use data-testid for complex queries
+   - Avoid implementation details
 
-- Test user workflows
-- Verify page navigation
-- Test responsive layouts
-- Check theme switching
-- Verify component interactions
+4. **State Management**
+   - Test initial state
+   - Verify state updates
+   - Check derived state
+   - Test side effects
 
-### Type Testing
+## Common Gotchas
 
-- Ensure proper type definitions
-- Test type inference
-- Verify generic constraints
-- Check interface implementations
+1. **Svelte 5 Changes**
+   - Use `rerender` instead of `$set`
+   - Props are passed directly in render options
+   - Content props are functions that need to be called
+   - State updates might require `await tick()`
 
-## Continuous Integration
+2. **Testing Library**
+   - Queries throw when element not found
+   - Use `queryBy*` for checking absence
+   - Container queries don't throw
 
-Tests run automatically on:
-
-- Pull requests
-- Pushes to main branch
-- Deployment to production
-
-The GitHub Actions workflow includes:
-
-- Dependency caching
-- Parallel test execution
-- Test result reporting
-- Coverage reporting (coming soon)
-
-## Writing Good Tests
-
-1. **Arrange**: Set up test conditions
-2. **Act**: Perform the action
-3. **Assert**: Verify the results
-
-Example:
-
-```typescript
-test('newsletter subscription works', async () => {
-	// Arrange
-	const { getByRole } = render(NewsletterCTA);
-	const input = getByRole('textbox');
-	const button = getByRole('button');
-
-	// Act
-	await fireEvent.input(input, { target: { value: 'test@example.com' } });
-	await fireEvent.click(button);
-
-	// Assert
-	expect(getByText('Thanks for subscribing!')).toBeInTheDocument();
-});
-```
-
-## Test Coverage
-
-We aim for high test coverage but prioritize meaningful tests over coverage numbers. Focus areas:
-
-- Critical business logic
-- User interactions
-- Edge cases
-- Error handling
-- Responsive behavior
-
-## Debugging Tests
-
-### Unit Tests
-
-```bash
-# Run tests in watch mode
-npm run test:unit -- --watch
-
-# Debug specific test
-npm run test:unit -- --grep "test name"
-```
-
-### Integration Tests
-
-```bash
-# Run with debug mode
-npm run test:integration -- --debug
-
-# Show browser
-npm run test:integration -- --headed
-```
+3. **Async Testing**
+   - Always await state updates
+   - Use `act` for complex interactions
+   - Handle promises properly
 
 ## Future Improvements
 
@@ -163,4 +161,4 @@ npm run test:integration -- --headed
 - [ ] Implement end-to-end testing
 - [ ] Add test coverage reporting
 - [ ] Add performance testing
-- [ ] Implement accessibility testing
+- [ ] Enhance accessibility testing
