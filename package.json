@@ -8,7 +8,6 @@
 		"build": "NODE_ENV=production vite build",
 		"preview": "NODE_ENV=production vite preview --host",
 		"setup": "npx playwright install chromium",
-		"pretest": "npm run setup",
 		"test": "NODE_ENV=development npm run test:integration && NODE_ENV=development npm run test:unit",
 		"check": "NODE_ENV=development svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "NODE_ENV=development svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
