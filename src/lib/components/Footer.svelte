@@ -1,7 +1,11 @@
 <footer class="footer">
 	<p>
 		&copy; {new Date().getFullYear()} Russell Jones |
-		<a href="https://github.com/jonesrussell/me" target="_blank" rel="noopener noreferrer">
+		<a
+			href="https://github.com/jonesrussell/me"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
 			Source Code
 		</a>
 		| Licensed under

@@ -12,7 +12,10 @@ export function gridCellDimensions(): { width: number; height: number } {
 export function adjustMediaPadding() {
 	const cell = gridCellDimensions();
 
-	function setHeightFromRatio(media: HTMLImageElement | HTMLVideoElement, ratio: number) {
+	function setHeightFromRatio(
+		media: HTMLImageElement | HTMLVideoElement,
+		ratio: number
+	) {
 		const rect = media.getBoundingClientRect();
 		const realHeight = rect.width / ratio;
 		const diff = cell.height - (realHeight % cell.height);
@@ -52,8 +55,12 @@ export function adjustMediaPadding() {
 				if ((media as HTMLImageElement).complete) {
 					onMediaLoaded(media as HTMLImageElement);
 				} else {
-					media.addEventListener('load', () => onMediaLoaded(media as HTMLImageElement));
-					media.addEventListener('error', () => setFallbackHeight(media as HTMLImageElement));
+					media.addEventListener('load', () =>
+						onMediaLoaded(media as HTMLImageElement)
+					);
+					media.addEventListener('error', () =>
+						setFallbackHeight(media as HTMLImageElement)
+					);
 				}
 				break;
 			case 'VIDEO':
@@ -64,8 +71,12 @@ export function adjustMediaPadding() {
 						onMediaLoaded(media as HTMLVideoElement);
 						break;
 					default:
-						media.addEventListener('loadeddata', () => onMediaLoaded(media as HTMLVideoElement));
-						media.addEventListener('error', () => setFallbackHeight(media as HTMLVideoElement));
+						media.addEventListener('loadeddata', () =>
+							onMediaLoaded(media as HTMLVideoElement)
+						);
+						media.addEventListener('error', () =>
+							setFallbackHeight(media as HTMLVideoElement)
+						);
 						break;
 				}
 				break;
@@ -74,9 +85,18 @@ export function adjustMediaPadding() {
 }
 
 export function checkOffsets() {
-	const ignoredTagNames = new Set(['THEAD', 'TBODY', 'TFOOT', 'TR', 'TD', 'TH']);
+	const ignoredTagNames = new Set([
+		'THEAD',
+		'TBODY',
+		'TFOOT',
+		'TR',
+		'TD',
+		'TH'
+	]);
 	const cell = gridCellDimensions();
-	const elements = document.querySelectorAll('body :not(.debug-grid, .debug-toggle)');
+	const elements = document.querySelectorAll(
+		'body :not(.debug-grid, .debug-toggle)'
+	);
 	for (const element of elements) {
 		if (ignoredTagNames.has(element.tagName)) {
 			continue;
@@ -104,7 +124,9 @@ export function checkOffsets() {
 }
 
 export function setupDebugToggle() {
-	const debugToggle = document.querySelector('.debug-toggle') as HTMLInputElement | null;
+	const debugToggle = document.querySelector(
+		'.debug-toggle'
+	) as HTMLInputElement | null;
 	function onDebugToggle() {
 		if (debugToggle) {
 			document.body.classList.toggle('debug', debugToggle.checked);

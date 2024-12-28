@@ -32,7 +32,9 @@
 	--mobile-breakpoint: 75ch;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
 	box-sizing: inherit;
 }
 
