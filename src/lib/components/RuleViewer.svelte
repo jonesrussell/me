@@ -26,7 +26,11 @@
 	</div>
 
 	{#if editing}
-		<textarea bind:value={rules} spellcheck="false" rows={rules.split('\n').length}></textarea>
+		<textarea
+			bind:value={rules}
+			spellcheck="false"
+			rows={rules.split('\n').length}
+		></textarea>
 	{:else}
 		<pre class="rules-display">{rules}</pre>
 	{/if}
