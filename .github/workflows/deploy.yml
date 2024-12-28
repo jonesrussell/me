@@ -6,32 +6,70 @@ on:
   pull_request:
     branches: ['main']
     types: [opened, synchronize]
+  # Allow manual trigger
+  workflow_dispatch:
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+# Default to bash
+defaults:
+  run:
+    shell: bash
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
       PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
       DEBIAN_FRONTEND: noninteractive
+      NODE_ENV: test
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Fetch all history for git info
-          
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      # Reusable cache for system dependencies
+      - name: Cache system dependencies
+        id: cache-system-deps
+        uses: actions/cache@v4
+        with:
+          path: /var/cache/apt
+          key: ${{ runner.os }}-apt-${{ hashFiles('.github/workflows/deploy.yml') }}
+
       - name: Install system dependencies
+        if: steps.cache-system-deps.outputs.cache-hit != 'true'
         run: |
+          # Wait for any existing apt processes to finish
+          while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1 || sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1 || sudo fuser /var/cache/apt/archives/lock >/dev/null 2>&1; do
+            echo "Waiting for other apt processes to finish..."
+            sleep 1
+          done
+
+          # Clean up any stale locks
+          sudo rm -f /var/lib/dpkg/lock*
+          sudo rm -f /var/cache/apt/archives/lock
+          sudo rm -f /var/lib/apt/lists/lock
+
+          # Update apt
           sudo apt-get update
-          sudo apt-get install -y \
+          sudo apt-get clean
+          sudo apt-get install -y --no-install-recommends \
             libgtk-3-0 \
             libwebkit2gtk-4.0-37 \
             libwoff1 \
             libharfbuzz-icu0 \
             gstreamer1.0-plugins-base \
-            libgstreamer-gl1.0-0 \
-            libgstreamer-plugins-bad1.0-0 \
-            libopus0 \
-            libwoff1 \
-            libharfbuzz-icu0 \
             libgstreamer-gl1.0-0 \
             libgstreamer-plugins-bad1.0-0 \
             libopus0 \
@@ -72,28 +110,19 @@ jobs:
             lsb-release \
             xdg-utils
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: package-lock.json
-
       - name: Cache Playwright browsers
         id: playwright-cache
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            playwright-${{ runner.os }}-
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --prefer-offline --no-audit
 
       - name: Install Playwright browsers
-        run: npx playwright install chromium
         if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium --with-deps
 
       - name: Type check
         run: npm run check
@@ -108,6 +137,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: test
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
 
@@ -119,7 +149,7 @@ jobs:
           cache-dependency-path: package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --prefer-offline --no-audit
 
       - name: Build
         env:
@@ -127,7 +157,7 @@ jobs:
           NODE_ENV: production
         run: npm run build
 
-      - name: Upload Artifacts
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: build/
@@ -137,18 +167,19 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     permissions:
-      pages: write
-      id-token: write
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+    
+    # Deploy to the github-pages environment
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    concurrency:
-      group: "pages"
-      cancel-in-progress: false
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          timeout: 600000  # 10 minutes
