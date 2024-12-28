@@ -8,11 +8,7 @@ export default [
 	...ts.configs.recommended,
 	...svelte.configs['flat/recommended'],
 	{
-		ignores: [
-			'build/**',
-			'.svelte-kit/**',
-			'node_modules/**'
-		]
+		ignores: ['build/**', '.svelte-kit/**', 'node_modules/**']
 	},
 	{
 		files: ['**/*.svelte'],
