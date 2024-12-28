@@ -3,12 +3,10 @@ import { alignToGrid } from './grid';
 
 describe('grid utils', () => {
 	beforeAll(() => {
-		// Mock window.innerWidth
-		Object.defineProperty(window, 'innerWidth', {
-			writable: true,
-			configurable: true,
-			value: 1024
-		});
+		// Mock window object for Node.js environment
+		global.window = {
+			innerWidth: 1024
+		} as Window & typeof globalThis;
 	});
 
 	test('alignToGrid rounds to nearest grid unit', () => {
