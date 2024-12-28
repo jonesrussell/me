@@ -7,9 +7,6 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Oh My Zsh
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-
 # Install Docker CLI and Buildx
 FROM base as docker
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
@@ -57,23 +54,11 @@ RUN curl https://raw.githubusercontent.com/nektos/act/master/install.sh | bash
 # Final stage
 FROM act as final
 
-# Set up shell history
-RUN git clone https://github.com/stuartleeks/shell-history.git /tmp/shell-history \
-    && cd /tmp/shell-history \
-    && ./install.sh \
-    && rm -rf /tmp/shell-history
-
 # Set default shell to zsh
 RUN chsh -s $(which zsh)
 
 # Create workspace directory
 WORKDIR /workspaces/me
-
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
 
 # Set up environment
 ENV NODE_ENV=development 
