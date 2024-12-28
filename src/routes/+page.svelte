@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { alignToGrid } from '$lib/utils/grid';
-	const width = alignToGrid(80);
-
 	// YouTube channel and video info
 	const youtubeChannel = {
 		url: 'https://www.youtube.com/@fullstackdev42',

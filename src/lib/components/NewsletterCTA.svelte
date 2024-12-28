@@ -23,7 +23,8 @@
 			if (!response.ok) throw new Error('Failed to subscribe');
 			success = true;
 			email = '';
-		} catch (e) {
+		} catch (err) {
+			console.error('Newsletter subscription failed:', err);
 			error = 'Failed to subscribe. Please try again later.';
 		} finally {
 			submitting = false;
