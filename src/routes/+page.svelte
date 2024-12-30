@@ -1,7 +1,12 @@
 <script lang="ts">
 	import Profile from '../components/Profile.svelte';
 
-	const specialties = ['Full Stack Engineer', 'Cloud Architecture', 'DevOps'];
+	const specialties = [
+		'Full Stack Engineer',
+		'AI Integration',
+		'Cloud Architecture',
+		'DevOps'
+	];
 </script>
 
-<Profile name="Your Name" {specialties} />
+<Profile name="Russell Jones" {specialties} />
