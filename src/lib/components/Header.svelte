@@ -1,66 +1,66 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
+
+	type NavItem = {
+		href: string;
+		label: string;
+		isActive: boolean;
+	};
+
+	const navItems: NavItem[] = [
+		{
+			href: '/blog',
+			label: 'Blog',
+			isActive: $page.url.pathname.startsWith('/blog')
+		},
+		{
+			href: '/projects',
+			label: 'Projects',
+			isActive: $page.url.pathname.startsWith('/projects')
+		},
+		{
+			href: '/resources',
+			label: 'Resources',
+			isActive: $page.url.pathname.startsWith('/resources')
+		},
+		{
+			href: '/contact',
+			label: 'Contact',
+			isActive: $page.url.pathname.startsWith('/contact')
+		}
+	];
 </script>
 
-<header class="site-header" role="banner">
+<header class="site-header">
 	<div class="header-content">
 		<div class="header-main">
-			<h1 class="title">
-				<a href="{base}/" aria-label="Russell Jones - Home">Russell Jones</a>
-			</h1>
+			<a href="{base}/" class="title">Russell Jones</a>
 			<nav class="header-nav" aria-label="Main navigation">
-				<a
-					href="{base}/blog"
-					class:active={$page.url.pathname.startsWith('/blog')}
-					aria-current={$page.url.pathname.startsWith('/blog')
-						? 'page'
-						: undefined}
-				>
-					Blog
-				</a>
-				<a
-					href="{base}/projects"
-					class:active={$page.url.pathname.startsWith('/projects')}
-					aria-current={$page.url.pathname.startsWith('/projects')
-						? 'page'
-						: undefined}
-				>
-					Projects
-				</a>
-				<a
-					href="{base}/resources"
-					class:active={$page.url.pathname.startsWith('/resources')}
-					aria-current={$page.url.pathname.startsWith('/resources')
-						? 'page'
-						: undefined}
-				>
-					Resources
-				</a>
-				<a
-					href="{base}/contact"
-					class:active={$page.url.pathname.startsWith('/contact')}
-					aria-current={$page.url.pathname.startsWith('/contact')
-						? 'page'
-						: undefined}
-				>
-					Contact
-				</a>
+				{#each navItems as { href, label, isActive }}
+					<a
+						href="{base}{href}"
+						class:active={isActive}
+						aria-current={isActive ? 'page' : undefined}
+					>
+						{label}
+					</a>
+				{/each}
 			</nav>
 		</div>
 	</div>
 </header>
 
-<div class="subtitle-bar" role="complementary" aria-label="Developer title">
-	<div class="container">
-		<h2 class="subtitle">Limitless Developer</h2>
-	</div>
+<div class="subtitle-bar">
+	<div class="container">Limitless Developer</div>
 </div>
 
 <style>
 	.site-header {
+		--header-height: calc(var(--ch) * 4);
+		container-type: inline-size;
 		border-bottom: 1px solid var(--border-color);
-		padding: var(--ch) 0;
+		padding-block: var(--ch);
 		background: var(--bg-color);
 		color: var(--text-color);
 		width: 100%;
@@ -72,85 +72,62 @@
 	.subtitle-bar {
 		background: var(--bg-darker);
 		width: 100%;
-		padding: var(--ch) 0;
+		padding-block: var(--ch);
 	}
 
 	.container {
-		max-width: min(var(--measure), 95vw);
-		margin: 0 auto;
-		padding: 0 var(--ch2);
+		max-width: min(var(--measure), 95cqi);
+		margin-inline: auto;
+		padding-inline: var(--ch2);
 		color: var(--text-muted);
 	}
 
 	.header-content {
 		width: 100%;
-		max-width: min(var(--measure), 95vw);
-		padding: 0 var(--ch2);
-		margin: 0 auto;
+		max-width: min(var(--measure), 95cqi);
+		padding-inline: var(--ch2);
+		margin-inline: auto;
 	}
 
 	.header-main {
-		display: flex;
-		justify-content: space-between;
+		display: grid;
+		grid-template-columns: auto 1fr;
 		align-items: center;
-	}
+		gap: var(--ch4);
 
-	.brand {
-		display: flex;
-		flex-direction: column;
-		gap: var(--ch-half);
+		@container (width < 600px) {
+			grid-template-columns: 1fr;
+			justify-items: center;
+			gap: var(--ch);
+		}
 	}
 
 	.title {
-		margin: 0;
-		font-size: inherit;
 		font-weight: bold;
-	}
-
-	.title a {
 		color: var(--text-color);
 		text-decoration: none;
-	}
-
-	.subtitle {
-		margin: 0;
-		font-size: inherit;
-		font-weight: normal;
-		color: inherit;
+		font-family: 'Fira Code', monospace;
 	}
 
 	.header-nav {
 		display: flex;
 		gap: var(--ch3);
-	}
 
-	.header-nav a {
-		color: var(--text-muted);
-		text-decoration: none;
-		transition: color 0.2s ease;
-	}
+		& a {
+			color: var(--text-muted);
+			text-decoration: none;
+			transition: color 0.2s ease;
 
-	.header-nav a:hover {
-		color: var(--text-color);
-		text-decoration: none;
-	}
+			&:hover {
+				color: var(--text-color);
+			}
 
-	.header-nav a.active {
-		color: var(--text-color);
-	}
-
-	@media (max-width: 600px) {
-		.header-main {
-			flex-direction: column;
-			align-items: center;
-			gap: var(--ch);
+			&.active {
+				color: var(--text-color);
+			}
 		}
 
-		.brand {
-			align-items: center;
-		}
-
-		.header-nav {
+		@container (width < 600px) {
 			gap: var(--ch4);
 		}
 	}
