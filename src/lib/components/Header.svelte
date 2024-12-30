@@ -131,4 +131,15 @@
 			gap: var(--ch4);
 		}
 	}
+
+	.brand {
+		display: flex;
+		flex-direction: column;
+		gap: var(--ch-half);
+	}
+
+	.subtitle {
+		color: var(--text-muted);
+		font-size: 0.9em;
+	}
 </style>

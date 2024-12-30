@@ -10,6 +10,26 @@
 		url: 'https://youtu.be/B4v7ZDLxiS4',
 		embedUrl: `https://www.youtube.com/embed/B4v7ZDLxiS4`
 	} as const;
+
+	const specialties = [
+		{
+			title: 'Modern JavaScript/TS',
+			description: 'Building the future with cutting-edge web technologies'
+		},
+		{
+			title: 'AI Integration',
+			description:
+				'Harnessing artificial intelligence to solve complex problems'
+		},
+		{
+			title: 'Cloud Architecture',
+			description: 'Designing scalable, resilient cloud-native solutions'
+		},
+		{
+			title: 'DevOps',
+			description: 'Automating excellence, delivering continuously'
+		}
+	];
 </script>
 
 <svelte:head>
@@ -21,106 +41,113 @@
 </svelte:head>
 
 <section class="home">
-	<h1>Hey, I'm Web Developer Jones.</h1>
+	<div class="intro">
+		Transforming ideas into elegant solutions.
+		<span class="highlight">One line of code at a time.</span>
+	</div>
 
 	<div class="tagline">
-		I help build amazing web applications and contribute to open source.
+		Full Stack Developer crafting high-performance applications and pushing the
+		boundaries of what's possible on the web.
 	</div>
 
-	<div class="intro">
-		I'm a Full Stack Developer from Canada 🇨🇦 specializing in:
-
-		<div class="skills">
-			<div class="skill-group">
-				<div class="skill">Modern JavaScript/TS</div>
-				<div class="skill">PHP (Laravel, Drupal)</div>
-				<div class="skill">Go Development 🐹</div>
+	<div class="specialties">
+		{#each specialties as specialty}
+			<div class="specialty">
+				<div class="specialty-title">{specialty.title}</div>
+				<div class="specialty-desc">{specialty.description}</div>
 			</div>
-			<div class="skill-group">
-				<div class="skill">Vue & Svelte</div>
-				<div class="skill">DevOps & Docker</div>
-				<div class="skill">Open Source</div>
-			</div>
-		</div>
-
-		<!-- Added YouTube channel section -->
-		<div class="youtube-section">
-			<div class="youtube-banner">
-				📺 Check out my developer tutorials on YouTube
-			</div>
-
-			<figure class="video-figure">
-				<div class="video-container">
-					<iframe
-						src={featuredVideo.embedUrl}
-						title="Featured YouTube video"
-						frameborder="0"
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-						allowfullscreen
-						loading="lazy"
-					></iframe>
-				</div>
-				<figcaption>Add a Google Font to Tailwind CSS | 2023</figcaption>
-			</figure>
-
-			<a
-				href={youtubeChannel.url}
-				class="youtube-link"
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				Subscribe to my channel: youtube.com/@fullstackdev42
-			</a>
-		</div>
-
-		<nav class="navigation">
-			<a href="/blog">Read my technical articles</a>
-			<a href="/projects">Browse my open source projects</a>
-			<a href="/contact">Get in touch</a>
-		</nav>
+		{/each}
 	</div>
+
+	<!-- Added YouTube channel section -->
+	<div class="youtube-section">
+		<div class="youtube-banner">
+			📺 Check out my developer tutorials on YouTube
+		</div>
+
+		<figure class="video-figure">
+			<div class="video-container">
+				<iframe
+					src={featuredVideo.embedUrl}
+					title="Featured YouTube video"
+					frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+					allowfullscreen
+					loading="lazy"
+				></iframe>
+			</div>
+			<figcaption>Add a Google Font to Tailwind CSS | 2023</figcaption>
+		</figure>
+
+		<a
+			href={youtubeChannel.url}
+			class="youtube-link"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			Subscribe to my channel: youtube.com/@fullstackdev42
+		</a>
+	</div>
+
+	<nav class="navigation">
+		<a href="/blog">Read my technical articles</a>
+		<a href="/projects">Browse my open source projects</a>
+		<a href="/contact">Get in touch</a>
+	</nav>
 </section>
 
 <style>
 	.home {
-		max-width: min(var(--measure), 95vw);
-		margin: 0 auto;
+		max-width: min(var(--measure), 95cqi);
+		margin-inline: auto;
 		padding: var(--ch4) var(--ch2);
 	}
 
-	h1 {
+	.intro {
 		font-size: 2em;
 		line-height: 1.2;
-		margin: 0;
+		font-weight: bold;
+		margin-bottom: var(--ch2);
+	}
+
+	.highlight {
+		color: var(--accent-color);
+		display: block;
 	}
 
 	.tagline {
 		color: var(--text-muted);
-		margin: var(--ch2) 0;
+		font-size: 1.2em;
+		margin-bottom: var(--ch4);
+		max-width: 60ch;
 	}
 
-	.intro {
-		margin: var(--ch3) 0;
-	}
-
-	.skills {
-		margin: var(--ch2) 0;
+	.specialties {
 		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 35ch), 1fr));
 		gap: var(--ch2);
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 30ch), 1fr));
+		margin-top: var(--ch4);
 	}
 
-	.skill-group {
-		display: flex;
-		flex-direction: column;
-		gap: var(--ch);
-	}
-
-	.skill {
-		padding: var(--ch);
+	.specialty {
+		padding: var(--ch2);
 		border: 1px solid var(--border-color);
-		border-radius: 2px;
-		background: color-mix(in srgb, var(--text-color) 5%, transparent);
+		background: var(--bg-darker);
+		transition: transform 0.2s ease;
+
+		&:hover {
+			transform: translateY(-2px);
+		}
+	}
+
+	.specialty-title {
+		font-weight: bold;
+		margin-bottom: var(--ch);
+	}
+
+	.specialty-desc {
+		color: var(--text-muted);
 	}
 
 	.navigation {
