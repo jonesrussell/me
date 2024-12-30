@@ -37,7 +37,12 @@
 - [ ] Document component usage
 - [ ] Add examples for each component
 - [ ] Create style guide for ASCII art
-- [ ] Document rule file format
+- [x] Document rule file format and usage
+- [x] Add documentation for initialization script
+  - [x] Add ai-attach command for quick file review
+  - [ ] Add command to update key files after major changes
+  - [ ] Add automatic rule validation on commit
+  - [ ] Add documentation generation from rules
 
 ## Technical Improvements
 
@@ -45,6 +50,10 @@
 - [x] Implement rule file parser
 - [x] Add unit tests for components
 - [x] Set up CI/CD for rule validation
+- [x] Add YAML support for better rule file readability
+- [ ] Add automatic rule file formatting
+- [ ] Implement rule file schema validation
+- [ ] Add rule file version control integration
 
 ## Build & Deploy
 
@@ -61,6 +70,22 @@
 - [ ] Add visual regression testing
 - [ ] Implement end-to-end testing scenarios
 - [ ] Add test coverage reporting
+
+## Development Workflow
+
+- [x] Add initialization script for project setup
+- [x] Add command for quick AI file attachment
+- [ ] Implement automatic documentation updates
+- [ ] Add pre-commit hooks for rule validation
+- [ ] Create automated changelog from rule changes
+
+## AI Integration Improvements
+
+- [x] Add quick command for AI file review
+- [ ] Add automatic rule suggestion based on code changes
+- [ ] Implement AI-assisted rule validation
+- [ ] Add AI-powered documentation generation
+- [ ] Create AI training data from successful code patterns
 
 # Homepage Improvements
 

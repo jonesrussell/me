@@ -19,6 +19,18 @@ interface CursorRules {
     [key: string]: any;
 }
 
+async function generateAIInstructions(): Promise<void> {
+    console.log(chalk.white(`
+Please review and keep in mind these key project files:
+@.cursorrules - Project coding standards and guidelines
+@TODO.md - Current project tasks and progress
+@README.md - Project overview and documentation
+@docs/CONTRIBUTING.md - Contribution guidelines
+@docs/TESTING.md - Testing procedures and requirements
+
+These files should inform all your responses and recommendations.`));
+}
+
 async function validateCursorRules(): Promise<void> {
     try {
         console.log(chalk.blue('📋 Validating Cursor Rules...'));
@@ -71,6 +83,26 @@ async function scanMarkdownDocs(): Promise<void> {
                 console.log(chalk.gray(`  - ${file}`));
             });
         }
+
+        // Verify key documentation files exist
+        const requiredFiles = ['.cursorrules', 'TODO.md', 'README.md', 'docs/CONTRIBUTING.md', 'docs/TESTING.md'];
+        const missingFiles: string[] = [];
+
+        for (const file of requiredFiles) {
+            try {
+                await readFile(file, 'utf-8');
+            } catch {
+                missingFiles.push(file);
+            }
+        }
+
+        if (missingFiles.length > 0) {
+            console.log(chalk.yellow('\n⚠ Missing key documentation files:'));
+            missingFiles.forEach(file => {
+                console.log(chalk.yellow(`  - ${file}`));
+            });
+        }
+
     } catch (error) {
         console.error(chalk.red('✗ Error scanning markdown docs:'), error);
     }
@@ -134,6 +166,14 @@ async function reviewCodebase(): Promise<void> {
 }
 
 async function main() {
+    const command = process.argv[2];
+
+    if (command === 'attach') {
+        console.log(chalk.blue('🤖 AI File Attachment Instructions:'));
+        await generateAIInstructions();
+        return;
+    }
+
     console.log(chalk.yellow('=== Session Initialization ===\n'));
 
     await validateCursorRules();
