@@ -52,6 +52,10 @@ monospace_web_guidelines:
       - ensure_consistent_spacing_in_character_units: true
       - format_tables_to_auto_adjust_to_monospace_grid: true
       - keep_media_objects_aligned_to_character_boundaries: true
+      - enforce_monospace_navigation_alignment: true
+      - use_character_based_widths_for_nav_items: true
+      - maintain_consistent_character_spacing: true
+      - test_visual_alignment_with_snapshots: true
 
 css_2024_best_practices:
   - description: "Best practices for CSS in 2024."
@@ -390,3 +394,16 @@ jest_dom_assertions:
           expect(element).toBeVisible();
           expect(element).not.toBeDisabled();
         });
+
+testing_guidelines:
+  - description: "Guidelines for comprehensive testing."
+  - rules:
+      - implement_visual_regression_tests: true
+      - capture_baseline_screenshots: true
+      - verify_monospace_alignment: true
+      - test_responsive_breakpoints: true
+      - check_font_family_consistency: true
+      - validate_character_grid_alignment: true
+      - ensure_consistent_spacing: true
+      - test_dark_and_light_themes: true
+      - verify_accessibility_standards: true

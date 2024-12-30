@@ -21,7 +21,8 @@
 		"workflow:deploy": "act -j deploy -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
 		"workflow:full": "act -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy --reuse",
 		"init-session": "tsx scripts.ts",
-		"ai-attach": "tsx scripts.ts attach"
+		"ai-attach": "tsx scripts.ts attach",
+		"init-help": "tsx scripts.ts --help"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^3.2.2",
