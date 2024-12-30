@@ -35,7 +35,24 @@
 	],
 	"customizations": {
 		"vscode": {
-			"extensions": ["svelte.svelte-vscode", "github.vscode-github-actions"]
+			"extensions": [
+				"svelte.svelte-vscode",
+				"github.vscode-github-actions"
+			]
+		}
+	},
+	"forwardPorts": [
+		5173,
+		9323
+	],
+	"portsAttributes": {
+		"5173": {
+			"label": "Vite Dev Server",
+			"onAutoForward": "notify"
+		},
+		"9323": {
+			"label": "Playwright Report",
+			"onAutoForward": "notify"
 		}
 	}
 	// Features to add to the dev container. More info: https://containers.dev/features.

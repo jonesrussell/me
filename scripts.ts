@@ -165,22 +165,54 @@ async function reviewCodebase(): Promise<void> {
     }
 }
 
+async function showHelp(): Promise<void> {
+    console.log(chalk.blue('📚 Available Commands:\n'));
+    console.log(chalk.white(`
+npm run init-session
+    Initializes a development session:
+    - Validates cursor rules
+    - Scans markdown documentation
+    - Reviews codebase structure
+    - Shows project health check
+
+npm run ai-attach
+    Outputs AI file attachment instructions:
+    - Lists key project files
+    - Provides context for AI review
+    - Makes documentation updates easier
+
+Options:
+    --help, -h    Show this help message
+`));
+}
+
 async function main() {
     const command = process.argv[2];
 
-    if (command === 'attach') {
-        console.log(chalk.blue('🤖 AI File Attachment Instructions:'));
-        await generateAIInstructions();
-        return;
+    switch (command) {
+        case 'attach':
+            console.log(chalk.blue('🤖 AI File Attachment Instructions:'));
+            await generateAIInstructions();
+            break;
+
+        case '--help':
+        case '-h':
+            await showHelp();
+            break;
+
+        case undefined:
+            console.log(chalk.yellow('=== Session Initialization ===\n'));
+            await validateCursorRules();
+            await scanMarkdownDocs();
+            await reviewCodebase();
+            console.log(chalk.yellow('\n=== Initialization Complete ==='));
+            break;
+
+        default:
+            console.log(chalk.red(`Unknown command: ${command}`));
+            await showHelp();
+            process.exit(1);
     }
-
-    console.log(chalk.yellow('=== Session Initialization ===\n'));
-
-    await validateCursorRules();
-    await scanMarkdownDocs();
-    await reviewCodebase();
-
-    console.log(chalk.yellow('\n=== Initialization Complete ==='));
 }
 
 main().catch(console.error); 
