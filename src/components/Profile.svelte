@@ -12,23 +12,29 @@
 	}>();
 </script>
 
-<div class="profile-container">
-	<h1>{name}</h1>
-	<h2>{title}</h2>
-	<div class="specialties">
-		{specialties.join(' | ')}
-	</div>
+<div class="profile">
+	<div class="name">{name}</div>
+	<div class="title">{title}</div>
+	<div class="specialties">{specialties.join(' | ')}</div>
 </div>
 
 <style>
-	.profile-container {
-		font-family: 'Fira Code', monospace;
+	.profile {
 		text-align: center;
-		padding: 2rem;
+		margin-bottom: var(--ch4);
+		font-family: 'Fira Code', monospace;
+	}
+
+	.name {
+		font-size: 1.2em;
+	}
+
+	.title {
+		color: var(--text-muted);
+		margin: var(--ch) 0;
 	}
 
 	.specialties {
-		margin-top: 1rem;
-		color: var(--text-secondary);
+		color: var(--text-muted);
 	}
 </style>
