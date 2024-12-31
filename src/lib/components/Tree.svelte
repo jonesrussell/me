@@ -1,11 +1,15 @@
 <script lang="ts">
+	import Tree from './Tree.svelte';
+
 	interface TreeNode {
 		name: string;
 		children?: TreeNode[];
 	}
 
-	export let data: TreeNode;
-	export let level = 0;
+	const { data, level = 0 } = $props<{
+		data: TreeNode;
+		level?: number;
+	}>();
 
 	function getPrefix(isLast: boolean) {
 		if (level === 0) return '';
@@ -20,7 +24,7 @@
 			{getPrefix(false)}{data.name}/
 		</div>
 		{#each data.children as child}
-			<svelte:self data={child} level={level + 1} />
+			<Tree data={child} level={level + 1} />
 		{/each}
 	{:else}
 		<div class="file">

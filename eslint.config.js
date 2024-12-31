@@ -21,8 +21,14 @@ export default [
 			parserOptions: {
 				parser: ts.parser,
 				project: ['./tsconfig.json'],
-				extraFileExtensions: ['.svelte']
+				extraFileExtensions: ['.svelte'],
+				jsx: true,
+				jsxPragma: null,
+				jsxFragmentName: null
 			}
+		},
+		rules: {
+			'no-unused-vars': ['error', { varsIgnorePattern: '^\\$' }]
 		}
 	},
 	{

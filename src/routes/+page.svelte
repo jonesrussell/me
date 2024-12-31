@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Terminal from '$lib/components/Terminal.svelte';
 	// YouTube channel and video info
 	const youtubeChannel = {
 		url: 'https://www.youtube.com/@fullstackdev42',
@@ -10,168 +11,288 @@
 		url: 'https://youtu.be/B4v7ZDLxiS4',
 		embedUrl: `https://www.youtube.com/embed/B4v7ZDLxiS4`
 	} as const;
+
+	const specialties = [
+		{
+			title: 'Modern JavaScript/TS',
+			description: 'Building the future with cutting-edge web technologies',
+			icon: '⚡'
+		},
+		{
+			title: 'Golang & PHP',
+			description:
+				'Crafting robust backend solutions with battle-tested technologies',
+			icon: '🔧'
+		},
+		{
+			title: 'AI Integration',
+			description:
+				'Harnessing artificial intelligence to solve complex problems',
+			icon: '🤖'
+		},
+		{
+			title: 'Cloud & DevOps',
+			description: 'Designing and automating scalable cloud-native solutions',
+			icon: '☁️'
+		}
+	];
 </script>
 
 <svelte:head>
 	<title>Russell Jones | Web Developer</title>
 	<meta
 		name="description"
-		content="Full Stack Developer from Canada specializing in JavaScript, Go, and Open Source"
+		content="Developer from Canada specializing in JavaScript, Go, and Open Source"
 	/>
 </svelte:head>
 
-<section class="home">
-	<h1>Hey, I'm Web Developer Jones.</h1>
-
-	<div class="tagline">
-		I help build amazing web applications and contribute to open source.
-	</div>
-
-	<div class="intro">
-		I'm a Full Stack Developer from Canada 🇨🇦 specializing in:
-
-		<div class="skills">
-			<div class="skill-group">
-				<div class="skill">Modern JavaScript/TS</div>
-				<div class="skill">PHP (Laravel, Drupal)</div>
-				<div class="skill">Go Development 🐹</div>
+<section class="hero">
+	<div class="hero-content">
+		<Terminal>
+			<div class="intro">Building elegant solutions, line by line.</div>
+			<div class="tagline">
+				Developer crafting high-performance applications and pushing the
+				boundaries of what's possible on the web.
 			</div>
-			<div class="skill-group">
-				<div class="skill">Vue & Svelte</div>
-				<div class="skill">DevOps & Docker</div>
-				<div class="skill">Open Source</div>
-			</div>
-		</div>
-
-		<!-- Added YouTube channel section -->
-		<div class="youtube-section">
-			<div class="youtube-banner">
-				📺 Check out my developer tutorials on YouTube
-			</div>
-
-			<figure class="video-figure">
-				<div class="video-container">
-					<iframe
-						src={featuredVideo.embedUrl}
-						title="Featured YouTube video"
-						frameborder="0"
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-						allowfullscreen
-						loading="lazy"
-					></iframe>
-				</div>
-				<figcaption>Add a Google Font to Tailwind CSS | 2023</figcaption>
-			</figure>
-
-			<a
-				href={youtubeChannel.url}
-				class="youtube-link"
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				Subscribe to my channel: youtube.com/@fullstackdev42
-			</a>
-		</div>
-
-		<nav class="navigation">
-			<a href="/blog">Read my technical articles</a>
-			<a href="/projects">Browse my open source projects</a>
-			<a href="/contact">Get in touch</a>
-		</nav>
+		</Terminal>
 	</div>
 </section>
 
+<section class="home">
+	<div class="specialties">
+		{#each specialties as specialty}
+			<div class="specialty">
+				<div class="specialty-icon">{specialty.icon}</div>
+				<div class="specialty-content">
+					<div class="specialty-title">{specialty.title}</div>
+					<div class="specialty-desc">{specialty.description}</div>
+				</div>
+			</div>
+		{/each}
+	</div>
+
+	<!-- Added YouTube channel section -->
+	<div class="youtube-section">
+		<div class="section-header">
+			<h2>Developer Tutorials</h2>
+			<p class="section-desc">
+				Learn web development tips and tricks on my YouTube channel
+			</p>
+		</div>
+
+		<figure class="video-figure">
+			<div class="video-container">
+				<iframe
+					src={featuredVideo.embedUrl}
+					title="Featured YouTube video"
+					frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+					allowfullscreen
+					loading="lazy"
+				></iframe>
+			</div>
+			<figcaption>Add a Google Font to Tailwind CSS | 2023</figcaption>
+		</figure>
+
+		<a
+			href={youtubeChannel.url}
+			class="youtube-link"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			<span class="youtube-icon">▶</span>
+			Subscribe to my channel
+		</a>
+	</div>
+
+	<nav class="navigation">
+		<a href="/blog" class="nav-link">
+			<span class="nav-icon">📝</span>
+			Read my technical articles
+		</a>
+		<a href="/projects" class="nav-link">
+			<span class="nav-icon">🚀</span>
+			Browse my open source projects
+		</a>
+		<a href="/contact" class="nav-link">
+			<span class="nav-icon">✉️</span>
+			Get in touch
+		</a>
+	</nav>
+</section>
+
 <style>
-	.home {
-		max-width: min(var(--measure), 95vw);
-		margin: 0 auto;
+	.hero {
+		position: relative;
 		padding: var(--ch4) var(--ch2);
+		background: var(--bg-darker);
 	}
 
-	h1 {
-		font-size: 2em;
+	.hero-content {
+		max-width: min(var(--measure), 95cqi);
+		margin-inline: auto;
+	}
+
+	.intro {
+		font-size: clamp(2em, 5vw, 3em);
 		line-height: 1.2;
-		margin: 0;
+		font-weight: bold;
+		margin-bottom: var(--ch2);
+		color: var(--accent-color);
 	}
 
 	.tagline {
 		color: var(--text-muted);
-		margin: var(--ch2) 0;
+		font-size: clamp(1.2em, 2vw, 1.5em);
+		margin-bottom: var(--ch2);
+		max-width: 60ch;
 	}
 
-	.intro {
-		margin: var(--ch3) 0;
+	.home {
+		max-width: min(var(--measure), 95cqi);
+		margin-inline: auto;
+		padding: 0 var(--ch2) var(--ch4);
 	}
 
-	.skills {
-		margin: var(--ch2) 0;
+	.specialties {
 		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 35ch), 1fr));
 		gap: var(--ch2);
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 30ch), 1fr));
+		margin: var(--ch4) 0;
 	}
 
-	.skill-group {
-		display: flex;
-		flex-direction: column;
-		gap: var(--ch);
-	}
-
-	.skill {
-		padding: var(--ch);
+	.specialty {
+		padding: var(--ch3);
 		border: 1px solid var(--border-color);
-		border-radius: 2px;
-		background: color-mix(in srgb, var(--text-color) 5%, transparent);
+		background: var(--bg-darker);
+		transition: all 0.3s ease;
+		display: flex;
+		gap: var(--ch2);
+		align-items: flex-start;
+
+		&:hover {
+			transform: translateY(-2px);
+			border-color: var(--accent-color);
+			box-shadow: 0 4px 12px
+				color-mix(in srgb, var(--text-color) 10%, transparent);
+		}
+	}
+
+	.specialty-icon {
+		font-size: 1.5em;
+		line-height: 1;
+		padding: var(--ch);
+		background: color-mix(in srgb, var(--accent-color) 10%, transparent);
+		border-radius: 8px;
+	}
+
+	.specialty-content {
+		flex: 1;
+	}
+
+	.specialty-title {
+		font-weight: bold;
+		margin-bottom: var(--ch);
+		color: var(--accent-color);
+	}
+
+	.specialty-desc {
+		color: var(--text-muted);
+		line-height: 1.4;
 	}
 
 	.navigation {
-		margin-top: var(--ch3);
+		margin: var(--ch4) 0;
 		display: flex;
 		flex-direction: column;
 		gap: var(--ch2);
 	}
 
-	.navigation a {
+	.nav-link {
 		color: var(--link-color);
 		text-decoration: none;
+		display: flex;
+		align-items: center;
+		gap: var(--ch2);
+		padding: var(--ch2);
+		border: 1px solid var(--border-color);
+		border-radius: 4px;
+		transition: all 0.2s ease;
+
+		&:hover {
+			background: color-mix(in srgb, var(--text-color) 5%, transparent);
+			border-color: var(--accent-color);
+			transform: translateX(var(--ch));
+		}
 	}
 
-	.navigation a:hover {
-		text-decoration: underline;
+	.nav-icon {
+		font-size: 1.2em;
 	}
 
 	@media (min-width: 600px) {
 		.navigation {
 			flex-direction: row;
-			gap: var(--ch4);
+			gap: var(--ch2);
+		}
+
+		.nav-link {
+			flex: 1;
+			justify-content: center;
+
+			&:hover {
+				transform: translateY(-2px);
+			}
 		}
 	}
 
 	.youtube-section {
-		margin: var(--ch3) 0;
-		padding: var(--ch2);
+		margin: var(--ch4) 0;
+		padding: var(--ch3);
 		border: 1px solid var(--border-color);
-		border-radius: 2px;
+		border-radius: 8px;
 		background: color-mix(in srgb, var(--text-color) 3%, transparent);
-
-		/* Using CSS Container Query for responsive layout */
 		container-type: inline-size;
 	}
 
-	.youtube-banner {
-		font-weight: bold;
-		margin-bottom: var(--ch);
+	.section-header {
+		text-align: center;
+		margin-bottom: var(--ch3);
+	}
+
+	h2 {
+		font-size: 1.5em;
+		margin: 0 0 var(--ch) 0;
+		color: var(--accent-color);
+	}
+
+	.section-desc {
+		color: var(--text-muted);
+		margin: 0;
 	}
 
 	.youtube-link {
 		color: var(--link-color);
 		text-decoration: none;
-		display: inline-block;
-		padding: var(--ch) 0;
-		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--ch);
+		padding: var(--ch2);
+		margin-top: var(--ch2);
+		border: 1px solid var(--border-color);
+		border-radius: 4px;
+		transition: all 0.2s ease;
+
+		&:hover {
+			background: color-mix(in srgb, var(--text-color) 5%, transparent);
+			border-color: var(--accent-color);
+		}
 	}
 
-	.youtube-link:hover {
-		text-decoration: underline;
+	.youtube-icon {
+		color: #ff0000;
+		font-size: 1.2em;
 	}
 
 	.video-container {
@@ -197,10 +318,6 @@
 		.youtube-section {
 			display: grid;
 			gap: var(--ch2);
-		}
-
-		.youtube-banner {
-			text-align: center;
 		}
 
 		.youtube-link {

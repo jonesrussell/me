@@ -1,6 +1,35 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
+
+	type NavItem = {
+		href: string;
+		label: string;
+		isActive: boolean;
+	};
+
+	const navItems: NavItem[] = [
+		{
+			href: '/blog',
+			label: 'Blog',
+			isActive: $page.url.pathname.startsWith('/blog')
+		},
+		{
+			href: '/projects',
+			label: 'Projects',
+			isActive: $page.url.pathname.startsWith('/projects')
+		},
+		{
+			href: '/resources',
+			label: 'Resources',
+			isActive: $page.url.pathname.startsWith('/resources')
+		},
+		{
+			href: '/contact',
+			label: 'Contact',
+			isActive: $page.url.pathname.startsWith('/contact')
+		}
+	];
 </script>
 
 <header class="site-header">
@@ -8,39 +37,30 @@
 		<div class="header-main">
 			<a href="{base}/" class="title">Russell Jones</a>
 			<nav class="header-nav" aria-label="Main navigation">
-				<a
-					href="{base}/blog"
-					class:active={$page.url.pathname.startsWith('/blog')}
-				>
-					Blog
-				</a>
-				<a
-					href="{base}/projects"
-					class:active={$page.url.pathname.startsWith('/projects')}
-				>
-					Projects
-				</a>
-				<a
-					href="{base}/resources"
-					class:active={$page.url.pathname.startsWith('/resources')}
-				>
-					Resources
-				</a>
-				<a
-					href="{base}/contact"
-					class:active={$page.url.pathname.startsWith('/contact')}
-				>
-					Contact
-				</a>
+				{#each navItems as { href, label, isActive }}
+					<a
+						href="{base}{href}"
+						class:active={isActive}
+						aria-current={isActive ? 'page' : undefined}
+					>
+						{label}
+					</a>
+				{/each}
 			</nav>
 		</div>
 	</div>
 </header>
 
+<div class="subtitle-bar">
+	<div class="container">Limitless Developer</div>
+</div>
+
 <style>
 	.site-header {
+		--header-height: calc(var(--ch) * 4);
+		container-type: inline-size;
 		border-bottom: 1px solid var(--border-color);
-		padding: var(--ch) 0;
+		padding-block: var(--ch);
 		background: var(--bg-color);
 		color: var(--text-color);
 		width: 100%;
@@ -49,54 +69,68 @@
 		z-index: 10;
 	}
 
+	.subtitle-bar {
+		background: var(--bg-darker);
+		width: 100%;
+		padding-block: var(--ch);
+	}
+
+	.container {
+		max-width: min(var(--measure), 95cqi);
+		margin-inline: auto;
+		padding-inline: var(--ch2);
+		color: var(--text-muted);
+	}
+
 	.header-content {
 		width: 100%;
-		max-width: min(var(--measure), 95vw);
-		padding: 0 var(--ch2);
-		margin: 0 auto;
+		max-width: min(var(--measure), 95cqi);
+		padding-inline: var(--ch2);
+		margin-inline: auto;
 	}
 
 	.header-main {
-		display: flex;
-		justify-content: space-between;
+		display: grid;
+		grid-template-columns: auto 1fr;
 		align-items: center;
+		gap: var(--ch4);
+
+		@container (width < 600px) {
+			grid-template-columns: 1fr;
+			justify-items: center;
+			gap: var(--ch);
+		}
 	}
 
 	.title {
 		font-weight: bold;
 		color: var(--text-color);
 		text-decoration: none;
+		font-family: 'Fira Code', monospace;
 	}
 
 	.header-nav {
 		display: flex;
 		gap: var(--ch3);
-	}
+		justify-content: flex-end;
 
-	.header-nav a {
-		color: var(--text-muted);
-		text-decoration: none;
-		transition: color 0.2s ease;
-	}
+		& a {
+			color: var(--text-muted);
+			text-decoration: none;
+			transition: color 0.2s ease;
 
-	.header-nav a:hover {
-		color: var(--text-color);
-		text-decoration: none;
-	}
+			&:hover {
+				color: var(--text-color);
+			}
 
-	.header-nav a.active {
-		color: var(--text-color);
-	}
-
-	@media (max-width: 600px) {
-		.header-main {
-			flex-direction: column;
-			align-items: center;
-			gap: var(--ch);
+			&.active {
+				color: var(--text-color);
+			}
 		}
 
-		.header-nav {
+		@container (width < 600px) {
 			gap: var(--ch4);
+			justify-content: center;
 		}
 	}
 </style>

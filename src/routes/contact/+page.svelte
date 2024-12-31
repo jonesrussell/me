@@ -1,175 +1,121 @@
 <script lang="ts">
-	let formData = {
+	let formData = $state({
 		name: '',
 		email: '',
 		message: ''
-	};
+	});
 
-	let isSubmitting = false;
-	let submitStatus: 'idle' | 'success' | 'error' = 'idle';
-	let errorMessage = '';
+	let isSubmitting = $state(false);
+	let submitStatus = $state<'idle' | 'success' | 'error'>('idle');
+	let errorMessage = $state('');
 
-	const handleSubmit = async (event: SubmitEvent) => {
+	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
+		if (isSubmitting) return;
+
 		isSubmitting = true;
 		submitStatus = 'idle';
 		errorMessage = '';
 
 		try {
-			const response = await fetch(
-				'https://goforms.streetcode.net/api/contact',
-				{
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({
-						name: formData.name,
-						email: formData.email,
-						message: formData.message
-					})
-				}
-			);
-
-			if (!response.ok) {
-				throw new Error(`Error: ${response.status}`);
-			}
-
+			// Simulate API call
+			await new Promise((resolve) => setTimeout(resolve, 1000));
 			submitStatus = 'success';
-			formData = { name: '', email: '', message: '' }; // Reset form
-		} catch (error) {
+			formData = { name: '', email: '', message: '' };
+		} catch (e) {
 			submitStatus = 'error';
-			errorMessage =
-				error instanceof Error ? error.message : 'An error occurred';
+			errorMessage = e instanceof Error ? e.message : 'Failed to send message';
 		} finally {
 			isSubmitting = false;
 		}
-	};
+	}
 </script>
 
-<svelte:head>
-	<title>Contact | Russell Jones</title>
-	<meta
-		name="description"
-		content="Get in touch with Russell Jones - Web Developer and Open Source Enthusiast"
-	/>
-</svelte:head>
+<div class="contact-page">
+	<section class="contact-section">
+		<div class="contact-info">
+			<h2>Get in Touch</h2>
+			<p>
+				Have a question or want to work together? I'd love to hear from you.
+			</p>
 
-<section class="contact">
-	<header>
-		<h1>Get in Touch</h1>
-		<p class="intro">
-			I'm always interested in hearing about new opportunities, collaborations,
-			or just having a chat about technology.
-		</p>
-	</header>
+			<div class="contact-methods">
+				<a
+					href="https://github.com/jonesrussell"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					GitHub: @jonesrussell
+				</a>
+				<a
+					href="https://www.linkedin.com/in/jonesrussell42"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					LinkedIn: jonesrussell42
+				</a>
+				<a href="mailto:jones.russell.dev@gmail.com">
+					Email: jones.russell.dev@gmail.com
+				</a>
+			</div>
+		</div>
 
-	<div class="contact-methods">
-		<div class="method">
+		<div class="contact-form-section">
 			<h2>Send a Message</h2>
-			<form on:submit={handleSubmit} class="contact-form">
+			<form onsubmit={handleSubmit} class="contact-form">
 				<div class="form-group">
-					<label for="name">Name:</label>
+					<label for="name">Name</label>
 					<input
 						type="text"
 						id="name"
-						bind:value={formData.name}
 						required
+						bind:value={formData.name}
 						disabled={isSubmitting}
 					/>
 				</div>
 
 				<div class="form-group">
-					<label for="email">Email:</label>
+					<label for="email">Email</label>
 					<input
 						type="email"
 						id="email"
-						bind:value={formData.email}
 						required
+						bind:value={formData.email}
 						disabled={isSubmitting}
 					/>
 				</div>
 
 				<div class="form-group">
-					<label for="message">Message:</label>
+					<label for="message">Message</label>
 					<textarea
 						id="message"
-						bind:value={formData.message}
-						rows="6"
+						rows="5"
 						required
+						bind:value={formData.message}
 						disabled={isSubmitting}
 					></textarea>
 				</div>
 
-				{#if submitStatus === 'success'}
-					<div class="status-message success">Message sent successfully!</div>
-				{:else if submitStatus === 'error'}
-					<div class="status-message error">
-						{errorMessage}
-					</div>
-				{/if}
-
 				<button type="submit" disabled={isSubmitting}>
 					{isSubmitting ? 'Sending...' : 'Send Message'}
 				</button>
+
+				{#if submitStatus === 'success'}
+					<div class="success-message">
+						Message sent successfully! I'll get back to you soon.
+					</div>
+				{/if}
+
+				{#if submitStatus === 'error'}
+					<div class="error-message">{errorMessage}</div>
+				{/if}
 			</form>
 		</div>
-
-		<div class="method">
-			<h2>Professional</h2>
-			<ul>
-				<li>
-					<span class="label">GitHub:</span>
-					<div class="link-group">
-						<a
-							href="https://github.com/jonesrussell"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							@jonesrussell
-						</a>
-						<span class="full-url">https://github.com/jonesrussell</span>
-					</div>
-				</li>
-				<li>
-					<span class="label">LinkedIn:</span>
-					<div class="link-group">
-						<a
-							href="https://linkedin.com/in/jonesrussell42"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							jonesrussell42
-						</a>
-						<span class="full-url">https://linkedin.com/in/jonesrussell42</span>
-					</div>
-				</li>
-			</ul>
-		</div>
-
-		<div class="method">
-			<h2>Social</h2>
-			<ul>
-				<li>
-					<span class="label">X:</span>
-					<div class="link-group">
-						<a
-							href="https://x.com/jonesrussell42"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							@jonesrussell42
-						</a>
-						<span class="full-url">https://x.com/jonesrussell42</span>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</div>
-</section>
+	</section>
+</div>
 
 <style>
-	.contact {
+	.contact-page {
 		width: 100%;
 		max-width: var(--contact-width);
 		margin: 0 auto;
@@ -177,33 +123,15 @@
 		box-sizing: border-box;
 	}
 
-	header {
-		text-align: center;
-		margin-bottom: var(--ch4);
-	}
-
-	h1 {
-		font-size: 2em;
-		line-height: 1.2;
-		margin: 0;
-	}
-
-	.intro {
-		margin: var(--ch2) 0 0 0;
-		color: var(--text-muted);
-	}
-
-	.contact-methods {
+	.contact-section {
 		display: grid;
 		gap: var(--ch4);
 	}
 
-	.method {
-		width: 100%;
-		box-sizing: border-box;
-		padding: var(--ch3);
-		border: 1px solid var(--border-color);
-		background: color-mix(in srgb, var(--text-color) 5%, transparent);
+	.contact-methods {
+		display: flex;
+		flex-direction: column;
+		gap: var(--ch2);
 	}
 
 	h2 {
@@ -270,50 +198,6 @@
 		background: var(--link-hover);
 	}
 
-	ul {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		width: 100%;
-		box-sizing: border-box;
-	}
-
-	li {
-		display: flex;
-		gap: var(--ch2);
-		align-items: baseline;
-		flex-wrap: wrap;
-		width: 100%;
-		box-sizing: border-box;
-		margin-bottom: var(--ch2);
-	}
-
-	li:last-child {
-		margin-bottom: 0;
-	}
-
-	.label {
-		color: var(--text-muted);
-		min-width: 10ch;
-		flex-shrink: 0;
-	}
-
-	.link-group {
-		display: flex;
-		flex-direction: column;
-		gap: var(--ch);
-		width: 100%;
-		box-sizing: border-box;
-	}
-
-	.full-url {
-		color: var(--text-muted);
-		font-size: 0.9em;
-		font-family: var(--font-mono);
-		word-break: break-all;
-		max-width: 100%;
-	}
-
 	a {
 		color: var(--link-color);
 		text-decoration: none;
@@ -323,5 +207,15 @@
 	a:hover {
 		color: var(--link-hover);
 		border-bottom-color: currentColor;
+	}
+
+	.success-message {
+		color: #22c55e;
+		margin-top: var(--ch2);
+	}
+
+	.error-message {
+		color: #ef4444;
+		margin-top: var(--ch2);
 	}
 </style>

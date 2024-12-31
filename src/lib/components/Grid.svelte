@@ -2,28 +2,36 @@
 	import { onMount } from 'svelte';
 	import { alignToGrid } from '$lib/utils/grid';
 
-	export let cols = 1;
-	export let gap = 2;
+	const {
+		cols = 1,
+		gap = 2,
+		children
+	} = $props<{
+		cols?: number;
+		gap?: number;
+		children?: () => unknown;
+	}>();
 
-	let mounted = false;
+	let mounted = $state(false);
 
 	onMount(() => {
 		mounted = true;
 	});
 
-	// Safe grid template calculation
-	$: gridTemplate = mounted
-		? `repeat(auto-fit, minmax(min(100%, ${alignToGrid(40)}ch), 1fr))`
-		: `repeat(${cols}, 1fr)`; // Fallback for SSR
+	const gridTemplate = $derived(
+		mounted
+			? `repeat(auto-fit, minmax(min(100%, ${alignToGrid(40)}ch), 1fr))`
+			: `repeat(${cols}, 1fr)` // Fallback for SSR
+	);
 
-	$: gridGap = `${gap}ch`;
+	const gridGap = $derived(`${gap}ch`);
 </script>
 
 <div
 	class="grid"
 	style="--grid-template: {gridTemplate}; --grid-gap: {gridGap}"
 >
-	<slot />
+	{@render children()}
 </div>
 
 <style>

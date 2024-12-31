@@ -1,6 +1,8 @@
 <script lang="ts">
-	export let items: string[] = [];
-	export let selected = 0;
+	const { items = [], selected = 0 } = $props<{
+		items?: string[];
+		selected?: number;
+	}>();
 </script>
 
 <div class="menu">

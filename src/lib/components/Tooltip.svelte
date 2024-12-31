@@ -1,6 +1,8 @@
 <script lang="ts">
-	export let text: string;
-	export let position: 'top' | 'bottom' | 'left' | 'right' = 'top';
+	const { text, position = 'top' } = $props<{
+		text: string;
+		position?: 'top' | 'bottom' | 'left' | 'right';
+	}>();
 </script>
 
 <div class="tooltip-wrapper">

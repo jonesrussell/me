@@ -21,6 +21,11 @@ Visit the website at https://jonesrussell.github.io/me/
   - Dependency caching
   - Fast CI/CD with GitHub Actions
   - Comprehensive testing suite
+- Development Tools
+  - Session initialization script
+  - AI-assisted development workflow
+  - Automated documentation updates
+  - Rule-based code standards
 
 ## Tech Stack
 
@@ -32,6 +37,8 @@ Visit the website at https://jonesrussell.github.io/me/
   - Playwright for integration tests
   - Vitest for unit tests
 - ESLint + Prettier for code quality
+- YAML for configuration
+- Custom development tools
 
 ## Project Structure
 
@@ -46,6 +53,13 @@ src/
 │   ├── blog/         # Blog section
 │   └── projects/     # Projects showcase
 └── app.css          # Global CSS variables and styles
+
+docs/
+├── CONTRIBUTING.md   # Contribution guidelines
+└── TESTING.md       # Testing procedures
+
+scripts/
+└── scripts.ts       # Development workflow tools
 ```
 
 ## Development
@@ -68,10 +82,44 @@ npm run test         # Run all tests
 npm run test:unit    # Run unit tests
 npm run test:integration  # Run integration tests
 
-# Check code quality
+# Development Tools
+npm run init-session # Initialize development session
+npm run ai-attach    # Get AI file review instructions
+
+# Code Quality
 npm run lint         # Run ESLint
 npm run format       # Run Prettier
 ```
+
+## Development Workflow
+
+This project uses several tools to maintain code quality and development efficiency:
+
+1. **Session Initialization**
+
+   - Run `npm run init-session` to validate project setup
+   - Checks cursor rules, documentation, and project structure
+   - Ensures consistent development environment
+
+2. **AI-Assisted Development**
+
+   - Use `npm run ai-attach` for AI code review
+   - Maintains consistent coding standards
+   - Helps with documentation updates
+   - Provides intelligent suggestions
+
+3. **Documentation**
+
+   - Automated updates to key files
+   - Rule-based code standards
+   - Comprehensive API documentation
+   - Clear contribution guidelines
+
+4. **Code Quality**
+   - Strict TypeScript types
+   - ESLint and Prettier integration
+   - Automated testing
+   - CI/CD pipeline
 
 ## Deployment
 

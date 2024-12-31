@@ -3,6 +3,8 @@
 general_rules:
   - be_liberal_with_comments: true
   - use_semicolons: true
+  - maintain_documentation_sync: true
+  - update_rules_after_improvements: true
 
 typescript_guidelines:
   - description: "TypeScript guidelines for better type safety and code quality."
@@ -10,6 +12,33 @@ typescript_guidelines:
       - define_types_for_variables_and_functions: true
       - use_css_variables_for_styles: true
       - use_template_literals_for_string_concatenation: true
+      - prefer_strict_type_checking: true
+      - use_interfaces_for_complex_types: true
+
+script_development_guidelines:
+  - description: "Guidelines for developing project scripts and tools."
+  - rules:
+      - use_typescript_for_all_scripts: true
+      - implement_proper_error_handling: true
+      - provide_clear_console_output: true
+      - support_command_line_arguments: true
+      - maintain_single_responsibility: true
+      - add_help_text_for_commands: true
+      - use_yaml_for_configuration: true
+      - validate_file_existence: true
+      - handle_missing_dependencies: true
+      - provide_fallback_behavior: true
+
+ai_integration_guidelines:
+  - description: "Guidelines for AI-assisted development workflow."
+  - rules:
+      - maintain_key_file_documentation: true
+      - update_documentation_after_changes: true
+      - provide_context_for_ai_review: true
+      - capture_learnings_in_rules: true
+      - document_successful_patterns: true
+      - standardize_ai_instructions: true
+      - version_control_ai_artifacts: true
 
 monospace_web_guidelines:
   - description: "Guidelines for monospace web design."
@@ -23,6 +52,10 @@ monospace_web_guidelines:
       - ensure_consistent_spacing_in_character_units: true
       - format_tables_to_auto_adjust_to_monospace_grid: true
       - keep_media_objects_aligned_to_character_boundaries: true
+      - enforce_monospace_navigation_alignment: true
+      - use_character_based_widths_for_nav_items: true
+      - maintain_consistent_character_spacing: true
+      - test_visual_alignment_with_snapshots: true
 
 css_2024_best_practices:
   - description: "Best practices for CSS in 2024."
@@ -361,3 +394,16 @@ jest_dom_assertions:
           expect(element).toBeVisible();
           expect(element).not.toBeDisabled();
         });
+
+testing_guidelines:
+  - description: "Guidelines for comprehensive testing."
+  - rules:
+      - implement_visual_regression_tests: true
+      - capture_baseline_screenshots: true
+      - verify_monospace_alignment: true
+      - test_responsive_breakpoints: true
+      - check_font_family_consistency: true
+      - validate_character_grid_alignment: true
+      - ensure_consistent_spacing: true
+      - test_dark_and_light_themes: true
+      - verify_accessibility_standards: true
