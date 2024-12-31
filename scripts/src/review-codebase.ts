@@ -63,4 +63,4 @@ export async function reviewCodebase(): Promise<void> {
 			chalk.red('✗ Could not find src directory - is this a SvelteKit project?')
 		);
 	}
-} 
+}

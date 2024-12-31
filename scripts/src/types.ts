@@ -12,4 +12,4 @@ export interface CursorRules {
 	code_style_examples?: Record<string, unknown>;
 	snippets_in_svelte_5?: Record<string, unknown>;
 	[key: string]: unknown;
-} 
+}

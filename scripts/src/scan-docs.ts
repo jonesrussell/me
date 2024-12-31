@@ -61,4 +61,4 @@ export async function scanMarkdownDocs(): Promise<void> {
 	} catch (err) {
 		console.error(chalk.red('✗ Error scanning markdown docs:'), err);
 	}
-} 
+}

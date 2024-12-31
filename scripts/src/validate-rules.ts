@@ -32,4 +32,4 @@ export async function validateCursorRules(): Promise<void> {
 			chalk.yellow('⚠ No .cursorrules file found - using default rules')
 		);
 	}
-} 
+}
