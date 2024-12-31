@@ -112,6 +112,7 @@
 	.header-nav {
 		display: flex;
 		gap: var(--ch3);
+		justify-content: flex-end;
 
 		& a {
 			color: var(--text-muted);
@@ -129,6 +130,7 @@
 
 		@container (width < 600px) {
 			gap: var(--ch4);
+			justify-content: center;
 		}
 	}
 </style>
