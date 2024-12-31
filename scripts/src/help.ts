@@ -21,4 +21,4 @@ Options:
     --help, -h    Show this help message
 `)
 	);
-} 
+}
