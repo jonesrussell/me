@@ -41,16 +41,33 @@
 	/>
 </svelte:head>
 
+<section class="hero">
+	<div class="hero-content">
+		<div class="terminal-frame">
+			<div class="terminal-header">
+				<span class="terminal-title">~/developer</span>
+				<div class="terminal-buttons">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</div>
+			<div class="terminal-body">
+				<div class="command-line">
+					<span class="prompt">$</span>
+					<span class="command">whoami</span>
+				</div>
+				<div class="intro">Building elegant solutions, line by line.</div>
+				<div class="tagline">
+					Developer crafting high-performance applications and pushing the
+					boundaries of what's possible on the web.
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
 <section class="home">
-	<div class="intro">
-		Transforming ideas into elegant solutions, one line of code at a time.
-	</div>
-
-	<div class="tagline">
-		Developer crafting high-performance applications and pushing the boundaries
-		of what's possible on the web.
-	</div>
-
 	<div class="specialties">
 		{#each specialties as specialty}
 			<div class="specialty">
@@ -98,14 +115,74 @@
 </section>
 
 <style>
-	.home {
+	.hero {
+		position: relative;
+		padding: var(--ch4) var(--ch2);
+		background: var(--bg-darker);
+	}
+
+	.hero-content {
 		max-width: min(var(--measure), 95cqi);
 		margin-inline: auto;
-		padding: var(--ch4) var(--ch2);
+	}
+
+	.terminal-frame {
+		background: var(--bg-color);
+		border: 1px solid var(--border-color);
+		border-radius: 8px;
+		overflow: hidden;
+		box-shadow: 0 4px 6px -1px
+			color-mix(in srgb, var(--text-color) 10%, transparent);
+	}
+
+	.terminal-header {
+		background: color-mix(in srgb, var(--text-color) 5%, transparent);
+		padding: var(--ch) var(--ch2);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1px solid var(--border-color);
+	}
+
+	.terminal-title {
+		color: var(--text-muted);
+		font-size: 0.9em;
+	}
+
+	.terminal-buttons {
+		display: flex;
+		gap: var(--ch);
+
+		& span {
+			width: 12px;
+			height: 12px;
+			border-radius: 50%;
+			background: var(--text-muted);
+			opacity: 0.5;
+		}
+	}
+
+	.terminal-body {
+		padding: var(--ch3) var(--ch2);
+	}
+
+	.command-line {
+		font-family: 'Fira Code', monospace;
+		margin-bottom: var(--ch2);
+		color: var(--text-muted);
+	}
+
+	.prompt {
+		color: var(--accent-color);
+		margin-right: var(--ch);
+	}
+
+	.command {
+		color: var(--text-color);
 	}
 
 	.intro {
-		font-size: 2em;
+		font-size: clamp(2em, 5vw, 3em);
 		line-height: 1.2;
 		font-weight: bold;
 		margin-bottom: var(--ch2);
@@ -114,9 +191,15 @@
 
 	.tagline {
 		color: var(--text-muted);
-		font-size: 1.2em;
-		margin-bottom: var(--ch4);
+		font-size: clamp(1.2em, 2vw, 1.5em);
+		margin-bottom: var(--ch2);
 		max-width: 60ch;
+	}
+
+	.home {
+		max-width: min(var(--measure), 95cqi);
+		margin-inline: auto;
+		padding: 0 var(--ch2) var(--ch4);
 	}
 
 	.specialties {
