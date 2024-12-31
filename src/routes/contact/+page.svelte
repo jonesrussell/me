@@ -54,9 +54,7 @@
 				>
 					LinkedIn: jonesrussell42
 				</a>
-				<a href="mailto:jones.russell.dev@gmail.com">
-					Email: jones.russell.dev@gmail.com
-				</a>
+				<a href="mailto:russell@web.ca"> Email: russell@web.ca </a>
 			</div>
 		</div>
 
