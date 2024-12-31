@@ -1,87 +1,82 @@
 <script lang="ts">
-	import { alignToGrid } from '$lib/utils/grid';
-
-	export let title = 'terminal';
-	export let width = 60;
-	export let prompt = '$';
-
-	$: alignedWidth = alignToGrid(width);
-	$: contentWidth = alignedWidth - 4;
-
-	let commands: string[] = [];
-	let currentCommand = '';
-
-	function handleKeydown(event: KeyboardEvent) {
-		if (event.key === 'Enter') {
-			commands = [...commands, currentCommand];
-			currentCommand = '';
-		}
-	}
+	const {
+		title = '~/developer',
+		command = 'whoami',
+		content = () => ''
+	} = $props();
 </script>
 
-<div class="terminal" style="--term-width: {alignedWidth}ch">
-	<div class="term-header">
-		<div class="controls">
-			<span class="circle red">●</span>
-			<span class="circle yellow">●</span>
-			<span class="circle green">●</span>
+<div class="terminal-frame">
+	<div class="terminal-header">
+		<span class="terminal-title">{title}</span>
+		<div class="terminal-buttons">
+			<span></span>
+			<span></span>
+			<span></span>
 		</div>
-		<div class="title">{title}</div>
 	</div>
-
-	<div class="term-content">
-		{#each commands as command}
-			<div class="command-line">
-				<span class="prompt">{prompt}</span>
-				<span class="command">{command}</span>
-			</div>
-		{/each}
+	<div class="terminal-body">
 		<div class="command-line">
-			<span class="prompt">{prompt}</span>
-			<input
-				type="text"
-				bind:value={currentCommand}
-				on:keydown={handleKeydown}
-				style="width: {contentWidth - prompt.length - 1}ch"
-			/>
+			<span class="prompt">$</span>
+			<span class="command">{command}</span>
 		</div>
+		{@render content()}
 	</div>
 </div>
 
 <style>
-	.terminal {
-		width: var(--term-width);
-		font-family: var(--font-mono);
-		background: #1a1a1a;
-		border-radius: 6px;
+	.terminal-frame {
+		background: var(--bg-color);
+		border: 1px solid var(--border-color);
+		border-radius: 8px;
 		overflow: hidden;
-		line-height: 1.2;
+		box-shadow: 0 4px 6px -1px
+			color-mix(in srgb, var(--text-color) 10%, transparent);
 	}
 
-	.term-header {
-		background: #2a2a2a;
+	.terminal-header {
+		background: color-mix(in srgb, var(--text-color) 5%, transparent);
 		padding: var(--ch) var(--ch2);
 		display: flex;
+		justify-content: space-between;
 		align-items: center;
-		gap: var(--ch2);
+		border-bottom: 1px solid var(--border-color);
 	}
 
-	.controls {
+	.terminal-title {
+		color: var(--text-muted);
+		font-size: 0.9em;
+	}
+
+	.terminal-buttons {
 		display: flex;
 		gap: var(--ch);
+
+		& span {
+			width: 12px;
+			height: 12px;
+			border-radius: 50%;
+			background: var(--text-muted);
+			opacity: 0.5;
+		}
 	}
 
-	.circle {
-		font-size: 0.8em;
+	.terminal-body {
+		padding: var(--ch3) var(--ch2);
 	}
 
-	.red {
-		color: #ff5f56;
+	.command-line {
+		font-family: 'Fira Code', monospace;
+		margin-bottom: var(--ch2);
+		color: var(--text-muted);
 	}
-	.yellow {
-		color: #ffbd2e;
+
+	.prompt {
+		color: var(--accent-color);
+		margin-right: var(--ch);
 	}
-	.green {
-		color: #27c93f;
+
+	.command {
+		color: var(--text-color);
 	}
 </style>
