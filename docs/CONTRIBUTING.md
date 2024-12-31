@@ -34,6 +34,7 @@ npm run test:integration
 ## Commit Messages
 
 Follow conventional commits format:
+
 - feat: New feature
 - fix: Bug fix
 - docs: Documentation changes
@@ -95,4 +96,4 @@ src/
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under the project's MIT License. 
+By contributing, you agree that your contributions will be licensed under the project's MIT License.

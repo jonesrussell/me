@@ -1,12 +1,20 @@
 <script lang="ts">
 	import { alignToGrid } from '$lib/utils/grid';
 
-	export let title: string | undefined = undefined;
-	export let width = 40;
-	export let style = '';
+	const {
+		title = undefined,
+		width = 40,
+		style = '',
+		children
+	} = $props<{
+		title?: string;
+		width?: number;
+		style?: string;
+		children?: () => unknown;
+	}>();
 
-	$: alignedWidth = alignToGrid(width);
-	$: contentWidth = alignedWidth - 4; // Account for borders
+	const alignedWidth = $derived(alignToGrid(width));
+	const contentWidth = $derived(alignedWidth - 4); // Account for borders
 
 	function createLine(char: string): string {
 		return char.repeat(contentWidth);
@@ -22,7 +30,7 @@
 		{/if}
 
 		<div class="content">
-			<slot />
+			{@render children()}
 		</div>
 
 		<div class="footer">╰{createLine('─')}╯</div>

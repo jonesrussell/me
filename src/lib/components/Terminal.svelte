@@ -1,9 +1,5 @@
 <script lang="ts">
-	const {
-		title = '~/developer',
-		command = 'whoami',
-		content = () => ''
-	} = $props();
+	const { title = '~/developer', command = 'whoami', children } = $props();
 </script>
 
 <div class="terminal-frame">
@@ -20,7 +16,7 @@
 			<span class="prompt">$</span>
 			<span class="command">{command}</span>
 		</div>
-		{@render content()}
+		{@render children()}
 	</div>
 </div>
 

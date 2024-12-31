@@ -90,36 +90,42 @@
 # Homepage Improvements
 
 ## Visual Hierarchy
+
 - [ ] Add fade-in animations on scroll/load for specialties
 - [ ] Enhance card hover effects with subtle shadows/borders
 - [ ] Add specialty icons (⚡DevOps, 🧠AI, etc.)
 - [ ] Improve visual transitions between sections
 
 ## Content Structure
+
 - [ ] Enhance specialty descriptions for better impact
 - [ ] Add visual indicators for each specialty
 - [ ] Improve content flow and readability
 - [ ] Consider adding quick stats/achievements
 
 ## Layout & Spacing
+
 - [ ] Refine grid layout for specialties section
 - [ ] Implement character-based spacing consistently
 - [ ] Improve mobile/tablet responsive behavior
 - [ ] Better section transitions
 
 ## Monospace Aesthetics
+
 - [ ] Use monospace font more strategically
 - [ ] Add clean table-like structures where appropriate
 - [ ] Ensure consistent character-width alignment
 - [ ] Maintain professional look while embracing monospace style
 
 ## Performance & SEO
+
 - [ ] Optimize animations for performance
 - [ ] Improve heading hierarchy
 - [ ] Add structured data
 - [ ] Enhance meta descriptions
 
 ## Testing
+
 - [ ] Test across different viewport sizes
 - [ ] Verify animations with reduced motion
 - [ ] Check color contrast

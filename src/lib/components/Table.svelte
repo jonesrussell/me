@@ -1,26 +1,37 @@
 <script lang="ts">
 	import { alignToGrid } from '$lib/utils/grid';
 
-	export let headers: string[] = [];
-	export let rows: string[][] = [];
-	export let width = 60;
+	const {
+		headers = [],
+		rows = [],
+		width = 60
+	} = $props<{
+		headers?: string[];
+		rows?: string[][];
+		width?: number;
+	}>();
 
-	$: alignedWidth = alignToGrid(width);
+	const alignedWidth = $derived(alignToGrid(width));
 
 	function padCell(text: string, width: number): string {
 		return text.padEnd(width);
 	}
 
 	// Calculate column widths
-	$: columnWidths = headers.map((header, index) => {
-		const columnContent = [header, ...rows.map((row) => row[index])];
-		return Math.max(...columnContent.map((cell) => cell.length));
-	});
+	const columnWidths = $derived(
+		headers.map((header: string, index: number) => {
+			const columnContent = [
+				header,
+				...rows.map((row: string[]) => row[index])
+			];
+			return Math.max(...columnContent.map((cell) => cell.length));
+		})
+	);
 </script>
 
 <div class="table" style="--table-width: {alignedWidth}ch">
 	<div class="table-border">
-		┌{columnWidths.map((w) => '─'.repeat(w + 2)).join('┬')}┐
+		┌{columnWidths.map((w: number) => '─'.repeat(w + 2)).join('┬')}┐
 	</div>
 
 	<div class="header-row">
@@ -30,7 +41,7 @@
 	</div>
 
 	<div class="table-border">
-		├{columnWidths.map((w) => '─'.repeat(w + 2)).join('┼')}┤
+		├{columnWidths.map((w: number) => '─'.repeat(w + 2)).join('┼')}┤
 	</div>
 
 	{#each rows as row}
@@ -42,7 +53,7 @@
 	{/each}
 
 	<div class="table-border">
-		└{columnWidths.map((w) => '─'.repeat(w + 2)).join('┴')}┘
+		└{columnWidths.map((w: number) => '─'.repeat(w + 2)).join('┴')}┘
 	</div>
 </div>
 

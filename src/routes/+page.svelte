@@ -44,15 +44,13 @@
 
 <section class="hero">
 	<div class="hero-content">
-		<Terminal
-			content={() => `
-				<div class="intro">Building elegant solutions, line by line.</div>
-				<div class="tagline">
-					Developer crafting high-performance applications and pushing the
-					boundaries of what's possible on the web.
-				</div>
-			`}
-		/>
+		<Terminal>
+			<div class="intro">Building elegant solutions, line by line.</div>
+			<div class="tagline">
+				Developer crafting high-performance applications and pushing the
+				boundaries of what's possible on the web.
+			</div>
+		</Terminal>
 	</div>
 </section>
 

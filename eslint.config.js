@@ -28,7 +28,6 @@ export default [
 			}
 		},
 		rules: {
-			'svelte/valid-compile': ['error', { runes: true }],
 			'no-unused-vars': ['error', { varsIgnorePattern: '^\\$' }]
 		}
 	},

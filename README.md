@@ -96,17 +96,20 @@ npm run format       # Run Prettier
 This project uses several tools to maintain code quality and development efficiency:
 
 1. **Session Initialization**
+
    - Run `npm run init-session` to validate project setup
    - Checks cursor rules, documentation, and project structure
    - Ensures consistent development environment
 
 2. **AI-Assisted Development**
+
    - Use `npm run ai-attach` for AI code review
    - Maintains consistent coding standards
    - Helps with documentation updates
    - Provides intelligent suggestions
 
 3. **Documentation**
+
    - Automated updates to key files
    - Rule-based code standards
    - Comprehensive API documentation

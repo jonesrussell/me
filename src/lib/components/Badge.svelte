@@ -1,7 +1,12 @@
 <script lang="ts">
-	export let type: 'info' | 'success' | 'warning' | 'error' = 'info';
+	type BadgeType = 'info' | 'success' | 'warning' | 'error';
 
-	const symbols = {
+	const { type = 'info', children } = $props<{
+		type?: BadgeType;
+		children?: () => unknown;
+	}>();
+
+	const symbols: Record<BadgeType, string> = {
 		info: 'ℹ',
 		success: '✓',
 		warning: '⚠',
@@ -10,7 +15,7 @@
 </script>
 
 <span class="badge {type}">
-	[{symbols[type]}] <slot />
+	[{symbols[type as BadgeType]}] {@render children()}
 </span>
 
 <style>

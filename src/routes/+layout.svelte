@@ -4,6 +4,7 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import NewsletterCTA from '$lib/components/NewsletterCTA.svelte';
+	const { children } = $props();
 </script>
 
 <div class="layout">
@@ -11,7 +12,7 @@
 
 	<main class="content">
 		<div class="content-inner">
-			<slot />
+			{@render children()}
 		</div>
 	</main>
 

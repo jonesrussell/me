@@ -10,7 +10,7 @@ const config = {
 	compilerOptions: {
 		runes: true,
 		compatibility: {
-			componentApi: "5"
+			componentApi: 5
 		}
 	},
 
