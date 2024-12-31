@@ -16,7 +16,9 @@
 			<span class="prompt">$</span>
 			<span class="command">{command}</span>
 		</div>
-		{@render children()}
+		<div class="command-output">
+			{@render children()}
+		</div>
 	</div>
 </div>
 
@@ -59,20 +61,26 @@
 
 	.terminal-body {
 		padding: var(--ch3) var(--ch2);
+		font-family: var(--font-mono);
 	}
 
 	.command-line {
-		font-family: 'Fira Code', monospace;
 		margin-bottom: var(--ch2);
+		display: flex;
+		gap: var(--ch);
 		color: var(--text-muted);
 	}
 
 	.prompt {
 		color: var(--accent-color);
-		margin-right: var(--ch);
 	}
 
 	.command {
+		color: var(--text-color);
+	}
+
+	.command-output {
+		padding-left: calc(var(--ch) * 2);
 		color: var(--text-color);
 	}
 </style>
