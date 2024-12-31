@@ -1,17 +1,22 @@
 <script lang="ts">
 	import { alignToGrid } from '$lib/utils/grid';
 
-	export let language = '';
-	export let filename: string | undefined = undefined;
-	export let width = 60;
+	const {
+		language = '',
+		filename = undefined,
+		width = 60,
+		children
+	} = $props<{
+		language?: string;
+		filename?: string;
+		width?: number;
+		children?: () => unknown;
+	}>();
 
-	$: alignedWidth = alignToGrid(width);
+	const alignedWidth = $derived(alignToGrid(width));
 
 	// Get the content of the default slot
-	let content = '';
-	$: if ($$slots.default) {
-		content = $$slots.default.toString();
-	}
+	const content = $derived(children?.toString() ?? '');
 </script>
 
 <div class="code-block" style="--block-width: {alignedWidth}ch">
@@ -23,7 +28,7 @@
 	{/if}
 
 	<div class="code-content">
-		<pre><code class={language}><slot /></code></pre>
+		<pre><code class={language}>{@render children()}</code></pre>
 	</div>
 
 	<div class="code-footer">

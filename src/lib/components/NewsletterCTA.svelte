@@ -1,94 +1,81 @@
 <script lang="ts">
-	let email = '';
-	let submitting = false;
-	let success = false;
-	let error: string | null = null;
+	let email = $state('');
+	let submitting = $state(false);
+	let success = $state(false);
+	let error = $state<string | null>(null);
 
-	async function handleSubmit() {
+	async function handleSubmit(event: SubmitEvent) {
+		event.preventDefault();
 		if (!email) return;
+
 		submitting = true;
 		error = null;
-		success = false;
 
 		try {
-			const response = await fetch(
-				'https://goforms.streetcode.net/api/subscriptions',
-				{
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ email })
-				}
-			);
-
-			if (!response.ok) throw new Error('Failed to subscribe');
+			// Simulate API call
+			await new Promise((resolve) => setTimeout(resolve, 1000));
 			success = true;
-			email = '';
-		} catch (err) {
-			console.error('Newsletter subscription failed:', err);
-			error = 'Failed to subscribe. Please try again later.';
+		} catch (e) {
+			error = e instanceof Error ? e.message : 'Something went wrong';
 		} finally {
 			submitting = false;
 		}
 	}
 </script>
 
-<section class="newsletter-section">
-	<div class="newsletter">
-		<div class="newsletter-content">
-			<h2 class="title">Newsletter Signup</h2>
-			<p class="description">Stay updated with latest posts and projects.</p>
+<div class="newsletter-cta">
+	<div class="cta-content">
+		<h3>Stay Updated</h3>
+		<p>Get the latest updates on web development and tech insights.</p>
 
-			<form class="signup-form" on:submit|preventDefault={handleSubmit}>
+		{#if success}
+			<div class="success-message">
+				Thanks for subscribing! Check your email to confirm.
+			</div>
+		{:else}
+			<form class="signup-form" onsubmit={handleSubmit}>
 				<div class="input-wrapper">
 					<input
 						type="email"
+						placeholder="Enter your email"
 						bind:value={email}
-						placeholder="Enter email"
-						aria-label="Email address"
+						disabled={submitting}
 					/>
+					<button type="submit" disabled={submitting}>
+						{submitting ? 'Subscribing...' : 'Subscribe'}
+					</button>
 				</div>
-				<button type="submit" disabled={submitting}>
-					[{submitting ? '...' : 'Subscribe'}]
-				</button>
-
-				{#if success}
-					<div class="message success">✓ Thanks for subscribing!</div>
-				{/if}
-
 				{#if error}
-					<div class="message error">✗ {error}</div>
+					<div class="error-message">{error}</div>
 				{/if}
 			</form>
-		</div>
+		{/if}
 	</div>
-</section>
+</div>
 
 <style>
-	.newsletter-section {
+	.newsletter-cta {
 		width: 100%;
 		padding: var(--ch2) 0;
 		background: var(--bg-color);
 		border-top: 1px solid var(--border-color);
 	}
 
-	.newsletter {
+	.cta-content {
 		width: 100%;
 		max-width: min(var(--measure), 95vw);
 		margin: 0 auto;
 		padding: 0 var(--ch2);
-	}
-
-	.newsletter-content {
 		text-align: center;
 		line-height: var(--line-height);
 	}
 
-	.title {
+	h3 {
 		font-weight: var(--font-weight-bold);
 		margin-bottom: var(--ch2);
 	}
 
-	.description {
+	p {
 		color: var(--text-muted);
 		margin-bottom: var(--ch2);
 	}
@@ -97,6 +84,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--ch2);
+
 		align-items: center;
 	}
 
@@ -134,16 +122,15 @@
 		cursor: not-allowed;
 	}
 
-	.message {
+	.success-message {
+		color: #22c55e;
 		margin-top: var(--ch2);
 		line-height: 1.2;
 	}
 
-	.success {
-		color: #22c55e;
-	}
-
-	.error {
+	.error-message {
 		color: #ef4444;
+		margin-top: var(--ch2);
+		line-height: 1.2;
 	}
 </style>
