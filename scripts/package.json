@@ -1,0 +1,19 @@
+{
+	"name": "me-scripts",
+	"version": "1.0.0",
+	"type": "module",
+	"scripts": {
+		"build": "tsc",
+		"start": "node dist/index.js",
+		"dev": "tsx src/index.ts"
+	},
+	"dependencies": {
+		"chalk": "^5.3.0",
+		"yaml": "^2.3.4"
+	},
+	"devDependencies": {
+		"@types/node": "^20.10.6",
+		"tsx": "^4.7.0",
+		"typescript": "^5.3.3"
+	}
+} 

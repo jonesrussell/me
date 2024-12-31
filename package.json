@@ -18,10 +18,7 @@
 		"workflow:test": "act -j test -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
 		"workflow:build": "act -j build -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
 		"workflow:deploy": "act -j deploy -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
-		"workflow:full": "act -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy --reuse",
-		"init-session": "tsx scripts.ts",
-		"ai-attach": "tsx scripts.ts attach",
-		"init-help": "tsx scripts.ts --help"
+		"workflow:full": "act -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy --reuse"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^3.2.2",
@@ -49,14 +46,9 @@
 		"storybook": "^8.4.7",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",
-		"tsx": "^4.19.2",
 		"typescript": "^5.0.0",
 		"typescript-eslint": "^8.0.0",
 		"vite": "^6.0.0",
 		"vitest": "^2.0.4"
-	},
-	"dependencies": {
-		"chalk": "^5.3.0",
-		"yaml": "^2.3.4"
 	}
 }
