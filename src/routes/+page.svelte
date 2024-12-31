@@ -17,17 +17,18 @@
 			description: 'Building the future with cutting-edge web technologies'
 		},
 		{
+			title: 'Golang & PHP',
+			description:
+				'Crafting robust backend solutions with battle-tested technologies'
+		},
+		{
 			title: 'AI Integration',
 			description:
 				'Harnessing artificial intelligence to solve complex problems'
 		},
 		{
-			title: 'Cloud Architecture',
-			description: 'Designing scalable, resilient cloud-native solutions'
-		},
-		{
-			title: 'DevOps',
-			description: 'Automating excellence, delivering continuously'
+			title: 'Cloud & DevOps',
+			description: 'Designing and automating scalable cloud-native solutions'
 		}
 	];
 </script>
@@ -36,19 +37,18 @@
 	<title>Russell Jones | Web Developer</title>
 	<meta
 		name="description"
-		content="Full Stack Developer from Canada specializing in JavaScript, Go, and Open Source"
+		content="Developer from Canada specializing in JavaScript, Go, and Open Source"
 	/>
 </svelte:head>
 
 <section class="home">
 	<div class="intro">
-		Transforming ideas into elegant solutions.
-		<span class="highlight">One line of code at a time.</span>
+		Transforming ideas into elegant solutions, one line of code at a time.
 	</div>
 
 	<div class="tagline">
-		Full Stack Developer crafting high-performance applications and pushing the
-		boundaries of what's possible on the web.
+		Developer crafting high-performance applications and pushing the boundaries
+		of what's possible on the web.
 	</div>
 
 	<div class="specialties">
@@ -109,11 +109,7 @@
 		line-height: 1.2;
 		font-weight: bold;
 		margin-bottom: var(--ch2);
-	}
-
-	.highlight {
 		color: var(--accent-color);
-		display: block;
 	}
 
 	.tagline {
