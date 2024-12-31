@@ -1,12 +1,17 @@
 <script lang="ts">
-	const { text, position = 'top' } = $props<{
+	const {
+		text,
+		position = 'top',
+		children
+	} = $props<{
 		text: string;
 		position?: 'top' | 'bottom' | 'left' | 'right';
+		children?: () => unknown;
 	}>();
 </script>
 
 <div class="tooltip-wrapper">
-	<slot />
+	{@render children()}
 	<span class="tooltip" data-position={position}>
 		{text}
 	</span>
