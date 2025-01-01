@@ -64,7 +64,7 @@
 		margin: 0 auto;
 		padding: var(--ch4) var(--ch2);
 		font-family: var(--font-mono);
-		line-height: 1.4;
+		line-height: var(--line-height-base);
 	}
 
 	h1 {
@@ -98,13 +98,16 @@
 		border: 1px solid var(--border-color);
 		border-radius: var(--radius-sm);
 		background: var(--color-mix-light);
+		display: flex;
+		flex-direction: column;
+		gap: var(--ch2);
 	}
 
 	.resource-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin-bottom: var(--ch2);
+		gap: var(--ch2);
 	}
 
 	h2 {
@@ -116,7 +119,7 @@
 
 	.stars {
 		color: var(--text-muted);
-		font-size: 0.9em;
+		font-size: var(--font-size-sm);
 	}
 
 	.description {
@@ -137,6 +140,8 @@
 		color: var(--link-color);
 		text-decoration: none;
 		border-bottom: 1px solid transparent;
+		transition: all 0.2s ease;
+		padding-bottom: calc(var(--ch) / 4);
 	}
 
 	a:hover {

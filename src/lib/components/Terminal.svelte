@@ -181,6 +181,8 @@ Commands:
 		display: inline-block;
 		color: var(--accent-color);
 		animation: blink 1s step-end infinite;
+		width: var(--ch);
+		height: 100%;
 	}
 
 	@keyframes blink {
@@ -195,7 +197,7 @@ Commands:
 
 	.debug {
 		position: absolute;
-		top: calc(100% + 1rem);
+		top: calc(100% + var(--ch2));
 		left: 0;
 		right: 0;
 		background: var(--bg-color);
@@ -206,7 +208,7 @@ Commands:
 		font-size: var(--font-size-xs);
 		white-space: pre;
 		z-index: 100;
-		margin-bottom: 2rem;
+		margin-bottom: var(--ch4);
 		box-shadow: var(--shadow-md);
 	}
 </style>
