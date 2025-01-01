@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { enhancedImages } from '@sveltejs/enhanced-img';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
@@ -9,7 +10,13 @@ export default defineConfig(async () => {
 		plugins: [images, sveltekit()],
 		test: {
 			...configDefaults,
-			include: ['src/**/*.{test,spec}.{js,ts}']
+			include: ['src/**/*.{test,spec}.{js,ts}'],
+			environment: 'jsdom',
+			setupFiles: ['src/test/setup.ts'],
+			globals: true,
+			deps: {
+				inline: [/^svelte/]
+			}
 		}
 	};
 });
