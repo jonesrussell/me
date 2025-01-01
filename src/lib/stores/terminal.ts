@@ -114,11 +114,19 @@ function countCommandLines(cmd: Command): number {
 	return commandLines + outputLines;
 }
 
+// Count total height needed for all commands up to current
+function calculateTotalHeight(currentCommand: number): number {
+	let totalLines = 0;
+	for (let i = 0; i <= currentCommand; i++) {
+		totalLines += countCommandLines(commands[i]);
+	}
+	return Math.ceil(totalLines * lineHeight + headerHeight + padding);
+}
+
 const maxLines = Math.max(...commands.map(countCommandLines));
 const headerHeight = 3; // 3ch for header
-const padding = 2; // 1ch padding top + 1ch bottom
-const lineHeight = 1.5; // From CSS var(--line-height)
-const TERMINAL_HEIGHT = `${Math.ceil((maxLines + headerHeight + padding) * lineHeight)}ch`;
+const padding = 1; // 0.5ch padding top + 0.5ch bottom
+const lineHeight = 3.5; // Much taller to show all content including AUTHOR and COPYRIGHT
 
 // Debug store to track calculations
 interface DebugState {
@@ -145,29 +153,28 @@ export const debug = writable<DebugState>({
 	padding,
 	lineHeight,
 	rawHeight: maxLines + headerHeight + padding,
-	scaledHeight: Math.ceil((maxLines + headerHeight + padding) * lineHeight),
-	totalHeight: TERMINAL_HEIGHT,
+	scaledHeight: calculateTotalHeight(commands.length - 1),
+	totalHeight: `${calculateTotalHeight(commands.length - 1)}ch`,
 	commands: commands.map((cmd) => {
 		const lines = countCommandLines(cmd);
-		const height = Math.ceil((lines + headerHeight + padding) * lineHeight);
+		const height = Math.ceil(lines * lineHeight + headerHeight + padding);
 		return {
 			cmd: cmd.cmd,
 			lines,
 			height: `${height}ch`,
-			breakdown: `(${lines} lines + ${headerHeight}ch header + ${padding}ch padding) × ${lineHeight} line height = ${height}ch`
+			breakdown: `(${lines} lines × ${lineHeight} line height + ${headerHeight}ch header + ${padding}ch padding) = ${height}ch`
 		};
 	})
 });
 
 export const terminalHeight = derived(terminal, ($terminal) => {
-	const currentOutput = commands[$terminal.currentCommand]?.output || '';
-	const lines = currentOutput.split('\n').length + 1; // +1 for command line
+	const height = calculateTotalHeight($terminal.currentCommand);
 
 	// Update debug info with current command details
 	debug.update((d) => ({
 		...d,
-		currentLines: lines
+		currentLines: countCommandLines(commands[$terminal.currentCommand])
 	}));
 
-	return TERMINAL_HEIGHT;
+	return `${height}ch`;
 });
