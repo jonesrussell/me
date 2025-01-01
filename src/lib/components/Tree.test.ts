@@ -53,8 +53,8 @@ describe('Tree', () => {
 		const folders = container.querySelectorAll('.folder');
 		expect(folders).toHaveLength(3);
 		expect(folders[0]?.textContent?.trim()).toBe('project/');
-		expect(folders[1]?.textContent?.trim()).toBe('├─ src/');
-		expect(folders[2]?.textContent?.trim()).toBe('│  ├─ components/');
+		expect(folders[1]?.textContent?.trim()).toBe('└─ src/');
+		expect(folders[2]?.textContent?.trim()).toBe('│  └─ components/');
 
 		const files = container.querySelectorAll('.file');
 		expect(files).toHaveLength(2);

@@ -71,23 +71,23 @@ describe('Tooltip', () => {
 		const wrapper = container.querySelector('.tooltip-wrapper') as HTMLElement;
 		const tooltip = container.querySelector('.tooltip') as HTMLElement;
 
-		// Initial state
-		expect(tooltip).toHaveStyle({ visibility: 'hidden' });
+		expect(tooltip).toHaveClass('tooltip');
+		expect(tooltip).not.toHaveClass('visible');
 
 		// Hover state
 		await fireEvent.mouseEnter(wrapper);
-		expect(tooltip).toHaveStyle({ visibility: 'visible' });
+		expect(tooltip).toHaveClass('visible');
 
 		// Remove hover
 		await fireEvent.mouseLeave(wrapper);
-		expect(tooltip).toHaveStyle({ visibility: 'hidden' });
+		expect(tooltip).not.toHaveClass('visible');
 	});
 
 	it('has correct styling', () => {
 		const { container } = render(Tooltip, {
 			props: {
 				text: 'Tooltip text',
-				children: () => '<button>Hover me</button>'
+					children: () => '<button>Hover me</button>'
 			}
 		});
 

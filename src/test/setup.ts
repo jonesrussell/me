@@ -83,9 +83,23 @@ class CSSStyleSheet {
 	}
 }
 
-// Mock style element
+// Mock style element and prevent CSS parsing errors
 Object.defineProperty(document.createElement('style'), 'sheet', {
 	get() {
 		return new CSSStyleSheet();
 	}
 });
+
+// Mock CSS parsing to prevent errors with modern features
+Object.defineProperty(CSSStyleSheet.prototype, 'insertRule', {
+	value: () => 0
+});
+
+// Suppress CSS parsing warnings
+const originalError = console.error;
+console.error = (...args) => {
+	if (args[0]?.includes?.('Could not parse CSS stylesheet')) {
+		return;
+	}
+	originalError(...args);
+};

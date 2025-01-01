@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { alignToGrid } from '$lib/utils/grid';
-
 	const {
 		language = '',
 		filename = undefined,
-		width = 64,
+		width = 60,
 		children
 	} = $props<{
 		language?: string;
@@ -13,12 +11,13 @@
 		children?: () => unknown;
 	}>();
 
-	const alignedWidth = $derived(alignToGrid(width));
 	const content = $derived(children?.() ?? '');
-	const lineCount = $derived(content.toString().split('\n').length);
+	const lineCount = $derived(
+		content.toString().split('\n').filter(Boolean).length
+	);
 </script>
 
-<div class="code-block" style="--block-width: {alignedWidth}ch">
+<div class="code-block" style="--block-width: {width}ch">
 	{#if filename}
 		<div class="file-header">
 			<span class="filename">{filename}</span>

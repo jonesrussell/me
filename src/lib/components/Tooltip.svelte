@@ -8,11 +8,25 @@
 		position?: 'top' | 'bottom' | 'left' | 'right';
 		children?: () => unknown;
 	}>();
+
+	let isVisible = $state(false);
+
+	function handleMouseEnter() {
+		isVisible = true;
+	}
+
+	function handleMouseLeave() {
+		isVisible = false;
+	}
 </script>
 
-<div class="tooltip-wrapper">
+<div
+	class="tooltip-wrapper"
+	on:mouseenter={handleMouseEnter}
+	on:mouseleave={handleMouseLeave}
+>
 	{children?.()}
-	<span class="tooltip" data-position={position}>
+	<span class="tooltip" class:visible={isVisible} data-position={position}>
 		{text}
 	</span>
 </div>
@@ -25,17 +39,23 @@
 
 	.tooltip {
 		font-family: var(--font-mono);
-		visibility: hidden;
+		opacity: 0;
 		position: absolute;
 		padding: var(--ch) var(--ch2);
 		background: var(--bg-color);
 		border: 1px solid var(--border-color);
 		white-space: nowrap;
 		z-index: 1;
+		transition: opacity 0.2s ease;
+		pointer-events: none;
+	}
+
+	.tooltip.visible {
+		opacity: 1;
 	}
 
 	.tooltip-wrapper:hover .tooltip {
-		visibility: visible;
+		opacity: 1;
 	}
 
 	[data-position='top'] {
