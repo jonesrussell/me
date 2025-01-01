@@ -1,38 +1,77 @@
 <script lang="ts">
-	const { title = '~/developer', command = 'whoami', children } = $props();
+	const props = $props();
+	const title = props.title || '~/developer';
 	let commandVisible = $state('');
 	let outputVisible = $state('');
+	let currentCommand = $state(0);
 	let isTyping = $state(true);
 
-	// Type out the command and output
+	const commands = ['whoami', 'man russell'];
+	const outputs = [
+		'russell',
+		`RUSSELL(1)                     User Commands                     RUSSELL(1)
+
+NAME
+       russell - a limitless developer
+
+SYNOPSIS
+       russell [--code] [--create] [--solve] <problem>
+
+DESCRIPTION
+       Crafts elegant solutions using modern web technologies.
+       Specializes in TypeScript, Go, and cloud architecture.
+
+AUTHOR
+       Written by Russell Jones.
+
+COPYRIGHT
+       License MIT`
+	];
+
+	// Type out commands and outputs in sequence
 	$effect(() => {
-		const text = command;
-		const output = children?.() || '';
 		let cmdIndex = 0;
 		let outIndex = 0;
 
-		// Type command first
-		const cmdInterval = setInterval(() => {
-			if (cmdIndex <= text.length) {
-				commandVisible = text.slice(0, cmdIndex);
-				cmdIndex++;
-			} else {
-				clearInterval(cmdInterval);
-				// Start typing output after command is done
-				const outInterval = setInterval(() => {
-					if (outIndex <= output.length) {
-						outputVisible = output.slice(0, outIndex);
-						outIndex++;
+		const typeNextCommand = () => {
+			const cmdInterval = setInterval(() => {
+				if (cmdIndex <= commands[currentCommand].length) {
+					commandVisible = commands[currentCommand].slice(0, cmdIndex);
+					cmdIndex++;
+				} else {
+					clearInterval(cmdInterval);
+					typeOutput();
+				}
+			}, 100);
+		};
+
+		const typeOutput = () => {
+			const outInterval = setInterval(() => {
+				if (outIndex <= outputs[currentCommand].length) {
+					outputVisible = outputs[currentCommand].slice(0, outIndex);
+					outIndex++;
+				} else {
+					clearInterval(outInterval);
+					if (currentCommand < commands.length - 1) {
+						setTimeout(() => {
+							currentCommand++;
+							cmdIndex = 0;
+							outIndex = 0;
+							commandVisible = '';
+							outputVisible = '';
+							typeNextCommand();
+						}, 1000);
 					} else {
-						clearInterval(outInterval);
 						isTyping = false;
 					}
-				}, 50);
-			}
-		}, 100);
+				}
+			}, 25);
+		};
+
+		typeNextCommand();
 
 		return () => {
-			clearInterval(cmdInterval);
+			// Cleanup will be handled by individual intervals
 		};
 	});
 </script>
@@ -47,19 +86,23 @@
 		</div>
 	</div>
 	<div class="terminal-body">
-		<div class="command-line">
-			<span class="prompt">$</span>
-			<span class="command">{commandVisible}</span>
-			{#if isTyping && commandVisible.length === command.length}
-				<span class="cursor">▋</span>
-			{/if}
-		</div>
-		<div class="command-output">
-			{outputVisible}
-			{#if isTyping && commandVisible.length === command.length}
-				<span class="cursor">▋</span>
-			{/if}
-		</div>
+		{#each commands.slice(0, currentCommand + 1) as cmd, i}
+			<div class="command-line">
+				<span class="prompt">$</span>
+				<span class="command">
+					{i === currentCommand ? commandVisible : cmd}
+				</span>
+				{#if isTyping && i === currentCommand && commandVisible.length === cmd.length}
+					<span class="cursor">▋</span>
+				{/if}
+			</div>
+			<div class="command-output">
+				{i === currentCommand ? outputVisible : outputs[i]}
+				{#if isTyping && i === currentCommand && commandVisible.length === cmd.length}
+					<span class="cursor">▋</span>
+				{/if}
+			</div>
+		{/each}
 	</div>
 </div>
 
@@ -106,7 +149,7 @@
 	}
 
 	.command-line {
-		margin-bottom: var(--ch2);
+		margin-bottom: var(--ch);
 		display: flex;
 		gap: var(--ch);
 		color: var(--text-muted);
@@ -124,6 +167,7 @@
 		padding-left: calc(var(--ch) * 2);
 		color: var(--text-color);
 		min-height: 1.5em;
+		margin-bottom: var(--ch2);
 		white-space: pre-line;
 	}
 
