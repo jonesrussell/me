@@ -1,409 +1,45 @@
-# .cursorrules file for Monospace Web Project and Svelte 5
-
+# Core Development Guidelines
 general_rules:
-  - be_liberal_with_comments: true
+  - use_typescript: true
+  - add_comments: true
+  - maintain_documentation: true
+
+code_style:
   - use_semicolons: true
-  - maintain_documentation_sync: true
-  - update_rules_after_improvements: true
+  - use_strict_types: true
+  - prefer_const: true
+  - max_line_length: 100
+  - indent_style: tabs
+  - indent_size: 2
 
-typescript_guidelines:
-  - description: "TypeScript guidelines for better type safety and code quality."
-  - rules:
-      - define_types_for_variables_and_functions: true
-      - use_css_variables_for_styles: true
-      - use_template_literals_for_string_concatenation: true
-      - prefer_strict_type_checking: true
-      - use_interfaces_for_complex_types: true
-
-script_development_guidelines:
-  - description: "Guidelines for developing project scripts and tools."
-  - rules:
-      - use_typescript_for_all_scripts: true
-      - implement_proper_error_handling: true
-      - provide_clear_console_output: true
-      - support_command_line_arguments: true
-      - maintain_single_responsibility: true
-      - add_help_text_for_commands: true
-      - use_yaml_for_configuration: true
-      - validate_file_existence: true
-      - handle_missing_dependencies: true
-      - provide_fallback_behavior: true
-
-ai_integration_guidelines:
-  - description: "Guidelines for AI-assisted development workflow."
-  - rules:
-      - maintain_key_file_documentation: true
-      - update_documentation_after_changes: true
-      - provide_context_for_ai_review: true
-      - capture_learnings_in_rules: true
-      - document_successful_patterns: true
-      - standardize_ai_instructions: true
-      - version_control_ai_artifacts: true
-
-monospace_web_guidelines:
-  - description: "Guidelines for monospace web design."
-  - rules:
-      - use_monospace_fonts_for_all_text_content: true
-      - align_text_and_elements_to_character_sized_grid: true
-      - keep_layouts_responsive_in_character_sized_steps: true
-      - use_ascii_art_for_diagrams_when_appropriate: true
-      - maintain_semantic_html_structure: true
-      - use_box_drawing_characters_for_borders_and_frames: true
-      - ensure_consistent_spacing_in_character_units: true
-      - format_tables_to_auto_adjust_to_monospace_grid: true
-      - keep_media_objects_aligned_to_character_boundaries: true
-      - enforce_monospace_navigation_alignment: true
-      - use_character_based_widths_for_nav_items: true
-      - maintain_consistent_character_spacing: true
-      - test_visual_alignment_with_snapshots: true
-
-css_2024_best_practices:
-  - description: "Best practices for CSS in 2024."
-  - rules:
-      - use_css_container_queries_for_responsive_design: true
-      - implement_has_selector_for_parent_based_styling: true
-      - utilize_css_nesting_for_cleaner_selectors: true
-      - apply_css_custom_highlight_api_for_text_highlighting: true
-      - use_css_subgrid_for_aligned_nested_grid_layouts: true
-      - implement_css_scroll_timeline_for_scroll_based_animations: true
-      - apply_css_layer_for_cascade_management: true
-      - use_css_color_level_4_for_color_manipulation: true
-      - implement_css_view_transitions_api_for_page_transitions: true
-      - utilize_css_anchor_positioning_for_dynamic_placement: true
-      - apply_css_property_for_custom_property_type_checking: true
-      - use_css_relative_color_syntax_for_color_relationships: true
-      - implement_css_cascade_layers_for_conflict_resolution: true
-      - utilize_css_focus_visible_for_focus_indicators: true
-      - apply_css_is_and_where_for_selector_grouping: true
-      - use_css_grid_level_3_for_advanced_grid_layouts: true
-      - implement_css_containment_for_performance_optimization: true
-      - utilize_css_logical_properties_for_internationalization: true
-      - apply_css_custom_media_queries_for_reusable_breakpoints: true
-      - use_css_overscroll_behavior_for_scroll_chaining_control: true
-
-ecmascript_2024_standards:
-  - description: "Standards and best practices for ECMAScript 2024."
-  - rules:
-      - use_promise_with_resolvers_instead_of_manual_promise_creation: true
-      - utilize_regexp_v_flag_for_unicode_operations: true
-      - prefer_array_from_async_for_async_iterables: true
-      - use_string_is_well_formed_and_to_well_formed_for_unicode_handling: true
-      - implement_atomics_wait_async_for_shared_memory_operations: true
-      - use_object_group_by_and_map_group_by_for_data_grouping: true
-      - utilize_resizable_array_buffers_when_dynamic_memory_allocation_is_needed: true
-
-code_style_examples:
-  - promise_handling:
-      description: "Example of using Promise.withResolvers."
-      code: |
-        const { promise, resolve, reject } = Promise.withResolvers();
-  - unicode_operations:
-      description: "Example of Unicode operations with RegExp v flag."
-      code: |
-        const unicodeRegex = /[\p{ASCII}&&\p{Decimal_Number}]/v;
-  - monospace_aligned_object:
-      description: "Monospace-aligned object example."
-      code: |
-        const config = {
-            name:     'example',
-            version:  '1.0.0',
-            author:   'dev',
-            license:  'MIT'
-        };
-  - grid_aligned_array:
-      description: "Grid-aligned array example."
-      code: |
-        const matrix = [
-            [1, 0, 0],
-            [0, 1, 0],
-            [0, 0, 1]
-        ];
-
-best_practices:
-  - description: "General best practices for the project."
-  - rules:
-      - always_use_async_await_with_promise_with_resolvers: true
-      - include_proper_error_handling_for_unicode_operations: true
-      - consider_memory_implications_when_using_resizable_buffers: true
-      - add_type_annotations_when_using_group_by_operations: true
-      - document_any_unicode_specific_string_manipulations: true
-      - align_code_blocks_to_character_grid: true
-      - use_consistent_character_spacing_for_readability: true
-      - maintain_monospace_formatting_in_comments: true
-      - utilize_ascii_art_for_visual_documentation: true
-      - keep_layouts_responsive_in_character_units: true
-
-svelte_5_considerations:
-  - use_sveltekit_routing_and_data_loading: true
-  - optimize_performance_with_svelte_5: true
-  - stay_updated_with_latest_svelte_5_practices: true
-
-svelte_5_runes:
-  - $state:
-      description: "Declare reactive state."
-      usage: |
-        <script>let count = $state(0);</script>
-      class_fields: |
-        class Todo {
-          done = $state(false);
-          text = $state();
-          constructor(text) {
-            this.text = text;
-          }
-        }
-      deep_reactivity: "Only plain objects and arrays become deeply reactive."
-  - $state_raw:
-      description: "Declare state that cannot be mutated, only reassigned."
-      usage: |
-        <script>let numbers = $state.raw([1, 2, 3]);</script>
-      performance: "Improves with large arrays and objects."
-  - $state_snapshot:
-      description: "Take a static snapshot of $state."
-      usage: |
-        <script>
-          let counter = $state({ count: 0 });
-
-          function onClick() {
-            console.log($state.snapshot(counter));
-          }
-        </script>
-  - $derived:
-      description: "Declare derived state."
-      usage: |
-        <script>let count = $state(0); let doubled = $derived(count * 2);</script>
-  - $derived_by:
-      description: "Create complex derivations with a function."
-      usage: |
-        <script>
-          let numbers = $state([1, 2, 3]); 
-          let total = $derived.by(() => numbers.reduce((a, b) => a + b, 0));
-        </script>
-  - $effect:
-      description: "Run side-effects when values change."
-      usage: |
-        <script>
-          let size = $state(50);
-          let color = $state('#ff3e00');
-
-          $effect(() => {
-            const context = canvas.getContext('2d');
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            context.fillStyle = color;
-            context.fillRect(0, 0, size, size);
-          });
-        </script>
-  - $effect_pre:
-      description: "Run code before the DOM updates."
-      usage: |
-        <script>
-          $effect.pre(() => {
-            // logic here
-          });
-        </script>
-  - $effect_tracking:
-      description: "Check if code is running inside a tracking context."
-      usage: |
-        <script>console.log('tracking:', $effect.tracking());</script>
-  - $props:
-      description: "Declare component props."
-      usage: |
-        <script>let { prop1, prop2 } = $props();</script>
-  - $bindable:
-      description: "Declare bindable props."
-      usage: |
-        <script>let { bindableProp = $bindable('fallback') } = $props();</script>
-  - $inspect:
-      description: "Equivalent to `console.log` but re-runs when its argument changes."
-      usage: |
-        <script>let count = $state(0); $inspect(count);</script>
-  - $host:
-      description: "Retrieve the this reference of the custom element."
-      usage: |
-        <script>
-          function greet(greeting) {
-            $host().dispatchEvent(new CustomEvent('greeting', { detail: greeting }));
-          }
-        </script>
-
-snippets_in_svelte_5:
-  - description: "Snippets for reusable chunks of markup."
-  - definition: |
-        {#snippet figure(image)}
-          <figure>
-            <img src={image.src} alt={image.caption} width={image.width} height={image.height} />
-            <figcaption>{image.caption}</figcaption>
-          </figure>
-        {/snippet}
-  - invocation: |
-        {@render figure(image)}
-
-event_handling:
-  - description: "Examples of event handling in Svelte 5."
-  - code: |
-        <script>
-          let count = $state(0);
-          
-          function handleClick() {
-            count++;
-          }
-        </script>
-        <button onclick={() => count++}>
-          clicks: {count}
-        </button>
-        <!-- or using shorthand -->
-        <button {handleClick}>
-          clicks: {count}
-        </button>
-
-component_events:
-  - description: "Handling component events in Svelte 5."
-  - code: |
-        <script>
-          let size = $state(15);
-          let burst = $state(false);
-
-          function reset() {
-            size = 15;
-            burst = false;
-          }
-        </script>
-
-        <Pump
-          inflate={(power) => { 
-            size += power; 
-            if (size > 75) burst = true; 
-          }}
-          deflate={(power) => { 
-            if (size > 0) size -= power; 
-          }}
-        />
-
-testing_in_svelte_5:
-  - vitest_unit_testing:
-      description: "Unit testing with Vitest."
-      code: |
-        import { expect, test } from 'vitest';
-        import { render } from '@testing-library/svelte';
-        import Counter from './Counter.svelte';
-
-        test('increments counter when button is clicked', async () => {
-          const { getByText } = render(Counter);
-          const button = getByText('clicks: 0');
-          await button.click();
-          expect(getByText('clicks: 1')).toBeInTheDocument();
-        });
-  - playwright_integration_testing:
-      description: "Integration testing with Playwright."
-      code: |
-        import { test, expect } from '@playwright/test';
-
-        test('counter increments', async ({ page }) => {
-          await page.goto('/');
-          await page.click('button:has-text("clicks: 0")');
-          await expect(page.locator('button')).toHaveText('clicks: 1');
-        });
-
-tailwindcss_with_svelte_5:
-  - dynamic_classes:
-      description: "Using TailwindCSS dynamic classes in Svelte 5."
-      code: |
-        <script>
-          let isActive = $state(false);
-        </script>
-
-        <div class={`
-          rounded-lg 
-          p-4 
-          ${isActive ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-800'}
-          transition-colors
-          duration-200
-        `}>
-          Dynamic Tailwind Classes
-        </div>
-  - typography:
-      description: "Using @tailwindcss/typography with Svelte 5."
-      code: |
-        <article class="prose prose-slate lg:prose-lg">
-          <h1>Article Title</h1>
-          <p>Article content with beautiful typography...</p>
-        </article>
-
-eslint_and_prettier_integration:
-  - prettier_configuration:
-      description: "Configuration for Prettier."
-      code: |
-        {
-          "useTabs": true,
-          "singleQuote": true,
-          "trailingComma": "none",
-          "plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"]
-        }
-  - eslint_configuration:
-      description: "Configuration for ESLint."
-      code: |
-        // eslint.config.js
-        import js from '@eslint/js';
-        import ts from 'typescript-eslint';
-        import svelte from 'eslint-plugin-svelte';
-
-        export default [
-          js.configs.recommended,
-          ...ts.configs.recommended,
-          ...svelte.configs['flat/recommended']
-        ];
-
-typescript_support:
-  - component_props_type_definition:
-      description: "Type definition for component props."
-      code: |
-        interface Props {
-          title: string;
-          count?: number;
-        }
-  - in_component:
-      description: "Using TypeScript in Svelte 5 component."
-      code: |
-        <script lang="ts">
-          let { title, count = 0 } = $props<Props>();
-          let doubled = $derived(count * 2);
-        </script>
-
-development_tools:
-  - hmr:
-      description: "Hot Module Replacement (HMR) configuration for Vite."
-      code: |
-        // vite.config.ts
-        import { defineConfig } from 'vite';
-        import { sveltekit } from '@sveltejs/kit/vite';
-
-        export default defineConfig({
-          plugins: [sveltekit()],
-          server: {
-            hmr: true
-          }
-        });
-
-jest_dom_assertions:
-  - description: "Using Jest-DOM assertions for testing."
-  - code: |
-        import '@testing-library/jest-dom';
-
-        test('element has correct classes', () => {
-          const element = screen.getByRole('button');
-          expect(element).toHaveClass('bg-blue-500');
-          expect(element).toBeVisible();
-          expect(element).not.toBeDisabled();
-        });
+svelte_patterns:
+  - use_runes: true
+  - prefer_$state_over_let: true
+  - prefer_$derived_over_computed: true
+  - use_$effect_for_side_effects: true
+  - use_typescript_for_props: true
+  - keep_components_small: true
+  - use_semantic_html: true
 
 testing_guidelines:
-  - description: "Guidelines for comprehensive testing."
-  - rules:
-      - implement_visual_regression_tests: true
-      - capture_baseline_screenshots: true
-      - verify_monospace_alignment: true
-      - test_responsive_breakpoints: true
-      - check_font_family_consistency: true
-      - validate_character_grid_alignment: true
-      - ensure_consistent_spacing: true
-      - test_dark_and_light_themes: true
-      - verify_accessibility_standards: true
+  - write_unit_tests: true
+  - test_components_in_isolation: true
+  - test_user_interactions: true
+  - test_state_management: true
+  - test_accessibility: true
+  - test_error_cases: true
+  - use_vitest_and_testing_library: true
+
+monospace_design:
+  - use_monospace_fonts: true
+  - align_to_character_grid: true
+  - use_consistent_spacing: true
+  - maintain_visual_hierarchy: true
+
+best_practices:
+  - handle_errors_gracefully: true
+  - validate_user_input: true
+  - optimize_performance: true
+  - follow_accessibility_standards: true
+  - use_semantic_versioning: true
+  - keep_dependencies_updated: true
