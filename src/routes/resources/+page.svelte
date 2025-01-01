@@ -68,8 +68,8 @@
 	}
 
 	h1 {
-		font-size: 2em;
-		line-height: 1.2;
+		font-size: var(--font-size-2xl);
+		line-height: var(--line-height-tight);
 		margin: 0;
 		text-align: center;
 	}
@@ -96,7 +96,8 @@
 		width: 100%;
 		padding: var(--ch3);
 		border: 1px solid var(--border-color);
-		background: color-mix(in srgb, var(--text-color) 5%, transparent);
+		border-radius: var(--radius-sm);
+		background: var(--color-mix-light);
 	}
 
 	.resource-header {
@@ -108,7 +109,8 @@
 
 	h2 {
 		margin: 0;
-		font-size: 1.2em;
+		font-size: var(--font-size-lg);
+		line-height: var(--line-height-tight);
 		font-weight: var(--font-weight-bold);
 	}
 
@@ -124,11 +126,11 @@
 
 	.category {
 		display: inline-block;
-		font-size: 0.9em;
-		padding: 0.2em var(--ch);
-		background: color-mix(in srgb, var(--text-color) 10%, transparent);
+		font-size: var(--font-size-sm);
+		padding: var(--ch) var(--ch2);
+		background: var(--color-mix-medium);
 		border: 1px solid var(--border-color);
-		border-radius: 2px;
+		border-radius: var(--radius-sm);
 	}
 
 	a {

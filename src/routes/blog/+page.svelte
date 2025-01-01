@@ -94,8 +94,8 @@
 	}
 
 	h1 {
-		font-size: 2em;
-		line-height: 1.2;
+		font-size: var(--font-size-2xl);
+		line-height: var(--line-height-tight);
 		margin: 0;
 	}
 
@@ -113,8 +113,8 @@
 	.post {
 		padding: var(--ch2);
 		border: 1px solid var(--border-color);
-		border-radius: 2px;
-		background: color-mix(in srgb, var(--text-color) 5%, transparent);
+		border-radius: var(--radius-sm);
+		background: var(--color-mix-light);
 	}
 
 	.post-header {
@@ -126,9 +126,9 @@
 	}
 
 	.post-header h2 {
-		font-size: 1.2em;
+		font-size: var(--font-size-lg);
+		line-height: var(--line-height-tight);
 		margin: 0;
-		line-height: 1.2;
 	}
 
 	time {
@@ -152,8 +152,8 @@
 		margin: var(--ch4) 0;
 		padding: var(--ch2);
 		border: 1px solid var(--border-color);
-		border-radius: 2px;
-		background: color-mix(in srgb, var(--text-color) 3%, transparent);
+		border-radius: var(--radius-sm);
+		background: var(--color-mix-faint);
 	}
 
 	.dev-to-link {
@@ -174,25 +174,25 @@
 	.dev-to-screenshot {
 		width: 100%;
 		height: auto;
-		border-radius: 2px;
-		box-shadow: 0 2px 4px color-mix(in srgb, var(--text-color) 10%, transparent);
+		border-radius: var(--radius-sm);
+		box-shadow: var(--shadow-md);
 	}
 
 	.dev-to-text {
 		display: block;
-		font-size: 0.9em;
+		font-size: var(--font-size-sm);
 		padding: var(--ch) 0;
 	}
 
 	@media (min-width: 60ch) {
 		.dev-to-text {
-			font-size: 1em;
+			font-size: var(--font-size-md);
 		}
 	}
 
 	.source-note {
 		margin: var(--ch2) 0;
-		font-size: 0.9em;
+		font-size: var(--font-size-sm);
 		color: var(--text-muted);
 	}
 

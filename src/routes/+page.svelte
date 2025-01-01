@@ -151,6 +151,7 @@
 		padding: var(--ch3);
 		border: 1px solid var(--border-color);
 		background: var(--bg-darker);
+		border-radius: var(--radius-md);
 		transition: all 0.3s ease;
 		display: flex;
 		gap: var(--ch2);
@@ -159,8 +160,7 @@
 		&:hover {
 			transform: translateY(-2px);
 			border-color: var(--accent-color);
-			box-shadow: 0 4px 12px
-				color-mix(in srgb, var(--text-color) 10%, transparent);
+			box-shadow: var(--shadow-lg);
 		}
 	}
 
@@ -168,8 +168,8 @@
 		font-size: var(--font-size-xl);
 		line-height: var(--line-height-base);
 		padding: var(--ch);
-		background: color-mix(in srgb, var(--accent-color) 10%, transparent);
-		border-radius: 8px;
+		background: var(--color-mix-light);
+		border-radius: var(--radius-md);
 	}
 
 	.specialty-content {
@@ -202,11 +202,11 @@
 		gap: var(--ch2);
 		padding: var(--ch2);
 		border: 1px solid var(--border-color);
-		border-radius: 4px;
+		border-radius: var(--radius-md);
 		transition: all 0.2s ease;
 
 		&:hover {
-			background: color-mix(in srgb, var(--text-color) 5%, transparent);
+			background: var(--color-mix-light);
 			border-color: var(--accent-color);
 			transform: translateX(var(--ch));
 		}
@@ -236,8 +236,8 @@
 		margin: var(--ch4) 0;
 		padding: var(--ch3);
 		border: 1px solid var(--border-color);
-		border-radius: 8px;
-		background: color-mix(in srgb, var(--text-color) 3%, transparent);
+		border-radius: var(--radius-lg);
+		background: var(--color-mix-faint);
 		container-type: inline-size;
 	}
 
@@ -267,11 +267,11 @@
 		padding: var(--ch2);
 		margin-top: var(--ch2);
 		border: 1px solid var(--border-color);
-		border-radius: 4px;
+		border-radius: var(--radius-md);
 		transition: all 0.2s ease;
 
 		&:hover {
-			background: color-mix(in srgb, var(--text-color) 5%, transparent);
+			background: var(--color-mix-light);
 			border-color: var(--accent-color);
 		}
 	}
@@ -284,10 +284,9 @@
 	.video-container {
 		position: relative;
 		width: 100%;
-		/* 16:9 aspect ratio */
 		padding-bottom: 56.25%;
 		margin: var(--ch2) 0;
-		background: color-mix(in srgb, var(--text-color) 10%, transparent);
+		background: var(--color-mix-medium);
 	}
 
 	.video-container iframe {

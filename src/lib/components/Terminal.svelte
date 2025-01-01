@@ -93,18 +93,17 @@ Commands:
 		max-width: 80ch;
 		background: var(--bg-color);
 		border: 1px solid var(--border-color);
-		border-radius: 8px;
+		border-radius: var(--radius-lg);
 		overflow: visible;
-		box-shadow: 0 4px 6px -1px
-			color-mix(in srgb, var(--text-color) 10%, transparent);
+		box-shadow: var(--shadow-lg);
 		display: flex;
 		flex-direction: column;
 		position: relative;
 	}
 
 	.terminal-header {
-		height: 3ch;
-		background: color-mix(in srgb, var(--text-color) 5%, transparent);
+		height: var(--ch3);
+		background: var(--color-mix-light);
 		padding: 0 var(--ch2);
 		display: flex;
 		justify-content: space-between;
@@ -123,9 +122,9 @@ Commands:
 		gap: var(--ch);
 
 		& span {
-			width: 12px;
-			height: 12px;
-			border-radius: 50%;
+			width: var(--ch);
+			height: var(--ch);
+			border-radius: var(--radius-full);
 			background: var(--text-muted);
 			opacity: 0.5;
 		}
@@ -163,7 +162,7 @@ Commands:
 		color: var(--text-color);
 		white-space: pre;
 		animation: crtReveal 50ms linear;
-		line-height: var(--line-height);
+		line-height: var(--line-height-base);
 		font-weight: var(--font-weight-normal);
 	}
 
@@ -201,12 +200,13 @@ Commands:
 		right: 0;
 		background: var(--bg-color);
 		border: 1px solid var(--border-color);
+		border-radius: var(--radius-md);
 		padding: var(--ch2);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-xs);
 		white-space: pre;
 		z-index: 100;
 		margin-bottom: 2rem;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		box-shadow: var(--shadow-md);
 	}
 </style>
