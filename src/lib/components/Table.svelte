@@ -1,23 +1,14 @@
 <script lang="ts">
-	import { alignToGrid } from '$lib/utils/grid';
-
 	const {
 		headers = [],
 		rows = [],
-		width = 64
+		width = 60
 	} = $props<{
 		headers?: string[];
 		rows?: string[][];
 		width?: number;
 	}>();
 
-	const alignedWidth = $derived(alignToGrid(width));
-
-	function padCell(text: string, width: number): string {
-		return text.padEnd(width);
-	}
-
-	// Calculate column widths
 	const columnWidths = $derived(
 		headers.map((header: string, index: number) => {
 			const columnContent = [
@@ -38,9 +29,13 @@
 	const bottomBorder = $derived(
 		`└${columnWidths.map((w: number) => '─'.repeat(w + 2)).join('┴')}┘`
 	);
+
+	function padCell(text: string, width: number): string {
+		return text.padEnd(width);
+	}
 </script>
 
-<div class="table" style="--table-width: {alignedWidth}ch">
+<div class="table" style="--table-width: {width}ch">
 	<div class="table-border">
 		{topBorder}
 	</div>

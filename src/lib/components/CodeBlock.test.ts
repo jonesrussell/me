@@ -25,7 +25,7 @@ describe('CodeBlock', () => {
 			}
 		});
 		const codeBlock = container.querySelector('.code-block');
-		expect(codeBlock).toHaveStyle({ '--block-width': '80ch' });
+		expect(codeBlock?.getAttribute('style')).toContain('--block-width: 80ch');
 	});
 
 	it('renders with filename and language', () => {

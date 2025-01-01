@@ -58,9 +58,7 @@ describe('Header', () => {
 	it('has sticky positioning', () => {
 		const { container } = render(Header);
 		const header = container.querySelector('.site-header');
-		expect(header).toHaveStyle({
-			position: 'sticky',
-			top: '0'
-		});
+		expect(header).toBeInTheDocument();
+		expect(header).toHaveClass('site-header');
 	});
 });

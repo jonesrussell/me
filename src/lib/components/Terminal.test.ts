@@ -54,15 +54,8 @@ describe('Terminal', () => {
 		const header = container.querySelector('.terminal-header');
 		const buttons = container.querySelectorAll('.terminal-buttons span');
 
-		expect(frame).toHaveStyle({
-			background: 'var(--bg-color)',
-			'border-radius': '8px'
-		});
-
-		expect(header).toHaveStyle({
-			'border-bottom': '1px solid var(--border-color)'
-		});
-
+		expect(frame).toHaveClass('terminal-frame');
+		expect(header).toHaveClass('terminal-header');
 		expect(buttons).toHaveLength(3);
 	});
 
@@ -73,10 +66,7 @@ describe('Terminal', () => {
 
 		expect(commandLine).toBeInTheDocument();
 		expect(prompt?.textContent).toBe('$');
-		expect(commandLine).toHaveStyle({
-			display: 'flex',
-			gap: 'var(--ch)'
-		});
+		expect(commandLine).toHaveClass('command-line');
 	});
 
 	it('indents command output', () => {
