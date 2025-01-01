@@ -10,7 +10,7 @@ vi.mock('$app/paths', () => ({
 
 vi.mock('$app/stores', () => ({
 	page: {
-		subscribe: (fn: (value: any) => void) => {
+		subscribe: (fn: (value: { url: { pathname: string } }) => void) => {
 			fn({ url: { pathname: '/blog' } });
 			return () => {};
 		}
