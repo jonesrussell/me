@@ -115,29 +115,51 @@ function countCommandLines(cmd: Command): number {
 	});
 }
 
+/**
+ * Terminal Height Calculation
+ *
+ * The total height is calculated using character units (ch) to maintain a perfect monospace grid.
+ * Each factor is carefully chosen to ensure proper spacing and alignment:
+ *
+ * 1. Content Lines (23 total):
+ *    - First command: 3 lines (prompt + cmd + output)
+ *    - Gap: 1 line
+ *    - Second command: 19 lines (prompt + cmd + 17 lines man page)
+ *    Each line is multiplied by LINE_HEIGHT (1.7) to account for line spacing
+ *
+ * 2. Fixed Spacing:
+ *    - HEADER: 3ch (terminal title bar)
+ *    - BODY_PADDING: 7ch (3ch top + 4ch bottom for visual balance)
+ *    - COMMAND_MARGINS: 4ch (2ch per command block)
+ *    - ELEMENT_GAPS: 2ch (1ch between elements)
+ *
+ * Final equation:
+ * height = ceil(CONTENT_LINES × LINE_HEIGHT) + HEADER + BODY_PADDING + COMMAND_MARGINS + ELEMENT_GAPS
+ * = ceil(23 × 1.7) + 3 + 7 + 4 + 2
+ * = 40 + 16
+ * = 56ch total
+ */
+
 // Calculate height with ALL spacing factors
 const CONTENT_LINES = 23; // Total content lines
 const LINE_HEIGHT = 1.7; // --line-height-relaxed
 const HEADER = 3; // Terminal header height
-const BODY_PADDING = 4; // 2ch top + 2ch bottom (var(--ch2))
-const COMMAND_MARGINS = 4; // 1ch margin-top on each command-line and command-output (2 commands)
+const BODY_PADDING = 7; // 3ch top + 4ch bottom padding
+const COMMAND_MARGINS = 4; // 2ch margin-top on each command block (2 commands)
 const ELEMENT_GAPS = 2; // 1ch gap between elements in terminal-body
-const EXTRA_PADDING = 2; // Safety margin
 
 // Calculate total height:
 // 1. Content lines with line height
 // 2. Fixed header height
-// 3. Body padding (top and bottom)
-// 4. Command margins
-// 5. Element gaps
-// 6. Extra padding for safety
+// 3. Body padding (3ch top + 4ch bottom)
+// 4. Command margins (2ch per command block)
+// 5. Element gaps (1ch between elements)
 const TERMINAL_HEIGHT = `${
 	Math.ceil(CONTENT_LINES * LINE_HEIGHT) +
 	HEADER +
 	BODY_PADDING +
 	COMMAND_MARGINS +
-	ELEMENT_GAPS +
-	EXTRA_PADDING
+	ELEMENT_GAPS
 }ch`;
 
 // Debug store to track calculations
@@ -163,19 +185,13 @@ export const debug = writable<DebugState>({
 	headerHeight: HEADER,
 	padding: BODY_PADDING,
 	rawHeight:
-		CONTENT_LINES +
-		HEADER +
-		BODY_PADDING +
-		COMMAND_MARGINS +
-		ELEMENT_GAPS +
-		EXTRA_PADDING,
+		CONTENT_LINES + HEADER + BODY_PADDING + COMMAND_MARGINS + ELEMENT_GAPS,
 	scaledHeight:
 		Math.ceil(CONTENT_LINES * LINE_HEIGHT) +
 		HEADER +
 		BODY_PADDING +
 		COMMAND_MARGINS +
-		ELEMENT_GAPS +
-		EXTRA_PADDING,
+		ELEMENT_GAPS,
 	totalHeight: TERMINAL_HEIGHT,
 	commands: commands.map((cmd) => {
 		const lines = countCommandLines(cmd);
@@ -184,13 +200,12 @@ export const debug = writable<DebugState>({
 			HEADER +
 			BODY_PADDING +
 			COMMAND_MARGINS +
-			ELEMENT_GAPS +
-			EXTRA_PADDING;
+			ELEMENT_GAPS;
 		return {
 			cmd: cmd.cmd,
 			lines,
 			height: `${height}ch`,
-			breakdown: `(${lines} lines × ${LINE_HEIGHT} line-height + ${HEADER}ch header + ${BODY_PADDING}ch top padding + ${COMMAND_MARGINS}ch command margins + ${ELEMENT_GAPS}ch element gaps + ${EXTRA_PADDING}ch extra padding) = ${height}ch`
+			breakdown: `(${lines} lines × ${LINE_HEIGHT} line-height + ${HEADER}ch header + ${BODY_PADDING}ch top padding + ${COMMAND_MARGINS}ch command margins + ${ELEMENT_GAPS}ch element gaps) = ${height}ch`
 		};
 	})
 });
