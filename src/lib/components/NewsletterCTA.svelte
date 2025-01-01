@@ -1,236 +1,217 @@
 <script lang="ts">
-	let email = $state('');
-	let submitting = $state(false);
-	let success = $state(false);
-	let error = $state<string | null>(null);
+	import { onMount } from 'svelte';
 
-	async function handleSubmit(event: SubmitEvent) {
+	let email = '';
+	let submitStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
+	let errorMessage = '';
+
+	async function handleSubmit(event: Event) {
 		event.preventDefault();
 		if (!email) return;
 
-		submitting = true;
-		error = null;
+		submitStatus = 'loading';
 
 		try {
-			// Simulate API call
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-			success = true;
-		} catch (e) {
-			error = e instanceof Error ? e.message : 'Something went wrong';
-		} finally {
-			submitting = false;
+			const response = await fetch('/api/newsletter', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ email })
+			});
+
+			if (!response.ok) {
+				throw new Error('Failed to subscribe');
+			}
+
+			submitStatus = 'success';
+			email = '';
+		} catch (error) {
+			submitStatus = 'error';
+			errorMessage =
+				error instanceof Error ? error.message : 'An unexpected error occurred';
 		}
 	}
+
+	onMount(() => {
+		const form = document.querySelector('form');
+		if (form) {
+			form.setAttribute('novalidate', '');
+		}
+	});
 </script>
 
-<div class="newsletter-cta">
-	<div class="cta-content">
-		<div class="cta-header">
-			<h3>┌─[ Stay Updated ]─┐</h3>
-			<p>Get the latest updates on web development and tech insights.</p>
+<div class="newsletter">
+	<div class="newsletter-header">
+		<h3>Stay Updated</h3>
+		<p class="description">
+			Subscribe to my newsletter for updates on web development, Go, and open
+			source.
+		</p>
+	</div>
+
+	<form class="form" on:submit={handleSubmit}>
+		<div class="form-group">
+			<label for="email">Email Address</label>
+			<input
+				type="email"
+				id="email"
+				name="email"
+				bind:value={email}
+				placeholder="you@example.com"
+				required
+			/>
 		</div>
 
-		{#if success}
-			<div class="success-message">
-				<span class="icon">✓</span> Thanks for subscribing! Check your email to confirm.
-			</div>
-		{:else}
-			<form class="signup-form" onsubmit={handleSubmit}>
-				<div class="input-wrapper">
-					<input
-						type="email"
-						placeholder="your.email@example.com"
-						bind:value={email}
-						disabled={submitting}
-					/>
-					<button type="submit" disabled={submitting}>
-						{#if submitting}
-							[ Processing... ]
-						{:else}
-							[ ▶ Subscribe ]
-						{/if}
-					</button>
+		<button type="submit" disabled={submitStatus === 'loading'}>
+			{#if submitStatus === 'loading'}
+				<div class="loading">
+					<span>Subscribing</span>
+					<span>...</span>
 				</div>
-				{#if error}
-					<div class="error-message"><span class="icon">✗</span> {error}</div>
-				{/if}
-			</form>
+			{:else}
+				Subscribe
+			{/if}
+		</button>
+
+		{#if submitStatus === 'success'}
+			<div class="success-message">
+				<span class="icon">✓</span> Message sent successfully! I'll get back to you
+				soon.
+			</div>
 		{/if}
-	</div>
+
+		{#if submitStatus === 'error'}
+			<div class="error-message">
+				<span class="icon">✗</span>
+				{errorMessage}
+			</div>
+		{/if}
+	</form>
 </div>
 
 <style>
-	.newsletter-cta {
-		position: relative;
-		width: 100%;
-		margin: var(--ch4) 0;
-		padding: var(--ch4) 0;
-		border: 1px solid var(--border-color);
-		background: var(--bg-alt);
-		overflow: hidden;
-	}
-
-	.newsletter-cta::before {
-		position: absolute;
-		inset: 0;
-		content: '';
-		background-image: linear-gradient(
-				45deg,
-				var(--border-color) 25%,
-				transparent 25%
-			),
-			linear-gradient(-45deg, var(--border-color) 25%, transparent 25%),
-			linear-gradient(45deg, transparent 75%, var(--border-color) 75%),
-			linear-gradient(-45deg, transparent 75%, var(--border-color) 75%);
-		background-size: 20px 20px;
-		background-position:
-			0 0,
-			0 10px,
-			10px -10px,
-			-10px 0;
-		opacity: 0.03;
-		pointer-events: none;
-	}
-
-	.cta-content {
-		position: relative;
-		width: 100%;
-		max-width: min(var(--measure), 95vw);
-		margin: 0 auto;
-		padding: var(--ch4) var(--ch2);
-		border: 1px solid var(--border-color);
-		background: var(--bg-color);
-		line-height: var(--line-height);
-		text-align: center;
-		box-shadow: 4px 4px 0 var(--border-color);
-	}
-
-	.cta-header {
-		margin-bottom: var(--ch4);
-	}
-
-	h3 {
-		margin-bottom: var(--ch2);
-		color: var(--accent-color);
-		font-size: var(--font-size-lg);
-		font-weight: var(--font-weight-bold);
-		line-height: var(--line-height-base);
-		letter-spacing: 0.05em;
-		text-shadow: 2px 2px 0 var(--bg-color);
-	}
-
-	p {
-		max-width: 50ch;
-		margin-right: auto;
-		margin-bottom: var(--ch2);
-		margin-left: auto;
-		color: var(--text-muted);
-	}
-
-	.signup-form {
+	.newsletter {
 		display: flex;
 		flex-direction: column;
 		gap: var(--ch2);
-		align-items: center;
+		width: 100%;
+		padding: var(--ch3);
+		border: 1px solid var(--border-color);
+		border-radius: var(--radius-md);
+		background: var(--color-mix-light);
 	}
 
-	.input-wrapper {
+	.newsletter-header {
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
+		gap: var(--ch);
+	}
+
+	h3 {
+		margin: 0;
+		font-size: var(--font-size-lg);
+		line-height: var(--line-height-base);
+	}
+
+	.description {
+		color: var(--text-muted);
+		line-height: var(--line-height-relaxed);
+	}
+
+	.form {
+		display: flex;
+		flex-direction: column;
 		gap: var(--ch2);
-		align-items: stretch;
-		width: 100%;
-		max-width: min(50ch, 100%);
-		margin: 0 auto;
+	}
+
+	.form-group {
+		display: flex;
+		flex-direction: column;
+		gap: var(--ch);
+	}
+
+	label {
+		color: var(--text-muted);
+		font-size: var(--font-size-sm);
 	}
 
 	input {
-		flex: 1;
-		min-width: 0;
+		width: 100%;
 		padding: var(--ch2);
 		border: 1px solid var(--border-color);
+		border-radius: var(--radius-sm);
 		background: var(--bg-color);
 		color: var(--text-color);
 		font-family: var(--font-mono);
+		font-size: var(--font-size-base);
 		transition: all 0.2s ease;
-		box-shadow: inset 0 1px 2px rgb(0 0 0 / 10%);
-	}
-
-	input::placeholder {
-		color: var(--text-muted);
-		opacity: 0.7;
 	}
 
 	input:focus {
 		outline: none;
 		border-color: var(--accent-color);
-		box-shadow:
-			0 0 0 2px var(--accent-color-transparent),
-			inset 0 1px 2px rgb(0 0 0 / 10%);
+		box-shadow: 0 0 0 calc(var(--ch) / 8) var(--accent-color-transparent);
+	}
+
+	input::placeholder {
+		color: var(--text-muted);
+		opacity: 0.5;
 	}
 
 	button {
-		position: relative;
-		width: auto;
-		padding: var(--ch2) var(--ch4);
-		border: 1px solid var(--accent-color);
-		background: var(--accent-color-hover);
-		color: var(--bg-color);
+		display: flex;
+		gap: var(--ch);
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		padding: var(--ch2);
+		border: 1px solid var(--border-color);
+		border-radius: var(--radius-sm);
+		background: var(--color-mix-light);
+		color: var(--text-color);
 		font-family: var(--font-mono);
-		font-weight: var(--font-weight-bold);
-		line-height: var(--line-height-tight);
+		font-size: var(--font-size-base);
 		transition: all 0.2s ease;
 		cursor: pointer;
-		white-space: nowrap;
-		text-shadow: none;
-		box-shadow: 2px 2px 0 var(--accent-color);
 	}
 
 	button:hover:not(:disabled) {
-		background: var(--accent-color);
-		transform: translateY(-1px) translateX(-1px);
-		box-shadow: 3px 3px 0 var(--accent-color);
-	}
-
-	button:active:not(:disabled) {
-		transform: translateY(1px) translateX(1px);
-		box-shadow: 1px 1px 0 var(--accent-color);
+		background: var(--color-mix-medium);
+		border-color: var(--accent-color);
+		transform: translateY(calc(-1 * var(--ch) / 8));
 	}
 
 	button:disabled {
-		background: var(--text-muted);
-		transform: none;
+		opacity: 0.5;
 		cursor: not-allowed;
-		border-color: var(--border-color);
-		box-shadow: 2px 2px 0 var(--border-color);
-		opacity: 0.7;
+	}
+
+	.loading {
+		display: flex;
+		gap: var(--ch);
+		align-items: center;
+		color: var(--text-muted);
 	}
 
 	.success-message,
 	.error-message {
 		display: flex;
 		gap: var(--ch);
-		justify-content: center;
 		align-items: center;
-		margin-top: var(--ch2);
 		padding: var(--ch2);
-		border: 1px solid;
-		line-height: var(--line-height-relaxed);
+		border-radius: var(--radius-sm);
 	}
 
 	.success-message {
-		background: rgb(34 197 94 / 10%);
-		color: #22c55e;
-		border-color: #22c55e;
+		border: 1px solid var(--color-success);
+		background: color-mix(in srgb, var(--color-success) 15%, transparent);
+		color: var(--color-success);
 	}
 
 	.error-message {
-		background: rgb(239 68 68 / 10%);
-		color: #ef4444;
-		border-color: #ef4444;
-	}
-
-	.icon {
-		font-weight: var(--font-weight-bold);
+		border: 1px solid var(--color-error);
+		background: color-mix(in srgb, var(--color-error) 15%, transparent);
+		color: var(--color-error);
 	}
 </style>

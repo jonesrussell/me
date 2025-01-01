@@ -17,9 +17,12 @@
 	);
 </script>
 
-<div class="code-block" style="
+<div
+	class="code-block"
+	style="
 
---block-width: {width}ch">
+--block-width: {width}ch"
+>
 	{#if filename}
 		<div class="file-header">
 			<span class="filename">{filename}</span>
@@ -62,7 +65,7 @@
 
 	.language {
 		color: var(--text-muted);
-		font-size: 0.9em;
+		font-size: var(--font-size-sm);
 	}
 
 	.code-content {
@@ -83,7 +86,7 @@
 		padding: var(--ch) var(--ch2);
 		border-top: 1px solid var(--border-color);
 		color: var(--text-muted);
-		font-size: 0.9em;
+		font-size: var(--font-size-sm);
 	}
 
 	.line-number {
