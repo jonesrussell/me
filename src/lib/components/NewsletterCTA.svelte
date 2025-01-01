@@ -113,10 +113,11 @@
 	}
 
 	h3 {
+		font-size: var(--font-size-lg);
+		line-height: var(--line-height-base);
 		font-weight: var(--font-weight-bold);
 		margin-bottom: var(--ch2);
 		color: var(--accent-color);
-		font-size: 1.2em;
 		letter-spacing: 0.05em;
 		text-shadow: 2px 2px 0 var(--bg-color);
 	}
@@ -172,13 +173,13 @@
 	}
 
 	button {
-		font-family: inherit;
+		font-family: var(--font-mono);
 		background: var(--accent-color-hover);
 		border: 1px solid var(--accent-color);
 		color: var(--bg-color);
 		cursor: pointer;
 		padding: var(--ch2) var(--ch4);
-		line-height: 1.2;
+		line-height: var(--line-height-tight);
 		font-weight: var(--font-weight-bold);
 		transition: all 0.2s ease;
 		width: auto;
@@ -211,7 +212,7 @@
 	.success-message,
 	.error-message {
 		margin-top: var(--ch2);
-		line-height: 1.4;
+		line-height: var(--line-height-relaxed);
 		padding: var(--ch2);
 		border: 1px solid;
 		display: flex;

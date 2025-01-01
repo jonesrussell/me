@@ -41,7 +41,8 @@
 	.box {
 		width: var(--box-width);
 		font-family: var(--font-mono);
-		line-height: 1.2;
+		line-height: var(--line-height-tight);
+		white-space: pre;
 	}
 
 	.box-frame {

@@ -42,7 +42,8 @@
 		font-family: var(--font-mono);
 		background: var(--bg-color);
 		border: 1px solid var(--border-color);
-		line-height: 1.2;
+		line-height: var(--line-height-tight);
+		white-space: pre;
 	}
 
 	.file-header {
@@ -81,5 +82,16 @@
 		border-top: 1px solid var(--border-color);
 		color: var(--text-muted);
 		font-size: 0.9em;
+	}
+
+	.line-number {
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
+		user-select: none;
+	}
+
+	button {
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
 	}
 </style>

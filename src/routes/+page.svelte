@@ -165,8 +165,8 @@
 	}
 
 	.specialty-icon {
-		font-size: 1.5em;
-		line-height: 1;
+		font-size: var(--font-size-xl);
+		line-height: var(--line-height-base);
 		padding: var(--ch);
 		background: color-mix(in srgb, var(--accent-color) 10%, transparent);
 		border-radius: 8px;
@@ -184,7 +184,7 @@
 
 	.specialty-desc {
 		color: var(--text-muted);
-		line-height: 1.4;
+		line-height: var(--line-height-relaxed);
 	}
 
 	.navigation {
@@ -213,7 +213,7 @@
 	}
 
 	.nav-icon {
-		font-size: 1.2em;
+		font-size: var(--font-size-lg);
 	}
 
 	@media (min-width: 600px) {
@@ -247,7 +247,7 @@
 	}
 
 	h2 {
-		font-size: 1.5em;
+		font-size: var(--font-size-xl);
 		margin: 0 0 var(--ch) 0;
 		color: var(--accent-color);
 	}
@@ -278,7 +278,7 @@
 
 	.youtube-icon {
 		color: #ff0000;
-		font-size: 1.2em;
+		font-size: var(--font-size-lg);
 	}
 
 	.video-container {
@@ -328,7 +328,7 @@
 
 	figcaption {
 		color: var(--text-muted);
-		font-size: 0.9em;
+		font-size: var(--font-size-sm);
 		padding: var(--ch) 0;
 		text-align: center;
 		/* Add subtle separator */
