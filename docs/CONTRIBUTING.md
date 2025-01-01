@@ -1,99 +1,140 @@
-# Contributing Guide
+# Contributing Guidelines
 
-Thank you for considering contributing to this project! This document provides guidelines and instructions for contributing.
+This project follows a monospace-first design approach, where all layouts and measurements are based on character units (ch) to maintain perfect grid alignment.
 
-## Development Setup
+## Design Principles
 
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Start development server: `npm run dev`
+### Monospace Grid System
 
-## Code Style
+All components should align to the character grid:
 
-We use ESLint and Prettier for code formatting. Our style guidelines include:
+- Use character units (`ch`) for measurements
+- Ensure whole number values for grid alignment
+- Use the Grid component for layouts
+- Follow monospace design patterns
 
-- Use semicolons
-- Use single quotes for strings
-- Use template literals for string concatenation
-- Follow TypeScript best practices
-- Maintain monospace-aligned code where appropriate
+Example:
 
-## Testing
-
-Before submitting a PR, ensure all tests pass:
-
-```bash
-# Run all tests
-npm run test
-
-# Run specific test suites
-npm run test:unit
-npm run test:integration
+```svelte
+<Grid cols={2} gap={2}>
+	<div>Column 1</div>
+	<div>Column 2</div>
+</Grid>
 ```
 
-## Commit Messages
+### Terminal Components
 
-Follow conventional commits format:
+When creating terminal-based interfaces:
 
-- feat: New feature
-- fix: Bug fix
-- docs: Documentation changes
-- style: Code style changes
-- refactor: Code refactoring
-- test: Test updates
-- chore: Maintenance tasks
+- Use the Terminal component for command demonstrations
+- Follow the command/output pattern
+- Maintain proper typing animations
+- Handle terminal resizing appropriately
+
+Example:
+
+```typescript
+const commands = [
+	{
+		cmd: 'echo "Hello"',
+		output: 'Hello'
+	}
+];
+
+terminal.loadCommands(commands);
+```
+
+## Development Workflow
+
+1. **Setup**
+
+   ```bash
+   npm install
+   npm run dev
+   ```
+
+2. **Code Style**
+
+   - Use TypeScript for type safety
+   - Follow the monospace grid system
+   - Maintain character-based alignments
+   - Use Svelte runes for reactivity
+
+3. **Testing**
+
+   - Write unit tests for utilities
+   - Test components in isolation
+   - Verify grid alignments
+   - Check terminal animations
+
+4. **Documentation**
+   - Document component props
+   - Explain grid measurements
+   - Provide usage examples
+   - Update relevant docs
+
+## Component Guidelines
+
+### Creating New Components
+
+1. Use the monospace grid system:
+
+   ```typescript
+   import { alignToGrid, toCharUnit } from '$lib/utils/grid';
+   const width = toCharUnit(alignToGrid(40)); // "40ch"
+   ```
+
+2. Follow the terminal pattern when needed:
+
+   ```typescript
+   import { terminal } from '$lib/stores/terminal';
+   terminal.loadCommands(myCommands);
+   ```
+
+3. Maintain proper types:
+   ```typescript
+   interface Props {
+   	cols?: number;
+   	gap?: number;
+   }
+   ```
+
+### Styling Rules
+
+1. Use character units:
+
+   ```css
+   .element {
+   	width: var(--ch40);
+   	padding: var(--ch2);
+   	gap: var(--ch);
+   }
+   ```
+
+2. Maintain grid alignment:
+   ```css
+   .grid {
+   	display: grid;
+   	grid-template-columns: repeat(var(--cols), 1fr);
+   	gap: var(--grid-gap);
+   }
+   ```
 
 ## Pull Request Process
 
-1. Create a feature branch from `main`
-2. Make your changes
-3. Ensure all tests pass
-4. Update documentation if needed
-5. Submit PR against `main`
+1. Ensure code follows monospace grid system
+2. Update documentation if needed
+3. Add tests for new features
+4. Update type definitions
+5. Verify terminal animations
+6. Check grid alignments
 
-## Project Structure
+## Questions?
 
-```
-src/
-├── lib/
-│   ├── components/     # Reusable components
-│   ├── utils/         # Utility functions
-│   └── styles/        # Global styles
-├── routes/           # SvelteKit routes
-└── tests/           # Test files
-```
+Feel free to open an issue for:
 
-## Design Guidelines
-
-- Follow monospace-first design principles
-- Align elements to character grid
-- Use ASCII art for borders and diagrams
-- Maintain responsive layouts in character units
-- Follow semantic HTML structure
-
-## Testing Guidelines
-
-- Write unit tests for utility functions
-- Add integration tests for components
-- Include visual regression tests for UI changes
-- Test responsive layouts
-- Verify dark/light theme compatibility
-
-## Documentation
-
-- Update README.md for major changes
-- Document new components
-- Include usage examples
-- Update type definitions
-- Add JSDoc comments for functions
-
-## Need Help?
-
-- Check existing issues
-- Review pull requests
-- Read the documentation
-- Ask questions in discussions
-
-## License
-
-By contributing, you agree that your contributions will be licensed under the project's MIT License.
+- Grid alignment questions
+- Terminal component usage
+- Animation issues
+- Type definitions
+- Documentation improvements
