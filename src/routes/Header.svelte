@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+
 	const title = 'Limitless Developer';
 	const navItems = [
 		{ href: '/blog', text: 'Blog      ' },
@@ -8,15 +10,24 @@
 	];
 </script>
 
-<header>
-	<div class="brand">Russell Jones</div>
-	<div class="title">{title}</div>
-	<nav>
-		{#each navItems as item}
-			<a href={item.href}>{item.text}</a>
-		{/each}
-	</nav>
+<header class="site-header">
+	<div class="header-main">
+		<a href="/" class="title">Russell Jones</a>
+		<nav class="header-nav">
+			{#each navItems as item}
+				<a href={item.href} class:active={$page.url.pathname === item.href}
+					>{item.text}</a
+				>
+			{/each}
+		</nav>
+	</div>
 </header>
+
+<div class="subtitle-bar">
+	<div class="container">
+		{title}
+	</div>
+</div>
 
 <style>
 	.site-header {
@@ -46,18 +57,14 @@
 		color: var(--text-muted);
 	}
 
-	.header-content {
-		width: 100%;
-		max-width: min(var(--measure), 95cqi);
-		padding-inline: var(--ch2);
-		margin-inline: auto;
-	}
-
 	.header-main {
 		display: grid;
 		gap: var(--ch4);
 		align-items: center;
 		grid-template-columns: auto 1fr;
+		max-width: min(var(--measure), 95cqi);
+		padding-inline: var(--ch2);
+		margin-inline: auto;
 
 		@container (width < 600px) {
 			grid-template-columns: 1fr;
