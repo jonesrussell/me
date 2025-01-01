@@ -17,7 +17,7 @@
 			<span class="command">{command}</span>
 		</div>
 		<div class="command-output">
-			{@render children()}
+			{children?.()}
 		</div>
 	</div>
 </div>

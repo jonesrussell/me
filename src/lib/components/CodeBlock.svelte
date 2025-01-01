@@ -4,7 +4,7 @@
 	const {
 		language = '',
 		filename = undefined,
-		width = 60,
+		width = 64,
 		children
 	} = $props<{
 		language?: string;
@@ -14,9 +14,8 @@
 	}>();
 
 	const alignedWidth = $derived(alignToGrid(width));
-
-	// Get the content of the default slot
-	const content = $derived(children?.toString() ?? '');
+	const content = $derived(children?.() ?? '');
+	const lineCount = $derived(content.toString().split('\n').length);
 </script>
 
 <div class="code-block" style="--block-width: {alignedWidth}ch">
@@ -28,12 +27,12 @@
 	{/if}
 
 	<div class="code-content">
-		<pre><code class={language}>{@render children()}</code></pre>
+		<pre><code class={language}>{content}</code></pre>
 	</div>
 
 	<div class="code-footer">
 		<span class="line-count">
-			{content.split('\n').length} lines
+			{lineCount} lines
 		</span>
 	</div>
 </div>
