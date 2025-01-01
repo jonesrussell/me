@@ -23,6 +23,6 @@
 	.footer {
 		padding: var(--ch2) 0;
 		text-align: center;
-		border-top: 1px solid var(--border-color);
+		border-top: calc(1 * var(--ch) / 16) solid var(--border-color);
 	}
 </style>

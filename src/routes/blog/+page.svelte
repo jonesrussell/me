@@ -112,7 +112,7 @@
 
 	.post {
 		padding: var(--ch2);
-		border: 1px solid var(--border-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-sm);
 		background: var(--color-mix-light);
 	}
@@ -151,7 +151,7 @@
 	.dev-to-section {
 		margin: var(--ch4) 0;
 		padding: var(--ch2);
-		border: 1px solid var(--border-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-sm);
 		background: var(--color-mix-faint);
 	}

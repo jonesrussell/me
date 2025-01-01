@@ -148,7 +148,7 @@
 		display: grid;
 		gap: var(--ch4);
 		padding: var(--ch4);
-		border: 1px solid var(--border-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-sm);
 		background: var(--color-mix-faint);
 	}
@@ -174,7 +174,7 @@
 		gap: var(--ch2);
 		align-items: center;
 		padding: var(--ch) var(--ch2);
-		border: 1px solid var(--border-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		background: var(--color-mix-light);
 		text-decoration: none;
 		transition: all 0.2s ease;
@@ -229,7 +229,7 @@
 		max-width: calc(100% - var(--ch2));
 		margin: 0 var(--ch);
 		padding: var(--ch2);
-		border: 1px solid var(--border-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		background: var(--bg-color);
 		color: var(--text-color);
 		font-family: var(--font-mono);
@@ -251,26 +251,31 @@
 	}
 
 	.submit-button {
-		padding: var(--ch2) var(--ch4);
-		border: 1px solid var(--border-color);
+		display: flex;
+		gap: var(--ch);
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		padding: var(--ch2);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
+		border-radius: var(--radius-sm);
 		background: var(--color-mix-light);
 		color: var(--text-color);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
 		transition: all 0.2s ease;
 		cursor: pointer;
-		align-self: flex-start;
+	}
+
+	.submit-button:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
 	}
 
 	.submit-button:hover:not(:disabled) {
 		background: var(--color-mix-medium);
 		border-color: var(--accent-color);
 		transform: translateY(calc(-1 * var(--ch) / 8));
-	}
-
-	.submit-button:disabled {
-		opacity: 0.5;
-		cursor: not-allowed;
 	}
 
 	.button-content {
@@ -288,22 +293,22 @@
 
 	.success-message,
 	.error-message {
-		display: flex;
-		gap: var(--ch);
-		align-items: center;
+		margin-top: var(--ch2);
 		padding: var(--ch2);
+		border: calc(1 * var(--ch) / 16) solid;
 		border-radius: var(--radius-sm);
+		font-family: var(--font-mono);
 	}
 
 	.success-message {
-		border: 1px solid var(--color-success);
-		background: color-mix(in srgb, var(--color-success) 15%, transparent);
+		border-color: var(--color-success);
+		background: var(--color-success-transparent);
 		color: var(--color-success);
 	}
 
 	.error-message {
-		border: 1px solid var(--color-error);
-		background: color-mix(in srgb, var(--color-error) 15%, transparent);
+		border-color: var(--color-error);
+		background: var(--color-error-transparent);
 		color: var(--color-error);
 	}
 

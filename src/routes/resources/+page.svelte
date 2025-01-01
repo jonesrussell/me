@@ -98,7 +98,7 @@
 		gap: var(--ch2);
 		width: 100%;
 		padding: var(--ch3);
-		border: 1px solid var(--border-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-sm);
 		background: var(--color-mix-light);
 	}
@@ -130,7 +130,7 @@
 	.category {
 		display: inline-block;
 		padding: var(--ch) var(--ch2);
-		border: 1px solid var(--border-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-sm);
 		background: var(--color-mix-medium);
 		font-size: var(--font-size-sm);
@@ -141,7 +141,7 @@
 		color: var(--link-color);
 		text-decoration: none;
 		transition: all 0.2s ease;
-		border-bottom: 1px solid transparent;
+		border-bottom: calc(1 * var(--ch) / 16) solid transparent;
 	}
 
 	a:hover {

@@ -94,7 +94,7 @@ Commands:
 		flex-direction: column;
 		width: 100%;
 		max-width: var(--measure);
-		border: 1px solid var(--border-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-lg);
 		background: var(--bg-color);
 		overflow: visible;
@@ -108,7 +108,7 @@ Commands:
 		height: var(--ch3);
 		padding: 0 var(--ch2);
 		background: var(--color-mix-light);
-		border-bottom: 1px solid var(--border-color);
+		border-bottom: calc(1 * var(--ch) / 16) solid var(--border-color);
 	}
 
 	.terminal-title {
@@ -205,7 +205,7 @@ Commands:
 		z-index: 100;
 		margin-bottom: var(--ch4);
 		padding: var(--ch2);
-		border: 1px solid var(--border-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-md);
 		background: var(--bg-color);
 		font-family: var(--font-mono);
