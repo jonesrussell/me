@@ -48,9 +48,12 @@
 	--color-mix-heavy: color-mix(in srgb, var(--text-color) 15%, transparent);
 
 	/* Shadows */
-	--shadow-sm: 0 calc(var(--ch) / 16) calc(2 * var(--ch) / 16) var(--color-mix-medium);
-	--shadow-md: 0 calc(2 * var(--ch) / 16) calc(4 * var(--ch) / 16) var(--color-mix-medium);
-	--shadow-lg: 0 calc(4 * var(--ch) / 16) calc(6 * var(--ch) / 16) calc(-1 * var(--ch) / 16) var(--color-mix-medium);
+	--shadow-sm: 0 calc(var(--ch) / 16) calc(2 * var(--ch) / 16)
+		var(--color-mix-medium);
+	--shadow-md: 0 calc(2 * var(--ch) / 16) calc(4 * var(--ch) / 16)
+		var(--color-mix-medium);
+	--shadow-lg: 0 calc(4 * var(--ch) / 16) calc(6 * var(--ch) / 16)
+		calc(-1 * var(--ch) / 16) var(--color-mix-medium);
 
 	/* Colors */
 	--bg-color: hsl(0deg 0% 10%);
@@ -63,7 +66,11 @@
 	--link-hover: hsl(213deg 100% 73%);
 	--accent-color: hsl(156deg 100% 50%);
 	--accent-color-hover: hsl(156deg 100% 60%);
-	--accent-color-transparent: color-mix(in srgb, var(--accent-color) 20%, transparent);
+	--accent-color-transparent: color-mix(
+		in srgb,
+		var(--accent-color) 20%,
+		transparent
+	);
 	--color-success: hsl(142deg 64% 45%);
 	--color-warning: hsl(43deg 90% 47%);
 	--color-error: hsl(0deg 84% 60%);
@@ -182,7 +189,11 @@ a:hover {
 	textarea {
 		color: var(--text-color);
 		border-color: var(--border-color);
-		background-color: color-mix(in srgb, var(--bg-color) 80%, var(--text-color));
+		background-color: color-mix(
+			in srgb,
+			var(--bg-color) 80%,
+			var(--text-color)
+		);
 	}
 }
 
@@ -205,5 +216,9 @@ a:hover {
 	--link-hover: hsl(210deg 100% 32%);
 	--accent-color: hsl(160deg 100% 40%);
 	--accent-color-hover: hsl(160deg 100% 32%);
-	--accent-color-transparent: color-mix(in srgb, var(--accent-color) 20%, transparent);
+	--accent-color-transparent: color-mix(
+		in srgb,
+		var(--accent-color) 20%,
+		transparent
+	);
 }

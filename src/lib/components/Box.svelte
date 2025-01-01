@@ -21,9 +21,12 @@
 	}
 </script>
 
-<div class="box" style="
+<div
+	class="box"
+	style="
 
---box-width: {alignedWidth}ch; {style}">
+--box-width: {alignedWidth}ch; {style}"
+>
 	<div class="box-frame">
 		{#if title}
 			<div class="header">╭──── {title} {createLine('─')}╮</div>

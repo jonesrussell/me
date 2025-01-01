@@ -35,9 +35,12 @@
 	}
 </script>
 
-<div class="table" style="
+<div
+	class="table"
+	style="
 
---table-width: {width}ch">
+--table-width: {width}ch"
+>
 	<div class="table-border">
 		{topBorder}
 	</div>
