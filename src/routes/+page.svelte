@@ -117,14 +117,21 @@
 
 <style>
 	.hero {
-		position: relative;
+		min-height: 80vh;
+		display: grid;
+		place-items: center;
 		padding: var(--ch4) var(--ch2);
-		background: var(--bg-darker);
+		background: radial-gradient(
+			circle at 50% 50%,
+			color-mix(in srgb, var(--accent-color) 2%, transparent),
+			color-mix(in srgb, var(--bg-color) 98%, transparent) 100%
+		);
 	}
 
 	.hero-content {
-		max-width: min(var(--measure), 95cqi);
-		margin-inline: auto;
+		width: 100%;
+		max-width: 80ch;
+		margin: 0 auto;
 	}
 
 	.home {

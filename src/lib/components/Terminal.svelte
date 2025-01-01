@@ -5,6 +5,7 @@
 	let outputVisible = $state('');
 	let currentCommand = $state(0);
 	let isTyping = $state(true);
+	let terminalHeight = $state('auto');
 
 	const commands = ['whoami', 'man russell'];
 	const outputs = [
@@ -15,7 +16,7 @@ NAME
        russell - a limitless developer
 
 SYNOPSIS
-       russell [--code] [--create] [--solve] <problem>
+       russell [--build] [--innovate] [--ship] <solution>
 
 DESCRIPTION
        Crafts elegant solutions using modern web technologies.
@@ -27,6 +28,14 @@ AUTHOR
 COPYRIGHT
        License MIT`
 	];
+
+	$effect(() => {
+		// When output changes, measure and set the height
+		if (outputVisible && currentCommand === commands.length - 1) {
+			terminalHeight =
+				document.querySelector('.terminal-body')?.scrollHeight + 'px';
+		}
+	});
 
 	// Type out commands and outputs in sequence
 	$effect(() => {
@@ -40,23 +49,12 @@ COPYRIGHT
 					cmdIndex++;
 				} else {
 					clearInterval(cmdInterval);
-					typeOutput();
-				}
-			}, 100);
-		};
-
-		const typeOutput = () => {
-			const outInterval = setInterval(() => {
-				if (outIndex <= outputs[currentCommand].length) {
-					outputVisible = outputs[currentCommand].slice(0, outIndex);
-					outIndex++;
-				} else {
-					clearInterval(outInterval);
+					// Show output instantly
+					outputVisible = outputs[currentCommand];
 					if (currentCommand < commands.length - 1) {
 						setTimeout(() => {
 							currentCommand++;
 							cmdIndex = 0;
-							outIndex = 0;
 							commandVisible = '';
 							outputVisible = '';
 							typeNextCommand();
@@ -65,7 +63,7 @@ COPYRIGHT
 						isTyping = false;
 					}
 				}
-			}, 25);
+			}, 100);
 		};
 
 		typeNextCommand();
@@ -76,7 +74,7 @@ COPYRIGHT
 	});
 </script>
 
-<div class="terminal-frame">
+<div class="terminal-frame" style:height={terminalHeight}>
 	<div class="terminal-header">
 		<span class="terminal-title">{title}</span>
 		<div class="terminal-buttons">
@@ -92,15 +90,12 @@ COPYRIGHT
 				<span class="command">
 					{i === currentCommand ? commandVisible : cmd}
 				</span>
-				{#if isTyping && i === currentCommand && commandVisible.length === cmd.length}
+				{#if isTyping && i === currentCommand && commandVisible.length === cmd.length && !outputVisible}
 					<span class="cursor">▋</span>
 				{/if}
 			</div>
 			<div class="command-output">
 				{i === currentCommand ? outputVisible : outputs[i]}
-				{#if isTyping && i === currentCommand && commandVisible.length === cmd.length}
-					<span class="cursor">▋</span>
-				{/if}
 			</div>
 		{/each}
 	</div>
@@ -108,6 +103,8 @@ COPYRIGHT
 
 <style>
 	.terminal-frame {
+		width: 100%;
+		max-width: 80ch;
 		background: var(--bg-color);
 		border: 1px solid var(--border-color);
 		border-radius: 8px;
@@ -117,8 +114,9 @@ COPYRIGHT
 	}
 
 	.terminal-header {
+		height: 3ch;
 		background: color-mix(in srgb, var(--text-color) 5%, transparent);
-		padding: var(--ch) var(--ch2);
+		padding: 0 var(--ch2);
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -144,15 +142,16 @@ COPYRIGHT
 	}
 
 	.terminal-body {
-		padding: var(--ch3) var(--ch2);
+		padding: var(--ch2);
 		font-family: var(--font-mono);
+		line-height: var(--line-height);
 	}
 
 	.command-line {
-		margin-bottom: var(--ch);
 		display: flex;
 		gap: var(--ch);
 		color: var(--text-muted);
+		margin-bottom: calc(var(--ch) * 0.5);
 	}
 
 	.prompt {
@@ -166,9 +165,18 @@ COPYRIGHT
 	.command-output {
 		padding-left: calc(var(--ch) * 2);
 		color: var(--text-color);
-		min-height: 1.5em;
-		margin-bottom: var(--ch2);
+		margin-bottom: var(--ch);
 		white-space: pre-line;
+		animation: crtReveal 50ms linear;
+	}
+
+	@keyframes crtReveal {
+		from {
+			clip-path: inset(0 0 100% 0);
+		}
+		to {
+			clip-path: inset(0 0 0 0);
+		}
 	}
 
 	.cursor {
