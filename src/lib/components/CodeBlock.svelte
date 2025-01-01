@@ -94,9 +94,4 @@
 		font-size: var(--font-size-sm);
 		user-select: none;
 	}
-
-	button {
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
-	}
 </style>

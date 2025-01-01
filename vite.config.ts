@@ -1,4 +1,5 @@
 /// <reference types="vitest" />
+import { enhancedImages } from '@sveltejs/enhanced-img';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
@@ -51,7 +52,7 @@ const cssTransform = {
 };
 
 export default defineConfig({
-	plugins: [sveltekit(), cssTransform],
+	plugins: [enhancedImages(), sveltekit(), cssTransform],
 	build: {
 		cssMinify: true,
 		cssCodeSplit: true
