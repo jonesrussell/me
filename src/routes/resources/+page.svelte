@@ -21,10 +21,11 @@
 </script>
 
 <svelte:head>
-	<title>Resources | Russell Jones</title>
+	<title>Developer Resources | Russell Jones - Tools & Learning Materials</title
+	>
 	<meta
 		name="description"
-		content="Curated collection of development resources and tools"
+		content="Curated collection of development resources, tools, and learning materials for Go, web development, and cloud technologies. Hand-picked by Russell Jones."
 	/>
 </svelte:head>
 

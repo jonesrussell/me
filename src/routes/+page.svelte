@@ -39,10 +39,10 @@
 </script>
 
 <svelte:head>
-	<title>Russell Jones | Web Developer</title>
+	<title>Russell Jones | Limitless Developer</title>
 	<meta
 		name="description"
-		content="Developer from Canada specializing in JavaScript, Go, and Open Source"
+		content="Limitless Developer from Canada specializing in JavaScript, Go, Cloud Technologies, and Open Source. Building elegant solutions with modern web technologies."
 	/>
 </svelte:head>
 
