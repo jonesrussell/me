@@ -93,11 +93,11 @@ Commands:
 		display: flex;
 		flex-direction: column;
 		width: 100%;
-		max-width: var(--measure);
+		max-width: min(var(--measure), 100%);
 		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-lg);
 		background: var(--bg-color);
-		overflow: visible;
+		overflow: hidden;
 		box-shadow: var(--shadow-lg);
 	}
 
@@ -137,7 +137,9 @@ Commands:
 		gap: var(--ch);
 		padding: var(--ch2);
 		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
 		line-height: var(--line-height-relaxed);
+		white-space: pre-wrap;
 	}
 
 	.command-line {
@@ -147,6 +149,7 @@ Commands:
 		font-weight: var(--font-weight-normal);
 		line-height: var(--line-height-base);
 		margin-top: var(--ch);
+		font-size: var(--font-size-sm);
 	}
 
 	.prompt {
@@ -167,6 +170,7 @@ Commands:
 		animation: crt-reveal 50ms linear;
 		white-space: pre;
 		margin-top: var(--ch);
+		font-size: var(--font-size-sm);
 	}
 
 	@keyframes crt-reveal {
