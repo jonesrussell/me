@@ -1,5 +1,40 @@
 <script lang="ts">
 	const { title = '~/developer', command = 'whoami', children } = $props();
+	let commandVisible = $state('');
+	let outputVisible = $state('');
+	let isTyping = $state(true);
+
+	// Type out the command and output
+	$effect(() => {
+		const text = command;
+		const output = children?.() || '';
+		let cmdIndex = 0;
+		let outIndex = 0;
+
+		// Type command first
+		const cmdInterval = setInterval(() => {
+			if (cmdIndex <= text.length) {
+				commandVisible = text.slice(0, cmdIndex);
+				cmdIndex++;
+			} else {
+				clearInterval(cmdInterval);
+				// Start typing output after command is done
+				const outInterval = setInterval(() => {
+					if (outIndex <= output.length) {
+						outputVisible = output.slice(0, outIndex);
+						outIndex++;
+					} else {
+						clearInterval(outInterval);
+						isTyping = false;
+					}
+				}, 50);
+			}
+		}, 100);
+
+		return () => {
+			clearInterval(cmdInterval);
+		};
+	});
 </script>
 
 <div class="terminal-frame">
@@ -14,10 +49,16 @@
 	<div class="terminal-body">
 		<div class="command-line">
 			<span class="prompt">$</span>
-			<span class="command">{command}</span>
+			<span class="command">{commandVisible}</span>
+			{#if isTyping && commandVisible.length === command.length}
+				<span class="cursor">▋</span>
+			{/if}
 		</div>
 		<div class="command-output">
-			{children?.()}
+			{outputVisible}
+			{#if isTyping && commandVisible.length === command.length}
+				<span class="cursor">▋</span>
+			{/if}
 		</div>
 	</div>
 </div>
@@ -82,5 +123,23 @@
 	.command-output {
 		padding-left: calc(var(--ch) * 2);
 		color: var(--text-color);
+		min-height: 1.5em;
+		white-space: pre-line;
+	}
+
+	.cursor {
+		display: inline-block;
+		color: var(--accent-color);
+		animation: blink 1s step-end infinite;
+	}
+
+	@keyframes blink {
+		0%,
+		100% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0;
+		}
 	}
 </style>
