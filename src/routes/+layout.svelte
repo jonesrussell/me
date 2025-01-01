@@ -37,11 +37,11 @@
 	}
 
 	.content-inner {
-		width: 100%;
-		max-width: min(var(--measure), 100%);
-		margin: 0 auto;
 		display: flex;
 		flex-direction: column;
 		gap: var(--ch4);
+		width: 100%;
+		max-width: min(var(--measure), 100%);
+		margin: 0 auto;
 	}
 </style>

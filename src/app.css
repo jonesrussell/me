@@ -1,29 +1,32 @@
 @import url('./reset.css');
-@import '@fontsource/jetbrains-mono/latin-400.css';
-@import '@fontsource/jetbrains-mono/latin-500.css';
-@import '@fontsource/jetbrains-mono/latin-700.css';
+@import url('@fontsource/jetbrains-mono/latin-400.css');
+@import url('@fontsource/jetbrains-mono/latin-500.css');
+@import url('@fontsource/jetbrains-mono/latin-700.css');
 
 :root {
 	color-scheme: light dark;
 
 	/* Base units */
 	--ch: 1ch;
-	--ch2: 2ch;
-	--ch3: 3ch;
-	--ch4: 4ch;
-	--ch6: 6ch;
+	--ch2: calc(2 * var(--ch));
+	--ch3: calc(3 * var(--ch));
+	--ch4: calc(4 * var(--ch));
+	--ch6: calc(6 * var(--ch));
+	--ch8: calc(8 * var(--ch));
+	--ch16: calc(16 * var(--ch));
 
 	/* Typography */
-	--font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Monaco,
+	--font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', menlo, monaco,
 		'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', monospace;
-	--font-size-base: 1.25rem;
-	--font-size-xs: 0.875rem;
-	--font-size-sm: 1rem;
-	--font-size-md: 1.25rem;
-	--font-size-lg: 1.5rem;
-	--font-size-xl: 2rem;
-	--font-size-2xl: 2.5rem;
-	--line-height-tight: 1.2;
+	--font-size-base: var(--ch);
+	--font-size-xs: calc(0.75 * var(--ch));
+	--font-size-sm: calc(0.875 * var(--ch));
+	--font-size-md: calc(1.25 * var(--ch));
+	--font-size-lg: calc(1.125 * var(--ch));
+	--font-size-xl: calc(1.25 * var(--ch));
+	--font-size-2xl: calc(1.5 * var(--ch));
+	--font-size-3xl: calc(1.875 * var(--ch));
+	--line-height-tight: 1.25;
 	--line-height-base: 1.5;
 	--line-height-relaxed: 1.7;
 	--font-weight-normal: 400;
@@ -37,10 +40,10 @@
 	--projects-width: 120ch;
 
 	/* Border radius */
-	--radius-sm: calc(2 * var(--ch) / 16);
-	--radius-md: calc(4 * var(--ch) / 16);
-	--radius-lg: calc(8 * var(--ch) / 16);
-	--radius-full: 9999ch;
+	--radius-sm: calc(var(--ch) / 4);
+	--radius-md: calc(var(--ch) / 2);
+	--radius-lg: var(--ch);
+	--radius-full: calc(999 * var(--ch));
 
 	/* Color mix presets */
 	--color-mix-faint: color-mix(in srgb, var(--text-color) 3%, transparent);

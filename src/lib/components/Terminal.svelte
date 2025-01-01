@@ -5,6 +5,7 @@
 		terminal,
 		terminalHeight
 	} from '$lib/stores/terminal';
+	import { get } from 'svelte/store';
 	const props = $props();
 	const title = props.title || '~/developer';
 
@@ -38,22 +39,23 @@
 		</div>
 	</div>
 	<div class="terminal-body">
-		{#each Array($terminal.currentCommand + 1) as _, i}
+		{#each [...Array($terminal.currentCommand + 1).keys()] as i}
+			{@const currentCommands = get(commands)}
 			<div class="command-line">
 				<span class="prompt">$</span>
 				<span class="command">
 					{i === $terminal.currentCommand
 						? $terminal.commandVisible
-						: commands[i]?.cmd || ''}
+						: currentCommands[i]?.cmd || ''}
 				</span>
-				{#if $terminal.isTyping && i === $terminal.currentCommand && $terminal.commandVisible.length === commands[i]?.cmd?.length && !$terminal.outputVisible}
+				{#if $terminal.isTyping && i === $terminal.currentCommand && $terminal.commandVisible.length === currentCommands[i]?.cmd?.length && !$terminal.outputVisible}
 					<span class="cursor">▋</span>
 				{/if}
 			</div>
 			<div class="command-output">
 				{i === $terminal.currentCommand
 					? $terminal.outputVisible
-					: commands[i]?.output || ''}
+					: currentCommands[i]?.output || ''}
 			</div>
 		{/each}
 	</div>
@@ -145,11 +147,11 @@ Commands:
 	.command-line {
 		display: flex;
 		gap: var(--ch2);
+		margin-top: var(--ch);
 		color: var(--text-muted);
+		font-size: var(--font-size-sm);
 		font-weight: var(--font-weight-normal);
 		line-height: var(--line-height-base);
-		margin-top: var(--ch);
-		font-size: var(--font-size-sm);
 	}
 
 	.prompt {
@@ -163,14 +165,14 @@ Commands:
 	}
 
 	.command-output {
+		margin-top: var(--ch);
 		padding-left: calc(var(--ch) * 3);
 		color: var(--text-color);
+		font-size: var(--font-size-sm);
 		font-weight: var(--font-weight-normal);
 		line-height: var(--line-height-relaxed);
 		animation: crt-reveal 50ms linear;
 		white-space: pre;
-		margin-top: var(--ch);
-		font-size: var(--font-size-sm);
 	}
 
 	@keyframes crt-reveal {

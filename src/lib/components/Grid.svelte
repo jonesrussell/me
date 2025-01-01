@@ -52,7 +52,9 @@ character units.
 
 <div
 	class="grid"
-	style="--grid-template: {gridTemplate}; --grid-gap: {gridGap}"
+	style="
+
+--grid-template: {gridTemplate}; --grid-gap: {gridGap}"
 >
 	{children?.()}
 </div>

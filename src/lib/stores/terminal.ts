@@ -21,7 +21,7 @@ let typingInterval: NodeJS.Timeout | null = null;
 let currentCommands: Command[] = [];
 
 function createTerminal() {
-	const { subscribe, set, update } = writable<TerminalState>({
+	const { subscribe, update } = writable<TerminalState>({
 		currentCommand: 0,
 		commandVisible: '',
 		outputVisible: '',
