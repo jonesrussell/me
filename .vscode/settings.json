@@ -30,17 +30,10 @@
 	"editor.codeActionsOnSave": {
 		"source.fixAll.stylelint": "explicit"
 	},
-	"stylelint.validate": [
-		"css",
-		"scss",
-		"svelte"
-	],
+	"stylelint.validate": ["css", "scss", "svelte"],
 	"css.validate": false,
 	"scss.validate": false,
-	"editor.rulers": [
-		80,
-		100
-	],
+	"editor.rulers": [80, 100],
 	"editor.guides.indentation": true,
 	"editor.fontFamily": "'JetBrains Mono', Consolas, 'Courier New', monospace",
 	"editor.fontLigatures": true,

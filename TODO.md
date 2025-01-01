@@ -1,4 +1,5 @@
 # Completed
+
 - [x] Set up initial project structure with SvelteKit
 - [x] Create basic layout and navigation
 - [x] Add Terminal component with typing animation
@@ -10,6 +11,7 @@
 - [x] Optimize SEO with proper meta tags
 
 # In Progress
+
 - [ ] Refactor Terminal component for better maintainability
   - [ ] Extract command/output logic into separate store
   - [ ] Split terminal styling into separate components
@@ -17,6 +19,7 @@
   - [ ] Add proper error handling for animations
 
 # TODO
+
 - [ ] Add proper loading states for YouTube embed
 - [ ] Implement dark/light theme toggle
 - [ ] Add blog post previews to homepage

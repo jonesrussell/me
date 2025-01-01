@@ -57,17 +57,20 @@ function createTerminalStore() {
 		currentInterval = setInterval(() => {
 			const command = commands[state.currentCommand];
 			if (cmdIndex <= command.cmd.length) {
-				store.update(s => ({ ...s, commandVisible: command.cmd.slice(0, cmdIndex) }));
+				store.update((s) => ({
+					...s,
+					commandVisible: command.cmd.slice(0, cmdIndex)
+				}));
 				cmdIndex++;
 			} else {
 				if (currentInterval) clearInterval(currentInterval);
 				// Show output instantly
-				store.update(s => ({ ...s, outputVisible: command.output }));
-				
+				store.update((s) => ({ ...s, outputVisible: command.output }));
+
 				if (state.currentCommand < commands.length - 1) {
 					setTimeout(() => {
 						cmdIndex = 0;
-						store.update(s => ({
+						store.update((s) => ({
 							...s,
 							currentCommand: s.currentCommand + 1,
 							commandVisible: '',
@@ -76,7 +79,7 @@ function createTerminalStore() {
 						typeNextCommand();
 					}, 1000);
 				} else {
-					store.update(s => ({ ...s, isTyping: false }));
+					store.update((s) => ({ ...s, isTyping: false }));
 				}
 			}
 		}, 100);
@@ -144,7 +147,7 @@ export const debug = writable<DebugState>({
 	rawHeight: maxLines + headerHeight + padding,
 	scaledHeight: Math.ceil((maxLines + headerHeight + padding) * lineHeight),
 	totalHeight: TERMINAL_HEIGHT,
-	commands: commands.map(cmd => {
+	commands: commands.map((cmd) => {
 		const lines = countCommandLines(cmd);
 		const height = Math.ceil((lines + headerHeight + padding) * lineHeight);
 		return {
@@ -156,15 +159,15 @@ export const debug = writable<DebugState>({
 	})
 });
 
-export const terminalHeight = derived(terminal, $terminal => {
+export const terminalHeight = derived(terminal, ($terminal) => {
 	const currentOutput = commands[$terminal.currentCommand]?.output || '';
 	const lines = currentOutput.split('\n').length + 1; // +1 for command line
-	
+
 	// Update debug info with current command details
-	debug.update(d => ({
+	debug.update((d) => ({
 		...d,
 		currentLines: lines
 	}));
 
 	return TERMINAL_HEIGHT;
-}); 
+});

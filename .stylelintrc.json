@@ -1,98 +1,92 @@
 {
-  "extends": [
-    "stylelint-config-standard",
-    "stylelint-config-recommended-scss"
-  ],
-  "plugins": [
-    "stylelint-order",
-    "stylelint-declaration-strict-value"
-  ],
-  "rules": {
-    "color-no-hex": true,
-    "color-named": "never",
-    "unit-allowed-list": ["ch", "%", "deg", "ms", "s", "fr", "vw", "vh", "cqi"],
-    "unit-disallowed-list": ["px", "rem", "em"],
-    "declaration-property-value-disallowed-list": {
-      "line-height": ["/^[0-9]+$/"]
-    },
-    "scale-unlimited/declaration-strict-value": [
-      [
-        "color",
-        "background-color",
-        "border-color",
-        "outline-color",
-        "fill",
-        "stroke"
-      ],
-      {
-        "ignoreValues": [
-          "transparent",
-          "inherit",
-          "initial",
-          "unset",
-          "currentColor"
-        ]
-      }
-    ],
-    "order/properties-order": [
-      "position",
-      "top",
-      "right",
-      "bottom",
-      "left",
-      "z-index",
-      "display",
-      "flex",
-      "flex-direction",
-      "flex-wrap",
-      "gap",
-      "justify-content",
-      "align-items",
-      "width",
-      "min-width",
-      "max-width",
-      "height",
-      "min-height",
-      "max-height",
-      "margin",
-      "margin-top",
-      "margin-right",
-      "margin-bottom",
-      "margin-left",
-      "padding",
-      "padding-top",
-      "padding-right",
-      "padding-bottom",
-      "padding-left",
-      "border",
-      "border-radius",
-      "background",
-      "color",
-      "font-family",
-      "font-size",
-      "font-weight",
-      "line-height",
-      "text-align",
-      "text-decoration",
-      "transition",
-      "transform",
-      "animation",
-      "cursor"
-    ]
-  },
-  "overrides": [
-    {
-      "files": ["**/*.svelte"],
-      "customSyntax": "postcss-html",
-      "rules": {
-        "no-empty-source": null,
-        "selector-pseudo-class-no-unknown": [
-          true,
-          {
-            "ignorePseudoClasses": ["global"]
-          }
-        ]
-      }
-    }
-  ]
+	"extends": ["stylelint-config-standard", "stylelint-config-recommended-scss"],
+	"plugins": ["stylelint-order", "stylelint-declaration-strict-value"],
+	"rules": {
+		"color-no-hex": true,
+		"color-named": "never",
+		"unit-allowed-list": ["ch", "%", "deg", "ms", "s", "fr", "vw", "vh", "cqi"],
+		"unit-disallowed-list": ["px", "rem", "em"],
+		"declaration-property-value-disallowed-list": {
+			"line-height": ["/^[0-9]+$/"]
+		},
+		"scale-unlimited/declaration-strict-value": [
+			[
+				"color",
+				"background-color",
+				"border-color",
+				"outline-color",
+				"fill",
+				"stroke"
+			],
+			{
+				"ignoreValues": [
+					"transparent",
+					"inherit",
+					"initial",
+					"unset",
+					"currentColor"
+				]
+			}
+		],
+		"order/properties-order": [
+			"position",
+			"top",
+			"right",
+			"bottom",
+			"left",
+			"z-index",
+			"display",
+			"flex",
+			"flex-direction",
+			"flex-wrap",
+			"gap",
+			"justify-content",
+			"align-items",
+			"width",
+			"min-width",
+			"max-width",
+			"height",
+			"min-height",
+			"max-height",
+			"margin",
+			"margin-top",
+			"margin-right",
+			"margin-bottom",
+			"margin-left",
+			"padding",
+			"padding-top",
+			"padding-right",
+			"padding-bottom",
+			"padding-left",
+			"border",
+			"border-radius",
+			"background",
+			"color",
+			"font-family",
+			"font-size",
+			"font-weight",
+			"line-height",
+			"text-align",
+			"text-decoration",
+			"transition",
+			"transform",
+			"animation",
+			"cursor"
+		]
+	},
+	"overrides": [
+		{
+			"files": ["**/*.svelte"],
+			"customSyntax": "postcss-html",
+			"rules": {
+				"no-empty-source": null,
+				"selector-pseudo-class-no-unknown": [
+					true,
+					{
+						"ignorePseudoClasses": ["global"]
+					}
+				]
+			}
+		}
+	]
 }
