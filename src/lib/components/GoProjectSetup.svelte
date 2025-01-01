@@ -106,7 +106,7 @@ with explanations and real terminal output.
 		</div>
 
 		<div class="controls">
-			<button class="prev" on:click={prevStep} disabled={currentStep === 0}>
+			<button class="prev" onclick={prevStep} disabled={currentStep === 0}>
 				Previous Step
 			</button>
 			<span class="step-counter"
@@ -114,7 +114,7 @@ with explanations and real terminal output.
 			>
 			<button
 				class="next"
-				on:click={nextStep}
+				onclick={nextStep}
 				disabled={currentStep === setupSteps.length - 1}
 			>
 				Next Step
@@ -156,8 +156,8 @@ with explanations and real terminal output.
 	.controls {
 		display: flex;
 		gap: var(--ch2);
-		align-items: center;
 		justify-content: space-between;
+		align-items: center;
 		padding: var(--ch2);
 		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-md);
