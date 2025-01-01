@@ -47,9 +47,7 @@
 </svelte:head>
 
 <section class="hero">
-	<div class="hero-content">
-		<Terminal />
-	</div>
+	<Terminal />
 </section>
 
 <section class="home">
@@ -117,21 +115,10 @@
 
 <style>
 	.hero {
-		display: grid;
-		min-height: 80vh;
-		padding: var(--ch4) var(--ch2);
-		background: radial-gradient(
-			circle at 50% 50%,
-			color-mix(in srgb, var(--accent-color) 2%, transparent),
-			color-mix(in srgb, var(--bg-color) 98%, transparent) 100%
-		);
-		place-items: center;
-	}
-
-	.hero-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		width: 100%;
-		max-width: 80ch;
-		margin: 0 auto;
 	}
 
 	.home {

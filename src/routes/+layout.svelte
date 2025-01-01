@@ -32,7 +32,7 @@
 	.content {
 		flex: 1;
 		width: 100%;
-		padding: 0 var(--content-padding);
+		padding: var(--ch2) var(--content-padding);
 		box-sizing: border-box;
 	}
 
@@ -40,5 +40,8 @@
 		width: 100%;
 		max-width: min(var(--measure), 100%);
 		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: var(--ch4);
 	}
 </style>

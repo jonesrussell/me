@@ -134,17 +134,19 @@ Commands:
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		padding: var(--ch);
+		gap: var(--ch);
+		padding: var(--ch2);
 		font-family: var(--font-mono);
-		line-height: var(--line-height-base);
+		line-height: var(--line-height-relaxed);
 	}
 
 	.command-line {
 		display: flex;
-		gap: var(--ch);
+		gap: var(--ch2);
 		color: var(--text-muted);
 		font-weight: var(--font-weight-normal);
 		line-height: var(--line-height-base);
+		margin-top: var(--ch);
 	}
 
 	.prompt {
@@ -158,12 +160,13 @@ Commands:
 	}
 
 	.command-output {
-		padding-left: calc(var(--ch) * 2);
+		padding-left: calc(var(--ch) * 3);
 		color: var(--text-color);
 		font-weight: var(--font-weight-normal);
-		line-height: var(--line-height-base);
+		line-height: var(--line-height-relaxed);
 		animation: crt-reveal 50ms linear;
 		white-space: pre;
+		margin-top: var(--ch);
 	}
 
 	@keyframes crt-reveal {
