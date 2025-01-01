@@ -23,7 +23,6 @@
 	"devDependencies": {
 		"@chromatic-com/storybook": "^3.2.2",
 		"@eslint/compat": "^1.2.3",
-		"@fontsource/fira-mono": "^5.1.0",
 		"@storybook/addon-essentials": "^8.4.7",
 		"@storybook/addon-interactions": "^8.4.7",
 		"@storybook/addon-svelte-csf": "^5.0.0-next.15",
@@ -55,5 +54,8 @@
 		"vite": "^6.0.0",
 		"vitest": "^2.0.4",
 		"webdriverio": "^9.5.0"
+	},
+	"dependencies": {
+		"@fontsource/jetbrains-mono": "^5.1.2"
 	}
 }

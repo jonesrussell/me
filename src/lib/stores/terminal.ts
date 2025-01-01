@@ -101,8 +101,70 @@ function createTerminalStore() {
 }
 
 export const terminal = createTerminalStore();
+
+// Count lines including command prompt and spacing
+function countCommandLines(cmd: Command): number {
+	// Count command line itself ($ prompt + command)
+	const commandLines = 1;
+	// Count output lines exactly as they appear
+	const outputLines = cmd.output.split('\n').length;
+	return commandLines + outputLines;
+}
+
+const maxLines = Math.max(...commands.map(countCommandLines));
+const headerHeight = 3; // 3ch for header
+const padding = 2; // 1ch padding top + 1ch bottom
+const lineHeight = 1.5; // From CSS var(--line-height)
+const TERMINAL_HEIGHT = `${Math.ceil((maxLines + headerHeight + padding) * lineHeight)}ch`;
+
+// Debug store to track calculations
+interface DebugState {
+	currentLines: number;
+	maxLines: number;
+	headerHeight: number;
+	padding: number;
+	lineHeight: number;
+	rawHeight: number;
+	scaledHeight: number;
+	totalHeight: string;
+	commands: Array<{
+		cmd: string;
+		lines: number;
+		height: string;
+		breakdown: string;
+	}>;
+}
+
+export const debug = writable<DebugState>({
+	currentLines: 0,
+	maxLines,
+	headerHeight,
+	padding,
+	lineHeight,
+	rawHeight: maxLines + headerHeight + padding,
+	scaledHeight: Math.ceil((maxLines + headerHeight + padding) * lineHeight),
+	totalHeight: TERMINAL_HEIGHT,
+	commands: commands.map(cmd => {
+		const lines = countCommandLines(cmd);
+		const height = Math.ceil((lines + headerHeight + padding) * lineHeight);
+		return {
+			cmd: cmd.cmd,
+			lines,
+			height: `${height}ch`,
+			breakdown: `(${lines} lines + ${headerHeight}ch header + ${padding}ch padding) × ${lineHeight} line height = ${height}ch`
+		};
+	})
+});
+
 export const terminalHeight = derived(terminal, $terminal => {
 	const currentOutput = commands[$terminal.currentCommand]?.output || '';
-	const lines = currentOutput.split('\n').length;
-	return `${(lines + 4) * 1.5}ch`;
+	const lines = currentOutput.split('\n').length + 1; // +1 for command line
+	
+	// Update debug info with current command details
+	debug.update(d => ({
+		...d,
+		currentLines: lines
+	}));
+
+	return TERMINAL_HEIGHT;
 }); 

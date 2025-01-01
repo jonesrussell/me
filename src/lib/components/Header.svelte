@@ -103,7 +103,7 @@
 	}
 
 	.title {
-		font-weight: bold;
+		font-weight: var(--font-weight-bold);
 		color: var(--text-color);
 		text-decoration: none;
 		font-family: 'Fira Code', monospace;

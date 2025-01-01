@@ -177,7 +177,7 @@
 	}
 
 	.specialty-title {
-		font-weight: bold;
+		font-weight: var(--font-weight-bold);
 		margin-bottom: var(--ch);
 		color: var(--accent-color);
 	}
