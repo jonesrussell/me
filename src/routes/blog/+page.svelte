@@ -204,28 +204,4 @@
 	.source-note a:hover {
 		text-decoration: underline;
 	}
-
-	.blog-title {
-		color: var(--accent-color);
-		font-size: var(--font-size-2xl);
-		line-height: var(--line-height-tight);
-	}
-
-	.blog-meta {
-		color: var(--text-muted);
-		font-size: var(--font-size-lg);
-		line-height: var(--line-height-tight);
-	}
-
-	.blog-date {
-		font-size: var(--font-size-sm);
-	}
-
-	.blog-excerpt {
-		font-size: var(--font-size-md);
-	}
-
-	.blog-tag {
-		font-size: var(--font-size-sm);
-	}
 </style>

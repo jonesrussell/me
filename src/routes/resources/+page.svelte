@@ -148,25 +148,4 @@
 		color: var(--link-hover);
 		border-bottom-color: currentcolor;
 	}
-
-	.resources-content {
-		line-height: var(--line-height-relaxed);
-	}
-
-	.resources-title {
-		font-size: var(--font-size-2xl);
-		line-height: var(--line-height-tight);
-	}
-
-	.resource-title {
-		font-size: var(--font-size-lg);
-	}
-
-	.resource-description {
-		font-size: var(--font-size-sm);
-	}
-
-	.resource-meta {
-		font-size: var(--font-size-sm);
-	}
 </style>

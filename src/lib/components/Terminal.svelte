@@ -38,7 +38,7 @@
 		</div>
 	</div>
 	<div class="terminal-body">
-		{#each Array($terminal.currentCommand + 1) as _, i}
+		{#each Array($terminal.currentCommand + 1) as i}
 			<div class="command-line">
 				<span class="prompt">$</span>
 				<span class="command">
