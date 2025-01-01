@@ -34,7 +34,11 @@ const vitestConfig = {
 		setupFiles: ['src/test/setup.ts'],
 		globals: true,
 		deps: {
-			inline: ['^svelte', '@sveltejs/kit']
+			optimizer: {
+				web: {
+					include: ['^svelte', '@sveltejs/kit']
+				}
+			}
 		},
 		css: true,
 		reporters: ['verbose'],
