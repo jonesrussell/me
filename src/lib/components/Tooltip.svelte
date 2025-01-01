@@ -22,8 +22,9 @@
 
 <div
 	class="tooltip-wrapper"
-	on:mouseenter={handleMouseEnter}
-	on:mouseleave={handleMouseLeave}
+	role="tooltip"
+	onmouseenter={handleMouseEnter}
+	onmouseleave={handleMouseLeave}
 >
 	{children?.()}
 	<span class="tooltip" class:visible={isVisible} data-position={position}>
