@@ -50,7 +50,7 @@
 		</p>
 	</div>
 
-	<form class="form" on:submit={handleSubmit}>
+	<form class="form" onsubmit={handleSubmit}>
 		<div class="form-group">
 			<label for="email">Email Address</label>
 			<input
