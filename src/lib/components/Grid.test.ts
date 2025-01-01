@@ -64,4 +64,4 @@ describe('Grid', () => {
 		expect(container.textContent).toContain('Item 3');
 		expect(container.textContent).toContain('Item 4');
 	});
-}); 
+});

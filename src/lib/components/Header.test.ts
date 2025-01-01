@@ -30,11 +30,13 @@ describe('Header', () => {
 		const { container } = render(Header);
 		const nav = container.querySelector('.header-nav');
 		expect(nav).toBeInTheDocument();
-		
+
 		const navLinks = nav?.querySelectorAll('a');
 		expect(navLinks).toHaveLength(4);
-		
-		const linkTexts = Array.from(navLinks || []).map(link => link.textContent);
+
+		const linkTexts = Array.from(navLinks || []).map(
+			(link) => link.textContent
+		);
 		expect(linkTexts).toEqual(['Blog', 'Projects', 'Resources', 'Contact']);
 	});
 
@@ -61,4 +63,4 @@ describe('Header', () => {
 			top: '0'
 		});
 	});
-}); 
+});

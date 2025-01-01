@@ -28,7 +28,9 @@ describe('Footer', () => {
 
 	it('contains source code link', () => {
 		const { container } = render(Footer);
-		const sourceLink = container.querySelector('a[href="https://github.com/jonesrussell/me"]');
+		const sourceLink = container.querySelector(
+			'a[href="https://github.com/jonesrussell/me"]'
+		);
 		expect(sourceLink).toBeInTheDocument();
 		expect(sourceLink?.textContent?.trim()).toBe('Source Code');
 		expect(sourceLink).toHaveAttribute('target', '_blank');
@@ -37,7 +39,9 @@ describe('Footer', () => {
 
 	it('contains license link', () => {
 		const { container } = render(Footer);
-		const licenseLink = container.querySelector('a[href="https://github.com/jonesrussell/me/blob/main/LICENSE"]');
+		const licenseLink = container.querySelector(
+			'a[href="https://github.com/jonesrussell/me/blob/main/LICENSE"]'
+		);
 		expect(licenseLink).toBeInTheDocument();
 		expect(licenseLink?.textContent?.trim()).toBe('MIT');
 		expect(licenseLink).toHaveAttribute('target', '_blank');
@@ -52,4 +56,4 @@ describe('Footer', () => {
 			'border-top': '1px solid var(--border-color)'
 		});
 	});
-}); 
+});

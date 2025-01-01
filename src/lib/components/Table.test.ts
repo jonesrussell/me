@@ -85,4 +85,4 @@ describe('Table', () => {
 		expect(tableRow?.textContent).toContain('1  '); // Padded to match '333'
 		expect(tableRow?.textContent).toContain('22 '); // Padded to match '333'
 	});
-}); 
+});

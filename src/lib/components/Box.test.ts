@@ -51,4 +51,4 @@ describe('Box', () => {
 		expect(box).toHaveStyle({ 'margin-top': '1rem' });
 		expect(container.textContent).toContain('Styled Content');
 	});
-}); 
+});

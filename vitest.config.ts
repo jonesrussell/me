@@ -10,18 +10,22 @@ interface ViteConfig extends UserConfig {
 }
 
 export default defineConfig({
-	plugins: [svelte({
-		hot: !process.env.VITEST,
-		compilerOptions: {
-			dev: true,
-			css: 'injected',
-			runes: true
-		}
-	})],
+	plugins: [
+		svelte({
+			hot: !process.env.VITEST,
+			compilerOptions: {
+				dev: true,
+				css: 'injected',
+				runes: true
+			}
+		})
+	],
 	resolve: {
 		alias: {
 			$lib: fileURLToPath(new URL('./src/lib', import.meta.url)),
-			$app: fileURLToPath(new URL('./node_modules/@sveltejs/kit/src/runtime/app', import.meta.url))
+			$app: fileURLToPath(
+				new URL('./node_modules/@sveltejs/kit/src/runtime/app', import.meta.url)
+			)
 		}
 	},
 	test: {
@@ -44,4 +48,4 @@ export default defineConfig({
 		pool: 'forks',
 		isolate: false
 	}
-} as ViteConfig); 
+} as ViteConfig);

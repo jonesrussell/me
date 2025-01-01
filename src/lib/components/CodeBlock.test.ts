@@ -57,4 +57,4 @@ describe('CodeBlock', () => {
 		expect(container.textContent).toContain('4 lines');
 		expect(container.textContent).toContain('function example()');
 	});
-}); 
+});

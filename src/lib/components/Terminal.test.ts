@@ -12,10 +12,10 @@ describe('Terminal', () => {
 		});
 		const terminal = container.querySelector('.terminal-frame');
 		expect(terminal).toBeInTheDocument();
-		
+
 		const title = container.querySelector('.terminal-title');
 		expect(title?.textContent).toBe('~/developer');
-		
+
 		const command = container.querySelector('.command');
 		expect(command?.textContent).toBe('whoami');
 	});
@@ -28,10 +28,10 @@ describe('Terminal', () => {
 				children: () => 'Directory listing'
 			}
 		});
-		
+
 		const title = container.querySelector('.terminal-title');
 		expect(title?.textContent).toBe('~/projects');
-		
+
 		const command = container.querySelector('.command');
 		expect(command?.textContent).toBe('ls -la');
 	});
@@ -43,7 +43,7 @@ describe('Terminal', () => {
 				children: () => output
 			}
 		});
-		
+
 		const commandOutput = container.querySelector('.command-output');
 		expect(commandOutput?.textContent).toBe(output);
 	});
@@ -53,16 +53,16 @@ describe('Terminal', () => {
 		const frame = container.querySelector('.terminal-frame');
 		const header = container.querySelector('.terminal-header');
 		const buttons = container.querySelectorAll('.terminal-buttons span');
-		
+
 		expect(frame).toHaveStyle({
 			background: 'var(--bg-color)',
 			'border-radius': '8px'
 		});
-		
+
 		expect(header).toHaveStyle({
 			'border-bottom': '1px solid var(--border-color)'
 		});
-		
+
 		expect(buttons).toHaveLength(3);
 	});
 
@@ -70,7 +70,7 @@ describe('Terminal', () => {
 		const { container } = render(Terminal);
 		const commandLine = container.querySelector('.command-line');
 		const prompt = container.querySelector('.prompt');
-		
+
 		expect(commandLine).toBeInTheDocument();
 		expect(prompt?.textContent).toBe('$');
 		expect(commandLine).toHaveStyle({
@@ -82,9 +82,9 @@ describe('Terminal', () => {
 	it('indents command output', () => {
 		const { container } = render(Terminal);
 		const output = container.querySelector('.command-output');
-		
+
 		expect(output).toHaveStyle({
 			'padding-left': 'calc(var(--ch) * 2)'
 		});
 	});
-}); 
+});

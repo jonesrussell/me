@@ -54,4 +54,4 @@ describe('Badge', () => {
 		expect(badge?.textContent).toContain('[✗]');
 		expect(badge?.textContent).toContain('Error Badge');
 	});
-}); 
+});
