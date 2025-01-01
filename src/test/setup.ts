@@ -4,7 +4,15 @@ import { cleanup } from '@testing-library/svelte';
 import { afterEach, expect, vi } from 'vitest';
 
 // Extend jest-dom matchers
-expect.extend(matchers as Record<string, (received: unknown, ...args: unknown[]) => { pass: boolean; message(): string }>);
+expect.extend(
+	matchers as Record<
+		string,
+		(
+			received: unknown,
+			...args: unknown[]
+		) => { pass: boolean; message(): string }
+	>
+);
 
 // Cleanup after each test
 afterEach(() => {
