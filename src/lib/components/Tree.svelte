@@ -6,29 +6,38 @@
 		children?: TreeNode[];
 	}
 
-	const { data, level = 0 } = $props<{
+	const {
+		data,
+		level = 0,
+		isLast = false
+	} = $props<{
 		data: TreeNode;
 		level?: number;
+		isLast?: boolean;
 	}>();
 
-	function getPrefix(isLast: boolean) {
+	function getPrefix(isLastItem: boolean) {
 		if (level === 0) return '';
 		const indent = '│  '.repeat(level - 1);
-		return indent + (isLast ? '└─ ' : '├─ ');
+		return indent + (isLastItem ? '└─ ' : '├─ ');
 	}
 </script>
 
 <div class="tree-node">
 	{#if data.children}
 		<div class="folder">
-			{getPrefix(false)}{data.name}/
+			{getPrefix(isLast)}{data.name}/
 		</div>
-		{#each data.children as child}
-			<Tree data={child} level={level + 1} />
+		{#each data.children as child, i}
+			<Tree
+				data={child}
+				level={level + 1}
+				isLast={i === data.children.length - 1}
+			/>
 		{/each}
 	{:else}
 		<div class="file">
-			{getPrefix(true)}{data.name}
+			{getPrefix(isLast)}{data.name}
 		</div>
 	{/if}
 </div>

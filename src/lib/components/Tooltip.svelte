@@ -11,7 +11,7 @@
 </script>
 
 <div class="tooltip-wrapper">
-	{@render children()}
+	{children?.()}
 	<span class="tooltip" data-position={position}>
 		{text}
 	</span>

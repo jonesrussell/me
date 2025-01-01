@@ -30,7 +30,7 @@
 		{/if}
 
 		<div class="content">
-			{@render children()}
+			{children?.()}
 		</div>
 
 		<div class="footer">╰{createLine('─')}╯</div>

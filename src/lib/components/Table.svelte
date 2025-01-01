@@ -4,7 +4,7 @@
 	const {
 		headers = [],
 		rows = [],
-		width = 60
+		width = 64
 	} = $props<{
 		headers?: string[];
 		rows?: string[][];
@@ -24,36 +24,47 @@
 				header,
 				...rows.map((row: string[]) => row[index])
 			];
-			return Math.max(...columnContent.map((cell) => cell.length));
+			return Math.max(...columnContent.map((cell) => cell?.length ?? 0));
 		})
+	);
+
+	// Create border lines
+	const topBorder = $derived(
+		`┌${columnWidths.map((w: number) => '─'.repeat(w + 2)).join('┬')}┐`
+	);
+	const middleBorder = $derived(
+		`├${columnWidths.map((w: number) => '─'.repeat(w + 2)).join('┼')}┤`
+	);
+	const bottomBorder = $derived(
+		`└${columnWidths.map((w: number) => '─'.repeat(w + 2)).join('┴')}┘`
 	);
 </script>
 
 <div class="table" style="--table-width: {alignedWidth}ch">
 	<div class="table-border">
-		┌{columnWidths.map((w: number) => '─'.repeat(w + 2)).join('┬')}┐
+		{topBorder}
 	</div>
 
 	<div class="header-row">
-		│ {#each headers as header, i}
-			{padCell(header, columnWidths[i])} │
+		│{#each headers as header, i}
+			{' '}{padCell(header, columnWidths[i])} │
 		{/each}
 	</div>
 
 	<div class="table-border">
-		├{columnWidths.map((w: number) => '─'.repeat(w + 2)).join('┼')}┤
+		{middleBorder}
 	</div>
 
 	{#each rows as row}
 		<div class="table-row">
-			│ {#each row as cell, i}
-				{padCell(cell, columnWidths[i])} │
+			│{#each row as cell, i}
+				{' '}{padCell(cell ?? '', columnWidths[i])} │
 			{/each}
 		</div>
 	{/each}
 
 	<div class="table-border">
-		└{columnWidths.map((w: number) => '─'.repeat(w + 2)).join('┴')}┘
+		{bottomBorder}
 	</div>
 </div>
 
