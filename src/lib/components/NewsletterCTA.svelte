@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	let email = '';
-	let submitStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
-	let errorMessage = '';
+	let email = $state('');
+	let submitStatus = $state<'idle' | 'loading' | 'success' | 'error'>('idle');
+	let errorMessage = $state('');
 
 	async function handleSubmit(event: Event) {
 		event.preventDefault();

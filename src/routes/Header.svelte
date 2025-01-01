@@ -1,13 +1,15 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
-	const title = 'Limitless Developer';
-	const navItems = [
+	const title = $state('Limitless Developer');
+	const navItems = $state([
 		{ href: '/blog', text: 'Blog      ' },
 		{ href: '/projects', text: 'Projects  ' },
 		{ href: '/resources', text: 'Resources ' },
 		{ href: '/contact', text: 'Contact   ' }
-	];
+	]);
+
+	const isActive = $derived((path: string) => $page.url.pathname === path);
 </script>
 
 <header class="site-header">
@@ -15,9 +17,7 @@
 		<a href="/" class="title">Russell Jones</a>
 		<nav class="header-nav">
 			{#each navItems as item}
-				<a href={item.href} class:active={$page.url.pathname === item.href}
-					>{item.text}</a
-				>
+				<a href={item.href} class:active={isActive(item.href)}>{item.text}</a>
 			{/each}
 		</nav>
 	</div>
