@@ -114,7 +114,7 @@ Commands:
 
 	.terminal-title {
 		color: var(--text-muted);
-		font-size: 0.9em;
+		font-size: var(--font-size-sm);
 		font-weight: var(--font-weight-medium);
 	}
 
@@ -134,7 +134,7 @@ Commands:
 	.terminal-body {
 		padding: var(--ch);
 		font-family: var(--font-mono);
-		line-height: var(--line-height);
+		line-height: var(--line-height-base);
 		position: relative;
 		display: flex;
 		flex-direction: column;
@@ -144,7 +144,7 @@ Commands:
 		display: flex;
 		gap: var(--ch);
 		color: var(--text-muted);
-		line-height: var(--line-height);
+		line-height: var(--line-height-base);
 		font-weight: var(--font-weight-normal);
 	}
 
@@ -203,7 +203,7 @@ Commands:
 		border: 1px solid var(--border-color);
 		padding: var(--ch2);
 		font-family: var(--font-mono);
-		font-size: 0.8em;
+		font-size: var(--font-size-xs);
 		white-space: pre;
 		z-index: 100;
 		margin-bottom: 2rem;

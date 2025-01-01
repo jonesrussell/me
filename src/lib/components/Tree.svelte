@@ -56,4 +56,10 @@
 	.file {
 		color: var(--text-color);
 	}
+
+	.tree {
+		font-family: var(--font-mono);
+		line-height: var(--line-height-tight);
+		white-space: pre;
+	}
 </style>

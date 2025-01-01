@@ -106,7 +106,7 @@
 		font-weight: var(--font-weight-bold);
 		color: var(--text-color);
 		text-decoration: none;
-		font-family: 'Fira Code', monospace;
+		font-family: var(--font-mono);
 	}
 
 	.header-nav {

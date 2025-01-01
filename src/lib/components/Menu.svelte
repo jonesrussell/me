@@ -16,8 +16,8 @@
 <style>
 	.menu {
 		font-family: var(--font-mono);
+		line-height: var(--line-height-tight);
 		white-space: pre;
-		line-height: 1.2;
 	}
 
 	.menu-item {
