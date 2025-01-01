@@ -25,8 +25,8 @@
 	.layout {
 		display: flex;
 		flex-direction: column;
-		min-height: 100vh;
 		width: 100%;
+		min-height: 100vh;
 		overflow-x: hidden;
 	}
 
@@ -38,8 +38,8 @@
 	}
 
 	.content-inner {
+		width: 100%;
 		max-width: min(var(--measure), 100%);
 		margin: 0 auto;
-		width: 100%;
 	}
 </style>

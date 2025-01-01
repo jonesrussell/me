@@ -21,8 +21,8 @@
 
 <style>
 	.footer {
-		text-align: center;
 		padding: var(--ch2) 0;
+		text-align: center;
 		border-top: 1px solid var(--border-color);
 	}
 </style>

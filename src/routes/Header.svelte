@@ -27,31 +27,31 @@
 	}
 
 	.brand {
-		font-size: 1.2em;
 		width: fit-content;
+		font-size: 1.2em;
 	}
 
 	.title {
+		width: fit-content;
+		margin-top: var(--ch-half);
 		color: var(--text-muted);
 		font-size: 0.9em;
-		margin-top: var(--ch-half);
-		width: fit-content;
 	}
 
 	nav {
-		margin-top: var(--ch2);
 		display: flex;
 		gap: var(--ch4);
 		width: fit-content;
+		margin-top: var(--ch2);
 	}
 
 	nav a {
-		color: var(--text-color);
-		text-decoration: none;
-		font-family: inherit;
-		white-space: pre;
-		width: var(--ch10);
 		display: inline-block;
+		width: var(--ch10);
+		color: var(--text-color);
+		font-family: inherit;
+		text-decoration: none;
+		white-space: pre;
 	}
 
 	nav a:hover {

@@ -39,15 +39,15 @@
 	}
 
 	.tooltip {
-		font-family: var(--font-mono);
-		opacity: 0;
 		position: absolute;
-		padding: var(--ch) var(--ch2);
-		background: var(--bg-color);
-		border: 1px solid var(--border-color);
-		white-space: nowrap;
 		z-index: 1;
+		padding: var(--ch) var(--ch2);
+		border: 1px solid var(--border-color);
+		background: var(--bg-color);
+		font-family: var(--font-mono);
 		transition: opacity 0.2s ease;
+		opacity: 0;
+		white-space: nowrap;
 		pointer-events: none;
 	}
 
@@ -62,28 +62,28 @@
 	[data-position='top'] {
 		bottom: 100%;
 		left: 50%;
-		transform: translateX(-50%);
 		margin-bottom: var(--ch);
+		transform: translateX(-50%);
 	}
 
 	[data-position='bottom'] {
 		top: 100%;
 		left: 50%;
-		transform: translateX(-50%);
 		margin-top: var(--ch);
+		transform: translateX(-50%);
 	}
 
 	[data-position='left'] {
-		right: 100%;
 		top: 50%;
-		transform: translateY(-50%);
+		right: 100%;
 		margin-right: var(--ch);
+		transform: translateY(-50%);
 	}
 
 	[data-position='right'] {
-		left: 100%;
 		top: 50%;
-		transform: translateY(-50%);
+		left: 100%;
 		margin-left: var(--ch);
+		transform: translateY(-50%);
 	}
 </style>

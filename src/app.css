@@ -53,21 +53,21 @@
 	--shadow-lg: 0 calc(4 * var(--ch) / 16) calc(6 * var(--ch) / 16) calc(-1 * var(--ch) / 16) var(--color-mix-medium);
 
 	/* Colors */
-	--bg-color: #1a1a1a;
-	--bg-darker: #141414;
-	--bg-alt: #1f1f1f;
-	--text-color: #fff;
-	--text-muted: #bfbfbf;
-	--border-color: #666;
-	--link-color: #4a9eff;
-	--link-hover: #7ab8ff;
-	--accent-color: #00ff9d;
-	--accent-color-hover: #33ffa7;
-	--accent-color-transparent: rgb(0 255 157 / 20%);
-	--color-success: #22c55e;
-	--color-warning: #eab308;
-	--color-error: #ef4444;
-	--color-info: #3b82f6;
+	--bg-color: hsl(0deg 0% 10%);
+	--bg-darker: hsl(0deg 0% 8%);
+	--bg-alt: hsl(0deg 0% 12%);
+	--text-color: hsl(0deg 0% 100%);
+	--text-muted: hsl(0deg 0% 75%);
+	--border-color: hsl(0deg 0% 40%);
+	--link-color: hsl(213deg 100% 65%);
+	--link-hover: hsl(213deg 100% 73%);
+	--accent-color: hsl(156deg 100% 50%);
+	--accent-color-hover: hsl(156deg 100% 60%);
+	--accent-color-transparent: color-mix(in srgb, var(--accent-color) 20%, transparent);
+	--color-success: hsl(142deg 64% 45%);
+	--color-warning: hsl(43deg 90% 47%);
+	--color-error: hsl(0deg 84% 60%);
+	--color-info: hsl(217deg 91% 60%);
 
 	/* Add box-sizing reset */
 	box-sizing: border-box;
@@ -91,13 +91,13 @@
 }
 
 body {
+	margin: 0;
+	background: var(--bg-color);
+	color: var(--text-color);
 	font-family: var(--font-mono);
 	font-size: var(--font-size-base);
 	font-weight: var(--font-weight-normal);
 	line-height: var(--line-height-base);
-	color: var(--text-color);
-	margin: 0;
-	background: var(--bg-color);
 }
 
 a {
@@ -168,8 +168,8 @@ a:hover {
 	[data-debug-grid] {
 		background: linear-gradient(
 			to right,
-			rgb(255 0 0 / 10%) 0,
-			rgb(255 0 0 / 10%) 1ch,
+			color-mix(in srgb, var(--color-error) 10%, transparent) 0,
+			color-mix(in srgb, var(--color-error) 10%, transparent) 1ch,
 			transparent 1ch,
 			transparent 2ch
 		);
@@ -182,7 +182,7 @@ a:hover {
 	textarea {
 		color: var(--text-color);
 		border-color: var(--border-color);
-		background-color: color-mix(in srgb, var(--bg-color) 80%, white);
+		background-color: color-mix(in srgb, var(--bg-color) 80%, var(--text-color));
 	}
 }
 
@@ -195,15 +195,15 @@ a:hover {
 [data-theme='light'] {
 	color-scheme: light;
 
-	--bg-color: #fff;
-	--bg-darker: #f5f5f5;
-	--bg-alt: #fafafa;
-	--text-color: #1a1a1a;
-	--text-muted: #666;
-	--border-color: #e5e5e5;
-	--link-color: #06c;
-	--link-hover: #0052a3;
-	--accent-color: #00cc7d;
-	--accent-color-hover: #00a364;
-	--accent-color-transparent: rgb(0 204 125 / 20%);
+	--bg-color: hsl(0deg 0% 100%);
+	--bg-darker: hsl(0deg 0% 96%);
+	--bg-alt: hsl(0deg 0% 98%);
+	--text-color: hsl(0deg 0% 10%);
+	--text-muted: hsl(0deg 0% 40%);
+	--border-color: hsl(0deg 0% 90%);
+	--link-color: hsl(210deg 100% 40%);
+	--link-hover: hsl(210deg 100% 32%);
+	--accent-color: hsl(160deg 100% 40%);
+	--accent-color-hover: hsl(160deg 100% 32%);
+	--accent-color-transparent: color-mix(in srgb, var(--accent-color) 20%, transparent);
 }

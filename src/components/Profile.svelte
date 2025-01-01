@@ -20,9 +20,9 @@
 
 <style>
 	.profile {
-		text-align: center;
 		margin-bottom: var(--ch4);
 		font-family: 'Fira Code', monospace;
+		text-align: center;
 	}
 
 	.name {
@@ -30,8 +30,8 @@
 	}
 
 	.title {
-		color: var(--text-muted);
 		margin: var(--ch) 0;
+		color: var(--text-muted);
 	}
 
 	.specialties {

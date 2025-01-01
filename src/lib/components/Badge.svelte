@@ -20,18 +20,18 @@
 
 <style>
 	:root {
-		--font-mono: 'Courier New', Courier, monospace;
+		--font-mono: 'Courier New', courier, monospace;
 		--ch: 1ch;
 	}
 
 	.badge {
-		font-family: var(--font-mono);
 		padding: 0 var(--ch);
+		font-family: var(--font-mono);
 		white-space: nowrap;
 	}
 
 	.info {
-		color: #0066cc;
+		color: #06c;
 	}
 
 	.success {

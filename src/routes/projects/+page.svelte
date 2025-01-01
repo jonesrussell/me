@@ -89,20 +89,20 @@
 		margin: 0 auto;
 		padding: var(--ch4) var(--ch2);
 		font-family: var(--font-mono);
-		line-height: 1.4;
+		line-height: var(--line-height-base);
 	}
 
 	h1 {
-		font-size: 2em;
-		line-height: 1.2;
 		margin: 0;
+		font-size: var(--font-size-2xl);
+		line-height: var(--line-height-tight);
 		text-align: center;
 	}
 
 	.intro {
-		text-align: center;
 		margin: var(--ch2) 0 var(--ch4) 0;
 		color: var(--text-muted);
+		text-align: center;
 	}
 
 	.project-grid {
@@ -111,7 +111,7 @@
 		grid-template-columns: 1fr;
 	}
 
-	@media (min-width: 80ch) {
+	@media (width >= 80ch) {
 		.project-grid {
 			grid-template-columns: repeat(auto-fit, minmax(50ch, 1fr));
 		}
@@ -121,7 +121,7 @@
 		width: 100%;
 		padding: var(--ch3);
 		border: 1px solid var(--border-color);
-		background: color-mix(in srgb, var(--text-color) 5%, transparent);
+		background: var(--color-mix-light);
 	}
 
 	.project-header {
@@ -133,19 +133,19 @@
 
 	h2 {
 		margin: 0;
-		font-size: 1.2em;
+		font-size: var(--font-size-lg);
 		font-weight: var(--font-weight-bold);
 	}
 
 	.status {
-		font-size: 0.9em;
-		padding: 0.2em var(--ch);
-		border-radius: 2px;
+		padding: calc(var(--ch) / 4) var(--ch);
+		border-radius: calc(var(--ch) / 8);
+		font-size: var(--font-size-sm);
 	}
 
 	.status-active {
-		color: var(--color-success);
 		background: color-mix(in srgb, var(--color-success) 15%, transparent);
+		color: var(--color-success);
 	}
 
 	.status-stable {
@@ -153,8 +153,8 @@
 	}
 
 	.status-experimental {
-		color: var(--color-warning);
 		background: color-mix(in srgb, var(--color-warning) 15%, transparent);
+		color: var(--color-warning);
 	}
 
 	.description {
@@ -170,11 +170,11 @@
 	}
 
 	.tech {
-		font-size: 0.9em;
-		padding: 0.2em var(--ch);
-		background: color-mix(in srgb, var(--text-color) 10%, transparent);
+		padding: calc(var(--ch) / 4) var(--ch);
 		border: 1px solid var(--border-color);
-		border-radius: 2px;
+		border-radius: calc(var(--ch) / 8);
+		background: var(--color-mix-medium);
+		font-size: var(--font-size-sm);
 	}
 
 	a {
@@ -185,6 +185,6 @@
 
 	a:hover {
 		color: var(--link-hover);
-		border-bottom-color: currentColor;
+		border-bottom-color: currentcolor;
 	}
 </style>
