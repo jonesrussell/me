@@ -1,4 +1,23 @@
 /**
+ * Grid Utilities
+ *
+ * This module provides utilities for working with monospace grids and character-based layouts.
+ * When calculating heights, follow these rules:
+ * 1. Count exact content lines from strings (use split('\n').length)
+ * 2. Only multiply content lines by line-height
+ * 3. Add fixed spacing (header, padding, gaps) AFTER line-height calculation
+ * 4. Account for all CSS spacing factors:
+ *    - Line height (usually from CSS variables)
+ *    - Header height (fixed character units)
+ *    - Body padding (top and bottom)
+ *    - Element margins (e.g., between commands)
+ *    - Element gaps (from CSS gap property)
+ *    - Safety padding if needed
+ * 5. Document all spacing factors in the calculation
+ * 6. Prefer whole character units when possible
+ */
+
+/**
  * Calculate exact height in character units based on content
  */
 export function calculateCharacterHeight(
@@ -40,7 +59,8 @@ export function getGridWidth(width: number): string {
 }
 
 /**
- * Calculate exact monospace height accounting for line-height and spacing
+ * Calculate exact monospace height accounting for line-height and spacing.
+ * This is the preferred way to calculate heights for monospace layouts.
  */
 export function calculateMonospaceHeight(options: {
 	lines: number; // Number of content lines
@@ -54,13 +74,14 @@ export function calculateMonospaceHeight(options: {
 		lineHeight = 1.7,
 		headerHeight = 0,
 		padding = 0,
+
 		extraGaps = 0
 	} = options;
 
-	// Calculate base content height with line-height
+	// 1. Calculate base content height with line-height
 	const contentHeight = Math.ceil(lines * lineHeight);
 
-	// Add header, padding, and any extra gaps
+	// 2. Add fixed spacing AFTER line-height calculation
 	const totalHeight = contentHeight + headerHeight + padding + extraGaps;
 
 	return `${totalHeight}ch`;

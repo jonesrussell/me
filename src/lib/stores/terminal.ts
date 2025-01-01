@@ -1,7 +1,4 @@
-import {
-	calculateCharacterHeight,
-	calculateMonospaceHeight
-} from '$lib/utils/grid';
+import { calculateCharacterHeight } from '$lib/utils/grid';
 import { derived, get, writable } from 'svelte/store';
 
 export interface Command {
@@ -118,29 +115,30 @@ function countCommandLines(cmd: Command): number {
 	});
 }
 
-// Count total height needed for all commands up to current
-function calculateTotalHeight(currentCommand: number): number {
-	let totalLines = 0;
+// Calculate height with ALL spacing factors
+const CONTENT_LINES = 23; // Total content lines
+const LINE_HEIGHT = 1.7; // --line-height-relaxed
+const HEADER = 3; // Terminal header height
+const BODY_PADDING = 4; // 2ch top + 2ch bottom (var(--ch2))
+const COMMAND_MARGINS = 4; // 1ch margin-top on each command-line and command-output (2 commands)
+const ELEMENT_GAPS = 2; // 1ch gap between elements in terminal-body
+const EXTRA_PADDING = 2; // Safety margin
 
-	// Sum up lines from all commands shown so far
-	for (let i = 0; i <= currentCommand; i++) {
-		// Add a line for the command prompt
-		totalLines += 1; // $
-		// Add a line for the command itself
-		totalLines += 1; // command text
-		// Add lines from output
-		totalLines += commands[i].output.split('\n').length;
-		// Add a blank line after each command except the last one
-		if (i < currentCommand) totalLines += 1;
-	}
-
-	// Add header and padding
-	return totalLines + headerHeight + padding;
-}
-
-const maxLines = Math.max(...commands.map(countCommandLines));
-const headerHeight = 3; // 3ch for header
-const padding = 4; // More padding to ensure content is visible
+// Calculate total height:
+// 1. Content lines with line height
+// 2. Fixed header height
+// 3. Body padding (top and bottom)
+// 4. Command margins
+// 5. Element gaps
+// 6. Extra padding for safety
+const TERMINAL_HEIGHT = `${
+	Math.ceil(CONTENT_LINES * LINE_HEIGHT) +
+	HEADER +
+	BODY_PADDING +
+	COMMAND_MARGINS +
+	ELEMENT_GAPS +
+	EXTRA_PADDING
+}ch`;
 
 // Debug store to track calculations
 interface DebugState {
@@ -160,46 +158,41 @@ interface DebugState {
 }
 
 export const debug = writable<DebugState>({
-	currentLines: 0,
-	maxLines,
-	headerHeight,
-	padding,
-	rawHeight: maxLines + headerHeight + padding,
-	scaledHeight: calculateTotalHeight(commands.length - 1),
-	totalHeight: `${calculateTotalHeight(commands.length - 1)}ch`,
+	currentLines: CONTENT_LINES,
+	maxLines: CONTENT_LINES,
+	headerHeight: HEADER,
+	padding: BODY_PADDING,
+	rawHeight:
+		CONTENT_LINES +
+		HEADER +
+		BODY_PADDING +
+		COMMAND_MARGINS +
+		ELEMENT_GAPS +
+		EXTRA_PADDING,
+	scaledHeight:
+		Math.ceil(CONTENT_LINES * LINE_HEIGHT) +
+		HEADER +
+		BODY_PADDING +
+		COMMAND_MARGINS +
+		ELEMENT_GAPS +
+		EXTRA_PADDING,
+	totalHeight: TERMINAL_HEIGHT,
 	commands: commands.map((cmd) => {
 		const lines = countCommandLines(cmd);
-		const height = lines + headerHeight + padding;
+		const height =
+			Math.ceil(lines * LINE_HEIGHT) +
+			HEADER +
+			BODY_PADDING +
+			COMMAND_MARGINS +
+			ELEMENT_GAPS +
+			EXTRA_PADDING;
 		return {
 			cmd: cmd.cmd,
 			lines,
 			height: `${height}ch`,
-			breakdown: `(${lines} lines + ${headerHeight}ch header + ${padding}ch padding) = ${height}ch`
+			breakdown: `(${lines} lines × ${LINE_HEIGHT} line-height + ${HEADER}ch header + ${BODY_PADDING}ch top padding + ${COMMAND_MARGINS}ch command margins + ${ELEMENT_GAPS}ch element gaps + ${EXTRA_PADDING}ch extra padding) = ${height}ch`
 		};
 	})
 });
 
-export const terminalHeight = derived(terminal, ($terminal) => {
-	// Update debug info with current command details
-	debug.update((d) => ({
-		...d,
-		currentLines: countCommandLines(commands[$terminal.currentCommand])
-	}));
-
-	// Count total content lines
-	let totalLines = 0;
-	for (let i = 0; i <= $terminal.currentCommand; i++) {
-		totalLines += 1; // Prompt
-		totalLines += 1; // Command
-		totalLines += commands[i].output.split('\n').length;
-		if (i < $terminal.currentCommand) totalLines += 1; // Gap between commands
-	}
-
-	return calculateMonospaceHeight({
-		lines: totalLines,
-		lineHeight: 1.7,
-		headerHeight: 3,
-		padding: 4,
-		extraGaps: 4 // Gaps between elements
-	});
-});
+export const terminalHeight = derived(terminal, () => TERMINAL_HEIGHT);
