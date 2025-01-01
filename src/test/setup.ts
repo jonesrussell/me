@@ -3,7 +3,8 @@ import * as matchers from '@testing-library/jest-dom/matchers';
 import { cleanup } from '@testing-library/svelte';
 import { afterEach, expect, vi } from 'vitest';
 
-expect.extend(matchers as any);
+// Extend jest-dom matchers
+expect.extend(matchers as Record<string, (received: unknown, ...args: unknown[]) => { pass: boolean; message(): string }>);
 
 // Cleanup after each test
 afterEach(() => {
@@ -52,7 +53,7 @@ global.ResizeObserver = class ResizeObserver {
 };
 
 // Mock IntersectionObserver
-global.IntersectionObserver = vi.fn().mockImplementation((callback) => ({
+global.IntersectionObserver = vi.fn().mockImplementation(() => ({
 	observe: vi.fn(),
 	unobserve: vi.fn(),
 	disconnect: vi.fn(),
@@ -73,4 +74,18 @@ vi.mock('svelte', async () => {
 			return actual.tick();
 		}
 	};
+});
+
+// Mock CSSStyleSheet
+class CSSStyleSheet {
+	insertRule() {
+		return 0;
+	}
+}
+
+// Mock style element
+Object.defineProperty(document.createElement('style'), 'sheet', {
+	get() {
+		return new CSSStyleSheet();
+	}
 });
