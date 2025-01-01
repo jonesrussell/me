@@ -173,31 +173,30 @@
 
 	button {
 		font-family: inherit;
-		background: var(--accent-color);
-		border: 1px solid var(--accent-color-hover);
-		color: #ffffff;
+		background: var(--accent-color-hover);
+		border: 1px solid var(--accent-color);
+		color: var(--bg-color);
 		cursor: pointer;
 		padding: var(--ch2) var(--ch4);
 		line-height: 1.2;
 		font-weight: var(--font-weight-bold);
-
 		transition: all 0.2s ease;
 		width: auto;
 		white-space: nowrap;
 		position: relative;
-		text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
-		box-shadow: 2px 2px 0 var(--accent-color-hover);
+		text-shadow: none;
+		box-shadow: 2px 2px 0 var(--accent-color);
 	}
 
 	button:hover:not(:disabled) {
-		background: var(--accent-color-hover);
+		background: var(--accent-color);
 		transform: translateY(-1px) translateX(-1px);
-		box-shadow: 3px 3px 0 var(--accent-color-hover);
+		box-shadow: 3px 3px 0 var(--accent-color);
 	}
 
 	button:active:not(:disabled) {
 		transform: translateY(1px) translateX(1px);
-		box-shadow: 1px 1px 0 var(--accent-color-hover);
+		box-shadow: 1px 1px 0 var(--accent-color);
 	}
 
 	button:disabled {
