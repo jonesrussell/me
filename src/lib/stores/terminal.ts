@@ -20,6 +20,23 @@ const TYPING_SPEED = 50;
 let typingInterval: NodeJS.Timeout | null = null;
 let currentCommands: Command[] = [];
 
+// Initial commands
+const defaultCommands: Command[] = [
+	{
+		cmd: 'whoami',
+		output: 'russell'
+	},
+	{
+		cmd: 'man russell | grep -A5 "^SYNOPSIS"',
+		output: `SYNOPSIS
+       russell [--build] [--innovate] [--ship] <solution>
+
+DESCRIPTION
+       A limitless developer crafting elegant solutions with modern web technologies.
+       Specializes in TypeScript, Go, and cloud architecture.`
+	}
+];
+
 function createTerminal() {
 	const { subscribe, update } = writable<TerminalState>({
 		currentCommand: 0,
@@ -78,9 +95,12 @@ function createTerminal() {
 
 	return {
 		subscribe,
-		loadCommands: (commands: Command[]) => {
-			currentCommands = commands;
-			if (commands.length > 0) {
+		loadCommands: (newCommands?: Command[]) => {
+			const commandsToLoad = newCommands || defaultCommands;
+			currentCommands = commandsToLoad;
+			commands.set(commandsToLoad); // Update the commands store
+
+			if (commandsToLoad.length > 0) {
 				update((state) => ({
 					...state,
 					currentCommand: 0,
@@ -88,8 +108,8 @@ function createTerminal() {
 					outputVisible: '',
 					isTyping: true
 				}));
-				typeCommand(commands[0].cmd, () => {
-					showOutput(commands[0].output);
+				typeCommand(commandsToLoad[0].cmd, () => {
+					showOutput(commandsToLoad[0].output);
 				});
 			}
 		},
@@ -147,7 +167,7 @@ export const debug = writable({
 });
 
 // Terminal height store
-export const terminalHeight = writable('20ch');
+export const terminalHeight = writable('35ch');
 
-// Commands store
-export const commands = writable<Command[]>([]);
+// Commands store - initialize with default commands
+export const commands = writable<Command[]>(defaultCommands);
