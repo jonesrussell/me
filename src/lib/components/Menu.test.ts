@@ -14,7 +14,7 @@ describe('Menu', () => {
 		});
 		const menu = container.querySelector('.menu');
 		expect(menu).toBeInTheDocument();
-		
+
 		const items = container.querySelectorAll('.menu-item');
 		expect(items).toHaveLength(3);
 		expect(items[0]).toHaveClass('selected');
@@ -59,4 +59,4 @@ describe('Menu', () => {
 		// No item should have the arrow when selected index is invalid
 		expect(container.textContent).not.toContain('→');
 	});
-}); 
+});

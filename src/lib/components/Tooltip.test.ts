@@ -11,10 +11,10 @@ describe('Tooltip', () => {
 				children: () => '<button>Hover me</button>'
 			}
 		});
-		
+
 		const wrapper = container.querySelector('.tooltip-wrapper');
 		const tooltip = container.querySelector('.tooltip');
-		
+
 		expect(wrapper).toBeInTheDocument();
 		expect(tooltip).toBeInTheDocument();
 		expect(tooltip?.textContent?.trim()).toBe('Tooltip text');
@@ -27,14 +27,14 @@ describe('Tooltip', () => {
 				children: () => '<button>Hover me</button>'
 			}
 		});
-		
+
 		expect(container.textContent).toContain('Hover me');
 	});
 
 	it('positions tooltip correctly', () => {
 		const positions = ['top', 'bottom', 'left', 'right'] as const;
-		
-		positions.forEach(position => {
+
+		positions.forEach((position) => {
 			const { container } = render(Tooltip, {
 				props: {
 					text: 'Tooltip text',
@@ -42,7 +42,7 @@ describe('Tooltip', () => {
 					children: () => '<button>Hover me</button>'
 				}
 			});
-			
+
 			const tooltip = container.querySelector('.tooltip');
 			expect(tooltip).toHaveAttribute('data-position', position);
 		});
@@ -55,7 +55,7 @@ describe('Tooltip', () => {
 				children: () => '<button>Hover me</button>'
 			}
 		});
-		
+
 		const tooltip = container.querySelector('.tooltip');
 		expect(tooltip).toHaveAttribute('data-position', 'top');
 	});
@@ -67,17 +67,17 @@ describe('Tooltip', () => {
 				children: () => '<button>Hover me</button>'
 			}
 		});
-		
+
 		const wrapper = container.querySelector('.tooltip-wrapper') as HTMLElement;
 		const tooltip = container.querySelector('.tooltip') as HTMLElement;
-		
+
 		// Initial state
 		expect(tooltip).toHaveStyle({ visibility: 'hidden' });
-		
+
 		// Hover state
 		await fireEvent.mouseEnter(wrapper);
 		expect(tooltip).toHaveStyle({ visibility: 'visible' });
-		
+
 		// Remove hover
 		await fireEvent.mouseLeave(wrapper);
 		expect(tooltip).toHaveStyle({ visibility: 'hidden' });
@@ -90,19 +90,19 @@ describe('Tooltip', () => {
 				children: () => '<button>Hover me</button>'
 			}
 		});
-		
+
 		const wrapper = container.querySelector('.tooltip-wrapper');
 		const tooltip = container.querySelector('.tooltip');
-		
+
 		expect(wrapper).toHaveStyle({
 			position: 'relative',
 			display: 'inline-block'
 		});
-		
+
 		expect(tooltip).toHaveStyle({
 			position: 'absolute',
 			'white-space': 'nowrap',
 			'z-index': '1'
 		});
 	});
-}); 
+});
