@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { blogPosts, fetchFeed } from '$services/blogService';
 	import devToProfile from '$lib/images/dev.to.jpeg?enhanced';
+	import { blogPosts, fetchFeed } from '$services/blogService';
+	import { onMount } from 'svelte';
 
 	const devToUrl = 'https://dev.to/jonesrussell' as const;
 
@@ -17,10 +17,10 @@
 </script>
 
 <svelte:head>
-	<title>Blog | Russell Jones</title>
+	<title>Technical Blog | Russell Jones - Web Development & Open Source</title>
 	<meta
 		name="description"
-		content="Russell Jones's Blog, featuring web development, open source, and personal reflections"
+		content="Articles and tutorials on web development, Go programming, cloud technologies, and open source software by Russell Jones. Practical insights and best practices."
 	/>
 </svelte:head>
 

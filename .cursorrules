@@ -1,6 +1,10 @@
 # STOP FUCKING TRYING TO USE SLOTS
 
 # Core Development Guidelines
+branding:
+  - title: "Limitless Developer"
+  - description: "Building elegant solutions with modern web technologies"
+
 general_rules:
   - use_typescript: true
   - add_comments: true

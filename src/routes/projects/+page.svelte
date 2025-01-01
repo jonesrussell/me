@@ -41,10 +41,12 @@
 </script>
 
 <svelte:head>
-	<title>Projects | Russell Jones</title>
+	<title
+		>Open Source Projects | Russell Jones - Go & Modern Web Development</title
+	>
 	<meta
 		name="description"
-		content="Open source projects by Russell Jones, featuring Go and modern web technologies"
+		content="Explore my open source projects built with Go, JavaScript, and modern web technologies. From web applications to system tools and game development."
 	/>
 </svelte:head>
 
