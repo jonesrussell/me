@@ -6,8 +6,10 @@
 :root {
 	color-scheme: light dark;
 
-	/* Base units */
+	/* Base character size */
 	--ch: 1ch;
+
+	/* Base units - multiples of character width */
 	--ch2: calc(2 * var(--ch));
 	--ch3: calc(3 * var(--ch));
 	--ch4: calc(4 * var(--ch));
@@ -15,29 +17,48 @@
 	--ch8: calc(8 * var(--ch));
 	--ch16: calc(16 * var(--ch));
 
-	/* Typography */
+	/* Typography - refined for better readability */
 	--font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', menlo, monaco,
 		'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', monospace;
-	--font-size-base: var(--ch);
-	--font-size-xs: calc(0.75 * var(--ch));
-	--font-size-sm: calc(0.875 * var(--ch));
-	--font-size-md: calc(1.25 * var(--ch));
-	--font-size-lg: calc(1.125 * var(--ch));
-	--font-size-xl: calc(1.25 * var(--ch));
-	--font-size-2xl: calc(1.5 * var(--ch));
-	--font-size-3xl: calc(1.875 * var(--ch));
-	--line-height-tight: 1.25;
-	--line-height-base: 1.5;
-	--line-height-relaxed: 1.7;
-	--font-weight-normal: 400;
-	--font-weight-medium: 500;
-	--font-weight-bold: 700;
 
-	/* Layout */
-	--measure: 80ch;
+	/* Font sizes - doubled from previous values */
+	--font-size-xs: 2ch; /* UI elements */
+	--font-size-sm: 2.3ch; /* Secondary text */
+	--font-size-base: 2.7ch; /* Main body text */
+	--font-size-md: 3ch; /* Important content */
+	--font-size-lg: 3.5ch; /* Section headers */
+	--font-size-xl: 4ch; /* Major headers */
+	--font-size-2xl: 5ch; /* Hero text */
+	--font-size-3xl: 6ch; /* Display text */
+
+	/* Line heights - adjusted for new font sizes */
+	--line-height-tight: 1.25; /* Headings */
+	--line-height-base: 1.5; /* Body text */
+	--line-height-relaxed: 1.75; /* Large text blocks */
+
+	/* Grid system - refined spacing */
+	--grid-base: var(--ch);
+	--grid-2: calc(2 * var(--grid-base));
+	--grid-3: calc(3 * var(--grid-base));
+	--grid-4: calc(4 * var(--grid-base));
+	--grid-6: calc(6 * var(--grid-base));
+	--grid-8: calc(8 * var(--grid-base));
+	--grid-12: calc(12 * var(--grid-base));
+	--grid-16: calc(16 * var(--grid-base));
+
+	/* Layout - adjusted for better proportions */
+	--measure: 80ch; /* Optimal reading width */
 	--content-padding: var(--ch2);
-	--contact-width: 80ch;
-	--projects-width: 120ch;
+	--contact-width: 80ch; /* Forms and contact info */
+	--projects-width: 120ch; /* Project showcases */
+
+	/* Spacing system - aligned to character grid */
+	--space-1: var(--ch);
+	--space-2: var(--ch2);
+	--space-3: var(--ch3);
+	--space-4: var(--ch4);
+	--space-6: var(--ch6);
+	--space-8: var(--ch8);
 
 	/* Border radius */
 	--radius-sm: calc(var(--ch) / 4);
@@ -93,12 +114,21 @@
 	box-sizing: inherit;
 }
 
-/* Mobile adjustments */
+/* Mobile adjustments - refined for better small screen experience */
 @container (max-width: var(--mobile-breakpoint)) {
 	:root {
+		--font-size-base: 2.5ch; /* Slightly smaller for mobile */
+		--font-size-sm: 2.2ch;
+		--font-size-xs: 2ch;
 		--content-padding: var(--ch);
 		--measure: 100%;
+		--line-height-base: 1.6;
 	}
+}
+
+/* Remove html font-size since we're using ch units */
+html {
+	font-size: 100%;
 }
 
 body {
@@ -109,6 +139,9 @@ body {
 	font-size: var(--font-size-base);
 	font-weight: var(--font-weight-normal);
 	line-height: var(--line-height-base);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
 }
 
 a {
@@ -177,13 +210,14 @@ a:hover {
 /* Only in development */
 @media (width <= 9999ch) {
 	[data-debug-grid] {
-		background: linear-gradient(
+		background-image: linear-gradient(
 			to right,
-			color-mix(in srgb, var(--color-error) 10%, transparent) 0,
-			color-mix(in srgb, var(--color-error) 10%, transparent) 1ch,
+			color-mix(in srgb, var(--color-error) 15%, transparent) 0,
+			color-mix(in srgb, var(--color-error) 15%, transparent) 1ch,
 			transparent 1ch,
 			transparent 2ch
 		);
+		background-size: 2ch 100%;
 	}
 }
 
