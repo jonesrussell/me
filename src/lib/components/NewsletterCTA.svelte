@@ -97,7 +97,7 @@
 		gap: var(--ch2);
 		width: 100%;
 		padding: var(--ch3);
-		border: 1px solid var(--border-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-md);
 		background: var(--color-mix-light);
 	}
@@ -139,7 +139,7 @@
 	input {
 		width: 100%;
 		padding: var(--ch2);
-		border: 1px solid var(--border-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-sm);
 		background: var(--bg-color);
 		color: var(--text-color);
@@ -166,7 +166,7 @@
 		align-items: center;
 		width: 100%;
 		padding: var(--ch2);
-		border: 1px solid var(--border-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-sm);
 		background: var(--color-mix-light);
 		color: var(--text-color);
@@ -204,14 +204,14 @@
 	}
 
 	.success-message {
-		border: 1px solid var(--color-success);
-		background: color-mix(in srgb, var(--color-success) 15%, transparent);
+		border: calc(1 * var(--ch) / 16) solid var(--color-success);
+		background: var(--color-success-transparent);
 		color: var(--color-success);
 	}
 
 	.error-message {
-		border: 1px solid var(--color-error);
-		background: color-mix(in srgb, var(--color-error) 15%, transparent);
+		border: calc(1 * var(--ch) / 16) solid var(--color-error);
+		background: var(--color-error-transparent);
 		color: var(--color-error);
 	}
 </style>

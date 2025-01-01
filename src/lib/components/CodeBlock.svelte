@@ -44,7 +44,7 @@
 <style>
 	.code-block {
 		width: var(--block-width);
-		border: 1px solid var(--border-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		background: var(--bg-color);
 		font-family: var(--font-mono);
 		line-height: var(--line-height-tight);
@@ -56,7 +56,7 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: var(--ch) var(--ch2);
-		border-bottom: 1px solid var(--border-color);
+		border-bottom: calc(1 * var(--ch) / 16) solid var(--border-color);
 	}
 
 	.filename {
@@ -84,7 +84,7 @@
 
 	.code-footer {
 		padding: var(--ch) var(--ch2);
-		border-top: 1px solid var(--border-color);
+		border-top: calc(1 * var(--ch) / 16) solid var(--border-color);
 		color: var(--text-muted);
 		font-size: var(--font-size-sm);
 	}

@@ -40,7 +40,7 @@
 		background: var(--bg-color);
 		color: var(--text-color);
 		container-type: inline-size;
-		border-bottom: 1px solid var(--border-color);
+		border-bottom: calc(1 * var(--ch) / 16) solid var(--border-color);
 		padding-block: var(--ch);
 	}
 

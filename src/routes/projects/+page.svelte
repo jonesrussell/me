@@ -120,7 +120,7 @@
 	.project {
 		width: 100%;
 		padding: var(--ch3);
-		border: 1px solid var(--border-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		background: var(--color-mix-light);
 	}
 
@@ -171,7 +171,7 @@
 
 	.tech {
 		padding: calc(var(--ch) / 4) var(--ch);
-		border: 1px solid var(--border-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: calc(var(--ch) / 8);
 		background: var(--color-mix-medium);
 		font-size: var(--font-size-sm);
@@ -180,7 +180,7 @@
 	a {
 		color: var(--link-color);
 		text-decoration: none;
-		border-bottom: 1px solid transparent;
+		border-bottom: calc(1 * var(--ch) / 16) solid transparent;
 	}
 
 	a:hover {

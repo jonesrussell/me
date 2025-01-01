@@ -152,7 +152,7 @@
 		gap: var(--ch2);
 		align-items: flex-start;
 		padding: var(--ch3);
-		border: 1px solid var(--border-color);
+		border: calc(var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-md);
 		background: var(--bg-darker);
 		transition: all 0.3s ease;
@@ -199,7 +199,7 @@
 		gap: var(--ch2);
 		align-items: center;
 		padding: var(--ch2);
-		border: 1px solid var(--border-color);
+		border: calc(var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-md);
 		color: var(--link-color);
 		text-decoration: none;
@@ -216,7 +216,7 @@
 		font-size: var(--font-size-lg);
 	}
 
-	@media (width >= 600px) {
+	@media (width >= calc(var(--ch) * 37.5)) {
 		.navigation {
 			flex-direction: row;
 			gap: var(--ch2);
@@ -228,14 +228,14 @@
 		}
 
 		.nav-link:hover {
-			transform: translateY(calc(-2 * var(--ch) / 16));
+			transform: translateY(calc(-1 * var(--ch) / 8));
 		}
 	}
 
 	.youtube-section {
 		margin: var(--ch4) 0;
 		padding: var(--ch3);
-		border: 1px solid var(--border-color);
+		border: calc(var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-lg);
 		background: var(--color-mix-faint);
 		container-type: inline-size;
@@ -293,7 +293,7 @@
 		align-items: center;
 		margin-top: var(--ch3);
 		padding: var(--ch2);
-		border: 1px solid var(--border-color);
+		border: calc(var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-md);
 		background: var(--color-mix-light);
 		color: var(--text-color);

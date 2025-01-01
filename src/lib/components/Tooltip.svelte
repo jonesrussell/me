@@ -42,7 +42,7 @@
 		position: absolute;
 		z-index: 1;
 		padding: var(--ch) var(--ch2);
-		border: 1px solid var(--border-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		background: var(--bg-color);
 		font-family: var(--font-mono);
 		transition: opacity 0.2s ease;

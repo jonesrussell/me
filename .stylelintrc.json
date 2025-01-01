@@ -25,7 +25,8 @@
 					"initial",
 					"unset",
 					"currentColor"
-				]
+				],
+				"disableFix": true
 			}
 		],
 		"order/properties-order": [
