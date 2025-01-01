@@ -77,7 +77,7 @@
 
 	.header-row {
 		color: var(--text-color);
-		font-weight: bold;
+		font-weight: var(--font-weight-bold);
 	}
 
 	.table-row {

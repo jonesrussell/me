@@ -233,6 +233,6 @@
 	}
 
 	.icon {
-		font-weight: bold;
+		font-weight: var(--font-weight-bold);
 	}
 </style>

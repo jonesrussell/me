@@ -1,4 +1,7 @@
 @import './reset.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/700.css';
 
 :root {
 	color-scheme: light dark;
@@ -11,9 +14,10 @@
 	--ch6: 6ch;
 
 	/* Typography */
-	--font-mono: 'Fira Mono', monospace;
+	--font-mono: 'JetBrains Mono', monospace;
 	--font-size-base: 16px;
 	--line-height: 1.5;
+	--font-weight-normal: 400;
 	--font-weight-medium: 500;
 	--font-weight-bold: 700;
 
@@ -66,6 +70,7 @@ body {
 	font-family: var(--font-mono);
 	font-size: var(--font-size-base);
 	line-height: var(--line-height);
+	font-weight: var(--font-weight-normal);
 	background: var(--bg-color);
 	color: var(--text-color);
 }
@@ -88,6 +93,17 @@ a:hover {
 }
 .text-right {
 	text-align: right;
+}
+
+/* Font weight utilities */
+.font-normal {
+	font-weight: var(--font-weight-normal);
+}
+.font-medium {
+	font-weight: var(--font-weight-medium);
+}
+.font-bold {
+	font-weight: var(--font-weight-bold);
 }
 
 .flex {
