@@ -164,7 +164,7 @@ a:hover {
 }
 
 /* Only in development */
-@media (width <= 9999px) {
+@media (width <= 9999ch) {
 	[data-debug-grid] {
 		background: linear-gradient(
 			to right,
