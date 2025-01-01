@@ -25,25 +25,33 @@
 	}
 
 	.badge {
-		padding: 0 var(--ch);
-		font-family: var(--font-mono);
-		white-space: nowrap;
+		display: inline-flex;
+		gap: var(--ch);
+		align-items: center;
+		padding: calc(var(--ch) / 4) var(--ch);
+		border-radius: var(--radius-sm);
+		font-size: var(--font-size-sm);
+		line-height: var(--line-height-tight);
 	}
 
-	.info {
-		color: #06c;
+	.badge.info {
+		background: color-mix(in srgb, var(--color-info) 15%, transparent);
+		color: var(--color-info);
 	}
 
-	.success {
-		color: #22c55e;
+	.badge.success {
+		background: color-mix(in srgb, var(--color-success) 15%, transparent);
+		color: var(--color-success);
 	}
 
-	.warning {
-		color: #eab308;
+	.badge.warning {
+		background: color-mix(in srgb, var(--color-warning) 15%, transparent);
+		color: var(--color-warning);
 	}
 
-	.error {
-		color: #ef4444;
+	.badge.error {
+		background: color-mix(in srgb, var(--color-error) 15%, transparent);
+		color: var(--color-error);
 	}
 
 	:global([data-theme='dark']) .badge {
