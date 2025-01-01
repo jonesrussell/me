@@ -23,9 +23,10 @@
           "inherit",
           "initial",
           "unset",
-          "currentColor"
+          "currentColor",
+          "/^var\\(--/"
         ],
-        "disableFix": true
+        "disableFix": false
       }
     ],
     "declaration-property-value-disallowed-list": {
@@ -39,6 +40,15 @@
     },
     "unit-disallowed-list": ["px", "rem", "em"],
     "unit-allowed-list": ["ch", "%", "deg", "ms", "s", "fr", "vw", "vh", "cqi"],
+    "declaration-block-single-line-max-declarations": 1,
+    "declaration-block-no-duplicate-properties": true,
+    "declaration-block-no-shorthand-property-overrides": true,
+    "no-duplicate-selectors": true,
+    "property-no-vendor-prefix": true,
+    "value-no-vendor-prefix": true,
+    "selector-no-vendor-prefix": true,
+    "media-feature-name-no-vendor-prefix": true,
+    "at-rule-no-vendor-prefix": true,
     "order/properties-order": [
       "font-family",
       "font-size",
@@ -147,6 +157,22 @@
           "animation-play-state"
         ]
       }
-    ]
+    ],
+    "color-named": "never",
+    "color-no-hex": true,
+    "function-url-no-scheme-relative": true,
+    "number-max-precision": 2,
+    "shorthand-property-no-redundant-values": true,
+    "value-keyword-case": "lower",
+    "declaration-no-important": true,
+    "declaration-block-no-redundant-longhand-properties": true,
+    "no-unknown-animations": true,
+    "selector-class-pattern": "^[a-z][a-zA-Z0-9-]*$",
+    "selector-id-pattern": "^[a-z][a-zA-Z0-9-]*$",
+    "max-nesting-depth": 3,
+    "no-empty-source": true,
+    "no-missing-end-of-source-newline": true,
+    "no-invalid-position-at-import-rule": true,
+    "font-family-name-quotes": "always-where-recommended"
   }
-} 
+}

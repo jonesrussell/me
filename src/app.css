@@ -1,7 +1,7 @@
-@import './reset.css';
-@import '@fontsource/jetbrains-mono/400.css';
-@import '@fontsource/jetbrains-mono/500.css';
-@import '@fontsource/jetbrains-mono/700.css';
+@import url('./reset.css');
+@import url('@fontsource/jetbrains-mono/400.css');
+@import url('@fontsource/jetbrains-mono/500.css');
+@import url('@fontsource/jetbrains-mono/700.css');
 
 :root {
 	color-scheme: light dark;
@@ -15,18 +15,16 @@
 
 	/* Typography */
 	--font-mono: 'JetBrains Mono', monospace;
-	--font-size-base: 16px;
-	--font-size-xs: 0.8em;
-	--font-size-sm: 0.9em;
-	--font-size-md: 1em;
-	--font-size-lg: 1.2em;
-	--font-size-xl: 1.5em;
-	--font-size-2xl: 2em;
-
+	--font-size-base: calc(16 * var(--ch) / 16);
+	--font-size-xs: calc(12 * var(--ch) / 16);
+	--font-size-sm: calc(14 * var(--ch) / 16);
+	--font-size-md: var(--ch);
+	--font-size-lg: calc(19 * var(--ch) / 16);
+	--font-size-xl: calc(24 * var(--ch) / 16);
+	--font-size-2xl: calc(32 * var(--ch) / 16);
 	--line-height-tight: 1.2;
 	--line-height-base: 1.5;
 	--line-height-relaxed: 1.7;
-
 	--font-weight-normal: 400;
 	--font-weight-medium: 500;
 	--font-weight-bold: 700;
@@ -38,10 +36,10 @@
 	--projects-width: 120ch;
 
 	/* Border radius */
-	--radius-sm: 2px;
-	--radius-md: 4px;
-	--radius-lg: 8px;
-	--radius-full: 9999px;
+	--radius-sm: calc(2 * var(--ch) / 16);
+	--radius-md: calc(4 * var(--ch) / 16);
+	--radius-lg: calc(8 * var(--ch) / 16);
+	--radius-full: 9999ch;
 
 	/* Color mix presets */
 	--color-mix-faint: color-mix(in srgb, var(--text-color) 3%, transparent);
@@ -50,22 +48,22 @@
 	--color-mix-heavy: color-mix(in srgb, var(--text-color) 15%, transparent);
 
 	/* Shadows */
-	--shadow-sm: 0 1px 2px var(--color-mix-medium);
-	--shadow-md: 0 2px 4px var(--color-mix-medium);
-	--shadow-lg: 0 4px 6px -1px var(--color-mix-medium);
+	--shadow-sm: 0 calc(var(--ch) / 16) calc(2 * var(--ch) / 16) var(--color-mix-medium);
+	--shadow-md: 0 calc(2 * var(--ch) / 16) calc(4 * var(--ch) / 16) var(--color-mix-medium);
+	--shadow-lg: 0 calc(4 * var(--ch) / 16) calc(6 * var(--ch) / 16) calc(-1 * var(--ch) / 16) var(--color-mix-medium);
 
 	/* Colors */
 	--bg-color: #1a1a1a;
 	--bg-darker: #141414;
 	--bg-alt: #1f1f1f;
-	--text-color: #ffffff;
+	--text-color: #fff;
 	--text-muted: #bfbfbf;
-	--border-color: #666666;
+	--border-color: #666;
 	--link-color: #4a9eff;
 	--link-hover: #7ab8ff;
 	--accent-color: #00ff9d;
 	--accent-color-hover: #33ffa7;
-	--accent-color-transparent: rgba(0, 255, 157, 0.2);
+	--accent-color-transparent: rgb(0 255 157 / 20%);
 	--color-success: #22c55e;
 	--color-warning: #eab308;
 	--color-error: #ef4444;
@@ -79,8 +77,8 @@
 }
 
 *,
-*:before,
-*:after {
+*::before,
+*::after {
 	box-sizing: inherit;
 }
 
@@ -93,13 +91,13 @@
 }
 
 body {
-	margin: 0;
 	font-family: var(--font-mono);
 	font-size: var(--font-size-base);
-	line-height: var(--line-height-base);
 	font-weight: var(--font-weight-normal);
-	background: var(--bg-color);
+	line-height: var(--line-height-base);
 	color: var(--text-color);
+	margin: 0;
+	background: var(--bg-color);
 }
 
 a {
@@ -115,9 +113,11 @@ a:hover {
 .text-center {
 	text-align: center;
 }
+
 .text-left {
 	text-align: left;
 }
+
 .text-right {
 	text-align: right;
 }
@@ -126,9 +126,11 @@ a:hover {
 .font-normal {
 	font-weight: var(--font-weight-normal);
 }
+
 .font-medium {
 	font-weight: var(--font-weight-medium);
 }
+
 .font-bold {
 	font-weight: var(--font-weight-bold);
 }
@@ -136,12 +138,15 @@ a:hover {
 .flex {
 	display: flex;
 }
+
 .flex-col {
 	flex-direction: column;
 }
+
 .items-center {
 	align-items: center;
 }
+
 .justify-between {
 	justify-content: space-between;
 }
@@ -149,20 +154,22 @@ a:hover {
 .mb-ch {
 	margin-bottom: var(--ch);
 }
+
 .mb-ch2 {
 	margin-bottom: var(--ch2);
 }
+
 .mb-ch4 {
 	margin-bottom: var(--ch4);
 }
 
 /* Only in development */
-@media (max-width: 9999px) {
+@media (width <= 9999px) {
 	[data-debug-grid] {
 		background: linear-gradient(
 			to right,
-			rgba(255, 0, 0, 0.1) 0,
-			rgba(255, 0, 0, 0.1) 1ch,
+			rgb(255 0 0 / 10%) 0,
+			rgb(255 0 0 / 10%) 1ch,
 			transparent 1ch,
 			transparent 2ch
 		);
@@ -173,9 +180,9 @@ a:hover {
 @media (prefers-color-scheme: dark) {
 	input,
 	textarea {
-		background-color: color-mix(in srgb, var(--bg-color) 80%, white);
 		color: var(--text-color);
 		border-color: var(--border-color);
+		background-color: color-mix(in srgb, var(--bg-color) 80%, white);
 	}
 }
 
@@ -187,15 +194,16 @@ a:hover {
 /* Force light mode when data-theme="light" */
 [data-theme='light'] {
 	color-scheme: light;
-	--bg-color: #ffffff;
+
+	--bg-color: #fff;
 	--bg-darker: #f5f5f5;
 	--bg-alt: #fafafa;
 	--text-color: #1a1a1a;
-	--text-muted: #666666;
+	--text-muted: #666;
 	--border-color: #e5e5e5;
-	--link-color: #0066cc;
+	--link-color: #06c;
 	--link-hover: #0052a3;
 	--accent-color: #00cc7d;
 	--accent-color-hover: #00a364;
-	--accent-color-transparent: rgba(0, 204, 125, 0.2);
+	--accent-color-transparent: rgb(0 204 125 / 20%);
 }
