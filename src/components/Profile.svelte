@@ -26,7 +26,7 @@
 	}
 
 	.name {
-		font-size: 1.2em;
+		font-size: var(--ch-scale-lg);
 	}
 
 	.title {
