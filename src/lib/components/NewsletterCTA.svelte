@@ -176,15 +176,15 @@
 		cursor: pointer;
 	}
 
+	button:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
 	button:hover:not(:disabled) {
 		background: var(--color-mix-medium);
 		border-color: var(--accent-color);
 		transform: translateY(calc(-1 * var(--ch) / 8));
-	}
-
-	button:disabled {
-		opacity: 0.5;
-		cursor: not-allowed;
 	}
 
 	.loading {

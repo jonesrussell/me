@@ -162,11 +162,11 @@ Commands:
 		color: var(--text-color);
 		font-weight: var(--font-weight-normal);
 		line-height: var(--line-height-base);
-		animation: crtReveal 50ms linear;
+		animation: crt-reveal 50ms linear;
 		white-space: pre;
 	}
 
-	@keyframes crtReveal {
+	@keyframes crt-reveal {
 		from {
 			clip-path: inset(0 0 100% 0);
 			opacity: 0.8;
