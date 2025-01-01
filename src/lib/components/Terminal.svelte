@@ -10,7 +10,7 @@
 	const title = props.title || '~/developer';
 
 	$effect(() => {
-		terminal.start();
+		terminal.loadCommands(); // Will use default commands
 		return () => terminal.stop();
 	});
 
@@ -115,7 +115,7 @@ Commands:
 
 	.terminal-title {
 		color: var(--text-muted);
-		font-size: var(--font-size-sm);
+		font-size: calc(1.5 * var(--ch));
 		font-weight: var(--font-weight-medium);
 	}
 
@@ -139,7 +139,7 @@ Commands:
 		gap: var(--ch);
 		padding: var(--ch2);
 		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
+		font-size: calc(1.5 * var(--ch));
 		line-height: var(--line-height-relaxed);
 		white-space: pre-wrap;
 	}
@@ -149,7 +149,7 @@ Commands:
 		gap: var(--ch2);
 		margin-top: var(--ch);
 		color: var(--text-muted);
-		font-size: var(--font-size-sm);
+		font-size: calc(1.5 * var(--ch));
 		font-weight: var(--font-weight-normal);
 		line-height: var(--line-height-base);
 	}
@@ -168,7 +168,7 @@ Commands:
 		margin-top: var(--ch);
 		padding-left: calc(var(--ch) * 3);
 		color: var(--text-color);
-		font-size: var(--font-size-sm);
+		font-size: calc(1.5 * var(--ch));
 		font-weight: var(--font-weight-normal);
 		line-height: var(--line-height-relaxed);
 		animation: crt-reveal 50ms linear;
