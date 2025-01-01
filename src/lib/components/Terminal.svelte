@@ -1,80 +1,15 @@
 <script lang="ts">
+	import { commands, terminal, terminalHeight } from '$lib/stores/terminal';
 	const props = $props();
 	const title = props.title || '~/developer';
-	let commandVisible = $state('');
-	let outputVisible = $state('');
-	let currentCommand = $state(0);
-	let isTyping = $state(true);
-	let terminalHeight = $state('auto');
-
-	const commands = ['whoami', 'man russell'];
-	const outputs = [
-		'russell',
-		`RUSSELL(1)                     User Commands                     RUSSELL(1)
-
-NAME
-       russell - a limitless developer
-
-SYNOPSIS
-       russell [--build] [--innovate] [--ship] <solution>
-
-DESCRIPTION
-       Crafts elegant solutions using modern web technologies.
-       Specializes in TypeScript, Go, and cloud architecture.
-
-AUTHOR
-       Written by Russell Jones.
-
-COPYRIGHT
-       License MIT`
-	];
 
 	$effect(() => {
-		// When output changes, measure and set the height
-		if (outputVisible && currentCommand === commands.length - 1) {
-			terminalHeight =
-				document.querySelector('.terminal-body')?.scrollHeight + 'px';
-		}
-	});
-
-	// Type out commands and outputs in sequence
-	$effect(() => {
-		let cmdIndex = 0;
-		let outIndex = 0;
-
-		const typeNextCommand = () => {
-			const cmdInterval = setInterval(() => {
-				if (cmdIndex <= commands[currentCommand].length) {
-					commandVisible = commands[currentCommand].slice(0, cmdIndex);
-					cmdIndex++;
-				} else {
-					clearInterval(cmdInterval);
-					// Show output instantly
-					outputVisible = outputs[currentCommand];
-					if (currentCommand < commands.length - 1) {
-						setTimeout(() => {
-							currentCommand++;
-							cmdIndex = 0;
-							commandVisible = '';
-							outputVisible = '';
-							typeNextCommand();
-						}, 1000);
-					} else {
-						isTyping = false;
-					}
-				}
-			}, 100);
-		};
-
-		typeNextCommand();
-
-		return () => {
-			// Cleanup will be handled by individual intervals
-		};
+		terminal.start();
+		return () => terminal.stop();
 	});
 </script>
 
-<div class="terminal-frame" style:height={terminalHeight}>
+<div class="terminal-frame" style:height={$terminalHeight}>
 	<div class="terminal-header">
 		<span class="terminal-title">{title}</span>
 		<div class="terminal-buttons">
@@ -84,18 +19,22 @@ COPYRIGHT
 		</div>
 	</div>
 	<div class="terminal-body">
-		{#each commands.slice(0, currentCommand + 1) as cmd, i}
+		{#each Array($terminal.currentCommand + 1) as _, i}
 			<div class="command-line">
 				<span class="prompt">$</span>
 				<span class="command">
-					{i === currentCommand ? commandVisible : cmd}
+					{i === $terminal.currentCommand
+						? $terminal.commandVisible
+						: commands[i].cmd}
 				</span>
-				{#if isTyping && i === currentCommand && commandVisible.length === cmd.length && !outputVisible}
+				{#if $terminal.isTyping && i === $terminal.currentCommand && $terminal.commandVisible.length === commands[i].cmd.length && !$terminal.outputVisible}
 					<span class="cursor">▋</span>
 				{/if}
 			</div>
 			<div class="command-output">
-				{i === currentCommand ? outputVisible : outputs[i]}
+				{i === $terminal.currentCommand
+					? $terminal.outputVisible
+					: commands[i].output}
 			</div>
 		{/each}
 	</div>
@@ -105,6 +44,7 @@ COPYRIGHT
 	.terminal-frame {
 		width: 100%;
 		max-width: 80ch;
+		height: 24ch;
 		background: var(--bg-color);
 		border: 1px solid var(--border-color);
 		border-radius: 8px;
