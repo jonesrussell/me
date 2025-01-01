@@ -1,0 +1,10 @@
+# Build outputs
+build/
+dist/
+.svelte-kit/
+
+# Dependencies
+node_modules/
+
+# Cache directories
+.cache/

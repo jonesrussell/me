@@ -17,7 +17,9 @@
 	);
 </script>
 
-<div class="code-block" style="--block-width: {width}ch">
+<div class="code-block" style="
+
+--block-width: {width}ch">
 	{#if filename}
 		<div class="file-header">
 			<span class="filename">{filename}</span>
@@ -39,19 +41,19 @@
 <style>
 	.code-block {
 		width: var(--block-width);
-		font-family: var(--font-mono);
-		background: var(--bg-color);
 		border: 1px solid var(--border-color);
+		background: var(--bg-color);
+		font-family: var(--font-mono);
 		line-height: var(--line-height-tight);
 		white-space: pre;
 	}
 
 	.file-header {
-		padding: var(--ch) var(--ch2);
-		border-bottom: 1px solid var(--border-color);
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		padding: var(--ch) var(--ch2);
+		border-bottom: 1px solid var(--border-color);
 	}
 
 	.filename {
@@ -85,8 +87,8 @@
 	}
 
 	.line-number {
-		font-size: var(--font-size-sm);
 		color: var(--text-muted);
+		font-size: var(--font-size-sm);
 		user-select: none;
 	}
 

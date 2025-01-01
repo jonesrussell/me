@@ -58,20 +58,21 @@
 <style>
 	.site-header {
 		--header-height: calc(var(--ch) * 4);
-		container-type: inline-size;
-		border-bottom: 1px solid var(--border-color);
-		padding-block: var(--ch);
-		background: var(--bg-color);
-		color: var(--text-color);
-		width: 100%;
+
 		position: sticky;
 		top: 0;
 		z-index: 10;
+		width: 100%;
+		background: var(--bg-color);
+		color: var(--text-color);
+		container-type: inline-size;
+		border-bottom: 1px solid var(--border-color);
+		padding-block: var(--ch);
 	}
 
 	.subtitle-bar {
-		background: var(--bg-darker);
 		width: 100%;
+		background: var(--bg-darker);
 		padding-block: var(--ch);
 	}
 
@@ -91,9 +92,9 @@
 
 	.header-main {
 		display: grid;
-		grid-template-columns: auto 1fr;
-		align-items: center;
 		gap: var(--ch4);
+		align-items: center;
+		grid-template-columns: auto 1fr;
 
 		@container (width < 600px) {
 			grid-template-columns: 1fr;
@@ -103,10 +104,10 @@
 	}
 
 	.title {
-		font-weight: var(--font-weight-bold);
 		color: var(--text-color);
-		text-decoration: none;
 		font-family: var(--font-mono);
+		font-weight: var(--font-weight-bold);
+		text-decoration: none;
 	}
 
 	.header-nav {

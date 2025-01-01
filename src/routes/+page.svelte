@@ -117,15 +117,15 @@
 
 <style>
 	.hero {
-		min-height: 80vh;
 		display: grid;
-		place-items: center;
+		min-height: 80vh;
 		padding: var(--ch4) var(--ch2);
 		background: radial-gradient(
 			circle at 50% 50%,
 			color-mix(in srgb, var(--accent-color) 2%, transparent),
 			color-mix(in srgb, var(--bg-color) 98%, transparent) 100%
 		);
+		place-items: center;
 	}
 
 	.hero-content {
@@ -148,28 +148,28 @@
 	}
 
 	.specialty {
-		padding: var(--ch3);
-		border: 1px solid var(--border-color);
-		background: var(--bg-darker);
-		border-radius: var(--radius-md);
-		transition: all 0.3s ease;
 		display: flex;
 		gap: var(--ch2);
 		align-items: flex-start;
+		padding: var(--ch3);
+		border: 1px solid var(--border-color);
+		border-radius: var(--radius-md);
+		background: var(--bg-darker);
+		transition: all 0.3s ease;
+	}
 
-		&:hover {
-			transform: translateY(-2px);
-			border-color: var(--accent-color);
-			box-shadow: var(--shadow-lg);
-		}
+	.specialty:hover {
+		transform: translateY(calc(-2 * var(--ch) / 16));
+		border-color: var(--accent-color);
+		box-shadow: var(--shadow-lg);
 	}
 
 	.specialty-icon {
+		padding: var(--ch);
+		border-radius: var(--radius-md);
+		background: var(--color-mix-light);
 		font-size: var(--font-size-xl);
 		line-height: var(--line-height-base);
-		padding: var(--ch);
-		background: var(--color-mix-light);
-		border-radius: var(--radius-md);
 	}
 
 	.specialty-content {
@@ -177,9 +177,9 @@
 	}
 
 	.specialty-title {
-		font-weight: var(--font-weight-bold);
 		margin-bottom: var(--ch);
 		color: var(--accent-color);
+		font-weight: var(--font-weight-bold);
 	}
 
 	.specialty-desc {
@@ -188,35 +188,35 @@
 	}
 
 	.navigation {
-		margin: var(--ch4) 0;
 		display: flex;
 		flex-direction: column;
 		gap: var(--ch2);
+		margin: var(--ch4) 0;
 	}
 
 	.nav-link {
-		color: var(--link-color);
-		text-decoration: none;
 		display: flex;
-		align-items: center;
 		gap: var(--ch2);
+		align-items: center;
 		padding: var(--ch2);
 		border: 1px solid var(--border-color);
 		border-radius: var(--radius-md);
+		color: var(--link-color);
+		text-decoration: none;
 		transition: all 0.2s ease;
+	}
 
-		&:hover {
-			background: var(--color-mix-light);
-			border-color: var(--accent-color);
-			transform: translateX(var(--ch));
-		}
+	.nav-link:hover {
+		background: var(--color-mix-light);
+		border-color: var(--accent-color);
+		transform: translateX(var(--ch));
 	}
 
 	.nav-icon {
 		font-size: var(--font-size-lg);
 	}
 
-	@media (min-width: 600px) {
+	@media (width >= 600px) {
 		.navigation {
 			flex-direction: row;
 			gap: var(--ch2);
@@ -225,10 +225,10 @@
 		.nav-link {
 			flex: 1;
 			justify-content: center;
+		}
 
-			&:hover {
-				transform: translateY(-2px);
-			}
+		.nav-link:hover {
+			transform: translateY(calc(-2 * var(--ch) / 16));
 		}
 	}
 
@@ -242,51 +242,32 @@
 	}
 
 	.section-header {
-		text-align: center;
 		margin-bottom: var(--ch3);
+		text-align: center;
 	}
 
 	h2 {
+		margin-bottom: var(--ch);
 		font-size: var(--font-size-xl);
-		margin: 0 0 var(--ch) 0;
-		color: var(--accent-color);
+		line-height: var(--line-height-tight);
 	}
 
 	.section-desc {
 		color: var(--text-muted);
-		margin: 0;
+		line-height: var(--line-height-relaxed);
 	}
 
-	.youtube-link {
-		color: var(--link-color);
-		text-decoration: none;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: var(--ch);
-		padding: var(--ch2);
-		margin-top: var(--ch2);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-md);
-		transition: all 0.2s ease;
-
-		&:hover {
-			background: var(--color-mix-light);
-			border-color: var(--accent-color);
-		}
-	}
-
-	.youtube-icon {
-		color: #ff0000;
-		font-size: var(--font-size-lg);
+	.video-figure {
+		margin: var(--ch3) 0;
 	}
 
 	.video-container {
 		position: relative;
-		width: 100%;
+		height: 0;
 		padding-bottom: 56.25%;
-		margin: var(--ch2) 0;
-		background: var(--color-mix-medium);
+		border-radius: var(--radius-md);
+		background: var(--bg-darker);
+		overflow: hidden;
 	}
 
 	.video-container iframe {
@@ -295,43 +276,39 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		border: none;
-	}
-
-	/* Using modern CSS @container query */
-	@container (min-width: 60ch) {
-		.youtube-section {
-			display: grid;
-			gap: var(--ch2);
-		}
-
-		.youtube-link {
-			text-align: center;
-		}
-	}
-
-	/* Ensure proper spacing on smaller screens */
-	@container (max-width: 60ch) {
-		.video-container {
-			margin-left: calc(-1 * var(--ch));
-			margin-right: calc(-1 * var(--ch));
-			width: calc(100% + 2 * var(--ch));
-		}
-	}
-
-	.video-figure {
-		margin: var(--ch2) 0;
-		/* Remove margin-bottom since figcaption will add spacing */
-		margin-bottom: 0;
+		border: 0;
 	}
 
 	figcaption {
+		margin-top: var(--ch);
 		color: var(--text-muted);
 		font-size: var(--font-size-sm);
-		padding: var(--ch) 0;
 		text-align: center;
-		/* Add subtle separator */
-		border-top: 1px solid var(--border-color);
-		margin-top: var(--ch);
+	}
+
+	.youtube-link {
+		display: flex;
+		gap: var(--ch2);
+		justify-content: center;
+		align-items: center;
+		margin-top: var(--ch3);
+		padding: var(--ch2);
+		border: 1px solid var(--border-color);
+		border-radius: var(--radius-md);
+		background: var(--color-mix-light);
+		color: var(--text-color);
+		text-decoration: none;
+		transition: all 0.2s ease;
+	}
+
+	.youtube-link:hover {
+		background: var(--color-mix-medium);
+		border-color: var(--accent-color);
+		transform: translateY(calc(-2 * var(--ch) / 16));
+	}
+
+	.youtube-icon {
+		color: var(--accent-color);
+		font-size: var(--font-size-lg);
 	}
 </style>

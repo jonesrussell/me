@@ -46,7 +46,7 @@
 	.tree-node {
 		font-family: var(--font-mono);
 		white-space: pre;
-		line-height: 1.2;
+		line-height: var(--line-height-tight);
 	}
 
 	.folder {

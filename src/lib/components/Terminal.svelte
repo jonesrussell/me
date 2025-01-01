@@ -89,25 +89,25 @@ Commands:
 
 <style>
 	.terminal-frame {
-		width: 100%;
-		max-width: var(--measure);
-		background: var(--bg-color);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-lg);
-		overflow: visible;
-		box-shadow: var(--shadow-lg);
+		position: relative;
 		display: flex;
 		flex-direction: column;
-		position: relative;
+		width: 100%;
+		max-width: var(--measure);
+		border: 1px solid var(--border-color);
+		border-radius: var(--radius-lg);
+		background: var(--bg-color);
+		overflow: visible;
+		box-shadow: var(--shadow-lg);
 	}
 
 	.terminal-header {
-		height: var(--ch3);
-		background: var(--color-mix-light);
-		padding: 0 var(--ch2);
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		height: var(--ch3);
+		padding: 0 var(--ch2);
+		background: var(--color-mix-light);
 		border-bottom: 1px solid var(--border-color);
 	}
 
@@ -131,20 +131,20 @@ Commands:
 	}
 
 	.terminal-body {
-		padding: var(--ch);
-		font-family: var(--font-mono);
-		line-height: var(--line-height-base);
 		position: relative;
 		display: flex;
 		flex-direction: column;
+		padding: var(--ch);
+		font-family: var(--font-mono);
+		line-height: var(--line-height-base);
 	}
 
 	.command-line {
 		display: flex;
 		gap: var(--ch);
 		color: var(--text-muted);
-		line-height: var(--line-height-base);
 		font-weight: var(--font-weight-normal);
+		line-height: var(--line-height-base);
 	}
 
 	.prompt {
@@ -160,10 +160,10 @@ Commands:
 	.command-output {
 		padding-left: calc(var(--ch) * 2);
 		color: var(--text-color);
-		white-space: pre;
-		animation: crtReveal 50ms linear;
-		line-height: var(--line-height-base);
 		font-weight: var(--font-weight-normal);
+		line-height: var(--line-height-base);
+		animation: crtReveal 50ms linear;
+		white-space: pre;
 	}
 
 	@keyframes crtReveal {
@@ -171,6 +171,7 @@ Commands:
 			clip-path: inset(0 0 100% 0);
 			opacity: 0.8;
 		}
+
 		to {
 			clip-path: inset(0 0 0 0);
 			opacity: 1;
@@ -179,10 +180,10 @@ Commands:
 
 	.cursor {
 		display: inline-block;
-		color: var(--accent-color);
-		animation: blink 1s step-end infinite;
 		width: var(--ch);
 		height: 100%;
+		color: var(--accent-color);
+		animation: blink 1s step-end infinite;
 	}
 
 	@keyframes blink {
@@ -190,6 +191,7 @@ Commands:
 		100% {
 			opacity: 1;
 		}
+
 		50% {
 			opacity: 0;
 		}
@@ -198,17 +200,17 @@ Commands:
 	.debug {
 		position: absolute;
 		top: calc(100% + var(--ch2));
-		left: 0;
 		right: 0;
-		background: var(--bg-color);
+		left: 0;
+		z-index: 100;
+		margin-bottom: var(--ch4);
+		padding: var(--ch2);
 		border: 1px solid var(--border-color);
 		border-radius: var(--radius-md);
-		padding: var(--ch2);
+		background: var(--bg-color);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-xs);
 		white-space: pre;
-		z-index: 100;
-		margin-bottom: var(--ch4);
 		box-shadow: var(--shadow-md);
 	}
 </style>
