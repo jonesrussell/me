@@ -8,22 +8,37 @@
 	--ch2: 2ch;
 	--ch3: 3ch;
 	--ch4: 4ch;
+	--ch6: 6ch;
 
 	/* Typography */
 	--font-mono: 'Fira Mono', monospace;
 	--font-size-base: 16px;
 	--line-height: 1.5;
+	--font-weight-medium: 500;
+	--font-weight-bold: 700;
 
 	/* Layout - avoid decimal points */
 	--measure: 80ch;
 	--content-padding: var(--ch2);
+	--contact-width: 80ch;
+	--projects-width: 120ch;
 
 	/* Colors */
 	--bg-color: #1a1a1a;
+	--bg-darker: #141414;
+	--bg-alt: #1f1f1f;
 	--text-color: #ffffff;
 	--text-muted: #bfbfbf;
 	--border-color: #666666;
 	--link-color: #4a9eff;
+	--link-hover: #7ab8ff;
+	--accent-color: #00ff9d;
+	--accent-color-hover: #33ffa7;
+	--accent-color-transparent: rgba(0, 255, 157, 0.2);
+	--color-success: #22c55e;
+	--color-warning: #eab308;
+	--color-error: #ef4444;
+	--color-info: #3b82f6;
 
 	/* Add box-sizing reset */
 	box-sizing: border-box;
@@ -129,4 +144,15 @@ a:hover {
 /* Force light mode when data-theme="light" */
 [data-theme='light'] {
 	color-scheme: light;
+	--bg-color: #ffffff;
+	--bg-darker: #f5f5f5;
+	--bg-alt: #fafafa;
+	--text-color: #1a1a1a;
+	--text-muted: #666666;
+	--border-color: #e5e5e5;
+	--link-color: #0066cc;
+	--link-hover: #0052a3;
+	--accent-color: #00cc7d;
+	--accent-color-hover: #00a364;
+	--accent-color-transparent: rgba(0, 204, 125, 0.2);
 }

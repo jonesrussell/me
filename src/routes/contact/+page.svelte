@@ -34,7 +34,7 @@
 <div class="contact-page">
 	<section class="contact-section">
 		<div class="contact-info">
-			<h2>Get in Touch</h2>
+			<h2>┌── Get in Touch ──┐</h2>
 			<p>
 				Have a question or want to work together? I'd love to hear from you.
 			</p>
@@ -44,22 +44,32 @@
 					href="https://github.com/jonesrussell"
 					target="_blank"
 					rel="noopener noreferrer"
+					class="contact-link"
 				>
-					GitHub: @jonesrussell
+					<span class="icon">⌘</span>
+					<span class="label">GitHub:</span>
+					<span class="value">@jonesrussell</span>
 				</a>
 				<a
 					href="https://www.linkedin.com/in/jonesrussell42"
 					target="_blank"
 					rel="noopener noreferrer"
+					class="contact-link"
 				>
-					LinkedIn: jonesrussell42
+					<span class="icon">⚏</span>
+					<span class="label">LinkedIn:</span>
+					<span class="value">jonesrussell42</span>
 				</a>
-				<a href="mailto:russell@web.ca"> Email: russell@web.ca </a>
+				<a href="mailto:russell@web.ca" class="contact-link">
+					<span class="icon">✉</span>
+					<span class="label">Email:</span>
+					<span class="value">russell@web.ca</span>
+				</a>
 			</div>
 		</div>
 
 		<div class="contact-form-section">
-			<h2>Send a Message</h2>
+			<h2>└── Send a Message ──┘</h2>
 			<form onsubmit={handleSubmit} class="contact-form">
 				<div class="form-group">
 					<label for="name">Name</label>
@@ -69,6 +79,7 @@
 						required
 						bind:value={formData.name}
 						disabled={isSubmitting}
+						placeholder="Your name"
 					/>
 				</div>
 
@@ -80,6 +91,7 @@
 						required
 						bind:value={formData.email}
 						disabled={isSubmitting}
+						placeholder="your.email@example.com"
 					/>
 				</div>
 
@@ -88,24 +100,35 @@
 					<textarea
 						id="message"
 						rows="5"
-						required
 						bind:value={formData.message}
 						disabled={isSubmitting}
+						placeholder="Type your message here..."
 					></textarea>
 				</div>
 
-				<button type="submit" disabled={isSubmitting}>
-					{isSubmitting ? 'Sending...' : 'Send Message'}
+				<button type="submit" disabled={isSubmitting} class="submit-button">
+					{#if isSubmitting}
+						<span class="loading">Sending...</span>
+					{:else}
+						<span class="button-content">
+							<span class="icon">↪</span>
+							Send Message
+						</span>
+					{/if}
 				</button>
 
 				{#if submitStatus === 'success'}
 					<div class="success-message">
-						Message sent successfully! I'll get back to you soon.
+						<span class="icon">✓</span> Message sent successfully! I'll get back
+						to you soon.
 					</div>
 				{/if}
 
 				{#if submitStatus === 'error'}
-					<div class="error-message">{errorMessage}</div>
+					<div class="error-message">
+						<span class="icon">✗</span>
+						{errorMessage}
+					</div>
 				{/if}
 			</form>
 		</div>
@@ -124,18 +147,55 @@
 	.contact-section {
 		display: grid;
 		gap: var(--ch4);
+		background: color-mix(in srgb, var(--text-color) 3%, transparent);
+		padding: var(--ch4);
+		border: 1px solid var(--border-color);
+		border-radius: 2px;
 	}
 
 	.contact-methods {
 		display: flex;
 		flex-direction: column;
 		gap: var(--ch2);
+		margin-top: var(--ch3);
 	}
 
 	h2 {
 		margin: 0 0 var(--ch2) 0;
 		font-size: 1.2em;
 		font-weight: var(--font-weight-medium);
+		font-family: var(--font-mono);
+		color: var(--accent-color);
+		white-space: pre;
+	}
+
+	.contact-link {
+		display: flex;
+		align-items: center;
+		gap: var(--ch2);
+		padding: var(--ch) var(--ch2);
+		background: color-mix(in srgb, var(--text-color) 5%, transparent);
+		border: 1px solid var(--border-color);
+		text-decoration: none;
+		transition: all 0.2s ease;
+	}
+
+	.contact-link:hover {
+		border-color: var(--accent-color);
+		transform: translateX(4px);
+	}
+
+	.icon {
+		color: var(--accent-color);
+		font-family: var(--font-mono);
+	}
+
+	.label {
+		color: var(--text-muted);
+	}
+
+	.value {
+		color: var(--text-color);
 	}
 
 	.contact-form {
@@ -159,61 +219,109 @@
 	label {
 		color: var(--text-muted);
 		font-size: 0.9em;
+		font-family: var(--font-mono);
+		margin-left: var(--ch);
 	}
 
 	input,
 	textarea {
 		width: 100%;
 		box-sizing: border-box;
-		padding: var(--ch);
+		padding: var(--ch2);
 		background: var(--bg-color);
 		border: 1px solid var(--border-color);
 		max-width: calc(100% - var(--ch2));
 		margin: 0 var(--ch);
 		color: var(--text-color);
 		font-family: var(--font-mono);
+		transition: all 0.2s ease;
 	}
 
 	input:focus,
 	textarea:focus {
 		outline: none;
-		border-color: var(--link-color);
+		border-color: var(--accent-color);
+		box-shadow: 0 0 0 2px
+			color-mix(in srgb, var(--accent-color) 20%, transparent);
 	}
 
-	button {
+	input::placeholder,
+	textarea::placeholder {
+		color: color-mix(in srgb, var(--text-muted) 50%, transparent);
+	}
+
+	.submit-button {
 		width: calc(100% - var(--ch2));
 		margin: 0 var(--ch);
-		padding: var(--ch) var(--ch2);
-		background: var(--link-color);
+		padding: var(--ch2);
+		background: var(--accent-color);
 		color: var(--bg-color);
 		border: none;
 		cursor: pointer;
 		font-family: var(--font-mono);
-		transition: background-color 0.2s ease;
+		transition: all 0.2s ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--ch);
 	}
 
-	button:hover {
-		background: var(--link-hover);
+	.submit-button:hover:not(:disabled) {
+		background: var(--accent-color-hover);
+		transform: translateY(-1px);
 	}
 
-	a {
-		color: var(--link-color);
-		text-decoration: none;
-		border-bottom: 1px solid transparent;
+	.submit-button:disabled {
+		opacity: 0.7;
+		cursor: not-allowed;
 	}
 
-	a:hover {
-		color: var(--link-hover);
-		border-bottom-color: currentColor;
+	.loading {
+		display: flex;
+		align-items: center;
+		gap: var(--ch);
+	}
+
+	.loading::before {
+		content: '⟳';
+		animation: spin 1s linear infinite;
+	}
+
+	@keyframes spin {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	.success-message,
+	.error-message {
+		margin: var(--ch2) var(--ch);
+		padding: var(--ch2);
+		display: flex;
+		align-items: center;
+		gap: var(--ch);
+		border: 1px solid;
 	}
 
 	.success-message {
 		color: #22c55e;
-		margin-top: var(--ch2);
+		background: color-mix(in srgb, #22c55e 10%, transparent);
+		border-color: color-mix(in srgb, #22c55e 30%, transparent);
 	}
 
 	.error-message {
 		color: #ef4444;
-		margin-top: var(--ch2);
+		background: color-mix(in srgb, #ef4444 10%, transparent);
+		border-color: color-mix(in srgb, #ef4444 30%, transparent);
+	}
+
+	@media (min-width: 768px) {
+		.contact-section {
+			grid-template-columns: 1fr 1fr;
+			gap: var(--ch6);
+		}
 	}
 </style>

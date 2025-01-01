@@ -48,15 +48,7 @@
 
 <section class="hero">
 	<div class="hero-content">
-		<Terminal>
-			<div class="terminal-output">
-				<div class="user-info">russell</div>
-				<h1 class="description">
-					Building elegant solutions, line by line. Crafting high-performance
-					applications and pushing the boundaries of what's possible on the web.
-				</h1>
-			</div>
-		</Terminal>
+		<Terminal children={() => 'Building elegant solutions, line by line.'} />
 	</div>
 </section>
 
@@ -335,24 +327,5 @@
 		/* Add subtle separator */
 		border-top: 1px solid var(--border-color);
 		margin-top: var(--ch);
-	}
-
-	.terminal-output {
-		color: var(--text-color);
-		line-height: 1.6;
-	}
-
-	.user-info {
-		color: var(--accent-color);
-		font-weight: bold;
-		margin-bottom: var(--ch);
-	}
-
-	.description {
-		color: var(--text-muted);
-		white-space: pre-line;
-		margin: 0;
-		font-size: inherit;
-		font-weight: normal;
 	}
 </style>

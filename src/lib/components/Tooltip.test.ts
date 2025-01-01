@@ -87,7 +87,7 @@ describe('Tooltip', () => {
 		const { container } = render(Tooltip, {
 			props: {
 				text: 'Tooltip text',
-					children: () => '<button>Hover me</button>'
+				children: () => '<button>Hover me</button>'
 			}
 		});
 
