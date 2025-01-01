@@ -1,15 +1,8 @@
-/// <reference types="vitest" />
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { fileURLToPath } from 'url';
-import type { UserConfig } from 'vite';
-import { defineConfig } from 'vite';
-import type { InlineConfig } from 'vitest';
+import { mergeConfig } from 'vite';
 
-interface ViteConfig extends UserConfig {
-	test: InlineConfig;
-}
-
-export default defineConfig({
+const viteConfig = {
 	plugins: [
 		svelte({
 			hot: !process.env.VITEST,
@@ -23,29 +16,27 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			$lib: fileURLToPath(new URL('./src/lib', import.meta.url)),
-			$app: fileURLToPath(
-				new URL('./node_modules/@sveltejs/kit/src/runtime/app', import.meta.url)
-			)
-		}
-	},
+			$app: fileURLToPath(new URL('./node_modules/@sveltejs/kit/src/runtime/app', import.meta.url)),
+			__sveltekit: fileURLToPath(new URL('./node_modules/@sveltejs/kit/src/runtime', import.meta.url))
+		},
+		conditions: process.env.VITEST ? ['browser'] : undefined
+	}
+};
+
+const vitestConfig = {
 	test: {
-		include: ['src/**/*.{test,spec}.{js,ts}'],
+		include: ['src/**/*.{test,spec}.{js,ts,svelte}'],
 		environment: 'jsdom',
 		setupFiles: ['src/test/setup.ts'],
 		globals: true,
 		deps: {
-			inline: [/^svelte/]
+			inline: ['^svelte', '@sveltejs/kit']
 		},
 		css: true,
-		mode: 'development',
-		browser: {
-			enabled: true,
-			name: 'chrome',
-			headless: true,
-			provider: 'webdriverio'
-		},
 		reporters: ['verbose'],
 		pool: 'forks',
 		isolate: false
 	}
-} as ViteConfig);
+};
+
+export default mergeConfig(viteConfig, vitestConfig);
