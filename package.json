@@ -10,7 +10,7 @@
 		"test": "NODE_ENV=development npm run test:unit",
 		"check": "NODE_ENV=development svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "NODE_ENV=development svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "NODE_ENV=development prettier --check . && NODE_ENV=development eslint .",
+		"lint": "NODE_ENV=development prettier --check . && NODE_ENV=development eslint . && npm run lint:css",
 		"format": "NODE_ENV=development prettier --write .",
 		"test:unit": "NODE_ENV=development vitest --run",
 		"workflow": "act -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
@@ -19,8 +19,7 @@
 		"workflow:build": "act -j build -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
 		"workflow:deploy": "act -j deploy -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
 		"workflow:full": "act -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy --reuse",
-		"lint:css": "stylelint '**/*.{css,scss,svelte}' --fix",
-		"lint": "npm run lint:css"
+		"lint:css": "stylelint '**/*.{css,scss,svelte}' --fix"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^3.2.2",

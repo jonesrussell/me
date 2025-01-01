@@ -90,7 +90,7 @@ Commands:
 <style>
 	.terminal-frame {
 		width: 100%;
-		max-width: 80ch;
+		max-width: var(--measure);
 		background: var(--bg-color);
 		border: 1px solid var(--border-color);
 		border-radius: var(--radius-lg);
@@ -120,14 +120,14 @@ Commands:
 	.terminal-buttons {
 		display: flex;
 		gap: var(--ch);
+	}
 
-		& span {
-			width: var(--ch);
-			height: var(--ch);
-			border-radius: var(--radius-full);
-			background: var(--text-muted);
-			opacity: 0.5;
-		}
+	.terminal-buttons span {
+		width: var(--ch);
+		height: var(--ch);
+		border-radius: var(--radius-full);
+		background: var(--text-muted);
+		opacity: 0.5;
 	}
 
 	.terminal-body {
