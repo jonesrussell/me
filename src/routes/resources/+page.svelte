@@ -8,6 +8,7 @@
 	}
 
 	const resources: Resource[] = [
+		// Go Resources
 		{
 			title: 'Go by Example',
 			url: 'https://github.com/mmcgrana/gobyexample',
@@ -15,9 +16,80 @@
 				'A comprehensive collection of annotated example programs for learning Go',
 			stars: 7400,
 			category: 'Go'
+		},
+		{
+			title: 'Effective Go',
+			url: 'https://go.dev/doc/effective_go',
+			description: 'Official guide to writing clear, idiomatic Go code',
+			category: 'Go'
+		},
+		{
+			title: 'Go Playground',
+			url: 'https://go.dev/play/',
+			description: 'Interactive Go environment in the browser',
+			category: 'Go'
+		},
+		// Web Development
+		{
+			title: 'TypeScript Handbook',
+			url: 'https://www.typescriptlang.org/docs/handbook/',
+			description: 'Official TypeScript documentation and language guide',
+			stars: 9200,
+			category: 'Web Development'
+		},
+		{
+			title: 'SvelteKit',
+			url: 'https://kit.svelte.dev',
+			description: 'Web application framework for Svelte',
+			stars: 15600,
+			category: 'Web Development'
+		},
+		{
+			title: 'MDN Web Docs',
+			url: 'https://developer.mozilla.org',
+			description: 'Comprehensive web development documentation',
+			category: 'Web Development'
+		},
+		// Tools
+		{
+			title: 'Docker Compose',
+			url: 'https://docs.docker.com/compose/',
+			description: 'Define and run multi-container Docker applications',
+			stars: 8500,
+			category: 'Tools'
+		},
+		{
+			title: 'Neovim',
+			url: 'https://neovim.io',
+			description: 'Hyperextensible Vim-based text editor',
+			stars: 68900,
+			category: 'Tools'
+		},
+		{
+			title: 'tmux',
+			url: 'https://github.com/tmux/tmux',
+			description: 'Terminal multiplexer for Unix-like systems',
+			stars: 31200,
+			category: 'Tools'
 		}
-		// More resources can be added here
 	];
+
+	// Transform resources into tree structure
+	const treeData = {
+		name: 'resources/',
+		children: [...new Set(resources.map((r) => r.category))].map(
+			(category) => ({
+				name: `${category.toLowerCase()}/`,
+				children: resources
+					.filter((r) => r.category === category)
+					.map((resource) => ({
+						name: `${resource.title} ${resource.stars ? '★' + resource.stars : ''}`,
+						url: resource.url,
+						description: resource.description
+					}))
+			})
+		)
+	};
 </script>
 
 <svelte:head>
@@ -29,123 +101,32 @@
 	/>
 </svelte:head>
 
-<section class="resources">
+<div class="resources">
 	<h1>Development Resources</h1>
-
-	<div class="intro">
-		A curated collection of helpful resources, tools, and learning materials.
-	</div>
-
-	<div class="resource-grid">
-		{#each resources as resource}
-			<div class="resource">
-				<div class="resource-header">
-					<h2>
-						<a href={resource.url} target="_blank" rel="noopener noreferrer">
-							{resource.title}
-						</a>
-					</h2>
-					{#if resource.stars}
-						<span class="stars">★ {resource.stars}</span>
-					{/if}
-				</div>
-
-				<p class="description">{resource.description}</p>
-				<span class="category">{resource.category}</span>
-			</div>
-		{/each}
-	</div>
-</section>
+	<p class="description">
+		A curated collection of tools and learning materials.
+	</p>
+	<ResourceTree data={treeData} />
+</div>
 
 <style>
 	.resources {
 		width: 100%;
-		max-width: var(--measure);
+		max-width: calc(100 * var(--ch));
 		margin: 0 auto;
-		padding: var(--ch4) var(--ch2);
+		padding: calc(4 * var(--ch));
 		font-family: var(--font-mono);
-		line-height: var(--line-height-base);
 	}
 
 	h1 {
 		margin: 0;
-		font-size: var(--font-size-2xl);
+		font-size: calc(2 * var(--ch));
 		line-height: var(--line-height-tight);
-		text-align: center;
-	}
-
-	.intro {
-		margin: var(--ch2) 0 var(--ch4) 0;
-		color: var(--text-muted);
-		text-align: center;
-	}
-
-	.resource-grid {
-		display: grid;
-		gap: var(--ch4);
-		grid-template-columns: 1fr;
-	}
-
-	@media (width >= 80ch) {
-		.resource-grid {
-			grid-template-columns: repeat(auto-fit, minmax(50ch, 1fr));
-		}
-	}
-
-	.resource {
-		display: flex;
-		flex-direction: column;
-		gap: var(--ch2);
-		width: 100%;
-		padding: var(--ch3);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		border-radius: var(--radius-sm);
-		background: var(--color-mix-light);
-	}
-
-	.resource-header {
-		display: flex;
-		gap: var(--ch2);
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	h2 {
-		margin: 0;
-		font-size: var(--font-size-lg);
-		font-weight: var(--font-weight-bold);
-		line-height: var(--line-height-tight);
-	}
-
-	.stars {
-		color: var(--text-muted);
-		font-size: var(--font-size-sm);
+		color: var(--accent-color);
 	}
 
 	.description {
-		margin: var(--ch2) 0;
+		margin: calc(2 * var(--ch)) 0 calc(4 * var(--ch));
 		color: var(--text-muted);
-	}
-
-	.category {
-		display: inline-block;
-		padding: var(--ch) var(--ch2);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		border-radius: var(--radius-sm);
-		background: var(--color-mix-medium);
-		font-size: var(--font-size-sm);
-	}
-
-	a {
-		padding-bottom: calc(var(--ch) / 4);
-		color: var(--link-color);
-		text-decoration: none;
-		transition: all 0.2s ease;
-		border-bottom: calc(1 * var(--ch) / 16) solid transparent;
-	}
-
-	a:hover {
-		color: var(--link-hover);
-		border-bottom-color: currentcolor;
 	}
 </style>

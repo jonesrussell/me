@@ -26,64 +26,73 @@
 
 <div class="blog">
 	<header>
-		<h1>Web Developer Blog</h1>
-		<p class="subtitle">
-			Web Developer & <a
-				href="https://github.com/jonesrussell"
-				target="_blank"
-				rel="noopener noreferrer">Open Source Enthusiast</a
-			>
-		</p>
-		<p class="source-note">
-			This page and
-			<a href={devToUrl} target="_blank" rel="noopener noreferrer"> DEV.to </a>
-			are syndicated from my
+		<div class="header-content">
+			<h1>Web Developer Blog</h1>
+			<p class="subtitle">
+				<a
+					href="https://github.com/jonesrussell"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					Open Source Enthusiast
+				</a>
+			</p>
+			<p class="source-note">
+				This page and
+				<a href={devToUrl} target="_blank" rel="noopener noreferrer">
+					DEV.to
+				</a>
+				are syndicated from my
+				<a
+					href="https://jonesrussell.github.io/blog/"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					Jekyll-powered blog
+				</a>
+			</p>
+		</div>
+		<hr class="divider" />
+	</header>
+
+	<div class="content">
+		<div class="posts">
+			{#each $blogPosts as post}
+				<article class="post">
+					<div class="post-header">
+						<h2>
+							<a href={post.link} target="_blank" rel="noopener noreferrer">
+								{post.title}
+							</a>
+						</h2>
+						<time>{formatDate(post.published)}</time>
+					</div>
+					<p class="description">{post.description}</p>
+				</article>
+			{/each}
+		</div>
+
+		<div class="dev-to-section">
 			<a
-				href="https://jonesrussell.github.io/blog/"
+				href={devToUrl}
+				class="dev-to-link"
 				target="_blank"
 				rel="noopener noreferrer"
 			>
-				Jekyll-powered blog
-			</a>
-		</p>
-	</header>
-
-	<div class="dev-to-section">
-		<a
-			href={devToUrl}
-			class="dev-to-link"
-			target="_blank"
-			rel="noopener noreferrer"
-		>
-			<div class="dev-to-content">
-				<enhanced:img
-					src={devToProfile}
-					alt="Russell Jones's DEV.to Profile"
-					class="dev-to-screenshot"
-					sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
-					fetchpriority="high"
-				/>
-				<span class="dev-to-text"
-					>Read more articles on DEV.to/jonesrussell</span
-				>
-			</div>
-		</a>
-	</div>
-
-	<div class="posts">
-		{#each $blogPosts as post}
-			<article class="post">
-				<div class="post-header">
-					<h2>
-						<a href={post.link} target="_blank" rel="noopener noreferrer">
-							{post.title}
-						</a>
-					</h2>
-					<time>{formatDate(post.published)}</time>
+				<div class="dev-to-content">
+					<enhanced:img
+						src={devToProfile}
+						alt="Russell Jones's DEV.to Profile"
+						class="dev-to-screenshot"
+						sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
+						fetchpriority="high"
+					/>
+					<span class="dev-to-text"
+						>Read more articles on DEV.to/jonesrussell</span
+					>
 				</div>
-				<p class="description">{post.description}</p>
-			</article>
-		{/each}
+			</a>
+		</div>
 	</div>
 </div>
 
@@ -97,69 +106,123 @@
 	header {
 		margin-bottom: var(--ch4);
 		text-align: center;
+		padding: var(--ch4) 0;
+	}
+
+	.header-content {
+		margin-bottom: var(--ch4);
+	}
+
+	.divider {
+		height: calc(1 * var(--ch) / 16);
+		background: var(--border-color);
+		margin: 0;
+		border: none;
+	}
+
+	.content {
+		display: grid;
+		grid-template-columns: 1fr calc(32 * var(--ch));
+		gap: calc(2 * var(--ch));
+		align-items: start;
+	}
+
+	@media (width <= calc(80 * var(--ch))) {
+		.content {
+			grid-template-columns: 1fr;
+		}
 	}
 
 	h1 {
 		margin: 0;
-		font-size: var(--font-size-2xl);
+		font-size: var(--font-size-3xl);
 		line-height: var(--line-height-tight);
+		color: var(--accent-color);
 	}
 
 	.subtitle {
 		margin: var(--ch2) 0 0 0;
 		color: var(--text-muted);
+		font-size: var(--font-size-lg);
+	}
+
+	.subtitle a {
+		color: var(--accent-color);
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+
+	.subtitle a:hover {
+		color: var(--link-color);
+		text-decoration: underline;
 	}
 
 	.posts {
 		display: flex;
 		flex-direction: column;
-		gap: var(--ch2);
+		gap: calc(2 * var(--ch));
 	}
 
 	.post {
-		padding: var(--ch2);
+		padding: calc(3 * var(--ch));
 		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-sm);
 		background: var(--color-mix-light);
 	}
 
+	.post:hover {
+		background: var(--color-mix-light-hover);
+	}
+
 	.post-header {
 		display: flex;
-		gap: var(--ch2);
+		gap: calc(2 * var(--ch));
 		justify-content: space-between;
 		align-items: baseline;
-		margin-bottom: var(--ch);
+		margin-bottom: calc(2 * var(--ch));
 	}
 
 	.post-header h2 {
 		margin: 0;
-		font-size: var(--font-size-lg);
+		font-size: var(--font-size-xl);
 		line-height: var(--line-height-tight);
+	}
+
+	.post-header h2 a {
+		color: var(--text-color);
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+
+	.post-header h2 a:hover {
+		color: var(--accent-color);
+		text-decoration: underline;
 	}
 
 	time {
 		color: var(--text-muted);
 		white-space: nowrap;
+		font-size: var(--font-size-sm);
+		font-family: var(--font-mono);
 	}
 
 	.description {
 		margin: 0;
 		color: var(--text-muted);
-	}
-
-	@media (width <= 40ch) {
-		.post-header {
-			flex-direction: column;
-			gap: var(--ch);
-		}
+		line-height: var(--line-height-relaxed);
 	}
 
 	.dev-to-section {
-		margin: var(--ch4) 0;
-		padding: var(--ch2);
+		position: sticky;
+		top: calc(4 * var(--ch));
+		padding: calc(3 * var(--ch));
 		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-sm);
 		background: var(--color-mix-faint);
+	}
+
+	.dev-to-section:hover {
+		background: var(--color-mix-faint-hover);
 	}
 
 	.dev-to-link {
@@ -184,30 +247,49 @@
 		box-shadow: var(--shadow-md);
 	}
 
-	.dev-to-text {
-		display: block;
-		padding: var(--ch) 0;
-		font-size: var(--font-size-sm);
+	.dev-to-screenshot:hover {
+		transform: scale(1.02);
 	}
 
-	@media (width >= 60ch) {
-		.dev-to-text {
-			font-size: var(--font-size-md);
-		}
+	.dev-to-text {
+		display: block;
+		padding: var(--ch2) 0;
+		font-size: var(--font-size-sm);
+		color: var(--accent-color);
+		font-family: var(--font-mono);
 	}
 
 	.source-note {
 		margin: var(--ch2) 0;
 		color: var(--text-muted);
 		font-size: var(--font-size-sm);
+		text-align: center;
+		font-family: var(--font-mono);
 	}
 
 	.source-note a {
 		color: var(--link-color);
 		text-decoration: none;
+		transition: color 0.2s ease;
 	}
 
 	.source-note a:hover {
+		color: var(--accent-color);
 		text-decoration: underline;
+	}
+
+	@media (width <= 40ch) {
+		.post-header {
+			flex-direction: column;
+			gap: var(--ch);
+		}
+
+		h1 {
+			font-size: var(--font-size-2xl);
+		}
+
+		.subtitle {
+			font-size: var(--font-size-md);
+		}
 	}
 </style>
