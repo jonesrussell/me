@@ -83,7 +83,7 @@
 
 <style>
 	.blog {
-		max-width: min(var(--measure), 95vw);
+		max-width: min(var(--measure), calc(95 * var(--ch)));
 		margin: 0 auto;
 		padding: var(--ch4) var(--ch2);
 	}
