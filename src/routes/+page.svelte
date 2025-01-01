@@ -48,9 +48,7 @@
 
 <section class="hero">
 	<div class="hero-content">
-		<Terminal
-			children={() => 'Russell\nBuilding elegant solutions, line by line.'}
-		/>
+		<Terminal />
 	</div>
 </section>
 
