@@ -6,39 +6,40 @@ Visit the website at https://jonesrussell.github.io/me/
 
 ## Features
 
-- Monospace-based design system
-- Character-grid layouts
-- Dark/light theme support
-- Responsive design
-- GitHub Pages deployment
-- Modern CSS features
-  - CSS Container Queries
-  - CSS Color Level 4
-  - CSS Custom Properties
-  - CSS Grid
-  - CSS Transitions
-- Optimized build pipeline
-  - Dependency caching
-  - Fast CI/CD with GitHub Actions
-  - Comprehensive testing suite
+- Monospace Design System
+  - Character-grid based layouts
+  - Precise character unit measurements
+  - Grid component for perfect alignment
+  - Terminal-style interfaces
+- Interactive Guides
+  - Go project setup walkthrough
+  - Terminal command demonstrations
+  - Step-by-step tutorials
+- Modern Development
+  - SvelteKit with TypeScript
+  - Svelte Runes for state management
+  - Character-based CSS
+  - Responsive monospace layouts
 - Development Tools
-  - Session initialization script
-  - AI-assisted development workflow
-  - Automated documentation updates
-  - Rule-based code standards
+  - Grid alignment utilities
+  - Terminal animation system
+  - Character-based measurements
+  - Monospace validation
 
 ## Tech Stack
 
 - SvelteKit
 - TypeScript
 - Modern CSS
-- GitHub Pages
+  - Character Units (ch)
+  - CSS Grid
+  - CSS Custom Properties
+  - CSS Transitions
 - Testing
   - Playwright for integration tests
   - Vitest for unit tests
 - ESLint + Prettier for code quality
-- YAML for configuration
-- Custom development tools
+- Custom monospace utilities
 
 ## Project Structure
 
@@ -46,20 +47,21 @@ Visit the website at https://jonesrussell.github.io/me/
 src/
 ├── lib/
 │   ├── components/     # Reusable components
-│   ├── utils/         # Utility functions
-│   └── styles/        # Global styles
+│   │   ├── Grid.svelte      # Monospace grid system
+│   │   ├── Terminal.svelte  # Terminal interface
+│   │   └── ...
+│   ├── utils/
+│   │   ├── grid.ts    # Grid alignment utilities
+│   │   └── ...
+│   └── stores/
+│       ├── terminal.ts # Terminal state management
+│       └── ...
 ├── routes/           # SvelteKit routes
-│   ├── +page.svelte  # Home page
-│   ├── blog/         # Blog section
-│   └── projects/     # Projects showcase
-└── app.css          # Global CSS variables and styles
+└── app.css          # Global CSS variables
 
 docs/
 ├── CONTRIBUTING.md   # Contribution guidelines
 └── TESTING.md       # Testing procedures
-
-scripts/
-└── scripts.ts       # Development workflow tools
 ```
 
 ## Development
@@ -78,69 +80,51 @@ npm run build
 npm run preview
 
 # Run tests
-npm run test         # Run all tests
-npm run test:unit    # Run unit tests
-npm run test:integration  # Run integration tests
-
-# Development Tools
-npm run init-session # Initialize development session
-npm run ai-attach    # Get AI file review instructions
-
-# Code Quality
-npm run lint         # Run ESLint
-npm run format       # Run Prettier
+npm run test
 ```
 
-## Development Workflow
+## Monospace Grid System
 
-This project uses several tools to maintain code quality and development efficiency:
+The project uses a character-based grid system for precise layouts:
 
-1. **Session Initialization**
+```svelte
+<Grid cols={2} gap={2}>
+	<div>Perfectly</div>
+	<div>Aligned</div>
+</Grid>
+```
 
-   - Run `npm run init-session` to validate project setup
-   - Checks cursor rules, documentation, and project structure
-   - Ensures consistent development environment
+Grid utilities ensure proper alignment:
 
-2. **AI-Assisted Development**
+```typescript
+import { alignToGrid, toCharUnit } from '$lib/utils/grid';
 
-   - Use `npm run ai-attach` for AI code review
-   - Maintains consistent coding standards
-   - Helps with documentation updates
-   - Provides intelligent suggestions
+const width = toCharUnit(alignToGrid(40)); // "40ch"
+```
 
-3. **Documentation**
+## Terminal Component
 
-   - Automated updates to key files
-   - Rule-based code standards
-   - Comprehensive API documentation
-   - Clear contribution guidelines
+Interactive terminal interface for command demonstrations:
 
-4. **Code Quality**
-   - Strict TypeScript types
-   - ESLint and Prettier integration
-   - Automated testing
-   - CI/CD pipeline
+```typescript
+const commands = [
+	{
+		cmd: 'echo "Hello"',
+		output: 'Hello'
+	}
+];
 
-## Deployment
+terminal.loadCommands(commands);
+```
 
-This site is automatically deployed to GitHub Pages using GitHub Actions. The deployment pipeline includes:
+## Contributing
 
-- Dependency caching for faster builds
-- Comprehensive testing suite
-- Type checking
-- Linting and formatting checks
-- Automated deployment to GitHub Pages
+See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for guidelines on:
 
-See the deployment configuration in `.github/workflows/deploy.yml`
-
-## Resources
-
-- [SvelteKit Documentation](https://kit.svelte.dev/docs)
-- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
-- [Modern CSS Features](https://developer.mozilla.org/en-US/docs/Web/CSS)
-- [GitHub Pages](https://pages.github.com/)
-- [Playwright Documentation](https://playwright.dev)
-- [Vitest Documentation](https://vitest.dev)
+- Using the monospace grid system
+- Creating terminal interfaces
+- Following character-based layouts
+- Adding interactive guides
 
 ## License
 
