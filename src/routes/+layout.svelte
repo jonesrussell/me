@@ -1,9 +1,8 @@
 <script lang="ts">
-	import '@fontsource/fira-mono';
-	import '../app.css';
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import NewsletterCTA from '$lib/components/NewsletterCTA.svelte';
+	import '../app.css';
 	const { children } = $props();
 </script>
 

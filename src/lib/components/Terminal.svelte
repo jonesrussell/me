@@ -38,22 +38,22 @@
 		</div>
 	</div>
 	<div class="terminal-body">
-		{#each Array($terminal.currentCommand + 1) as i}
+		{#each Array($terminal.currentCommand + 1) as _, i}
 			<div class="command-line">
 				<span class="prompt">$</span>
 				<span class="command">
 					{i === $terminal.currentCommand
 						? $terminal.commandVisible
-						: commands[i].cmd}
+						: commands[i]?.cmd || ''}
 				</span>
-				{#if $terminal.isTyping && i === $terminal.currentCommand && $terminal.commandVisible.length === commands[i].cmd.length && !$terminal.outputVisible}
+				{#if $terminal.isTyping && i === $terminal.currentCommand && $terminal.commandVisible.length === commands[i]?.cmd?.length && !$terminal.outputVisible}
 					<span class="cursor">▋</span>
 				{/if}
 			</div>
 			<div class="command-output">
 				{i === $terminal.currentCommand
 					? $terminal.outputVisible
-					: commands[i].output}
+					: commands[i]?.output || ''}
 			</div>
 		{/each}
 	</div>
