@@ -27,7 +27,13 @@
 <div class="blog">
 	<header>
 		<h1>Web Developer Blog</h1>
-		<p class="subtitle">Web Developer & Open Source Enthusiast</p>
+		<p class="subtitle">
+			Web Developer & <a
+				href="https://github.com/jonesrussell"
+				target="_blank"
+				rel="noopener noreferrer">Open Source Enthusiast</a
+			>
+		</p>
 		<p class="source-note">
 			This page and
 			<a href={devToUrl} target="_blank" rel="noopener noreferrer"> DEV.to </a>
