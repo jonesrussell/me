@@ -56,13 +56,19 @@
 			]
 		}
 	},
-	"forwardPorts": [5173],
+	"forwardPorts": [
+		5173
+	],
 	"postCreateCommand": "",
 	"waitFor": "postCreateCommand",
 	"postStartCommand": "npm run dev",
 	"remoteEnv": {
 		"NODE_ENV": "development"
 	},
-	"capAdd": ["SYS_PTRACE"],
-	"securityOpt": ["seccomp=unconfined"]
+	"capAdd": [
+		"SYS_PTRACE"
+	],
+	"securityOpt": [
+		"seccomp=unconfined"
+	]
 }

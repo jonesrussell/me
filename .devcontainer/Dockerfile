@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm
 
-# Install Playwright dependencies
+# Install additional required packages
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
     libnss3 \
@@ -22,12 +22,15 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     libasound2 \
     libxcursor1 \
     libgtk-3-0 \
-    libgdk-3-0 \
+    libgdk-3.0-0 \
     fonts-noto-color-emoji \
     fonts-liberation \
     fonts-freefont-ttf \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
+
+# Set up non-root user
+USER node
 
 # Install Playwright browser
 RUN npx playwright install chromium \
