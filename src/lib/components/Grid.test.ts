@@ -13,7 +13,7 @@ describe('Grid', () => {
 		const grid = container.querySelector('.grid');
 		expect(grid).toBeInTheDocument();
 		expect(grid).toHaveStyle({
-			'--grid-template': 'repeat(1, 1fr)',
+			'--grid-template': 'repeat(1, minmax(0, 1fr))',
 			'--grid-gap': '2ch'
 		});
 		expect(container.textContent).toContain('Grid Item');
@@ -28,7 +28,7 @@ describe('Grid', () => {
 		});
 		const grid = container.querySelector('.grid');
 		expect(grid).toHaveStyle({
-			'--grid-template': 'repeat(3, 1fr)',
+			'--grid-template': 'repeat(3, minmax(0, 1fr))',
 			'--grid-gap': '2ch'
 		});
 	});
@@ -42,7 +42,7 @@ describe('Grid', () => {
 		});
 		const grid = container.querySelector('.grid');
 		expect(grid).toHaveStyle({
-			'--grid-template': 'repeat(1, 1fr)',
+			'--grid-template': 'repeat(1, minmax(0, 1fr))',
 			'--grid-gap': '4ch'
 		});
 	});
