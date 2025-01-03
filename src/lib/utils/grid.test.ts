@@ -13,7 +13,7 @@ describe('grid utilities', () => {
 	describe('calculateWidth', () => {
 		it('calculates the width of content in character units', () => {
 			expect(calculateWidth('test')).toBe(4);
-			expect(calculateWidth('multi\nline')).toBe(4);
+			expect(calculateWidth('multi\nline')).toBe(5);
 			expect(calculateWidth('longer line\nshort')).toBe(11);
 		});
 	});
