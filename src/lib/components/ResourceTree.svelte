@@ -1,4 +1,6 @@
 <script lang="ts">
+	import ResourceTree from './ResourceTree.svelte';
+
 	interface TreeNode {
 		name: string;
 		url?: string;
@@ -29,7 +31,7 @@
 			{getPrefix(isLast)}{data.name}
 		</div>
 		{#each data.children as child, i}
-			<svelte:self
+			<ResourceTree
 				data={child}
 				level={level + 1}
 				isLast={i === data.children.length - 1}

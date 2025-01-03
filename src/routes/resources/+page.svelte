@@ -1,4 +1,6 @@
 <script lang="ts">
+	import ResourceTree from '$lib/components/ResourceTree.svelte';
+
 	interface Resource {
 		title: string;
 		url: string;
