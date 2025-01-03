@@ -1,32 +1,41 @@
-import { afterEach, describe, expect, it } from 'vitest';
-import { alignToGrid, getGridWidth, getResponsiveValue } from './grid';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { alignToGrid, calculateWidth, getResponsiveValue } from './grid';
 
 describe('grid utilities', () => {
-	// Store original window
-	const originalWindow = globalThis.window;
-
-	afterEach(() => {
-		// Restore original window after each test
-		globalThis.window = originalWindow;
+	describe('alignToGrid', () => {
+		it('aligns values to the nearest character unit', () => {
+			expect(alignToGrid(10)).toBe(10);
+			expect(alignToGrid(10.4)).toBe(10);
+			expect(alignToGrid(10.6)).toBe(11);
+		});
 	});
 
-	it('should align values to grid', () => {
-		expect(alignToGrid(10)).toBe(10);
-		expect(alignToGrid(11, 2)).toBe(10);
-		expect(alignToGrid(12, 4)).toBe(12);
+	describe('calculateWidth', () => {
+		it('calculates the width of content in character units', () => {
+			expect(calculateWidth('test')).toBe(4);
+			expect(calculateWidth('multi\nline')).toBe(4);
+			expect(calculateWidth('longer line\nshort')).toBe(11);
+		});
 	});
 
-	it('should get responsive values', () => {
-		// Mock window using globalThis
-		globalThis.window = { innerWidth: 500 } as Window & typeof globalThis;
-		expect(getResponsiveValue(10, 20)).toBe(10);
+	describe('getResponsiveValue', () => {
+		afterEach(() => {
+			vi.restoreAllMocks();
+		});
 
-		globalThis.window = { innerWidth: 800 } as Window & typeof globalThis;
-		expect(getResponsiveValue(10, 20)).toBe(20);
-	});
+		it('returns mobile value when window width < 640', () => {
+			global.window = { innerWidth: 320 } as Window & typeof globalThis;
+			expect(getResponsiveValue(10, 20)).toBe(10);
+		});
 
-	it('should format grid widths', () => {
-		expect(getGridWidth(10.123)).toBe('10.12px');
-		expect(getGridWidth(10)).toBe('10px');
+		it('returns desktop value when window width >= 640', () => {
+			global.window = { innerWidth: 1024 } as Window & typeof globalThis;
+			expect(getResponsiveValue(10, 20)).toBe(20);
+		});
+
+		it('returns mobile value when window is undefined', () => {
+			global.window = undefined as unknown as Window & typeof globalThis;
+			expect(getResponsiveValue(10, 20)).toBe(10);
+		});
 	});
 });
