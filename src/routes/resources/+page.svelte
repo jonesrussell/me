@@ -2,6 +2,7 @@
 	import Grid from '$lib/components/Grid.svelte';
 	import Box from '$lib/components/Box.svelte';
 	import Badge from '$lib/components/Badge.svelte';
+	import { onMount } from 'svelte';
 
 	interface Resource {
 		title: string;
@@ -214,6 +215,48 @@
 	function formatUrl(url: string): string {
 		return url.replace(/^https?:\/\//, '');
 	}
+
+	// Debug layout
+	let containerWidth = 0;
+	let columnCount = 0;
+	let categoryWidths: Record<string, number> = {};
+
+	onMount(() => {
+		const resizeObserver = new ResizeObserver((entries) => {
+			for (const entry of entries) {
+				if (entry.target.classList.contains('resources')) {
+					containerWidth = entry.contentRect.width;
+					console.log('Container width:', containerWidth);
+				}
+				if (entry.target.classList.contains('categories')) {
+					const computed = window.getComputedStyle(entry.target);
+					columnCount = computed.gridTemplateColumns.split(' ').length;
+					console.log('Grid columns:', columnCount);
+				}
+				if (entry.target.classList.contains('category')) {
+					const category =
+						entry.target.querySelector('h2')?.textContent?.trim() || 'unknown';
+					categoryWidths[category] = entry.contentRect.width;
+					console.log('Category width:', category, entry.contentRect.width);
+				}
+			}
+		});
+
+		const containers = document.querySelectorAll(
+			'.resources, .categories, .category'
+		);
+		containers.forEach((container) => resizeObserver.observe(container));
+
+		return () => resizeObserver.disconnect();
+	});
+
+	$effect(() => {
+		console.log('Layout debug:', {
+			containerWidth,
+			columnCount,
+			categoryWidths
+		});
+	});
 </script>
 
 <svelte:head>
@@ -311,16 +354,19 @@
 
 	.categories {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 600px), 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(65ch, 1fr));
 		gap: var(--ch8);
 		align-items: start;
+		justify-items: center;
 	}
 
 	.category {
 		margin-bottom: 0;
 		display: flex;
 		flex-direction: column;
-		min-width: 0; /* Prevent flex items from overflowing */
+		min-width: 0;
+		width: 100%;
+		max-width: 65ch;
 	}
 
 	.category h2 {
@@ -337,6 +383,7 @@
 		padding: var(--ch2) 0;
 		z-index: 1;
 		backdrop-filter: blur(8px);
+		width: 100%;
 	}
 
 	.icon {
@@ -346,6 +393,7 @@
 	.resource-list {
 		display: grid;
 		gap: var(--ch4);
+		width: 100%;
 	}
 
 	.resource {
@@ -367,6 +415,8 @@
 		font-weight: 500;
 		transition: color 0.2s ease;
 		font-size: var(--font-size-base);
+		overflow-wrap: break-word;
+		word-break: break-word;
 	}
 
 	.resource-header a:hover {
@@ -379,6 +429,8 @@
 		margin: 0;
 		font-size: var(--font-size-sm);
 		line-height: var(--line-height-relaxed);
+		overflow-wrap: break-word;
+		word-break: break-word;
 	}
 
 	.url-preview {
@@ -391,17 +443,19 @@
 		font-size: var(--font-size-sm);
 		color: var(--text-muted);
 		font-family: var(--font-mono);
+		overflow: hidden;
 	}
 
 	.url-icon {
 		color: var(--accent-color);
+		flex-shrink: 0;
 	}
 
 	.url-text {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		min-width: 0; /* Enable text truncation */
+		min-width: 0;
 	}
 
 	@media (max-width: 767px) {
