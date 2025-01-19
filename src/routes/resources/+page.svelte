@@ -355,9 +355,10 @@
 	.categories {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(65ch, 1fr));
-		gap: var(--ch8);
+		gap: var(--ch6);
 		align-items: start;
 		justify-items: center;
+		margin-top: var(--ch4);
 	}
 
 	.category {
@@ -373,14 +374,14 @@
 		display: flex;
 		align-items: center;
 		gap: var(--ch2);
-		margin: 0 0 var(--ch4);
+		margin: 0 0 var(--ch2);
 		font-size: var(--font-size-lg);
 		color: var(--text-color);
 		font-weight: 500;
 		position: sticky;
 		top: var(--ch2);
 		background: var(--bg-color);
-		padding: var(--ch2) 0;
+		padding: var(--ch) 0;
 		z-index: 1;
 		backdrop-filter: blur(8px);
 		width: 100%;
@@ -388,11 +389,12 @@
 
 	.icon {
 		font-size: var(--font-size-xl);
+		line-height: 1;
 	}
 
 	.resource-list {
 		display: grid;
-		gap: var(--ch4);
+		gap: var(--ch2);
 		width: 100%;
 	}
 

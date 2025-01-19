@@ -2,7 +2,6 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import NewsletterCTA from '$lib/components/NewsletterCTA.svelte';
-	import DebugInfo from '$lib/components/DebugInfo.svelte';
 	import '../app.css';
 	const { children } = $props();
 </script>
@@ -23,7 +22,6 @@
 	</section>
 
 	<Footer />
-	<DebugInfo />
 </div>
 
 <style>
