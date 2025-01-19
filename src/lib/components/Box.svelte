@@ -78,17 +78,22 @@
 		white-space: pre;
 		overflow-wrap: break-word;
 		word-break: break-word;
+		border: 1px solid color-mix(in srgb, var(--text-muted) 15%, transparent);
+		border-radius: var(--radius-md);
+		background: color-mix(in srgb, var(--bg-darker) 50%, transparent);
 	}
 
 	.box-frame {
 		color: var(--text-muted);
 		overflow: hidden;
+		padding: var(--ch);
 	}
 
 	.header,
 	.footer {
 		white-space: pre;
 		overflow: hidden;
+		opacity: 0.5;
 	}
 
 	.content {
@@ -97,5 +102,10 @@
 		white-space: normal;
 		overflow-wrap: break-word;
 		word-break: break-word;
+		border-top: 1px solid color-mix(in srgb, var(--text-muted) 10%, transparent);
+		border-bottom: 1px solid
+			color-mix(in srgb, var(--text-muted) 10%, transparent);
+		margin: var(--ch) 0;
+		background: color-mix(in srgb, var(--bg-color) 50%, transparent);
 	}
 </style>
