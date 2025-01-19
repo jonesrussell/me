@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { alignToGrid } from '$lib/utils/grid';
-	import { onMount } from 'svelte';
 
 	const {
 		title = undefined,
