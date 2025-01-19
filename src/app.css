@@ -21,15 +21,15 @@
 	--font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', menlo, monaco,
 		'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', monospace;
 
-	/* Font sizes - doubled from previous values */
-	--font-size-xs: 2ch; /* UI elements */
-	--font-size-sm: 2.3ch; /* Secondary text */
-	--font-size-base: 2.7ch; /* Main body text */
-	--font-size-md: 3ch; /* Important content */
-	--font-size-lg: 3.5ch; /* Section headers */
-	--font-size-xl: 4ch; /* Major headers */
-	--font-size-2xl: 5ch; /* Hero text */
-	--font-size-3xl: 6ch; /* Display text */
+	/* Font sizes - reduced from previous values */
+	--font-size-xs: 1.6ch; /* UI elements */
+	--font-size-sm: 1.8ch; /* Secondary text */
+	--font-size-base: 2ch; /* Main body text */
+	--font-size-md: 2.4ch; /* Important content */
+	--font-size-lg: 2.8ch; /* Section headers */
+	--font-size-xl: 3.2ch; /* Major headers */
+	--font-size-2xl: 4ch; /* Hero text */
+	--font-size-3xl: 5ch; /* Display text */
 
 	/* Line heights - adjusted for new font sizes */
 	--line-height-tight: 1.25; /* Headings */

@@ -1,12 +1,6 @@
 <script lang="ts">
 	import ResourceTree from './ResourceTree.svelte';
-
-	interface TreeNode {
-		name: string;
-		url?: string;
-		description?: string;
-		children?: TreeNode[];
-	}
+	import type { TreeNode } from '$lib/types/resource';
 
 	const {
 		data,
