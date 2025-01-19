@@ -2,6 +2,7 @@
 	import devToProfile from '$lib/images/dev.to.jpeg?enhanced';
 	import { blogPosts, fetchFeed } from '$services/blogService';
 	import { onMount } from 'svelte';
+	import Box from '$lib/components/Box.svelte';
 
 	const devToUrl = 'https://dev.to/jonesrussell' as const;
 
@@ -26,209 +27,218 @@
 
 <div class="blog">
 	<header>
-		<div class="header-content">
-			<h1>Web Developer Blog</h1>
-			<p class="subtitle">
-				<a
-					href="https://github.com/jonesrussell"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Open Source Enthusiast
-				</a>
-			</p>
-			<p class="source-note">
-				This page and
-				<a href={devToUrl} target="_blank" rel="noopener noreferrer">
-					DEV.to
-				</a>
-				are syndicated from my
-				<a
-					href="https://jonesrussell.github.io/blog/"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Jekyll-powered blog
-				</a>
-			</p>
-		</div>
-		<hr class="divider" />
+		<h1>Web Developer Blog</h1>
+		<p class="subtitle">Open Source Enthusiast</p>
+		<p class="source-note">
+			This page and <a href={devToUrl} target="_blank" rel="noopener noreferrer"
+				>DEV.to</a
+			>
+			are syndicated from my
+			<a
+				href="https://jonesrussell.github.io/blog/"
+				target="_blank"
+				rel="noopener noreferrer">Jekyll-powered blog</a
+			>
+		</p>
 	</header>
 
 	<div class="content">
 		<div class="posts">
 			{#each $blogPosts as post}
-				<article class="post">
-					<div class="post-header">
-						<h2>
-							<a href={post.link} target="_blank" rel="noopener noreferrer">
-								{post.title}
-							</a>
-						</h2>
-						<time>{formatDate(post.published)}</time>
-					</div>
-					<p class="description">{post.description}</p>
-				</article>
+				<Box width={80}>
+					<article class="post">
+						<div class="post-header">
+							<h2>
+								<a href={post.link} target="_blank" rel="noopener noreferrer">
+									{post.title}
+								</a>
+							</h2>
+							<time>{formatDate(post.published)}</time>
+						</div>
+						<p class="description">{post.description}</p>
+						<a
+							href={post.link}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="url-preview"
+						>
+							<span class="url-icon">→</span>
+							<span class="url-text">Read article</span>
+						</a>
+					</article>
+				</Box>
 			{/each}
 		</div>
 
-		<div class="dev-to-section">
-			<a
-				href={devToUrl}
-				class="dev-to-link"
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				<div class="dev-to-content">
-					<enhanced:img
-						src={devToProfile}
-						alt="Russell Jones's DEV.to Profile"
-						class="dev-to-screenshot"
-						sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
-						fetchpriority="high"
-					/>
-					<span class="dev-to-text"
-						>Read more articles on DEV.to/jonesrussell</span
-					>
-				</div>
-			</a>
+		<div class="sidebar">
+			<Box width={32}>
+				<a
+					href={devToUrl}
+					class="dev-to-link"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<div class="dev-to-content">
+						<enhanced:img
+							src={devToProfile}
+							alt="Russell Jones's DEV.to Profile"
+							class="dev-to-screenshot"
+							sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
+							fetchpriority="high"
+						/>
+						<span class="dev-to-text"
+							>Read more articles on DEV.to/jonesrussell</span
+						>
+					</div>
+				</a>
+			</Box>
 		</div>
 	</div>
 </div>
 
 <style>
 	.blog {
-		max-width: min(var(--measure), calc(95 * var(--ch)));
+		width: 100%;
+		max-width: 1400px;
 		margin: 0 auto;
-		padding: var(--ch4) var(--ch2);
+		padding: var(--ch4) var(--content-padding);
+		font-family: var(--font-mono);
 	}
 
 	header {
-		margin-bottom: var(--ch4);
+		margin-bottom: var(--ch8);
 		text-align: center;
-		padding: var(--ch4) 0;
-	}
-
-	.header-content {
-		margin-bottom: var(--ch4);
-	}
-
-	.divider {
-		height: calc(1 * var(--ch) / 16);
-		background: var(--border-color);
-		margin: 0;
-		border: none;
-	}
-
-	.content {
-		display: grid;
-		grid-template-columns: 1fr calc(32 * var(--ch));
-		gap: calc(2 * var(--ch));
-		align-items: start;
-	}
-
-	@media (width <= calc(80 * var(--ch))) {
-		.content {
-			grid-template-columns: 1fr;
-		}
 	}
 
 	h1 {
 		margin: 0;
-		font-size: var(--font-size-3xl);
+		font-size: var(--font-size-2xl);
 		line-height: var(--line-height-tight);
 		color: var(--accent-color);
+		font-weight: 500;
+		background: linear-gradient(
+			to right,
+			var(--accent-color),
+			var(--accent-color-hover)
+		);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
 	}
 
 	.subtitle {
-		margin: var(--ch2) 0 0 0;
+		margin: var(--ch2) auto 0;
 		color: var(--text-muted);
 		font-size: var(--font-size-lg);
 	}
 
-	.subtitle a {
+	.source-note {
+		margin: var(--ch2) auto 0;
+		color: var(--text-muted);
+		font-size: var(--font-size-base);
+	}
+
+	.source-note a {
 		color: var(--accent-color);
 		text-decoration: none;
 		transition: color 0.2s ease;
 	}
 
-	.subtitle a:hover {
-		color: var(--link-color);
-		text-decoration: underline;
+	.source-note a:hover {
+		color: var(--accent-color-hover);
+	}
+
+	.content {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: var(--ch8);
+		align-items: start;
 	}
 
 	.posts {
-		display: flex;
-		flex-direction: column;
-		gap: calc(2 * var(--ch));
+		display: grid;
+		gap: var(--ch4);
 	}
 
 	.post {
-		padding: calc(3 * var(--ch));
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		border-radius: var(--radius-sm);
-		background: var(--color-mix-light);
-	}
-
-	.post:hover {
-		background: var(--color-mix-light-hover);
+		display: grid;
+		gap: var(--ch2);
 	}
 
 	.post-header {
 		display: flex;
-		gap: calc(2 * var(--ch));
 		justify-content: space-between;
 		align-items: baseline;
-		margin-bottom: calc(2 * var(--ch));
+		gap: var(--ch4);
+		flex-wrap: wrap;
 	}
 
 	.post-header h2 {
 		margin: 0;
-		font-size: var(--font-size-xl);
+		font-size: var(--font-size-lg);
 		line-height: var(--line-height-tight);
 	}
 
 	.post-header h2 a {
-		color: var(--text-color);
+		color: var(--accent-color);
 		text-decoration: none;
 		transition: color 0.2s ease;
 	}
 
 	.post-header h2 a:hover {
-		color: var(--accent-color);
-		text-decoration: underline;
+		color: var(--accent-color-hover);
 	}
 
 	time {
 		color: var(--text-muted);
-		white-space: nowrap;
 		font-size: var(--font-size-sm);
-		font-family: var(--font-mono);
+		white-space: nowrap;
 	}
 
 	.description {
 		margin: 0;
 		color: var(--text-muted);
+		font-size: var(--font-size-sm);
 		line-height: var(--line-height-relaxed);
 	}
 
-	.dev-to-section {
-		position: sticky;
-		top: calc(4 * var(--ch));
-		padding: calc(3 * var(--ch));
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
+	.url-preview {
+		display: flex;
+		align-items: center;
+		gap: var(--ch);
+		padding: var(--ch) var(--ch2);
+		background: var(--bg-darker);
 		border-radius: var(--radius-sm);
-		background: var(--color-mix-faint);
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
+		font-family: var(--font-mono);
+		overflow: hidden;
+		text-decoration: none;
+		transition: all 0.2s ease;
+		width: fit-content;
 	}
 
-	.dev-to-section:hover {
-		background: var(--color-mix-faint-hover);
+	.url-preview:hover {
+		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
+		color: var(--text-color);
+	}
+
+	.url-preview:hover .url-icon {
+		transform: translateX(2px);
+	}
+
+	.url-icon {
+		color: var(--accent-color);
+		transition: transform 0.2s ease;
+	}
+
+	.sidebar {
+		position: sticky;
+		top: var(--ch4);
 	}
 
 	.dev-to-link {
 		display: block;
-		width: 100%;
-		color: var(--link-color);
+		color: inherit;
 		text-decoration: none;
 	}
 
@@ -244,52 +254,34 @@
 		width: 100%;
 		height: auto;
 		border-radius: var(--radius-sm);
-		box-shadow: var(--shadow-md);
-	}
-
-	.dev-to-screenshot:hover {
-		transform: scale(1.02);
 	}
 
 	.dev-to-text {
-		display: block;
-		padding: var(--ch2) 0;
-		font-size: var(--font-size-sm);
 		color: var(--accent-color);
-		font-family: var(--font-mono);
-	}
-
-	.source-note {
-		margin: var(--ch2) 0;
-		color: var(--text-muted);
 		font-size: var(--font-size-sm);
-		text-align: center;
-		font-family: var(--font-mono);
 	}
 
-	.source-note a {
-		color: var(--link-color);
-		text-decoration: none;
-		transition: color 0.2s ease;
+	@media (max-width: 1200px) {
+		.content {
+			grid-template-columns: 1fr;
+		}
+
+		.sidebar {
+			display: none;
+		}
 	}
 
-	.source-note a:hover {
-		color: var(--accent-color);
-		text-decoration: underline;
-	}
-
-	@media (width <= 40ch) {
-		.post-header {
-			flex-direction: column;
-			gap: var(--ch);
+	@media (max-width: 767px) {
+		header {
+			margin-bottom: var(--ch4);
 		}
 
 		h1 {
-			font-size: var(--font-size-2xl);
+			font-size: var(--font-size-xl);
 		}
 
-		.subtitle {
-			font-size: var(--font-size-md);
+		.blog {
+			padding: var(--ch2) var(--content-padding);
 		}
 	}
 </style>
