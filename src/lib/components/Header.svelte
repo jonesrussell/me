@@ -15,9 +15,9 @@
 			isActive: $page.url.pathname.startsWith('/blog')
 		},
 		{
-			href: '/projects',
-			label: 'Projects',
-			isActive: $page.url.pathname.startsWith('/projects')
+			href: '/content',
+			label: 'Content',
+			isActive: $page.url.pathname.startsWith('/content')
 		},
 		{
 			href: '/resources',

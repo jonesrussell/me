@@ -1,320 +1,145 @@
 <script lang="ts">
-	let formData = $state({
-		name: '',
-		email: '',
-		message: ''
-	});
-
-	let isSubmitting = $state(false);
-	let submitStatus = $state<'idle' | 'success' | 'error'>('idle');
-	let errorMessage = $state('');
-
-	async function handleSubmit(event: SubmitEvent) {
-		event.preventDefault();
-		if (isSubmitting) return;
-
-		isSubmitting = true;
-		submitStatus = 'idle';
-		errorMessage = '';
-
-		try {
-			// Simulate API call
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-			submitStatus = 'success';
-			formData = { name: '', email: '', message: '' };
-		} catch (e) {
-			submitStatus = 'error';
-			errorMessage = e instanceof Error ? e.message : 'Failed to send message';
-		} finally {
-			isSubmitting = false;
-		}
-	}
+	let name = '';
+	let email = '';
+	let message = '';
 </script>
 
-<div class="contact-page">
-	<section class="contact-section">
-		<div class="contact-info">
-			<h2>┌── Get in Touch ──┐</h2>
+<div class="contact">
+	<div class="contact-grid">
+		<section class="left">
+			<h1>┌─ Get in Touch ─┐</h1>
+
 			<p>
-				Have a question or want to work together? I'd love to hear from you.
+				Have a question or want to work together?<br />
+				I'd love to hear from you.
 			</p>
 
-			<div class="contact-methods">
-				<a
-					href="https://github.com/jonesrussell"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="contact-link"
-				>
-					<span class="icon">⌘</span>
-					<span class="label">GitHub:</span>
-					<span class="value">@jonesrussell</span>
-				</a>
-				<a
-					href="https://www.linkedin.com/in/jonesrussell42"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="contact-link"
-				>
-					<span class="icon">⚏</span>
-					<span class="label">LinkedIn:</span>
-					<span class="value">jonesrussell42</span>
-				</a>
-				<a href="mailto:russell@web.ca" class="contact-link">
-					<span class="icon">✉</span>
-					<span class="label">Email:</span>
-					<span class="value">russell@web.ca</span>
-				</a>
+			<div class="links">
+				<div class="link">
+					<span class="icon">⌘</span> GitHub: @jonesrussell
+				</div>
+				<div class="link">
+					<span class="icon">≡</span> LinkedIn: jonesrussell42
+				</div>
+				<div class="link">
+					<span class="icon">✉</span> Email: russell@web.ca
+				</div>
 			</div>
-		</div>
+		</section>
 
-		<div class="contact-form-section">
-			<h2>└── Send a Message ──┘</h2>
-			<form onsubmit={handleSubmit} class="contact-form">
-				<div class="form-group">
-					<label for="name">Name</label>
-					<input
-						type="text"
-						id="name"
-						required
-						bind:value={formData.name}
-						disabled={isSubmitting}
-						placeholder="Your name"
-					/>
+		<section class="right">
+			<h2>└─ Send a Message ─┘</h2>
+			<form>
+				<div class="field">
+					<label>Name</label>
+					<input type="text" placeholder="Your name" />
 				</div>
-
-				<div class="form-group">
-					<label for="email">Email</label>
-					<input
-						type="email"
-						id="email"
-						required
-						bind:value={formData.email}
-						disabled={isSubmitting}
-						placeholder="your.email@example.com"
-					/>
+				<div class="field">
+					<label>Email</label>
+					<input type="email" placeholder="your.email@example.com" />
 				</div>
-
-				<div class="form-group">
-					<label for="message">Message</label>
-					<textarea
-						id="message"
-						rows="5"
-						bind:value={formData.message}
-						disabled={isSubmitting}
-						placeholder="Type your message here..."
-					></textarea>
+				<div class="field">
+					<label>Message</label>
+					<textarea placeholder="Type your message here..." />
 				</div>
-
-				<button type="submit" disabled={isSubmitting} class="submit-button">
-					{#if isSubmitting}
-						<span class="loading">Sending...</span>
-					{:else}
-						<span class="button-content">
-							<span class="icon">↪</span>
-							Send Message
-						</span>
-					{/if}
+				<button>
+					<span class="icon">→</span> Send Message
 				</button>
-
-				{#if submitStatus === 'success'}
-					<div class="success-message">
-						<span class="icon">✓</span> Message sent successfully! I'll get back
-						to you soon.
-					</div>
-				{/if}
-
-				{#if submitStatus === 'error'}
-					<div class="error-message">
-						<span class="icon">✗</span>
-						{errorMessage}
-					</div>
-				{/if}
 			</form>
-		</div>
-	</section>
+		</section>
+	</div>
 </div>
 
 <style>
-	.contact-page {
-		width: 100%;
-		max-width: var(--contact-width);
-		margin: 0 auto;
-		padding: var(--ch4) var(--ch2);
-		box-sizing: border-box;
+	.contact {
+		padding: 0 var(--ch2);
 	}
 
-	.contact-section {
+	.contact-grid {
 		display: grid;
-		gap: var(--ch4);
-		padding: var(--ch4);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		border-radius: var(--radius-sm);
-		background: var(--color-mix-faint);
-	}
-
-	.contact-methods {
-		display: flex;
-		flex-direction: column;
+		grid-template-columns: 35ch 1fr;
 		gap: var(--ch2);
-		margin-top: var(--ch3);
+		max-width: 90ch;
+		margin: var(--ch2) auto;
 	}
 
-	h2 {
-		margin: 0 0 var(--ch2) 0;
-		color: var(--accent-color);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-lg);
-		font-weight: var(--font-weight-medium);
+	h1, h2 {
+		color: rgb(0, 255, 127);
+		font-size: 1em;
+		font-weight: normal;
+		margin-bottom: var(--ch);
 		white-space: pre;
 	}
 
-	.contact-link {
-		display: flex;
-		gap: var(--ch2);
-		align-items: center;
-		padding: var(--ch) var(--ch2);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		background: var(--color-mix-light);
-		text-decoration: none;
-		transition: all 0.2s ease;
+	p {
+		color: var(--text-muted);
+		font-size: 0.9em;
+		margin-bottom: var(--ch);
+		line-height: 1.4;
 	}
 
-	.contact-link:hover {
-		border-color: var(--accent-color);
-		transform: translateX(var(--ch));
+	.links {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5em;
+	}
+
+	.link {
+		padding: 0.5em;
+		background: var(--bg-darker);
+		border: 1px solid var(--border-color);
+		border-radius: 2px;
+		font-size: 0.9em;
 	}
 
 	.icon {
-		color: var(--accent-color);
-		font-family: var(--font-mono);
+		color: rgb(0, 255, 127);
 	}
 
-	.label {
-		color: var(--text-muted);
-	}
-
-	.value {
-		color: var(--text-color);
-	}
-
-	.contact-form {
-		display: flex;
-		flex-direction: column;
-		gap: var(--ch3);
-		width: 100%;
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}
-
-	.form-group {
-		display: flex;
-		flex-direction: column;
-		gap: var(--ch);
-		width: 100%;
-		box-sizing: border-box;
+	.field {
+		margin-bottom: 0.75em;
 	}
 
 	label {
-		margin-left: var(--ch);
+		display: block;
 		color: var(--text-muted);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
+		margin-bottom: 0.25em;
+		font-size: 0.9em;
 	}
 
-	input,
+	input, textarea {
+		width: 100%;
+		padding: 0.5em;
+		background: var(--bg-darker);
+		border: 1px solid var(--border-color);
+		border-radius: 2px;
+		color: var(--text-color);
+		font-family: inherit;
+		font-size: 0.9em;
+	}
+
 	textarea {
-		width: 100%;
-		max-width: calc(100% - var(--ch2));
-		margin: 0 var(--ch);
-		padding: var(--ch2);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		background: var(--bg-color);
-		color: var(--text-color);
-		font-family: var(--font-mono);
-		transition: all 0.2s ease;
-		box-sizing: border-box;
+		height: 6em;
+		resize: vertical;
 	}
 
-	input:focus,
-	textarea:focus {
-		outline: none;
-		border-color: var(--accent-color);
-		box-shadow: 0 0 0 calc(var(--ch) / 8) var(--accent-color-transparent);
-	}
-
-	input::placeholder,
-	textarea::placeholder {
-		color: var(--text-muted);
-		opacity: 0.5;
-	}
-
-	.submit-button {
+	button {
 		display: flex;
-		gap: var(--ch);
-		justify-content: center;
 		align-items: center;
-		width: 100%;
-		padding: var(--ch2);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		border-radius: var(--radius-sm);
-		background: var(--color-mix-light);
+		gap: 0.5em;
+		padding: 0.5em 1em;
+		background: var(--bg-darker);
+		border: 1px solid var(--border-color);
+		border-radius: 2px;
 		color: var(--text-color);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-base);
-		transition: all 0.2s ease;
+		font-family: inherit;
+		font-size: 0.9em;
 		cursor: pointer;
 	}
 
-	.submit-button:disabled {
-		opacity: 0.5;
-		cursor: not-allowed;
-	}
-
-	.submit-button:hover:not(:disabled) {
-		background: var(--color-mix-medium);
-		border-color: var(--accent-color);
-		transform: translateY(calc(-1 * var(--ch) / 8));
-	}
-
-	.button-content {
-		display: flex;
-		gap: var(--ch);
-		align-items: center;
-	}
-
-	.loading {
-		display: flex;
-		gap: var(--ch);
-		align-items: center;
-		color: var(--text-muted);
-	}
-
-	.success-message,
-	.error-message {
-		margin-top: var(--ch2);
-		padding: var(--ch2);
-		border: calc(1 * var(--ch) / 16) solid;
-		border-radius: var(--radius-sm);
-		font-family: var(--font-mono);
-	}
-
-	.success-message {
-		border-color: var(--color-success);
-		background: var(--color-success-transparent);
-		color: var(--color-success);
-	}
-
-	.error-message {
-		border-color: var(--color-error);
-		background: var(--color-error-transparent);
-		color: var(--color-error);
-	}
-
-	@media (width >= 60ch) {
-		.contact-section {
-			grid-template-columns: 1fr 1fr;
+	@media (max-width: 600px) {
+		.contact-grid {
+			grid-template-columns: 1fr;
 		}
 	}
 </style>

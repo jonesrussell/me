@@ -2,6 +2,7 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import NewsletterCTA from '$lib/components/NewsletterCTA.svelte';
+	import DebugInfo from '$lib/components/DebugInfo.svelte';
 	import '../app.css';
 	const { children } = $props();
 </script>
@@ -15,9 +16,14 @@
 		</div>
 	</main>
 
-	<NewsletterCTA />
+	<section aria-label="Newsletter Signup" class="newsletter-section">
+		<div class="container">
+			<NewsletterCTA />
+		</div>
+	</section>
 
 	<Footer />
+	<DebugInfo />
 </div>
 
 <style>
@@ -43,5 +49,19 @@
 		width: 100%;
 		max-width: min(var(--measure), 100%);
 		margin: 0 auto;
+	}
+
+	.newsletter-section {
+		padding: var(--ch4) 0;
+		background: var(--bg-alt);
+		border-top: 1px solid var(--border-color);
+	}
+
+	.container {
+		width: 100%;
+		max-width: min(var(--measure), 100%);
+		margin: 0 auto;
+		padding: 0 var(--content-padding);
+		box-sizing: border-box;
 	}
 </style>

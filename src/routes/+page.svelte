@@ -102,9 +102,9 @@
 			<span class="nav-icon">📝</span>
 			Read my technical articles
 		</a>
-		<a href="/projects" class="nav-link">
+		<a href="/content" class="nav-link">
 			<span class="nav-icon">🚀</span>
-			Browse my open source projects
+			Browse my content & projects
 		</a>
 		<a href="/contact" class="nav-link">
 			<span class="nav-icon">✉️</span>
