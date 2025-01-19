@@ -2,20 +2,13 @@
 	import Grid from '$lib/components/Grid.svelte';
 	import Box from '$lib/components/Box.svelte';
 	import Badge from '$lib/components/Badge.svelte';
-	import CodeBlock from '$lib/components/CodeBlock.svelte';
 
 	interface Resource {
 		title: string;
-		url: string;
 		description: string;
+		url: string;
+		category: string;
 		stars?: number;
-		category:
-			| 'Go'
-			| 'Web Development'
-			| 'Tools'
-			| 'Documentation'
-			| 'DevOps'
-			| 'Learning Paths';
 	}
 
 	const resources: Resource[] = [
@@ -199,8 +192,6 @@
 			{} as Record<string, Resource[]>
 		);
 
-	const GRID_GAP = 2; // Character units
-
 	function getCategoryIcon(category: string): string {
 		switch (category) {
 			case 'Documentation':
@@ -244,14 +235,14 @@
 		</p>
 	</header>
 
-	<Grid cols={2} gap={8}>
+	<div class="categories">
 		{#each Object.entries(groupedResources) as [category, items]}
 			<section class="category">
 				<h2>
 					<span class="icon">{getCategoryIcon(category)}</span>
 					{category}
 				</h2>
-				<Grid cols={1} gap={2}>
+				<div class="resource-list">
 					{#each items as resource}
 						<Box>
 							<div class="resource">
@@ -275,10 +266,10 @@
 							</div>
 						</Box>
 					{/each}
-				</Grid>
+				</div>
 			</section>
 		{/each}
-	</Grid>
+	</div>
 </div>
 
 <style>
@@ -318,6 +309,12 @@
 		max-width: 80ch;
 	}
 
+	.categories {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: var(--ch8);
+	}
+
 	.category {
 		margin-bottom: var(--ch4);
 	}
@@ -334,6 +331,11 @@
 
 	.icon {
 		font-size: var(--font-size-xl);
+	}
+
+	.resource-list {
+		display: grid;
+		gap: var(--ch2);
 	}
 
 	.resource {
@@ -402,8 +404,8 @@
 			font-size: var(--font-size-md);
 		}
 
-		:global(.resources > .grid) {
-			grid-template-columns: 1fr !important;
+		.categories {
+			grid-template-columns: 1fr;
 		}
 	}
 </style>

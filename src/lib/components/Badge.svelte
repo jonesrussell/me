@@ -1,7 +1,7 @@
 <script lang="ts">
 	type BadgeType = 'info' | 'success' | 'warning' | 'error';
 
-	const { type = 'info', children } = $props<{
+	const { type = 'info', children = () => null } = $props<{
 		type?: BadgeType;
 		children?: () => unknown;
 	}>();
@@ -12,10 +12,15 @@
 		warning: '⚠',
 		error: '✗'
 	};
+
+	console.log('Badge props:', { type, children });
+	$effect(() => {
+		console.log('Badge children render attempt:', children?.());
+	});
 </script>
 
 <span class="badge {type}">
-	[{symbols[type as BadgeType]}] {children?.()}
+	[{symbols[type as BadgeType]}] {@render children()}
 </span>
 
 <style>
