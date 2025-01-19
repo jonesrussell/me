@@ -36,27 +36,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Cache node modules
-        uses: actions/cache@v4
-        id: npm-cache
-        with:
-          path: |
-            node_modules
-            ~/.npm
-          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            npm-${{ runner.os }}-
+          cache: 'npm'
 
       - name: Cache Playwright browsers
         uses: actions/cache@v4
         id: playwright-cache
         with:
-          path: ~/.cache/ms-playwright
+          path: |
+            ~/.cache/ms-playwright
+            **/node_modules/playwright
+            **/node_modules/playwright-core
           key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: Install dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci --prefer-offline --no-audit
 
       - name: Install Playwright browsers
@@ -84,20 +76,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
 
-      - name: Cache node modules
+      - name: Cache build output
         uses: actions/cache@v4
-        id: npm-cache
         with:
           path: |
-            node_modules
-            ~/.npm
-          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+            build
+            .svelte-kit
+          key: build-${{ runner.os }}-${{ github.sha }}
           restore-keys: |
-            npm-${{ runner.os }}-
+            build-${{ runner.os }}-
 
       - name: Install dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci --prefer-offline --no-audit
 
       - name: Build
