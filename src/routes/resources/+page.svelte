@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Grid from '$lib/components/Grid.svelte';
 	import Box from '$lib/components/Box.svelte';
 	import Badge from '$lib/components/Badge.svelte';
 	import { onMount } from 'svelte';
@@ -354,60 +353,59 @@
 
 	h1 {
 		margin: 0;
-		font-size: var(--font-size-2xl);
-		line-height: var(--line-height-tight);
-		color: var(--accent-color);
-		font-weight: 500;
 		background: linear-gradient(
 			to right,
 			var(--accent-color),
 			var(--accent-color-hover)
 		);
-		-webkit-background-clip: text;
+		color: var(--accent-color);
+		font-size: var(--font-size-2xl);
+		font-weight: 500;
+		line-height: var(--line-height-tight);
+		background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}
 
 	.description {
+		max-width: 80ch;
 		margin: var(--ch2) auto 0;
 		color: var(--text-muted);
 		font-size: var(--font-size-base);
 		line-height: var(--line-height-relaxed);
-		max-width: 80ch;
 	}
 
 	.categories {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(65ch, 1fr));
 		gap: var(--ch6);
-		align-items: start;
-		justify-items: center;
+		place-items: start center;
 		margin-top: var(--ch4);
 	}
 
 	.category {
-		margin-bottom: 0;
 		display: flex;
 		flex-direction: column;
-		min-width: 0;
 		width: 100%;
+		min-width: 0;
 		max-width: 65ch;
+		margin-bottom: 0;
 	}
 
 	.category h2 {
-		display: flex;
-		align-items: center;
-		gap: var(--ch2);
-		margin: 0 0 var(--ch2);
-		font-size: var(--font-size-lg);
-		color: var(--text-color);
-		font-weight: 500;
 		position: sticky;
 		top: var(--ch2);
-		background: var(--bg-color);
-		padding: var(--ch) 0;
 		z-index: 1;
-		backdrop-filter: blur(8px);
+		display: flex;
+		gap: var(--ch2);
+		align-items: center;
 		width: 100%;
+		margin: 0 0 var(--ch2);
+		padding: var(--ch) 0;
+		background: var(--bg-color);
+		color: var(--text-color);
+		font-size: var(--font-size-lg);
+		font-weight: 500;
+		backdrop-filter: blur(8px);
 	}
 
 	.icon {
@@ -428,18 +426,18 @@
 
 	.resource-header {
 		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: var(--ch2);
 		flex-wrap: wrap;
+		gap: var(--ch2);
+		justify-content: space-between;
+		align-items: center;
 	}
 
 	.resource-header a {
 		color: var(--accent-color);
-		text-decoration: none;
-		font-weight: 500;
-		transition: color 0.2s ease;
 		font-size: var(--font-size-base);
+		font-weight: 500;
+		text-decoration: none;
+		transition: color 0.2s ease;
 		overflow-wrap: break-word;
 		word-break: break-word;
 	}
@@ -450,8 +448,8 @@
 	}
 
 	.resource-description {
-		color: var(--text-muted);
 		margin: 0;
+		color: var(--text-muted);
 		font-size: var(--font-size-sm);
 		line-height: var(--line-height-relaxed);
 		overflow-wrap: break-word;
@@ -460,17 +458,17 @@
 
 	.url-preview {
 		display: flex;
-		align-items: center;
 		gap: var(--ch);
+		align-items: center;
 		padding: var(--ch) var(--ch2);
-		background: var(--bg-darker);
 		border-radius: var(--radius-sm);
-		font-size: var(--font-size-sm);
+		background: var(--bg-darker);
 		color: var(--text-muted);
 		font-family: var(--font-mono);
-		overflow: hidden;
+		font-size: var(--font-size-sm);
 		text-decoration: none;
 		transition: all 0.2s ease;
+		overflow: hidden;
 	}
 
 	.url-preview:hover {
@@ -495,7 +493,7 @@
 		min-width: 0;
 	}
 
-	@media (max-width: 767px) {
+	@media (width <= 767px) {
 		header {
 			margin-bottom: var(--ch4);
 		}

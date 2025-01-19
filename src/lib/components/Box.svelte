@@ -16,7 +16,12 @@
 	const alignedWidth = $derived(alignToGrid(width));
 </script>
 
-<div class="box" style="--box-width: {alignedWidth}ch; {style}">
+<div
+	class="box"
+	style="
+
+--box-width: {alignedWidth}ch; {style}"
+>
 	<div class="box-frame">
 		{#if title}
 			<div class="header">{title}</div>
@@ -31,19 +36,19 @@
 <style>
 	.box {
 		width: var(--box-width);
-		max-width: var(--box-width);
 		min-width: var(--box-width);
-		font-family: var(--font-mono);
-		line-height: var(--line-height-tight);
-		overflow-wrap: break-word;
-		word-break: break-word;
+		max-width: var(--box-width);
 		border: 1px solid color-mix(in srgb, var(--text-muted) 20%, transparent);
 		border-radius: var(--radius-md);
 		background: color-mix(in srgb, var(--bg-darker) 30%, transparent);
-		box-shadow: 0 1px 2px color-mix(in srgb, black 10%, transparent);
+		font-family: var(--font-mono);
+		line-height: var(--line-height-tight);
 		transition:
 			transform 0.2s ease,
 			box-shadow 0.2s ease;
+		overflow-wrap: break-word;
+		word-break: break-word;
+		box-shadow: 0 1px 2px color-mix(in srgb, black 10%, transparent);
 	}
 
 	.box:hover {
@@ -66,11 +71,11 @@
 	}
 
 	.content {
+		flex: 1;
 		padding: var(--ch2) var(--ch4);
+		background: color-mix(in srgb, var(--bg-color) 70%, transparent);
 		color: var(--text-color);
 		overflow-wrap: break-word;
 		word-break: break-word;
-		background: color-mix(in srgb, var(--bg-color) 70%, transparent);
-		flex: 1;
 	}
 </style>
