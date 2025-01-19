@@ -13,6 +13,22 @@
 	}
 
 	const resources: Resource[] = [
+		// AI
+		{
+			title: 'Cursor AI',
+			url: 'https://cursor.sh',
+			description:
+				'The AI-first code editor. Built for pair programming with AI.',
+			category: 'AI'
+		},
+		{
+			title: 'FullStack Dev AI Coding',
+			url: 'https://www.youtube.com/@fullstackdev42',
+			description:
+				'Live streams of AI pair programming and modern web development',
+			category: 'AI'
+		},
+
 		// Documentation
 		{
 			title: 'MDN Web Docs',
@@ -195,6 +211,8 @@
 
 	function getCategoryIcon(category: string): string {
 		switch (category) {
+			case 'AI':
+				return '🤖';
 			case 'Documentation':
 				return '📚';
 			case 'Go':
