@@ -14,10 +14,7 @@
 	};
 </script>
 
-<span class="badge {badgeType}">
-	{symbols[badgeType]}
-	{children()}
-</span>
+<span class="badge {badgeType}">{symbols[badgeType]} {children()}</span>
 
 <style>
 	:root {
