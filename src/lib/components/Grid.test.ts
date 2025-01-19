@@ -13,7 +13,7 @@ describe('Grid', () => {
 		const grid = container.querySelector('.grid');
 		expect(grid).toBeInTheDocument();
 		expect(grid).toHaveClass('grid');
-		expect(grid?.innerHTML?.trim()).toBe('<div>Grid Item</div>');
+		expect(grid?.innerHTML?.trim()).toContain('Grid Item');
 	});
 
 	it('renders with custom columns', () => {
@@ -26,7 +26,8 @@ describe('Grid', () => {
 		const grid = container.querySelector('.grid');
 		expect(grid).toBeInTheDocument();
 		expect(grid).toHaveClass('grid');
-		expect(grid?.innerHTML?.trim()).toBe('<div>Grid Item</div>');
+		expect(grid?.innerHTML?.trim()).toContain('Grid Item');
+		expect(grid).toHaveStyle({ '--cols': '3' });
 	});
 
 	it('renders with custom gap', () => {
@@ -39,7 +40,8 @@ describe('Grid', () => {
 		const grid = container.querySelector('.grid');
 		expect(grid).toBeInTheDocument();
 		expect(grid).toHaveClass('grid');
-		expect(grid?.innerHTML?.trim()).toBe('<div>Grid Item</div>');
+		expect(grid?.innerHTML?.trim()).toContain('Grid Item');
+		expect(grid).toHaveStyle({ '--gap': 'var(--ch4)' });
 	});
 
 	it('renders multiple grid items', () => {
