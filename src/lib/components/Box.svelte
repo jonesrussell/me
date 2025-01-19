@@ -5,7 +5,7 @@
 		title = undefined,
 		width = 40,
 		style = '',
-		children
+		children = () => null
 	} = $props<{
 		title?: string;
 		width?: number;
@@ -19,6 +19,11 @@
 	function createLine(char: string): string {
 		return char.repeat(contentWidth);
 	}
+
+	console.log('Box props:', { title, width, style, children });
+	$effect(() => {
+		console.log('Box children render attempt:', children?.());
+	});
 </script>
 
 <div
@@ -35,7 +40,7 @@
 		{/if}
 
 		<div class="content">
-			{children?.()}
+			{@render children()}
 		</div>
 
 		<div class="footer">╰{createLine('─')}╯</div>
