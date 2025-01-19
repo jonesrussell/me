@@ -1,9 +1,9 @@
 <script lang="ts">
 	type BadgeType = 'info' | 'success' | 'warning' | 'error';
 
-	const { type = 'info', children = () => null } = $props<{
+	const { type = 'info' as BadgeType, children } = $props<{
 		type?: BadgeType;
-		children?: () => unknown;
+		children: () => any;
 	}>();
 
 	const symbols: Record<BadgeType, string> = {
@@ -15,7 +15,7 @@
 </script>
 
 <span class="badge {type}">
-	{symbols[type as BadgeType]}
+	{symbols[type]}
 	{@render children()}
 </span>
 
