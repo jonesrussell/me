@@ -244,7 +244,7 @@
 				</h2>
 				<div class="resource-list">
 					{#each items as resource}
-						<Box>
+						<Box width={60}>
 							<div class="resource">
 								<div class="resource-header">
 									<a
@@ -275,7 +275,7 @@
 <style>
 	.resources {
 		width: 100%;
-		max-width: var(--measure);
+		max-width: 1400px;
 		margin: 0 auto;
 		padding: var(--ch4) var(--content-padding);
 		font-family: var(--font-mono);
@@ -311,12 +311,16 @@
 
 	.categories {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 600px), 1fr));
 		gap: var(--ch8);
+		align-items: start;
 	}
 
 	.category {
-		margin-bottom: var(--ch4);
+		margin-bottom: 0;
+		display: flex;
+		flex-direction: column;
+		min-width: 0; /* Prevent flex items from overflowing */
 	}
 
 	.category h2 {
@@ -327,6 +331,12 @@
 		font-size: var(--font-size-lg);
 		color: var(--text-color);
 		font-weight: 500;
+		position: sticky;
+		top: var(--ch2);
+		background: var(--bg-color);
+		padding: var(--ch2) 0;
+		z-index: 1;
+		backdrop-filter: blur(8px);
 	}
 
 	.icon {
@@ -335,7 +345,7 @@
 
 	.resource-list {
 		display: grid;
-		gap: var(--ch2);
+		gap: var(--ch4);
 	}
 
 	.resource {
@@ -348,6 +358,7 @@
 		align-items: center;
 		justify-content: space-between;
 		gap: var(--ch2);
+		flex-wrap: wrap;
 	}
 
 	.resource-header a {
@@ -355,6 +366,7 @@
 		text-decoration: none;
 		font-weight: 500;
 		transition: color 0.2s ease;
+		font-size: var(--font-size-base);
 	}
 
 	.resource-header a:hover {
@@ -389,6 +401,7 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		min-width: 0; /* Enable text truncation */
 	}
 
 	@media (max-width: 767px) {
@@ -404,8 +417,8 @@
 			font-size: var(--font-size-md);
 		}
 
-		.categories {
-			grid-template-columns: 1fr;
+		.resources {
+			padding: var(--ch2) var(--content-padding);
 		}
 	}
 </style>
