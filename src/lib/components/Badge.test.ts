@@ -12,7 +12,7 @@ describe('Badge', () => {
 		});
 		const badge = container.querySelector('.badge');
 		expect(badge).toHaveClass('info');
-		expect(badge?.textContent).toContain('Test Badge');
+		expect(badge?.textContent?.trim()).toBe('ℹ Test Badge');
 	});
 
 	it('renders with success type', () => {
@@ -24,7 +24,7 @@ describe('Badge', () => {
 		});
 		const badge = container.querySelector('.badge');
 		expect(badge).toHaveClass('success');
-		expect(badge?.textContent).toContain('Success Badge');
+		expect(badge?.textContent?.trim()).toBe('✓ Success Badge');
 	});
 
 	it('renders with warning type', () => {
@@ -36,7 +36,7 @@ describe('Badge', () => {
 		});
 		const badge = container.querySelector('.badge');
 		expect(badge).toHaveClass('warning');
-		expect(badge?.textContent).toContain('Warning Badge');
+		expect(badge?.textContent?.trim()).toBe('⚠ Warning Badge');
 	});
 
 	it('renders with error type', () => {
@@ -48,6 +48,6 @@ describe('Badge', () => {
 		});
 		const badge = container.querySelector('.badge');
 		expect(badge).toHaveClass('error');
-		expect(badge?.textContent).toContain('Error Badge');
+		expect(badge?.textContent?.trim()).toBe('✗ Error Badge');
 	});
 });

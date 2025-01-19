@@ -13,7 +13,9 @@ describe('Box', () => {
 		const box = container.querySelector('.box');
 		expect(box).toBeInTheDocument();
 		expect(box).toHaveStyle({ '--box-width': '40ch' });
-		expect(container.textContent).toContain('Test Content');
+		expect(container.querySelector('.content')?.textContent?.trim()).toBe(
+			'Test Content'
+		);
 	});
 
 	it('renders with custom width', () => {
@@ -25,7 +27,9 @@ describe('Box', () => {
 		});
 		const box = container.querySelector('.box');
 		expect(box).toHaveStyle({ '--box-width': '60ch' });
-		expect(container.textContent).toContain('Wide Content');
+		expect(container.querySelector('.content')?.textContent?.trim()).toBe(
+			'Wide Content'
+		);
 	});
 
 	it('renders with title', () => {
@@ -36,8 +40,10 @@ describe('Box', () => {
 			}
 		});
 		const header = container.querySelector('.header');
-		expect(header?.textContent).toContain('Test Box');
-		expect(container.textContent).toContain('Box Content');
+		expect(header?.textContent?.trim()).toBe('Test Box');
+		expect(container.querySelector('.content')?.textContent?.trim()).toBe(
+			'Box Content'
+		);
 	});
 
 	it('renders with custom style', () => {
@@ -49,6 +55,8 @@ describe('Box', () => {
 		});
 		const box = container.querySelector('.box');
 		expect(box).toHaveStyle({ 'margin-top': '1rem' });
-		expect(container.textContent).toContain('Styled Content');
+		expect(container.querySelector('.content')?.textContent?.trim()).toBe(
+			'Styled Content'
+		);
 	});
 });
