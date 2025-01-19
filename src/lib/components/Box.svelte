@@ -78,9 +78,18 @@
 		white-space: pre;
 		overflow-wrap: break-word;
 		word-break: break-word;
-		border: 1px solid color-mix(in srgb, var(--text-muted) 15%, transparent);
+		border: 1px solid color-mix(in srgb, var(--text-muted) 20%, transparent);
 		border-radius: var(--radius-md);
-		background: color-mix(in srgb, var(--bg-darker) 50%, transparent);
+		background: color-mix(in srgb, var(--bg-darker) 30%, transparent);
+		box-shadow: 0 1px 2px color-mix(in srgb, black 10%, transparent);
+		transition:
+			transform 0.2s ease,
+			box-shadow 0.2s ease;
+	}
+
+	.box:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 2px 4px color-mix(in srgb, black 15%, transparent);
 	}
 
 	.box-frame {
@@ -93,7 +102,8 @@
 	.footer {
 		white-space: pre;
 		overflow: hidden;
-		opacity: 0.5;
+		opacity: 0.4;
+		user-select: none;
 	}
 
 	.content {
@@ -102,10 +112,11 @@
 		white-space: normal;
 		overflow-wrap: break-word;
 		word-break: break-word;
-		border-top: 1px solid color-mix(in srgb, var(--text-muted) 10%, transparent);
+		border-top: 1px solid color-mix(in srgb, var(--text-muted) 15%, transparent);
 		border-bottom: 1px solid
-			color-mix(in srgb, var(--text-muted) 10%, transparent);
+			color-mix(in srgb, var(--text-muted) 15%, transparent);
 		margin: var(--ch) 0;
-		background: color-mix(in srgb, var(--bg-color) 50%, transparent);
+		background: color-mix(in srgb, var(--bg-color) 70%, transparent);
+		border-radius: var(--radius-sm);
 	}
 </style>
