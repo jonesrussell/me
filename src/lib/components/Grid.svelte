@@ -26,14 +26,9 @@ character units.
 <script lang="ts">
 	import { alignToGrid, toCharUnit, validateGridUnit } from '$lib/utils/grid';
 
-	const {
-		cols = 1,
-		gap = 2,
-		children
-	} = $props<{
+	const { cols = 1, gap = 4 } = $props<{
 		cols?: number;
 		gap?: number;
-		children?: () => unknown;
 	}>();
 
 	// Validate inputs are whole numbers
@@ -50,23 +45,15 @@ character units.
 	const gridGap = $derived(toCharUnit(gap));
 </script>
 
-<div
-	class="grid"
-	style="
-
---grid-template: {gridTemplate}; --grid-gap: {gridGap}"
->
-	{children?.()}
+<div class="grid" style:--cols={cols} style:--gap={`var(--ch${gap})`}>
+	<slot />
 </div>
 
 <style>
 	.grid {
 		display: grid;
-		grid-template-columns: var(--grid-template);
-		gap: var(--grid-gap);
-		width: fit-content;
-		min-width: 0;
-		max-width: 100%;
-		padding: 0 var(--ch2);
+		grid-template-columns: repeat(var(--cols), 1fr);
+		gap: var(--gap);
+		width: 100%;
 	}
 </style>
