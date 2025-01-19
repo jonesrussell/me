@@ -44,12 +44,12 @@ describe('NewsletterCTA', () => {
 	});
 
 	it('shows loading state during submission', async () => {
-		global.fetch = vi.fn().mockImplementation(
-			() =>
-				new Promise((resolve) =>
-					setTimeout(() => resolve({ ok: true }), 100)
-				)
-		);
+		global.fetch = vi
+			.fn()
+			.mockImplementation(
+				() =>
+					new Promise((resolve) => setTimeout(() => resolve({ ok: true }), 100))
+			);
 
 		const { container } = render(NewsletterCTA);
 		const input = container.querySelector(
