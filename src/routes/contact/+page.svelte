@@ -107,16 +107,16 @@
 
 	h1,
 	h2 {
+		margin-bottom: var(--ch2);
 		color: var(--accent-color);
 		font-size: var(--font-size-lg);
-		margin-bottom: var(--ch2);
 		font-weight: 500;
 	}
 
 	.description {
+		margin-bottom: var(--ch4);
 		color: var(--text-muted);
 		font-size: var(--font-size-base);
-		margin-bottom: var(--ch4);
 		line-height: var(--line-height-relaxed);
 	}
 
@@ -128,15 +128,15 @@
 
 	.link {
 		display: flex;
-		align-items: center;
 		gap: var(--ch);
+		align-items: center;
 		padding: var(--ch) var(--ch2);
-		background: var(--bg-alt);
 		border: 1px solid var(--border-color);
 		border-radius: var(--radius-sm);
+		background: var(--bg-alt);
 		color: var(--text-color);
-		text-decoration: none;
 		font-size: var(--font-size-sm);
+		text-decoration: none;
 		transition: all 0.2s ease;
 	}
 
@@ -157,8 +157,8 @@
 
 	label {
 		display: block;
-		color: var(--text-muted);
 		margin-bottom: var(--ch);
+		color: var(--text-muted);
 		font-size: var(--font-size-sm);
 	}
 
@@ -166,9 +166,9 @@
 	textarea {
 		width: 100%;
 		padding: var(--ch) var(--ch2);
-		background: var(--bg-alt);
 		border: 1px solid var(--border-color);
 		border-radius: var(--radius-sm);
+		background: var(--bg-alt);
 		color: var(--text-color);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
@@ -190,18 +190,18 @@
 
 	button {
 		display: flex;
-		align-items: center;
 		gap: var(--ch);
+		align-items: center;
 		padding: var(--ch) var(--ch2);
-		background: var(--accent-color);
 		border: none;
 		border-radius: var(--radius-sm);
+		background: var(--accent-color);
 		color: var(--bg-darker);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
 		font-weight: 500;
-		cursor: pointer;
 		transition: all 0.2s ease;
+		cursor: pointer;
 	}
 
 	button:hover {

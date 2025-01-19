@@ -156,7 +156,11 @@
 							{#each ['width', 'height', 'padding', 'margin', 'color', 'background-color', 'font-size', 'display', 'position'] as prop}
 								<p>
 									{prop}:
-									<code>{debugInfo.computedStyles[prop as any] || '−'}</code>
+									<code
+										>{debugInfo.computedStyles[
+											prop as keyof CSSStyleDeclaration
+										] || '−'}</code
+									>
 								</p>
 							{/each}
 						</div>
@@ -181,21 +185,21 @@
 <style>
 	.debug-icon {
 		position: fixed;
-		bottom: 2rem;
 		right: 2rem;
-		background: var(--bg-darker);
-		border: 2px solid var(--accent-color);
-		border-radius: 50%;
+		bottom: 2rem;
+		z-index: 9999;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		width: 3rem;
 		height: 3rem;
-		font-size: 1.5rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		z-index: 9999;
-		transition: all 0.2s ease;
 		padding: 0;
+		border: 2px solid var(--accent-color);
+		border-radius: 50%;
+		background: var(--bg-darker);
+		font-size: 1.5rem;
+		transition: all 0.2s ease;
+		cursor: pointer;
 		box-shadow: var(--shadow-lg);
 	}
 
@@ -207,18 +211,18 @@
 
 	.debug-panel {
 		position: fixed;
-		bottom: 2rem;
 		right: 2rem;
-		background: var(--bg-darker);
+		bottom: 2rem;
+		z-index: 9999;
+		width: 600px;
 		border: 2px solid var(--accent-color);
 		border-radius: var(--radius-md);
-		width: 600px;
-		font-size: 1rem;
+		background: var(--bg-darker);
 		font-family: var(--font-mono);
-		box-shadow: var(--shadow-lg);
-		z-index: 9999;
-		opacity: 0.98;
+		font-size: 1rem;
 		transition: all 0.2s ease;
+		box-shadow: var(--shadow-lg);
+		opacity: 0.98;
 	}
 
 	.debug-panel:hover {
@@ -235,9 +239,9 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: 1rem;
+		border-radius: var(--radius-md) var(--radius-md) 0 0;
 		background: var(--accent-color-transparent);
 		border-bottom: 2px solid var(--accent-color);
-		border-radius: var(--radius-md) var(--radius-md) 0 0;
 	}
 
 	.header-controls {
@@ -247,13 +251,13 @@
 	}
 
 	.debug-header h3 {
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
 		margin: 0;
+		color: var(--accent-color);
 		font-size: 1.2rem;
 		font-weight: bold;
-		color: var(--accent-color);
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
 	}
 
 	.locked {
@@ -262,13 +266,13 @@
 	}
 
 	.debug-header button {
-		background: none;
-		border: none;
-		color: var(--accent-color);
-		cursor: pointer;
-		font-size: 1.5rem;
 		padding: 0 0.5rem;
+		border: none;
+		background: none;
+		color: var(--accent-color);
+		font-size: 1.5rem;
 		transition: color 0.2s ease;
+		cursor: pointer;
 	}
 
 	.unlock-btn {
@@ -285,17 +289,17 @@
 	}
 
 	.debug-content {
-		padding: 1rem;
 		max-height: 600px;
+		padding: 1rem;
 		overflow-y: auto;
 	}
 
 	.section {
 		margin-bottom: 1.5rem;
 		padding: 1rem;
-		background: var(--bg-alt);
-		border-radius: var(--radius-sm);
 		border: 1px solid var(--border-color);
+		border-radius: var(--radius-sm);
+		background: var(--bg-alt);
 	}
 
 	.section:last-child {
@@ -303,11 +307,11 @@
 	}
 
 	.section h4 {
-		margin: 0 0 1rem 0;
-		font-size: 1rem;
-		color: var(--accent-color);
-		border-bottom: 1px solid var(--border-color);
+		margin: 0 0 1rem;
 		padding-bottom: 0.5rem;
+		color: var(--accent-color);
+		font-size: 1rem;
+		border-bottom: 1px solid var(--border-color);
 	}
 
 	.scroll-container {
@@ -317,29 +321,29 @@
 	}
 
 	p {
+		display: flex;
+		gap: 1.5rem;
+		justify-content: space-between;
 		margin: 0.5rem 0;
 		line-height: 1.5;
-		display: flex;
-		justify-content: space-between;
-		gap: 1.5rem;
 	}
 
 	code {
-		color: var(--accent-color);
-		background: var(--bg-darker);
 		padding: 0.25rem 0.5rem;
-		border-radius: var(--radius-sm);
-		word-break: break-all;
 		border: 1px solid var(--border-color);
+		border-radius: var(--radius-sm);
+		background: var(--bg-darker);
+		color: var(--accent-color);
+		word-break: break-all;
 	}
 
 	:global(.debug-highlight) {
 		position: absolute;
-		pointer-events: none;
+		z-index: 9998;
 		border: 2px solid var(--accent-color);
 		border-radius: var(--radius-sm);
 		background: color-mix(in srgb, var(--accent-color) 10%, transparent);
-		z-index: 9998;
 		transition: all 0.2s ease;
+		pointer-events: none;
 	}
 </style>

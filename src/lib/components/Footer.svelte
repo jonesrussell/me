@@ -24,9 +24,9 @@
 <style>
 	.footer {
 		padding: var(--ch2) 0;
+		font-size: 0.875rem;
 		text-align: center;
 		border-top: calc(1 * var(--ch) / 16) solid var(--border-color);
-		font-size: 0.875rem;
 	}
 
 	.container {
