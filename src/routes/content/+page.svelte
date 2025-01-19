@@ -19,18 +19,20 @@
 	const projects: Project[] = [
 		{
 			title: 'MP Emailer',
-			description: 'A web app that helps constituents easily contact their MPs through email campaigns on important issues.',
+			description:
+				'A web app that helps constituents easily contact their MPs through email campaigns on important issues.',
 			tech: ['Go', 'Echo', 'MariaDB', 'Tailwind CSS', 'JWT'],
 			url: 'https://github.com/jonesrussell/mp-emailer',
 			status: 'active'
-		},
+		}
 		// ... existing projects
 	];
 
 	const videos: Video[] = [
 		{
 			title: 'The Legend Reborn - AI Generated Trailer',
-			description: 'Journey with Nanabush and witness the story of the Anishinaabe in this AI-generated trailer celebrating Indigenous storytelling.',
+			description:
+				'Journey with Nanabush and witness the story of the Anishinaabe in this AI-generated trailer celebrating Indigenous storytelling.',
 			topics: ['AI Generated', 'Indigenous', 'Anishinaabe', 'Native American'],
 			url: 'https://www.youtube.com/watch?v=7Pvq7hQ3l84',
 			embedId: '7Pvq7hQ3l84',
@@ -38,7 +40,8 @@
 		},
 		{
 			title: 'Red Helmet - Stop Motion Trailer',
-			description: 'A wanderer comes across a red helmet, origin unknown. Little does he know, the helmet is imbued with a powerful entity that embarks on a journey of its own.',
+			description:
+				'A wanderer comes across a red helmet, origin unknown. Little does he know, the helmet is imbued with a powerful entity that embarks on a journey of its own.',
 			topics: ['Stop Motion', 'Short Film', 'Indie Film', 'Original Story'],
 			url: 'https://www.youtube.com/watch?v=Bky1A8vNUjU',
 			embedId: 'Bky1A8vNUjU',
@@ -51,7 +54,8 @@
 </script>
 
 <svelte:head>
-	<title>Content & Projects | Russell Jones - Go & Modern Web Development</title>
+	<title>Content & Projects | Russell Jones - Go & Modern Web Development</title
+	>
 	<meta
 		name="description"
 		content="Explore my open source projects, technical videos, and educational content about Go, JavaScript, and modern web development."
@@ -61,7 +65,8 @@
 <section class="content">
 	<h1>Content & Projects</h1>
 	<p class="intro">
-		Here you'll find my open source projects, technical videos, and educational content.
+		Here you'll find my open source projects, technical videos, and educational
+		content.
 	</p>
 
 	<h2>Featured Videos</h2>
