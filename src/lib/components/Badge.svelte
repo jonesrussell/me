@@ -12,15 +12,11 @@
 		warning: '⚠',
 		error: '✗'
 	};
-
-	console.log('Badge props:', { type, children });
-	$effect(() => {
-		console.log('Badge children render attempt:', children?.());
-	});
 </script>
 
 <span class="badge {type}">
-	[{symbols[type as BadgeType]}] {@render children()}
+	{symbols[type as BadgeType]}
+	{@render children()}
 </span>
 
 <style>
