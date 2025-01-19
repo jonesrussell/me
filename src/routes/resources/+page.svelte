@@ -130,6 +130,13 @@
 			category: 'DevOps'
 		},
 		{
+			title: 'Docker Compose',
+			url: 'https://docs.docker.com/compose/',
+			description: 'Define and run multi-container applications',
+			stars: 8500,
+			category: 'DevOps'
+		},
+		{
 			title: 'GitHub Actions',
 			url: 'https://github.com/features/actions',
 			description: 'Automate your software workflows',
@@ -140,13 +147,6 @@
 			url: 'https://github.com/nektos/act',
 			description: 'Run GitHub Actions locally',
 			stars: 43800,
-			category: 'DevOps'
-		},
-		{
-			title: 'Docker Compose',
-			url: 'https://docs.docker.com/compose/',
-			description: 'Define and run multi-container applications',
-			stars: 8500,
 			category: 'DevOps'
 		},
 
@@ -320,10 +320,15 @@
 									{/if}
 								</div>
 								<p class="resource-description">{resource.description}</p>
-								<div class="url-preview">
+								<a
+									href={resource.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="url-preview"
+								>
 									<span class="url-icon">→</span>
 									<span class="url-text">{formatUrl(resource.url)}</span>
-								</div>
+								</a>
 							</div>
 						</Box>
 					{/each}
@@ -464,11 +469,23 @@
 		color: var(--text-muted);
 		font-family: var(--font-mono);
 		overflow: hidden;
+		text-decoration: none;
+		transition: all 0.2s ease;
+	}
+
+	.url-preview:hover {
+		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
+		color: var(--text-color);
+	}
+
+	.url-preview:hover .url-icon {
+		transform: translateX(2px);
 	}
 
 	.url-icon {
 		color: var(--accent-color);
 		flex-shrink: 0;
+		transition: transform 0.2s ease;
 	}
 
 	.url-text {
