@@ -16,7 +16,7 @@
 
 <span class="badge {badgeType}">
 	{symbols[badgeType]}
-	{@render children()}
+	{children()}
 </span>
 
 <style>
