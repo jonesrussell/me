@@ -1,5 +1,8 @@
 <script lang="ts">
-	import ResourceTree from '$lib/components/ResourceTree.svelte';
+	import Grid from '$lib/components/Grid.svelte';
+	import Box from '$lib/components/Box.svelte';
+	import Badge from '$lib/components/Badge.svelte';
+	import CodeBlock from '$lib/components/CodeBlock.svelte';
 
 	interface Resource {
 		title: string;
@@ -183,23 +186,43 @@
 		}
 	];
 
-	// Transform resources into tree structure
-	const treeData = {
-		name: 'resources/',
-		children: [...new Set(resources.map((r) => r.category))]
-			.sort()
-			.map((category) => ({
-				name: `${category.toLowerCase()}/`,
-				children: resources
+	// Group resources by category
+	const groupedResources = [...new Set(resources.map((r) => r.category))]
+		.sort()
+		.reduce(
+			(acc, category) => {
+				acc[category] = resources
 					.filter((r) => r.category === category)
-					.sort((a, b) => (b.stars || 0) - (a.stars || 0))
-					.map((resource) => ({
-						name: `${resource.title} ${resource.stars ? '★' + resource.stars : ''}`,
-						url: resource.url,
-						description: resource.description
-					}))
-			}))
-	};
+					.sort((a, b) => (b.stars || 0) - (a.stars || 0));
+				return acc;
+			},
+			{} as Record<string, Resource[]>
+		);
+
+	const GRID_GAP = 2; // Character units
+
+	function getCategoryIcon(category: string): string {
+		switch (category) {
+			case 'Documentation':
+				return '📚';
+			case 'Go':
+				return '🏃';
+			case 'Web Development':
+				return '🌐';
+			case 'DevOps':
+				return '🔄';
+			case 'Tools':
+				return '🛠️';
+			case 'Learning Paths':
+				return '🎓';
+			default:
+				return '📦';
+		}
+	}
+
+	function formatUrl(url: string): string {
+		return url.replace(/^https?:\/\//, '');
+	}
 </script>
 
 <svelte:head>
@@ -212,13 +235,50 @@
 </svelte:head>
 
 <div class="resources">
-	<h1>Development Resources</h1>
-	<p class="description">
-		A curated and continuously expanding collection of tools, documentation, and
-		learning materials. Updated regularly with new discoveries and community
-		recommendations.
-	</p>
-	<ResourceTree data={treeData} />
+	<header>
+		<h1>Development Resources</h1>
+		<p class="description">
+			A curated and continuously expanding collection of tools, documentation,
+			and learning materials. Updated regularly with new discoveries and
+			community recommendations.
+		</p>
+	</header>
+
+	<Grid cols={2} gap={8}>
+		{#each Object.entries(groupedResources) as [category, items]}
+			<section class="category">
+				<h2>
+					<span class="icon">{getCategoryIcon(category)}</span>
+					{category}
+				</h2>
+				<Grid cols={1} gap={2}>
+					{#each items as resource}
+						<Box>
+							<div class="resource">
+								<div class="resource-header">
+									<a
+										href={resource.url}
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										{resource.title}
+									</a>
+									{#if resource.stars}
+										<Badge>★ {resource.stars.toLocaleString()}</Badge>
+									{/if}
+								</div>
+								<p class="resource-description">{resource.description}</p>
+								<div class="url-preview">
+									<span class="url-icon">→</span>
+									<span class="url-text">{formatUrl(resource.url)}</span>
+								</div>
+							</div>
+						</Box>
+					{/each}
+				</Grid>
+			</section>
+		{/each}
+	</Grid>
 </div>
 
 <style>
@@ -230,19 +290,120 @@
 		font-family: var(--font-mono);
 	}
 
+	header {
+		margin-bottom: var(--ch8);
+		text-align: center;
+	}
+
 	h1 {
 		margin: 0;
-		font-size: var(--font-size-xl);
+		font-size: var(--font-size-2xl);
 		line-height: var(--line-height-tight);
 		color: var(--accent-color);
 		font-weight: 500;
+		background: linear-gradient(
+			to right,
+			var(--accent-color),
+			var(--accent-color-hover)
+		);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
 	}
 
 	.description {
-		margin: var(--ch2) 0 var(--ch4);
+		margin: var(--ch2) auto 0;
 		color: var(--text-muted);
 		font-size: var(--font-size-base);
 		line-height: var(--line-height-relaxed);
 		max-width: 80ch;
+	}
+
+	.category {
+		margin-bottom: var(--ch4);
+	}
+
+	.category h2 {
+		display: flex;
+		align-items: center;
+		gap: var(--ch2);
+		margin: 0 0 var(--ch4);
+		font-size: var(--font-size-lg);
+		color: var(--text-color);
+		font-weight: 500;
+	}
+
+	.icon {
+		font-size: var(--font-size-xl);
+	}
+
+	.resource {
+		display: grid;
+		gap: var(--ch2);
+	}
+
+	.resource-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--ch2);
+	}
+
+	.resource-header a {
+		color: var(--accent-color);
+		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.2s ease;
+	}
+
+	.resource-header a:hover {
+		color: var(--accent-color-hover);
+		text-decoration: none;
+	}
+
+	.resource-description {
+		color: var(--text-muted);
+		margin: 0;
+		font-size: var(--font-size-sm);
+		line-height: var(--line-height-relaxed);
+	}
+
+	.url-preview {
+		display: flex;
+		align-items: center;
+		gap: var(--ch);
+		padding: var(--ch) var(--ch2);
+		background: var(--bg-darker);
+		border-radius: var(--radius-sm);
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
+		font-family: var(--font-mono);
+	}
+
+	.url-icon {
+		color: var(--accent-color);
+	}
+
+	.url-text {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	@media (max-width: 767px) {
+		header {
+			margin-bottom: var(--ch4);
+		}
+
+		h1 {
+			font-size: var(--font-size-xl);
+		}
+
+		.category h2 {
+			font-size: var(--font-size-md);
+		}
+
+		:global(.resources > .grid) {
+			grid-template-columns: 1fr !important;
+		}
 	}
 </style>
