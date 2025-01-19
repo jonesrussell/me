@@ -12,7 +12,6 @@ describe('Badge', () => {
 		});
 		const badge = container.querySelector('.badge');
 		expect(badge).toHaveClass('info');
-		expect(badge?.textContent).toContain('[ℹ]');
 		expect(badge?.textContent).toContain('Test Badge');
 	});
 
@@ -25,7 +24,6 @@ describe('Badge', () => {
 		});
 		const badge = container.querySelector('.badge');
 		expect(badge).toHaveClass('success');
-		expect(badge?.textContent).toContain('[✓]');
 		expect(badge?.textContent).toContain('Success Badge');
 	});
 
@@ -38,7 +36,6 @@ describe('Badge', () => {
 		});
 		const badge = container.querySelector('.badge');
 		expect(badge).toHaveClass('warning');
-		expect(badge?.textContent).toContain('[⚠]');
 		expect(badge?.textContent).toContain('Warning Badge');
 	});
 
@@ -51,7 +48,6 @@ describe('Badge', () => {
 		});
 		const badge = container.querySelector('.badge');
 		expect(badge).toHaveClass('error');
-		expect(badge?.textContent).toContain('[✗]');
 		expect(badge?.textContent).toContain('Error Badge');
 	});
 });

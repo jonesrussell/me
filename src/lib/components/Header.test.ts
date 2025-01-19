@@ -37,7 +37,7 @@ describe('Header', () => {
 		const linkTexts = Array.from(navLinks || []).map(
 			(link) => link.textContent
 		);
-		expect(linkTexts).toEqual(['Blog', 'Projects', 'Resources', 'Contact']);
+		expect(linkTexts).toEqual(['Blog', 'Content', 'Resources', 'Contact']);
 	});
 
 	it('marks active navigation item', () => {
