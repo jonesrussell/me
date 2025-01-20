@@ -34,26 +34,46 @@
 </div>
 
 <style>
+	:root {
+		--box-border-width: 0.125ch;
+		--box-shadow-sm: 0 0.125ch 0.25ch;
+		--box-shadow-md: 0 0.25ch 0.5ch;
+		--box-shadow-opacity-sm: 0.1;
+		--box-shadow-opacity-md: 0.15;
+		--box-translate-y: -0.125ch;
+	}
+
 	.box {
 		width: var(--box-width);
 		min-width: var(--box-width);
 		max-width: var(--box-width);
-		border: 1px solid color-mix(in srgb, var(--text-muted) 20%, transparent);
+		border: var(--box-border-width) solid
+			color-mix(in srgb, var(--text-muted) 20%, transparent);
 		border-radius: var(--radius-md);
 		background: color-mix(in srgb, var(--bg-darker) 30%, transparent);
 		font-family: var(--font-mono);
 		line-height: var(--line-height-tight);
 		transition:
-			transform 0.2s ease,
-			box-shadow 0.2s ease;
+			transform var(--transition-duration) var(--transition-timing),
+			box-shadow var(--transition-duration) var(--transition-timing);
 		overflow-wrap: break-word;
 		word-break: break-word;
-		box-shadow: 0 1px 2px color-mix(in srgb, black 10%, transparent);
+		box-shadow: var(--box-shadow-sm)
+			color-mix(
+				in srgb,
+				var(--shadow-color) var(--box-shadow-opacity-sm),
+				transparent
+			);
 	}
 
 	.box:hover {
-		transform: translateY(-1px);
-		box-shadow: 0 2px 4px color-mix(in srgb, black 15%, transparent);
+		transform: translateY(var(--box-translate-y));
+		box-shadow: var(--box-shadow-md)
+			color-mix(
+				in srgb,
+				var(--shadow-color) var(--box-shadow-opacity-md),
+				transparent
+			);
 	}
 
 	.box-frame {
@@ -66,7 +86,7 @@
 		padding: var(--ch2) var(--ch4);
 		color: var(--text-muted);
 		font-weight: 500;
-		border-bottom: 1px solid
+		border-bottom: var(--box-border-width) solid
 			color-mix(in srgb, var(--text-muted) 15%, transparent);
 	}
 

@@ -92,6 +92,12 @@
 </div>
 
 <style>
+	:root {
+		--contact-border-width: 0.125ch;
+		--contact-focus-shadow: 0.25ch;
+		--contact-button-translate: -0.25ch;
+	}
+
 	.contact {
 		width: 100%;
 		max-width: var(--contact-width);
@@ -131,13 +137,13 @@
 		gap: var(--ch);
 		align-items: center;
 		padding: var(--ch) var(--ch2);
-		border: 1px solid var(--border-color);
+		border: var(--contact-border-width) solid var(--border-color);
 		border-radius: var(--radius-sm);
 		background: var(--bg-alt);
 		color: var(--text-color);
 		font-size: var(--font-size-sm);
 		text-decoration: none;
-		transition: all 0.2s ease;
+		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.link:hover {
@@ -166,26 +172,27 @@
 	textarea {
 		width: 100%;
 		padding: var(--ch) var(--ch2);
-		border: 1px solid var(--border-color);
+		border: var(--contact-border-width) solid var(--border-color);
 		border-radius: var(--radius-sm);
 		background: var(--bg-alt);
 		color: var(--text-color);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
-		transition: all 0.2s ease;
-	}
-
-	input:focus,
-	textarea:focus {
-		outline: none;
-		border-color: var(--accent-color);
-		box-shadow: 0 0 0 2px var(--accent-color-transparent);
+		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	textarea {
 		height: 12ch;
 		resize: vertical;
 		line-height: var(--line-height-relaxed);
+	}
+
+	input:focus,
+	textarea:focus {
+		outline: none;
+		border-color: var(--accent-color);
+		box-shadow: 0 0 0 var(--contact-focus-shadow)
+			var(--accent-color-transparent);
 	}
 
 	button {
@@ -200,13 +207,13 @@
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
 		font-weight: 500;
-		transition: all 0.2s ease;
+		transition: all var(--transition-duration) var(--transition-timing);
 		cursor: pointer;
 	}
 
 	button:hover {
 		background: var(--accent-color-hover);
-		transform: translateY(-2px);
+		transform: translateY(var(--contact-button-translate));
 	}
 
 	button .icon {
