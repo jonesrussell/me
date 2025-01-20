@@ -24,7 +24,7 @@
 <style>
 	.footer {
 		padding: var(--ch2) 0;
-		font-size: 0.875rem;
+		font-size: var(--font-size-sm);
 		text-align: center;
 		border-top: calc(1 * var(--ch) / 16) solid var(--border-color);
 	}
