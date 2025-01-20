@@ -25,6 +25,10 @@
 </div>
 
 <style>
+	:root {
+		--layout-border-width: 0.125ch;
+	}
+
 	.layout {
 		display: flex;
 		flex-direction: column;
@@ -52,7 +56,7 @@
 	.newsletter-section {
 		padding: var(--ch4) 0;
 		background: var(--bg-alt);
-		border-top: 1px solid var(--border-color);
+		border-top: var(--layout-border-width) solid var(--border-color);
 	}
 
 	.container {

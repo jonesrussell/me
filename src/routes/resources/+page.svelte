@@ -234,9 +234,9 @@
 	}
 
 	// Debug layout
-	let containerWidth = 0;
-	let columnCount = 0;
-	let categoryWidths: Record<string, number> = {};
+	let containerWidth = $state(0);
+	let columnCount = $state(0);
+	let categoryWidths = $state<Record<string, number>>({});
 
 	onMount(() => {
 		const resizeObserver = new ResizeObserver((entries) => {
@@ -253,7 +253,10 @@
 				if (entry.target.classList.contains('category')) {
 					const category =
 						entry.target.querySelector('h2')?.textContent?.trim() || 'unknown';
-					categoryWidths[category] = entry.contentRect.width;
+					categoryWidths = {
+						...categoryWidths,
+						[category]: entry.contentRect.width
+					};
 					console.log('Category width:', category, entry.contentRect.width);
 				}
 			}
@@ -286,22 +289,22 @@
 </svelte:head>
 
 <div class="resources">
-	<header>
+	<div class="header">
 		<h1>Development Resources</h1>
-		<p class="description">
+		<p class="subtitle">
 			A curated and continuously expanding collection of tools, documentation,
 			and learning materials. Updated regularly with new discoveries and
 			community recommendations.
 		</p>
-	</header>
+	</div>
 
 	<div class="categories">
 		{#each Object.entries(groupedResources) as [category, items]}
 			<section class="category">
-				<h2>
-					<span class="icon">{getCategoryIcon(category)}</span>
-					{category}
-				</h2>
+				<div class="category-header">
+					<span class="category-icon">{getCategoryIcon(category)}</span>
+					<h2 class="category-title">{category}</h2>
+				</div>
 				<div class="resource-list">
 					{#each items as resource}
 						<Box width={60}>
@@ -335,18 +338,35 @@
 			</section>
 		{/each}
 	</div>
+
+	{#if import.meta.env.DEV}
+		<div class="debug">
+			<p>Container width: {containerWidth}px</p>
+			<p>Column count: {columnCount}</p>
+			<p>Category widths:</p>
+			<ul>
+				{#each Object.entries(categoryWidths) as [category, width]}
+					<li>{category}: {width}px</li>
+				{/each}
+			</ul>
+		</div>
+	{/if}
 </div>
 
 <style>
-	.resources {
-		width: 100%;
-		max-width: 1400px;
-		margin: 0 auto;
-		padding: var(--ch4) var(--content-padding);
-		font-family: var(--font-mono);
+	:root {
+		--resource-border-width: 0.125ch;
+		--resource-translate: 0.25ch;
 	}
 
-	header {
+	.resources {
+		width: 100%;
+		max-width: var(--content-max-width);
+		margin: 0 auto;
+		padding: var(--ch4) var(--content-padding);
+	}
+
+	.header {
 		margin-bottom: var(--ch8);
 		text-align: center;
 	}
@@ -366,100 +386,54 @@
 		-webkit-text-fill-color: transparent;
 	}
 
-	.description {
-		max-width: 80ch;
+	.subtitle {
 		margin: var(--ch2) auto 0;
 		color: var(--text-muted);
-		font-size: var(--font-size-base);
+		font-size: var(--font-size-lg);
 		line-height: var(--line-height-relaxed);
 	}
 
 	.categories {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(65ch, 1fr));
-		gap: var(--ch6);
-		place-items: start center;
-		margin-top: var(--ch4);
+		grid-template-columns: repeat(auto-fit, minmax(45ch, 1fr));
+		gap: var(--ch4);
 	}
 
 	.category {
 		display: flex;
 		flex-direction: column;
-		width: 100%;
-		min-width: 0;
-		max-width: 65ch;
-		margin-bottom: 0;
+		gap: var(--ch4);
 	}
 
-	.category h2 {
-		position: sticky;
-		top: var(--ch2);
-		z-index: 1;
+	.category-header {
 		display: flex;
 		gap: var(--ch2);
 		align-items: center;
-		width: 100%;
-		margin: 0 0 var(--ch2);
-		padding: var(--ch) 0;
-		background: var(--bg-color);
-		color: var(--text-color);
-		font-size: var(--font-size-lg);
-		font-weight: 500;
-		backdrop-filter: blur(8px);
+		margin-bottom: var(--ch2);
 	}
 
-	.icon {
-		font-size: var(--font-size-xl);
-		line-height: 1;
+	.category-title {
+		margin: 0;
+		color: var(--accent-color);
+		font-size: var(--font-size-lg);
+		font-weight: 500;
+	}
+
+	.category-icon {
+		font-size: var(--font-size-lg);
 	}
 
 	.resource-list {
-		display: grid;
-		gap: var(--ch2);
-		width: 100%;
-	}
-
-	.resource {
-		display: grid;
-		gap: var(--ch2);
-	}
-
-	.resource-header {
 		display: flex;
-		flex-wrap: wrap;
+		flex-direction: column;
 		gap: var(--ch2);
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	.resource-header a {
-		color: var(--accent-color);
-		font-size: var(--font-size-base);
-		font-weight: 500;
-		text-decoration: none;
-		transition: color 0.2s ease;
-		overflow-wrap: break-word;
-		word-break: break-word;
-	}
-
-	.resource-header a:hover {
-		color: var(--accent-color-hover);
-		text-decoration: none;
-	}
-
-	.resource-description {
-		margin: 0;
-		color: var(--text-muted);
-		font-size: var(--font-size-sm);
-		line-height: var(--line-height-relaxed);
-		overflow-wrap: break-word;
-		word-break: break-word;
 	}
 
 	.url-preview {
 		display: flex;
 		gap: var(--ch);
 		align-items: center;
+		width: fit-content;
 		padding: var(--ch) var(--ch2);
 		border-radius: var(--radius-sm);
 		background: var(--bg-darker);
@@ -467,7 +441,7 @@
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		text-decoration: none;
-		transition: all 0.2s ease;
+		transition: all var(--transition-duration) var(--transition-timing);
 		overflow: hidden;
 	}
 
@@ -476,38 +450,26 @@
 		color: var(--text-color);
 	}
 
-	.url-preview:hover .url-icon {
-		transform: translateX(2px);
-	}
-
 	.url-icon {
 		color: var(--accent-color);
-		flex-shrink: 0;
-		transition: transform 0.2s ease;
+		transition: transform var(--transition-duration) var(--transition-timing);
 	}
 
-	.url-text {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		min-width: 0;
+	.url-preview:hover .url-icon {
+		transform: translateX(var(--resource-translate));
 	}
 
-	@media (width <= 767px) {
-		header {
-			margin-bottom: var(--ch4);
-		}
-
-		h1 {
-			font-size: var(--font-size-xl);
-		}
-
-		.category h2 {
-			font-size: var(--font-size-md);
-		}
-
-		.resources {
-			padding: var(--ch2) var(--content-padding);
-		}
+	.debug {
+		position: fixed;
+		bottom: var(--ch4);
+		left: var(--ch4);
+		padding: var(--ch2);
+		border: var(--resource-border-width) solid var(--border-color);
+		border-radius: var(--radius-sm);
+		background: var(--bg-darker);
+		color: var(--text-muted);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		opacity: 0.8;
 	}
 </style>

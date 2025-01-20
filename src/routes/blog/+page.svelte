@@ -97,9 +97,13 @@
 </div>
 
 <style>
+	:root {
+		--blog-url-translate: 0.25ch;
+	}
+
 	.blog {
 		width: 100%;
-		max-width: 1400px;
+		max-width: var(--content-max-width);
 		margin: 0 auto;
 		padding: var(--ch4) var(--content-padding);
 		font-family: var(--font-mono);
@@ -140,7 +144,7 @@
 	.source-note a {
 		color: var(--accent-color);
 		text-decoration: none;
-		transition: color 0.2s ease;
+		transition: color var(--transition-duration) var(--transition-timing);
 	}
 
 	.source-note a:hover {
@@ -178,13 +182,13 @@
 		line-height: var(--line-height-tight);
 	}
 
-	.post-header h2 a {
+	.post-header a {
 		color: var(--accent-color);
 		text-decoration: none;
-		transition: color 0.2s ease;
+		transition: color var(--transition-duration) var(--transition-timing);
 	}
 
-	.post-header h2 a:hover {
+	.post-header a:hover {
 		color: var(--accent-color-hover);
 	}
 
@@ -213,7 +217,7 @@
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		text-decoration: none;
-		transition: all 0.2s ease;
+		transition: all var(--transition-duration) var(--transition-timing);
 		overflow: hidden;
 	}
 
@@ -222,13 +226,13 @@
 		color: var(--text-color);
 	}
 
-	.url-preview:hover .url-icon {
-		transform: translateX(2px);
-	}
-
 	.url-icon {
 		color: var(--accent-color);
-		transition: transform 0.2s ease;
+		transition: transform var(--transition-duration) var(--transition-timing);
+	}
+
+	.url-preview:hover .url-icon {
+		transform: translateX(var(--blog-url-translate));
 	}
 
 	.sidebar {
