@@ -99,6 +99,10 @@
 <style>
 	:root {
 		--blog-url-translate: 0.25ch;
+		--blog-image-width-sm: 33.5ch;
+		--blog-image-width-lg: 34.75ch;
+		--blog-breakpoint-md: 95ch;
+		--blog-breakpoint-lg: 150ch;
 	}
 
 	.blog {
@@ -135,22 +139,6 @@
 		font-size: var(--font-size-lg);
 	}
 
-	.source-note {
-		margin: var(--ch2) auto 0;
-		color: var(--text-muted);
-		font-size: var(--font-size-base);
-	}
-
-	.source-note a {
-		color: var(--accent-color);
-		text-decoration: none;
-		transition: color var(--transition-duration) var(--transition-timing);
-	}
-
-	.source-note a:hover {
-		color: var(--accent-color-hover);
-	}
-
 	.content {
 		display: grid;
 		grid-template-columns: 1fr auto;
@@ -174,22 +162,38 @@
 		gap: var(--ch4);
 		justify-content: space-between;
 		align-items: baseline;
+
+		h2 {
+			margin: 0;
+			font-size: var(--font-size-lg);
+			line-height: var(--line-height-tight);
+		}
+
+		a {
+			color: var(--accent-color);
+			text-decoration: none;
+			transition: color var(--transition-duration) var(--transition-timing);
+		}
+
+		&:hover {
+			color: var(--accent-color-hover);
+		}
 	}
 
-	.post-header h2 {
-		margin: 0;
-		font-size: var(--font-size-lg);
-		line-height: var(--line-height-tight);
-	}
+	.source-note {
+		margin: var(--ch2) auto 0;
+		color: var(--text-muted);
+		font-size: var(--font-size-base);
 
-	.post-header a {
-		color: var(--accent-color);
-		text-decoration: none;
-		transition: color var(--transition-duration) var(--transition-timing);
-	}
+		a {
+			color: var(--accent-color);
+			text-decoration: none;
+			transition: color var(--transition-duration) var(--transition-timing);
+		}
 
-	.post-header a:hover {
-		color: var(--accent-color-hover);
+		a:hover {
+			color: var(--accent-color-hover);
+		}
 	}
 
 	time {
@@ -255,7 +259,7 @@
 	}
 
 	.dev-to-screenshot {
-		width: 100%;
+		width: var(--blog-image-width-lg);
 		height: auto;
 		border-radius: var(--radius-sm);
 	}
@@ -265,7 +269,7 @@
 		font-size: var(--font-size-sm);
 	}
 
-	@media (width <= 1200px) {
+	@media (width <= var(--blog-breakpoint-lg)) {
 		.content {
 			grid-template-columns: 1fr;
 		}
@@ -275,7 +279,7 @@
 		}
 	}
 
-	@media (width <= 767px) {
+	@media (width <= var(--blog-breakpoint-md)) {
 		header {
 			margin-bottom: var(--ch4);
 		}
@@ -286,6 +290,10 @@
 
 		.blog {
 			padding: var(--ch2) var(--content-padding);
+		}
+
+		.dev-to-screenshot {
+			width: var(--blog-image-width-sm);
 		}
 	}
 </style>
