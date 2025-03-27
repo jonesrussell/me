@@ -63,6 +63,6 @@
 		"webdriverio": "^9.5.0"
 	},
 	"dependencies": {
-		"@fontsource/jetbrains-mono": "^5.1.2"
+		"@fontsource/jetbrains-mono": "^5.2.5"
 	}
 }
