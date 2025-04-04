@@ -28,13 +28,15 @@
 <div class="blog">
 	<header>
 		<div class="header-image">
-			<img
-				{...devToProfile}
-				alt="Russell Jones's DEV.to Profile"
-				class="dev-to-screenshot"
-				sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
-				fetchpriority="high"
-			/>
+			<a href={devToUrl} target="_blank" rel="noopener noreferrer">
+				<img
+					{...devToProfile}
+					alt="Russell Jones's DEV.to Profile"
+					class="dev-to-screenshot"
+					sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
+					fetchpriority="high"
+				/>
+			</a>
 		</div>
 		<h1>Web Developer Blog</h1>
 		<p class="subtitle">Open Source Enthusiast</p>
@@ -111,15 +113,20 @@
 		overflow: hidden;
 	}
 
+	.header-image a {
+		display: block;
+		transition: transform var(--transition-duration) var(--transition-timing);
+	}
+
+	.header-image a:hover {
+		transform: scale(1.02);
+	}
+
 	.dev-to-screenshot {
 		width: 100%;
 		height: auto;
 		border-radius: var(--radius-md);
-		transition: transform var(--transition-duration) var(--transition-timing);
-	}
-
-	.dev-to-screenshot:hover {
-		transform: scale(1.02);
+		display: block;
 	}
 
 	h1 {
