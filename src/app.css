@@ -441,8 +441,13 @@ button[disabled],
 [role='main'],
 [role='complementary'],
 [role='contentinfo'] {
-	margin: var(--ch4) 0;
-	padding: var(--ch2);
+	margin: 0;
+	padding: var(--ch2) 0;
+}
+
+/* Add spacing between main content and footer */
+[role='main'] {
+	margin-bottom: var(--ch4);
 }
 
 /* Ensure main content area is properly styled */
