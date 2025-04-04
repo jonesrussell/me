@@ -243,7 +243,7 @@
 
 	.button-icon {
 		font-size: var(--font-size-lg);
-		line-height: 1;
+		line-height: var(--line-height-tight);
 	}
 
 	.loading {
@@ -300,7 +300,7 @@
 		color: var(--color-error);
 	}
 
-	@media (width >= 600px) {
+	@media (width >= calc(37.5 * var(--ch))) {
 		.form-group {
 			flex-direction: row;
 			gap: var(--ch2);

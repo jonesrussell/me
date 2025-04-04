@@ -10,7 +10,7 @@
 		title?: string;
 		width?: number;
 		style?: string;
-		children: () => any;
+		children: () => import('svelte').ComponentType;
 	}>();
 
 	const alignedWidth = $derived(alignToGrid(width));
