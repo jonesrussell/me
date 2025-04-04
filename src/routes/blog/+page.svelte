@@ -105,6 +105,14 @@
 		text-align: center;
 	}
 
+	/* Base link styles */
+	.post-header a,
+	.source-note a {
+		color: var(--link-color);
+		text-decoration: none;
+		transition: color var(--transition-duration) var(--transition-timing);
+	}
+
 	/* Header image styles */
 	.header-image {
 		width: 100%;
@@ -121,21 +129,14 @@
 		overflow: hidden;
 	}
 
-	.header-image a:hover {
-		transform: scale(1.02);
-	}
-
-	/* Base link styles */
-	.post-header a,
-	.source-note a {
-		color: var(--link-color);
-		text-decoration: none;
-		transition: color var(--transition-duration) var(--transition-timing);
-	}
-
+	/* Hover states */
 	.post-header a:hover,
 	.source-note a:hover {
 		color: var(--accent-color-hover);
+	}
+
+	.header-image a:hover {
+		transform: scale(1.02);
 	}
 
 	.dev-to-screenshot {
