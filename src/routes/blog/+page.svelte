@@ -27,6 +27,15 @@
 
 <div class="blog">
 	<header>
+		<div class="header-image">
+			<img
+				{...devToProfile}
+				alt="Russell Jones's DEV.to Profile"
+				class="dev-to-screenshot"
+				sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
+				fetchpriority="high"
+			/>
+		</div>
 		<h1>Web Developer Blog</h1>
 		<p class="subtitle">Open Source Enthusiast</p>
 		<p class="source-note">
@@ -69,30 +78,6 @@
 				</Box>
 			{/each}
 		</div>
-
-		<div class="sidebar">
-			<Box width={32}>
-				<a
-					href={devToUrl}
-					class="dev-to-link"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<div class="dev-to-content">
-						<img
-							{...devToProfile}
-							alt="Russell Jones's DEV.to Profile"
-							class="dev-to-screenshot"
-							sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
-							fetchpriority="high"
-						/>
-						<span class="dev-to-text">
-							Read more articles on DEV.to/jonesrussell
-						</span>
-					</div>
-				</a>
-			</Box>
-		</div>
 	</div>
 </div>
 
@@ -116,6 +101,25 @@
 	header {
 		margin-bottom: var(--ch8);
 		text-align: center;
+	}
+
+	.header-image {
+		width: 100%;
+		max-width: var(--blog-image-width-lg);
+		margin: 0 auto var(--ch4);
+		border-radius: var(--radius-md);
+		overflow: hidden;
+	}
+
+	.dev-to-screenshot {
+		width: 100%;
+		height: auto;
+		border-radius: var(--radius-md);
+		transition: transform var(--transition-duration) var(--transition-timing);
+	}
+
+	.dev-to-screenshot:hover {
+		transform: scale(1.02);
 	}
 
 	h1 {
@@ -256,12 +260,6 @@
 		gap: var(--ch2);
 		align-items: center;
 		text-align: center;
-	}
-
-	.dev-to-screenshot {
-		width: var(--blog-image-width-lg);
-		height: auto;
-		border-radius: var(--radius-sm);
 	}
 
 	.dev-to-text {
