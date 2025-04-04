@@ -79,16 +79,16 @@
 					rel="noopener noreferrer"
 				>
 					<div class="dev-to-content">
-						<enhanced:img
-							src={devToProfile}
+						<img
+							{...devToProfile}
 							alt="Russell Jones's DEV.to Profile"
 							class="dev-to-screenshot"
 							sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
 							fetchpriority="high"
 						/>
-						<span class="dev-to-text"
-							>Read more articles on DEV.to/jonesrussell</span
-						>
+						<span class="dev-to-text">
+							Read more articles on DEV.to/jonesrussell
+						</span>
 					</div>
 				</a>
 			</Box>

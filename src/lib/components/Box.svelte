@@ -5,12 +5,12 @@
 		title = undefined,
 		width = 40,
 		style = '',
-		children = () => null
+		children
 	} = $props<{
 		title?: string;
 		width?: number;
 		style?: string;
-		children?: () => unknown;
+		children: () => any;
 	}>();
 
 	const alignedWidth = $derived(alignToGrid(width));
@@ -28,7 +28,7 @@
 		{/if}
 
 		<div class="content">
-			{children()}
+			{@render children()}
 		</div>
 	</div>
 </div>
