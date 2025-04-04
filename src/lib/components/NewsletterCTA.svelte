@@ -310,18 +310,4 @@
 			min-width: 15ch;
 		}
 	}
-
-	.debug {
-		position: fixed;
-		bottom: var(--ch4);
-		left: var(--ch4);
-		padding: var(--ch2);
-		border: var(--resource-border-width) solid var(--border-color);
-		border-radius: var(--radius-sm);
-		background: var(--bg-darker);
-		color: var(--text-muted);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
-		opacity: 0.8;
-	}
 </style>
