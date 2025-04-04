@@ -15,7 +15,7 @@
 <header class="site-header">
 	<div class="header-main">
 		<a href="/" class="title">Russell Jones</a>
-		<nav class="header-nav">
+		<nav class="header-nav" aria-label="Main navigation">
 			{#each navItems as item}
 				<a href={item.href} class:active={isActive(item.href)}>{item.text}</a>
 			{/each}
