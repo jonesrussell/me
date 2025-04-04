@@ -77,12 +77,13 @@
 	--bg-darker: hsl(222deg 18% 10%);
 	--bg-alt: hsl(222deg 18% 14%);
 	--text-color: hsl(0deg 0% 100%);
-	--text-muted: hsl(222deg 10% 85%);
+	--text-muted: hsl(222deg 10% 90%);
 	--border-color: hsl(222deg 18% 40%);
-	--link-color: hsl(213deg 94% 70%);
-	--link-hover: hsl(213deg 94% 80%);
-	--accent-color: hsl(156deg 84% 45%);
-	--accent-color-hover: hsl(156deg 84% 55%);
+	--link-color: hsl(213deg 94% 75%);
+	--link-hover: hsl(213deg 94% 85%);
+	--accent-color: hsl(156deg 84% 50%);
+	--accent-color-hover: hsl(156deg 84% 60%);
+	--accent-color-contrast: hsl(0deg 0% 0%);
 	--accent-color-transparent: color-mix(
 		in srgb,
 		var(--accent-color) 20%,
@@ -139,10 +140,13 @@ body {
 
 a {
 	color: var(--link-color);
-	text-decoration: none;
+	text-decoration: underline;
+	text-underline-offset: 0.2em;
+	transition: color var(--transition-duration) var(--transition-timing);
 }
 
 a:hover {
+	color: var(--link-hover);
 	text-decoration: underline;
 }
 
@@ -240,18 +244,14 @@ a:hover {
 	--bg-color: hsl(210deg 20% 98%);
 	--bg-darker: hsl(210deg 20% 96%);
 	--bg-alt: hsl(210deg 20% 99%);
-	--text-color: hsl(222deg 18% 10%);
-	--text-muted: hsl(222deg 10% 35%);
+	--text-color: hsl(222deg 18% 5%);
+	--text-muted: hsl(222deg 10% 25%);
 	--border-color: hsl(222deg 18% 85%);
-	--link-color: hsl(213deg 94% 35%);
-	--link-hover: hsl(213deg 94% 25%);
-	--accent-color: hsl(156deg 84% 30%);
-	--accent-color-hover: hsl(156deg 84% 25%);
-	--accent-color-transparent: color-mix(
-		in srgb,
-		var(--accent-color) 20%,
-		transparent
-	);
+	--link-color: hsl(213deg 94% 30%);
+	--link-hover: hsl(213deg 94% 20%);
+	--accent-color: hsl(156deg 84% 25%);
+	--accent-color-hover: hsl(156deg 84% 20%);
+	--accent-color-contrast: hsl(0deg 0% 100%);
 	--color-success: hsl(142deg 64% 30%);
 	--color-warning: hsl(43deg 90% 35%);
 	--color-error: hsl(0deg 84% 45%);
@@ -305,24 +305,44 @@ body::before {
 
 .specialty-title {
 	color: var(--text-color);
-	font-weight: 500;
+	font-weight: 600;
+	font-size: var(--font-size-lg);
 }
 
 .specialty {
 	color: var(--text-color);
+	background: color-mix(in srgb, var(--bg-darker) 95%, var(--accent-color));
+	padding: var(--ch2);
+	border-radius: var(--radius-md);
+	border: calc(var(--ch) / 16) solid var(--border-color);
 }
 
 .button-text {
-	color: var(--bg-darker);
-	font-weight: 500;
+	color: var(--accent-color-contrast);
+	font-weight: 600;
 }
 
 button {
 	background-color: var(--accent-color);
-	color: var(--bg-darker);
-	font-weight: 500;
+	color: var(--accent-color-contrast);
+	font-weight: 600;
+	padding: var(--ch2) var(--ch4);
+	border: none;
+	border-radius: var(--radius-md);
+	transition: all var(--transition-duration) var(--transition-timing);
+	font-size: var(--font-size-base);
+	line-height: var(--line-height-tight);
+	cursor: pointer;
+	box-shadow: var(--shadow-sm);
 }
 
 button:hover {
 	background-color: var(--accent-color-hover);
+	transform: translateY(calc(-1 * var(--ch) / 8));
+	box-shadow: var(--shadow-md);
+}
+
+button:focus-visible {
+	outline: calc(var(--ch) / 8) solid var(--accent-color);
+	outline-offset: calc(var(--ch) / 4);
 }
