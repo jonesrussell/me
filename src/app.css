@@ -142,7 +142,8 @@ a {
 	color: var(--link-color);
 	text-decoration: underline;
 	text-underline-offset: calc(var(--ch) / 5);
-	transition: color var(--transition-duration) var(--transition-timing);
+	transition: all 0.2s ease-in-out;
+	cursor: pointer;
 }
 
 a:hover {
@@ -326,14 +327,14 @@ button {
 	padding: var(--ch2) var(--ch4);
 	border: none;
 	border-radius: var(--radius-md);
+	background-color: var(--accent-color);
 	color: var(--accent-color-contrast);
 	font-size: var(--font-size-base);
 	font-weight: 600;
 	line-height: var(--line-height-tight);
-	transition: all var(--transition-duration) var(--transition-timing);
-	cursor: pointer;
-	background-color: var(--accent-color);
 	box-shadow: var(--shadow-sm);
+	cursor: pointer;
+	transition: all var(--transition-duration) var(--transition-timing);
 }
 
 button:hover {
