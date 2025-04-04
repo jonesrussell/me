@@ -72,25 +72,17 @@
 	--color-mix-medium: color-mix(in srgb, var(--text-color) 10%, transparent);
 	--color-mix-heavy: color-mix(in srgb, var(--text-color) 15%, transparent);
 
-	/* Shadows */
-	--shadow-sm: 0 calc(var(--ch) / 16) calc(2 * var(--ch) / 16)
-		var(--color-mix-medium);
-	--shadow-md: 0 calc(2 * var(--ch) / 16) calc(4 * var(--ch) / 16)
-		var(--color-mix-medium);
-	--shadow-lg: 0 calc(4 * var(--ch) / 16) calc(6 * var(--ch) / 16)
-		calc(-1 * var(--ch) / 16) var(--color-mix-medium);
-
-	/* Colors */
-	--bg-color: hsl(0deg 0% 10%);
-	--bg-darker: hsl(0deg 0% 8%);
-	--bg-alt: hsl(0deg 0% 12%);
+	/* Colors - Dark theme (default) */
+	--bg-color: hsl(222deg 18% 12%);
+	--bg-darker: hsl(222deg 18% 10%);
+	--bg-alt: hsl(222deg 18% 14%);
 	--text-color: hsl(0deg 0% 100%);
-	--text-muted: hsl(0deg 0% 75%);
-	--border-color: hsl(0deg 0% 40%);
-	--link-color: hsl(213deg 100% 65%);
-	--link-hover: hsl(213deg 100% 73%);
-	--accent-color: hsl(156deg 100% 50%);
-	--accent-color-hover: hsl(156deg 100% 60%);
+	--text-muted: hsl(222deg 10% 75%);
+	--border-color: hsl(222deg 18% 40%);
+	--link-color: hsl(213deg 94% 65%);
+	--link-hover: hsl(213deg 94% 73%);
+	--accent-color: hsl(156deg 84% 50%);
+	--accent-color-hover: hsl(156deg 84% 60%);
 	--accent-color-transparent: color-mix(
 		in srgb,
 		var(--accent-color) 20%,
@@ -100,6 +92,7 @@
 	--color-warning: hsl(43deg 90% 47%);
 	--color-error: hsl(0deg 84% 60%);
 	--color-info: hsl(217deg 91% 60%);
+	--shadow-color: hsl(222deg 18% 5%);
 
 	/* Add box-sizing reset */
 	box-sizing: border-box;
@@ -244,19 +237,61 @@ a:hover {
 [data-theme='light'] {
 	color-scheme: light;
 
-	--bg-color: hsl(0deg 0% 100%);
-	--bg-darker: hsl(0deg 0% 96%);
-	--bg-alt: hsl(0deg 0% 98%);
-	--text-color: hsl(0deg 0% 10%);
-	--text-muted: hsl(0deg 0% 40%);
-	--border-color: hsl(0deg 0% 90%);
-	--link-color: hsl(210deg 100% 40%);
-	--link-hover: hsl(210deg 100% 32%);
-	--accent-color: hsl(160deg 100% 40%);
-	--accent-color-hover: hsl(160deg 100% 32%);
+	--bg-color: hsl(210deg 20% 98%);
+	--bg-darker: hsl(210deg 20% 96%);
+	--bg-alt: hsl(210deg 20% 99%);
+	--text-color: hsl(222deg 18% 12%);
+	--text-muted: hsl(222deg 10% 45%);
+	--border-color: hsl(222deg 18% 85%);
+	--link-color: hsl(213deg 94% 45%);
+	--link-hover: hsl(213deg 94% 35%);
+	--accent-color: hsl(156deg 84% 35%);
+	--accent-color-hover: hsl(156deg 84% 30%);
 	--accent-color-transparent: color-mix(
 		in srgb,
 		var(--accent-color) 20%,
 		transparent
 	);
+	--color-success: hsl(142deg 64% 35%);
+	--color-warning: hsl(43deg 90% 37%);
+	--color-error: hsl(0deg 84% 50%);
+	--color-info: hsl(217deg 91% 50%);
+	--shadow-color: hsl(222deg 18% 20%);
+}
+
+/* Add subtle texture to backgrounds */
+body::before {
+	content: '';
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+	opacity: 0.015;
+	z-index: -1;
+}
+
+/* Add subtle gradient to boxes */
+.box {
+	background: linear-gradient(
+		to bottom right,
+		color-mix(in srgb, var(--bg-darker) 95%, var(--accent-color)),
+		var(--bg-darker)
+	);
+	box-shadow:
+		var(--shadow-md),
+		inset 0 1px color-mix(in srgb, var(--text-color) 3%, transparent);
+}
+
+.box:hover {
+	background: linear-gradient(
+		to bottom right,
+		color-mix(in srgb, var(--bg-darker) 92%, var(--accent-color)),
+		var(--bg-darker)
+	);
+	box-shadow:
+		var(--shadow-lg),
+		inset 0 1px color-mix(in srgb, var(--text-color) 5%, transparent);
 }
