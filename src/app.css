@@ -346,3 +346,113 @@ button:focus-visible {
 	outline: calc(var(--ch) / 8) solid var(--accent-color);
 	outline-offset: calc(var(--ch) / 4);
 }
+
+/* Accessibility Enhancements */
+.skip-link {
+	position: absolute;
+	top: -100px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: var(--accent-color);
+	color: var(--accent-color-contrast);
+	padding: var(--ch2) var(--ch4);
+	border-radius: 0 0 var(--radius-md) var(--radius-md);
+	text-decoration: none;
+	font-weight: 600;
+	z-index: 1000;
+	transition: top 0.2s ease-in-out;
+}
+
+.skip-link:focus {
+	top: 0;
+	outline: calc(var(--ch) / 8) solid var(--accent-color);
+	outline-offset: calc(var(--ch) / 4);
+}
+
+/* Focus Management */
+:focus {
+	outline: calc(var(--ch) / 8) solid var(--accent-color);
+	outline-offset: calc(var(--ch) / 4);
+}
+
+:focus:not(:focus-visible) {
+	outline: none;
+}
+
+:focus-visible {
+	outline: calc(var(--ch) / 8) solid var(--accent-color);
+	outline-offset: calc(var(--ch) / 4);
+	box-shadow: 0 0 0 calc(var(--ch) / 4) var(--accent-color-transparent);
+}
+
+/* Interactive Elements */
+button,
+a,
+input,
+select,
+textarea {
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+}
+
+/* Ensure sufficient touch target size */
+button,
+a {
+	min-height: var(--ch4);
+	min-width: var(--ch4);
+	padding: var(--ch) var(--ch2);
+}
+
+/* Keyboard focus indicators */
+button:focus-visible,
+a:focus-visible {
+	outline: calc(var(--ch) / 8) solid var(--accent-color);
+	outline-offset: calc(var(--ch) / 4);
+	box-shadow: 0 0 0 calc(var(--ch) / 4) var(--accent-color-transparent);
+}
+
+/* ARIA States */
+[aria-expanded='true'],
+[aria-selected='true'],
+[aria-current='page'] {
+	background-color: var(--accent-color-transparent);
+}
+
+[aria-disabled='true'] {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+/* Ensure proper contrast for disabled states */
+button[disabled],
+[aria-disabled='true'] {
+	background-color: var(--text-muted);
+	color: var(--bg-color);
+	cursor: not-allowed;
+}
+
+/* Hide elements from screen readers when appropriate */
+[aria-hidden='true'] {
+	display: none !important;
+}
+
+/* Ensure proper spacing for interactive elements */
+nav a,
+nav button {
+	margin: var(--ch);
+}
+
+/* Landmark styling */
+[role='banner'],
+[role='navigation'],
+[role='main'],
+[role='complementary'],
+[role='contentinfo'] {
+	margin: var(--ch4) 0;
+	padding: var(--ch2);
+}
+
+/* Ensure main content area is properly styled */
+#main-content:focus {
+	outline: none;
+}
