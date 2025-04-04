@@ -141,7 +141,7 @@ body {
 a {
 	color: var(--link-color);
 	text-decoration: underline;
-	text-underline-offset: 0.2em;
+	text-underline-offset: calc(var(--ch) / 5);
 	transition: color var(--transition-duration) var(--transition-timing);
 }
 
@@ -261,16 +261,16 @@ a:hover {
 
 /* Add subtle texture to backgrounds */
 body::before {
-	content: '';
 	position: fixed;
 	top: 0;
 	left: 0;
+	z-index: -1;
 	width: 100%;
 	height: 100%;
+	content: '';
 	pointer-events: none;
 	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 	opacity: 0.015;
-	z-index: -1;
 }
 
 /* Add subtle gradient to boxes */
@@ -305,16 +305,16 @@ body::before {
 
 .specialty-title {
 	color: var(--text-color);
-	font-weight: 600;
 	font-size: var(--font-size-lg);
+	font-weight: 600;
 }
 
 .specialty {
-	color: var(--text-color);
-	background: color-mix(in srgb, var(--bg-darker) 95%, var(--accent-color));
 	padding: var(--ch2);
-	border-radius: var(--radius-md);
 	border: calc(var(--ch) / 16) solid var(--border-color);
+	border-radius: var(--radius-md);
+	background: color-mix(in srgb, var(--bg-darker) 95%, var(--accent-color));
+	color: var(--text-color);
 }
 
 .button-text {
@@ -323,16 +323,16 @@ body::before {
 }
 
 button {
-	background-color: var(--accent-color);
-	color: var(--accent-color-contrast);
-	font-weight: 600;
 	padding: var(--ch2) var(--ch4);
 	border: none;
 	border-radius: var(--radius-md);
-	transition: all var(--transition-duration) var(--transition-timing);
+	color: var(--accent-color-contrast);
 	font-size: var(--font-size-base);
+	font-weight: 600;
 	line-height: var(--line-height-tight);
+	transition: all var(--transition-duration) var(--transition-timing);
 	cursor: pointer;
+	background-color: var(--accent-color);
 	box-shadow: var(--shadow-sm);
 }
 
@@ -350,17 +350,17 @@ button:focus-visible {
 /* Accessibility Enhancements */
 .skip-link {
 	position: absolute;
-	top: -100px;
+	top: calc(-25 * var(--ch));
 	left: 50%;
-	transform: translateX(-50%);
-	background: var(--accent-color);
-	color: var(--accent-color-contrast);
+	z-index: 1000;
 	padding: var(--ch2) var(--ch4);
 	border-radius: 0 0 var(--radius-md) var(--radius-md);
-	text-decoration: none;
+	background: var(--accent-color);
+	color: var(--accent-color-contrast);
 	font-weight: 600;
-	z-index: 1000;
+	text-decoration: none;
 	transition: top 0.2s ease-in-out;
+	transform: translateX(-50%);
 }
 
 .skip-link:focus {
@@ -391,15 +391,15 @@ a,
 input,
 select,
 textarea {
-	cursor: pointer;
 	transition: all 0.2s ease-in-out;
+	cursor: pointer;
 }
 
 /* Ensure sufficient touch target size */
 button,
 a {
-	min-height: var(--ch4);
 	min-width: var(--ch4);
+	min-height: var(--ch4);
 	padding: var(--ch) var(--ch2);
 }
 
@@ -436,7 +436,7 @@ button[disabled],
 	display: none !important;
 }
 
-/* Ensure proper spacing for interactive elements */
+/* Navigation styles */
 nav a,
 nav button {
 	margin: var(--ch);
