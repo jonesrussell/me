@@ -2,8 +2,8 @@
 
 # Core Development Guidelines
 branding:
-  - title: "Limitless Developer"
-  - description: "Building elegant solutions with modern web technologies"
+  - title: 'Limitless Developer'
+  - description: 'Building elegant solutions with modern web technologies'
 
 general_rules:
   - use_typescript: true
@@ -26,6 +26,7 @@ svelte_patterns:
   - use_typescript_for_props: true
   - keep_components_small: true
   - use_semantic_html: true
+  - use_render_instead_of_slots: true
 
 testing_guidelines:
   - write_unit_tests: true

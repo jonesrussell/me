@@ -71,7 +71,11 @@
 					{#if submitStatus === 'loading'}
 						<div class="loading">
 							<span>Subscribing</span>
-							<span class="dots">...</span>
+							<span class="dots">
+								<span class="dot">.</span>
+								<span class="dot">.</span>
+								<span class="dot">.</span>
+							</span>
 						</div>
 					{:else}
 						<span class="button-content">
@@ -214,6 +218,7 @@
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
 		font-weight: var(--font-weight-bold);
+		line-height: var(--line-height-tight);
 		transition: all 0.2s ease;
 		cursor: pointer;
 	}
@@ -244,26 +249,31 @@
 	.loading {
 		display: flex;
 		gap: var(--ch);
-		align-items: center;
 		justify-content: center;
+		align-items: center;
 	}
 
 	.dots {
-		animation: dots 1.4s infinite;
+		display: flex;
+		gap: calc(2 * var(--ch) / 16);
 	}
 
-	@keyframes dots {
-		0%,
-		20% {
-			content: '.';
-		}
-		40%,
-		60% {
-			content: '..';
-		}
-		80%,
-		100% {
-			content: '...';
+	.dot {
+		animation: pulse 1.4s infinite;
+		opacity: 0.3;
+	}
+
+	.dot:nth-child(2) {
+		animation-delay: 0.2s;
+	}
+
+	.dot:nth-child(3) {
+		animation-delay: 0.4s;
+	}
+
+	@keyframes pulse {
+		50% {
+			opacity: 1;
 		}
 	}
 
@@ -271,8 +281,8 @@
 	.error-message {
 		display: flex;
 		gap: var(--ch);
-		align-items: center;
 		justify-content: center;
+		align-items: center;
 		padding: var(--ch2);
 		border-radius: var(--radius-md);
 		font-size: var(--font-size-sm);
@@ -290,7 +300,7 @@
 		color: var(--color-error);
 	}
 
-	@media (min-width: 600px) {
+	@media (width >= 600px) {
 		.form-group {
 			flex-direction: row;
 			gap: var(--ch2);
@@ -299,5 +309,19 @@
 		button {
 			min-width: 15ch;
 		}
+	}
+
+	.debug {
+		position: fixed;
+		bottom: var(--ch4);
+		left: var(--ch4);
+		padding: var(--ch2);
+		border: var(--resource-border-width) solid var(--border-color);
+		border-radius: var(--radius-sm);
+		background: var(--bg-darker);
+		color: var(--text-muted);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		opacity: 0.8;
 	}
 </style>
