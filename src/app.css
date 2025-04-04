@@ -323,32 +323,74 @@ body::before {
 	font-weight: 600;
 }
 
+/* Interactive Elements */
+button,
+a,
+input,
+select,
+textarea {
+	transition: all 0.2s ease-in-out;
+	cursor: pointer;
+}
+
+/* Base button styles */
 button {
 	padding: var(--ch2) var(--ch4);
 	border: none;
 	border-radius: var(--radius-md);
+	background-color: var(--accent-color);
 	color: var(--accent-color-contrast);
 	font-size: var(--font-size-base);
 	font-weight: 600;
 	line-height: var(--line-height-tight);
-	transition: all var(--transition-duration) var(--transition-timing);
-	cursor: pointer;
-	background-color: var(--accent-color);
 	box-shadow: var(--shadow-sm);
+	cursor: pointer;
+	transition: all var(--transition-duration) var(--transition-timing);
 }
 
+/* Base link styles */
+a {
+	color: var(--link-color);
+	text-decoration: underline;
+	text-underline-offset: calc(var(--ch) / 5);
+	transition: all 0.2s ease-in-out;
+}
+
+/* Navigation styles */
+nav a,
+nav button {
+	margin: var(--ch);
+}
+
+/* Hover states */
 button:hover {
 	background-color: var(--accent-color-hover);
 	transform: translateY(calc(-1 * var(--ch) / 8));
 	box-shadow: var(--shadow-md);
 }
 
-button:focus-visible {
-	outline: calc(var(--ch) / 8) solid var(--accent-color);
-	outline-offset: calc(var(--ch) / 4);
+a:hover {
+	color: var(--link-hover);
+	text-decoration: underline;
 }
 
-/* Accessibility Enhancements */
+/* Focus states */
+button:focus-visible,
+a:focus-visible {
+	outline: calc(var(--ch) / 8) solid var(--accent-color);
+	outline-offset: calc(var(--ch) / 4);
+	box-shadow: 0 0 0 calc(var(--ch) / 4) var(--accent-color-transparent);
+}
+
+/* Ensure sufficient touch target size */
+button,
+a {
+	min-width: var(--ch4);
+	min-height: var(--ch4);
+	padding: var(--ch) var(--ch2);
+}
+
+/* Skip link */
 .skip-link {
 	position: absolute;
 	top: calc(-25 * var(--ch));
@@ -386,32 +428,6 @@ button:focus-visible {
 	box-shadow: 0 0 0 calc(var(--ch) / 4) var(--accent-color-transparent);
 }
 
-/* Interactive Elements */
-button,
-a,
-input,
-select,
-textarea {
-	transition: all 0.2s ease-in-out;
-	cursor: pointer;
-}
-
-/* Ensure sufficient touch target size */
-button,
-a {
-	min-width: var(--ch4);
-	min-height: var(--ch4);
-	padding: var(--ch) var(--ch2);
-}
-
-/* Keyboard focus indicators */
-button:focus-visible,
-a:focus-visible {
-	outline: calc(var(--ch) / 8) solid var(--accent-color);
-	outline-offset: calc(var(--ch) / 4);
-	box-shadow: 0 0 0 calc(var(--ch) / 4) var(--accent-color-transparent);
-}
-
 /* ARIA States */
 [aria-expanded='true'],
 [aria-selected='true'],
@@ -435,12 +451,6 @@ button[disabled],
 /* Hide elements from screen readers when appropriate */
 [aria-hidden='true'] {
 	display: none !important;
-}
-
-/* Navigation styles */
-nav a,
-nav button {
-	margin: var(--ch);
 }
 
 /* Landmark styling */
