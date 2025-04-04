@@ -114,8 +114,10 @@
 	}
 
 	.header-image a {
+		position: relative;
 		display: block;
-		transition: transform var(--transition-duration) var(--transition-timing);
+		border-radius: var(--radius-md);
+		overflow: hidden;
 	}
 
 	.header-image a:hover {
@@ -123,10 +125,10 @@
 	}
 
 	.dev-to-screenshot {
+		display: block;
 		width: 100%;
 		height: auto;
 		border-radius: var(--radius-md);
-		display: block;
 	}
 
 	h1 {
@@ -181,7 +183,7 @@
 		}
 
 		a {
-			color: var(--accent-color);
+			color: var(--link-color);
 			text-decoration: none;
 			transition: color var(--transition-duration) var(--transition-timing);
 		}
@@ -197,7 +199,7 @@
 		font-size: var(--font-size-base);
 
 		a {
-			color: var(--accent-color);
+			color: var(--link-color);
 			text-decoration: none;
 			transition: color var(--transition-duration) var(--transition-timing);
 		}
