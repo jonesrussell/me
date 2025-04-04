@@ -139,16 +139,30 @@ body {
 }
 
 a {
+	min-width: var(--ch4);
+	min-height: var(--ch4);
+	padding: var(--ch) var(--ch2);
 	color: var(--link-color);
 	text-decoration: underline;
-	text-underline-offset: calc(var(--ch) / 5);
 	transition: all 0.2s ease-in-out;
 	cursor: pointer;
+	text-underline-offset: calc(var(--ch) / 5);
 }
 
-a:hover {
-	color: var(--link-hover);
-	text-decoration: underline;
+button {
+	min-width: var(--ch4);
+	min-height: var(--ch4);
+	padding: var(--ch) var(--ch2);
+	border: none;
+	border-radius: var(--radius-md);
+	color: var(--accent-color-contrast);
+	font-size: var(--font-size-base);
+	font-weight: 600;
+	line-height: var(--line-height-tight);
+	transition: all var(--transition-duration) var(--transition-timing);
+	cursor: pointer;
+	background-color: var(--accent-color);
+	box-shadow: var(--shadow-sm);
 }
 
 /* Utility classes */
@@ -283,7 +297,8 @@ body::before {
 	);
 	box-shadow:
 		var(--shadow-md),
-		inset 0 1px color-mix(in srgb, var(--text-color) 3%, transparent);
+		inset 0 calc(var(--ch) / 4)
+			color-mix(in srgb, var(--text-color) 3%, transparent);
 }
 
 .box:hover {
@@ -294,7 +309,8 @@ body::before {
 	);
 	box-shadow:
 		var(--shadow-lg),
-		inset 0 1px color-mix(in srgb, var(--text-color) 5%, transparent);
+		inset 0 calc(var(--ch) / 4)
+			color-mix(in srgb, var(--text-color) 5%, transparent);
 }
 
 /* Add contrast adjustments for specific components */
@@ -324,36 +340,11 @@ body::before {
 }
 
 /* Interactive Elements */
-button,
-a,
 input,
 select,
 textarea {
 	transition: all 0.2s ease-in-out;
 	cursor: pointer;
-}
-
-/* Base button styles */
-button {
-	padding: var(--ch2) var(--ch4);
-	border: none;
-	border-radius: var(--radius-md);
-	background-color: var(--accent-color);
-	color: var(--accent-color-contrast);
-	font-size: var(--font-size-base);
-	font-weight: 600;
-	line-height: var(--line-height-tight);
-	box-shadow: var(--shadow-sm);
-	cursor: pointer;
-	transition: all var(--transition-duration) var(--transition-timing);
-}
-
-/* Base link styles */
-a {
-	color: var(--link-color);
-	text-decoration: underline;
-	text-underline-offset: calc(var(--ch) / 5);
-	transition: all 0.2s ease-in-out;
 }
 
 /* Navigation styles */
@@ -363,31 +354,38 @@ nav button {
 }
 
 /* Hover states */
+a:hover {
+	color: var(--link-hover);
+	text-decoration: underline;
+}
+
 button:hover {
 	background-color: var(--accent-color-hover);
 	transform: translateY(calc(-1 * var(--ch) / 8));
 	box-shadow: var(--shadow-md);
 }
 
-a:hover {
-	color: var(--link-hover);
-	text-decoration: underline;
+/* Focus states */
+:focus {
+	outline: calc(var(--ch) / 8) solid var(--accent-color);
+	outline-offset: calc(var(--ch) / 4);
 }
 
-/* Focus states */
-button:focus-visible,
-a:focus-visible {
+:focus:not(:focus-visible) {
+	outline: none;
+}
+
+:focus-visible {
 	outline: calc(var(--ch) / 8) solid var(--accent-color);
 	outline-offset: calc(var(--ch) / 4);
 	box-shadow: 0 0 0 calc(var(--ch) / 4) var(--accent-color-transparent);
 }
 
-/* Ensure sufficient touch target size */
-button,
-a {
-	min-width: var(--ch4);
-	min-height: var(--ch4);
-	padding: var(--ch) var(--ch2);
+button:focus-visible,
+a:focus-visible {
+	outline: calc(var(--ch) / 8) solid var(--accent-color);
+	outline-offset: calc(var(--ch) / 4);
+	box-shadow: 0 0 0 calc(var(--ch) / 4) var(--accent-color-transparent);
 }
 
 /* Skip link */
@@ -410,22 +408,6 @@ a {
 	top: 0;
 	outline: calc(var(--ch) / 8) solid var(--accent-color);
 	outline-offset: calc(var(--ch) / 4);
-}
-
-/* Focus Management */
-:focus {
-	outline: calc(var(--ch) / 8) solid var(--accent-color);
-	outline-offset: calc(var(--ch) / 4);
-}
-
-:focus:not(:focus-visible) {
-	outline: none;
-}
-
-:focus-visible {
-	outline: calc(var(--ch) / 8) solid var(--accent-color);
-	outline-offset: calc(var(--ch) / 4);
-	box-shadow: 0 0 0 calc(var(--ch) / 4) var(--accent-color-transparent);
 }
 
 /* ARIA States */

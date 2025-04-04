@@ -105,6 +105,7 @@
 		text-align: center;
 	}
 
+	/* Header image styles */
 	.header-image {
 		width: 100%;
 		max-width: var(--blog-image-width-lg);
@@ -122,6 +123,19 @@
 
 	.header-image a:hover {
 		transform: scale(1.02);
+	}
+
+	/* Base link styles */
+	.post-header a,
+	.source-note a {
+		color: var(--link-color);
+		text-decoration: none;
+		transition: color var(--transition-duration) var(--transition-timing);
+	}
+
+	.post-header a:hover,
+	.source-note a:hover {
+		color: var(--accent-color-hover);
 	}
 
 	.dev-to-screenshot {
@@ -175,38 +189,18 @@
 		gap: var(--ch4);
 		justify-content: space-between;
 		align-items: baseline;
+	}
 
-		h2 {
-			margin: 0;
-			font-size: var(--font-size-lg);
-			line-height: var(--line-height-tight);
-		}
-
-		a {
-			color: var(--link-color);
-			text-decoration: none;
-			transition: color var(--transition-duration) var(--transition-timing);
-		}
-
-		&:hover {
-			color: var(--accent-color-hover);
-		}
+	.post-header h2 {
+		margin: 0;
+		font-size: var(--font-size-lg);
+		line-height: var(--line-height-tight);
 	}
 
 	.source-note {
 		margin: var(--ch2) auto 0;
 		color: var(--text-muted);
 		font-size: var(--font-size-base);
-
-		a {
-			color: var(--link-color);
-			text-decoration: none;
-			transition: color var(--transition-duration) var(--transition-timing);
-		}
-
-		a:hover {
-			color: var(--accent-color-hover);
-		}
 	}
 
 	time {
@@ -302,38 +296,5 @@
 		.dev-to-screenshot {
 			width: var(--blog-image-width-sm);
 		}
-	}
-
-	/* Base link styles */
-	.post-header a,
-	.source-note a {
-		color: var(--link-color);
-		text-decoration: none;
-		transition: color var(--transition-duration) var(--transition-timing);
-	}
-
-	.post-header a:hover,
-	.source-note a:hover {
-		color: var(--accent-color-hover);
-	}
-
-	/* Header image styles */
-	.header-image {
-		width: 100%;
-		max-width: var(--blog-image-width-lg);
-		margin: 0 auto var(--ch4);
-		border-radius: var(--radius-md);
-		overflow: hidden;
-	}
-
-	.header-image a {
-		position: relative;
-		display: block;
-		border-radius: var(--radius-md);
-		overflow: hidden;
-	}
-
-	.header-image a:hover {
-		transform: scale(1.02);
 	}
 </style>
