@@ -8,6 +8,11 @@
 		/>
 		<meta name="color-scheme" content="light dark" />
 
+		<!-- Preconnect to external domains -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="preconnect" href="https://dev.to" crossorigin />
+
 		<!-- Preload critical fonts -->
 		<link
 			rel="preload"
@@ -31,7 +36,11 @@
 			crossorigin
 		/>
 
-		<link rel="icon" href="%sveltekit.assets%/favicons/favicon.ico" />
+		<link
+			rel="icon"
+			href="%sveltekit.assets%/favicons/favicon.ico"
+			sizes="any"
+		/>
 		<link
 			rel="apple-touch-icon"
 			href="%sveltekit.assets%/favicons/apple-touch-icon.png"
@@ -43,16 +52,25 @@
 	<body>
 		<div>%sveltekit.body%</div>
 		<script>
+			// Inline critical theme initialization
 			(function () {
 				try {
 					const prefersDark = window.matchMedia(
 						'(prefers-color-scheme: dark)'
 					).matches;
 					const savedTheme = localStorage.getItem('theme');
-					const theme = savedTheme || (prefersDark ? 'dark' : 'light');
-					document.documentElement.setAttribute('data-theme', theme);
+					document.documentElement.setAttribute(
+						'data-theme',
+						savedTheme || (prefersDark ? 'dark' : 'light')
+					);
+				} catch (e) {
+					console.warn('Theme initialization failed:', e);
+				}
+			})();
 
-					// Listen for system theme changes
+			// Defer non-critical theme handling
+			window.addEventListener('load', function () {
+				try {
 					window
 						.matchMedia('(prefers-color-scheme: dark)')
 						.addEventListener('change', (e) => {
@@ -64,9 +82,9 @@
 							}
 						});
 				} catch (e) {
-					console.warn('Theme initialization failed:', e);
+					console.warn('Theme change listener failed:', e);
 				}
-			})();
+			});
 		</script>
 	</body>
 </html>
