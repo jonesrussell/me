@@ -34,6 +34,7 @@
 <style>
 	.site-header {
 		--header-height: calc(var(--ch) * 4);
+
 		container-type: inline-size;
 		position: sticky;
 		top: 0;
@@ -55,16 +56,16 @@
 
 	.header-main {
 		display: grid;
-		grid-template-columns: auto 1fr;
-		align-items: center;
 		gap: var(--ch4);
+		align-items: center;
+		grid-template-columns: auto 1fr;
 	}
 
 	.title {
 		color: var(--text-color);
 		font-family: var(--font-mono);
-		text-decoration: none;
 		font-size: var(--font-size-base);
+		text-decoration: none;
 	}
 
 	.header-nav {
@@ -74,8 +75,8 @@
 
 		& a {
 			color: var(--text-muted);
-			text-decoration: none;
 			font-size: var(--font-size-base);
+			text-decoration: none;
 
 			&:hover,
 			&.active {
@@ -93,11 +94,11 @@
 	.container {
 		width: 100%;
 		max-width: min(var(--measure), 95cqi);
+		color: var(--text-muted);
+		font-size: var(--font-size-base);
+		text-align: center;
 		padding-inline: var(--ch2);
 		margin-inline: auto;
-		color: var(--text-muted);
-		text-align: center;
-		font-size: var(--font-size-base);
 	}
 
 	@media (width <= var(--mobile-breakpoint)) {

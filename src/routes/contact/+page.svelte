@@ -3,7 +3,8 @@
 	let email = $state('');
 	let message = $state('');
 
-	function handleSubmit() {
+	function handleSubmit(event: SubmitEvent) {
+		event.preventDefault();
 		// TODO: Implement form submission
 		console.log({ name, email, message });
 	}
@@ -101,13 +102,6 @@
 		--contact-button-translate: -0.25ch;
 	}
 
-	.contact {
-		width: 100%;
-		max-width: var(--contact-width);
-		margin: 0 auto;
-		padding: var(--ch4) var(--content-padding);
-	}
-
 	.contact-grid {
 		display: grid;
 		grid-template-columns: minmax(35ch, 1fr) minmax(45ch, 2fr);
@@ -122,20 +116,30 @@
 		font-weight: 500;
 	}
 
-	.description {
+	.contact-info {
+		display: flex;
+		flex-direction: column;
+		gap: var(--ch4);
+	}
+
+	.contact-heading {
+		margin-bottom: var(--ch2);
+	}
+
+	.contact-text {
 		margin-bottom: var(--ch4);
 		color: var(--text-muted);
 		font-size: var(--font-size-base);
 		line-height: var(--line-height-relaxed);
 	}
 
-	.links {
+	.contact-links {
 		display: flex;
 		flex-direction: column;
 		gap: var(--ch);
 	}
 
-	.link {
+	.contact-link {
 		display: flex;
 		gap: var(--ch);
 		align-items: center;
@@ -149,30 +153,30 @@
 		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
-	.link:hover {
+	.contact-link:hover {
 		border-color: var(--accent-color);
 		background: var(--bg-darker);
 		transform: translateX(var(--ch));
 	}
 
-	.icon {
+	.contact-link-icon {
 		color: var(--accent-color);
 		font-size: var(--font-size-md);
 	}
 
-	.field {
+	.form-group {
 		margin-bottom: var(--ch2);
 	}
 
-	label {
+	.form-label {
 		display: block;
 		margin-bottom: var(--ch);
 		color: var(--text-muted);
 		font-size: var(--font-size-sm);
 	}
 
-	input,
-	textarea {
+	.form-input,
+	.form-textarea {
 		width: 100%;
 		padding: var(--ch) var(--ch2);
 		border: var(--contact-border-width) solid var(--border-color);
@@ -184,52 +188,54 @@
 		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
-	textarea {
+	.form-textarea {
 		height: 12ch;
 		resize: vertical;
 		line-height: var(--line-height-relaxed);
 	}
 
-	input:focus,
-	textarea:focus {
+	.form-input:focus,
+	.form-textarea:focus {
 		outline: none;
 		border-color: var(--accent-color);
 		box-shadow: 0 0 0 var(--contact-focus-shadow)
 			var(--accent-color-transparent);
 	}
 
-	button {
+	.form-submit {
 		display: flex;
 		gap: var(--ch);
+		justify-content: center;
 		align-items: center;
+		width: 100%;
 		padding: var(--ch) var(--ch2);
 		border: none;
 		border-radius: var(--radius-sm);
 		background: var(--accent-color);
 		color: var(--bg-darker);
-		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
 		font-weight: 500;
 		transition: all var(--transition-duration) var(--transition-timing);
 		cursor: pointer;
 	}
 
-	button:hover {
+	.form-submit:hover {
 		background: var(--accent-color-hover);
 		transform: translateY(var(--contact-button-translate));
 	}
 
-	button .icon {
-		color: inherit;
+	.form-submit .contact-link-icon {
+		color: var(--bg-darker);
+		transition: transform var(--transition-duration) var(--transition-timing);
+	}
+
+	.form-submit:hover .contact-link-icon {
+		transform: translateX(var(--ch));
 	}
 
 	@media (max-width: var(--mobile-breakpoint)) {
 		.contact-grid {
 			grid-template-columns: 1fr;
-		}
-
-		.contact {
-			padding: var(--ch2) var(--content-padding);
 		}
 
 		h1,

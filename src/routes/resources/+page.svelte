@@ -9,6 +9,7 @@
 		url: string;
 		category: string;
 		stars?: number;
+		featured?: boolean;
 	}
 
 	// YouTube channel info
@@ -29,20 +30,22 @@
 	} as const;
 
 	const resources: Resource[] = [
-		// AI
+		// Featured Content
+		{
+			title: 'FullStack Dev YouTube',
+			url: youtubeChannel.url,
+			description:
+				'Live streams and tutorials on modern web development, AI pair programming, and coding best practices',
+			category: 'Featured Content',
+			featured: true
+		},
 		{
 			title: 'Cursor AI',
 			url: 'https://cursor.sh',
 			description:
 				'The AI-first code editor. Built for pair programming with AI.',
-			category: 'AI'
-		},
-		{
-			title: 'FullStack Dev AI Coding',
-			url: 'https://www.youtube.com/@fullstackdev42',
-			description:
-				'Live streams of AI pair programming and modern web development',
-			category: 'AI'
+			category: 'Featured Content',
+			featured: true
 		},
 
 		// Documentation
@@ -212,14 +215,24 @@
 		}
 	];
 
-	// Group resources by category
-	const groupedResources = [...new Set(resources.map((r) => r.category))]
-		.sort()
+	// Group resources by category with featured content first
+	const groupedResources = [
+		...new Set(['Featured Content', ...resources.map((r) => r.category)])
+	]
+		.sort((a, b) => {
+			if (a === 'Featured Content') return -1;
+			if (b === 'Featured Content') return 1;
+			return a.localeCompare(b);
+		})
 		.reduce(
 			(acc, category) => {
 				acc[category] = resources
 					.filter((r) => r.category === category)
-					.sort((a, b) => (b.stars || 0) - (a.stars || 0));
+					.sort((a, b) => {
+						if (a.featured && !b.featured) return -1;
+						if (!a.featured && b.featured) return 1;
+						return (b.stars || 0) - (a.stars || 0);
+					});
 				return acc;
 			},
 			{} as Record<string, Resource[]>
@@ -227,6 +240,8 @@
 
 	function getCategoryIcon(category: string): string {
 		switch (category) {
+			case 'Featured Content':
+				return '🎥';
 			case 'AI':
 				return '🤖';
 			case 'Documentation':
@@ -314,48 +329,6 @@
 		</p>
 	</div>
 
-	<section class="youtube-section">
-		<div class="youtube-header">
-			<span class="youtube-icon">▶</span>
-			<h2 class="youtube-title">Video Tutorials</h2>
-		</div>
-		<p class="youtube-description">
-			Learn web development through practical tutorials and real-world examples
-			on my YouTube channel. From modern JavaScript frameworks to cloud
-			technologies and development best practices.
-		</p>
-
-		<div class="featured-videos">
-			{#each youtubeChannel.featuredVideos as video}
-				<div class="video-card">
-					<div class="video-container">
-						<iframe
-							src={`https://www.youtube.com/embed/${video.embedId}`}
-							title={video.title}
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-							allowfullscreen
-							loading="lazy"
-						></iframe>
-					</div>
-					<div class="video-info">
-						<h3 class="video-title">{video.title}</h3>
-						<p class="video-description">{video.description}</p>
-					</div>
-				</div>
-			{/each}
-		</div>
-
-		<a
-			href={youtubeChannel.url}
-			class="subscribe-link"
-			target="_blank"
-			rel="noopener noreferrer"
-		>
-			<span class="youtube-icon">▶</span>
-			<span>Subscribe to Channel</span>
-		</a>
-	</section>
-
 	<div class="categories">
 		{#each Object.entries(groupedResources) as [category, items]}
 			<section class="category">
@@ -364,33 +337,74 @@
 					<h2 class="category-title">{category}</h2>
 				</div>
 				<div class="resource-list">
+					{#if category === 'Featured Content' && items[0]?.url === youtubeChannel.url}
+						<div class="youtube-section">
+							<div class="youtube-header">
+								<span class="youtube-icon">▶</span>
+								<h3 class="youtube-title">Latest Video Tutorial</h3>
+							</div>
+							<div class="video-card">
+								<div class="video-container">
+									<iframe
+										src={`https://www.youtube.com/embed/${youtubeChannel.featuredVideos[0].embedId}`}
+										title={youtubeChannel.featuredVideos[0].title}
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+										allowfullscreen
+										loading="lazy"
+									></iframe>
+								</div>
+								<div class="video-info">
+									<h4 class="video-title">
+										{youtubeChannel.featuredVideos[0].title}
+									</h4>
+									<p class="video-description">
+										{youtubeChannel.featuredVideos[0].description}
+									</p>
+								</div>
+							</div>
+							<a
+								href={youtubeChannel.url}
+								class="subscribe-link"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<span class="youtube-icon">▶</span>
+								<span>Subscribe to Channel</span>
+							</a>
+						</div>
+					{/if}
 					{#each items as resource}
-						<Box width={60}>
-							<div class="resource">
-								<div class="resource-header">
+						{#if !resource.featured || category !== 'Featured Content'}
+							<Box width={60}>
+								<div class="resource">
+									<div class="resource-header">
+										<a
+											href={resource.url}
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											{resource.title}
+										</a>
+										{#if resource.stars !== undefined}
+											<Badge
+												type="info"
+												children={() => resource.stars?.toLocaleString() ?? ''}
+											/>
+										{/if}
+									</div>
+									<p class="resource-description">{resource.description}</p>
 									<a
 										href={resource.url}
 										target="_blank"
 										rel="noopener noreferrer"
+										class="url-preview"
 									>
-										{resource.title}
+										<span class="url-icon">→</span>
+										<span class="url-text">{formatUrl(resource.url)}</span>
 									</a>
-									{#if resource.stars}
-										<Badge>★ {resource.stars.toLocaleString()}</Badge>
-									{/if}
 								</div>
-								<p class="resource-description">{resource.description}</p>
-								<a
-									href={resource.url}
-									target="_blank"
-									rel="noopener noreferrer"
-									class="url-preview"
-								>
-									<span class="url-icon">→</span>
-									<span class="url-text">{formatUrl(resource.url)}</span>
-								</a>
-							</div>
-						</Box>
+							</Box>
+						{/if}
 					{/each}
 				</div>
 			</section>
@@ -531,53 +545,42 @@
 		opacity: 0.8;
 	}
 
-	/* Add YouTube section styles */
+	/* YouTube section styles */
 	.youtube-section {
 		margin-bottom: var(--ch8);
 		padding: var(--ch4);
-		background: linear-gradient(145deg, var(--bg-alt), var(--bg-darker));
 		border: 1px solid var(--border-color);
 		border-radius: var(--ch);
-		box-shadow:
-			0 2px 8px var(--shadow-color),
-			0 1px 3px var(--shadow-color-darker);
+		background: var(--bg-darker);
+		box-shadow: var(--shadow-lg);
 	}
 
 	.youtube-header {
 		display: flex;
-		align-items: center;
 		gap: var(--ch3);
+		align-items: center;
 		margin-bottom: var(--ch4);
 	}
 
 	.youtube-icon {
-		font-size: var(--font-size-2xl);
 		color: var(--accent-color);
+		font-size: var(--font-size-2xl);
 	}
 
 	.youtube-title {
-		font-size: var(--font-size-xl);
-		font-weight: var(--font-weight-bold);
 		background: linear-gradient(
 			90deg,
 			var(--accent-color),
 			var(--secondary-accent)
 		);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
 		color: var(--accent-color);
+		font-size: var(--font-size-xl);
+		font-weight: var(--font-weight-bold);
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
 	}
 
-	.youtube-description {
-		color: var(--text-muted);
-		margin-bottom: var(--ch4);
-		line-height: var(--line-height-relaxed);
-	}
-
-	.featured-videos {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
-		gap: var(--ch4);
+	.video-card {
 		margin-bottom: var(--ch4);
 	}
 
@@ -585,8 +588,8 @@
 		position: relative;
 		width: 100%;
 		padding-bottom: 56.25%; /* 16:9 aspect ratio */
-		background: var(--bg-darker);
 		border-radius: var(--ch);
+		background: var(--bg-darker);
 		overflow: hidden;
 	}
 
@@ -604,10 +607,10 @@
 	}
 
 	.video-title {
+		margin-bottom: var(--ch);
+		color: var(--text-color);
 		font-size: var(--font-size-base);
 		font-weight: var(--font-weight-medium);
-		color: var(--text-color);
-		margin-bottom: var(--ch);
 	}
 
 	.video-description {
@@ -618,23 +621,19 @@
 
 	.subscribe-link {
 		display: inline-flex;
-		align-items: center;
 		gap: var(--ch2);
+		align-items: center;
 		padding: var(--ch2) var(--ch4);
+		border-radius: var(--ch);
 		background: var(--accent-color);
 		color: white;
-		border-radius: var(--ch);
-		text-decoration: none;
 		font-weight: var(--font-weight-medium);
+		text-decoration: none;
 		transition: all 0.2s ease-in-out;
 	}
 
 	.subscribe-link:hover {
 		background: var(--accent-color-hover);
 		transform: translateY(-2px);
-	}
-
-	[data-theme='light'] .youtube-section {
-		background: linear-gradient(145deg, hsl(210, 25%, 99%), hsl(210, 25%, 97%));
 	}
 </style>
