@@ -11,6 +11,23 @@
 		stars?: number;
 	}
 
+	// YouTube channel info
+	const youtubeChannel = {
+		name: 'Full Stack Dev',
+		url: 'https://www.youtube.com/@fullstackdev42',
+		description: 'Practical web development tutorials and coding insights',
+		featuredVideos: [
+			{
+				title: 'Add a Google Font to Tailwind CSS | 2023',
+				url: 'https://youtu.be/B4v7ZDLxiS4',
+				embedId: 'B4v7ZDLxiS4',
+				description:
+					'Learn how to integrate custom Google Fonts with Tailwind CSS'
+			}
+			// Add more featured videos as needed
+		]
+	} as const;
+
 	const resources: Resource[] = [
 		// AI
 		{
@@ -284,7 +301,7 @@
 	>
 	<meta
 		name="description"
-		content="An ever-growing collection of development resources, tools, and learning materials. Includes documentation, Go libraries, web development frameworks, DevOps tools, and learning paths."
+		content="An ever-growing collection of development resources, tools, and learning materials. Includes video tutorials, documentation, Go libraries, web development frameworks, DevOps tools, and learning paths."
 	/>
 </svelte:head>
 
@@ -292,11 +309,52 @@
 	<div class="header">
 		<h1>Development Resources</h1>
 		<p class="subtitle">
-			A curated and continuously expanding collection of tools, documentation,
-			and learning materials. Updated regularly with new discoveries and
-			community recommendations.
+			A curated collection of tools, documentation, and learning materials.
+			Updated regularly with new discoveries and community recommendations.
 		</p>
 	</div>
+
+	<section class="youtube-section">
+		<div class="youtube-header">
+			<span class="youtube-icon">▶</span>
+			<h2 class="youtube-title">Video Tutorials</h2>
+		</div>
+		<p class="youtube-description">
+			Learn web development through practical tutorials and real-world examples
+			on my YouTube channel. From modern JavaScript frameworks to cloud
+			technologies and development best practices.
+		</p>
+
+		<div class="featured-videos">
+			{#each youtubeChannel.featuredVideos as video}
+				<div class="video-card">
+					<div class="video-container">
+						<iframe
+							src={`https://www.youtube.com/embed/${video.embedId}`}
+							title={video.title}
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen
+							loading="lazy"
+						></iframe>
+					</div>
+					<div class="video-info">
+						<h3 class="video-title">{video.title}</h3>
+						<p class="video-description">{video.description}</p>
+					</div>
+				</div>
+			{/each}
+		</div>
+
+		<a
+			href={youtubeChannel.url}
+			class="subscribe-link"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			<span class="youtube-icon">▶</span>
+			<span>Subscribe to Channel</span>
+		</a>
+	</section>
 
 	<div class="categories">
 		{#each Object.entries(groupedResources) as [category, items]}
@@ -471,5 +529,112 @@
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		opacity: 0.8;
+	}
+
+	/* Add YouTube section styles */
+	.youtube-section {
+		margin-bottom: var(--ch8);
+		padding: var(--ch4);
+		background: linear-gradient(145deg, var(--bg-alt), var(--bg-darker));
+		border: 1px solid var(--border-color);
+		border-radius: var(--ch);
+		box-shadow:
+			0 2px 8px var(--shadow-color),
+			0 1px 3px var(--shadow-color-darker);
+	}
+
+	.youtube-header {
+		display: flex;
+		align-items: center;
+		gap: var(--ch3);
+		margin-bottom: var(--ch4);
+	}
+
+	.youtube-icon {
+		font-size: var(--font-size-2xl);
+		color: var(--accent-color);
+	}
+
+	.youtube-title {
+		font-size: var(--font-size-xl);
+		font-weight: var(--font-weight-bold);
+		background: linear-gradient(
+			90deg,
+			var(--accent-color),
+			var(--secondary-accent)
+		);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		color: var(--accent-color);
+	}
+
+	.youtube-description {
+		color: var(--text-muted);
+		margin-bottom: var(--ch4);
+		line-height: var(--line-height-relaxed);
+	}
+
+	.featured-videos {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
+		gap: var(--ch4);
+		margin-bottom: var(--ch4);
+	}
+
+	.video-container {
+		position: relative;
+		width: 100%;
+		padding-bottom: 56.25%; /* 16:9 aspect ratio */
+		background: var(--bg-darker);
+		border-radius: var(--ch);
+		overflow: hidden;
+	}
+
+	.video-container iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border: none;
+	}
+
+	.video-info {
+		margin-top: var(--ch2);
+	}
+
+	.video-title {
+		font-size: var(--font-size-base);
+		font-weight: var(--font-weight-medium);
+		color: var(--text-color);
+		margin-bottom: var(--ch);
+	}
+
+	.video-description {
+		color: var(--text-muted);
+		font-size: var(--font-size-sm);
+		line-height: var(--line-height-relaxed);
+	}
+
+	.subscribe-link {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--ch2);
+		padding: var(--ch2) var(--ch4);
+		background: var(--accent-color);
+		color: white;
+		border-radius: var(--ch);
+		text-decoration: none;
+		font-weight: var(--font-weight-medium);
+		transition: all 0.2s ease-in-out;
+	}
+
+	.subscribe-link:hover {
+		background: var(--accent-color-hover);
+		transform: translateY(-2px);
+	}
+
+	[data-theme='light'] .youtube-section {
+		background: linear-gradient(145deg, hsl(210, 25%, 99%), hsl(210, 25%, 97%));
 	}
 </style>
