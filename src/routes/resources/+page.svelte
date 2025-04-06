@@ -549,7 +549,7 @@
 	.youtube-section {
 		margin-bottom: var(--ch8);
 		padding: var(--ch4);
-		border: 1px solid var(--border-color);
+		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--ch);
 		background: var(--bg-darker);
 		box-shadow: var(--shadow-lg);
@@ -557,7 +557,7 @@
 
 	.youtube-header {
 		display: flex;
-		gap: var(--ch3);
+		gap: var(--ch2);
 		align-items: center;
 		margin-bottom: var(--ch4);
 	}
@@ -626,14 +626,14 @@
 		padding: var(--ch2) var(--ch4);
 		border-radius: var(--ch);
 		background: var(--accent-color);
-		color: white;
+		color: var(--bg-darker);
 		font-weight: var(--font-weight-medium);
 		text-decoration: none;
-		transition: all 0.2s ease-in-out;
+		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.subscribe-link:hover {
 		background: var(--accent-color-hover);
-		transform: translateY(-2px);
+		transform: translateY(-0.25ch);
 	}
 </style>

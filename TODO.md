@@ -18,9 +18,20 @@
   - [x] Add grid utilities for alignment and calculations
   - [x] Ensure proper character grid alignment
 - [x] Add interactive Go project setup guide
+- [x] Convert px units to ch units in app.css
+  - [x] Update font sizes to use ch units
+  - [x] Convert spacing and layout units
+  - [x] Fix media query breakpoints
+  - [x] Update animation keyframes
 
 # In Progress
 
+- [ ] Fix remaining CSS linting errors
+  - [ ] Replace hex colors with CSS variables
+  - [ ] Fix duplicate selectors and specificity issues
+  - [ ] Update Header component spacing
+  - [ ] Fix resources page layout
+  - [ ] Add stylelint rules for unit enforcement
 - [ ] Enhance Terminal and Grid Components
   - [ ] Add keyboard navigation support
   - [ ] Improve accessibility with ARIA labels

@@ -54,7 +54,7 @@
 
 	<section class="contact-form" aria-label="Contact Form">
 		<h2 class="form-heading">Send a Message</h2>
-		<form on:submit|preventDefault={handleSubmit}>
+		<form onsubmit={handleSubmit}>
 			<div class="form-group">
 				<label class="form-label" for="name">Name</label>
 				<input
