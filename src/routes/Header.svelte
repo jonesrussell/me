@@ -42,7 +42,7 @@
 		width: 100%;
 		background: var(--bg-color);
 		color: var(--text-color);
-		border-bottom: 1px solid var(--border-color);
+		border-bottom: var(--border-width) solid var(--border-color);
 		padding-block: var(--ch);
 	}
 
@@ -64,7 +64,8 @@
 	.title {
 		color: var(--text-color);
 		font-family: var(--font-mono);
-		font-size: var(--font-size-base);
+		font-size: var(--font-size-lg);
+		font-weight: 500;
 		text-decoration: none;
 	}
 
@@ -74,20 +75,24 @@
 		justify-content: flex-end;
 
 		& a {
+			padding: var(--ch) var(--ch2);
+			border-radius: var(--radius-sm);
 			color: var(--text-muted);
 			font-size: var(--font-size-base);
 			text-decoration: none;
+			transition: all var(--transition-duration) var(--transition-timing);
 
 			&:hover,
 			&.active {
 				color: var(--text-color);
+				background-color: var(--bg-darker);
 			}
 		}
 	}
 
 	.subtitle-bar {
 		background: var(--bg-darker);
-		border-bottom: 1px solid var(--border-color);
+		border-bottom: var(--border-width) solid var(--border-color);
 		padding-block: var(--ch);
 	}
 
