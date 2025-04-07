@@ -23,6 +23,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: read
     env:
       PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
       DEBIAN_FRONTEND: noninteractive
@@ -69,6 +72,9 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
     steps:
       - uses: actions/checkout@v4
 
@@ -113,6 +119,8 @@ jobs:
     permissions:
       pages: write # to deploy to Pages
       id-token: write # to verify the deployment originates from an appropriate source
+      contents: read # to read repository contents
+      pull-requests: read # to read pull request information
 
     # Deploy to the github-pages environment
     environment:
