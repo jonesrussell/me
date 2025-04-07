@@ -10,7 +10,7 @@
 		title?: string;
 		width?: number;
 		style?: string;
-		children: () => import('svelte').ComponentType;
+		children: any;
 	}>();
 
 	const alignedWidth = $derived(alignToGrid(width));
@@ -28,7 +28,11 @@
 		{/if}
 
 		<div class="content">
-			{children()}
+			{#if typeof children === 'function'}
+				{children()}
+			{:else}
+				{children}
+			{/if}
 		</div>
 	</div>
 </div>
