@@ -12,9 +12,10 @@
 			"fr",
 			"s",
 			"cqi",
-			"ms"
+			"ms",
+			"rem"
 		],
-		"unit-disallowed-list": ["em", "rem"],
+		"unit-disallowed-list": ["em"],
 		"selector-pseudo-class-no-unknown": [
 			true,
 			{
