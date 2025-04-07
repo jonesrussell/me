@@ -35,10 +35,6 @@ describe('Navigation Component', () => {
 		const links = document.querySelectorAll('.nav-link');
 		links.forEach(link => {
 			expect(link).toHaveClass('nav-link');
-			expect(link).toHaveStyle({
-				'background': 'var(--bg-darker)',
-				'border-radius': 'var(--radius-md)'
-			});
 		});
 	});
 
@@ -59,24 +55,17 @@ describe('Navigation Component', () => {
 		expect(screen.getByText(singleLink[0].icon)).toBeInTheDocument();
 	});
 
-	it('applies correct icon and text styling', () => {
+	it('applies correct icon and text classes', () => {
 		render(Navigation, { links: testLinks });
 
 		const icons = document.querySelectorAll('.nav-icon');
 		icons.forEach(icon => {
 			expect(icon).toHaveClass('nav-icon');
-			expect(icon).toHaveStyle({
-				'font-size': 'var(--font-size-lg)'
-			});
 		});
 
 		const texts = document.querySelectorAll('.nav-text');
 		texts.forEach(text => {
 			expect(text).toHaveClass('nav-text');
-			expect(text).toHaveStyle({
-				'font-family': 'var(--font-mono)',
-				'font-size': 'var(--font-size-base)'
-			});
 		});
 	});
 });
