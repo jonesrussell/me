@@ -68,7 +68,7 @@ function createTerminal() {
 	function typeCommand(command: string, callback: () => void) {
 		let currentIndex = 0;
 		typingInterval = setInterval(() => {
-			update((state) => ({
+			update(state => ({
 				...state,
 				commandVisible: command.slice(0, currentIndex + 1)
 			}));
@@ -82,7 +82,7 @@ function createTerminal() {
 	}
 
 	function showOutput(output: string) {
-		update((state) => ({
+		update(state => ({
 			...state,
 			outputVisible: output,
 			isTyping: false
@@ -90,14 +90,14 @@ function createTerminal() {
 
 		// Move to next command after a delay
 		setTimeout(() => {
-			update((state) => {
+			update(state => {
 				if (state.currentCommand < currentCommands.length - 1) {
 					const nextCommand = state.currentCommand + 1;
 					const nextCommandData = currentCommands[nextCommand];
 
 					// Update state immediately for completed command
 					const completedCommand = currentCommands[state.currentCommand];
-					commands.update((cmds) => {
+					commands.update(cmds => {
 						cmds[state.currentCommand] = {
 							...completedCommand,
 							completed: true
@@ -131,7 +131,7 @@ function createTerminal() {
 			commands.set(commandsToLoad); // Update the commands store
 
 			if (commandsToLoad.length > 0) {
-				update((state) => ({
+				update(state => ({
 					...state,
 					currentCommand: 0,
 					commandVisible: '',
@@ -145,7 +145,7 @@ function createTerminal() {
 		},
 		start: () => {
 			if (currentCommands.length > 0) {
-				update((state) => ({
+				update(state => ({
 					...state,
 					isTyping: true
 				}));
@@ -158,7 +158,7 @@ function createTerminal() {
 			if (typingInterval) {
 				clearInterval(typingInterval);
 			}
-			update((state) => ({
+			update(state => ({
 				...state,
 				isTyping: false
 			}));
@@ -167,7 +167,7 @@ function createTerminal() {
 			if (typingInterval) {
 				clearInterval(typingInterval);
 			}
-			update((state) => ({
+			update(state => ({
 				...state,
 				currentCommand: 0,
 				commandVisible: '',

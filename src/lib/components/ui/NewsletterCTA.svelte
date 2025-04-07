@@ -28,8 +28,7 @@
 			email = '';
 		} catch (error) {
 			submitStatus = 'error';
-			errorMessage =
-				error instanceof Error ? error.message : 'An unexpected error occurred';
+			errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
 		}
 	}
 
@@ -40,67 +39,6 @@
 		}
 	});
 </script>
-
-<div class="newsletter">
-	<div class="newsletter-content">
-		<div class="newsletter-header">
-			<div class="header-title">
-				<span class="bracket">[</span>
-				<h3>Stay Updated</h3>
-				<span class="bracket">]</span>
-			</div>
-			<p class="description">
-				Get the latest updates on web development and tech insights.
-			</p>
-		</div>
-
-		<form class="form" onsubmit={handleSubmit}>
-			<div class="form-group">
-				<div class="input-wrapper">
-					<span class="input-prefix">→</span>
-					<input
-						type="email"
-						id="email"
-						name="email"
-						bind:value={email}
-						placeholder="your.email@example.com"
-						required
-					/>
-				</div>
-				<button type="submit" disabled={submitStatus === 'loading'}>
-					{#if submitStatus === 'loading'}
-						<div class="loading">
-							<span>Subscribing</span>
-							<span class="dots">
-								<span class="dot">.</span>
-								<span class="dot">.</span>
-								<span class="dot">.</span>
-							</span>
-						</div>
-					{:else}
-						<span class="button-content">
-							<span class="button-text">Subscribe</span>
-							<span class="button-icon">⟶</span>
-						</span>
-					{/if}
-				</button>
-			</div>
-
-			{#if submitStatus === 'success'}
-				<div class="success-message">
-					<span class="icon">✓</span> Message sent successfully
-				</div>
-			{/if}
-
-			{#if submitStatus === 'error'}
-				<div class="error-message">
-					<span class="icon">✗</span>
-					{errorMessage}
-				</div>
-			{/if}
-		</form>
-	</div>
-</div>
 
 <style>
 	.newsletter {
@@ -331,3 +269,62 @@
 		}
 	}
 </style>
+
+<div class="newsletter">
+	<div class="newsletter-content">
+		<div class="newsletter-header">
+			<div class="header-title">
+				<span class="bracket">[</span>
+				<h3>Stay Updated</h3>
+				<span class="bracket">]</span>
+			</div>
+			<p class="description">Get the latest updates on web development and tech insights.</p>
+		</div>
+
+		<form class="form" onsubmit={handleSubmit}>
+			<div class="form-group">
+				<div class="input-wrapper">
+					<span class="input-prefix">→</span>
+					<input
+						type="email"
+						id="email"
+						name="email"
+						bind:value={email}
+						placeholder="your.email@example.com"
+						required
+					/>
+				</div>
+				<button type="submit" disabled={submitStatus === 'loading'}>
+					{#if submitStatus === 'loading'}
+						<div class="loading">
+							<span>Subscribing</span>
+							<span class="dots">
+								<span class="dot">.</span>
+								<span class="dot">.</span>
+								<span class="dot">.</span>
+							</span>
+						</div>
+					{:else}
+						<span class="button-content">
+							<span class="button-text">Subscribe</span>
+							<span class="button-icon">⟶</span>
+						</span>
+					{/if}
+				</button>
+			</div>
+
+			{#if submitStatus === 'success'}
+				<div class="success-message">
+					<span class="icon">✓</span> Message sent successfully
+				</div>
+			{/if}
+
+			{#if submitStatus === 'error'}
+				<div class="error-message">
+					<span class="icon">✗</span>
+					{errorMessage}
+				</div>
+			{/if}
+		</form>
+	</div>
+</div>

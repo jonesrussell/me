@@ -9,7 +9,7 @@
 			"files": "*.svelte",
 			"options": {
 				"parser": "svelte",
-				"svelteSortOrder": "scripts-styles-markup",
+				"svelteSortOrder": "scripts-styles-markup-options",
 				"svelteStrictMode": true,
 				"svelteBracketNewLine": false,
 				"svelteIndentScriptAndStyle": true

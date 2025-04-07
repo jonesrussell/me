@@ -30,42 +30,6 @@
 	}
 </script>
 
-<svelte:head>
-	<title>Technical Blog | Russell Jones - Web Development & Open Source</title>
-	<meta
-		name="description"
-		content="Articles and tutorials on web development, Go programming, cloud technologies, and open source software by Russell Jones. Practical insights and best practices."
-	/>
-</svelte:head>
-
-<div class="blog">
-	<BlogHeader />
-
-	<div class="container">
-		<div class="posts">
-			{#each $blogPosts as post (post.link)}
-				<BlogPost {post} />
-			{/each}
-		</div>
-
-		{#if hasMore}
-			<div class="load-more">
-				<button
-					onclick={loadMore}
-					disabled={isLoading}
-					class="load-more-button"
-				>
-					{#if isLoading}
-						Loading...
-					{:else}
-						Load More
-					{/if}
-				</button>
-			</div>
-		{/if}
-	</div>
-</div>
-
 <style>
 	.blog {
 		width: 100%;
@@ -111,3 +75,35 @@
 		cursor: not-allowed;
 	}
 </style>
+
+<svelte:head>
+	<title>Technical Blog | Russell Jones - Web Development & Open Source</title>
+	<meta
+		name="description"
+		content="Articles and tutorials on web development, Go programming, cloud technologies, and open source software by Russell Jones. Practical insights and best practices."
+	/>
+</svelte:head>
+
+<div class="blog">
+	<BlogHeader />
+
+	<div class="container">
+		<div class="posts">
+			{#each $blogPosts as post (post.link)}
+				<BlogPost {post} />
+			{/each}
+		</div>
+
+		{#if hasMore}
+			<div class="load-more">
+				<button onclick={loadMore} disabled={isLoading} class="load-more-button">
+					{#if isLoading}
+						Loading...
+					{:else}
+						Load More
+					{/if}
+				</button>
+			</div>
+		{/if}
+	</div>
+</div>

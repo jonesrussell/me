@@ -7,10 +7,7 @@ import { afterEach, expect, vi } from 'vitest';
 expect.extend(
 	matchers as Record<
 		string,
-		(
-			received: unknown,
-			...args: unknown[]
-		) => { pass: boolean; message(): string }
+		(received: unknown, ...args: unknown[]) => { pass: boolean; message(): string }
 	>
 );
 
@@ -50,7 +47,7 @@ vi.mock('$app/stores', () => ({
 Object.defineProperty(window, 'matchMedia', {
 	writable: true,
 	enumerable: true,
-	value: vi.fn().mockImplementation((query) => ({
+	value: vi.fn().mockImplementation(query => ({
 		matches: false,
 		media: query,
 		onchange: null,

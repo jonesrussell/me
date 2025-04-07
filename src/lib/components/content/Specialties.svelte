@@ -8,24 +8,6 @@
 	}>();
 </script>
 
-<div class="specialties-container">
-	<div class="section-header">
-		<h2>My Specialties</h2>
-		<p class="section-desc">Areas where I excel and bring value to projects</p>
-	</div>
-	<div class="specialties">
-		{#each specialties as specialty (specialty.title)}
-			<div class="specialty">
-				<div class="specialty-icon">{specialty.icon}</div>
-				<div class="specialty-content">
-					<div class="specialty-title">{specialty.title}</div>
-					<div class="specialty-desc">{specialty.description}</div>
-				</div>
-			</div>
-		{/each}
-	</div>
-</div>
-
 <style>
 	.specialties-container {
 		display: flex;
@@ -121,3 +103,21 @@
 		}
 	}
 </style>
+
+<div class="specialties-container">
+	<div class="section-header">
+		<h2>My Specialties</h2>
+		<p class="section-desc">Areas where I excel and bring value to projects</p>
+	</div>
+	<div class="specialties">
+		{#each specialties as specialty (specialty.title)}
+			<div class="specialty">
+				<div class="specialty-icon">{specialty.icon}</div>
+				<div class="specialty-content">
+					<div class="specialty-title">{specialty.title}</div>
+					<div class="specialty-desc">{specialty.description}</div>
+				</div>
+			</div>
+		{/each}
+	</div>
+</div>

@@ -5,33 +5,6 @@
 	const { video } = $props<{ video: Video }>();
 </script>
 
-<Box>
-	<div class="video-card">
-		<div class="video-container">
-			<iframe
-				src={`https://www.youtube.com/embed/${video.embedId}`}
-				title={video.title}
-				frameborder="0"
-				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-				allowfullscreen
-				loading="lazy"
-			></iframe>
-		</div>
-		<div class="video-info">
-			<h3 class="video-title">{video.title}</h3>
-			{#if video.date}
-				<time class="video-date">{video.date}</time>
-			{/if}
-			<p class="description">{video.description}</p>
-			<div class="topics">
-				{#each video.topics as topic (topic)}
-					<span class="topic">{topic}</span>
-				{/each}
-			</div>
-		</div>
-	</div>
-</Box>
-
 <style>
 	.video-card {
 		width: 100%;
@@ -123,3 +96,30 @@
 		}
 	}
 </style>
+
+<Box>
+	<div class="video-card">
+		<div class="video-container">
+			<iframe
+				src={`https://www.youtube.com/embed/${video.embedId}`}
+				title={video.title}
+				frameborder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+				allowfullscreen
+				loading="lazy"
+			></iframe>
+		</div>
+		<div class="video-info">
+			<h3 class="video-title">{video.title}</h3>
+			{#if video.date}
+				<time class="video-date">{video.date}</time>
+			{/if}
+			<p class="description">{video.description}</p>
+			<div class="topics">
+				{#each video.topics as topic (topic)}
+					<span class="topic">{topic}</span>
+				{/each}
+			</div>
+		</div>
+	</div>
+</Box>

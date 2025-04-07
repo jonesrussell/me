@@ -6,27 +6,6 @@
 	const { resource } = $props<{ resource: Resource }>();
 </script>
 
-<Box>
-	<div class="resource">
-		<div class="resource-header">
-			<h3>
-				<a href={resource.url} target="_blank" rel="noopener noreferrer">
-					{resource.title}
-				</a>
-			</h3>
-			{#if resource.stars}
-				<Badge type="info">
-					⭐ {resource.stars.toLocaleString()}
-				</Badge>
-			{/if}
-		</div>
-		<p class="description">{resource.description}</p>
-		<div class="category">
-			<Badge type="info">{resource.category}</Badge>
-		</div>
-	</div>
-</Box>
-
 <style>
 	.resource {
 		width: 100%;
@@ -85,3 +64,24 @@
 		}
 	}
 </style>
+
+<Box>
+	<div class="resource">
+		<div class="resource-header">
+			<h3>
+				<a href={resource.url} target="_blank" rel="noopener noreferrer">
+					{resource.title}
+				</a>
+			</h3>
+			{#if resource.stars}
+				<Badge type="info">
+					⭐ {resource.stars.toLocaleString()}
+				</Badge>
+			{/if}
+		</div>
+		<p class="description">{resource.description}</p>
+		<div class="category">
+			<Badge type="info">{resource.category}</Badge>
+		</div>
+	</div>
+</Box>

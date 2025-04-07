@@ -43,20 +43,14 @@ export function validateGridUnit(value: number): void {
  * Calculates content width in character units
  */
 export function calculateWidth(content: string): number {
-	return Math.max(...content.split('\n').map((line) => line.length));
+	return Math.max(...content.split('\n').map(line => line.length));
 }
 
 /**
  * Calculates height in character units
  */
 export function calculateHeight(options: HeightOptions): string {
-	const {
-		lines,
-		lineHeight = 1.7,
-		headerHeight = 0,
-		padding = 0,
-		gaps = 0
-	} = options;
+	const { lines, lineHeight = 1.7, headerHeight = 0, padding = 0, gaps = 0 } = options;
 
 	validateGridUnit(headerHeight);
 	validateGridUnit(padding);

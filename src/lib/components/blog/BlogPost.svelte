@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Box from '$lib/components/layout/Box.svelte';
-	import { formatDate } from '$services/blog-service';
+	import { formatPostDate } from '$lib/services/blog-service';
 
 	const { post } = $props<{
 		post: {
@@ -11,33 +11,6 @@
 		};
 	}>();
 </script>
-
-<Box width={80}>
-	<article class="post">
-		<div class="post-header">
-			<h2>
-				<a href={post.link} target="_blank" rel="noopener noreferrer">
-					{post.title}
-				</a>
-			</h2>
-			<time>{formatDate(post.published)}</time>
-		</div>
-		<div class="post-content">
-			<p class="description">{post.description}</p>
-		</div>
-		<div class="post-footer">
-			<a
-				href={post.link}
-				target="_blank"
-				rel="noopener noreferrer"
-				class="url-preview"
-			>
-				<span class="url-icon">→</span>
-				<span class="url-text">Read article</span>
-			</a>
-		</div>
-	</article>
-</Box>
 
 <style>
 	.post {
@@ -143,3 +116,25 @@
 		}
 	}
 </style>
+
+<Box width={80}>
+	<article class="post">
+		<div class="post-header">
+			<h2>
+				<a href={post.link} target="_blank" rel="noopener noreferrer">
+					{post.title}
+				</a>
+			</h2>
+			<time>{formatPostDate(post.published)}</time>
+		</div>
+		<div class="post-content">
+			<p class="description">{post.description}</p>
+		</div>
+		<div class="post-footer">
+			<a href={post.link} target="_blank" rel="noopener noreferrer" class="url-preview">
+				<span class="url-icon">→</span>
+				<span class="url-text">Read article</span>
+			</a>
+		</div>
+	</article>
+</Box>

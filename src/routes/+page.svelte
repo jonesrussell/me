@@ -16,14 +16,12 @@
 		},
 		{
 			title: 'Golang & PHP',
-			description:
-				'Crafting robust backend solutions with battle-tested technologies',
+			description: 'Crafting robust backend solutions with battle-tested technologies',
 			icon: '🔧'
 		},
 		{
 			title: 'AI Integration',
-			description:
-				'Harnessing artificial intelligence to solve complex problems',
+			description: 'Harnessing artificial intelligence to solve complex problems',
 			icon: '🤖'
 		},
 		{
@@ -39,30 +37,6 @@
 		{ href: '/contact', icon: '✉️', text: 'Get in touch' }
 	];
 </script>
-
-<svelte:head>
-	<title>Russell Jones | Limitless Developer</title>
-	<meta
-		name="description"
-		content="Limitless Developer from Canada specializing in JavaScript, Go, Cloud Technologies, and Open Source. Building elegant solutions with modern web technologies."
-	/>
-</svelte:head>
-
-<section class="hero">
-	<Terminal />
-</section>
-
-<main class="home">
-	<div class="container">
-		<Specialties {specialties} />
-		<YouTubeSection
-			channelUrl={YOUTUBE_CHANNEL}
-			videoId={YOUTUBE_VIDEO_ID}
-			videoTitle={YOUTUBE_VIDEO_TITLE}
-		/>
-		<Navigation links={navLinks} />
-	</div>
-</main>
 
 <style>
 	.hero {
@@ -95,3 +69,27 @@
 		}
 	}
 </style>
+
+<svelte:head>
+	<title>Russell Jones | Limitless Developer</title>
+	<meta
+		name="description"
+		content="Limitless Developer from Canada specializing in JavaScript, Go, Cloud Technologies, and Open Source. Building elegant solutions with modern web technologies."
+	/>
+</svelte:head>
+
+<section class="hero">
+	<Terminal />
+</section>
+
+<main class="home">
+	<div class="container">
+		<Specialties {specialties} />
+		<YouTubeSection
+			channelUrl={YOUTUBE_CHANNEL}
+			videoId={YOUTUBE_VIDEO_ID}
+			videoTitle={YOUTUBE_VIDEO_TITLE}
+		/>
+		<Navigation links={navLinks} />
+	</div>
+</main>

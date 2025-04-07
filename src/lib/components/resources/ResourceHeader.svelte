@@ -5,11 +5,6 @@
 	}>();
 </script>
 
-<div class="header">
-	<h1>{title}</h1>
-	<p class="intro">{description}</p>
-</div>
-
 <style>
 	.header {
 		margin-bottom: var(--space-6);
@@ -51,3 +46,8 @@
 		}
 	}
 </style>
+
+<div class="header">
+	<h1>{title}</h1>
+	<p class="intro">{description}</p>
+</div>

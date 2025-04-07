@@ -1,13 +1,8 @@
 <script lang="ts">
-	const { text = 'Building elegant solutions with modern web technologies' } =
-		$props<{
-			text?: string;
-		}>();
+	const { text = 'Building elegant solutions with modern web technologies' } = $props<{
+		text?: string;
+	}>();
 </script>
-
-<div class="subtitle-bar">
-	<div class="container">{text}</div>
-</div>
 
 <style>
 	.subtitle-bar {
@@ -25,11 +20,7 @@
 		left: 0;
 		width: 100%;
 		height: 2px;
-		background: linear-gradient(
-			90deg,
-			var(--accent-color),
-			var(--secondary-accent)
-		);
+		background: linear-gradient(90deg, var(--accent-color), var(--secondary-accent));
 		opacity: 0.5;
 		content: '';
 	}
@@ -44,3 +35,7 @@
 		padding-inline: var(--space-4);
 	}
 </style>
+
+<div class="subtitle-bar">
+	<div class="container">{text}</div>
+</div>

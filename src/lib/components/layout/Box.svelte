@@ -14,23 +14,6 @@
 	}>();
 </script>
 
-<div
-	class="box"
-	style="
-
-		--box-width: {alignToGrid(width)}ch; {style}"
->
-	<div class="box-frame">
-		{#if title}
-			<div class="header">{title}</div>
-		{/if}
-
-		<div class="content">
-			{@render children?.()}
-		</div>
-	</div>
-</div>
-
 <style>
 	.box {
 		width: var(--box-width);
@@ -86,3 +69,20 @@
 		}
 	}
 </style>
+
+<div
+	class="box"
+	style="
+
+		--box-width: {alignToGrid(width)}ch; {style}"
+>
+	<div class="box-frame">
+		{#if title}
+			<div class="header">{title}</div>
+		{/if}
+
+		<div class="content">
+			{@render children?.()}
+		</div>
+	</div>
+</div>

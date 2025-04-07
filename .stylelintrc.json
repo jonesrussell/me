@@ -3,19 +3,7 @@
 	"plugins": ["stylelint-order"],
 	"ignoreFiles": ["**/coverage/**"],
 	"rules": {
-		"unit-allowed-list": [
-			"ch",
-			"px",
-			"%",
-			"deg",
-			"vh",
-			"vw",
-			"fr",
-			"s",
-			"cqi",
-			"ms",
-			"rem"
-		],
+		"unit-allowed-list": ["ch", "px", "%", "deg", "vh", "vw", "fr", "s", "cqi", "ms", "rem"],
 		"unit-disallowed-list": ["em"],
 		"selector-pseudo-class-no-unknown": [
 			true,
@@ -31,13 +19,7 @@
 		"declaration-block-no-redundant-longhand-properties": null,
 		"font-family-no-missing-generic-family-keyword": null,
 		"value-keyword-case": ["lower", { "ignoreProperties": ["font-family"] }],
-		"order/order": [
-			"custom-properties",
-			"dollar-variables",
-			"at-rules",
-			"declarations",
-			"rules"
-		],
+		"order/order": ["custom-properties", "dollar-variables", "at-rules", "declarations", "rules"],
 		"order/properties-order": [
 			{
 				"groupName": "Box Model",
@@ -96,14 +78,7 @@
 		"at-rule-no-unknown": [
 			true,
 			{
-				"ignoreAtRules": [
-					"tailwind",
-					"apply",
-					"variants",
-					"responsive",
-					"screen",
-					"layer"
-				]
+				"ignoreAtRules": ["tailwind", "apply", "variants", "responsive", "screen", "layer"]
 			}
 		],
 		"no-duplicate-at-import-rules": true,

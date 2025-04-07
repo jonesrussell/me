@@ -42,9 +42,7 @@ describe('Header', () => {
 		const navLinks = nav?.querySelectorAll('a');
 		expect(navLinks).toHaveLength(4);
 
-		const linkTexts = Array.from(navLinks || []).map(
-			(link) => link.textContent
-		);
+		const linkTexts = Array.from(navLinks || []).map(link => link.textContent);
 		expect(linkTexts).toEqual(['Blog', 'Projects', 'Resources', 'Contact']);
 	});
 
@@ -56,9 +54,7 @@ describe('Header', () => {
 
 		await waitFor(
 			() => {
-				const activeLink = container.querySelector(
-					'.desktop-nav a[href="/blog"]'
-				);
+				const activeLink = container.querySelector('.desktop-nav a[href="/blog"]');
 				expect(activeLink).toBeInTheDocument();
 				expect(activeLink?.classList.contains('active')).toBe(true);
 				expect(activeLink?.textContent).toBe('Blog');

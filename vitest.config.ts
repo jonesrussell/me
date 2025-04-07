@@ -16,9 +16,7 @@ const viteConfig = {
 	resolve: {
 		alias: {
 			$lib: fileURLToPath(new URL('./src/lib', import.meta.url)),
-			$app: fileURLToPath(
-				new URL('./node_modules/@sveltejs/kit/src/runtime/app', import.meta.url)
-			),
+			$app: fileURLToPath(new URL('./node_modules/@sveltejs/kit/src/runtime/app', import.meta.url)),
 			__sveltekit: fileURLToPath(
 				new URL('./node_modules/@sveltejs/kit/src/runtime', import.meta.url)
 			)

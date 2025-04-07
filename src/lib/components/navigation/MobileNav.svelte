@@ -21,9 +21,7 @@
 	function isActive(path: string) {
 		const basePath = base || '';
 		const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-		const normalizedCurrentPath = currentPath.startsWith('/')
-			? currentPath
-			: `/${currentPath}`;
+		const normalizedCurrentPath = currentPath.startsWith('/') ? currentPath : `/${currentPath}`;
 
 		return (
 			normalizedCurrentPath === normalizedPath ||
@@ -33,21 +31,6 @@
 		);
 	}
 </script>
-
-<nav class="mobile-nav" class:open={isOpen} aria-label="Main navigation">
-	<a href="/blog" class:active={isActive('/blog')} onclick={toggleMenu}>Blog</a>
-	<a href="/projects" class:active={isActive('/projects')} onclick={toggleMenu}
-		>Projects</a
-	>
-	<a
-		href="/resources"
-		class:active={isActive('/resources')}
-		onclick={toggleMenu}>Resources</a
-	>
-	<a href="/contact" class:active={isActive('/contact')} onclick={toggleMenu}
-		>Contact</a
-	>
-</nav>
 
 <style>
 	.mobile-nav {
@@ -110,3 +93,10 @@
 		}
 	}
 </style>
+
+<nav class="mobile-nav" class:open={isOpen} aria-label="Main navigation">
+	<a href="/blog" class:active={isActive('/blog')} onclick={toggleMenu}>Blog</a>
+	<a href="/projects" class:active={isActive('/projects')} onclick={toggleMenu}>Projects</a>
+	<a href="/resources" class:active={isActive('/resources')} onclick={toggleMenu}>Resources</a>
+	<a href="/contact" class:active={isActive('/contact')} onclick={toggleMenu}>Contact</a>
+</nav>

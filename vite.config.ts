@@ -13,14 +13,8 @@ const cssTransform = {
 		if (!id.endsWith('.css') && !id.endsWith('.svelte')) return;
 
 		// Replace units with ch
-		code = code.replace(
-			/(\d+)px/g,
-			(match) => `calc(${match.slice(0, -2)} * var(--ch) / 16)`
-		);
-		code = code.replace(
-			/(\d*\.?\d+)em/g,
-			(match) => `calc(${match.slice(0, -2)} * var(--ch))`
-		);
+		code = code.replace(/(\d+)px/g, match => `calc(${match.slice(0, -2)} * var(--ch) / 16)`);
+		code = code.replace(/(\d*\.?\d+)em/g, match => `calc(${match.slice(0, -2)} * var(--ch))`);
 
 		// Replace colors with variables
 		const colors: Record<string, string> = {
@@ -32,7 +26,7 @@ const cssTransform = {
 			'#eab308': '--color-warning'
 		};
 
-		code = code.replace(/#[0-9a-fA-F]{3,6}/g, (match) => {
+		code = code.replace(/#[0-9a-fA-F]{3,6}/g, match => {
 			const color = colors[match.toLowerCase()];
 			return color ? `var(${color})` : match;
 		});

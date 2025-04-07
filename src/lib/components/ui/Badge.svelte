@@ -14,11 +14,6 @@
 	};
 </script>
 
-<span class="badge {badgeType}">
-	{symbols[badgeType as BadgeType]}
-	{@render children()}
-</span>
-
 <style>
 	.badge {
 		display: inline-flex;
@@ -61,3 +56,8 @@
 		}
 	}
 </style>
+
+<span class="badge {badgeType}">
+	{symbols[badgeType as BadgeType]}
+	{@render children()}
+</span>

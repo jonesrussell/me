@@ -5,15 +5,6 @@
 	const { videos } = $props<{ videos: Video[] }>();
 </script>
 
-<section>
-	<h2>Creative Storytelling</h2>
-	<div class="video-grid">
-		{#each videos as video (video.title)}
-			<VideoCard {video} />
-		{/each}
-	</div>
-</section>
-
 <style>
 	h2 {
 		margin: var(--space-8) 0 var(--space-4) 0;
@@ -45,3 +36,12 @@
 		}
 	}
 </style>
+
+<section>
+	<h2>Creative Storytelling</h2>
+	<div class="video-grid">
+		{#each videos as video (video.title)}
+			<VideoCard {video} />
+		{/each}
+	</div>
+</section>

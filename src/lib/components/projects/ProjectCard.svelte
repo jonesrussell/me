@@ -5,25 +5,6 @@
 	const { project } = $props<{ project: Project }>();
 </script>
 
-<Box>
-	<div class="project">
-		<div class="project-header">
-			<h3>
-				<a href={project.url} target="_blank" rel="noopener noreferrer">
-					{project.title}
-				</a>
-			</h3>
-			<span class="status status-{project.status}">{project.status}</span>
-		</div>
-		<p class="description">{project.description}</p>
-		<div class="tech-stack">
-			{#each project.tech as tech (tech)}
-				<span class="tech">{tech}</span>
-			{/each}
-		</div>
-	</div>
-</Box>
-
 <style>
 	.project {
 		width: 100%;
@@ -135,3 +116,22 @@
 		}
 	}
 </style>
+
+<Box>
+	<div class="project">
+		<div class="project-header">
+			<h3>
+				<a href={project.url} target="_blank" rel="noopener noreferrer">
+					{project.title}
+				</a>
+			</h3>
+			<span class="status status-{project.status}">{project.status}</span>
+		</div>
+		<p class="description">{project.description}</p>
+		<div class="tech-stack">
+			{#each project.tech as tech (tech)}
+				<span class="tech">{tech}</span>
+			{/each}
+		</div>
+	</div>
+</Box>
