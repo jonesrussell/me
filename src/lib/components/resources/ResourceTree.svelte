@@ -24,7 +24,7 @@
 		<div class="folder">
 			{getPrefix(isLast)}{data.name}
 		</div>
-		{#each data.children as child, i}
+		{#each data.children as child, i (child.name)}
 			<ResourceTree
 				data={child}
 				level={level + 1}

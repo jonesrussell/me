@@ -1,6 +1,7 @@
 {
 	"extends": ["stylelint-config-standard", "stylelint-config-clean-order"],
 	"plugins": ["stylelint-order"],
+	"ignoreFiles": ["**/coverage/**"],
 	"rules": {
 		"unit-allowed-list": [
 			"ch",

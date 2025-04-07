@@ -24,7 +24,7 @@
 		</div>
 	</div>
 	<div class="terminal-body">
-		{#each get(commands).filter((cmd) => cmd.completed) as command}
+		{#each get(commands).filter((cmd) => cmd.completed) as command (command.cmd)}
 			<div class="command-line">
 				<span class="prompt">$</span>
 				<span class="command">{command.cmd}</span>

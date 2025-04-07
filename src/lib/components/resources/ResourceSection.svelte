@@ -37,7 +37,7 @@
 		{category}
 	</h2>
 	<div class="resource-grid">
-		{#each resources as resource}
+		{#each resources as resource (resource.title)}
 			<ResourceCard {resource} />
 		{/each}
 	</div>

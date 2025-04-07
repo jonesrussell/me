@@ -24,7 +24,7 @@
 			{/if}
 			<p class="description">{video.description}</p>
 			<div class="topics">
-				{#each video.topics as topic}
+				{#each video.topics as topic (topic)}
 					<span class="topic">{topic}</span>
 				{/each}
 			</div>

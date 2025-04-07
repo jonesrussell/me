@@ -17,7 +17,7 @@
 		</div>
 		<p class="description">{project.description}</p>
 		<div class="tech-stack">
-			{#each project.tech as tech}
+			{#each project.tech as tech (tech)}
 				<span class="tech">{tech}</span>
 			{/each}
 		</div>

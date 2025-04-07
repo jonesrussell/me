@@ -43,7 +43,7 @@
 
 	<div class="container">
 		<div class="posts">
-			{#each $blogPosts as post}
+			{#each $blogPosts as post (post.link)}
 				<BlogPost {post} />
 			{/each}
 		</div>

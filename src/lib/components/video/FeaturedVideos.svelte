@@ -8,7 +8,7 @@
 <section class="featured-videos">
 	<h2>🎥 Featured Videos</h2>
 	<div class="video-grid">
-		{#each videos as video}
+		{#each videos as video (video.title)}
 			<VideoCard {video} />
 		{/each}
 	</div>
