@@ -24,25 +24,23 @@
 		</div>
 	</div>
 	<div class="terminal-body">
-		{#each [...Array($terminal.currentCommand + 1).keys()] as i}
-			{@const currentCommands = get(commands)}
+		{#each get(commands).filter((cmd) => cmd.completed) as command}
 			<div class="command-line">
 				<span class="prompt">$</span>
-				<span class="command">
-					{i === $terminal.currentCommand
-						? $terminal.commandVisible
-						: currentCommands[i]?.cmd || ''}
-				</span>
-				{#if $terminal.isTyping && i === $terminal.currentCommand && $terminal.commandVisible.length === currentCommands[i]?.cmd?.length && !$terminal.outputVisible}
+				<span class="command">{command.cmd}</span>
+			</div>
+			<div class="command-output">{command.output}</div>
+		{/each}
+		{#if $terminal.currentCommand < get(commands).length}
+			<div class="command-line">
+				<span class="prompt">$</span>
+				<span class="command">{$terminal.commandVisible}</span>
+				{#if $terminal.isTyping && $terminal.commandVisible.length === get(commands)[$terminal.currentCommand]?.cmd?.length && !$terminal.outputVisible}
 					<span class="cursor">▋</span>
 				{/if}
 			</div>
-			<div class="command-output">
-				{i === $terminal.currentCommand
-					? $terminal.outputVisible
-					: currentCommands[i]?.output || ''}
-			</div>
-		{/each}
+			<div class="command-output">{$terminal.outputVisible}</div>
+		{/if}
 	</div>
 </div>
 

@@ -3,6 +3,7 @@ import { writable } from 'svelte/store';
 export type Command = {
 	cmd: string;
 	output: string;
+	completed?: boolean;
 };
 
 type TerminalState = {
@@ -92,9 +93,23 @@ function createTerminal() {
 			update((state) => {
 				if (state.currentCommand < currentCommands.length - 1) {
 					const nextCommand = state.currentCommand + 1;
-					typeCommand(currentCommands[nextCommand].cmd, () => {
-						showOutput(currentCommands[nextCommand].output);
+					const nextCommandData = currentCommands[nextCommand];
+
+					// Update state immediately for completed command
+					const completedCommand = currentCommands[state.currentCommand];
+					commands.update(cmds => {
+						cmds[state.currentCommand] = {
+							...completedCommand,
+							completed: true
+						};
+						return cmds;
 					});
+
+					// Start typing next command
+					typeCommand(nextCommandData.cmd, () => {
+						showOutput(nextCommandData.output);
+					});
+
 					return {
 						...state,
 						currentCommand: nextCommand,
