@@ -84,8 +84,6 @@
 </div>
 
 <style>
-
-
 	@media (width <= var(--blog-breakpoint-lg)) {
 		.content {
 			grid-template-columns: 1fr;
