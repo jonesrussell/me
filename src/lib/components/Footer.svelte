@@ -23,17 +23,52 @@
 
 <style>
 	.footer {
-		padding: var(--ch2) 0;
-		border-top: calc(1 * var(--ch) / 16) solid var(--border-color);
+		container-type: inline-size;
+		padding: var(--space-8) 0;
+		border-top: var(--border-width) solid var(--border-color);
 		font-size: var(--font-size-sm);
 		text-align: center;
+		background: var(--bg-darker);
 	}
 
 	.container {
-		box-sizing: border-box;
 		width: 100%;
-		max-width: min(var(--measure), 100%);
-		margin: 0 auto;
-		padding: 0 var(--content-padding);
+		max-width: min(var(--measure), 95cqi);
+		margin-inline: auto;
+		padding-inline: var(--space-4);
+	}
+
+	@container (width < 40ch) {
+		.container {
+			padding-inline: var(--space-4);
+		}
+
+		p {
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-2);
+		}
+	}
+
+	@container (width >= 40ch) {
+		.container {
+			padding-inline: var(--space-8);
+		}
+	}
+
+	a {
+		text-decoration: none;
+		color: var(--text-color);
+		transition: color var(--transition-duration) var(--transition-timing);
+	}
+
+	a:hover {
+		color: var(--accent-color);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		a {
+			transition: none;
+		}
 	}
 </style>
