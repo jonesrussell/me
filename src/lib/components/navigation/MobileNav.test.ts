@@ -6,8 +6,10 @@ import MobileNav from './MobileNav.svelte';
 describe('MobileNav', () => {
 	beforeEach(() => {
 		// Mock window.location
-		delete window.location;
-		window.location = new URL('http://localhost/blog') as Location;
+		Object.defineProperty(window, 'location', {
+			value: new URL('http://localhost/blog'),
+			writable: true
+		});
 	});
 
 	it('renders navigation items', () => {
