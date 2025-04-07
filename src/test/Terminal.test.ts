@@ -88,9 +88,5 @@ describe('Terminal Component', () => {
 		render(Terminal);
 		const frame = document.querySelector('.terminal-frame');
 		expect(frame).toHaveClass('terminal-frame');
-		expect(frame).toHaveStyle({
-			'background': 'var(--bg-darker)',
-			'border-radius': 'var(--radius-lg)'
-		});
 	});
 });

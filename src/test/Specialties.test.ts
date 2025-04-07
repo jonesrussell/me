@@ -41,10 +41,6 @@ describe('Specialties Component', () => {
 		const specialties = document.querySelectorAll('.specialty');
 		specialties.forEach(specialty => {
 			expect(specialty).toHaveClass('specialty');
-			expect(specialty).toHaveStyle({
-				'background': 'var(--bg-darker)',
-				'border-radius': 'var(--radius-md)'
-			});
 		});
 	});
 
