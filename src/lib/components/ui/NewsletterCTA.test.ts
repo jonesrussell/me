@@ -72,10 +72,10 @@ describe('NewsletterCTA', () => {
 		expect(newsletter).toHaveStyle({
 			display: 'flex',
 			'flex-direction': 'column',
-			gap: 'var(--ch2)',
+			gap: 'var(--space-4)',
 			width: '100%',
-			padding: 'var(--ch3)',
-			background: 'var(--color-mix-light)'
+			padding: 'var(--space-6)',
+			background: 'var(--bg-darker)'
 		});
 	});
 });
