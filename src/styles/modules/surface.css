@@ -8,6 +8,23 @@
 		.container {
 			--container-padding: var(--space-8);
 		}
+
+		.specialties {
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30ch), 1fr));
+		}
+	}
+
+	@container (width > 80ch) {
+		.specialties {
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
+		}
+	}
+
+	@container (width > 48ch) {
+		.specialty {
+			flex-direction: row;
+			align-items: flex-start;
+		}
 	}
 
 	/* Home */
@@ -21,13 +38,15 @@
 	/* Specialties */
 	.specialties {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 30ch), 1fr));
+		grid-template-columns: 1fr;
 		gap: var(--space-8);
 		margin: var(--space-16) 0;
+		container-type: inline-size;
 	}
 
 	.specialty {
 		display: flex;
+		flex-direction: column;
 		padding: var(--space-8);
 		background: var(--bg-color);
 		border: var(--border-width) solid var(--border-color);
@@ -35,7 +54,6 @@
 		box-shadow: var(--shadow-sm);
 		transition: all var(--transition-duration) var(--transition-timing);
 		gap: var(--space-4);
-		align-items: flex-start;
 	}
 
 	.specialty:hover {

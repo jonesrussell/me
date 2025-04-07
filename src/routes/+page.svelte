@@ -61,22 +61,44 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		justify-content: center;
 		width: 100%;
 		min-height: 50vh;
+		padding: var(--space-8) var(--space-4);
 		background: linear-gradient(to bottom, var(--bg-color), var(--bg-darker));
+		container-type: inline-size;
+	}
+
+	@container (width > 48ch) {
+		.hero {
+			min-height: 60vh;
+			padding: var(--space-16) var(--space-8);
+		}
 	}
 
 	.home {
 		container-type: inline-size;
-		max-width: min(var(--measure), 95cqi);
+		max-width: min(var(--measure) * 1.5, 95cqi);
 		margin-inline: auto;
-		padding: var(--ch4) var(--ch2);
+		padding: var(--space-16) var(--space-4);
+	}
+
+	@container (width > 48ch) {
+		.home {
+			padding: var(--space-16) var(--space-8);
+		}
+	}
+
+	@container (width > 80ch) {
+		.home {
+			max-width: min(var(--measure) * 2, 95cqi);
+		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
 		* {
-			animation: none !important;
 			transition: none !important;
+			animation: none !important;
 		}
 	}
 </style>
