@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Box from './Box.svelte';
+	import Box from '$lib/components/layout/Box.svelte';
 	import type { Project } from '$lib/types';
 
 	const { project } = $props<{ project: Project }>();

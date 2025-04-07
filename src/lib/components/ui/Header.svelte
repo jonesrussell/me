@@ -1,6 +1,6 @@
 <script lang="ts">
-	import DesktopNav from './DesktopNav.svelte';
-	import MobileNav from './MobileNav.svelte';
+	import DesktopNav from '$lib/components/navigation/DesktopNav.svelte';
+	import MobileNav from '$lib/components/navigation/MobileNav.svelte';
 
 	const { url } = $props<{ url: URL }>();
 
