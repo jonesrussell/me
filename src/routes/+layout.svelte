@@ -3,13 +3,37 @@
 	import SkipToMain from '$lib/components/SkipToMain.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	const { children } = $props();
+	const { children, url } = $props<{ children: any; url: URL }>();
 </script>
+
+<svelte:head>
+	<link
+		rel="preload"
+		href="/node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2"
+		as="font"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/>
+	<link
+		rel="preload"
+		href="/node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2"
+		as="font"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/>
+	<link
+		rel="preload"
+		href="/node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff2"
+		as="font"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/>
+</svelte:head>
 
 <SkipToMain />
 
 <div class="site">
-	<Header />
+	<Header {url} />
 
 	{@render children()}
 
