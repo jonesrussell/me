@@ -1,11 +1,23 @@
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/svelte';
-import { describe, expect, it } from 'vitest';
+import { render, waitFor } from '@testing-library/svelte';
+import { describe, expect, it, vi } from 'vitest';
 import Header from './Header.svelte';
 
+// Mock SvelteKit stores
+vi.mock('$app/stores', () => ({
+	page: {
+		subscribe: (fn: (value: { url: URL }) => void) => {
+			fn({ url: new URL('https://jonesrussell.github.io/me/') });
+			return () => {};
+		}
+	}
+}));
+
 describe('Header', () => {
+	const mockUrl = new URL('https://jonesrussell.github.io/me/');
+
 	it('renders site title', () => {
-		const { container } = render(Header);
+		const { container } = render(Header, { url: mockUrl });
 		const title = container.querySelector('.title');
 		expect(title).toBeInTheDocument();
 		expect(title?.textContent).toBe('Russell Jones');
@@ -13,7 +25,7 @@ describe('Header', () => {
 	});
 
 	it('renders navigation items', () => {
-		const { container } = render(Header);
+		const { container } = render(Header, { url: mockUrl });
 		const nav = container.querySelector('.desktop-nav');
 		expect(nav).toBeInTheDocument();
 
@@ -26,17 +38,28 @@ describe('Header', () => {
 		expect(linkTexts).toEqual(['Blog', 'Projects', 'Resources', 'Contact']);
 	});
 
-	it('marks active navigation item', () => {
+	it('marks active navigation item', async () => {
+		const blogUrl = new URL('https://jonesrussell.github.io/me/blog');
 		const { container } = render(Header, {
-			url: { pathname: '/blog' }
+			url: blogUrl
 		});
-		const activeLink = container.querySelector('a.active');
-		expect(activeLink).toBeInTheDocument();
-		expect(activeLink?.textContent).toBe('Blog');
+
+		// Wait for the component to update with the new URL
+		await waitFor(
+			() => {
+				const activeLink = container.querySelector(
+					'.desktop-nav a[href="/blog"]'
+				);
+				expect(activeLink).toBeInTheDocument();
+				expect(activeLink?.classList.contains('active')).toBe(true);
+				expect(activeLink?.textContent).toBe('Blog');
+			},
+			{ timeout: 1000 }
+		);
 	});
 
 	it('renders subtitle', () => {
-		const { container } = render(Header);
+		const { container } = render(Header, { url: mockUrl });
 		const subtitle = container.querySelector('.subtitle-bar');
 		expect(subtitle).toBeInTheDocument();
 		expect(subtitle?.textContent?.trim()).toBe(
@@ -45,7 +68,7 @@ describe('Header', () => {
 	});
 
 	it('has sticky positioning', () => {
-		const { container } = render(Header);
+		const { container } = render(Header, { url: mockUrl });
 		const header = container.querySelector('.site-header');
 		expect(header).toBeInTheDocument();
 		expect(header).toHaveClass('site-header');
