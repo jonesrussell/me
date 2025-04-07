@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Box from '$lib/components/layout/Box.svelte';
-	import { formatDate } from '../../../services/blog-service';
+	import { formatDate } from '$services/blog-service';
 
 	const { post } = $props<{
 		post: {
@@ -94,6 +94,7 @@
 		line-height: var(--line-height-relaxed);
 		color: var(--text-color);
 		-webkit-line-clamp: 3;
+		line-clamp: 3;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 	}
