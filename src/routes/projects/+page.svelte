@@ -7,6 +7,15 @@
 		status: 'active' | 'stable' | 'experimental';
 	}
 
+	interface Video {
+		title: string;
+		description: string;
+		topics: string[];
+		url: string;
+		embedId: string;
+		date: string;
+	}
+
 	const projects: Project[] = [
 		{
 			title: 'MP Emailer',
@@ -38,40 +47,83 @@
 			status: 'experimental'
 		}
 	];
+
+	const videos: Video[] = [
+		{
+			title: 'The Legend Reborn - AI Generated Trailer',
+			description:
+				'Journey with Nanabush and witness the story of the Anishinaabe in this AI-generated trailer celebrating Indigenous storytelling.',
+			topics: ['AI Generated', 'Indigenous', 'Anishinaabe', 'Native American'],
+			url: 'https://www.youtube.com/watch?v=7Pvq7hQ3l84',
+			embedId: '7Pvq7hQ3l84',
+			date: 'Feb 2024'
+		},
+		{
+			title: 'Red Helmet - Stop Motion Trailer',
+			description:
+				'A wanderer comes across a red helmet, origin unknown. Little does he know, the helmet is imbued with a powerful entity that embarks on a journey of its own.',
+			topics: ['Stop Motion', 'Short Film', 'Indie Film', 'Original Story'],
+			url: 'https://www.youtube.com/watch?v=Bky1A8vNUjU',
+			embedId: 'Bky1A8vNUjU',
+			date: 'Dec 2023'
+		}
+	];
 </script>
 
 <svelte:head>
-	<title
-		>Open Source Projects | Russell Jones - Go & Modern Web Development</title
+	<title>Projects & Content | Russell Jones - Go & Modern Web Development</title
 	>
 	<meta
 		name="description"
-		content="Explore my open source projects built with Go, JavaScript, and modern web technologies. From web applications to system tools and game development."
+		content="Explore my open source projects, technical videos, and educational content about Go, JavaScript, and modern web development."
 	/>
 </svelte:head>
 
-<section class="projects">
-	<h1>Open Source Projects</h1>
+<section class="content">
+	<h1>Projects & Content</h1>
+	<p class="intro">
+		Here you'll find my open source projects, technical videos, and educational
+		content.
+	</p>
 
-	<div class="intro">
-		Here are some of my open source projects. Most are built with Go and modern
-		web technologies.
+	<h2>Featured Videos</h2>
+	<div class="video-grid">
+		{#each videos as video}
+			<div class="video-card">
+				<div class="video-container">
+					<iframe
+						src={`https://www.youtube.com/embed/${video.embedId}`}
+						title={video.title}
+						frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+						allowfullscreen
+						loading="lazy"
+					></iframe>
+				</div>
+				<h3 class="video-title">{video.title}</h3>
+				<p class="description">{video.description}</p>
+				<div class="topics">
+					{#each video.topics as topic}
+						<span class="topic">{topic}</span>
+					{/each}
+				</div>
+			</div>
+		{/each}
 	</div>
 
+	<h2>Open Source Projects</h2>
 	<div class="project-grid">
 		{#each projects as project}
 			<div class="project">
 				<div class="project-header">
-					<h2>
+					<h3>
 						<a href={project.url} target="_blank" rel="noopener noreferrer">
 							{project.title}
 						</a>
-					</h2>
+					</h3>
 					<span class="status status-{project.status}">{project.status}</span>
 				</div>
-
 				<p class="description">{project.description}</p>
-
 				<div class="tech-stack">
 					{#each project.tech as tech}
 						<span class="tech">{tech}</span>
@@ -83,111 +135,180 @@
 </section>
 
 <style>
-	.projects {
+	.content {
 		width: 100%;
-		max-width: var(--projects-width);
+		max-width: calc(80 * var(--ch));
 		margin: 0 auto;
-		padding: var(--ch4) var(--ch2);
+		padding: var(--ch3) var(--ch2);
 
 		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
 		line-height: var(--line-height-base);
 	}
 
 	h1 {
-		margin: 0;
-		font-size: var(--font-size-2xl);
+		margin-bottom: var(--ch2);
+		font-size: var(--font-size-lg);
 		line-height: var(--line-height-tight);
-		text-align: center;
+		color: var(--text-muted);
+	}
+
+	h2 {
+		margin-top: var(--ch3);
+		margin-bottom: var(--ch2);
+
+		font-size: var(--font-size-base);
+		line-height: var(--line-height-tight);
+		color: var(--text-muted);
 	}
 
 	.intro {
-		margin: var(--ch2) 0 var(--ch4) 0;
-		text-align: center;
+		margin-bottom: var(--ch3);
+		font-size: var(--font-size-sm);
 		color: var(--text-muted);
+	}
+
+	.video-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
+		gap: var(--ch2);
+		margin-bottom: var(--ch3);
+	}
+
+	.video-card {
+		padding: var(--ch2);
+		background: var(--bg-darker);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
+		border-radius: var(--radius-sm);
+	}
+
+	.video-card:hover {
+		transform: translateY(calc(-1 * var(--ch) / 8));
+	}
+
+	.video-container {
+		position: relative;
+
+		height: 0;
+		margin-bottom: var(--ch2);
+		padding-bottom: 56.25%;
+
+		background: var(--bg-color);
+		border-radius: var(--radius-sm);
+
+		overflow: hidden;
+	}
+
+	.video-container iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+
+	.video-title {
+		margin-bottom: calc(var(--ch) / 2);
+		font-size: var(--font-size-base);
+		line-height: var(--line-height-tight);
+	}
+
+	.description {
+		margin-bottom: var(--ch);
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
+	}
+
+	.topics {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--ch);
+	}
+
+	.topic {
+		padding: calc(var(--ch) / 4) var(--ch);
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
+		background: var(--bg-darker);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
+		border-radius: var(--radius-sm);
 	}
 
 	.project-grid {
 		display: grid;
-		grid-template-columns: 1fr;
-		gap: var(--ch4);
-	}
-
-	@media (width >= 80ch) {
-		.project-grid {
-			grid-template-columns: repeat(auto-fit, minmax(50ch, 1fr));
-		}
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
+		gap: var(--ch2);
 	}
 
 	.project {
-		width: 100%;
-		padding: var(--ch3);
-		background: var(--color-mix-light);
+		padding: var(--ch2);
+		background: var(--bg-darker);
 		border: calc(1 * var(--ch) / 16) solid var(--border-color);
+		border-radius: var(--radius-sm);
+	}
+
+	.project:hover {
+		transform: translateY(calc(-1 * var(--ch) / 8));
 	}
 
 	.project-header {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		margin-bottom: var(--ch2);
+		margin-bottom: var(--ch);
 	}
 
-	h2 {
+	.project-header h3 {
 		margin: 0;
-		font-size: var(--font-size-lg);
-		font-weight: var(--font-weight-bold);
+		font-size: var(--font-size-base);
+		line-height: var(--line-height-tight);
 	}
 
 	.status {
 		padding: calc(var(--ch) / 4) var(--ch);
 		font-size: var(--font-size-sm);
-		border-radius: calc(var(--ch) / 8);
+		border-radius: var(--radius-sm);
 	}
 
 	.status-active {
-		color: var(--color-success);
-		background: color-mix(in srgb, var(--color-success) 15%, transparent);
+		color: var(--success-color);
+		background: color-mix(in srgb, var(--success-color) 15%, transparent);
 	}
 
 	.status-stable {
-		color: var(--color-info);
+		color: var(--info-color);
+		background: color-mix(in srgb, var(--info-color) 15%, transparent);
 	}
 
 	.status-experimental {
-		color: var(--color-warning);
-		background: color-mix(in srgb, var(--color-warning) 15%, transparent);
-	}
-
-	.description {
-		margin: var(--ch2) 0;
-		color: var(--text-muted);
+		color: var(--warning-color);
+		background: color-mix(in srgb, var(--warning-color) 15%, transparent);
 	}
 
 	.tech-stack {
 		display: flex;
 		flex-wrap: wrap;
 		gap: var(--ch);
-		margin-top: var(--ch2);
+		margin-top: var(--ch);
 	}
 
 	.tech {
 		padding: calc(var(--ch) / 4) var(--ch);
-
 		font-size: var(--font-size-sm);
-
-		background: var(--color-mix-medium);
+		color: var(--text-muted);
+		background: var(--bg-color);
 		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		border-radius: calc(var(--ch) / 8);
+		border-radius: var(--radius-sm);
 	}
 
 	a {
 		text-decoration: none;
 		color: var(--link-color);
-		border-bottom: calc(1 * var(--ch) / 16) solid transparent;
 	}
 
 	a:hover {
-		border-bottom-color: currentcolor;
 		color: var(--link-hover);
 	}
 </style>
