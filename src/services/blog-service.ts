@@ -222,6 +222,16 @@ export async function fetchFeed(options?: PaginationOptions): Promise<PaginatedR
 		const end = start + pageSize;
 		const items = feedCache.data.slice(start, end);
 
+		console.log('Using cached data:', {
+			totalPosts: feedCache.data.length,
+			page,
+			pageSize,
+			start,
+			end,
+			itemsCount: items.length,
+			hasMore: end < feedCache.data.length
+		});
+
 		return {
 			items,
 			total: feedCache.data.length,
@@ -255,6 +265,16 @@ export async function fetchFeed(options?: PaginationOptions): Promise<PaginatedR
 		const end = start + pageSize;
 		const items = feedCache?.data.slice(start, end) || [];
 
+		console.log('Using cached data (304):', {
+			totalPosts: feedCache?.data.length || 0,
+			page,
+			pageSize,
+			start,
+			end,
+			itemsCount: items.length,
+			hasMore: end < (feedCache?.data.length || 0)
+		});
+
 		return {
 			items,
 			total: feedCache?.data.length || 0,
@@ -281,6 +301,16 @@ export async function fetchFeed(options?: PaginationOptions): Promise<PaginatedR
 	const start = (page - 1) * pageSize;
 	const end = start + pageSize;
 	const items = posts.slice(start, end);
+
+	console.log('Using fresh data:', {
+		totalPosts: posts.length,
+		page,
+		pageSize,
+		start,
+		end,
+		itemsCount: items.length,
+		hasMore: end < posts.length
+	});
 
 	return {
 		items,

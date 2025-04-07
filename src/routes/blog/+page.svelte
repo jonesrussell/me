@@ -4,12 +4,14 @@
 	import BlogHeader from '$lib/components/BlogHeader.svelte';
 	import BlogPost from '$lib/components/BlogPost.svelte';
 
-	let currentPage = 1;
+	let currentPage = $state(1);
 	let hasMore = $state(false);
 	let isLoading = $state(false);
+	const pageSize = 5;
 
 	onMount(async () => {
-		const result = await fetchFeed({ page: currentPage, pageSize: 10 });
+		const result = await fetchFeed({ page: currentPage, pageSize });
+		console.log('Initial fetch result:', result);
 		blogPosts.set(result.items);
 		hasMore = result.hasMore;
 	});
@@ -20,7 +22,8 @@
 		isLoading = true;
 		currentPage++;
 
-		const result = await fetchFeed({ page: currentPage, pageSize: 10 });
+		const result = await fetchFeed({ page: currentPage, pageSize });
+		console.log('Load more result:', result);
 		blogPosts.update((posts) => [...posts, ...result.items]);
 		hasMore = result.hasMore;
 		isLoading = false;
