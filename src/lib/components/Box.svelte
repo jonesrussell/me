@@ -36,25 +36,25 @@
 <style>
 	.box {
 		width: var(--box-width);
-		min-width: var(--box-width);
-		max-width: var(--box-width);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-md);
 
 		font-family: var(--font-mono);
 		line-height: var(--line-height-tight);
-		word-break: break-word;
-		overflow-wrap: break-word;
 
 		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
 		box-shadow: var(--shadow-sm);
 
 		transition: all var(--transition-duration) var(--transition-timing);
+		min-width: var(--box-width);
+		max-width: var(--box-width);
+		word-break: break-word;
+		overflow-wrap: break-word;
 	}
 
 	.box:hover {
-		transform: translateY(-0.125ch);
 		box-shadow: var(--shadow-md);
+		transform: translateY(-0.125ch);
 	}
 
 	.box-frame {

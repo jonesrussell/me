@@ -10,13 +10,13 @@
 
 @keyframes slide-up {
 	from {
-		transform: translateY(var(--ch2));
 		opacity: 0;
+		transform: translateY(var(--ch2));
 	}
 
 	to {
-		transform: translateY(0);
 		opacity: 1;
+		transform: translateY(0);
 	}
 }
 

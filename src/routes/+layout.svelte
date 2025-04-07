@@ -31,12 +31,12 @@
 	.footer {
 		margin-top: auto;
 		padding: var(--space-16) var(--space-4);
-		border-top: var(--border-width) solid var(--border-color);
 
 		font-size: var(--font-size-sm);
-		color: var(--text-muted);
 		text-align: center;
+		color: var(--text-muted);
 
 		background: var(--bg-darker);
+		border-top: var(--border-width) solid var(--border-color);
 	}
 </style>

@@ -22,17 +22,17 @@
 <style>
 	.badge {
 		display: inline-flex;
-		gap: var(--space-1);
-		align-items: center;
 
 		padding: var(--space-1) var(--space-2);
-		border-radius: var(--radius-sm);
 
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		line-height: var(--line-height-tight);
+		border-radius: var(--radius-sm);
 
 		transition: all var(--transition-duration) var(--transition-timing);
+		gap: var(--space-1);
+		align-items: center;
 	}
 
 	.badge.info {

@@ -102,8 +102,8 @@
 
 	.intro {
 		margin: var(--ch2) 0 var(--ch4) 0;
-		color: var(--text-muted);
 		text-align: center;
+		color: var(--text-muted);
 	}
 
 	.project-grid {
@@ -121,8 +121,8 @@
 	.project {
 		width: 100%;
 		padding: var(--ch3);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		background: var(--color-mix-light);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 	}
 
 	.project-header {
@@ -140,8 +140,8 @@
 
 	.status {
 		padding: calc(var(--ch) / 4) var(--ch);
-		border-radius: calc(var(--ch) / 8);
 		font-size: var(--font-size-sm);
+		border-radius: calc(var(--ch) / 8);
 	}
 
 	.status-active {
@@ -172,18 +172,18 @@
 
 	.tech {
 		padding: calc(var(--ch) / 4) var(--ch);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		border-radius: calc(var(--ch) / 8);
 
 		font-size: var(--font-size-sm);
 
 		background: var(--color-mix-medium);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
+		border-radius: calc(var(--ch) / 8);
 	}
 
 	a {
-		border-bottom: calc(1 * var(--ch) / 16) solid transparent;
-		color: var(--link-color);
 		text-decoration: none;
+		color: var(--link-color);
+		border-bottom: calc(1 * var(--ch) / 16) solid transparent;
 	}
 
 	a:hover {

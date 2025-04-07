@@ -1,15 +1,26 @@
 @layer components {
+	/* Container Queries */
+	@container (width > 48ch) {
+		.card {
+			padding: var(--space-12);
+		}
+
+		.container {
+			--container-padding: var(--space-8);
+		}
+	}
+
 	/* Cards */
 	.card {
 		padding: var(--space-4);
-		border-radius: var(--radius-md);
 		background: var(--bg-darker);
+		border-radius: var(--radius-md);
 		box-shadow: var(--shadow-sm);
 	}
 
 	.card:hover {
-		transform: translateY(-0.25ch);
 		box-shadow: var(--shadow-lg);
+		transform: translateY(-0.25ch);
 	}
 
 	.card-compact {
@@ -22,19 +33,19 @@
 
 	/* Surfaces */
 	.surface {
-		border: var(--border-width) solid var(--border-color);
 		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
 	}
 
 	.surface-elevated {
-		border: var(--border-width) solid var(--border-color);
 		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
 		box-shadow: var(--shadow-md);
 	}
 
 	.surface-floating {
-		border: var(--border-width) solid var(--border-color);
 		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
 		box-shadow: var(--shadow-lg);
 	}
 
@@ -120,16 +131,5 @@
 
 	.rounded-full {
 		border-radius: var(--radius-full);
-	}
-
-	/* Container Queries */
-	@container (width > 48ch) {
-		.card {
-			padding: var(--space-12);
-		}
-
-		.container {
-			--container-padding: var(--space-8);
-		}
 	}
 }

@@ -105,15 +105,15 @@
 <style>
 	.newsletter {
 		display: flex;
-		justify-content: center;
 
 		width: 100%;
 		padding: var(--space-8);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-lg);
 
 		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-lg);
 		box-shadow: var(--shadow-lg);
+		justify-content: center;
 	}
 
 	.newsletter-content {
@@ -173,15 +173,15 @@
 
 	.input-wrapper {
 		display: flex;
-		align-items: center;
 
 		padding: var(--space-2) var(--space-4);
+
+		background: var(--bg-color);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
 
-		background: var(--bg-color);
-
 		transition: all var(--transition-duration) var(--transition-timing);
+		align-items: center;
 	}
 
 	.input-wrapper:focus-within {
@@ -196,17 +196,16 @@
 	}
 
 	input {
-		flex: 1;
-
 		width: 100%;
 		padding: 0;
-		border: none;
 
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
 		color: var(--text-color);
 
 		background: transparent;
+		border: none;
+		flex: 1;
 	}
 
 	input:focus {
@@ -219,11 +218,7 @@
 	}
 
 	button {
-		cursor: pointer;
-
 		padding: var(--space-4);
-		border: var(--border-width) solid var(--accent-color);
-		border-radius: var(--radius-md);
 
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
@@ -232,8 +227,11 @@
 		color: var(--bg-darker);
 
 		background: var(--accent-color);
+		border: var(--border-width) solid var(--accent-color);
+		border-radius: var(--radius-md);
 
 		transition: all var(--transition-duration) var(--transition-timing);
+		cursor: pointer;
 	}
 
 	button:disabled {
@@ -242,9 +240,9 @@
 	}
 
 	button:hover:not(:disabled) {
+		background: var(--accent-color-hover);
 		transform: translateY(-0.25ch);
 		border-color: var(--accent-color-hover);
-		background: var(--accent-color-hover);
 	}
 
 	.button-content {
@@ -293,26 +291,26 @@
 	.success-message,
 	.error-message {
 		display: flex;
+
+		padding: var(--space-4);
+
+		font-size: var(--font-size-sm);
+		border-radius: var(--radius-md);
 		gap: var(--space-2);
 		align-items: center;
 		justify-content: center;
-
-		padding: var(--space-4);
-		border-radius: var(--radius-md);
-
-		font-size: var(--font-size-sm);
 	}
 
 	.success-message {
-		border: var(--border-width) solid var(--color-success);
 		color: var(--color-success);
 		background: var(--color-mix-light);
+		border: var(--border-width) solid var(--color-success);
 	}
 
 	.error-message {
-		border: var(--border-width) solid var(--color-error);
 		color: var(--color-error);
 		background: var(--color-mix-light);
+		border: var(--border-width) solid var(--color-error);
 	}
 
 	@media (width >= calc(37.5 * var(--ch))) {

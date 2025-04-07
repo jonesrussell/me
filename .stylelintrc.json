@@ -29,7 +29,92 @@
 		"no-descending-specificity": null,
 		"declaration-block-no-redundant-longhand-properties": null,
 		"font-family-no-missing-generic-family-keyword": null,
-		"value-keyword-case": ["lower", { "ignoreProperties": ["font-family"] }]
+		"value-keyword-case": ["lower", { "ignoreProperties": ["font-family"] }],
+		"order/order": [
+			"custom-properties",
+			"dollar-variables",
+			"at-rules",
+			"declarations",
+			"rules"
+		],
+		"order/properties-order": [
+			{
+				"groupName": "Box Model",
+				"properties": [
+					"display",
+					"position",
+					"top",
+					"right",
+					"bottom",
+					"left",
+					"width",
+					"height",
+					"margin",
+					"margin-top",
+					"margin-right",
+					"margin-bottom",
+					"margin-left",
+					"padding",
+					"padding-top",
+					"padding-right",
+					"padding-bottom",
+					"padding-left"
+				]
+			},
+			{
+				"groupName": "Typography",
+				"properties": [
+					"font",
+					"font-family",
+					"font-size",
+					"font-weight",
+					"line-height",
+					"text-align",
+					"text-decoration",
+					"text-transform",
+					"color"
+				]
+			},
+			{
+				"groupName": "Visual",
+				"properties": [
+					"background",
+					"background-color",
+					"border",
+					"border-radius",
+					"box-shadow",
+					"opacity",
+					"visibility"
+				]
+			},
+			{
+				"groupName": "Animation",
+				"properties": ["transition", "animation", "transform"]
+			}
+		],
+		"at-rule-no-unknown": [
+			true,
+			{
+				"ignoreAtRules": [
+					"tailwind",
+					"apply",
+					"variants",
+					"responsive",
+					"screen",
+					"layer"
+				]
+			}
+		],
+		"no-duplicate-at-import-rules": true,
+		"no-invalid-position-at-import-rule": true,
+		"at-rule-empty-line-before": [
+			"always",
+			{
+				"except": ["first-nested"],
+				"ignore": ["after-comment", "blockless-after-same-name-blockless"],
+				"ignoreAtRules": ["import", "layer"]
+			}
+		]
 	},
 	"overrides": [
 		{
