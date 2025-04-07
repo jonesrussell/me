@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Box from '$lib/components/Box.svelte';
+
 	interface Project {
 		title: string;
 		description: string;
@@ -79,123 +81,200 @@
 	/>
 </svelte:head>
 
-<section class="content">
-	<h1>Projects & Content</h1>
-	<p class="intro">
-		Here you'll find my open source projects, technical videos, and educational
-		content.
-	</p>
+<div class="projects">
+	<div class="container">
+		<h1>Projects & Content</h1>
+		<p class="intro">
+			Here you'll find my open source projects, technical videos, and
+			educational content.
+		</p>
 
-	<h2>Featured Videos</h2>
-	<div class="video-grid">
-		{#each videos as video}
-			<div class="video-card">
-				<div class="video-container">
-					<iframe
-						src={`https://www.youtube.com/embed/${video.embedId}`}
-						title={video.title}
-						frameborder="0"
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-						allowfullscreen
-						loading="lazy"
-					></iframe>
-				</div>
-				<h3 class="video-title">{video.title}</h3>
-				<p class="description">{video.description}</p>
-				<div class="topics">
-					{#each video.topics as topic}
-						<span class="topic">{topic}</span>
-					{/each}
-				</div>
-			</div>
-		{/each}
-	</div>
+		<h2>Featured Videos</h2>
+		<div class="video-grid">
+			{#each videos as video}
+				<Box>
+					<div class="video-card">
+						<div class="video-container">
+							<iframe
+								src={`https://www.youtube.com/embed/${video.embedId}`}
+								title={video.title}
+								frameborder="0"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+								allowfullscreen
+								loading="lazy"
+							></iframe>
+						</div>
+						<h3 class="video-title">{video.title}</h3>
+						<p class="description">{video.description}</p>
+						<div class="topics">
+							{#each video.topics as topic}
+								<span class="topic">{topic}</span>
+							{/each}
+						</div>
+					</div>
+				</Box>
+			{/each}
+		</div>
 
-	<h2>Open Source Projects</h2>
-	<div class="project-grid">
-		{#each projects as project}
-			<div class="project">
-				<div class="project-header">
-					<h3>
-						<a href={project.url} target="_blank" rel="noopener noreferrer">
-							{project.title}
-						</a>
-					</h3>
-					<span class="status status-{project.status}">{project.status}</span>
-				</div>
-				<p class="description">{project.description}</p>
-				<div class="tech-stack">
-					{#each project.tech as tech}
-						<span class="tech">{tech}</span>
-					{/each}
-				</div>
-			</div>
-		{/each}
+		<h2>Open Source Projects</h2>
+		<div class="project-grid">
+			{#each projects as project}
+				<Box>
+					<div class="project">
+						<div class="project-header">
+							<h3>
+								<a href={project.url} target="_blank" rel="noopener noreferrer">
+									{project.title}
+								</a>
+							</h3>
+							<span class="status status-{project.status}"
+								>{project.status}</span
+							>
+						</div>
+						<p class="description">{project.description}</p>
+						<div class="tech-stack">
+							{#each project.tech as tech}
+								<span class="tech">{tech}</span>
+							{/each}
+						</div>
+					</div>
+				</Box>
+			{/each}
+		</div>
 	</div>
-</section>
+</div>
 
 <style>
-	.content {
-		width: 100%;
-		max-width: calc(80 * var(--ch));
-		margin: 0 auto;
-		padding: var(--ch3) var(--ch2);
+	/* Tablet and larger */
+	@media (width >= 48ch) {
+		.projects {
+			padding: var(--space-12) 0;
+		}
 
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
-		line-height: var(--line-height-base);
+		h1 {
+			font-size: var(--font-size-2xl);
+		}
+
+		h2 {
+			margin: var(--space-12) 0 var(--space-6) 0;
+			font-size: var(--font-size-xl);
+		}
+
+		.intro {
+			margin: var(--space-6) 0 var(--space-12) 0;
+			font-size: var(--font-size-lg);
+		}
+
+		.video-grid,
+		.project-grid {
+			gap: var(--space-6);
+		}
+
+		.video-card,
+		.project {
+			padding: var(--space-6);
+		}
+
+		.video-title {
+			font-size: var(--font-size-lg);
+		}
+
+		.description {
+			font-size: var(--font-size-base);
+		}
+
+		.topic,
+		.tech {
+			padding: var(--space-2) var(--space-4);
+			font-size: var(--font-size-sm);
+		}
+
+		.project-header {
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			gap: var(--space-4);
+		}
+
+		.status {
+			font-size: var(--font-size-sm);
+			align-self: auto;
+		}
+	}
+
+	/* Desktop and larger */
+	@media (width >= 80ch) {
+		.projects {
+			padding: var(--space-16) 0;
+		}
+
+		.video-grid,
+		.project-grid {
+			grid-template-columns: repeat(auto-fit, minmax(50ch, 1fr));
+			gap: var(--space-8);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			transition: none !important;
+		}
+	}
+
+	.projects {
+		width: 100%;
+		padding: var(--space-8) 0;
+	}
+
+	.container {
+		width: 100%;
+		max-width: min(var(--measure), 95cqi);
+		margin: 0 auto;
+		padding: 0 var(--space-4);
 	}
 
 	h1 {
-		margin-bottom: var(--ch2);
-		font-size: var(--font-size-lg);
+		margin: 0;
+		font-size: var(--font-size-xl);
 		line-height: var(--line-height-tight);
-		color: var(--text-muted);
+		text-align: center;
+		color: var(--text-color);
 	}
 
 	h2 {
-		margin-top: var(--ch3);
-		margin-bottom: var(--ch2);
-
-		font-size: var(--font-size-base);
+		margin: var(--space-8) 0 var(--space-4) 0;
+		font-size: var(--font-size-lg);
 		line-height: var(--line-height-tight);
-		color: var(--text-muted);
+		color: var(--text-color);
 	}
 
 	.intro {
-		margin-bottom: var(--ch3);
-		font-size: var(--font-size-sm);
+		margin: var(--space-4) 0 var(--space-8) 0;
+		font-size: var(--font-size-base);
+		line-height: var(--line-height-relaxed);
+		text-align: center;
 		color: var(--text-muted);
 	}
 
-	.video-grid {
+	.video-grid,
+	.project-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
-		gap: var(--ch2);
-		margin-bottom: var(--ch3);
+		gap: var(--space-4);
 	}
 
-	.video-card {
-		padding: var(--ch2);
-		background: var(--bg-darker);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		border-radius: var(--radius-sm);
-	}
-
-	.video-card:hover {
-		transform: translateY(calc(-1 * var(--ch) / 8));
+	.video-card,
+	.project {
+		width: 100%;
+		padding: var(--space-4);
 	}
 
 	.video-container {
 		position: relative;
-
 		height: 0;
-		margin-bottom: var(--ch2);
+		margin-bottom: var(--space-4);
 		padding-bottom: 56.25%;
-
-		background: var(--bg-color);
-		border-radius: var(--radius-sm);
-
+		background: var(--bg-darker);
+		border-radius: var(--radius-md);
 		overflow: hidden;
 	}
 
@@ -203,73 +282,72 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-
 		width: 100%;
 		height: 100%;
 		border: 0;
 	}
 
 	.video-title {
-		margin-bottom: calc(var(--ch) / 2);
+		margin: 0 0 var(--space-2) 0;
 		font-size: var(--font-size-base);
 		line-height: var(--line-height-tight);
+		color: var(--text-color);
 	}
 
 	.description {
-		margin-bottom: var(--ch);
+		margin: var(--space-4) 0;
 		font-size: var(--font-size-sm);
+		line-height: var(--line-height-relaxed);
 		color: var(--text-muted);
 	}
 
-	.topics {
+	.topics,
+	.tech-stack {
 		display: flex;
 		flex-wrap: wrap;
-		gap: var(--ch);
+		gap: var(--space-2);
+		margin-top: var(--space-4);
 	}
 
-	.topic {
-		padding: calc(var(--ch) / 4) var(--ch);
-		font-size: var(--font-size-sm);
+	.topic,
+	.tech {
+		padding: var(--space-2) var(--space-3);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-xs);
 		color: var(--text-muted);
 		background: var(--bg-darker);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		border-radius: var(--radius-sm);
+		border-radius: var(--radius-md);
+		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
-	.project-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
-		gap: var(--ch2);
-	}
-
-	.project {
-		padding: var(--ch2);
-		background: var(--bg-darker);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		border-radius: var(--radius-sm);
-	}
-
-	.project:hover {
-		transform: translateY(calc(-1 * var(--ch) / 8));
+	.topic:hover,
+	.tech:hover {
+		color: var(--text-color);
+		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
 	}
 
 	.project-header {
 		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin-bottom: var(--ch);
+		flex-direction: column;
+		gap: var(--space-2);
+		margin-bottom: var(--space-4);
 	}
 
 	.project-header h3 {
 		margin: 0;
-		font-size: var(--font-size-base);
+		font-size: var(--font-size-lg);
 		line-height: var(--line-height-tight);
+		color: var(--text-color);
 	}
 
 	.status {
-		padding: calc(var(--ch) / 4) var(--ch);
-		font-size: var(--font-size-sm);
-		border-radius: var(--radius-sm);
+		padding: var(--space-2) var(--space-3);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-xs);
+		font-weight: var(--font-weight-medium);
+		text-transform: capitalize;
+		border-radius: var(--radius-md);
+		align-self: flex-start;
 	}
 
 	.status-active {
@@ -287,25 +365,10 @@
 		background: color-mix(in srgb, var(--warning-color) 15%, transparent);
 	}
 
-	.tech-stack {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--ch);
-		margin-top: var(--ch);
-	}
-
-	.tech {
-		padding: calc(var(--ch) / 4) var(--ch);
-		font-size: var(--font-size-sm);
-		color: var(--text-muted);
-		background: var(--bg-color);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		border-radius: var(--radius-sm);
-	}
-
 	a {
 		text-decoration: none;
 		color: var(--link-color);
+		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	a:hover {
