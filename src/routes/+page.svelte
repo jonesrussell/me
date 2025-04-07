@@ -150,19 +150,19 @@
 	}
 
 	.specialty:hover {
+		background: var(--bg-darker);
 		transform: translateY(calc(-2 * var(--ch) / 16));
 		border-color: var(--accent-color);
 		box-shadow: var(--shadow-lg);
-		background: var(--bg-darker);
 	}
 
 	.specialty-icon {
 		padding: var(--ch2);
 		border-radius: var(--radius-md);
 		background: var(--color-mix-light);
+		color: var(--accent-color);
 		font-size: var(--font-size-2xl);
 		line-height: var(--line-height-tight);
-		color: var(--accent-color);
 	}
 
 	.specialty-content {
@@ -172,14 +172,14 @@
 	.specialty-title {
 		margin-bottom: var(--ch);
 		color: var(--accent-color);
-		font-weight: var(--font-weight-bold);
 		font-size: var(--font-size-lg);
+		font-weight: var(--font-weight-bold);
 	}
 
 	.specialty-desc {
 		color: var(--text-muted);
-		line-height: var(--line-height-relaxed);
 		font-size: var(--font-size-base);
+		line-height: var(--line-height-relaxed);
 	}
 
 	.navigation {
@@ -211,8 +211,8 @@
 	}
 
 	.nav-icon {
-		font-size: var(--font-size-xl);
 		color: var(--accent-color);
+		font-size: var(--font-size-xl);
 	}
 
 	.youtube-section {
@@ -232,22 +232,22 @@
 
 	h2 {
 		margin-bottom: var(--ch);
+		color: var(--accent-color);
 		font-size: var(--font-size-2xl);
 		line-height: var(--line-height-tight);
-		color: var(--accent-color);
 	}
 
 	.section-desc {
 		color: var(--text-muted);
-		line-height: var(--line-height-relaxed);
 		font-size: var(--font-size-lg);
+		line-height: var(--line-height-relaxed);
 	}
 
 	.video-figure {
 		margin: var(--ch3) 0;
-		aspect-ratio: 16/9;
-		background: var(--bg-darker);
 		border-radius: var(--radius-md);
+		background: var(--bg-darker);
+		aspect-ratio: 16/9;
 		overflow: hidden;
 	}
 
@@ -269,16 +269,16 @@
 	.youtube-link {
 		display: flex;
 		gap: var(--ch2);
-		align-items: center;
 		justify-content: center;
+		align-items: center;
 		margin-top: var(--ch3);
 		padding: var(--ch2);
 		border: calc(var(--ch) / 16) solid var(--accent-color);
 		border-radius: var(--radius-lg);
 		background: var(--accent-color);
 		color: var(--bg-color);
-		text-decoration: none;
 		font-weight: var(--font-weight-bold);
+		text-decoration: none;
 		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 

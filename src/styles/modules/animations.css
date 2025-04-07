@@ -68,6 +68,7 @@
 		from {
 			opacity: 0;
 		}
+
 		to {
 			opacity: 1;
 		}
@@ -77,6 +78,7 @@
 		from {
 			opacity: 1;
 		}
+
 		to {
 			opacity: 0;
 		}
@@ -87,6 +89,7 @@
 			transform: translateY(1ch);
 			opacity: 0;
 		}
+
 		to {
 			transform: translateY(0);
 			opacity: 1;
@@ -98,6 +101,7 @@
 			transform: translateY(-1ch);
 			opacity: 0;
 		}
+
 		to {
 			transform: translateY(0);
 			opacity: 1;
@@ -109,6 +113,7 @@
 			transform: translateX(1ch);
 			opacity: 0;
 		}
+
 		to {
 			transform: translateX(0);
 			opacity: 1;
@@ -120,6 +125,7 @@
 			transform: translateX(-1ch);
 			opacity: 0;
 		}
+
 		to {
 			transform: translateX(0);
 			opacity: 1;
@@ -131,6 +137,7 @@
 			transform: scale(0.95);
 			opacity: 0;
 		}
+
 		to {
 			transform: scale(1);
 			opacity: 1;
@@ -142,6 +149,7 @@
 			transform: scale(1);
 			opacity: 1;
 		}
+
 		to {
 			transform: scale(0.95);
 			opacity: 0;
@@ -152,6 +160,7 @@
 		from {
 			transform: rotate(0deg);
 		}
+
 		to {
 			transform: rotate(360deg);
 		}
@@ -161,9 +170,11 @@
 		0% {
 			opacity: 0.5;
 		}
+
 		50% {
 			opacity: 0.2;
 		}
+
 		100% {
 			opacity: 0.5;
 		}

@@ -23,27 +23,27 @@
 
 	/* Surfaces */
 	.surface {
-		background: var(--bg-darker);
 		border: var(--border-width) solid var(--border-color);
+		background: var(--bg-darker);
 	}
 
 	.surface-elevated {
-		background: var(--bg-darker);
 		border: var(--border-width) solid var(--border-color);
+		background: var(--bg-darker);
 		box-shadow: var(--shadow-md);
 	}
 
 	.surface-floating {
-		background: var(--bg-darker);
 		border: var(--border-width) solid var(--border-color);
+		background: var(--bg-darker);
 		box-shadow: var(--shadow-lg);
 	}
 
 	/* Dividers */
 	.divider {
 		height: var(--border-width);
-		background: var(--border-color);
 		margin: var(--space-8) 0;
+		background: var(--border-color);
 	}
 
 	.divider-compact {

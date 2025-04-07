@@ -1,10 +1,12 @@
-<script lang="ts">
-	import Tree from './Tree.svelte';
-
-	interface TreeNode {
+<script lang="ts" module>
+	export interface TreeNode {
 		name: string;
 		children?: TreeNode[];
 	}
+</script>
+
+<script lang="ts">
+	import Tree from './Tree.svelte';
 
 	const {
 		data,

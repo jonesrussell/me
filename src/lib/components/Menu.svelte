@@ -22,8 +22,8 @@
 
 	.menu-item {
 		padding: var(--space-1) var(--space-2);
-		cursor: pointer;
 		transition: all var(--transition-duration) var(--transition-timing);
+		cursor: pointer;
 	}
 
 	.menu-item:hover {

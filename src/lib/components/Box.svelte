@@ -16,7 +16,12 @@
 	const alignedWidth = $derived(alignToGrid(width));
 </script>
 
-<div class="box" style="--box-width: {alignedWidth}ch; {style}">
+<div
+	class="box"
+	style="
+
+--box-width: {alignedWidth}ch; {style}"
+>
 	<div class="box-frame">
 		{#if title}
 			<div class="header">{title}</div>
