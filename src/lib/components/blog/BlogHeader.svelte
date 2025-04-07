@@ -48,7 +48,7 @@
 		transform: scale(1.02);
 	}
 
-	.dev-to-screenshot {
+	.header-image img {
 		display: block;
 		width: 100%;
 		height: 100%;
@@ -83,14 +83,7 @@
 <header>
 	<div class="header-image">
 		<a href={devToUrl} target="_blank" rel="noopener noreferrer" aria-label="View DEV.to profile">
-			<enhanced:img
-				src="../../images/dev.to.jpeg"
-				alt="Russell Jones's DEV.to Profile"
-				class="dev-to-screenshot"
-				sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
-				fetchpriority="high"
-				loading="eager"
-			></enhanced:img>
+			<img alt="Dev.to logo" src="/images/dev.to.jpeg" width="24" height="24" />
 		</a>
 	</div>
 	<h1>Web Developer Blog</h1>

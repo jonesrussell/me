@@ -5,41 +5,31 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="color-scheme" content="light dark" />
 
+		<!-- Favicons -->
+		<link rel="icon" type="image/x-icon" href="%sveltekit.assets%/favicons/favicon.ico" />
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="%sveltekit.assets%/favicons/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="%sveltekit.assets%/favicons/favicon-16x16.png"
+		/>
+		<link rel="apple-touch-icon" href="%sveltekit.assets%/favicons/apple-touch-icon.png" />
+		<link rel="manifest" href="%sveltekit.assets%/favicons/site.webmanifest" />
+
 		<!-- Preconnect to external domains -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link rel="preconnect" href="https://dev.to" crossorigin />
-
-		<!-- Preload critical fonts -->
-		<link
-			rel="preload"
-			href="/node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
-		<link
-			rel="preload"
-			href="/node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
-		<link
-			rel="preload"
-			href="/node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
-
-		<link rel="icon" href="%sveltekit.assets%/favicons/favicon.ico" sizes="any" />
-		<link rel="apple-touch-icon" href="%sveltekit.assets%/favicons/apple-touch-icon.png" />
 
 		%sveltekit.head%
 	</head>
 
-	<body>
+	<body data-sveltekit-preload-data="hover">
 		<div id="app">
 			%sveltekit.body%
 			<main id="main" role="main" tabindex="-1">
