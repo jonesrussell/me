@@ -51,7 +51,7 @@ const vitestConfig = {
 			provider: 'v8',
 			reporter: ['text', 'json', 'html'],
 			include: ['src/**/*.{ts,svelte}'],
-			exclude: ['src/**/*.test.ts', 'src/**/*.spec.ts'],
+			exclude: ['src/**/*.test.ts', 'src/**/*.spec.ts']
 		}
 	}
 };

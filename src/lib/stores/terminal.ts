@@ -97,7 +97,7 @@ function createTerminal() {
 
 					// Update state immediately for completed command
 					const completedCommand = currentCommands[state.currentCommand];
-					commands.update(cmds => {
+					commands.update((cmds) => {
 						cmds[state.currentCommand] = {
 							...completedCommand,
 							completed: true

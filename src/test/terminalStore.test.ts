@@ -22,9 +22,7 @@ describe('Terminal Store', () => {
 	});
 
 	it('loads commands correctly', () => {
-		const testCommands = [
-			{ cmd: 'test', output: 'test output' }
-		];
+		const testCommands = [{ cmd: 'test', output: 'test output' }];
 		commands.set(testCommands);
 		terminal.loadCommands(testCommands);
 		terminal.stop(); // Ensure typing is stopped after loading commands
@@ -37,9 +35,7 @@ describe('Terminal Store', () => {
 	});
 
 	it('types command with correct timing', async () => {
-		const testCommands = [
-			{ cmd: 'test', output: 'test output' }
-		];
+		const testCommands = [{ cmd: 'test', output: 'test output' }];
 		commands.set(testCommands);
 		terminal.loadCommands(testCommands);
 

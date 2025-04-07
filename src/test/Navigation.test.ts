@@ -19,7 +19,7 @@ describe('Navigation Component', () => {
 	it('renders all navigation links', () => {
 		render(Navigation, { links: testLinks });
 
-		testLinks.forEach(link => {
+		testLinks.forEach((link) => {
 			const navLink = screen.getByText(link.text).closest('a');
 			expect(navLink).toHaveAttribute('href', link.href);
 			expect(screen.getByText(link.icon)).toBeInTheDocument();
@@ -33,7 +33,7 @@ describe('Navigation Component', () => {
 		expect(nav).toHaveClass('navigation');
 
 		const links = document.querySelectorAll('.nav-link');
-		links.forEach(link => {
+		links.forEach((link) => {
 			expect(link).toHaveClass('nav-link');
 		});
 	});
@@ -59,12 +59,12 @@ describe('Navigation Component', () => {
 		render(Navigation, { links: testLinks });
 
 		const icons = document.querySelectorAll('.nav-icon');
-		icons.forEach(icon => {
+		icons.forEach((icon) => {
 			expect(icon).toHaveClass('nav-icon');
 		});
 
 		const texts = document.querySelectorAll('.nav-text');
-		texts.forEach(text => {
+		texts.forEach((text) => {
 			expect(text).toHaveClass('nav-text');
 		});
 	});
