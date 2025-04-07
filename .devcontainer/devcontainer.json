@@ -27,20 +27,40 @@
 			"version": "latest"
 		},
 		"ghcr.io/dhoeric/features/act:1": {},
-		"ghcr.io/stuartleeks/dev-container-features/shell-history:0": {}
+		"ghcr.io/stuartleeks/dev-container-features/shell-history:0": {},
+		"ghcr.io/devcontainers/features/git:1": {
+			"version": "latest",
+			"ppa": false
+		}
 	},
-	"postCreateCommand": "sudo npx playwright install-deps && npm install -g npm@11.0.0",
+	"postCreateCommand": "sudo npx playwright install-deps && npm install -g npm@11.0.0 pnpm@latest bun@latest",
 	"mounts": [
-		"type=bind,source=/home/${localEnv:USER}/.ssh,target=/home/node/.ssh,readonly"
+		"type=bind,source=/home/${localEnv:USER}/.ssh,target=/home/node/.ssh,readonly",
+		"type=volume,src=node_modules,target=/workspace/node_modules",
+		"type=volume,src=vscode-extensions,target=/root/.vscode-server/extensions"
 	],
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"svelte.svelte-vscode",
 				"github.vscode-github-actions",
-				"esbenp.prettier-vscode",
-				"stylelint.vscode-stylelint"
-			]
+				"vscode.typescript-language-features",
+				"stylelint.vscode-stylelint",
+				"vscode.css-language-features",
+				"vscode.html-language-features",
+				"vscode.json-language-features",
+				"vscode.markdown-language-features"
+			],
+			"settings": {
+				"editor.formatOnSave": true,
+				"editor.defaultFormatter": "vscode.typescript-language-features",
+				"editor.codeActionsOnSave": {
+					"source.fixAll.eslint": "always",
+					"source.fixAll.stylelint": "always"
+				},
+				"typescript.tsdk": "node_modules/typescript/lib",
+				"typescript.enablePromptUseWorkspaceTsdk": true
+			}
 		}
 	},
 	"forwardPorts": [5173, 9323],
@@ -53,7 +73,7 @@
 			"label": "Playwright Report",
 			"onAutoForward": "notify"
 		}
-	}
+	},
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -62,4 +82,9 @@
 	// "customizations": {},
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
+	"remoteEnv": {
+		"NODE_ENV": "development",
+		"PATH": "/home/node/.bun/bin:${containerEnv:PATH}"
+	},
+	"updateContentCommand": "git config --global user.name \"${localEnv:GIT_USER_NAME}\" && git config --global user.email \"${localEnv:GIT_USER_EMAIL}\""
 }
