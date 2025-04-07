@@ -1,43 +1,45 @@
+import prettier from 'eslint-config-prettier';
 import js from '@eslint/js';
+import { includeIgnoreFile } from '@eslint/compat';
 import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
+import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
+import svelteConfig from './svelte.config.js';
 
-export default [
+const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
+
+export default ts.config(
+	includeIgnoreFile(gitignorePath),
 	js.configs.recommended,
 	...ts.configs.recommended,
-	...svelte.configs['flat/recommended'],
+	...svelte.configs.recommended,
+	prettier,
+	...svelte.configs.prettier,
 	{
-		ignores: ['build/**', '.svelte-kit/**', 'node_modules/**']
-	},
-	{
-		files: ['**/*.svelte'],
 		languageOptions: {
-			globals: {
-				...globals.browser,
-				...globals.node
-			},
-			parser: svelte.parser,
-			parserOptions: {
-				parser: ts.parser,
-				project: ['./tsconfig.json'],
-				extraFileExtensions: ['.svelte'],
-				jsx: true,
-				jsxPragma: null,
-				jsxFragmentName: null
-			}
+			globals: { ...globals.browser, ...globals.node, ...globals.es2021 }
 		},
 		rules: {
-			'no-unused-vars': ['error', { varsIgnorePattern: '^\\$' }]
+			'no-undef': 'off',
+			'@typescript-eslint/no-explicit-any': 'warn',
+			'@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+			'svelte/no-at-html-tags': 'error',
+			'svelte/no-target-blank': 'error',
+			'svelte/valid-compile': 'error',
+			'svelte/no-reactive-reassign': 'error'
 		}
 	},
 	{
-		files: ['*.js', '*.ts'],
+		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
+		ignores: ['eslint.config.js', 'svelte.config.js'],
 		languageOptions: {
-			globals: {
-				...globals.browser,
-				...globals.node
+			parserOptions: {
+				projectService: true,
+				extraFileExtensions: ['.svelte'],
+				parser: ts.parser,
+				svelteConfig
 			}
 		}
 	}
-];
+);

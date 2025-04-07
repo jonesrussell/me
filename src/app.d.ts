@@ -31,57 +31,59 @@ declare global {
 	}
 }
 
-declare module '$app/state' {
-	import { Readable } from 'svelte/store';
-	import { Page } from '@sveltejs/kit';
-
-	export const page: Readable<Page>;
-	export const navigating: Readable<boolean>;
-	export const updated: Readable<boolean>;
-}
-
-declare module '$app/paths' {
-	export const base: string;
-	export const assets: string;
-}
-
-declare module '$app/stores' {
-	import { Readable } from 'svelte/store';
-	import { Page } from '@sveltejs/kit';
-
-	export const page: Readable<Page>;
-	export const navigating: Readable<boolean>;
-	export const updated: Readable<boolean>;
-}
-
-declare module '*.jpeg?enhanced' {
+// Enhanced image type declarations
+declare module '*?enhanced' {
 	const value: App.EnhancedImage;
 	export default value;
 }
 
-declare module '*.jpg?enhanced' {
+// Specific image format declarations
+declare module '*.{jpeg,jpg,png,gif,webp,svg}?enhanced' {
 	const value: App.EnhancedImage;
 	export default value;
 }
 
-declare module '*.png?enhanced' {
+// Specific path declarations
+declare module '$lib/images/*.{jpeg,jpg,png,gif,webp,svg}?enhanced' {
 	const value: App.EnhancedImage;
 	export default value;
 }
 
-declare module '*.gif?enhanced' {
-	const value: App.EnhancedImage;
-	export default value;
+// Resource types
+declare module '$lib/types/resource' {
+	export interface TreeNode {
+		name: string;
+		url?: string;
+		description?: string;
+		children?: TreeNode[];
+	}
 }
 
-declare module '*.webp?enhanced' {
-	const value: App.EnhancedImage;
-	export default value;
+// SvelteKit types
+declare module '@sveltejs/kit' {
+	interface Page {
+		params: Record<string, string>;
+		routeId: string | null;
+		status: number;
+		error: Error | null;
+		data: Record<string, any>;
+		url: URL;
+	}
 }
 
-declare module '*.svg?enhanced' {
-	const value: App.EnhancedImage;
-	export default value;
+// Svelte 5 Component types
+declare module 'svelte' {
+	interface Component<Props = Record<string, any>, Events = Record<string, any>, Slots = string> {
+		(props: Props): {
+			$$prop_def: Props;
+			$$events_def: Events;
+			$$slot_def: Slots;
+		};
+	}
+
+	interface Readable<T> {
+		subscribe: (run: (value: T) => void) => () => void;
+	}
 }
 
 export {};

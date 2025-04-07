@@ -2,6 +2,8 @@
 import { enhancedImages } from '@sveltejs/enhanced-img';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig, mergeConfig } from 'vite';
+import { configDefaults } from 'vitest/config';
+import { svelteTesting } from '@testing-library/svelte/vite';
 
 // CSS transformation plugin
 const cssTransform = {
@@ -60,17 +62,44 @@ const viteConfig = {
 	test: {
 		globals: true,
 		environment: 'jsdom',
+		setupFiles: ['src/test/setup.ts'],
 		coverage: {
 			provider: 'v8',
 			reporter: ['text', 'json', 'html'],
 			include: ['src/**/*.{ts,svelte}'],
 			exclude: ['src/**/*.test.ts', 'src/**/*.spec.ts']
+		},
+		deps: {
+			inline: [/^svelte/]
 		}
 	}
 };
 
-export default defineConfig(() => {
-	return mergeConfig(viteConfig, {
-		// ... existing code ...
-	});
+export default defineConfig({
+	plugins: [sveltekit()],
+	test: {
+		workspace: [
+			{
+				extends: './vite.config.ts',
+				plugins: [svelteTesting()],
+				test: {
+					name: 'client',
+					environment: 'jsdom',
+					clearMocks: true,
+					include: ['src/**/*.svelte.{test,spec}.{js,ts}'],
+					exclude: ['src/lib/server/**'],
+					setupFiles: ['./vitest-setup-client.ts']
+				}
+			},
+			{
+				extends: './vite.config.ts',
+				test: {
+					name: 'server',
+					environment: 'node',
+					include: ['src/**/*.{test,spec}.{js,ts}'],
+					exclude: ['src/**/*.svelte.{test,spec}.{js,ts}']
+				}
+			}
+		]
+	}
 });
