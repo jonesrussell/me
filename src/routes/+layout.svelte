@@ -3,13 +3,10 @@
 	import SkipToMain from '$lib/components/navigation/SkipToMain.svelte';
 	import Header from '$lib/components/ui/Header.svelte';
 	import Footer from '$lib/components/ui/Footer.svelte';
-	import type { SvelteComponent } from 'svelte';
 	import { page } from '$app/stores';
 
-	const { data } = $props<{
-		data: {
-			children: () => SvelteComponent;
-		};
+	const { children } = $props<{
+		children: () => unknown;
 	}>();
 </script>
 
@@ -42,7 +39,7 @@
 <div class="site">
 	<Header url={$page.url} />
 
-	{@render data.children()}
+	{@render children()}
 
 	<Footer />
 </div>
