@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
+	import { base } from '$app/paths';
 
 	const {
-		url = $page.url,
+		url = page.url,
 		isOpen,
 		toggleMenu
 	} = $props<{
@@ -18,11 +19,17 @@
 	});
 
 	function isActive(path: string) {
+		const basePath = base || '';
+		const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+		const normalizedCurrentPath = currentPath.startsWith('/')
+			? currentPath
+			: `/${currentPath}`;
+
 		return (
-			currentPath === path ||
-			currentPath === `${path}/` ||
-			currentPath === `/me${path}` ||
-			currentPath === `/me${path}/`
+			normalizedCurrentPath === normalizedPath ||
+			normalizedCurrentPath === `${normalizedPath}/` ||
+			normalizedCurrentPath === `${basePath}${normalizedPath}` ||
+			normalizedCurrentPath === `${basePath}${normalizedPath}/`
 		);
 	}
 </script>
