@@ -12,6 +12,16 @@ const config = {
 		paths: {
 			base: process.env.NODE_ENV === 'production' ? '/me' : ''
 		},
+		prerender: {
+			handleHttpError: ({ path, referrer, message }) => {
+				// ignore 404s from the root path
+				if (path === '/' || path === '/me/') {
+					return;
+				}
+				// otherwise fail the build
+				throw new Error(message);
+			}
+		},
 		alias: {
 			$lib: './src/lib',
 			$test: './src/test'
