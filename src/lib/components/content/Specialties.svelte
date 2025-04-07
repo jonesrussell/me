@@ -8,24 +8,26 @@
 	}>();
 </script>
 
-<div class="specialties">
+<div class="specialties-container">
 	<div class="section-header">
 		<h2>My Specialties</h2>
 		<p class="section-desc">Areas where I excel and bring value to projects</p>
 	</div>
-	{#each specialties as specialty}
-		<div class="specialty">
-			<div class="specialty-icon">{specialty.icon}</div>
-			<div class="specialty-content">
-				<div class="specialty-title">{specialty.title}</div>
-				<div class="specialty-desc">{specialty.description}</div>
+	<div class="specialties">
+		{#each specialties as specialty}
+			<div class="specialty">
+				<div class="specialty-icon">{specialty.icon}</div>
+				<div class="specialty-content">
+					<div class="specialty-title">{specialty.title}</div>
+					<div class="specialty-desc">{specialty.description}</div>
+				</div>
 			</div>
-		</div>
-	{/each}
+		{/each}
+	</div>
 </div>
 
 <style>
-	.specialties {
+	.specialties-container {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-8);
@@ -33,7 +35,6 @@
 	}
 
 	.section-header {
-		margin-bottom: var(--space-8);
 		text-align: center;
 	}
 
@@ -48,6 +49,12 @@
 		margin-top: var(--space-2);
 		font-size: var(--font-size-base);
 		color: var(--text-muted);
+	}
+
+	.specialties {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-8);
 	}
 
 	.specialty {
