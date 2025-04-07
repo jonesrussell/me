@@ -29,13 +29,27 @@
 	<header>
 		<div class="header-image">
 			<a href={devToUrl} target="_blank" rel="noopener noreferrer">
-				<img
-					{...devToProfile}
-					alt="Russell Jones's DEV.to Profile"
-					class="dev-to-screenshot"
-					sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
-					fetchpriority="high"
-				/>
+				<picture>
+					<source
+						type="image/webp"
+						srcset={devToProfile.sources['image/webp']}
+						sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
+					/>
+					<source
+						type="image/jpeg"
+						srcset={devToProfile.sources['image/jpeg']}
+						sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
+					/>
+					<img
+						{...devToProfile.img}
+						alt="Russell Jones's DEV.to Profile"
+						class="dev-to-screenshot"
+						sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
+						fetchpriority="high"
+						loading="eager"
+						decoding="sync"
+					/>
+				</picture>
 			</a>
 		</div>
 		<h1>Web Developer Blog</h1>
@@ -53,7 +67,7 @@
 		</p>
 	</header>
 
-	<div class="content">
+	<div class="container">
 		<div class="posts">
 			{#each $blogPosts as post}
 				<Box width={80}>
@@ -84,85 +98,53 @@
 </div>
 
 <style>
-	@media (width <= var(--blog-breakpoint-lg)) {
-		.content {
-			grid-template-columns: 1fr;
-		}
-
-		.sidebar {
-			display: none;
-		}
-	}
-
-	@media (width <= var(--blog-breakpoint-md)) {
-		header {
-			margin-bottom: var(--ch2);
-		}
-
-		h1 {
-			font-size: var(--font-size-xl);
-		}
-
-		.blog {
-			padding: var(--ch) var(--content-padding) var(--ch2);
-		}
-
-		.dev-to-screenshot {
-			width: var(--blog-image-width-sm);
+	@media (prefers-reduced-motion: reduce) {
+		.header-image a,
+		.url-preview,
+		.url-icon,
+		.post-header a,
+		.source-note a {
+			transition: none;
 		}
 	}
 
-	:root {
-		--blog-url-translate: 0.25ch;
-		--blog-image-width-sm: 33.5ch;
-		--blog-image-width-lg: 34.75ch;
-		--blog-breakpoint-md: 95ch;
-		--blog-breakpoint-lg: 150ch;
+	@container (width > 48ch) {
+		.header-image {
+			max-width: 48ch;
+		}
 	}
 
 	.blog {
 		width: 100%;
-		max-width: var(--content-max-width);
-		margin: 0 auto;
-		padding: var(--ch2) var(--content-padding) var(--ch4);
-
-		font-family: var(--font-mono);
+		padding: var(--space-16) 0;
 	}
 
 	header {
-		margin-bottom: var(--ch4);
+		width: 100%;
+		max-width: min(var(--measure), 95cqi);
+		margin: 0 auto var(--space-16);
+		padding: 0 var(--space-4);
 		text-align: center;
 	}
 
-	/* Base link styles */
-	.post-header a,
-	.source-note a {
-		text-decoration: none;
-		color: var(--link-color);
-		transition: color var(--transition-duration) var(--transition-timing);
-	}
-
-	/* Header image styles */
 	.header-image {
 		overflow: hidden;
-
 		width: 100%;
-		max-width: var(--blog-image-width-lg);
-		margin: 0 auto var(--ch2);
+		max-width: 34.75ch;
+		margin: 0 auto var(--space-8);
 		border-radius: var(--radius-md);
+		aspect-ratio: 16/9;
+		container-type: inline-size;
 	}
 
 	.header-image a {
 		display: block;
 		position: relative;
+		width: 100%;
+		height: 100%;
 		border-radius: var(--radius-md);
+		transition: transform var(--transition-duration) var(--transition-timing);
 		overflow: hidden;
-	}
-
-	/* Hover states */
-	.post-header a:hover,
-	.source-note a:hover {
-		color: var(--accent-color-hover);
 	}
 
 	.header-image a:hover {
@@ -172,55 +154,59 @@
 	.dev-to-screenshot {
 		display: block;
 		width: 100%;
-		height: auto;
+		height: 100%;
+		object-fit: cover;
 		border-radius: var(--radius-md);
 	}
 
 	h1 {
 		margin: 0;
-
 		font-size: var(--font-size-2xl);
-		font-weight: 500;
+		font-weight: var(--font-weight-medium);
 		line-height: var(--line-height-tight);
 		color: var(--accent-color);
-
 		background: linear-gradient(
 			to right,
 			var(--accent-color),
 			var(--accent-color-hover)
 		);
 		background-clip: text;
-
 		-webkit-text-fill-color: transparent;
 	}
 
 	.subtitle {
-		margin: var(--ch2) auto 0;
+		margin: var(--space-4) auto 0;
 		font-size: var(--font-size-lg);
 		color: var(--text-muted);
 	}
 
-	.content {
-		display: grid;
-		grid-template-columns: 1fr auto;
-		gap: var(--ch8);
-		align-items: start;
+	.source-note {
+		margin: var(--space-4) auto 0;
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
+	}
+
+	.container {
+		width: 100%;
+		max-width: min(var(--measure), 95cqi);
+		margin: 0 auto;
+		padding: 0 var(--space-4);
 	}
 
 	.posts {
 		display: grid;
-		gap: var(--ch4);
+		gap: var(--space-8);
 	}
 
 	.post {
 		display: grid;
-		gap: var(--ch2);
+		gap: var(--space-4);
 	}
 
 	.post-header {
 		display: flex;
 		flex-wrap: wrap;
-		gap: var(--ch4);
+		gap: var(--space-4);
 		align-items: baseline;
 		justify-content: space-between;
 	}
@@ -229,12 +215,6 @@
 		margin: 0;
 		font-size: var(--font-size-lg);
 		line-height: var(--line-height-tight);
-	}
-
-	.source-note {
-		margin: var(--ch2) auto 0;
-		font-size: var(--font-size-base);
-		color: var(--text-muted);
 	}
 
 	time {
@@ -252,21 +232,16 @@
 
 	.url-preview {
 		display: flex;
-
 		width: fit-content;
-		padding: var(--ch) var(--ch2);
-
+		padding: var(--space-2) var(--space-4);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		text-decoration: none;
 		color: var(--text-muted);
-
 		background: var(--bg-darker);
 		border-radius: var(--radius-sm);
-
 		transition: all var(--transition-duration) var(--transition-timing);
-		overflow: hidden;
-		gap: var(--ch);
+		gap: var(--space-2);
 		align-items: center;
 	}
 
@@ -281,31 +256,19 @@
 	}
 
 	.url-preview:hover .url-icon {
-		transform: translateX(var(--blog-url-translate));
+		transform: translateX(0.25ch);
 	}
 
-	.sidebar {
-		position: sticky;
-		top: var(--ch4);
-	}
-
-	.dev-to-link {
-		display: block;
+	/* Base link styles */
+	.post-header a,
+	.source-note a {
 		text-decoration: none;
-		color: inherit;
+		color: var(--link-color);
+		transition: color var(--transition-duration) var(--transition-timing);
 	}
 
-	.dev-to-content {
-		display: flex;
-		flex-direction: column;
-		gap: var(--ch2);
-		align-items: center;
-
-		text-align: center;
-	}
-
-	.dev-to-text {
-		font-size: var(--font-size-sm);
-		color: var(--accent-color);
+	.post-header a:hover,
+	.source-note a:hover {
+		color: var(--accent-color-hover);
 	}
 </style>
