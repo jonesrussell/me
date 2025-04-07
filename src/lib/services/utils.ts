@@ -1,4 +1,4 @@
-// @ts-ignore - sanitize-html types are incorrect
+// @ts-expect-error - sanitize-html types are incorrect
 import sanitizeHtml from 'sanitize-html';
 
 // Cache for memoized results

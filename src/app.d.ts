@@ -5,7 +5,10 @@ declare global {
 		// interface Error {}
 		// interface Locals {}
 		// interface PageData {}
-		// interface PageState {}
+		interface PageState {
+			theme: 'light' | 'dark';
+			sidebarOpen: boolean;
+		}
 		// interface Platform {}
 		type ThemeMode = 'auto' | 'light' | 'dark';
 
@@ -28,6 +31,12 @@ declare global {
 			description?: string;
 			children?: TreeNode[];
 		}
+	}
+
+	interface Window {
+		// Add any global window properties here
+		__theme: 'light' | 'dark';
+		__setTheme: (theme: 'light' | 'dark') => void;
 	}
 }
 
