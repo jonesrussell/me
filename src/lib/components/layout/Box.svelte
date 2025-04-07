@@ -5,12 +5,12 @@
 		title = undefined,
 		width = 40,
 		style = '',
-		children
+		children = () => null
 	} = $props<{
 		title?: string;
 		width?: number;
 		style?: string;
-		children?: () => any;
+		children?: () => unknown;
 	}>();
 </script>
 
@@ -26,7 +26,7 @@
 		{/if}
 
 		<div class="content">
-			{@render children()}
+			{children()}
 		</div>
 	</div>
 </div>
