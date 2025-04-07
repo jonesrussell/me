@@ -2,6 +2,10 @@
 @import url('@fontsource/fira-mono/400.css');
 @import url('@fontsource/fira-mono/500.css');
 @import url('@fontsource/fira-mono/700.css');
+@import url('./styles/base.css');
+@import url('./styles/themes/light.css');
+@import url('./styles/themes/dark.css');
+@import url('./styles/animations.css');
 
 /* Reset */
 html,
@@ -104,14 +108,14 @@ video {
 	/* Typography */
 	--font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 	--font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-	--font-size-xs: 0.75ch;
-	--font-size-sm: 0.875ch;
-	--font-size-base: 1ch;
-	--font-size-lg: 1.125ch;
-	--font-size-xl: 1.25ch;
-	--font-size-2xl: 1.5ch;
-	--font-size-3xl: 1.875ch;
-	--font-size-4xl: 2.25ch;
+	--font-size-xs: 0.75rem;
+	--font-size-sm: 0.875rem;
+	--font-size-base: 1rem;
+	--font-size-lg: 1.125rem;
+	--font-size-xl: 1.25rem;
+	--font-size-2xl: 1.5rem;
+	--font-size-3xl: 1.875rem;
+	--font-size-4xl: 2.25rem;
 	--line-height-none: 1;
 	--line-height-tight: 1.25;
 	--line-height-normal: 1.5;
@@ -122,20 +126,20 @@ video {
 	--font-weight-bold: 700;
 
 	/* Spacing */
-	--ch: 1ch;
-	--ch2: calc(var(--ch) * 2);
-	--ch4: calc(var(--ch) * 4);
-	--ch6: calc(var(--ch) * 6);
-	--ch8: calc(var(--ch) * 8);
-	--ch12: calc(var(--ch) * 12);
-	--ch16: calc(var(--ch) * 16);
-	--ch20: calc(var(--ch) * 20);
-	--ch24: calc(var(--ch) * 24);
-	--ch32: calc(var(--ch) * 32);
-	--ch40: calc(var(--ch) * 40);
-	--ch48: calc(var(--ch) * 48);
-	--ch56: calc(var(--ch) * 56);
-	--ch64: calc(var(--ch) * 64);
+	--space-1: 0.25rem;
+	--space-2: 0.5rem;
+	--space-4: 1rem;
+	--space-6: 1.5rem;
+	--space-8: 2rem;
+	--space-12: 3rem;
+	--space-16: 4rem;
+	--space-20: 5rem;
+	--space-24: 6rem;
+	--space-32: 8rem;
+	--space-40: 10rem;
+	--space-48: 12rem;
+	--space-56: 14rem;
+	--space-64: 16rem;
 
 	/* Colors */
 	--success: var(--accent-color);
@@ -152,10 +156,10 @@ video {
 	--text-color: var(--text-color);
 
 	/* Borders */
-	--border-width: 0.125ch;
-	--radius-sm: 0.25ch;
-	--radius-md: 0.5ch;
-	--radius-lg: 1ch;
+	--border-width: 1px;
+	--radius-sm: 0.25rem;
+	--radius-md: 0.5rem;
+	--radius-lg: 1rem;
 	--radius-full: 50%;
 
 	/* Transitions */
@@ -163,7 +167,7 @@ video {
 	--transition-timing: ease-in-out;
 
 	/* Layout */
-	--content-padding: var(--ch4);
+	--content-padding: var(--space-4);
 	--content-max-width: 80ch;
 	--measure: 65ch;
 	--mobile-breakpoint: 48ch;
@@ -187,7 +191,7 @@ html {
 /* Typography */
 :where(html) {
 	font-family: var(--font-sans);
-	font-size: 1ch;
+	font-size: 18px;
 	font-weight: var(--font-weight-normal);
 	line-height: var(--line-height-normal);
 }
@@ -202,8 +206,8 @@ body {
 /* Form styles */
 .form-textarea {
 	width: 100%;
-	min-height: calc(var(--ch) * 20);
-	padding: var(--ch2);
+	min-height: calc(var(--space-20));
+	padding: var(--space-4);
 	border: var(--border-width) solid var(--border-color);
 	border-radius: var(--radius-sm);
 	background: var(--bg-darker);
@@ -218,14 +222,14 @@ body {
 .form-textarea:focus {
 	outline: none;
 	border-color: var(--accent-color);
-	box-shadow: 0 0 0 var(--ch) var(--accent-color-hover);
+	box-shadow: 0 0 0 var(--space-4) var(--accent-color-hover);
 }
 
 .form-submit {
 	display: inline-flex;
-	gap: var(--ch2);
+	gap: var(--space-4);
 	align-items: center;
-	padding: var(--ch2) var(--ch4);
+	padding: var(--space-4) var(--space-8);
 	border: none;
 	border-radius: var(--radius-sm);
 	background: var(--accent-color);
@@ -240,7 +244,7 @@ body {
 
 .form-submit:hover {
 	background: var(--accent-color-hover);
-	transform: translateY(-0.25ch);
+	transform: translateY(-0.25rem);
 }
 
 .form-submit .contact-link-icon {
@@ -261,7 +265,7 @@ body {
 
 @keyframes slide-up {
 	from {
-		transform: translateY(var(--ch2));
+		transform: translateY(var(--space-4));
 		opacity: 0;
 	}
 
@@ -283,28 +287,28 @@ body {
 
 /* Theme styles */
 [data-theme='light'] {
-	--bg-color: #fff;
-	--bg-darker: #f8f9fa;
-	--text-color: #1a1a1a;
-	--text-muted: #666;
-	--border-color: #e0e0e0;
-	--accent-color: #2563eb;
-	--accent-color-hover: #1d4ed8;
-	--secondary-accent: #7c3aed;
+	--bg-color: rgb(255 255 255);
+	--bg-darker: rgb(248 249 250);
+	--text-color: rgb(26 26 26);
+	--text-muted: rgb(102 102 102);
+	--border-color: rgb(224 224 224);
+	--accent-color: rgb(37 99 235);
+	--accent-color-hover: rgb(29 78 216);
+	--secondary-accent: rgb(124 58 237);
 	--color-mix-light: rgb(37 99 235 / 10%);
 	--color-mix-medium: rgb(37 99 235 / 20%);
 	--color-mix-faint: rgb(37 99 235 / 5%);
 }
 
 [data-theme='dark'] {
-	--bg-color: #0f172a;
-	--bg-darker: #1e293b;
-	--text-color: #f8fafc;
-	--text-muted: #94a3b8;
-	--border-color: #334155;
-	--accent-color: #60a5fa;
-	--accent-color-hover: #93c5fd;
-	--secondary-accent: #a78bfa;
+	--bg-color: rgb(15 23 42);
+	--bg-darker: rgb(30 41 59);
+	--text-color: rgb(248 250 252);
+	--text-muted: rgb(148 163 184);
+	--border-color: rgb(51 65 85);
+	--accent-color: rgb(96 165 250);
+	--accent-color-hover: rgb(147 197 253);
+	--secondary-accent: rgb(167 139 250);
 	--color-mix-light: rgb(96 165 250 / 10%);
 	--color-mix-medium: rgb(96 165 250 / 20%);
 	--color-mix-faint: rgb(96 165 250 / 5%);
@@ -315,8 +319,8 @@ body {
 	position: relative;
 	width: 100%;
 	max-width: var(--measure);
-	margin: var(--ch4) auto;
-	border-radius: var(--ch);
+	margin: var(--space-16) auto;
+	border-radius: var(--space-4);
 	background: var(--bg-darker);
 	box-shadow: var(--shadow-lg);
 	overflow: hidden;
@@ -325,19 +329,19 @@ body {
 .terminal-header {
 	display: flex;
 	align-items: center;
-	padding: var(--ch2);
+	padding: var(--space-4);
 	background: var(--bg-darker);
 	border-bottom: var(--border-width) solid var(--border-color);
 }
 
 .terminal-buttons {
 	display: flex;
-	gap: var(--ch);
+	gap: var(--space-2);
 }
 
 .terminal-button {
-	width: var(--ch2);
-	height: var(--ch2);
+	width: var(--space-4);
+	height: var(--space-4);
 	border-radius: var(--radius-full);
 }
 
@@ -361,7 +365,7 @@ body {
 }
 
 .terminal-content {
-	padding: var(--ch4);
+	padding: var(--space-8);
 	font-family: var(--font-mono);
 	font-size: var(--font-size-base);
 	line-height: var(--line-height-relaxed);
@@ -371,16 +375,16 @@ body {
 .specialty {
 	display: flex;
 	flex-direction: column;
-	gap: var(--ch4);
-	padding: var(--ch4);
+	gap: var(--space-8);
+	padding: var(--space-8);
 	border: var(--border-width) solid var(--border-color);
-	border-radius: var(--ch);
+	border-radius: var(--space-4);
 	background: var(--bg-darker);
 	transition: all var(--transition-duration) var(--transition-timing);
 }
 
 .specialty:hover {
-	transform: translateY(-0.25ch);
+	transform: translateY(-0.25rem);
 	box-shadow: var(--shadow-lg);
 }
 
@@ -404,7 +408,7 @@ body {
 
 /* Footer styles */
 .footer {
-	padding: var(--ch4) var(--content-padding);
+	padding: var(--space-16) var(--content-padding);
 	border-top: var(--border-width) solid var(--border-color);
 	background: var(--bg-darker);
 }
@@ -422,21 +426,21 @@ body {
 /* Media queries */
 @media (width <= var(--mobile-breakpoint)) {
 	.terminal-window {
-		margin: var(--ch2) auto;
+		margin: var(--space-8) auto;
 	}
 
 	.terminal-content {
-		padding: var(--ch2);
+		padding: var(--space-4);
 	}
 
 	.specialty {
-		padding: var(--ch2);
+		padding: var(--space-4);
 	}
 }
 
 /* Header styles */
 .site-header {
-	--header-height: calc(var(--ch) * 4);
+	--header-height: calc(var(--space-4) * 4);
 
 	position: sticky;
 	top: 0;
@@ -446,7 +450,7 @@ body {
 	color: var(--text-color);
 	container-type: inline-size;
 	border-bottom: var(--border-width) solid var(--border-color);
-	padding-block: var(--ch);
+	padding-block: var(--space-4);
 	box-shadow: var(--shadow-sm);
 }
 
@@ -454,7 +458,7 @@ body {
 	position: relative;
 	width: 100%;
 	background: var(--bg-darker);
-	padding-block: var(--ch);
+	padding-block: var(--space-4);
 	border-bottom: var(--border-width) solid var(--border-color);
 }
 
@@ -464,7 +468,7 @@ body {
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 0.125ch;
+	height: 0.125rem;
 	background: linear-gradient(
 		90deg,
 		var(--accent-color),
@@ -476,7 +480,7 @@ body {
 .container {
 	max-width: min(var(--measure), 95cqi);
 	margin-inline: auto;
-	padding-inline: var(--ch2);
+	padding-inline: var(--space-4);
 	color: var(--text-muted);
 	font-size: var(--font-size-sm);
 	text-align: center;
