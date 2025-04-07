@@ -17,9 +17,8 @@ const config = {
 			handleHttpError: ({ path, _referrer, message }) => {
 				// In production, all paths must start with /me
 				if (process.env.NODE_ENV === 'production' && !path.startsWith('/me')) {
-					throw new Error(
-						`Invalid path ${path}. In production, all paths must start with /me`
-					);
+					// Instead of throwing an error, we'll return a 404 for invalid paths
+					return { status: 404 };
 				}
 			}
 		},
