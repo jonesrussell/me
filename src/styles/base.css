@@ -1,3 +1,8 @@
+/* Fonts */
+@import url('@fontsource/fira-mono/400.css');
+@import url('@fontsource/fira-mono/500.css');
+@import url('@fontsource/fira-mono/700.css');
+
 /* Reset */
 html,
 body,
@@ -109,14 +114,14 @@ html {
 		--font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
 		/* Font Sizes */
-		--font-size-xs: 0.75ch;
-		--font-size-sm: 0.875ch;
-		--font-size-base: 1ch;
-		--font-size-lg: 1.125ch;
-		--font-size-xl: 1.25ch;
-		--font-size-2xl: 1.5ch;
-		--font-size-3xl: 1.875ch;
-		--font-size-4xl: 2.25ch;
+		--font-size-xs: 12px;
+		--font-size-sm: 14px;
+		--font-size-base: 16px;
+		--font-size-lg: 18px;
+		--font-size-xl: 20px;
+		--font-size-2xl: 24px;
+		--font-size-3xl: 30px;
+		--font-size-4xl: 36px;
 
 		/* Line Heights */
 		--line-height-none: 1;
@@ -131,26 +136,26 @@ html {
 		--font-weight-bold: 700;
 
 		/* Spacing */
-		--space-1: 0.25ch;
-		--space-2: 0.5ch;
-		--space-4: 1ch;
-		--space-6: 1.5ch;
-		--space-8: 2ch;
-		--space-12: 3ch;
-		--space-16: 4ch;
-		--space-20: 5ch;
-		--space-24: 6ch;
-		--space-32: 8ch;
-		--space-40: 10ch;
-		--space-48: 12ch;
-		--space-56: 14ch;
-		--space-64: 16ch;
+		--space-1: 4px;
+		--space-2: 8px;
+		--space-4: 16px;
+		--space-6: 24px;
+		--space-8: 32px;
+		--space-12: 48px;
+		--space-16: 64px;
+		--space-20: 80px;
+		--space-24: 96px;
+		--space-32: 128px;
+		--space-40: 160px;
+		--space-48: 192px;
+		--space-56: 224px;
+		--space-64: 256px;
 
 		/* Borders */
-		--border-width: 0.125ch;
-		--radius-sm: 0.25ch;
-		--radius-md: 0.5ch;
-		--radius-lg: 1ch;
+		--border-width: 1px;
+		--radius-sm: 4px;
+		--radius-md: 8px;
+		--radius-lg: 16px;
 		--radius-full: 50%;
 
 		/* Transitions */
@@ -159,18 +164,16 @@ html {
 
 		/* Layout */
 		--content-padding: var(--space-4);
-		--content-max-width: 80ch;
-		--measure: 65ch;
-		--mobile-breakpoint: 48ch;
+		--content-max-width: 1280px;
+		--measure: 960px;
+		--mobile-breakpoint: 768px;
 
 		/* Shadows */
-		--shadow-sm: 0 0.125ch 0.25ch 0 rgb(0 0 0 / 5%);
+		--shadow-sm: 0 2px 4px 0 rgb(0 0 0 / 5%);
 		--shadow-md:
-			0 0.5ch 0.75ch -0.125ch rgb(0 0 0 / 10%),
-			0 0.25ch 0.5ch -0.25ch rgb(0 0 0 / 10%);
+			0 8px 12px -2px rgb(0 0 0 / 10%), 0 4px 8px -4px rgb(0 0 0 / 10%);
 		--shadow-lg:
-			0 1.25ch 1.875ch -0.375ch rgb(0 0 0 / 10%),
-			0 0.5ch 0.75ch -0.5ch rgb(0 0 0 / 10%);
+			0 20px 30px -6px rgb(0 0 0 / 10%), 0 8px 12px -8px rgb(0 0 0 / 10%);
 
 		/* Container Queries */
 		--container-padding: var(--space-4);
@@ -178,17 +181,16 @@ html {
 	}
 
 	/* Base Typography */
-	:where(html) {
+	html {
 		font-family: var(--font-sans);
-		font-size: 1ch;
+		font-size: 16px !important;
 		font-weight: var(--font-weight-normal);
 		line-height: var(--line-height-normal);
 	}
 
-	/* Base Layout */
-	:where(body) {
-		margin: 0;
-		padding: 0;
+	body {
+		font-size: var(--font-size-base);
+		line-height: var(--line-height-normal);
 		color: var(--text-color);
 		background: var(--bg-color);
 	}
