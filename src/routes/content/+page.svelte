@@ -120,6 +120,7 @@
 		max-width: calc(80 * var(--ch));
 		margin: 0 auto;
 		padding: var(--ch3) var(--ch2);
+
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		line-height: var(--line-height-base);
@@ -127,29 +128,30 @@
 
 	h1 {
 		margin-bottom: var(--ch2);
-		color: var(--text-muted);
 		font-size: var(--font-size-lg);
 		line-height: var(--line-height-tight);
+		color: var(--text-muted);
 	}
 
 	h2 {
 		margin-top: var(--ch3);
 		margin-bottom: var(--ch2);
-		color: var(--text-muted);
+
 		font-size: var(--font-size-base);
 		line-height: var(--line-height-tight);
+		color: var(--text-muted);
 	}
 
 	.intro {
 		margin-bottom: var(--ch3);
-		color: var(--text-muted);
 		font-size: var(--font-size-sm);
+		color: var(--text-muted);
 	}
 
 	.video-grid {
 		display: grid;
-		gap: var(--ch2);
 		grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
+		gap: var(--ch2);
 		margin-bottom: var(--ch3);
 	}
 
@@ -166,18 +168,22 @@
 
 	.video-container {
 		position: relative;
+
+		overflow: hidden;
+
 		height: 0;
 		margin-bottom: var(--ch2);
 		padding-bottom: 56.25%;
 		border-radius: var(--radius-sm);
+
 		background: var(--bg-color);
-		overflow: hidden;
 	}
 
 	.video-container iframe {
 		position: absolute;
 		top: 0;
 		left: 0;
+
 		width: 100%;
 		height: 100%;
 		border: 0;
@@ -191,9 +197,9 @@
 
 	.description {
 		margin-bottom: var(--ch);
-		color: var(--text-muted);
 		font-size: var(--font-size-sm);
 		line-height: var(--line-height-base);
+		color: var(--text-muted);
 	}
 
 	.topics {
@@ -206,20 +212,22 @@
 		padding: calc(var(--ch) / 8) calc(var(--ch) / 2);
 		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: calc(var(--ch) / 8);
-		background: var(--bg-color);
-		color: var(--text-muted);
+
 		font-size: var(--font-size-xs);
+		color: var(--text-muted);
+
+		background: var(--bg-color);
 	}
 
 	.topic:hover {
-		background: var(--color-mix-light);
 		color: var(--text-color);
+		background: var(--color-mix-light);
 	}
 
 	.project-grid {
 		display: grid;
-		gap: var(--ch2);
 		grid-template-columns: 1fr;
+		gap: var(--ch2);
 	}
 
 	.project {
@@ -231,8 +239,8 @@
 
 	.project-header {
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
+		justify-content: space-between;
 		margin-bottom: calc(var(--ch) / 2);
 	}
 
@@ -253,8 +261,8 @@
 	.status {
 		padding: calc(var(--ch) / 8) calc(var(--ch) / 2);
 		border-radius: calc(var(--ch) / 8);
-		background: var(--bg-color);
 		font-size: var(--font-size-xs);
+		background: var(--bg-color);
 	}
 
 	.status-active {
@@ -272,8 +280,10 @@
 		padding: calc(var(--ch) / 8) calc(var(--ch) / 2);
 		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: calc(var(--ch) / 8);
-		background: var(--bg-color);
-		color: var(--text-muted);
+
 		font-size: var(--font-size-xs);
+		color: var(--text-muted);
+
+		background: var(--bg-color);
 	}
 </style>

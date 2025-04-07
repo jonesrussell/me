@@ -88,6 +88,7 @@
 		max-width: var(--projects-width);
 		margin: 0 auto;
 		padding: var(--ch4) var(--ch2);
+
 		font-family: var(--font-mono);
 		line-height: var(--line-height-base);
 	}
@@ -107,8 +108,8 @@
 
 	.project-grid {
 		display: grid;
-		gap: var(--ch4);
 		grid-template-columns: 1fr;
+		gap: var(--ch4);
 	}
 
 	@media (width >= 80ch) {
@@ -126,8 +127,8 @@
 
 	.project-header {
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
+		justify-content: space-between;
 		margin-bottom: var(--ch2);
 	}
 
@@ -144,8 +145,8 @@
 	}
 
 	.status-active {
-		background: color-mix(in srgb, var(--color-success) 15%, transparent);
 		color: var(--color-success);
+		background: color-mix(in srgb, var(--color-success) 15%, transparent);
 	}
 
 	.status-stable {
@@ -153,8 +154,8 @@
 	}
 
 	.status-experimental {
-		background: color-mix(in srgb, var(--color-warning) 15%, transparent);
 		color: var(--color-warning);
+		background: color-mix(in srgb, var(--color-warning) 15%, transparent);
 	}
 
 	.description {
@@ -173,18 +174,20 @@
 		padding: calc(var(--ch) / 4) var(--ch);
 		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: calc(var(--ch) / 8);
-		background: var(--color-mix-medium);
+
 		font-size: var(--font-size-sm);
+
+		background: var(--color-mix-medium);
 	}
 
 	a {
+		border-bottom: calc(1 * var(--ch) / 16) solid transparent;
 		color: var(--link-color);
 		text-decoration: none;
-		border-bottom: calc(1 * var(--ch) / 16) solid transparent;
 	}
 
 	a:hover {
-		color: var(--link-hover);
 		border-bottom-color: currentcolor;
+		color: var(--link-hover);
 	}
 </style>

@@ -97,9 +97,9 @@ video {
 /* Box sizing */
 html {
 	box-sizing: border-box;
-	text-size-adjust: 100%;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	text-size-adjust: 100%;
 }
 
 @layer base {
@@ -189,13 +189,14 @@ html {
 	:where(body) {
 		margin: 0;
 		padding: 0;
-		background: var(--bg-color);
 		color: var(--text-color);
+		background: var(--bg-color);
 	}
 
 	/* Base Containment */
 	.container {
 		contain: layout style paint;
+
 		width: 100%;
 		max-width: var(--container-max-width);
 		margin-inline: auto;
@@ -210,8 +211,8 @@ html {
 
 	/* Base Selection */
 	:where(::selection) {
-		background: var(--color-mix-light);
 		color: var(--text-color);
+		background: var(--color-mix-light);
 	}
 
 	/* Container Queries */
@@ -224,10 +225,10 @@ html {
 	/* Reduced Motion */
 	@media (prefers-reduced-motion: reduce) {
 		* {
+			scroll-behavior: auto !important;
+			transition-duration: 0.01ms !important;
 			animation-duration: 0.01ms !important;
 			animation-iteration-count: 1 !important;
-			transition-duration: 0.01ms !important;
-			scroll-behavior: auto !important;
 		}
 	}
 

@@ -144,9 +144,9 @@ with explanations and real terminal output.
 	}
 
 	.step-title {
-		color: var(--text-muted);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
+		color: var(--text-muted);
 	}
 
 	.terminal-container {
@@ -156,43 +156,50 @@ with explanations and real terminal output.
 	.controls {
 		display: flex;
 		gap: var(--space-4);
-		justify-content: space-between;
 		align-items: center;
+		justify-content: space-between;
+
 		padding: var(--space-4);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
+
 		background: var(--color-mix-light);
 	}
 
 	.step-counter {
-		color: var(--text-muted);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
+		color: var(--text-muted);
 	}
 
 	button {
+		cursor: pointer;
+
 		display: flex;
 		gap: var(--space-2);
 		align-items: center;
+
 		padding: var(--space-2) var(--space-4);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-sm);
-		background: var(--bg-darker);
-		color: var(--text-color);
+
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
+		color: var(--text-color);
+
+		background: var(--bg-darker);
+
 		transition: all var(--transition-duration) var(--transition-timing);
-		cursor: pointer;
 	}
 
 	button:disabled {
-		opacity: 0.5;
 		cursor: not-allowed;
+		opacity: 0.5;
 	}
 
 	button:not(:disabled):hover {
-		background: var(--color-mix-medium);
 		transform: translateY(-0.125ch);
+		background: var(--color-mix-medium);
 	}
 
 	@media (prefers-reduced-motion: reduce) {

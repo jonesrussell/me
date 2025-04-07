@@ -118,16 +118,18 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+
 		width: 100%;
 		min-height: 50vh;
+
 		background: linear-gradient(to bottom, var(--bg-color), var(--bg-darker));
 	}
 
 	.home {
+		container-type: inline-size;
 		max-width: min(var(--measure), 95cqi);
 		margin-inline: auto;
 		padding: var(--ch4) var(--ch2);
-		container-type: inline-size;
 	}
 
 	.specialties {
@@ -141,28 +143,33 @@
 		display: flex;
 		gap: var(--ch2);
 		align-items: flex-start;
+
 		padding: var(--ch3);
 		border: calc(var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-lg);
+
 		background: var(--bg-color);
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 		box-shadow: var(--shadow-sm);
+
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.specialty:hover {
-		background: var(--bg-darker);
 		transform: translateY(calc(-2 * var(--ch) / 16));
 		border-color: var(--accent-color);
+		background: var(--bg-darker);
 		box-shadow: var(--shadow-lg);
 	}
 
 	.specialty-icon {
 		padding: var(--ch2);
 		border-radius: var(--radius-md);
-		background: var(--color-mix-light);
-		color: var(--accent-color);
+
 		font-size: var(--font-size-2xl);
 		line-height: var(--line-height-tight);
+		color: var(--accent-color);
+
+		background: var(--color-mix-light);
 	}
 
 	.specialty-content {
@@ -171,15 +178,15 @@
 
 	.specialty-title {
 		margin-bottom: var(--ch);
-		color: var(--accent-color);
 		font-size: var(--font-size-lg);
 		font-weight: var(--font-weight-bold);
+		color: var(--accent-color);
 	}
 
 	.specialty-desc {
-		color: var(--text-muted);
 		font-size: var(--font-size-base);
 		line-height: var(--line-height-relaxed);
+		color: var(--text-muted);
 	}
 
 	.navigation {
@@ -193,36 +200,42 @@
 		display: flex;
 		gap: var(--ch2);
 		align-items: center;
+
 		padding: var(--ch2);
 		border: calc(var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-lg);
-		background: var(--bg-color);
+
 		color: var(--text-color);
 		text-decoration: none;
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+		background: var(--bg-color);
 		box-shadow: var(--shadow-sm);
+
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.nav-link:hover {
-		background: var(--bg-darker);
-		border-color: var(--accent-color);
 		transform: translateY(calc(-1 * var(--ch) / 8));
+		border-color: var(--accent-color);
+		background: var(--bg-darker);
 		box-shadow: var(--shadow-md);
 	}
 
 	.nav-icon {
-		color: var(--accent-color);
 		font-size: var(--font-size-xl);
+		color: var(--accent-color);
 	}
 
 	.youtube-section {
+		container-type: inline-size;
+
 		margin: var(--ch4) 0;
 		padding: var(--ch3);
 		border: calc(var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-lg);
+
 		background: var(--bg-color);
 		box-shadow: var(--shadow-sm);
-		container-type: inline-size;
 	}
 
 	.section-header {
@@ -232,23 +245,25 @@
 
 	h2 {
 		margin-bottom: var(--ch);
-		color: var(--accent-color);
 		font-size: var(--font-size-2xl);
 		line-height: var(--line-height-tight);
+		color: var(--accent-color);
 	}
 
 	.section-desc {
-		color: var(--text-muted);
 		font-size: var(--font-size-lg);
 		line-height: var(--line-height-relaxed);
+		color: var(--text-muted);
 	}
 
 	.video-figure {
+		overflow: hidden;
+
+		aspect-ratio: 16/9;
 		margin: var(--ch3) 0;
 		border-radius: var(--radius-md);
+
 		background: var(--bg-darker);
-		aspect-ratio: 16/9;
-		overflow: hidden;
 	}
 
 	.video-container {
@@ -261,6 +276,7 @@
 		position: absolute;
 		top: 0;
 		left: 0;
+
 		width: 100%;
 		height: 100%;
 		border: none;
@@ -269,23 +285,27 @@
 	.youtube-link {
 		display: flex;
 		gap: var(--ch2);
-		justify-content: center;
 		align-items: center;
+		justify-content: center;
+
 		margin-top: var(--ch3);
 		padding: var(--ch2);
 		border: calc(var(--ch) / 16) solid var(--accent-color);
 		border-radius: var(--radius-lg);
-		background: var(--accent-color);
-		color: var(--bg-color);
+
 		font-weight: var(--font-weight-bold);
+		color: var(--bg-color);
 		text-decoration: none;
+
+		background: var(--accent-color);
+
 		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.youtube-link:hover {
-		background: var(--accent-color-hover);
-		border-color: var(--accent-color-hover);
 		transform: translateY(calc(-1 * var(--ch) / 8));
+		border-color: var(--accent-color-hover);
+		background: var(--accent-color-hover);
 	}
 
 	.youtube-icon {
@@ -312,8 +332,8 @@
 		.specialty,
 		.nav-link,
 		.youtube-link {
-			transition: none;
 			transform: none;
+			transition: none;
 		}
 	}
 </style>

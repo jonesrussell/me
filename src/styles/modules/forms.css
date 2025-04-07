@@ -13,9 +13,9 @@
 
 	/* Labels */
 	.form-label {
-		color: var(--text-color);
 		font-size: var(--font-size-sm);
 		font-weight: var(--font-weight-medium);
+		color: var(--text-color);
 	}
 
 	/* Input fields */
@@ -24,15 +24,18 @@
 		padding: var(--space-2) var(--space-4);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-sm);
-		background: var(--bg-darker);
-		color: var(--text-color);
+
 		font-size: var(--font-size-base);
+		color: var(--text-color);
+
+		background: var(--bg-darker);
+
 		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.form-input:focus {
-		outline: none;
 		border-color: var(--accent-color);
+		outline: none;
 		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
 	}
 
@@ -43,23 +46,27 @@
 
 	/* Textareas */
 	.form-textarea {
+		resize: vertical;
+
 		width: 100%;
 		min-height: calc(var(--space-20));
 		padding: var(--space-4);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-sm);
-		background: var(--bg-darker);
-		color: var(--text-color);
+
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
 		line-height: var(--line-height-relaxed);
-		resize: vertical;
+		color: var(--text-color);
+
+		background: var(--bg-darker);
+
 		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.form-textarea:focus {
-		outline: none;
 		border-color: var(--accent-color);
+		outline: none;
 		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
 	}
 
@@ -70,20 +77,23 @@
 		padding-right: calc(var(--space-4) * 2);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-sm);
-		background: var(--bg-darker);
-		color: var(--text-color);
+
 		font-size: var(--font-size-base);
-		transition: all var(--transition-duration) var(--transition-timing);
+		color: var(--text-color);
+
 		appearance: none;
+		background: var(--bg-darker);
 		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
 		background-repeat: no-repeat;
 		background-position: right var(--space-2) center;
 		background-size: 1.5ch;
+
+		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.form-select:focus {
-		outline: none;
 		border-color: var(--accent-color);
+		outline: none;
 		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
 	}
 
@@ -99,18 +109,20 @@
 		height: 1.5ch;
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-sm);
+
 		background: var(--bg-darker);
+
 		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.form-check-input:checked {
-		background: var(--accent-color);
 		border-color: var(--accent-color);
+		background: var(--accent-color);
 	}
 
 	.form-check-input:focus {
-		outline: none;
 		border-color: var(--accent-color);
+		outline: none;
 		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
 	}
 
@@ -122,8 +134,8 @@
 	}
 
 	.form-error {
-		color: var(--error-color);
 		font-size: var(--font-size-sm);
+		color: var(--error-color);
 	}
 
 	/* Disabled states */
@@ -131,8 +143,8 @@
 	.form-textarea:disabled,
 	.form-select:disabled,
 	.form-check-input:disabled {
-		opacity: 0.5;
 		cursor: not-allowed;
+		opacity: 0.5;
 	}
 
 	/* Container Queries */

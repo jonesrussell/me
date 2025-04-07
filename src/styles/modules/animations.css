@@ -50,16 +50,19 @@
 
 	/* Loading animations */
 	.loading {
-		position: relative;
 		pointer-events: none;
+		position: relative;
 	}
 
 	.loading::after {
 		content: '';
+
 		position: absolute;
 		inset: 0;
-		background: var(--color-mix-light);
+
 		opacity: 0.5;
+		background: var(--color-mix-light);
+
 		animation: pulse 2s var(--transition-timing) infinite;
 	}
 

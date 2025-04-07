@@ -24,16 +24,16 @@
 <style>
 	.footer {
 		padding: var(--ch2) 0;
+		border-top: calc(1 * var(--ch) / 16) solid var(--border-color);
 		font-size: var(--font-size-sm);
 		text-align: center;
-		border-top: calc(1 * var(--ch) / 16) solid var(--border-color);
 	}
 
 	.container {
+		box-sizing: border-box;
 		width: 100%;
 		max-width: min(var(--measure), 100%);
 		margin: 0 auto;
 		padding: 0 var(--content-padding);
-		box-sizing: border-box;
 	}
 </style>

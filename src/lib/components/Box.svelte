@@ -40,13 +40,16 @@
 		max-width: var(--box-width);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
-		background: var(--bg-darker);
+
 		font-family: var(--font-mono);
 		line-height: var(--line-height-tight);
-		transition: all var(--transition-duration) var(--transition-timing);
-		overflow-wrap: break-word;
 		word-break: break-word;
+		overflow-wrap: break-word;
+
+		background: var(--bg-darker);
 		box-shadow: var(--shadow-sm);
+
+		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.box:hover {
@@ -62,18 +65,21 @@
 
 	.header {
 		padding: var(--space-2) var(--space-4);
-		color: var(--text-muted);
-		font-weight: var(--font-weight-medium);
 		border-bottom: var(--border-width) solid var(--border-color);
+		font-weight: var(--font-weight-medium);
+		color: var(--text-muted);
 	}
 
 	.content {
 		flex: 1;
+
 		padding: var(--space-2) var(--space-4);
-		background: var(--bg-color);
+
 		color: var(--text-color);
-		overflow-wrap: break-word;
 		word-break: break-word;
+		overflow-wrap: break-word;
+
+		background: var(--bg-color);
 	}
 
 	@media (prefers-reduced-motion: reduce) {

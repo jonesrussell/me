@@ -2,6 +2,7 @@
 	/* Container */
 	.container {
 		contain: layout style paint;
+
 		width: 100%;
 		max-width: var(--container-max-width);
 		margin-inline: auto;

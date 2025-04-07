@@ -46,35 +46,38 @@
 		width: var(--block-width);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
-		background: var(--bg-darker);
+
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		line-height: var(--line-height-tight);
 		white-space: pre;
+
+		background: var(--bg-darker);
 		box-shadow: var(--shadow-md);
 	}
 
 	.file-header {
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
+		justify-content: space-between;
+
 		padding: var(--space-2) var(--space-4);
 		border-bottom: var(--border-width) solid var(--border-color);
 	}
 
 	.filename {
-		color: var(--text-color);
 		font-weight: var(--font-weight-medium);
+		color: var(--text-color);
 	}
 
 	.language {
-		color: var(--text-muted);
 		font-size: var(--font-size-xs);
+		color: var(--text-muted);
 	}
 
 	.code-content {
-		padding: var(--space-4);
 		overflow-x: auto;
+		padding: var(--space-4);
 	}
 
 	pre {
@@ -89,13 +92,13 @@
 	.code-footer {
 		padding: var(--space-2) var(--space-4);
 		border-top: var(--border-width) solid var(--border-color);
-		color: var(--text-muted);
 		font-size: var(--font-size-xs);
+		color: var(--text-muted);
 	}
 
 	.line-number {
-		color: var(--text-muted);
-		font-size: var(--font-size-xs);
 		user-select: none;
+		font-size: var(--font-size-xs);
+		color: var(--text-muted);
 	}
 </style>

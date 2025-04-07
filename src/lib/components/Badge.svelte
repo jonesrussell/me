@@ -24,32 +24,35 @@
 		display: inline-flex;
 		gap: var(--space-1);
 		align-items: center;
+
 		padding: var(--space-1) var(--space-2);
 		border-radius: var(--radius-sm);
+
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		line-height: var(--line-height-tight);
+
 		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.badge.info {
-		background: var(--color-mix-light);
 		color: var(--color-info);
+		background: var(--color-mix-light);
 	}
 
 	.badge.success {
-		background: var(--color-mix-light);
 		color: var(--color-success);
+		background: var(--color-mix-light);
 	}
 
 	.badge.warning {
-		background: var(--color-mix-light);
 		color: var(--color-warning);
+		background: var(--color-mix-light);
 	}
 
 	.badge.error {
-		background: var(--color-mix-light);
 		color: var(--color-error);
+		background: var(--color-mix-light);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
