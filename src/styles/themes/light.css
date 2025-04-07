@@ -1,0 +1,13 @@
+[data-theme='light'] {
+	--bg-color: #ffffff;
+	--bg-darker: #cbdeef;
+	--text-color: #0783b6;
+	--text-muted: #39abe7;
+	--border-color: #9bd4e5;
+	--accent-color: #0783b6;
+	--accent-color-hover: #39abe7;
+	--secondary-accent: #9bd4e5;
+	--color-mix-light: rgb(7 131 182 / 10%);
+	--color-mix-medium: rgb(7 131 182 / 20%);
+	--color-mix-faint: rgb(7 131 182 / 5%);
+}

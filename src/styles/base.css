@@ -1,0 +1,174 @@
+/* Reset */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+/* Box sizing */
+html {
+	box-sizing: border-box;
+	text-size-adjust: 100%;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* Base styles */
+:root {
+	/* Typography */
+	--font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+	--font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+	--font-size-xs: 0.75ch;
+	--font-size-sm: 0.875ch;
+	--font-size-base: 1ch;
+	--font-size-lg: 1.125ch;
+	--font-size-xl: 1.25ch;
+	--font-size-2xl: 1.5ch;
+	--font-size-3xl: 1.875ch;
+	--font-size-4xl: 2.25ch;
+	--line-height-none: 1;
+	--line-height-tight: 1.25;
+	--line-height-normal: 1.5;
+	--line-height-relaxed: 1.75;
+	--font-weight-normal: 400;
+	--font-weight-medium: 500;
+	--font-weight-semibold: 600;
+	--font-weight-bold: 700;
+
+	/* Spacing */
+	--ch: 1ch;
+	--ch2: calc(var(--ch) * 2);
+	--ch4: calc(var(--ch) * 4);
+	--ch6: calc(var(--ch) * 6);
+	--ch8: calc(var(--ch) * 8);
+	--ch12: calc(var(--ch) * 12);
+	--ch16: calc(var(--ch) * 16);
+	--ch20: calc(var(--ch) * 20);
+	--ch24: calc(var(--ch) * 24);
+	--ch32: calc(var(--ch) * 32);
+	--ch40: calc(var(--ch) * 40);
+	--ch48: calc(var(--ch) * 48);
+	--ch56: calc(var(--ch) * 56);
+	--ch64: calc(var(--ch) * 64);
+
+	/* Borders */
+	--border-width: 0.125ch;
+	--radius-sm: 0.25ch;
+	--radius-md: 0.5ch;
+	--radius-lg: 1ch;
+	--radius-full: 50%;
+
+	/* Transitions */
+	--transition-duration: 0.2s;
+	--transition-timing: ease-in-out;
+
+	/* Layout */
+	--content-padding: var(--ch4);
+	--content-max-width: 80ch;
+	--measure: 65ch;
+	--mobile-breakpoint: 48ch;
+}
+
+/* Typography */
+:where(html) {
+	font-family: var(--font-sans);
+	font-size: 18px;
+	font-weight: var(--font-weight-normal);
+	line-height: var(--line-height-normal);
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background: var(--bg-color);
+	color: var(--text-color);
+}
