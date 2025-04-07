@@ -1,0 +1,122 @@
+@layer components {
+	/* Code blocks */
+	.code-block {
+		position: relative;
+		margin: var(--space-8) 0;
+		border-radius: var(--radius-md);
+		background: var(--bg-darker);
+		overflow: hidden;
+	}
+
+	.code-block-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: var(--space-2) var(--space-4);
+		background: var(--bg-darker);
+		border-bottom: var(--border-width) solid var(--border-color);
+	}
+
+	.code-block-title {
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
+	}
+
+	.code-block-actions {
+		display: flex;
+		gap: var(--space-2);
+	}
+
+	.code-block-content {
+		position: relative;
+		padding: var(--space-4);
+		overflow-x: auto;
+	}
+
+	/* Inline code */
+	.code-inline {
+		padding: 0.2ch 0.4ch;
+		border-radius: var(--radius-sm);
+		background: var(--bg-darker);
+		font-family: var(--font-mono);
+		font-size: 0.9em;
+		color: var(--text-color);
+	}
+
+	/* Syntax highlighting */
+	.code-block pre {
+		margin: 0;
+		padding: 0;
+		background: none;
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		line-height: var(--line-height-relaxed);
+		tab-size: 2;
+	}
+
+	.code-block code {
+		font-family: inherit;
+		font-size: inherit;
+		line-height: inherit;
+	}
+
+	/* Line numbers */
+	.code-block[data-line-numbers] {
+		counter-reset: line;
+	}
+
+	.code-block[data-line-numbers] .code-line::before {
+		counter-increment: line;
+		content: counter(line);
+		display: inline-block;
+		width: 2ch;
+		margin-right: 1ch;
+		padding-right: 1ch;
+		text-align: right;
+		color: var(--text-muted);
+		user-select: none;
+	}
+
+	/* Highlighted lines */
+	.code-line.highlight {
+		background: var(--color-mix-light);
+	}
+
+	/* Copy button */
+	.copy-button {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+		padding: var(--space-1) var(--space-2);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-sm);
+		background: var(--bg-darker);
+		color: var(--text-muted);
+		font-size: var(--font-size-sm);
+		cursor: pointer;
+		transition: all var(--transition-duration) var(--transition-timing);
+	}
+
+	.copy-button:hover {
+		background: var(--color-mix-light);
+		color: var(--text-color);
+	}
+
+	.copy-button.copied {
+		background: var(--success-color);
+		color: var(--bg-darker);
+		border-color: var(--success-color);
+	}
+
+	/* Container Queries */
+	@container (width > 48ch) {
+		.code-block {
+			margin: var(--space-12) 0;
+		}
+
+		.code-block-content {
+			padding: var(--space-8);
+		}
+	}
+}

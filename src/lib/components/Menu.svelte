@@ -21,15 +21,23 @@
 	}
 
 	.menu-item {
-		padding: var(--ch) var(--ch2);
+		padding: var(--space-1) var(--space-2);
 		cursor: pointer;
+		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.menu-item:hover {
-		background: var(--border-color);
+		background: var(--color-mix-light);
 	}
 
 	.selected {
-		color: var(--link-color);
+		color: var(--accent-color);
+		font-weight: var(--font-weight-medium);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.menu-item {
+			transition: none;
+		}
 	}
 </style>

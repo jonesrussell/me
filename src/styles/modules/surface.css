@@ -1,0 +1,135 @@
+@layer components {
+	/* Cards */
+	.card {
+		padding: var(--space-8);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
+		background: var(--bg-darker);
+		transition: all var(--transition-duration) var(--transition-timing);
+	}
+
+	.card:hover {
+		transform: translateY(-0.25ch);
+		box-shadow: var(--shadow-lg);
+	}
+
+	.card-compact {
+		padding: var(--space-4);
+	}
+
+	.card-padded {
+		padding: var(--space-12);
+	}
+
+	/* Surfaces */
+	.surface {
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+	}
+
+	.surface-elevated {
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		box-shadow: var(--shadow-md);
+	}
+
+	.surface-floating {
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		box-shadow: var(--shadow-lg);
+	}
+
+	/* Dividers */
+	.divider {
+		height: var(--border-width);
+		background: var(--border-color);
+		margin: var(--space-8) 0;
+	}
+
+	.divider-compact {
+		margin: var(--space-4) 0;
+	}
+
+	.divider-padded {
+		margin: var(--space-12) 0;
+	}
+
+	/* Containers */
+	.container {
+		contain: layout style paint;
+		width: 100%;
+		max-width: var(--container-max-width);
+		margin-inline: auto;
+		padding-inline: var(--container-padding);
+	}
+
+	.container-narrow {
+		max-width: var(--measure);
+	}
+
+	.container-wide {
+		max-width: var(--content-max-width);
+	}
+
+	/* Shadows */
+	.shadow-sm {
+		box-shadow: var(--shadow-sm);
+	}
+
+	.shadow-md {
+		box-shadow: var(--shadow-md);
+	}
+
+	.shadow-lg {
+		box-shadow: var(--shadow-lg);
+	}
+
+	/* Borders */
+	.border {
+		border: var(--border-width) solid var(--border-color);
+	}
+
+	.border-t {
+		border-top: var(--border-width) solid var(--border-color);
+	}
+
+	.border-b {
+		border-bottom: var(--border-width) solid var(--border-color);
+	}
+
+	.border-l {
+		border-left: var(--border-width) solid var(--border-color);
+	}
+
+	.border-r {
+		border-right: var(--border-width) solid var(--border-color);
+	}
+
+	/* Border Radius */
+	.rounded-sm {
+		border-radius: var(--radius-sm);
+	}
+
+	.rounded-md {
+		border-radius: var(--radius-md);
+	}
+
+	.rounded-lg {
+		border-radius: var(--radius-lg);
+	}
+
+	.rounded-full {
+		border-radius: var(--radius-full);
+	}
+
+	/* Container Queries */
+	@container (width > 48ch) {
+		.card {
+			padding: var(--space-12);
+		}
+
+		.container {
+			--container-padding: var(--space-8);
+		}
+	}
+}

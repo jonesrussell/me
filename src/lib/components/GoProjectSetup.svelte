@@ -127,14 +127,14 @@ with explanations and real terminal output.
 	.setup-guide {
 		display: flex;
 		flex-direction: column;
-		gap: var(--ch2);
+		gap: var(--space-4);
 		width: 100%;
 	}
 
 	header {
 		display: flex;
 		flex-direction: column;
-		gap: var(--ch);
+		gap: var(--space-2);
 	}
 
 	h2 {
@@ -155,11 +155,11 @@ with explanations and real terminal output.
 
 	.controls {
 		display: flex;
-		gap: var(--ch2);
+		gap: var(--space-4);
 		justify-content: space-between;
 		align-items: center;
-		padding: var(--ch2);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
+		padding: var(--space-4);
+		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
 		background: var(--color-mix-light);
 	}
@@ -172,16 +172,16 @@ with explanations and real terminal output.
 
 	button {
 		display: flex;
-		gap: var(--ch);
+		gap: var(--space-2);
 		align-items: center;
-		padding: var(--ch) var(--ch2);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
+		padding: var(--space-2) var(--space-4);
+		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-sm);
-		background: var(--bg-color);
+		background: var(--bg-darker);
 		color: var(--text-color);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
-		transition: all 0.2s ease;
+		transition: all var(--transition-duration) var(--transition-timing);
 		cursor: pointer;
 	}
 
@@ -192,6 +192,12 @@ with explanations and real terminal output.
 
 	button:not(:disabled):hover {
 		background: var(--color-mix-medium);
-		transform: translateY(calc(-1 * var(--ch) / 8));
+		transform: translateY(-0.125ch);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		button {
+			transition: none;
+		}
 	}
 </style>

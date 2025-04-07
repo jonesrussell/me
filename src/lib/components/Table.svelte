@@ -35,12 +35,7 @@
 	}
 </script>
 
-<div
-	class="table"
-	style="
-
---table-width: {width}ch"
->
+<div class="table" style="--table-width: {width}ch">
 	<div class="table-border">
 		{topBorder}
 	</div>
@@ -72,17 +67,18 @@
 	.table {
 		width: var(--table-width);
 		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
 		line-height: var(--line-height-tight);
 		white-space: pre;
 	}
 
 	.table-border {
-		color: var(--border-color);
+		color: var(--text-muted);
 	}
 
 	.header-row {
 		color: var(--text-color);
-		font-weight: var(--font-weight-bold);
+		font-weight: var(--font-weight-medium);
 	}
 
 	.table-row {

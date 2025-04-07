@@ -1,0 +1,120 @@
+@layer components {
+	/* Buttons */
+	.btn {
+		display: inline-flex;
+		gap: var(--space-2);
+		align-items: center;
+		padding: var(--space-2) var(--space-4);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-sm);
+		background: var(--bg-darker);
+		color: var(--text-color);
+		font-size: var(--font-size-base);
+		text-decoration: none;
+		transition: all var(--transition-duration) var(--transition-timing);
+		cursor: pointer;
+	}
+
+	.btn:hover {
+		background: var(--color-mix-light);
+		transform: translateY(-0.125ch);
+	}
+
+	.btn-primary {
+		background: var(--accent-color);
+		color: var(--bg-darker);
+		border-color: var(--accent-color);
+	}
+
+	.btn-primary:hover {
+		background: var(--accent-color-hover);
+		border-color: var(--accent-color-hover);
+	}
+
+	/* Links */
+	.link {
+		color: var(--accent-color);
+		text-decoration: none;
+		border-bottom: var(--border-width) solid transparent;
+		transition: all var(--transition-duration) var(--transition-timing);
+	}
+
+	.link:hover {
+		color: var(--accent-color-hover);
+		border-bottom-color: currentColor;
+	}
+
+	/* Form Elements */
+	.input {
+		width: 100%;
+		padding: var(--space-2) var(--space-4);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-sm);
+		background: var(--bg-darker);
+		color: var(--text-color);
+		font-size: var(--font-size-base);
+		transition: all var(--transition-duration) var(--transition-timing);
+	}
+
+	.input:focus {
+		outline: none;
+		border-color: var(--accent-color);
+		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
+	}
+
+	.input::placeholder {
+		color: var(--text-muted);
+		opacity: 0.5;
+	}
+
+	/* Focus Styles */
+	:where(:focus-visible) {
+		outline: var(--border-width) solid var(--accent-color);
+		outline-offset: var(--space-1);
+	}
+
+	/* Disabled States */
+	:where(.btn, .input):disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	/* Loading States */
+	.loading {
+		position: relative;
+		pointer-events: none;
+	}
+
+	.loading::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: var(--color-mix-light);
+		opacity: 0.5;
+	}
+
+	/* Hover States */
+	.hover-lift {
+		transition: transform var(--transition-duration) var(--transition-timing);
+	}
+
+	.hover-lift:hover {
+		transform: translateY(-0.25ch);
+	}
+
+	/* Active States */
+	.active {
+		background: var(--color-mix-light);
+		color: var(--accent-color);
+	}
+
+	/* Reduced Motion */
+	@media (prefers-reduced-motion: reduce) {
+		.btn,
+		.link,
+		.input,
+		.hover-lift {
+			transition: none;
+		}
+	}
+}
