@@ -31,3 +31,19 @@ export interface Project {
 	url: string;
 	status: 'active' | 'stable' | 'experimental';
 }
+
+export interface Resource {
+	title: string;
+	description: string;
+	url: string;
+	category: string;
+	stars?: number;
+	featured?: boolean;
+}
+
+export interface YouTubeChannel {
+	name: string;
+	url: string;
+	description: string;
+	featuredVideos: Video[];
+}
