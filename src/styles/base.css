@@ -180,7 +180,7 @@ html {
 	/* Base Typography */
 	:where(html) {
 		font-family: var(--font-sans);
-		font-size: 18px;
+		font-size: 1ch;
 		font-weight: var(--font-weight-normal);
 		line-height: var(--line-height-normal);
 	}
