@@ -25,7 +25,7 @@ Usage:
 </script>
 
 <div class="grid" style:--cols={cols} style:--gap={`var(--ch${gap})`}>
-	{children()}
+	{@render children?.()}
 </div>
 
 <style>

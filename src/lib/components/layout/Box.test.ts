@@ -6,7 +6,9 @@ import Box from './Box.svelte';
 describe('Box', () => {
 	it('renders with default props', () => {
 		const { container } = render(Box, {
-			children: () => 'Test Content'
+			props: {
+				children: () => 'Test Content'
+			}
 		});
 		const box = container.querySelector('.box');
 		expect(box).toBeInTheDocument();
@@ -16,8 +18,10 @@ describe('Box', () => {
 
 	it('renders with custom width', () => {
 		const { container } = render(Box, {
-			width: 60,
-			children: () => 'Wide Content'
+			props: {
+				width: 60,
+				children: () => 'Wide Content'
+			}
 		});
 		const box = container.querySelector('.box');
 		expect(box).toHaveStyle({ '--box-width': '60ch' });
@@ -26,8 +30,10 @@ describe('Box', () => {
 
 	it('renders with title', () => {
 		const { container } = render(Box, {
-			title: 'Test Box',
-			children: () => 'Box Content'
+			props: {
+				title: 'Test Box',
+				children: () => 'Box Content'
+			}
 		});
 		const header = container.querySelector('.header');
 		expect(header?.textContent?.trim()).toBe('Test Box');
@@ -36,8 +42,10 @@ describe('Box', () => {
 
 	it('renders with custom style', () => {
 		const { container } = render(Box, {
-			style: 'margin-top: 1rem;',
-			children: () => 'Styled Content'
+			props: {
+				style: 'margin-top: 1rem;',
+				children: () => 'Styled Content'
+			}
 		});
 		const box = container.querySelector('.box');
 		expect(box).toHaveStyle({ 'margin-top': '1rem' });
