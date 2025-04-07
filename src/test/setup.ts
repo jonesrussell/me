@@ -17,6 +17,8 @@ expect.extend(
 // Cleanup after each test
 afterEach(() => {
 	cleanup();
+	vi.clearAllMocks();
+	vi.clearAllTimers();
 });
 
 // Mock CSS modules
@@ -34,6 +36,12 @@ vi.mock('$app/paths', () => ({
 
 vi.mock('$app/stores', () => ({
 	page: {
+		subscribe: vi.fn()
+	},
+	navigating: {
+		subscribe: vi.fn()
+	},
+	updated: {
 		subscribe: vi.fn()
 	}
 }));
@@ -102,6 +110,18 @@ Object.defineProperty(document.createElement('style'), 'sheet', {
 Object.defineProperty(CSSStyleSheet.prototype, 'insertRule', {
 	value: () => 0
 });
+
+// Mock navigation
+vi.mock('$app/navigation', () => ({
+	afterNavigate: vi.fn(),
+	beforeNavigate: vi.fn(),
+	disableScrollHandling: vi.fn(),
+	goto: vi.fn(),
+	invalidate: vi.fn(),
+	invalidateAll: vi.fn(),
+	preloadCode: vi.fn(),
+	preloadData: vi.fn()
+}));
 
 // Suppress CSS parsing warnings
 const originalError = console.error;
