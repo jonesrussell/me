@@ -21,6 +21,11 @@
 </div>
 
 <style>
+	.specialties {
+		display: grid;
+		gap: var(--space-8);
+	}
+
 	@container (width < 40ch) {
 		.specialty {
 			flex-direction: column;
@@ -30,6 +35,12 @@
 
 		.specialty-icon {
 			margin-bottom: var(--space-4);
+		}
+	}
+
+	@media (width >= 48ch) {
+		.specialties {
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
