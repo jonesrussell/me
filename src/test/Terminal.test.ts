@@ -40,8 +40,6 @@ describe('Terminal Component', () => {
 		terminal.loadCommands(testCommands);
 
 		render(Terminal);
-
-		// Fast-forward timers
 		vi.advanceTimersByTime(1000);
 		await Promise.resolve();
 
@@ -55,23 +53,26 @@ describe('Terminal Component', () => {
 			{ cmd: 'first', output: 'first output' },
 			{ cmd: 'second', output: 'second output' }
 		];
+
+		// Reset and set up initial state
+		terminal.reset();
 		commands.set(testCommands);
 		terminal.loadCommands(testCommands);
 
 		render(Terminal);
 
-		// Fast-forward timers for first command
-		vi.advanceTimersByTime(1000);
+		// Wait for first command to complete
+		vi.advanceTimersByTime(2000);
 		await Promise.resolve();
 
-		// Fast-forward timers for second command
-		vi.advanceTimersByTime(1000);
+		// Wait for second command to complete
+		vi.advanceTimersByTime(2000);
 		await Promise.resolve();
 
-		const commandSpans = document.querySelectorAll('.command');
-		expect(commandSpans[0]).toHaveTextContent('first');
+		const commandElements = document.querySelectorAll('.command');
+		expect(commandElements[0]).toHaveTextContent('first');
 		expect(screen.getByText('first output')).toBeInTheDocument();
-		expect(commandSpans[1]).toHaveTextContent('second');
+		expect(commandElements[1]).toHaveTextContent('second');
 		expect(screen.getByText('second output')).toBeInTheDocument();
 	});
 

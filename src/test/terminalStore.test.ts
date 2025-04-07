@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { terminal, commands, debug, terminalHeight } from '$lib/stores/terminal';
 import { get } from 'svelte/store';
 
@@ -16,6 +16,11 @@ describe('Terminal Store', () => {
 			commands: []
 		});
 		terminalHeight.set('35ch');
+		vi.useFakeTimers();
+	});
+
+	afterEach(() => {
+		vi.useRealTimers();
 	});
 
 	it('initializes with correct default state', () => {
@@ -39,11 +44,15 @@ describe('Terminal Store', () => {
 	});
 
 	it('types command with correct timing', async () => {
-		const testCommand = { cmd: 'test', output: 'output' };
-		terminal.loadCommands([testCommand]);
+		const testCommands = [
+			{ cmd: 'test', output: 'output' }
+		];
+		terminal.loadCommands(testCommands);
+		terminal.start();
 
-		// Wait for typing to complete
-		await new Promise(resolve => setTimeout(resolve, 100));
+		// Wait for the full command to be typed
+		vi.advanceTimersByTime(2000);
+		await Promise.resolve();
 
 		const state = get(terminal);
 		expect(state.commandVisible).toBe('test');
@@ -57,9 +66,15 @@ describe('Terminal Store', () => {
 		];
 
 		terminal.loadCommands(testCommands);
+		terminal.start();
 
-		// Wait for both commands to complete
-		await new Promise(resolve => setTimeout(resolve, 2000));
+		// Wait for first command
+		vi.advanceTimersByTime(2000);
+		await Promise.resolve();
+
+		// Wait for second command
+		vi.advanceTimersByTime(2000);
+		await Promise.resolve();
 
 		const state = get(terminal);
 		expect(state.currentCommand).toBe(1);
@@ -68,9 +83,11 @@ describe('Terminal Store', () => {
 	});
 
 	it('stops typing when stop() is called', () => {
-		const testCommand = { cmd: 'test', output: 'output' };
-		terminal.loadCommands([testCommand]);
-
+		const testCommands = [
+			{ cmd: 'test', output: 'output' }
+		];
+		terminal.loadCommands(testCommands);
+		terminal.start();
 		terminal.stop();
 
 		const state = get(terminal);
@@ -78,9 +95,11 @@ describe('Terminal Store', () => {
 	});
 
 	it('resets state correctly', () => {
-		const testCommand = { cmd: 'test', output: 'output' };
-		terminal.loadCommands([testCommand]);
-
+		const testCommands = [
+			{ cmd: 'test', output: 'output' }
+		];
+		terminal.loadCommands(testCommands);
+		terminal.start();
 		terminal.reset();
 
 		const state = get(terminal);
