@@ -41,9 +41,18 @@ const vitestConfig = {
 			}
 		},
 		css: true,
-		reporters: ['verbose'],
+		reporters: ['default'],
 		pool: 'forks',
-		isolate: false
+		isolate: true,
+		testTimeout: 10000,
+		hookTimeout: 10000,
+		threads: false,
+		coverage: {
+			provider: 'v8',
+			reporter: ['text', 'json', 'html'],
+			include: ['src/**/*.{ts,svelte}'],
+			exclude: ['src/**/*.test.ts', 'src/**/*.spec.ts']
+		}
 	}
 };
 

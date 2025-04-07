@@ -1,69 +1,61 @@
 <script lang="ts">
-	import Footer from '$lib/components/Footer.svelte';
-	import Header from '$lib/components/Header.svelte';
-	import NewsletterCTA from '$lib/components/NewsletterCTA.svelte';
 	import '../app.css';
-	const { children } = $props();
+	import SkipToMain from '$lib/components/navigation/SkipToMain.svelte';
+	import Header from '$lib/components/ui/Header.svelte';
+	import Footer from '$lib/components/ui/Footer.svelte';
+	import type { SvelteComponent } from 'svelte';
+	const { children, url } = $props<{
+		children: () => SvelteComponent;
+		url: URL;
+	}>();
 </script>
 
-<div class="layout">
-	<Header />
+<svelte:head>
+	<link
+		rel="preload"
+		href="/node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2"
+		as="font"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/>
+	<link
+		rel="preload"
+		href="/node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2"
+		as="font"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/>
+	<link
+		rel="preload"
+		href="/node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff2"
+		as="font"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/>
+</svelte:head>
 
-	<main class="content">
-		<div class="content-inner">
-			{@render children()}
-		</div>
-	</main>
+<SkipToMain />
 
-	<section aria-label="Newsletter Signup" class="newsletter-section">
-		<div class="container">
-			<NewsletterCTA />
-		</div>
-	</section>
+<div class="site">
+	<Header {url} />
+
+	{@render children()}
 
 	<Footer />
 </div>
 
 <style>
-	:root {
-		--layout-border-width: 0.125ch;
-	}
-
-	.layout {
+	.site {
 		display: flex;
 		flex-direction: column;
-		width: 100%;
 		min-height: 100vh;
-		overflow-x: hidden;
-	}
-
-	.content {
-		flex: 1;
 		width: 100%;
-		padding: var(--ch2) var(--content-padding);
-		box-sizing: border-box;
 	}
 
-	.content-inner {
-		display: flex;
-		flex-direction: column;
-		gap: var(--ch4);
-		width: 100%;
-		max-width: min(var(--measure), 100%);
-		margin: 0 auto;
-	}
-
-	.newsletter-section {
-		padding: var(--ch4) 0;
-		background: var(--bg-alt);
-		border-top: var(--layout-border-width) solid var(--border-color);
-	}
-
-	.container {
-		width: 100%;
-		max-width: min(var(--measure), 100%);
-		margin: 0 auto;
-		padding: 0 var(--content-padding);
-		box-sizing: border-box;
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			transition: none !important;
+			animation: none !important;
+		}
 	}
 </style>

@@ -1,0 +1,275 @@
+/* Fonts */
+@font-face {
+	font-family: 'JetBrains Mono';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url('@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2')
+		format('woff2');
+}
+
+@font-face {
+	font-family: 'JetBrains Mono';
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url('@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2')
+		format('woff2');
+}
+
+@font-face {
+	font-family: 'JetBrains Mono';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url('@fontsource/jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff2')
+		format('woff2');
+}
+
+/* Reset */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+	padding: 0;
+	font-size: 100%;
+	border: 0;
+	vertical-align: baseline;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+/* Box sizing */
+html {
+	box-sizing: border-box;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-size-adjust: 100%;
+}
+
+/* Typography */
+:where(html) {
+	font-family: var(--font-mono);
+	font-size: 16px;
+	font-weight: var(--font-weight-normal);
+	line-height: var(--line-height-base);
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	color: var(--text-color);
+	background: var(--bg-color);
+}
+
+/* Base variables */
+:root {
+	/* Layout */
+	--measure: 80ch;
+	--content-padding: var(--space-4);
+	--container-padding: var(--space-4);
+
+	/* Spacing */
+	--space-1: 0.25rem;
+	--space-2: 0.5rem;
+	--space-4: 1rem;
+	--space-6: 1.5rem;
+	--space-8: 2rem;
+	--space-12: 3rem;
+	--space-16: 4rem;
+	--space-24: 6rem;
+	--space-32: 8rem;
+	--space-48: 12rem;
+	--space-64: 16rem;
+	--space-96: 24rem;
+	--space-128: 32rem;
+	--space-192: 48rem;
+	--space-256: 64rem;
+	--space-384: 96rem;
+	--space-512: 128rem;
+	--space-640: 160rem;
+	--space-768: 192rem;
+
+	/* Typography */
+	--font-mono: 'Fira Mono', monospace;
+	--font-size-xs: 0.75rem;
+	--font-size-sm: 0.875rem;
+	--font-size-base: 1rem;
+	--font-size-lg: 1.125rem;
+	--font-size-xl: 1.25rem;
+	--font-size-2xl: 1.5rem;
+	--font-size-3xl: 1.875rem;
+	--font-size-4xl: 2.25rem;
+	--font-size-5xl: 3rem;
+	--font-size-6xl: 3.75rem;
+	--font-size-7xl: 4.5rem;
+	--font-size-8xl: 6rem;
+	--font-size-9xl: 8rem;
+	--font-weight-normal: 400;
+	--font-weight-medium: 500;
+	--font-weight-bold: 700;
+	--line-height-tight: 1.25;
+	--line-height-base: 1.5;
+	--line-height-relaxed: 1.75;
+
+	/* Borders */
+	--border-width: 1px;
+	--radius-sm: 0.25rem;
+	--radius-md: 0.5rem;
+	--radius-lg: 1rem;
+	--radius-full: 50%;
+
+	/* Shadows */
+	--shadow-sm: 0 1px 2px rgb(0 0 0 / 10%);
+	--shadow-md: 0 2px 4px rgb(0 0 0 / 10%);
+	--shadow-lg: 0 4px 8px rgb(0 0 0 / 10%);
+
+	/* Transitions */
+	--transition-duration: 150ms;
+	--transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base container styles */
+.container {
+	width: 100%;
+	max-width: min(var(--measure), 100%);
+	margin-inline: auto;
+	padding-inline: var(--container-padding);
+}
+
+/* Base navigation styles */
+.nav {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+}
+
+/* Container Queries */
+@container (width > 48ch) {
+	.container {
+		--container-padding: var(--space-8);
+	}
+
+	.nav {
+		flex-direction: row;
+	}
+}
+
+/* Forced colors mode */
+@media (forced-colors: active) {
+	.card,
+	.surface,
+	.surface-elevated,
+	.surface-floating {
+		border: 0.125ch solid CanvasText;
+	}
+
+	.nav-link {
+		border: 0.125ch solid CanvasText;
+	}
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+	* {
+		scroll-behavior: auto !important;
+		transition-duration: 0.01ms !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+	}
+}
+
+/* Focus styles */
+:where(:focus-visible) {
+	outline: 2px solid var(--accent-color);
+	outline-offset: 2px;
+}
+
+/* Selection styles */
+:where(::selection) {
+	color: var(--bg-color);
+	background: var(--accent-color);
+}

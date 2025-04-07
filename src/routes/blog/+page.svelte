@@ -1,19 +1,32 @@
 <script lang="ts">
-	import devToProfile from '$lib/images/dev.to.jpeg?enhanced';
-	import { blogPosts, fetchFeed } from '$services/blogService';
+	import { blogPosts, fetchFeed } from '$services/blog-service';
 	import { onMount } from 'svelte';
-	import Box from '$lib/components/Box.svelte';
+	import BlogHeader from '$lib/components/blog/BlogHeader.svelte';
+	import BlogPost from '$lib/components/blog/BlogPost.svelte';
 
-	const devToUrl = 'https://dev.to/jonesrussell' as const;
+	let currentPage = $state(1);
+	let hasMore = $state(false);
+	let isLoading = $state(false);
+	const pageSize = 5;
 
 	onMount(async () => {
-		const fetchedPosts = await fetchFeed();
-		blogPosts.set(fetchedPosts);
+		const result = await fetchFeed({ page: currentPage, pageSize });
+		console.log('Initial fetch result:', result);
+		blogPosts.set(result.items);
+		hasMore = result.hasMore;
 	});
 
-	function formatDate(dateString: string) {
-		const date = new Date(dateString);
-		return date.toLocaleDateString('en-US');
+	async function loadMore() {
+		if (isLoading || !hasMore) return;
+
+		isLoading = true;
+		currentPage++;
+
+		const result = await fetchFeed({ page: currentPage, pageSize });
+		console.log('Load more result:', result);
+		blogPosts.update((posts) => [...posts, ...result.items]);
+		hasMore = result.hasMore;
+		isLoading = false;
 	}
 </script>
 
@@ -26,276 +39,75 @@
 </svelte:head>
 
 <div class="blog">
-	<header>
-		<div class="header-image">
-			<a href={devToUrl} target="_blank" rel="noopener noreferrer">
-				<img
-					{...devToProfile}
-					alt="Russell Jones's DEV.to Profile"
-					class="dev-to-screenshot"
-					sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
-					fetchpriority="high"
-				/>
-			</a>
-		</div>
-		<h1>Web Developer Blog</h1>
-		<p class="subtitle">Open Source Enthusiast</p>
-		<p class="source-note">
-			This page and <a href={devToUrl} target="_blank" rel="noopener noreferrer"
-				>DEV.to</a
-			>
-			are syndicated from my
-			<a
-				href="https://jonesrussell.github.io/blog/"
-				target="_blank"
-				rel="noopener noreferrer">Jekyll-powered blog</a
-			>
-		</p>
-	</header>
+	<BlogHeader />
 
-	<div class="content">
+	<div class="container">
 		<div class="posts">
 			{#each $blogPosts as post}
-				<Box width={80}>
-					<article class="post">
-						<div class="post-header">
-							<h2>
-								<a href={post.link} target="_blank" rel="noopener noreferrer">
-									{post.title}
-								</a>
-							</h2>
-							<time>{formatDate(post.published)}</time>
-						</div>
-						<p class="description">{post.description}</p>
-						<a
-							href={post.link}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="url-preview"
-						>
-							<span class="url-icon">→</span>
-							<span class="url-text">Read article</span>
-						</a>
-					</article>
-				</Box>
+				<BlogPost {post} />
 			{/each}
 		</div>
+
+		{#if hasMore}
+			<div class="load-more">
+				<button
+					onclick={loadMore}
+					disabled={isLoading}
+					class="load-more-button"
+				>
+					{#if isLoading}
+						Loading...
+					{:else}
+						Load More
+					{/if}
+				</button>
+			</div>
+		{/if}
 	</div>
 </div>
 
 <style>
-	:root {
-		--blog-url-translate: 0.25ch;
-		--blog-image-width-sm: 33.5ch;
-		--blog-image-width-lg: 34.75ch;
-		--blog-breakpoint-md: 95ch;
-		--blog-breakpoint-lg: 150ch;
-	}
-
 	.blog {
 		width: 100%;
-		max-width: var(--content-max-width);
+		padding: var(--space-16) 0;
+	}
+
+	.container {
+		width: 100%;
+		max-width: min(var(--measure), 95cqi);
 		margin: 0 auto;
-		padding: var(--ch2) var(--content-padding) var(--ch4);
-		font-family: var(--font-mono);
-	}
-
-	header {
-		margin-bottom: var(--ch4);
-		text-align: center;
-	}
-
-	/* Base link styles */
-	.post-header a,
-	.source-note a {
-		color: var(--link-color);
-		text-decoration: none;
-		transition: color var(--transition-duration) var(--transition-timing);
-	}
-
-	/* Header image styles */
-	.header-image {
-		width: 100%;
-		max-width: var(--blog-image-width-lg);
-		margin: 0 auto var(--ch2);
-		border-radius: var(--radius-md);
-		overflow: hidden;
-	}
-
-	.header-image a {
-		position: relative;
-		display: block;
-		border-radius: var(--radius-md);
-		overflow: hidden;
-	}
-
-	/* Hover states */
-	.post-header a:hover,
-	.source-note a:hover {
-		color: var(--accent-color-hover);
-	}
-
-	.header-image a:hover {
-		transform: scale(1.02);
-	}
-
-	.dev-to-screenshot {
-		display: block;
-		width: 100%;
-		height: auto;
-		border-radius: var(--radius-md);
-	}
-
-	h1 {
-		margin: 0;
-		background: linear-gradient(
-			to right,
-			var(--accent-color),
-			var(--accent-color-hover)
-		);
-		color: var(--accent-color);
-		font-size: var(--font-size-2xl);
-		font-weight: 500;
-		line-height: var(--line-height-tight);
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-
-	.subtitle {
-		margin: var(--ch2) auto 0;
-		color: var(--text-muted);
-		font-size: var(--font-size-lg);
-	}
-
-	.content {
-		display: grid;
-		grid-template-columns: 1fr auto;
-		gap: var(--ch8);
-		align-items: start;
+		padding: 0 var(--space-4);
 	}
 
 	.posts {
 		display: grid;
-		gap: var(--ch4);
+		gap: var(--space-8);
 	}
 
-	.post {
-		display: grid;
-		gap: var(--ch2);
-	}
-
-	.post-header {
+	.load-more {
 		display: flex;
-		flex-wrap: wrap;
-		gap: var(--ch4);
-		justify-content: space-between;
-		align-items: baseline;
+		justify-content: center;
+		margin-top: var(--space-8);
 	}
 
-	.post-header h2 {
-		margin: 0;
-		font-size: var(--font-size-lg);
-		line-height: var(--line-height-tight);
-	}
-
-	.source-note {
-		margin: var(--ch2) auto 0;
-		color: var(--text-muted);
-		font-size: var(--font-size-base);
-	}
-
-	time {
-		color: var(--text-muted);
-		font-size: var(--font-size-sm);
-		white-space: nowrap;
-	}
-
-	.description {
-		margin: 0;
-		color: var(--text-muted);
-		font-size: var(--font-size-sm);
-		line-height: var(--line-height-relaxed);
-	}
-
-	.url-preview {
-		display: flex;
-		gap: var(--ch);
-		align-items: center;
-		width: fit-content;
-		padding: var(--ch) var(--ch2);
-		border-radius: var(--radius-sm);
-		background: var(--bg-darker);
-		color: var(--text-muted);
+	.load-more-button {
+		padding: var(--space-4) var(--space-8);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
-		text-decoration: none;
-		transition: all var(--transition-duration) var(--transition-timing);
-		overflow: hidden;
-	}
-
-	.url-preview:hover {
-		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
 		color: var(--text-color);
+		background: var(--bg-darker);
+		border: none;
+		border-radius: var(--radius-md);
+		cursor: pointer;
+		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
-	.url-icon {
-		color: var(--accent-color);
-		transition: transform var(--transition-duration) var(--transition-timing);
+	.load-more-button:hover:not(:disabled) {
+		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
 	}
 
-	.url-preview:hover .url-icon {
-		transform: translateX(var(--blog-url-translate));
-	}
-
-	.sidebar {
-		position: sticky;
-		top: var(--ch4);
-	}
-
-	.dev-to-link {
-		display: block;
-		color: inherit;
-		text-decoration: none;
-	}
-
-	.dev-to-content {
-		display: flex;
-		flex-direction: column;
-		gap: var(--ch2);
-		align-items: center;
-		text-align: center;
-	}
-
-	.dev-to-text {
-		color: var(--accent-color);
-		font-size: var(--font-size-sm);
-	}
-
-	@media (width <= var(--blog-breakpoint-lg)) {
-		.content {
-			grid-template-columns: 1fr;
-		}
-
-		.sidebar {
-			display: none;
-		}
-	}
-
-	@media (width <= var(--blog-breakpoint-md)) {
-		header {
-			margin-bottom: var(--ch2);
-		}
-
-		h1 {
-			font-size: var(--font-size-xl);
-		}
-
-		.blog {
-			padding: var(--ch) var(--content-padding) var(--ch2);
-		}
-
-		.dev-to-screenshot {
-			width: var(--blog-image-width-sm);
-		}
+	.load-more-button:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
 	}
 </style>

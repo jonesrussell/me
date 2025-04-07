@@ -1,0 +1,57 @@
+/* Modern CSS Reset using :where() */
+@layer reset {
+	/* Remove all animations and transitions for people that prefer not to see them */
+	@media (prefers-reduced-motion: reduce) {
+		:where(*, *::before, *::after) {
+			scroll-behavior: auto !important;
+			transition-duration: 0.01ms !important;
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+		}
+	}
+
+	/* Box sizing rules */
+	:where(*, *::before, *::after) {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+
+	/* Set core root defaults */
+	:where(html) {
+		block-size: 100%;
+
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-size-adjust: 100%;
+		text-rendering: optimizelegibility;
+	}
+
+	/* Set core body defaults */
+	:where(body) {
+		min-block-size: 100%;
+		line-height: 1.5;
+	}
+
+	/* Remove list styles */
+	:where(ul, ol) {
+		list-style: none;
+	}
+
+	/* Set core anchor defaults */
+	:where(a) {
+		text-decoration: none;
+		color: inherit;
+	}
+
+	/* Make images easier to work with */
+	:where(img, picture, video, canvas, svg) {
+		display: block;
+		max-inline-size: 100%;
+	}
+
+	/* Inherit fonts for inputs and buttons */
+	:where(input, button, textarea, select) {
+		font: inherit;
+	}
+}
