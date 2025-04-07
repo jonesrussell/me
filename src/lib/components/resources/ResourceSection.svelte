@@ -31,18 +31,6 @@
 	}
 </script>
 
-<section class="category-section">
-	<h2>
-		{getCategoryIcon(category)}
-		{category}
-	</h2>
-	<div class="resource-grid">
-		{#each resources as resource (resource.title)}
-			<ResourceCard {resource} />
-		{/each}
-	</div>
-</section>
-
 <style>
 	.category-section {
 		margin: var(--space-6) 0;
@@ -88,3 +76,15 @@
 		}
 	}
 </style>
+
+<section class="category-section">
+	<h2>
+		{getCategoryIcon(category)}
+		{category}
+	</h2>
+	<div class="resource-grid">
+		{#each resources as resource (resource.title)}
+			<ResourceCard {resource} />
+		{/each}
+	</div>
+</section>

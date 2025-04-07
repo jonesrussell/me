@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { sanitizeText } from './utils';
+import { sanitizeText } from '../lib/services/utils';
 
 describe('sanitizeText', () => {
 	it('removes all HTML tags', () => {
@@ -9,17 +9,13 @@ describe('sanitizeText', () => {
 	});
 
 	it('removes HTML attributes', () => {
-		expect(sanitizeText('<a href="javascript:alert(1)">Click</a>')).toBe(
-			'Click'
-		);
+		expect(sanitizeText('<a href="javascript:alert(1)">Click</a>')).toBe('Click');
 		expect(sanitizeText('<img src="x" onerror="alert(1)">')).toBe('');
 	});
 
 	it('handles nested tags', () => {
 		expect(sanitizeText('<div><p>Nested</p></div>')).toBe('Nested');
-		expect(
-			sanitizeText('<div><script>alert(1)</script><p>Text</p></div>')
-		).toBe('Text');
+		expect(sanitizeText('<div><script>alert(1)</script><p>Text</p></div>')).toBe('Text');
 	});
 
 	it('preserves text content', () => {

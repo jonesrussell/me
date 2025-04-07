@@ -10,40 +10,6 @@
 	});
 </script>
 
-<div
-	class="terminal-frame"
-	style:height={$terminalHeight}
-	style:min-height={$terminalHeight}
->
-	<div class="terminal-header">
-		<span class="terminal-title">{title}</span>
-		<div class="terminal-buttons">
-			<span></span>
-			<span></span>
-			<span></span>
-		</div>
-	</div>
-	<div class="terminal-body">
-		{#each get(commands).filter((cmd) => cmd.completed) as command (command.cmd)}
-			<div class="command-line">
-				<span class="prompt">$</span>
-				<span class="command">{command.cmd}</span>
-			</div>
-			<div class="command-output">{command.output}</div>
-		{/each}
-		{#if $terminal.currentCommand < get(commands).length}
-			<div class="command-line">
-				<span class="prompt">$</span>
-				<span class="command">{$terminal.commandVisible}</span>
-				{#if $terminal.isTyping && $terminal.commandVisible.length === get(commands)[$terminal.currentCommand]?.cmd?.length && !$terminal.outputVisible}
-					<span class="cursor">▋</span>
-				{/if}
-			</div>
-			<div class="command-output">{$terminal.outputVisible}</div>
-		{/if}
-	</div>
-</div>
-
 <style>
 	.terminal-frame {
 		display: flex;
@@ -186,3 +152,33 @@
 		}
 	}
 </style>
+
+<div class="terminal-frame" style:height={$terminalHeight} style:min-height={$terminalHeight}>
+	<div class="terminal-header">
+		<span class="terminal-title">{title}</span>
+		<div class="terminal-buttons">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<div class="terminal-body">
+		{#each get(commands).filter((cmd) => cmd.completed) as command (command.cmd)}
+			<div class="command-line">
+				<span class="prompt">$</span>
+				<span class="command">{command.cmd}</span>
+			</div>
+			<div class="command-output">{command.output}</div>
+		{/each}
+		{#if $terminal.currentCommand < get(commands).length}
+			<div class="command-line">
+				<span class="prompt">$</span>
+				<span class="command">{$terminal.commandVisible}</span>
+				{#if $terminal.isTyping && $terminal.commandVisible.length === get(commands)[$terminal.currentCommand]?.cmd?.length && !$terminal.outputVisible}
+					<span class="cursor">▋</span>
+				{/if}
+			</div>
+			<div class="command-output">{$terminal.outputVisible}</div>
+		{/if}
+	</div>
+</div>

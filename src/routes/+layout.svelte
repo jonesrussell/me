@@ -10,6 +10,22 @@
 	}>();
 </script>
 
+<style>
+	.site {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		width: 100%;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			transition: none !important;
+			animation: none !important;
+		}
+	}
+</style>
+
 <svelte:head>
 	<link
 		rel="preload"
@@ -43,19 +59,3 @@
 
 	<Footer />
 </div>
-
-<style>
-	.site {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-		width: 100%;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		* {
-			transition: none !important;
-			animation: none !important;
-		}
-	}
-</style>

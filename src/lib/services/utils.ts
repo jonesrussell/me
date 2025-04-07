@@ -1,3 +1,4 @@
+// @ts-ignore - sanitize-html types are incorrect
 import sanitizeHtml from 'sanitize-html';
 
 // Cache for memoized results
@@ -33,30 +34,34 @@ export const sanitizeText = memoize((text: string): string => {
 	}).trim();
 });
 
-export const truncateDescription = memoize(
-	(text: string, maxLength: number = 280): string => {
-		if (!text || text.length <= maxLength) return text;
+/**
+ * Truncates a description to a maximum length, adding ellipsis if needed
+ */
+export const truncateDescription = memoize((text: string, maxLength: number = 280): string => {
+	if (!text || text.length <= maxLength) return text;
 
-		// Try to find a natural sentence break
-		const truncated = text.slice(0, maxLength);
-		const sentenceMatch = truncated.match(/(.*?[.!?])(?:\s|$)/);
+	// Try to find a natural sentence break
+	const truncated = text.slice(0, maxLength);
+	const sentenceMatch = truncated.match(/(.*?[.!?])(?:\s|$)/);
 
-		if (sentenceMatch) {
-			return sentenceMatch[1] + '...';
-		}
-
-		// If no sentence break found, try to break at a word boundary
-		const wordBoundary = truncated.lastIndexOf(' ');
-		if (wordBoundary > maxLength * 0.8) {
-			// Only break if we're keeping most of the text
-			return truncated.slice(0, wordBoundary) + '...';
-		}
-
-		// If we can't find a good break point, just truncate
-		return truncated + '...';
+	if (sentenceMatch) {
+		return sentenceMatch[1] + '...';
 	}
-);
 
+	// If no sentence break found, try to break at a word boundary
+	const wordBoundary = truncated.lastIndexOf(' ');
+	if (wordBoundary > maxLength * 0.8) {
+		// Only break if we're keeping most of the text
+		return truncated.slice(0, wordBoundary) + '...';
+	}
+
+	// If we can't find a good break point, just truncate
+	return truncated + '...';
+});
+
+/**
+ * Formats a date string into a more readable format
+ */
 export const formatDate = memoize((dateString: string): string => {
 	try {
 		const date = new Date(dateString);
@@ -75,35 +80,19 @@ export const formatDate = memoize((dateString: string): string => {
 });
 
 // Improved paragraph extraction with better HTML handling
-export const extractFirstMeaningfulParagraph = memoize(
-	(content: string): string => {
-		// Handle nested paragraphs and malformed HTML
-		const paragraphs = content.match(/<p[^>]*>(.*?)<\/p>/g) || [];
+export const extractFirstMeaningfulParagraph = memoize((content: string): string => {
+	if (!content) return '';
 
-		// Find the first non-greeting paragraph
-		for (const paragraph of paragraphs) {
-			const text = sanitizeText(paragraph.replace(/<p[^>]*>|<\/p>/g, ''));
-			if (
-				!text.match(
-					/^(Ahnii!|Hello|Hi|Hey|Greetings|Welcome|Thanks|Thank you)/i
-				)
-			) {
-				return text;
-			}
-		}
+	// Remove HTML tags
+	const text = content.replace(/<[^>]*>/g, ' ').trim();
 
-		// If no suitable paragraph found, use the first paragraph
-		if (paragraphs.length > 0) {
-			const firstParagraph = paragraphs[0];
-			if (firstParagraph) {
-				return sanitizeText(firstParagraph.replace(/<p[^>]*>|<\/p>/g, ''));
-			}
-		}
-
-		// If no paragraphs found, return empty string
-		return '';
-	}
-);
+	// Split into paragraphs and find the first non-empty one
+	const paragraphs = text
+		.split(/\n+/)
+		.map(p => p.trim())
+		.filter(p => p.length > 0);
+	return paragraphs[0] || '';
+});
 
 // Clear cache periodically to prevent memory leaks
 setInterval(

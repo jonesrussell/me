@@ -10,7 +10,14 @@
 		"sourceMap": true,
 		"strict": true,
 		"moduleResolution": "bundler",
-		"types": ["vitest/globals", "vitest/importMeta", "node", "jsdom"]
+		"types": [
+			"vitest/globals",
+			"vitest/importMeta",
+			"node",
+			"jsdom",
+			"sanitize-html",
+			"@sveltejs/kit"
+		]
 	},
 	"include": [
 		"./src/**/*.d.ts",
@@ -20,10 +27,5 @@
 		"./vitest-setup-client.ts",
 		"./vitest.config.ts"
 	],
-	"exclude": [
-		"node_modules",
-		"build",
-		"dist",
-		".svelte-kit"
-	]
+	"exclude": ["node_modules", "build", "dist", ".svelte-kit"]
 }

@@ -12,30 +12,6 @@
 	}
 </script>
 
-<header class="site-header">
-	<div class="header-content">
-		<div class="header-main">
-			<a href="/" class="title">Russell Jones</a>
-			<button
-				class="menu-toggle"
-				type="button"
-				onclick={toggleMobileMenu}
-				aria-expanded={isMobileMenuOpen}
-			>
-				<span class="menu-icon">☰</span>
-				<span class="sr-only">Toggle menu</span>
-			</button>
-			<DesktopNav {url} />
-			<MobileNav
-				{url}
-				isOpen={isMobileMenuOpen}
-				toggleMenu={toggleMobileMenu}
-			/>
-		</div>
-	</div>
-	<SubtitleBar />
-</header>
-
 <style>
 	.site-header {
 		position: sticky;
@@ -125,3 +101,23 @@
 		}
 	}
 </style>
+
+<header class="site-header">
+	<div class="header-content">
+		<div class="header-main">
+			<a href="/" class="title">Russell Jones</a>
+			<button
+				class="menu-toggle"
+				type="button"
+				onclick={toggleMobileMenu}
+				aria-expanded={isMobileMenuOpen}
+			>
+				<span class="menu-icon">☰</span>
+				<span class="sr-only">Toggle menu</span>
+			</button>
+			<DesktopNav {url} />
+			<MobileNav {url} isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
+		</div>
+	</div>
+	<SubtitleBar />
+</header>

@@ -4,8 +4,6 @@
 	}>();
 </script>
 
-<a {href} class="skip-to-main"> Skip to main content </a>
-
 <style>
 	.skip-to-main {
 		position: absolute;
@@ -33,3 +31,5 @@
 		opacity: 1;
 	}
 </style>
+
+<a {href} class="skip-to-main"> Skip to main content </a>

@@ -19,15 +19,13 @@ describe('Specialties Component', () => {
 	it('renders section header correctly', () => {
 		render(Specialties, { specialties: testSpecialties });
 		expect(screen.getByText('My Specialties')).toBeInTheDocument();
-		expect(
-			screen.getByText('Areas where I excel and bring value to projects')
-		).toBeInTheDocument();
+		expect(screen.getByText('Areas where I excel and bring value to projects')).toBeInTheDocument();
 	});
 
 	it('renders all specialties', () => {
 		render(Specialties, { specialties: testSpecialties });
 
-		testSpecialties.forEach((specialty) => {
+		testSpecialties.forEach(specialty => {
 			expect(screen.getByText(specialty.title)).toBeInTheDocument();
 			expect(screen.getByText(specialty.description)).toBeInTheDocument();
 			expect(screen.getByText(specialty.icon)).toBeInTheDocument();
@@ -41,7 +39,7 @@ describe('Specialties Component', () => {
 		expect(container).toHaveClass('specialties-container');
 
 		const specialties = document.querySelectorAll('.specialty');
-		specialties.forEach((specialty) => {
+		specialties.forEach(specialty => {
 			expect(specialty).toHaveClass('specialty');
 		});
 	});
@@ -58,9 +56,7 @@ describe('Specialties Component', () => {
 		render(Specialties, { specialties: singleSpecialty });
 
 		expect(screen.getByText(singleSpecialty[0].title)).toBeInTheDocument();
-		expect(
-			screen.getByText(singleSpecialty[0].description)
-		).toBeInTheDocument();
+		expect(screen.getByText(singleSpecialty[0].description)).toBeInTheDocument();
 		expect(screen.getByText(singleSpecialty[0].icon)).toBeInTheDocument();
 	});
 });

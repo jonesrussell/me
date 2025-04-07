@@ -10,95 +10,6 @@
 	}
 </script>
 
-<svelte:head>
-	<title>Contact | Russell Jones - Web Development & Open Source</title>
-	<meta
-		name="description"
-		content="Get in touch with Russell Jones for web development projects, technical consulting, or collaboration opportunities."
-	/>
-</svelte:head>
-
-<div class="contact">
-	<div class="container">
-		<div class="contact-grid">
-			<section class="contact-info" aria-label="Contact Information">
-				<h1 class="contact-heading">Get in Touch</h1>
-				<p class="contact-text">
-					Have a question or want to work together? I'd love to hear from you.
-					Let's build something amazing together.
-				</p>
-
-				<div class="contact-links">
-					<a
-						href="https://github.com/jonesrussell"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="contact-link"
-					>
-						<span class="contact-link-icon">⌘</span>
-						<span>GitHub: @jonesrussell</span>
-					</a>
-					<a
-						href="https://linkedin.com/in/jonesrussell42"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="contact-link"
-					>
-						<span class="contact-link-icon">≡</span>
-						<span>LinkedIn: jonesrussell42</span>
-					</a>
-					<a href="mailto:russell@web.ca" class="contact-link">
-						<span class="contact-link-icon">✉</span>
-						<span>Email: russell@web.ca</span>
-					</a>
-				</div>
-			</section>
-
-			<section class="contact-form" aria-label="Contact Form">
-				<h2 class="form-heading">Send a Message</h2>
-				<form onsubmit={handleSubmit}>
-					<div class="form-group">
-						<label class="form-label" for="name">Name</label>
-						<input
-							type="text"
-							id="name"
-							class="form-input"
-							bind:value={name}
-							placeholder="Your name"
-							required
-						/>
-					</div>
-					<div class="form-group">
-						<label class="form-label" for="email">Email</label>
-						<input
-							type="email"
-							id="email"
-							class="form-input"
-							bind:value={email}
-							placeholder="your.email@example.com"
-							required
-						/>
-					</div>
-					<div class="form-group">
-						<label class="form-label" for="message">Message</label>
-						<textarea
-							id="message"
-							class="form-textarea"
-							bind:value={message}
-							placeholder="Type your message here..."
-							required
-						></textarea>
-					</div>
-					<button type="submit" class="form-submit">
-						<span>Send Message</span>
-						<span class="contact-link-icon">→</span>
-					</button>
-				</form>
-			</section>
-		</div>
-	</div>
-</div>
-
 <style>
 	.contact {
 		width: 100%;
@@ -258,3 +169,92 @@
 		}
 	}
 </style>
+
+<svelte:head>
+	<title>Contact | Russell Jones - Web Development & Open Source</title>
+	<meta
+		name="description"
+		content="Get in touch with Russell Jones for web development projects, technical consulting, or collaboration opportunities."
+	/>
+</svelte:head>
+
+<div class="contact">
+	<div class="container">
+		<div class="contact-grid">
+			<section class="contact-info" aria-label="Contact Information">
+				<h1 class="contact-heading">Get in Touch</h1>
+				<p class="contact-text">
+					Have a question or want to work together? I'd love to hear from you. Let's build something
+					amazing together.
+				</p>
+
+				<div class="contact-links">
+					<a
+						href="https://github.com/jonesrussell"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="contact-link"
+					>
+						<span class="contact-link-icon">⌘</span>
+						<span>GitHub: @jonesrussell</span>
+					</a>
+					<a
+						href="https://linkedin.com/in/jonesrussell42"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="contact-link"
+					>
+						<span class="contact-link-icon">≡</span>
+						<span>LinkedIn: jonesrussell42</span>
+					</a>
+					<a href="mailto:russell@web.ca" class="contact-link">
+						<span class="contact-link-icon">✉</span>
+						<span>Email: russell@web.ca</span>
+					</a>
+				</div>
+			</section>
+
+			<section class="contact-form" aria-label="Contact Form">
+				<h2 class="form-heading">Send a Message</h2>
+				<form onsubmit={handleSubmit}>
+					<div class="form-group">
+						<label class="form-label" for="name">Name</label>
+						<input
+							type="text"
+							id="name"
+							class="form-input"
+							bind:value={name}
+							placeholder="Your name"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<label class="form-label" for="email">Email</label>
+						<input
+							type="email"
+							id="email"
+							class="form-input"
+							bind:value={email}
+							placeholder="your.email@example.com"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<label class="form-label" for="message">Message</label>
+						<textarea
+							id="message"
+							class="form-textarea"
+							bind:value={message}
+							placeholder="Type your message here..."
+							required
+						></textarea>
+					</div>
+					<button type="submit" class="form-submit">
+						<span>Send Message</span>
+						<span class="contact-link-icon">→</span>
+					</button>
+				</form>
+			</section>
+		</div>
+	</div>
+</div>

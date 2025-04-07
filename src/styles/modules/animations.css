@@ -138,51 +138,42 @@
 
 	/* Fade animations */
 	.fade-in {
-		animation: fade-in var(--transition-duration) var(--transition-timing)
-			forwards;
+		animation: fade-in var(--transition-duration) var(--transition-timing) forwards;
 	}
 
 	.fade-out {
-		animation: fade-out var(--transition-duration) var(--transition-timing)
-			forwards;
+		animation: fade-out var(--transition-duration) var(--transition-timing) forwards;
 	}
 
 	/* Slide animations */
 	.slide-up {
-		animation: slide-up var(--transition-duration) var(--transition-timing)
-			forwards;
+		animation: slide-up var(--transition-duration) var(--transition-timing) forwards;
 	}
 
 	.slide-down {
-		animation: slide-down var(--transition-duration) var(--transition-timing)
-			forwards;
+		animation: slide-down var(--transition-duration) var(--transition-timing) forwards;
 	}
 
 	.slide-left {
-		animation: slide-left var(--transition-duration) var(--transition-timing)
-			forwards;
+		animation: slide-left var(--transition-duration) var(--transition-timing) forwards;
 	}
 
 	.slide-right {
-		animation: slide-right var(--transition-duration) var(--transition-timing)
-			forwards;
+		animation: slide-right var(--transition-duration) var(--transition-timing) forwards;
 	}
 
 	/* Scale animations */
 	.scale-in {
-		animation: scale-in var(--transition-duration) var(--transition-timing)
-			forwards;
+		animation: scale-in var(--transition-duration) var(--transition-timing) forwards;
 	}
 
 	.scale-out {
-		animation: scale-out var(--transition-duration) var(--transition-timing)
-			forwards;
+		animation: scale-out var(--transition-duration) var(--transition-timing) forwards;
 	}
 
 	/* Rotate animations */
 	.rotate {
-		animation: rotate var(--transition-duration) var(--transition-timing)
-			infinite;
+		animation: rotate var(--transition-duration) var(--transition-timing) infinite;
 	}
 
 	/* Loading animations */

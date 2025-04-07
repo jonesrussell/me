@@ -516,9 +516,9 @@
 
 	/* Transform utilities */
 	.transform {
-		transform: translate(var(--tw-translate-x), var(--tw-translate-y))
-			rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y))
-			scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+		transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate))
+			skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x))
+			scaleY(var(--tw-scale-y));
 	}
 
 	.transform-none {
@@ -530,8 +530,7 @@
 		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 		transition-duration: 150ms;
 		transition-property:
-			background-color, border-color, color, fill, stroke, opacity, box-shadow,
-			transform;
+			background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
 	}
 
 	.transition-none {

@@ -32,9 +32,7 @@ describe('Footer', () => {
 
 	it('contains source code link', () => {
 		const { container } = render(Footer);
-		const sourceLink = container.querySelector(
-			'a[href="https://github.com/jonesrussell/me"]'
-		);
+		const sourceLink = container.querySelector('a[href="https://github.com/jonesrussell/me"]');
 		expect(sourceLink).toBeInTheDocument();
 		expect(sourceLink?.textContent?.trim()).toBe('Source Code');
 		expect(sourceLink).toHaveAttribute('target', '_blank');

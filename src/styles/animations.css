@@ -21,11 +21,9 @@
 }
 
 .fade-in {
-	animation: fade-in var(--transition-duration) var(--transition-timing)
-		forwards;
+	animation: fade-in var(--transition-duration) var(--transition-timing) forwards;
 }
 
 .slide-up {
-	animation: slide-up var(--transition-duration) var(--transition-timing)
-		forwards;
+	animation: slide-up var(--transition-duration) var(--transition-timing) forwards;
 }

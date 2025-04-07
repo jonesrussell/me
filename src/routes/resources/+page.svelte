@@ -14,8 +14,7 @@
 				title: 'Add a Google Font to Tailwind CSS | 2023',
 				url: 'https://youtu.be/B4v7ZDLxiS4',
 				embedId: 'B4v7ZDLxiS4',
-				description:
-					'Learn how to integrate custom Google Fonts with Tailwind CSS',
+				description: 'Learn how to integrate custom Google Fonts with Tailwind CSS',
 				topics: ['Tailwind CSS', 'Web Development', 'CSS', 'Frontend'],
 				date: 'Dec 2023'
 			}
@@ -35,8 +34,7 @@
 		{
 			title: 'Cursor AI',
 			url: 'https://cursor.sh',
-			description:
-				'The AI-first code editor. Built for pair programming with AI.',
+			description: 'The AI-first code editor. Built for pair programming with AI.',
 			category: 'Essential Tools & Platforms',
 			featured: true
 		},
@@ -189,8 +187,7 @@
 		{
 			title: 'roadmap.sh',
 			url: 'https://roadmap.sh',
-			description:
-				'Community-driven guides and paths to learn different tools and technologies',
+			description: 'Community-driven guides and paths to learn different tools and technologies',
 			stars: 25300,
 			category: 'Learning Paths'
 		},
@@ -210,10 +207,7 @@
 
 	// Group resources by category with featured content first
 	const groupedResources = [
-		...new Set([
-			'Essential Tools & Platforms',
-			...resources.map((r) => r.category)
-		])
+		...new Set(['Essential Tools & Platforms', ...resources.map((r) => r.category)])
 	]
 		.sort((a, b) => {
 			if (a === 'Essential Tools & Platforms') return -1;
@@ -234,29 +228,6 @@
 			{} as Record<string, Resource[]>
 		);
 </script>
-
-<svelte:head>
-	<title>Resources | Russell Jones - Go & Modern Web Development</title>
-	<meta
-		name="description"
-		content="Curated collection of development resources, tutorials, and tools for Go, web development, and modern software engineering."
-	/>
-</svelte:head>
-
-<div class="resources">
-	<div class="container">
-		<ResourceHeader
-			title="Development Resources"
-			description="A curated collection of tools, documentation, and learning resources for modern software development."
-		/>
-
-		{#each Object.entries(groupedResources) as [category, items] (category)}
-			<ResourceSection {category} resources={items} />
-		{/each}
-
-		<FeaturedVideos videos={youtubeChannel.featuredVideos} />
-	</div>
-</div>
 
 <style>
 	.resources {
@@ -301,3 +272,26 @@
 		}
 	}
 </style>
+
+<svelte:head>
+	<title>Resources | Russell Jones - Go & Modern Web Development</title>
+	<meta
+		name="description"
+		content="Curated collection of development resources, tutorials, and tools for Go, web development, and modern software engineering."
+	/>
+</svelte:head>
+
+<div class="resources">
+	<div class="container">
+		<ResourceHeader
+			title="Development Resources"
+			description="A curated collection of tools, documentation, and learning resources for modern software development."
+		/>
+
+		{#each Object.entries(groupedResources) as [category, items] (category)}
+			<ResourceSection {category} resources={items} />
+		{/each}
+
+		<FeaturedVideos videos={youtubeChannel.featuredVideos} />
+	</div>
+</div>

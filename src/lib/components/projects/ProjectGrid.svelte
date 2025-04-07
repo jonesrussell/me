@@ -5,15 +5,6 @@
 	const { projects } = $props<{ projects: Project[] }>();
 </script>
 
-<section>
-	<h2>Open Source Projects</h2>
-	<div class="project-grid">
-		{#each projects as project (project.title)}
-			<ProjectCard {project} />
-		{/each}
-	</div>
-</section>
-
 <style>
 	h2 {
 		margin: var(--space-8) 0 var(--space-4) 0;
@@ -45,3 +36,12 @@
 		}
 	}
 </style>
+
+<section>
+	<h2>Open Source Projects</h2>
+	<div class="project-grid">
+		{#each projects as project (project.title)}
+			<ProjectCard {project} />
+		{/each}
+	</div>
+</section>

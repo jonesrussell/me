@@ -1,7 +1,7 @@
 import { readable } from 'svelte/store';
 
 // Use readable store since year should only be updated by the system
-export const currentYear = readable(new Date().getFullYear(), (set) => {
+export const currentYear = readable(new Date().getFullYear(), set => {
 	// Update year when it changes
 	const interval = setInterval(
 		() => {

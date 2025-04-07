@@ -12,11 +12,7 @@ export async function scanMarkdownDocs(): Promise<void> {
 			for (const entry of entries) {
 				const fullPath = join(dir, entry.name);
 				// Skip node_modules and hidden directories
-				if (
-					entry.isDirectory() &&
-					!entry.name.startsWith('.') &&
-					entry.name !== 'node_modules'
-				) {
+				if (entry.isDirectory() && !entry.name.startsWith('.') && entry.name !== 'node_modules') {
 					await scanDir(fullPath);
 				} else if (entry.name.endsWith('.md')) {
 					mdFiles.push(fullPath);
@@ -29,7 +25,7 @@ export async function scanMarkdownDocs(): Promise<void> {
 			console.log(chalk.yellow('⚠ No markdown documentation files found'));
 		} else {
 			console.log(chalk.green(`✓ Found ${mdFiles.length} markdown files`));
-			mdFiles.forEach((file) => {
+			mdFiles.forEach(file => {
 				console.log(chalk.gray(`  - ${file}`));
 			});
 		}
@@ -54,7 +50,7 @@ export async function scanMarkdownDocs(): Promise<void> {
 
 		if (missingFiles.length > 0) {
 			console.log(chalk.yellow('\n⚠ Missing key documentation files:'));
-			missingFiles.forEach((file) => {
+			missingFiles.forEach(file => {
 				console.log(chalk.yellow(`  - ${file}`));
 			});
 		}

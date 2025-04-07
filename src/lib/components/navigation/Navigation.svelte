@@ -8,15 +8,6 @@
 	}>();
 </script>
 
-<nav class="navigation">
-	{#each links as link (link.href)}
-		<a href={link.href} class="nav-link">
-			<span class="nav-icon">{link.icon}</span>
-			<span class="nav-text">{link.text}</span>
-		</a>
-	{/each}
-</nav>
-
 <style>
 	.navigation {
 		display: flex;
@@ -70,3 +61,12 @@
 		}
 	}
 </style>
+
+<nav class="navigation">
+	{#each links as link (link.href)}
+		<a href={link.href} class="nav-link">
+			<span class="nav-icon">{link.icon}</span>
+			<span class="nav-text">{link.text}</span>
+		</a>
+	{/each}
+</nav>

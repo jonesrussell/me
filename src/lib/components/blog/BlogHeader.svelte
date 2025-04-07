@@ -1,49 +1,6 @@
 <script lang="ts">
-	import devToProfile from '$lib/images/dev.to.jpeg?enhanced';
-
 	export const devToUrl = 'https://dev.to/jonesrussell' as const;
 </script>
-
-<header>
-	<div class="header-image">
-		<a href={devToUrl} target="_blank" rel="noopener noreferrer">
-			<picture>
-				<source
-					type="image/webp"
-					srcset={devToProfile.sources['image/webp']}
-					sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
-				/>
-				<source
-					type="image/jpeg"
-					srcset={devToProfile.sources['image/jpeg']}
-					sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
-				/>
-				<img
-					{...devToProfile.img}
-					alt="Russell Jones's DEV.to Profile"
-					class="dev-to-screenshot"
-					sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
-					fetchpriority="high"
-					loading="eager"
-					decoding="sync"
-				/>
-			</picture>
-		</a>
-	</div>
-	<h1>Web Developer Blog</h1>
-	<p class="subtitle">Open Source Enthusiast</p>
-	<p class="source-note">
-		This page and <a href={devToUrl} target="_blank" rel="noopener noreferrer"
-			>DEV.to</a
-		>
-		are syndicated from my
-		<a
-			href="https://jonesrussell.github.io/blog/"
-			target="_blank"
-			rel="noopener noreferrer">Jekyll-powered blog</a
-		>
-	</p>
-</header>
 
 <style>
 	@media (prefers-reduced-motion: reduce) {
@@ -105,11 +62,7 @@
 		font-weight: var(--font-weight-medium);
 		line-height: var(--line-height-tight);
 		color: var(--accent-color);
-		background: linear-gradient(
-			to right,
-			var(--accent-color),
-			var(--accent-color-hover)
-		);
+		background: linear-gradient(to right, var(--accent-color), var(--accent-color-hover));
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}
@@ -126,3 +79,27 @@
 		color: var(--text-muted);
 	}
 </style>
+
+<header>
+	<div class="header-image">
+		<a href={devToUrl} target="_blank" rel="noopener noreferrer" aria-label="View DEV.to profile">
+			<enhanced:img
+				src="../../images/dev.to.jpeg"
+				alt="Russell Jones's DEV.to Profile"
+				class="dev-to-screenshot"
+				sizes="(min-width: 1280px) 1280px, (min-width: 768px) 768px, 100vw"
+				fetchpriority="high"
+				loading="eager"
+			></enhanced:img>
+		</a>
+	</div>
+	<h1>Web Developer Blog</h1>
+	<p class="subtitle">Open Source Enthusiast</p>
+	<p class="source-note">
+		This page and <a href={devToUrl} target="_blank" rel="noopener noreferrer">DEV.to</a>
+		are syndicated from my
+		<a href="https://jonesrussell.github.io/blog/" target="_blank" rel="noopener noreferrer"
+			>Jekyll-powered blog</a
+		>
+	</p>
+</header>

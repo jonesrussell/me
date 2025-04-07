@@ -13,9 +13,7 @@
 	function isActive(path: string) {
 		const basePath = base || '';
 		const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-		const normalizedCurrentPath = currentPath.startsWith('/')
-			? currentPath
-			: `/${currentPath}`;
+		const normalizedCurrentPath = currentPath.startsWith('/') ? currentPath : `/${currentPath}`;
 
 		return (
 			normalizedCurrentPath === normalizedPath ||
@@ -25,13 +23,6 @@
 		);
 	}
 </script>
-
-<nav class="desktop-nav" aria-label="Main navigation">
-	<a href="/blog" class:active={isActive('/blog')}>Blog</a>
-	<a href="/projects" class:active={isActive('/projects')}>Projects</a>
-	<a href="/resources" class:active={isActive('/resources')}>Resources</a>
-	<a href="/contact" class:active={isActive('/contact')}>Contact</a>
-</nav>
 
 <style>
 	.desktop-nav {
@@ -74,3 +65,10 @@
 		}
 	}
 </style>
+
+<nav class="desktop-nav" aria-label="Main navigation">
+	<a href="/blog" class:active={isActive('/blog')}>Blog</a>
+	<a href="/projects" class:active={isActive('/projects')}>Projects</a>
+	<a href="/resources" class:active={isActive('/resources')}>Resources</a>
+	<a href="/contact" class:active={isActive('/contact')}>Contact</a>
+</nav>

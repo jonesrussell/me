@@ -57,28 +57,6 @@
 	];
 </script>
 
-<svelte:head>
-	<title>Projects & Content | Russell Jones - Go & Modern Web Development</title
-	>
-	<meta
-		name="description"
-		content="Explore my open source projects, technical videos, and educational content about Go, JavaScript, and modern web development."
-	/>
-</svelte:head>
-
-<div class="projects">
-	<div class="container">
-		<h1>Projects & Content</h1>
-		<p class="intro">
-			Here you'll find my open source projects, technical videos, and
-			educational content.
-		</p>
-
-		<VideoGrid {videos} />
-		<ProjectGrid {projects} />
-	</div>
-</div>
-
 <style>
 	.projects {
 		width: 100%;
@@ -129,3 +107,23 @@
 		}
 	}
 </style>
+
+<svelte:head>
+	<title>Projects & Content | Russell Jones - Go & Modern Web Development</title>
+	<meta
+		name="description"
+		content="Explore my open source projects, technical videos, and educational content about Go, JavaScript, and modern web development."
+	/>
+</svelte:head>
+
+<div class="projects">
+	<div class="container">
+		<h1>Projects & Content</h1>
+		<p class="intro">
+			Here you'll find my open source projects, technical videos, and educational content.
+		</p>
+
+		<VideoGrid {videos} />
+		<ProjectGrid {projects} />
+	</div>
+</div>
