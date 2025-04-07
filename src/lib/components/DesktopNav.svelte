@@ -11,10 +11,10 @@
 </script>
 
 <nav class="desktop-nav" aria-label="Main navigation">
-	<a href="/" class:active={currentPath === '/'}>Home</a>
 	<a href="/blog" class:active={currentPath === '/blog'}>Blog</a>
 	<a href="/projects" class:active={currentPath === '/projects'}>Projects</a>
 	<a href="/resources" class:active={currentPath === '/resources'}>Resources</a>
+	<a href="/contact" class:active={currentPath === '/contact'}>Contact</a>
 </nav>
 
 <style>
