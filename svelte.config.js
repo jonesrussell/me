@@ -13,13 +13,14 @@ const config = {
 			base: process.env.NODE_ENV === 'production' ? '/me' : ''
 		},
 		prerender: {
+			entries: ['*'],
 			handleHttpError: ({ path, _referrer, message }) => {
-				// ignore 404s from the root path
-				if (path === '/' || path === '/me/') {
-					return;
+				// In production, all paths must start with /me
+				if (process.env.NODE_ENV === 'production' && !path.startsWith('/me')) {
+					throw new Error(
+						`Invalid path ${path}. In production, all paths must start with /me`
+					);
 				}
-				// otherwise fail the build
-				throw new Error(message);
 			}
 		},
 		alias: {
