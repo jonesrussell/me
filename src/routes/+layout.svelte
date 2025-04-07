@@ -1,8 +1,8 @@
 <script lang="ts">
 	import '../app.css';
-	import SkipToMain from '$lib/components/SkipToMain.svelte';
-	import Header from '$lib/components/Header.svelte';
-	import Footer from '$lib/components/Footer.svelte';
+	import SkipToMain from '$lib/components/navigation/SkipToMain.svelte';
+	import Header from '$lib/components/ui/Header.svelte';
+	import Footer from '$lib/components/ui/Footer.svelte';
 	import type { SvelteComponent } from 'svelte';
 	const { children, url } = $props<{
 		children: () => SvelteComponent;
