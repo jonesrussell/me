@@ -1,21 +1,29 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import Menu from './Menu.svelte';
+
+	const { url } = $props<{ url: URL }>();
+
+	let isMobileMenuOpen = $state(false);
+
+	function toggleMobileMenu() {
+		isMobileMenuOpen = !isMobileMenuOpen;
+	}
 </script>
 
 <header class="site-header">
 	<div class="header-content">
 		<div class="header-main">
 			<a href="/" class="title">Limitless Developer</a>
-			<nav class="header-nav" aria-label="Main navigation">
-				<a href="/" class:active={$page.url.pathname === '/'}>Home</a>
-				<a href="/blog" class:active={$page.url.pathname === '/blog'}>Blog</a>
-				<a href="/projects" class:active={$page.url.pathname === '/projects'}
-					>Projects</a
-				>
-				<a href="/resources" class:active={$page.url.pathname === '/resources'}
-					>Resources</a
-				>
-			</nav>
+			<button
+				class="menu-toggle"
+				type="button"
+				onclick={toggleMobileMenu}
+				aria-expanded={isMobileMenuOpen}
+			>
+				<span class="menu-icon">☰</span>
+				<span class="sr-only">Toggle menu</span>
+			</button>
+			<Menu {url} {isMobileMenuOpen} {toggleMobileMenu} />
 		</div>
 	</div>
 	<div class="subtitle-bar">
@@ -27,20 +35,12 @@
 
 <style>
 	.site-header {
-		--header-height: calc(var(--space-4) * 4);
-
 		position: sticky;
 		z-index: 10;
 		top: 0;
-
-		container-type: inline-size;
-
 		width: 100%;
 		padding-block: var(--space-4);
 		border-bottom: var(--border-width) solid var(--border-color);
-
-		color: var(--text-color);
-
 		background: var(--bg-color);
 		box-shadow: var(--shadow-sm);
 	}
@@ -53,16 +53,46 @@
 	}
 
 	.header-main {
-		@container (width < 600px) {
-			grid-template-columns: 1fr;
-			gap: var(--space-4);
-			justify-items: center;
-		}
-
 		display: grid;
-		grid-template-columns: auto 1fr;
+		grid-template-columns: 1fr auto;
 		gap: var(--space-4);
 		align-items: center;
+		position: relative;
+	}
+
+	.menu-toggle {
+		display: none;
+		width: 2.5rem;
+		height: 2.5rem;
+		padding: var(--space-2);
+		color: var(--text-color);
+		background: transparent;
+		border: none;
+		transition: all var(--transition-duration) var(--transition-timing);
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		z-index: 20;
+	}
+
+	.menu-toggle:hover {
+		color: var(--accent-color);
+	}
+
+	.menu-icon {
+		font-size: var(--font-size-xl);
+	}
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		padding: 0;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border-width: 0;
 	}
 
 	.title {
@@ -71,7 +101,6 @@
 		font-weight: var(--font-weight-bold);
 		text-decoration: none;
 		color: var(--text-color);
-
 		transition: color var(--transition-duration) var(--transition-timing);
 	}
 
@@ -79,46 +108,18 @@
 		color: var(--accent-color);
 	}
 
-	.header-nav {
-		@container (width < 600px) {
-			gap: var(--space-4);
-			justify-content: center;
-		}
-
-		display: flex;
-		gap: var(--space-4);
-		justify-content: flex-end;
-
-		& a {
-			padding: var(--space-2) var(--space-4);
-
-			font-size: var(--font-size-base);
-			text-decoration: none;
-			color: var(--text-muted);
-			border-radius: var(--radius-sm);
-
-			transition: all var(--transition-duration) var(--transition-timing);
-
-			&:hover {
-				color: var(--text-color);
-				background: var(--color-mix-light);
-			}
-
-			&.active {
-				color: var(--accent-color);
-				background: var(--color-mix-light);
-			}
+	@media (width < 768px) {
+		.menu-toggle {
+			display: flex;
 		}
 	}
 
 	.subtitle-bar {
 		position: relative;
-
 		width: 100%;
 		margin-top: var(--space-4);
 		padding-block: var(--space-4);
 		border-bottom: var(--border-width) solid var(--border-color);
-
 		background: var(--bg-darker);
 	}
 
@@ -126,7 +127,6 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-
 		width: 100%;
 		height: 2px;
 		background: linear-gradient(
@@ -134,7 +134,6 @@
 			var(--accent-color),
 			var(--secondary-accent)
 		);
-
 		opacity: 0.5;
 		content: '';
 	}
@@ -143,10 +142,16 @@
 		font-size: var(--font-size-sm);
 		text-align: center;
 		color: var(--text-muted);
-
 		opacity: 0.9;
 		max-width: min(var(--measure), 95cqi);
 		margin-inline: auto;
 		padding-inline: var(--space-4);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.menu-toggle,
+		.title {
+			transition: none;
+		}
 	}
 </style>
