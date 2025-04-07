@@ -2,14 +2,6 @@
 	import Box from './Box.svelte';
 	import type { Project } from '$lib/types';
 
-	interface Project {
-		title: string;
-		description: string;
-		tech: string[];
-		url: string;
-		status: 'active' | 'stable' | 'experimental';
-	}
-
 	const { project } = $props<{ project: Project }>();
 </script>
 
