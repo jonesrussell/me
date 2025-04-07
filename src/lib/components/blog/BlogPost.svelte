@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Box from '$lib/components/layout/Box.svelte';
-	import { formatDate } from '$services/blog-service';
+	import { formatDate } from '../../../services/blog-service';
 
 	const { post } = $props<{
 		post: {
