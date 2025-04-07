@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/svelte';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { render, cleanup } from '@testing-library/svelte';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import Footer from './Footer.svelte';
 
 // Mock the date store
@@ -14,6 +14,10 @@ vi.mock('$lib/stores/date', () => ({
 }));
 
 describe('Footer', () => {
+	afterEach(() => {
+		cleanup();
+	});
+
 	it('renders footer content', () => {
 		const { container } = render(Footer);
 		const footer = container.querySelector('.footer');
