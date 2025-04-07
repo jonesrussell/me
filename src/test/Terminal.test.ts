@@ -61,11 +61,15 @@ describe('Terminal Component', () => {
 
 		render(Terminal);
 
-		// Wait for first command to complete
+		// Wait for first command to complete typing
 		vi.advanceTimersByTime(2000);
 		await Promise.resolve();
 
-		// Wait for second command to complete
+		// Wait for output and timeout before next command
+		vi.advanceTimersByTime(1000);
+		await Promise.resolve();
+
+		// Wait for second command to complete typing
 		vi.advanceTimersByTime(2000);
 		await Promise.resolve();
 
