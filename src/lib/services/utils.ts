@@ -1,5 +1,4 @@
-// @ts-expect-error - sanitize-html types are incorrect
-import sanitizeHtml from 'sanitize-html';
+import sanitize from 'sanitize-html';
 
 // Cache for memoized results
 const memoCache = new Map<string, string>();
@@ -20,7 +19,7 @@ function memoize<Args extends unknown[], Return>(
 }
 
 export const sanitizeText = memoize((text: string): string => {
-	return sanitizeHtml(text, {
+	return sanitize(text, {
 		allowedTags: [], // Remove all HTML tags
 		allowedAttributes: {}, // Remove all attributes
 		disallowedTagsMode: 'discard', // Discard disallowed tags
