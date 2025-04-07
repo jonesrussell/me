@@ -1,0 +1,204 @@
+@layer components {
+	/* Keyframes */
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes fade-out {
+		from {
+			opacity: 1;
+		}
+
+		to {
+			opacity: 0;
+		}
+	}
+
+	@keyframes slide-up {
+		from {
+			opacity: 0;
+			transform: translateY(1ch);
+		}
+
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes slide-down {
+		from {
+			opacity: 0;
+			transform: translateY(-1ch);
+		}
+
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes slide-left {
+		from {
+			opacity: 0;
+			transform: translateX(1ch);
+		}
+
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	@keyframes slide-right {
+		from {
+			opacity: 0;
+			transform: translateX(-1ch);
+		}
+
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	@keyframes scale-in {
+		from {
+			opacity: 0;
+			transform: scale(0.95);
+		}
+
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	@keyframes scale-out {
+		from {
+			opacity: 1;
+			transform: scale(1);
+		}
+
+		to {
+			opacity: 0;
+			transform: scale(0.95);
+		}
+	}
+
+	@keyframes rotate {
+		from {
+			transform: rotate(0deg);
+		}
+
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	@keyframes pulse {
+		0% {
+			opacity: 0.5;
+		}
+
+		50% {
+			opacity: 0.2;
+		}
+
+		100% {
+			opacity: 0.5;
+		}
+	}
+
+	/* Reduced motion */
+	@media (prefers-reduced-motion: reduce) {
+		.fade-in,
+		.fade-out,
+		.slide-up,
+		.slide-down,
+		.slide-left,
+		.slide-right,
+		.scale-in,
+		.scale-out,
+		.rotate,
+		.loading::after {
+			animation: none;
+		}
+
+		.loading::after {
+			opacity: 0.5;
+		}
+	}
+
+	/* Fade animations */
+	.fade-in {
+		animation: fade-in var(--transition-duration) var(--transition-timing)
+			forwards;
+	}
+
+	.fade-out {
+		animation: fade-out var(--transition-duration) var(--transition-timing)
+			forwards;
+	}
+
+	/* Slide animations */
+	.slide-up {
+		animation: slide-up var(--transition-duration) var(--transition-timing)
+			forwards;
+	}
+
+	.slide-down {
+		animation: slide-down var(--transition-duration) var(--transition-timing)
+			forwards;
+	}
+
+	.slide-left {
+		animation: slide-left var(--transition-duration) var(--transition-timing)
+			forwards;
+	}
+
+	.slide-right {
+		animation: slide-right var(--transition-duration) var(--transition-timing)
+			forwards;
+	}
+
+	/* Scale animations */
+	.scale-in {
+		animation: scale-in var(--transition-duration) var(--transition-timing)
+			forwards;
+	}
+
+	.scale-out {
+		animation: scale-out var(--transition-duration) var(--transition-timing)
+			forwards;
+	}
+
+	/* Rotate animations */
+	.rotate {
+		animation: rotate var(--transition-duration) var(--transition-timing)
+			infinite;
+	}
+
+	/* Loading animations */
+	.loading {
+		pointer-events: none;
+		position: relative;
+	}
+
+	.loading::after {
+		position: absolute;
+		background: var(--color-mix-light);
+
+		opacity: 0.5;
+
+		animation: pulse 2s var(--transition-timing) infinite;
+		content: '';
+		inset: 0;
+	}
+}

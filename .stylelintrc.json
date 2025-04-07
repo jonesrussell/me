@@ -1,93 +1,125 @@
 {
-	"extends": ["stylelint-config-standard", "stylelint-config-recommended-scss"],
-	"plugins": ["stylelint-order", "stylelint-declaration-strict-value"],
+	"extends": ["stylelint-config-standard", "stylelint-config-clean-order"],
+	"plugins": ["stylelint-order"],
 	"rules": {
-		"color-no-hex": true,
-		"color-named": "never",
-		"unit-allowed-list": ["ch", "%", "deg", "ms", "s", "fr", "vw", "vh", "cqi"],
-		"unit-disallowed-list": ["px", "rem", "em"],
-		"declaration-property-value-disallowed-list": {
-			"line-height": ["/^[0-9]+$/"]
-		},
-		"scale-unlimited/declaration-strict-value": [
-			[
-				"color",
-				"background-color",
-				"border-color",
-				"outline-color",
-				"fill",
-				"stroke"
-			],
+		"unit-allowed-list": [
+			"ch",
+			"px",
+			"%",
+			"deg",
+			"vh",
+			"vw",
+			"fr",
+			"s",
+			"cqi",
+			"ms",
+			"rem"
+		],
+		"unit-disallowed-list": ["em"],
+		"selector-pseudo-class-no-unknown": [
+			true,
 			{
-				"ignoreValues": [
-					"transparent",
-					"inherit",
-					"initial",
-					"unset",
-					"currentColor"
-				],
-				"disableFix": true
+				"ignorePseudoClasses": ["global"]
 			}
 		],
+		"custom-property-pattern": null,
+		"selector-class-pattern": null,
+		"keyframes-name-pattern": null,
+		"media-query-no-invalid": null,
+		"no-descending-specificity": null,
+		"declaration-block-no-redundant-longhand-properties": null,
+		"font-family-no-missing-generic-family-keyword": null,
+		"value-keyword-case": ["lower", { "ignoreProperties": ["font-family"] }],
+		"order/order": [
+			"custom-properties",
+			"dollar-variables",
+			"at-rules",
+			"declarations",
+			"rules"
+		],
 		"order/properties-order": [
-			"position",
-			"top",
-			"right",
-			"bottom",
-			"left",
-			"z-index",
-			"display",
-			"flex",
-			"flex-direction",
-			"flex-wrap",
-			"gap",
-			"justify-content",
-			"align-items",
-			"width",
-			"min-width",
-			"max-width",
-			"height",
-			"min-height",
-			"max-height",
-			"margin",
-			"margin-top",
-			"margin-right",
-			"margin-bottom",
-			"margin-left",
-			"padding",
-			"padding-top",
-			"padding-right",
-			"padding-bottom",
-			"padding-left",
-			"border",
-			"border-radius",
-			"background",
-			"color",
-			"font-family",
-			"font-size",
-			"font-weight",
-			"line-height",
-			"text-align",
-			"text-decoration",
-			"transition",
-			"transform",
-			"animation",
-			"cursor"
+			{
+				"groupName": "Box Model",
+				"properties": [
+					"display",
+					"position",
+					"top",
+					"right",
+					"bottom",
+					"left",
+					"width",
+					"height",
+					"margin",
+					"margin-top",
+					"margin-right",
+					"margin-bottom",
+					"margin-left",
+					"padding",
+					"padding-top",
+					"padding-right",
+					"padding-bottom",
+					"padding-left"
+				]
+			},
+			{
+				"groupName": "Typography",
+				"properties": [
+					"font",
+					"font-family",
+					"font-size",
+					"font-weight",
+					"line-height",
+					"text-align",
+					"text-decoration",
+					"text-transform",
+					"color"
+				]
+			},
+			{
+				"groupName": "Visual",
+				"properties": [
+					"background",
+					"background-color",
+					"border",
+					"border-radius",
+					"box-shadow",
+					"opacity",
+					"visibility"
+				]
+			},
+			{
+				"groupName": "Animation",
+				"properties": ["transition", "animation", "transform"]
+			}
+		],
+		"at-rule-no-unknown": [
+			true,
+			{
+				"ignoreAtRules": [
+					"tailwind",
+					"apply",
+					"variants",
+					"responsive",
+					"screen",
+					"layer"
+				]
+			}
+		],
+		"no-duplicate-at-import-rules": true,
+		"no-invalid-position-at-import-rule": true,
+		"at-rule-empty-line-before": [
+			"always",
+			{
+				"except": ["first-nested"],
+				"ignore": ["after-comment", "blockless-after-same-name-blockless"],
+				"ignoreAtRules": ["import", "layer"]
+			}
 		]
 	},
 	"overrides": [
 		{
 			"files": ["**/*.svelte"],
-			"customSyntax": "postcss-html",
-			"rules": {
-				"no-empty-source": null,
-				"selector-pseudo-class-no-unknown": [
-					true,
-					{
-						"ignorePseudoClasses": ["global"]
-					}
-				]
-			}
+			"customSyntax": "postcss-html"
 		}
 	]
 }

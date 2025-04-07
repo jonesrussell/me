@@ -1,0 +1,146 @@
+@layer components {
+	/* Container Queries */
+	@container (width > 48ch) {
+		.code-block {
+			margin: var(--space-12) 0;
+		}
+
+		.code-block-content {
+			padding: var(--space-8);
+		}
+	}
+
+	/* Code blocks */
+	.code-block {
+		position: relative;
+
+		margin: var(--space-8) 0;
+
+		background: var(--bg-darker);
+		border-radius: var(--radius-md);
+
+		overflow: hidden;
+	}
+
+	.code-block-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		padding: var(--space-2) var(--space-4);
+		border-bottom: var(--border-width) solid var(--border-color);
+
+		background: var(--bg-darker);
+	}
+
+	.code-block-title {
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
+	}
+
+	.code-block-actions {
+		display: flex;
+		gap: var(--space-2);
+	}
+
+	.code-block-content {
+		position: relative;
+		overflow-x: auto;
+		padding: var(--space-4);
+	}
+
+	/* Inline code */
+	.code-inline {
+		padding: 0.2ch 0.4ch;
+
+		font-family: var(--font-mono);
+		font-size: 0.9ch;
+		color: var(--text-color);
+
+		background: var(--bg-darker);
+		border-radius: var(--radius-sm);
+	}
+
+	/* Syntax highlighting */
+	.code-block pre {
+		margin: 0;
+		padding: 0;
+
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		line-height: var(--line-height-relaxed);
+		tab-size: 2;
+
+		background: none;
+	}
+
+	.code-block code {
+		font-family: inherit;
+		font-size: inherit;
+		line-height: inherit;
+	}
+
+	/* Line numbers */
+	.code-block[data-line-numbers] {
+		counter-reset: line;
+	}
+
+	.code-block[data-line-numbers] .code-line::before {
+		display: inline-block;
+
+		width: 2ch;
+		margin-right: 1ch;
+		padding-right: 1ch;
+		text-align: right;
+
+		color: var(--text-muted);
+		content: counter(line);
+		counter-increment: line;
+		user-select: none;
+	}
+
+	/* Highlighted lines */
+	.code-line.highlight {
+		background: var(--color-mix-light);
+	}
+
+	/* Copy button */
+	.copy-button {
+		display: flex;
+
+		padding: var(--space-1) var(--space-2);
+
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
+
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-sm);
+
+		transition: all var(--transition-duration) var(--transition-timing);
+		cursor: pointer;
+		gap: var(--space-2);
+		align-items: center;
+	}
+
+	.copy-button:hover {
+		color: var(--text-color);
+		background: var(--color-mix-light);
+	}
+
+	.copy-button.copied {
+		border-color: var(--success-color);
+		color: var(--bg-darker);
+		background: var(--success-color);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		scroll-behavior: auto !important;
+		transition-duration: 0.01ms !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+	}
+}

@@ -1,11 +1,7 @@
 <script lang="ts">
-	interface Project {
-		title: string;
-		description: string;
-		tech: string[];
-		url: string;
-		status: 'active' | 'stable' | 'experimental';
-	}
+	import VideoGrid from '$lib/components/video/VideoGrid.svelte';
+	import ProjectGrid from '$lib/components/projects/ProjectGrid.svelte';
+	import type { Project, Video } from '$lib/types';
 
 	const projects: Project[] = [
 		{
@@ -38,153 +34,98 @@
 			status: 'experimental'
 		}
 	];
+
+	const videos: Video[] = [
+		{
+			title: 'The Legend Reborn - AI Generated Trailer',
+			description:
+				'Journey with Nanabush and witness the story of the Anishinaabe in this AI-generated trailer celebrating Indigenous storytelling.',
+			topics: ['AI Generated', 'Indigenous', 'Anishinaabe', 'Native American'],
+			url: 'https://www.youtube.com/watch?v=7Pvq7hQ3l84',
+			embedId: '7Pvq7hQ3l84',
+			date: 'Feb 2024'
+		},
+		{
+			title: 'Red Helmet - Stop Motion Trailer',
+			description:
+				'A wanderer comes across a red helmet, origin unknown. Little does he know, the helmet is imbued with a powerful entity that embarks on a journey of its own.',
+			topics: ['Stop Motion', 'Short Film', 'Indie Film', 'Original Story'],
+			url: 'https://www.youtube.com/watch?v=Bky1A8vNUjU',
+			embedId: 'Bky1A8vNUjU',
+			date: 'Dec 2023'
+		}
+	];
 </script>
 
 <svelte:head>
-	<title
-		>Open Source Projects | Russell Jones - Go & Modern Web Development</title
+	<title>Projects & Content | Russell Jones - Go & Modern Web Development</title
 	>
 	<meta
 		name="description"
-		content="Explore my open source projects built with Go, JavaScript, and modern web technologies. From web applications to system tools and game development."
+		content="Explore my open source projects, technical videos, and educational content about Go, JavaScript, and modern web development."
 	/>
 </svelte:head>
 
-<section class="projects">
-	<h1>Open Source Projects</h1>
+<div class="projects">
+	<div class="container">
+		<h1>Projects & Content</h1>
+		<p class="intro">
+			Here you'll find my open source projects, technical videos, and
+			educational content.
+		</p>
 
-	<div class="intro">
-		Here are some of my open source projects. Most are built with Go and modern
-		web technologies.
+		<VideoGrid {videos} />
+		<ProjectGrid {projects} />
 	</div>
-
-	<div class="project-grid">
-		{#each projects as project}
-			<div class="project">
-				<div class="project-header">
-					<h2>
-						<a href={project.url} target="_blank" rel="noopener noreferrer">
-							{project.title}
-						</a>
-					</h2>
-					<span class="status status-{project.status}">{project.status}</span>
-				</div>
-
-				<p class="description">{project.description}</p>
-
-				<div class="tech-stack">
-					{#each project.tech as tech}
-						<span class="tech">{tech}</span>
-					{/each}
-				</div>
-			</div>
-		{/each}
-	</div>
-</section>
+</div>
 
 <style>
 	.projects {
 		width: 100%;
-		max-width: var(--projects-width);
+		padding: var(--space-8) 0;
+	}
+
+	.container {
+		width: 100%;
+		max-width: min(var(--measure), 95cqi);
 		margin: 0 auto;
-		padding: var(--ch4) var(--ch2);
-		font-family: var(--font-mono);
-		line-height: var(--line-height-base);
+		padding: 0 var(--space-4);
 	}
 
 	h1 {
 		margin: 0;
-		font-size: var(--font-size-2xl);
+		font-size: var(--font-size-xl);
 		line-height: var(--line-height-tight);
 		text-align: center;
+		color: var(--text-color);
 	}
 
 	.intro {
-		margin: var(--ch2) 0 var(--ch4) 0;
-		color: var(--text-muted);
+		margin: var(--space-4) 0 var(--space-8) 0;
+		font-size: var(--font-size-base);
+		line-height: var(--line-height-relaxed);
 		text-align: center;
+		color: var(--text-muted);
 	}
 
-	.project-grid {
-		display: grid;
-		gap: var(--ch4);
-		grid-template-columns: 1fr;
-	}
+	@media (width >= 48ch) {
+		.projects {
+			padding: var(--space-12) 0;
+		}
 
-	@media (width >= 80ch) {
-		.project-grid {
-			grid-template-columns: repeat(auto-fit, minmax(50ch, 1fr));
+		h1 {
+			font-size: var(--font-size-2xl);
+		}
+
+		.intro {
+			margin: var(--space-6) 0 var(--space-12) 0;
+			font-size: var(--font-size-lg);
 		}
 	}
 
-	.project {
-		width: 100%;
-		padding: var(--ch3);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		background: var(--color-mix-light);
-	}
-
-	.project-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: var(--ch2);
-	}
-
-	h2 {
-		margin: 0;
-		font-size: var(--font-size-lg);
-		font-weight: var(--font-weight-bold);
-	}
-
-	.status {
-		padding: calc(var(--ch) / 4) var(--ch);
-		border-radius: calc(var(--ch) / 8);
-		font-size: var(--font-size-sm);
-	}
-
-	.status-active {
-		background: color-mix(in srgb, var(--color-success) 15%, transparent);
-		color: var(--color-success);
-	}
-
-	.status-stable {
-		color: var(--color-info);
-	}
-
-	.status-experimental {
-		background: color-mix(in srgb, var(--color-warning) 15%, transparent);
-		color: var(--color-warning);
-	}
-
-	.description {
-		margin: var(--ch2) 0;
-		color: var(--text-muted);
-	}
-
-	.tech-stack {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--ch);
-		margin-top: var(--ch2);
-	}
-
-	.tech {
-		padding: calc(var(--ch) / 4) var(--ch);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		border-radius: calc(var(--ch) / 8);
-		background: var(--color-mix-medium);
-		font-size: var(--font-size-sm);
-	}
-
-	a {
-		color: var(--link-color);
-		text-decoration: none;
-		border-bottom: calc(1 * var(--ch) / 16) solid transparent;
-	}
-
-	a:hover {
-		color: var(--link-hover);
-		border-bottom-color: currentcolor;
+	@media (width >= 80ch) {
+		.projects {
+			padding: var(--space-16) 0;
+		}
 	}
 </style>

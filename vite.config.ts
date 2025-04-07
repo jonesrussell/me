@@ -1,7 +1,7 @@
 /// <reference types="vitest" />
 import { enhancedImages } from '@sveltejs/enhanced-img';
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { defineConfig, mergeConfig } from 'vite';
 
 // CSS transformation plugin
 const cssTransform = {
@@ -51,10 +51,26 @@ const cssTransform = {
 	}
 };
 
-export default defineConfig({
+const viteConfig = {
 	plugins: [enhancedImages(), sveltekit(), cssTransform],
 	build: {
 		cssMinify: true,
 		cssCodeSplit: true
+	},
+	test: {
+		globals: true,
+		environment: 'jsdom',
+		coverage: {
+			provider: 'v8',
+			reporter: ['text', 'json', 'html'],
+			include: ['src/**/*.{ts,svelte}'],
+			exclude: ['src/**/*.test.ts', 'src/**/*.spec.ts']
+		}
 	}
+};
+
+export default defineConfig(() => {
+	return mergeConfig(viteConfig, {
+		// ... existing code ...
+	});
 });
