@@ -1,14 +1,22 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/svelte';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi, beforeEach } from 'vitest';
 import MobileNav from './MobileNav.svelte';
 
 describe('MobileNav', () => {
+	beforeEach(() => {
+		// Mock window.location
+		delete window.location;
+		window.location = new URL('http://localhost/blog') as Location;
+	});
+
 	it('renders navigation items', () => {
 		const { container } = render(MobileNav, {
-			url: new URL('http://localhost/blog'),
-			isOpen: true,
-			toggleMenu: () => {}
+			props: {
+				url: new URL('http://localhost/blog'),
+				isOpen: true,
+				toggleMenu: () => {}
+			}
 		});
 		const nav = container.querySelector('.mobile-nav');
 		expect(nav).toBeInTheDocument();
@@ -24,9 +32,11 @@ describe('MobileNav', () => {
 
 	it('marks active navigation item', () => {
 		const { container } = render(MobileNav, {
-			url: new URL('http://localhost/blog'),
-			isOpen: true,
-			toggleMenu: () => {}
+			props: {
+				url: new URL('http://localhost/blog'),
+				isOpen: true,
+				toggleMenu: () => {}
+			}
 		});
 		const activeLink = container.querySelector('a.active');
 		expect(activeLink).toBeInTheDocument();
@@ -35,9 +45,11 @@ describe('MobileNav', () => {
 
 	it('updates active item when URL changes', () => {
 		const { container } = render(MobileNav, {
-			url: new URL('http://localhost/projects'),
-			isOpen: true,
-			toggleMenu: () => {}
+			props: {
+				url: new URL('http://localhost/projects'),
+				isOpen: true,
+				toggleMenu: () => {}
+			}
 		});
 		const activeLink = container.querySelector('a.active');
 		expect(activeLink).toBeInTheDocument();
@@ -47,12 +59,20 @@ describe('MobileNav', () => {
 	it('toggles menu when link is clicked', () => {
 		const toggleMenu = vi.fn();
 		const { container } = render(MobileNav, {
-			url: new URL('http://localhost/blog'),
-			isOpen: true,
-			toggleMenu
+			props: {
+				url: new URL('http://localhost/blog'),
+				isOpen: true,
+				toggleMenu
+			}
 		});
 		const link = container.querySelector('a');
-		link?.click();
+		if (link) {
+			const clickEvent = new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true
+			});
+			link.dispatchEvent(clickEvent);
+		}
 		expect(toggleMenu).toHaveBeenCalled();
 	});
 });
