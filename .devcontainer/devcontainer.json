@@ -38,7 +38,8 @@
 			"extensions": [
 				"svelte.svelte-vscode",
 				"github.vscode-github-actions",
-				"esbenp.prettier-vscode"
+				"esbenp.prettier-vscode",
+				"stylelint.vscode-stylelint"
 			]
 		}
 	},
