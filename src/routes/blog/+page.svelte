@@ -1,6 +1,6 @@
 <script lang="ts">
 	import devToProfile from '$lib/images/dev.to.jpeg?enhanced';
-	import { blogPosts, fetchFeed } from '$services/blogService';
+	import { blogPosts, fetchFeed, formatDate } from '$services/blogService';
 	import { onMount } from 'svelte';
 	import Box from '$lib/components/Box.svelte';
 
@@ -10,11 +10,6 @@
 		const fetchedPosts = await fetchFeed();
 		blogPosts.set(fetchedPosts);
 	});
-
-	function formatDate(dateString: string) {
-		const date = new Date(dateString);
-		return date.toLocaleDateString('en-US');
-	}
 </script>
 
 <svelte:head>
@@ -80,16 +75,20 @@
 							</h2>
 							<time>{formatDate(post.published)}</time>
 						</div>
-						<p class="description">{post.description}</p>
-						<a
-							href={post.link}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="url-preview"
-						>
-							<span class="url-icon">→</span>
-							<span class="url-text">Read article</span>
-						</a>
+						<div class="post-content">
+							<p class="description">{post.description}</p>
+						</div>
+						<div class="post-footer">
+							<a
+								href={post.link}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="url-preview"
+							>
+								<span class="url-icon">→</span>
+								<span class="url-text">Read article</span>
+							</a>
+						</div>
 					</article>
 				</Box>
 			{/each}
@@ -201,6 +200,14 @@
 	.post {
 		display: grid;
 		gap: var(--space-4);
+		padding: var(--space-4);
+		background: var(--bg-darker);
+		border-radius: var(--radius-md);
+		transition: transform var(--transition-duration) var(--transition-timing);
+	}
+
+	.post:hover {
+		transform: translateY(-0.25ch);
 	}
 
 	.post-header {
@@ -217,17 +224,42 @@
 		line-height: var(--line-height-tight);
 	}
 
+	.post-header a {
+		text-decoration: none;
+		color: var(--text-color);
+		transition: color var(--transition-duration) var(--transition-timing);
+	}
+
+	.post-header a:hover {
+		color: var(--accent-color);
+	}
+
 	time {
 		font-size: var(--font-size-sm);
 		color: var(--text-muted);
 		white-space: nowrap;
 	}
 
+	.post-content {
+		margin: var(--space-4) 0;
+	}
+
 	.description {
+		display: -webkit-box;
 		margin: 0;
-		font-size: var(--font-size-sm);
+		font-size: var(--font-size-base);
 		line-height: var(--line-height-relaxed);
-		color: var(--text-muted);
+		color: var(--text-color);
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.post-footer {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		margin-top: var(--space-2);
 	}
 
 	.url-preview {
@@ -238,7 +270,7 @@
 		font-size: var(--font-size-sm);
 		text-decoration: none;
 		color: var(--text-muted);
-		background: var(--bg-darker);
+		background: var(--bg-color);
 		border-radius: var(--radius-sm);
 		transition: all var(--transition-duration) var(--transition-timing);
 		gap: var(--space-2);
@@ -247,7 +279,7 @@
 
 	.url-preview:hover {
 		color: var(--text-color);
-		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
+		background: color-mix(in srgb, var(--bg-color) 80%, var(--accent-color));
 	}
 
 	.url-icon {
@@ -259,16 +291,11 @@
 		transform: translateX(0.25ch);
 	}
 
-	/* Base link styles */
-	.post-header a,
-	.source-note a {
-		text-decoration: none;
-		color: var(--link-color);
-		transition: color var(--transition-duration) var(--transition-timing);
-	}
-
-	.post-header a:hover,
-	.source-note a:hover {
-		color: var(--accent-color-hover);
+	@media (prefers-reduced-motion: reduce) {
+		.post,
+		.url-preview,
+		.url-icon {
+			transition: none;
+		}
 	}
 </style>
