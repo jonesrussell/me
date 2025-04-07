@@ -57,3 +57,8 @@ export function extractFirstMeaningfulParagraph(content: string): string {
         if (firstParagraph) {
             return sanitizeText(firstParagraph.replace(/<p>|<\/p>/g, ''));
         }
+    }
+
+    // If no paragraphs found, return empty string
+    return '';
+}
