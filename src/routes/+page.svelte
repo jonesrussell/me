@@ -4,26 +4,32 @@
 	import YouTubeSection from '$lib/components/YouTubeSection.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
 
-	const YOUTUBE_CHANNEL = 'https://youtube.com/@yourchannel';
-	const YOUTUBE_VIDEO_ID = 'your-video-id';
-	const YOUTUBE_VIDEO_TITLE = 'Your Video Title';
+	const YOUTUBE_CHANNEL = 'https://youtube.com/@fullstackdev42';
+	const YOUTUBE_VIDEO_ID = 'B4v7ZDLxiS4';
+	const YOUTUBE_VIDEO_TITLE = 'Add a Google Font to Tailwind CSS | 2023';
 
 	const specialties = [
 		{
-			title: 'Web Development',
-			description:
-				'Building modern web applications with the latest technologies',
-			icon: '🌐'
-		},
-		{
-			title: 'UI/UX Design',
-			description: 'Creating beautiful and intuitive user interfaces',
-			icon: '🎨'
-		},
-		{
-			title: 'Performance Optimization',
-			description: 'Making websites fast and efficient',
+			title: 'Modern JavaScript/TS',
+			description: 'Building the future with cutting-edge web technologies',
 			icon: '⚡'
+		},
+		{
+			title: 'Golang & PHP',
+			description:
+				'Crafting robust backend solutions with battle-tested technologies',
+			icon: '🔧'
+		},
+		{
+			title: 'AI Integration',
+			description:
+				'Harnessing artificial intelligence to solve complex problems',
+			icon: '🤖'
+		},
+		{
+			title: 'Cloud & DevOps',
+			description: 'Designing and automating scalable cloud-native solutions',
+			icon: '☁️'
 		}
 	];
 
