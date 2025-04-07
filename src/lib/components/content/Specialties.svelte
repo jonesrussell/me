@@ -14,7 +14,7 @@
 		<p class="section-desc">Areas where I excel and bring value to projects</p>
 	</div>
 	<div class="specialties">
-		{#each specialties as specialty}
+		{#each specialties as specialty (specialty.title)}
 			<div class="specialty">
 				<div class="specialty-icon">{specialty.icon}</div>
 				<div class="specialty-content">
