@@ -26,17 +26,29 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
+		width: 100%;
 	}
 
 	.footer {
 		margin-top: auto;
-		padding: var(--space-16) var(--space-4);
-
+		padding: var(--space-8) var(--space-4);
 		font-size: var(--font-size-sm);
 		text-align: center;
 		color: var(--text-muted);
-
 		background: var(--bg-darker);
 		border-top: var(--border-width) solid var(--border-color);
+	}
+
+	@media (width >= 48ch) {
+		.footer {
+			padding: var(--space-16) var(--space-8);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			transition: none !important;
+			animation: none !important;
+		}
 	}
 </style>

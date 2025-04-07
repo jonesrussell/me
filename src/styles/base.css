@@ -126,6 +126,10 @@ body {
 :root {
 	/* Layout */
 	--measure: 80ch;
+	--content-padding: var(--space-4);
+	--container-padding: var(--space-4);
+
+	/* Spacing */
 	--space-1: 0.25rem;
 	--space-2: 0.5rem;
 	--space-4: 1rem;
@@ -185,14 +189,29 @@ body {
 	--transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Media queries */
-@media (width <= 48ch) {
-	.nav {
-		flex-direction: column;
+/* Base container styles */
+.container {
+	width: 100%;
+	max-width: min(var(--measure), 100%);
+	margin-inline: auto;
+	padding-inline: var(--container-padding);
+}
+
+/* Base navigation styles */
+.nav {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+}
+
+/* Container Queries */
+@container (width > 48ch) {
+	.container {
+		--container-padding: var(--space-8);
 	}
 
-	.container {
-		padding-inline: var(--space-4);
+	.nav {
+		flex-direction: row;
 	}
 }
 
@@ -220,141 +239,14 @@ body {
 	}
 }
 
-@layer base {
-	/* Container Queries */
-	@container (width > 48ch) {
-		.container {
-			--container-padding: var(--space-8);
-		}
-	}
+/* Focus styles */
+:where(:focus-visible) {
+	outline: 2px solid var(--accent-color);
+	outline-offset: 2px;
+}
 
-	/* Reduced Motion */
-	@media (prefers-reduced-motion: reduce) {
-		* {
-			scroll-behavior: auto !important;
-			transition-duration: 0.01ms !important;
-			animation-duration: 0.01ms !important;
-			animation-iteration-count: 1 !important;
-		}
-	}
-
-	/* Forced Colors Mode */
-	@media (forced-colors: active) {
-		:where(img, svg) {
-			forced-color-adjust: auto;
-		}
-
-		:where(button, [role='button']) {
-			border: var(--border-width) solid CanvasText;
-		}
-	}
-
-	:root {
-		/* Typography */
-		--font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-		--font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-
-		/* Font Sizes */
-		--font-size-xs: 12px;
-		--font-size-sm: 14px;
-		--font-size-base: 16px;
-		--font-size-lg: 18px;
-		--font-size-xl: 20px;
-		--font-size-2xl: 24px;
-		--font-size-3xl: 30px;
-		--font-size-4xl: 36px;
-
-		/* Line Heights */
-		--line-height-none: 1;
-		--line-height-tight: 1.25;
-		--line-height-normal: 1.5;
-		--line-height-relaxed: 1.75;
-
-		/* Font Weights */
-		--font-weight-normal: 400;
-		--font-weight-medium: 500;
-		--font-weight-semibold: 600;
-		--font-weight-bold: 700;
-
-		/* Spacing */
-		--space-1: 4px;
-		--space-2: 8px;
-		--space-4: 16px;
-		--space-6: 24px;
-		--space-8: 32px;
-		--space-12: 48px;
-		--space-16: 64px;
-		--space-20: 80px;
-		--space-24: 96px;
-		--space-32: 128px;
-		--space-40: 160px;
-		--space-48: 192px;
-		--space-56: 224px;
-		--space-64: 256px;
-
-		/* Borders */
-		--border-width: 1px;
-		--radius-sm: 4px;
-		--radius-md: 8px;
-		--radius-lg: 16px;
-		--radius-full: 50%;
-
-		/* Transitions */
-		--transition-duration: 0.2s;
-		--transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
-
-		/* Layout */
-		--content-padding: var(--space-4);
-		--content-max-width: 1280px;
-		--measure: 960px;
-		--mobile-breakpoint: 768px;
-
-		/* Shadows */
-		--shadow-sm: 0 2px 4px 0 rgb(0 0 0 / 5%);
-		--shadow-md:
-			0 8px 12px -2px rgb(0 0 0 / 10%), 0 4px 8px -4px rgb(0 0 0 / 10%);
-		--shadow-lg:
-			0 20px 30px -6px rgb(0 0 0 / 10%), 0 8px 12px -8px rgb(0 0 0 / 10%);
-
-		/* Container Queries */
-		--container-padding: var(--space-4);
-		--container-max-width: var(--measure);
-	}
-
-	/* Base Typography */
-	html {
-		font-family: var(--font-sans);
-		font-size: 16px !important;
-		font-weight: var(--font-weight-normal);
-		line-height: var(--line-height-normal);
-	}
-
-	body {
-		font-size: var(--font-size-base);
-		line-height: var(--line-height-normal);
-		color: var(--text-color);
-		background: var(--bg-color);
-	}
-
-	/* Base Containment */
-	.container {
-		contain: layout style paint;
-
-		width: 100%;
-		max-width: var(--container-max-width);
-		margin-inline: auto;
-		padding-inline: var(--container-padding);
-	}
-
-	/* Base Focus Styles */
-	:where(:focus-visible) {
-		outline: var(--border-width) solid var(--accent-color);
-		outline-offset: var(--space-1);
-	}
-
-	/* Base Selection */
-	:where(::selection) {
-		color: var(--text-color);
-		background: var(--color-mix-light);
-	}
+/* Selection styles */
+:where(::selection) {
+	color: var(--bg-color);
+	background: var(--accent-color);
 }
