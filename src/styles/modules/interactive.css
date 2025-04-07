@@ -33,6 +33,40 @@
 		background: var(--bg-darker);
 	}
 
+	/* Home Navigation */
+	.navigation {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 20ch), 1fr));
+		gap: var(--space-4);
+		margin: var(--space-16) 0;
+	}
+
+	.nav-link {
+		display: flex;
+		padding: var(--space-4);
+		text-decoration: none;
+		color: var(--text-color);
+		background: var(--bg-color);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-lg);
+		box-shadow: var(--shadow-sm);
+		transition: all var(--transition-duration) var(--transition-timing);
+		gap: var(--space-4);
+		align-items: center;
+	}
+
+	.nav-link:hover {
+		background: var(--bg-darker);
+		box-shadow: var(--shadow-md);
+		transform: translateY(calc(-1 * var(--space-1)));
+		border-color: var(--accent-color);
+	}
+
+	.nav-icon {
+		font-size: var(--font-size-xl);
+		color: var(--accent-color);
+	}
+
 	/* Buttons */
 	.btn {
 		display: inline-flex;
