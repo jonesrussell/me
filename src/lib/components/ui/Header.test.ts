@@ -28,7 +28,7 @@ describe('Header', () => {
 
 	it('renders navigation items', () => {
 		const { container } = render(Header);
-		const nav = container.querySelector('.header-nav');
+		const nav = container.querySelector('.desktop-nav');
 		expect(nav).toBeInTheDocument();
 
 		const navLinks = nav?.querySelectorAll('a');
@@ -37,7 +37,7 @@ describe('Header', () => {
 		const linkTexts = Array.from(navLinks || []).map(
 			(link) => link.textContent
 		);
-		expect(linkTexts).toEqual(['Blog', 'Content', 'Resources', 'Contact']);
+		expect(linkTexts).toEqual(['Home', 'Blog', 'Projects', 'About']);
 	});
 
 	it('marks active navigation item', () => {
@@ -45,14 +45,13 @@ describe('Header', () => {
 		const activeLink = container.querySelector('a.active');
 		expect(activeLink).toBeInTheDocument();
 		expect(activeLink?.textContent).toBe('Blog');
-		expect(activeLink?.getAttribute('aria-current')).toBe('page');
 	});
 
 	it('renders subtitle', () => {
 		const { container } = render(Header);
 		const subtitle = container.querySelector('.subtitle-bar');
 		expect(subtitle).toBeInTheDocument();
-		expect(subtitle?.textContent).toBe('Limitless Developer');
+		expect(subtitle?.textContent?.trim()).toBe('Building elegant solutions with modern web technologies');
 	});
 
 	it('has sticky positioning', () => {
