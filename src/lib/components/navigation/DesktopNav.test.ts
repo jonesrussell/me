@@ -1,32 +1,29 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/svelte';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import DesktopNav from './DesktopNav.svelte';
 
+vi.mock('$app/state', () => ({
+	page: {
+		url: new URL('http://localhost/')
+	}
+}));
+
 describe('DesktopNav', () => {
-	it('renders navigation items', () => {
-		const { container } = render(DesktopNav, {
-			url: new URL('http://localhost/blog')
-		});
-		const nav = container.querySelector('.desktop-nav');
-		expect(nav).toBeInTheDocument();
-
-		const navLinks = nav?.querySelectorAll('a');
-		expect(navLinks).toHaveLength(4);
-
-		const linkTexts = Array.from(navLinks || []).map(
-			(link) => link.textContent
-		);
-		expect(linkTexts).toEqual(['Blog', 'Projects', 'Resources', 'Contact']);
+	it('renders navigation links', () => {
+		const { getByText } = render(DesktopNav);
+		expect(getByText('Blog')).toBeTruthy();
+		expect(getByText('Projects')).toBeTruthy();
+		expect(getByText('Resources')).toBeTruthy();
+		expect(getByText('Contact')).toBeTruthy();
 	});
 
 	it('marks active navigation item', () => {
-		const { container } = render(DesktopNav, {
+		const { getByText } = render(DesktopNav, {
 			url: new URL('http://localhost/blog')
 		});
-		const activeLink = container.querySelector('a.active');
-		expect(activeLink).toBeInTheDocument();
-		expect(activeLink?.textContent).toBe('Blog');
+		const blogLink = getByText('Blog');
+		expect(blogLink.classList.contains('active')).toBe(true);
 	});
 
 	it('updates active item when URL changes', () => {

@@ -13,6 +13,16 @@ vi.mock('$app/stores', () => ({
 	}
 }));
 
+vi.mock('$app/state', () => ({
+	page: {
+		url: new URL('https://jonesrussell.github.io/me/')
+	}
+}));
+
+vi.mock('$app/paths', () => ({
+	base: '/me'
+}));
+
 describe('Header', () => {
 	const mockUrl = new URL('https://jonesrussell.github.io/me/');
 
@@ -44,7 +54,6 @@ describe('Header', () => {
 			url: blogUrl
 		});
 
-		// Wait for the component to update with the new URL
 		await waitFor(
 			() => {
 				const activeLink = container.querySelector(
@@ -72,5 +81,14 @@ describe('Header', () => {
 		const header = container.querySelector('.site-header');
 		expect(header).toBeInTheDocument();
 		expect(header).toHaveClass('site-header');
+	});
+
+	it('renders header with navigation', () => {
+		const { getAllByText } = render(Header);
+		const blogLinks = getAllByText('Blog');
+		expect(blogLinks).toHaveLength(2); // One in desktop nav, one in mobile nav
+		expect(getAllByText('Projects')).toHaveLength(2);
+		expect(getAllByText('Resources')).toHaveLength(2);
+		expect(getAllByText('Contact')).toHaveLength(2);
 	});
 });
