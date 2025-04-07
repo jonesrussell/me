@@ -33,7 +33,7 @@
 			"ppa": false
 		}
 	},
-	"postCreateCommand": "sudo npx playwright install-deps && npm install -g npm@11.0.0 pnpm@latest bun@latest",
+	"postCreateCommand": "sudo npx playwright install-deps && npm install -g npm@11.0.0",
 	"mounts": [
 		"type=bind,source=/home/${localEnv:USER}/.ssh,target=/home/node/.ssh,readonly",
 		"type=volume,src=node_modules,target=/workspace/node_modules",
