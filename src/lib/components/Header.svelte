@@ -27,7 +27,7 @@
 
 <style>
 	.site-header {
-		--header-height: calc(var(--ch) * 4);
+		--header-height: calc(var(--space-4) * 4);
 
 		position: sticky;
 		z-index: 10;
@@ -36,7 +36,7 @@
 		container-type: inline-size;
 
 		width: 100%;
-		padding-block: var(--ch);
+		padding-block: var(--space-4);
 		border-bottom: var(--border-width) solid var(--border-color);
 
 		color: var(--text-color);
@@ -49,18 +49,18 @@
 		width: 100%;
 		max-width: min(var(--measure), 95cqi);
 		margin-inline: auto;
-		padding-inline: var(--ch2);
+		padding-inline: var(--space-4);
 	}
 
 	.header-main {
 		display: grid;
 		grid-template-columns: auto 1fr;
-		gap: var(--ch4);
+		gap: var(--space-4);
 		align-items: center;
 
 		@container (width < 600px) {
 			grid-template-columns: 1fr;
-			gap: var(--ch);
+			gap: var(--space-4);
 			justify-items: center;
 		}
 	}
@@ -81,11 +81,11 @@
 
 	.header-nav {
 		display: flex;
-		gap: var(--ch3);
+		gap: var(--space-4);
 		justify-content: flex-end;
 
 		& a {
-			padding: var(--ch) var(--ch2);
+			padding: var(--space-2) var(--space-4);
 			border-radius: var(--radius-sm);
 
 			font-size: var(--font-size-base);
@@ -106,7 +106,7 @@
 		}
 
 		@container (width < 600px) {
-			gap: var(--ch2);
+			gap: var(--space-4);
 			justify-content: center;
 		}
 	}
@@ -115,8 +115,8 @@
 		position: relative;
 
 		width: 100%;
-		margin-top: var(--ch);
-		padding-block: var(--ch);
+		margin-top: var(--space-4);
+		padding-block: var(--space-4);
 		border-bottom: var(--border-width) solid var(--border-color);
 
 		background: var(--bg-darker);
@@ -130,7 +130,7 @@
 		left: 0;
 
 		width: 100%;
-		height: 0.125ch;
+		height: 2px;
 
 		opacity: 0.5;
 		background: linear-gradient(
@@ -143,7 +143,7 @@
 	.container {
 		max-width: min(var(--measure), 95cqi);
 		margin-inline: auto;
-		padding-inline: var(--ch2);
+		padding-inline: var(--space-4);
 
 		font-size: var(--font-size-sm);
 		color: var(--text-muted);
