@@ -1,5 +1,6 @@
 <script lang="ts">
-	import Menu from './Menu.svelte';
+	import DesktopNav from './DesktopNav.svelte';
+	import MobileNav from './MobileNav.svelte';
 
 	const { url } = $props<{ url: URL }>();
 
@@ -23,7 +24,12 @@
 				<span class="menu-icon">☰</span>
 				<span class="sr-only">Toggle menu</span>
 			</button>
-			<Menu {url} {isMobileMenuOpen} {toggleMobileMenu} />
+			<DesktopNav {url} />
+			<MobileNav
+				{url}
+				isOpen={isMobileMenuOpen}
+				toggleMenu={toggleMobileMenu}
+			/>
 		</div>
 	</div>
 	<div class="subtitle-bar">
@@ -58,10 +64,11 @@
 		gap: var(--space-4);
 		align-items: center;
 		position: relative;
+		container-type: inline-size;
 	}
 
 	.menu-toggle {
-		display: none;
+		display: flex;
 		width: 2.5rem;
 		height: 2.5rem;
 		padding: var(--space-2);
@@ -108,9 +115,9 @@
 		color: var(--accent-color);
 	}
 
-	@media (width < 768px) {
+	@container (width > 48ch) {
 		.menu-toggle {
-			display: flex;
+			display: none;
 		}
 	}
 
