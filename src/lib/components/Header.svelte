@@ -1,59 +1,29 @@
 <script lang="ts">
-	import { base } from '$app/paths';
 	import { page } from '$app/stores';
-
-	type NavItem = {
-		href: string;
-		label: string;
-		isActive: boolean;
-	};
-
-	const navItems: NavItem[] = [
-		{
-			href: '/blog',
-			label: 'Blog',
-			isActive: $page.url.pathname.startsWith('/blog')
-		},
-		{
-			href: '/content',
-			label: 'Content',
-			isActive: $page.url.pathname.startsWith('/content')
-		},
-		{
-			href: '/resources',
-			label: 'Resources',
-			isActive: $page.url.pathname.startsWith('/resources')
-		},
-		{
-			href: '/contact',
-			label: 'Contact',
-			isActive: $page.url.pathname.startsWith('/contact')
-		}
-	];
 </script>
 
 <header class="site-header">
 	<div class="header-content">
 		<div class="header-main">
-			<a href="{base}/" class="title">Russell Jones</a>
+			<a href="/" class="title">Limitless Developer</a>
 			<nav class="header-nav" aria-label="Main navigation">
-				{#each navItems as { href, label, isActive }}
-					<a
-						href="{base}{href}"
-						class:active={isActive}
-						aria-current={isActive ? 'page' : undefined}
-					>
-						{label}
-					</a>
-				{/each}
+				<a href="/" class:active={$page.url.pathname === '/'}>Home</a>
+				<a href="/blog" class:active={$page.url.pathname === '/blog'}>Blog</a>
+				<a href="/projects" class:active={$page.url.pathname === '/projects'}
+					>Projects</a
+				>
+				<a href="/resources" class:active={$page.url.pathname === '/resources'}
+					>Resources</a
+				>
 			</nav>
 		</div>
 	</div>
+	<div class="subtitle-bar">
+		<div class="container">
+			Building elegant solutions with modern web technologies
+		</div>
+	</div>
 </header>
-
-<div class="subtitle-bar">
-	<div class="container">Limitless Developer</div>
-</div>
 
 <style>
 	.site-header {
@@ -66,21 +36,9 @@
 		background: var(--bg-color);
 		color: var(--text-color);
 		container-type: inline-size;
-		border-bottom: calc(1 * var(--ch) / 16) solid var(--border-color);
+		border-bottom: var(--border-width) solid var(--border-color);
 		padding-block: var(--ch);
-	}
-
-	.subtitle-bar {
-		width: 100%;
-		background: var(--bg-darker);
-		padding-block: var(--ch);
-	}
-
-	.container {
-		max-width: min(var(--measure), 95cqi);
-		margin-inline: auto;
-		padding-inline: var(--ch2);
-		color: var(--text-muted);
+		box-shadow: var(--shadow-sm);
 	}
 
 	.header-content {
@@ -106,8 +64,14 @@
 	.title {
 		color: var(--text-color);
 		font-family: var(--font-mono);
+		font-size: var(--font-size-xl);
 		font-weight: var(--font-weight-bold);
 		text-decoration: none;
+		transition: color var(--transition-duration) var(--transition-timing);
+	}
+
+	.title:hover {
+		color: var(--accent-color);
 	}
 
 	.header-nav {
@@ -116,22 +80,61 @@
 		justify-content: flex-end;
 
 		& a {
+			padding: var(--ch) var(--ch2);
+			border-radius: var(--radius-sm);
 			color: var(--text-muted);
+			font-size: var(--font-size-base);
 			text-decoration: none;
-			transition: color 0.2s ease;
+			transition: all var(--transition-duration) var(--transition-timing);
 
 			&:hover {
+				background: var(--color-mix-light);
 				color: var(--text-color);
 			}
 
 			&.active {
-				color: var(--text-color);
+				background: var(--color-mix-light);
+				color: var(--accent-color);
 			}
 		}
 
 		@container (width < 600px) {
-			gap: var(--ch4);
+			gap: var(--ch2);
 			justify-content: center;
 		}
+	}
+
+	.subtitle-bar {
+		position: relative;
+		width: 100%;
+		margin-top: var(--ch);
+		background: var(--bg-darker);
+		padding-block: var(--ch);
+		border-bottom: var(--border-width) solid var(--border-color);
+	}
+
+	.subtitle-bar::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 0.125ch;
+		background: linear-gradient(
+			90deg,
+			var(--accent-color),
+			var(--secondary-accent)
+		);
+		opacity: 0.5;
+	}
+
+	.container {
+		max-width: min(var(--measure), 95cqi);
+		margin-inline: auto;
+		padding-inline: var(--ch2);
+		color: var(--text-muted);
+		font-size: var(--font-size-sm);
+		text-align: center;
+		opacity: 0.9;
 	}
 </style>

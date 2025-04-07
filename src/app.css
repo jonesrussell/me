@@ -283,14 +283,31 @@ body {
 
 /* Theme styles */
 [data-theme='light'] {
-	--bg-color: var(--bg-darker);
-	--text-color: var(--text-color);
-	--text-muted: var(--text-muted);
-	--border-color: var(--border-color);
+	--bg-color: #fff;
+	--bg-darker: #f8f9fa;
+	--text-color: #1a1a1a;
+	--text-muted: #666;
+	--border-color: #e0e0e0;
+	--accent-color: #2563eb;
+	--accent-color-hover: #1d4ed8;
+	--secondary-accent: #7c3aed;
+	--color-mix-light: rgb(37 99 235 / 10%);
+	--color-mix-medium: rgb(37 99 235 / 20%);
+	--color-mix-faint: rgb(37 99 235 / 5%);
 }
 
-[data-theme='light'] body::before {
-	background: var(--bg-darker);
+[data-theme='dark'] {
+	--bg-color: #0f172a;
+	--bg-darker: #1e293b;
+	--text-color: #f8fafc;
+	--text-muted: #94a3b8;
+	--border-color: #334155;
+	--accent-color: #60a5fa;
+	--accent-color-hover: #93c5fd;
+	--secondary-accent: #a78bfa;
+	--color-mix-light: rgb(96 165 250 / 10%);
+	--color-mix-medium: rgb(96 165 250 / 20%);
+	--color-mix-faint: rgb(96 165 250 / 5%);
 }
 
 /* Terminal window styles */
@@ -415,4 +432,53 @@ body {
 	.specialty {
 		padding: var(--ch2);
 	}
+}
+
+/* Header styles */
+.site-header {
+	--header-height: calc(var(--ch) * 4);
+
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	width: 100%;
+	background: var(--bg-color);
+	color: var(--text-color);
+	container-type: inline-size;
+	border-bottom: var(--border-width) solid var(--border-color);
+	padding-block: var(--ch);
+	box-shadow: var(--shadow-sm);
+}
+
+.subtitle-bar {
+	position: relative;
+	width: 100%;
+	background: var(--bg-darker);
+	padding-block: var(--ch);
+	border-bottom: var(--border-width) solid var(--border-color);
+}
+
+.subtitle-bar::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 0.125ch;
+	background: linear-gradient(
+		90deg,
+		var(--accent-color),
+		var(--secondary-accent)
+	);
+	opacity: 0.5;
+}
+
+.container {
+	max-width: min(var(--measure), 95cqi);
+	margin-inline: auto;
+	padding-inline: var(--ch2);
+	color: var(--text-muted);
+	font-size: var(--font-size-sm);
+	text-align: center;
+	opacity: 0.9;
 }
