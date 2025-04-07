@@ -9,23 +9,23 @@
 <style>
 	.skip-to-main {
 		position: absolute;
-		z-index: 100;
 		top: -100%;
 		left: var(--space-4);
 
 		padding: var(--space-4) var(--space-8);
-		border-radius: var(--radius-sm);
 
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
 		font-weight: var(--font-weight-medium);
-		color: var(--bg-color);
 		text-decoration: none;
+		color: var(--bg-color);
+		background: var(--accent-color);
+		border-radius: var(--radius-sm);
 
 		opacity: 0;
-		background: var(--accent-color);
 
 		transition: opacity var(--transition-duration) var(--transition-timing);
+		z-index: 100;
 	}
 
 	.skip-to-main:focus {

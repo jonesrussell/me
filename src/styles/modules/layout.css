@@ -1,4 +1,11 @@
 @layer components {
+	/* Container Queries */
+	@container (width > 48ch) {
+		.container {
+			--container-padding: var(--space-8);
+		}
+	}
+
 	/* Container */
 	.container {
 		contain: layout style paint;
@@ -81,13 +88,6 @@
 		margin-top: var(--space-8);
 	}
 
-	/* Container Queries */
-	@container (width > 48ch) {
-		.container {
-			--container-padding: var(--space-8);
-		}
-	}
-
 	/* Footer */
 	.footer {
 		padding: var(--space-16) var(--space-4);
@@ -96,8 +96,8 @@
 	}
 
 	.footer a {
-		color: var(--text-muted);
 		text-decoration: none;
+		color: var(--text-muted);
 		transition: color var(--transition-duration) var(--transition-timing);
 	}
 
@@ -108,6 +108,7 @@
 	/* Header */
 	.site-header {
 		--header-height: calc(var(--space-4) * 4);
+
 		position: sticky;
 		z-index: 10;
 		top: 0;
@@ -129,17 +130,17 @@
 	}
 
 	.subtitle-bar::before {
-		content: '';
 		position: absolute;
 		top: 0;
 		left: 0;
 		width: 100%;
 		height: 2px;
-		opacity: 0.5;
 		background: linear-gradient(
 			90deg,
 			var(--accent-color),
 			var(--secondary-accent)
 		);
+		opacity: 0.5;
+		content: '';
 	}
 }

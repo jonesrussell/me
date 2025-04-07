@@ -1,14 +1,25 @@
 @layer components {
+	/* Container Queries */
+	@container (width > 48ch) {
+		.code-block {
+			margin: var(--space-12) 0;
+		}
+
+		.code-block-content {
+			padding: var(--space-8);
+		}
+	}
+
 	/* Code blocks */
 	.code-block {
 		position: relative;
 
-		overflow: hidden;
-
 		margin: var(--space-8) 0;
-		border-radius: var(--radius-md);
 
 		background: var(--bg-darker);
+		border-radius: var(--radius-md);
+
+		overflow: hidden;
 	}
 
 	.code-block-header {
@@ -42,13 +53,13 @@
 	/* Inline code */
 	.code-inline {
 		padding: 0.2ch 0.4ch;
-		border-radius: var(--radius-sm);
 
 		font-family: var(--font-mono);
 		font-size: 0.9ch;
 		color: var(--text-color);
 
 		background: var(--bg-darker);
+		border-radius: var(--radius-sm);
 	}
 
 	/* Syntax highlighting */
@@ -76,18 +87,17 @@
 	}
 
 	.code-block[data-line-numbers] .code-line::before {
-		content: counter(line);
-		counter-increment: line;
-		user-select: none;
-
 		display: inline-block;
 
 		width: 2ch;
 		margin-right: 1ch;
 		padding-right: 1ch;
+		text-align: right;
 
 		color: var(--text-muted);
-		text-align: right;
+		content: counter(line);
+		counter-increment: line;
+		user-select: none;
 	}
 
 	/* Highlighted lines */
@@ -97,22 +107,21 @@
 
 	/* Copy button */
 	.copy-button {
-		cursor: pointer;
-
 		display: flex;
-		gap: var(--space-2);
-		align-items: center;
 
 		padding: var(--space-1) var(--space-2);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-sm);
 
 		font-size: var(--font-size-sm);
 		color: var(--text-muted);
 
 		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-sm);
 
 		transition: all var(--transition-duration) var(--transition-timing);
+		cursor: pointer;
+		gap: var(--space-2);
+		align-items: center;
 	}
 
 	.copy-button:hover {
@@ -124,17 +133,6 @@
 		border-color: var(--success-color);
 		color: var(--bg-darker);
 		background: var(--success-color);
-	}
-
-	/* Container Queries */
-	@container (width > 48ch) {
-		.code-block {
-			margin: var(--space-12) 0;
-		}
-
-		.code-block-content {
-			padding: var(--space-8);
-		}
 	}
 }
 

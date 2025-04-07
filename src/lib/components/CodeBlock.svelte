@@ -44,16 +44,16 @@
 <style>
 	.code-block {
 		width: var(--block-width);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-md);
 
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		line-height: var(--line-height-tight);
-		white-space: pre;
 
 		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
 		box-shadow: var(--shadow-md);
+		white-space: pre;
 	}
 
 	.file-header {

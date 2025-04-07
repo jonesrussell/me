@@ -141,26 +141,26 @@
 
 	.contact-link {
 		display: flex;
-		gap: var(--ch);
-		align-items: center;
 
 		padding: var(--ch) var(--ch2);
+
+		font-size: var(--font-size-sm);
+		text-decoration: none;
+		color: var(--text-color);
+
+		background: var(--bg-alt);
 		border: var(--contact-border-width) solid var(--border-color);
 		border-radius: var(--radius-sm);
 
-		font-size: var(--font-size-sm);
-		color: var(--text-color);
-		text-decoration: none;
-
-		background: var(--bg-alt);
-
 		transition: all var(--transition-duration) var(--transition-timing);
+		gap: var(--ch);
+		align-items: center;
 	}
 
 	.contact-link:hover {
+		background: var(--bg-darker);
 		transform: translateX(var(--ch));
 		border-color: var(--accent-color);
-		background: var(--bg-darker);
 	}
 
 	.contact-link-icon {
@@ -183,14 +183,14 @@
 	.form-textarea {
 		width: 100%;
 		padding: var(--ch) var(--ch2);
-		border: var(--contact-border-width) solid var(--border-color);
-		border-radius: var(--radius-sm);
 
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
 		color: var(--text-color);
 
 		background: var(--bg-alt);
+		border: var(--contact-border-width) solid var(--border-color);
+		border-radius: var(--radius-sm);
 
 		transition: all var(--transition-duration) var(--transition-timing);
 	}
@@ -210,30 +210,29 @@
 	}
 
 	.form-submit {
-		cursor: pointer;
-
 		display: flex;
-		gap: var(--ch);
-		align-items: center;
-		justify-content: center;
 
 		width: 100%;
 		padding: var(--ch) var(--ch2);
-		border: none;
-		border-radius: var(--radius-sm);
 
 		font-size: var(--font-size-base);
 		font-weight: 500;
 		color: var(--bg-darker);
 
 		background: var(--accent-color);
+		border: none;
+		border-radius: var(--radius-sm);
 
 		transition: all var(--transition-duration) var(--transition-timing);
+		cursor: pointer;
+		gap: var(--ch);
+		align-items: center;
+		justify-content: center;
 	}
 
 	.form-submit:hover {
-		transform: translateY(var(--contact-button-translate));
 		background: var(--accent-color-hover);
+		transform: translateY(var(--contact-button-translate));
 	}
 
 	.form-submit .contact-link-icon {

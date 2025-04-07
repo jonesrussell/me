@@ -91,19 +91,19 @@ Commands:
 
 <style>
 	.terminal-frame {
+		display: flex;
 		position: relative;
 
-		overflow: hidden;
-		display: flex;
-		flex-direction: column;
-
 		width: 100%;
-		max-width: min(var(--measure), 100%);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-lg);
 
 		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-lg);
 		box-shadow: var(--shadow-lg);
+
+		overflow: hidden;
+		flex-direction: column;
+		max-width: min(var(--measure), 100%);
 	}
 
 	.terminal-header {
@@ -132,24 +132,23 @@ Commands:
 	.terminal-buttons span {
 		width: var(--space-2);
 		height: var(--space-2);
+		background: var(--text-muted);
 		border-radius: var(--radius-full);
 
 		opacity: 0.5;
-		background: var(--text-muted);
 	}
 
 	.terminal-body {
-		position: relative;
-
 		display: flex;
-		flex-direction: column;
-		gap: var(--space-2);
+		position: relative;
 
 		padding: var(--space-4);
 
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		line-height: var(--line-height-relaxed);
+		flex-direction: column;
+		gap: var(--space-2);
 		white-space: pre-wrap;
 	}
 
@@ -224,22 +223,22 @@ Commands:
 
 	.debug {
 		position: absolute;
-		z-index: 100;
 		top: calc(100% + var(--space-4));
 		right: 0;
 		left: 0;
 
 		margin-bottom: var(--space-8);
 		padding: var(--space-4);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-md);
 
 		font-family: var(--font-mono);
 		font-size: var(--font-size-xs);
-		white-space: pre;
 
 		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
 		box-shadow: var(--shadow-md);
+		z-index: 100;
+		white-space: pre;
 	}
 
 	@media (prefers-reduced-motion: reduce) {

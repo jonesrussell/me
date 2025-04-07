@@ -157,9 +157,9 @@
 
 	.video-card {
 		padding: var(--ch2);
+		background: var(--bg-darker);
 		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-sm);
-		background: var(--bg-darker);
 	}
 
 	.video-card:hover {
@@ -169,14 +169,14 @@
 	.video-container {
 		position: relative;
 
-		overflow: hidden;
-
 		height: 0;
 		margin-bottom: var(--ch2);
 		padding-bottom: 56.25%;
-		border-radius: var(--radius-sm);
 
 		background: var(--bg-color);
+		border-radius: var(--radius-sm);
+
+		overflow: hidden;
 	}
 
 	.video-container iframe {
@@ -210,13 +210,13 @@
 
 	.topic {
 		padding: calc(var(--ch) / 8) calc(var(--ch) / 2);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		border-radius: calc(var(--ch) / 8);
 
 		font-size: var(--font-size-xs);
 		color: var(--text-muted);
 
 		background: var(--bg-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
+		border-radius: calc(var(--ch) / 8);
 	}
 
 	.topic:hover {
@@ -232,9 +232,9 @@
 
 	.project {
 		padding: var(--ch2);
+		background: var(--bg-darker);
 		border: calc(1 * var(--ch) / 16) solid var(--border-color);
 		border-radius: var(--radius-sm);
-		background: var(--bg-darker);
 	}
 
 	.project-header {
@@ -250,8 +250,8 @@
 	}
 
 	.project-header a {
-		color: var(--link-color);
 		text-decoration: none;
+		color: var(--link-color);
 	}
 
 	.project-header a:hover {
@@ -260,9 +260,9 @@
 
 	.status {
 		padding: calc(var(--ch) / 8) calc(var(--ch) / 2);
-		border-radius: calc(var(--ch) / 8);
 		font-size: var(--font-size-xs);
 		background: var(--bg-color);
+		border-radius: calc(var(--ch) / 8);
 	}
 
 	.status-active {
@@ -278,12 +278,12 @@
 
 	.tech {
 		padding: calc(var(--ch) / 8) calc(var(--ch) / 2);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		border-radius: calc(var(--ch) / 8);
 
 		font-size: var(--font-size-xs);
 		color: var(--text-muted);
 
 		background: var(--bg-color);
+		border: calc(1 * var(--ch) / 16) solid var(--border-color);
+		border-radius: calc(var(--ch) / 8);
 	}
 </style>

@@ -86,8 +86,8 @@ mark,
 audio,
 video {
 	padding: 0;
-	border: 0;
 	font-size: 100%;
+	border: 0;
 	vertical-align: baseline;
 }
 
@@ -221,6 +221,34 @@ body {
 }
 
 @layer base {
+	/* Container Queries */
+	@container (width > 48ch) {
+		.container {
+			--container-padding: var(--space-8);
+		}
+	}
+
+	/* Reduced Motion */
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			scroll-behavior: auto !important;
+			transition-duration: 0.01ms !important;
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+		}
+	}
+
+	/* Forced Colors Mode */
+	@media (forced-colors: active) {
+		:where(img, svg) {
+			forced-color-adjust: auto;
+		}
+
+		:where(button, [role='button']) {
+			border: var(--border-width) solid CanvasText;
+		}
+	}
+
 	:root {
 		/* Typography */
 		--font-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -328,33 +356,5 @@ body {
 	:where(::selection) {
 		color: var(--text-color);
 		background: var(--color-mix-light);
-	}
-
-	/* Container Queries */
-	@container (width > 48ch) {
-		.container {
-			--container-padding: var(--space-8);
-		}
-	}
-
-	/* Reduced Motion */
-	@media (prefers-reduced-motion: reduce) {
-		* {
-			scroll-behavior: auto !important;
-			transition-duration: 0.01ms !important;
-			animation-duration: 0.01ms !important;
-			animation-iteration-count: 1 !important;
-		}
-	}
-
-	/* Forced Colors Mode */
-	@media (forced-colors: active) {
-		:where(img, svg) {
-			forced-color-adjust: auto;
-		}
-
-		:where(button, [role='button']) {
-			border: var(--border-width) solid CanvasText;
-		}
 	}
 }

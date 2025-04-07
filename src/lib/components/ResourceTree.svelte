@@ -61,8 +61,8 @@
 	}
 
 	a {
-		color: var(--link-color);
 		text-decoration: none;
+		color: var(--link-color);
 	}
 
 	a:hover {

@@ -84,6 +84,36 @@
 </div>
 
 <style>
+
+
+	@media (width <= var(--blog-breakpoint-lg)) {
+		.content {
+			grid-template-columns: 1fr;
+		}
+
+		.sidebar {
+			display: none;
+		}
+	}
+
+	@media (width <= var(--blog-breakpoint-md)) {
+		header {
+			margin-bottom: var(--ch2);
+		}
+
+		h1 {
+			font-size: var(--font-size-xl);
+		}
+
+		.blog {
+			padding: var(--ch) var(--content-padding) var(--ch2);
+		}
+
+		.dev-to-screenshot {
+			width: var(--blog-image-width-sm);
+		}
+	}
+
 	:root {
 		--blog-url-translate: 0.25ch;
 		--blog-image-width-sm: 33.5ch;
@@ -109,8 +139,8 @@
 	/* Base link styles */
 	.post-header a,
 	.source-note a {
-		color: var(--link-color);
 		text-decoration: none;
+		color: var(--link-color);
 		transition: color var(--transition-duration) var(--transition-timing);
 	}
 
@@ -125,10 +155,10 @@
 	}
 
 	.header-image a {
-		position: relative;
-		overflow: hidden;
 		display: block;
+		position: relative;
 		border-radius: var(--radius-md);
+		overflow: hidden;
 	}
 
 	/* Hover states */
@@ -223,23 +253,23 @@
 	}
 
 	.url-preview {
-		overflow: hidden;
 		display: flex;
-		gap: var(--ch);
-		align-items: center;
 
 		width: fit-content;
 		padding: var(--ch) var(--ch2);
-		border-radius: var(--radius-sm);
 
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
-		color: var(--text-muted);
 		text-decoration: none;
+		color: var(--text-muted);
 
 		background: var(--bg-darker);
+		border-radius: var(--radius-sm);
 
 		transition: all var(--transition-duration) var(--transition-timing);
+		overflow: hidden;
+		gap: var(--ch);
+		align-items: center;
 	}
 
 	.url-preview:hover {
@@ -263,8 +293,8 @@
 
 	.dev-to-link {
 		display: block;
-		color: inherit;
 		text-decoration: none;
+		color: inherit;
 	}
 
 	.dev-to-content {
@@ -279,33 +309,5 @@
 	.dev-to-text {
 		font-size: var(--font-size-sm);
 		color: var(--accent-color);
-	}
-
-	@media (width <= var(--blog-breakpoint-lg)) {
-		.content {
-			grid-template-columns: 1fr;
-		}
-
-		.sidebar {
-			display: none;
-		}
-	}
-
-	@media (width <= var(--blog-breakpoint-md)) {
-		header {
-			margin-bottom: var(--ch2);
-		}
-
-		h1 {
-			font-size: var(--font-size-xl);
-		}
-
-		.blog {
-			padding: var(--ch) var(--content-padding) var(--ch2);
-		}
-
-		.dev-to-screenshot {
-			width: var(--blog-image-width-sm);
-		}
 	}
 </style>

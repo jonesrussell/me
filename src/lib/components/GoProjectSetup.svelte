@@ -155,15 +155,15 @@ with explanations and real terminal output.
 
 	.controls {
 		display: flex;
+
+		padding: var(--space-4);
+
+		background: var(--color-mix-light);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
 		gap: var(--space-4);
 		align-items: center;
 		justify-content: space-between;
-
-		padding: var(--space-4);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-md);
-
-		background: var(--color-mix-light);
 	}
 
 	.step-counter {
@@ -173,23 +173,22 @@ with explanations and real terminal output.
 	}
 
 	button {
-		cursor: pointer;
-
 		display: flex;
-		gap: var(--space-2);
-		align-items: center;
 
 		padding: var(--space-2) var(--space-4);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-sm);
 
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		color: var(--text-color);
 
 		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-sm);
 
 		transition: all var(--transition-duration) var(--transition-timing);
+		cursor: pointer;
+		gap: var(--space-2);
+		align-items: center;
 	}
 
 	button:disabled {
@@ -198,8 +197,8 @@ with explanations and real terminal output.
 	}
 
 	button:not(:disabled):hover {
-		transform: translateY(-0.125ch);
 		background: var(--color-mix-medium);
+		transform: translateY(-0.125ch);
 	}
 
 	@media (prefers-reduced-motion: reduce) {

@@ -505,23 +505,23 @@
 	}
 
 	.url-preview {
-		overflow: hidden;
 		display: flex;
-		gap: var(--ch);
-		align-items: center;
 
 		width: fit-content;
 		padding: var(--ch) var(--ch2);
-		border-radius: var(--radius-sm);
 
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
-		color: var(--text-muted);
 		text-decoration: none;
+		color: var(--text-muted);
 
 		background: var(--bg-darker);
+		border-radius: var(--radius-sm);
 
 		transition: all var(--transition-duration) var(--transition-timing);
+		overflow: hidden;
+		gap: var(--ch);
+		align-items: center;
 	}
 
 	.url-preview:hover {
@@ -544,25 +544,25 @@
 		left: var(--ch4);
 
 		padding: var(--ch2);
-		border: var(--resource-border-width) solid var(--border-color);
-		border-radius: var(--radius-sm);
 
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		color: var(--text-muted);
+		background: var(--bg-darker);
+		border: var(--resource-border-width) solid var(--border-color);
+		border-radius: var(--radius-sm);
 
 		opacity: 0.8;
-		background: var(--bg-darker);
 	}
 
 	/* YouTube section styles */
 	.youtube-section {
 		margin-bottom: var(--ch8);
 		padding: var(--ch4);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--ch);
 
 		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--ch);
 		box-shadow: var(--shadow-lg);
 	}
 
@@ -600,13 +600,13 @@
 	.video-container {
 		position: relative;
 
-		overflow: hidden;
-
 		width: 100%;
 		padding-bottom: 56.25%; /* 16:9 aspect ratio */
-		border-radius: var(--ch);
 
 		background: var(--bg-darker);
+		border-radius: var(--ch);
+
+		overflow: hidden;
 	}
 
 	.video-container iframe {
@@ -638,23 +638,23 @@
 
 	.subscribe-link {
 		display: inline-flex;
-		gap: var(--ch2);
-		align-items: center;
 
 		padding: var(--ch2) var(--ch4);
-		border-radius: var(--ch);
 
 		font-weight: var(--font-weight-medium);
-		color: var(--bg-darker);
 		text-decoration: none;
+		color: var(--bg-darker);
 
 		background: var(--accent-color);
+		border-radius: var(--ch);
 
 		transition: all var(--transition-duration) var(--transition-timing);
+		gap: var(--ch2);
+		align-items: center;
 	}
 
 	.subscribe-link:hover {
-		transform: translateY(-0.25ch);
 		background: var(--accent-color-hover);
+		transform: translateY(-0.25ch);
 	}
 </style>
