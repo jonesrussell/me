@@ -5,12 +5,10 @@
 		toggleMenu: () => void;
 	}>();
 
-	let currentPath = $state(url?.pathname ?? '/');
+	let currentPath = $state(url.pathname);
 
 	$effect(() => {
-		if (url) {
-			currentPath = url.pathname;
-		}
+		currentPath = url.pathname;
 	});
 </script>
 
