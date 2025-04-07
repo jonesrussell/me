@@ -3,7 +3,11 @@
 	import SkipToMain from '$lib/components/SkipToMain.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	const { children, url } = $props<{ children: any; url: URL }>();
+	import type { SvelteComponent } from 'svelte';
+	const { children, url } = $props<{
+		children: () => SvelteComponent;
+		url: URL;
+	}>();
 </script>
 
 <svelte:head>
