@@ -1,47 +1,52 @@
 @layer components {
 	/* Buttons */
 	.btn {
+		cursor: pointer;
+
 		display: inline-flex;
 		gap: var(--space-2);
 		align-items: center;
+
 		padding: var(--space-2) var(--space-4);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-sm);
-		background: var(--bg-darker);
-		color: var(--text-color);
+
 		font-size: var(--font-size-base);
+		color: var(--text-color);
 		text-decoration: none;
+
+		background: var(--bg-darker);
+
 		transition: all var(--transition-duration) var(--transition-timing);
-		cursor: pointer;
 	}
 
 	.btn:hover {
-		background: var(--color-mix-light);
 		transform: translateY(-0.125ch);
+		background: var(--color-mix-light);
 	}
 
 	.btn-primary {
-		background: var(--accent-color);
-		color: var(--bg-darker);
 		border-color: var(--accent-color);
+		color: var(--bg-darker);
+		background: var(--accent-color);
 	}
 
 	.btn-primary:hover {
-		background: var(--accent-color-hover);
 		border-color: var(--accent-color-hover);
+		background: var(--accent-color-hover);
 	}
 
 	/* Links */
 	.link {
+		border-bottom: var(--border-width) solid transparent;
 		color: var(--accent-color);
 		text-decoration: none;
-		border-bottom: var(--border-width) solid transparent;
 		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.link:hover {
-		color: var(--accent-color-hover);
 		border-bottom-color: currentcolor;
+		color: var(--accent-color-hover);
 	}
 
 	/* Form Elements */
@@ -50,15 +55,18 @@
 		padding: var(--space-2) var(--space-4);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-sm);
-		background: var(--bg-darker);
-		color: var(--text-color);
+
 		font-size: var(--font-size-base);
+		color: var(--text-color);
+
+		background: var(--bg-darker);
+
 		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.input:focus {
-		outline: none;
 		border-color: var(--accent-color);
+		outline: none;
 		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
 	}
 
@@ -75,22 +83,24 @@
 
 	/* Disabled States */
 	:where(.btn, .input):disabled {
-		opacity: 0.5;
 		cursor: not-allowed;
+		opacity: 0.5;
 	}
 
 	/* Loading States */
 	.loading {
-		position: relative;
 		pointer-events: none;
+		position: relative;
 	}
 
 	.loading::after {
 		content: '';
+
 		position: absolute;
 		inset: 0;
-		background: var(--color-mix-light);
+
 		opacity: 0.5;
+		background: var(--color-mix-light);
 	}
 
 	/* Hover States */
@@ -104,8 +114,8 @@
 
 	/* Active States */
 	.active {
-		background: var(--color-mix-light);
 		color: var(--accent-color);
+		background: var(--color-mix-light);
 	}
 
 	/* Reduced Motion */

@@ -1,93 +1,35 @@
 {
-	"extends": ["stylelint-config-standard", "stylelint-config-recommended-scss"],
-	"plugins": ["stylelint-order", "stylelint-declaration-strict-value"],
+	"extends": ["stylelint-config-standard", "stylelint-config-clean-order"],
+	"plugins": ["stylelint-order"],
 	"rules": {
-		"color-no-hex": true,
-		"color-named": "never",
-		"unit-allowed-list": ["ch", "%", "deg", "ms", "s", "fr", "vw", "vh", "cqi"],
-		"unit-disallowed-list": ["px", "rem", "em"],
-		"declaration-property-value-disallowed-list": {
-			"line-height": ["/^[0-9]+$/"]
-		},
-		"scale-unlimited/declaration-strict-value": [
-			[
-				"color",
-				"background-color",
-				"border-color",
-				"outline-color",
-				"fill",
-				"stroke"
-			],
+		"unit-allowed-list": [
+			"ch",
+			"ms",
+			"%",
+			"deg",
+			"vh",
+			"vw",
+			"px",
+			"fr",
+			"s",
+			"cqi"
+		],
+		"unit-disallowed-list": ["em", "rem"],
+		"selector-pseudo-class-no-unknown": [
+			true,
 			{
-				"ignoreValues": [
-					"transparent",
-					"inherit",
-					"initial",
-					"unset",
-					"currentColor"
-				],
-				"disableFix": true
+				"ignorePseudoClasses": ["global"]
 			}
 		],
-		"order/properties-order": [
-			"position",
-			"top",
-			"right",
-			"bottom",
-			"left",
-			"z-index",
-			"display",
-			"flex",
-			"flex-direction",
-			"flex-wrap",
-			"gap",
-			"justify-content",
-			"align-items",
-			"width",
-			"min-width",
-			"max-width",
-			"height",
-			"min-height",
-			"max-height",
-			"margin",
-			"margin-top",
-			"margin-right",
-			"margin-bottom",
-			"margin-left",
-			"padding",
-			"padding-top",
-			"padding-right",
-			"padding-bottom",
-			"padding-left",
-			"border",
-			"border-radius",
-			"background",
-			"color",
-			"font-family",
-			"font-size",
-			"font-weight",
-			"line-height",
-			"text-align",
-			"text-decoration",
-			"transition",
-			"transform",
-			"animation",
-			"cursor"
-		]
+		"custom-property-pattern": null,
+		"selector-class-pattern": null,
+		"keyframes-name-pattern": null,
+		"media-query-no-invalid": null
 	},
 	"overrides": [
 		{
 			"files": ["**/*.svelte"],
-			"customSyntax": "postcss-html",
-			"rules": {
-				"no-empty-source": null,
-				"selector-pseudo-class-no-unknown": [
-					true,
-					{
-						"ignorePseudoClasses": ["global"]
-					}
-				]
-			}
+			"customSyntax": "postcss-html"
 		}
 	]
 }

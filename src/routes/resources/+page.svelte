@@ -445,24 +445,27 @@
 
 	h1 {
 		margin: 0;
+
+		font-size: var(--font-size-2xl);
+		font-weight: 500;
+		line-height: var(--line-height-tight);
+		color: var(--accent-color);
+
 		background: linear-gradient(
 			to right,
 			var(--accent-color),
 			var(--accent-color-hover)
 		);
-		color: var(--accent-color);
-		font-size: var(--font-size-2xl);
-		font-weight: 500;
-		line-height: var(--line-height-tight);
 		background-clip: text;
+
 		-webkit-text-fill-color: transparent;
 	}
 
 	.subtitle {
 		margin: var(--ch2) auto 0;
-		color: var(--text-muted);
 		font-size: var(--font-size-lg);
 		line-height: var(--line-height-relaxed);
+		color: var(--text-muted);
 	}
 
 	.categories {
@@ -486,9 +489,9 @@
 
 	.category-title {
 		margin: 0;
-		color: var(--accent-color);
 		font-size: var(--font-size-lg);
 		font-weight: 500;
+		color: var(--accent-color);
 	}
 
 	.category-icon {
@@ -502,24 +505,28 @@
 	}
 
 	.url-preview {
+		overflow: hidden;
 		display: flex;
 		gap: var(--ch);
 		align-items: center;
+
 		width: fit-content;
 		padding: var(--ch) var(--ch2);
 		border-radius: var(--radius-sm);
-		background: var(--bg-darker);
-		color: var(--text-muted);
+
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
+		color: var(--text-muted);
 		text-decoration: none;
+
+		background: var(--bg-darker);
+
 		transition: all var(--transition-duration) var(--transition-timing);
-		overflow: hidden;
 	}
 
 	.url-preview:hover {
-		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
 		color: var(--text-color);
+		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
 	}
 
 	.url-icon {
@@ -535,14 +542,17 @@
 		position: fixed;
 		bottom: var(--ch4);
 		left: var(--ch4);
+
 		padding: var(--ch2);
 		border: var(--resource-border-width) solid var(--border-color);
 		border-radius: var(--radius-sm);
-		background: var(--bg-darker);
-		color: var(--text-muted);
+
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
+		color: var(--text-muted);
+
 		opacity: 0.8;
+		background: var(--bg-darker);
 	}
 
 	/* YouTube section styles */
@@ -551,6 +561,7 @@
 		padding: var(--ch4);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--ch);
+
 		background: var(--bg-darker);
 		box-shadow: var(--shadow-lg);
 	}
@@ -563,20 +574,22 @@
 	}
 
 	.youtube-icon {
-		color: var(--accent-color);
 		font-size: var(--font-size-2xl);
+		color: var(--accent-color);
 	}
 
 	.youtube-title {
+		font-size: var(--font-size-xl);
+		font-weight: var(--font-weight-bold);
+		color: var(--accent-color);
+
 		background: linear-gradient(
 			90deg,
 			var(--accent-color),
 			var(--secondary-accent)
 		);
-		color: var(--accent-color);
-		font-size: var(--font-size-xl);
-		font-weight: var(--font-weight-bold);
 		background-clip: text;
+
 		-webkit-text-fill-color: transparent;
 	}
 
@@ -586,17 +599,21 @@
 
 	.video-container {
 		position: relative;
+
+		overflow: hidden;
+
 		width: 100%;
 		padding-bottom: 56.25%; /* 16:9 aspect ratio */
 		border-radius: var(--ch);
+
 		background: var(--bg-darker);
-		overflow: hidden;
 	}
 
 	.video-container iframe {
 		position: absolute;
 		top: 0;
 		left: 0;
+
 		width: 100%;
 		height: 100%;
 		border: none;
@@ -608,32 +625,36 @@
 
 	.video-title {
 		margin-bottom: var(--ch);
-		color: var(--text-color);
 		font-size: var(--font-size-base);
 		font-weight: var(--font-weight-medium);
+		color: var(--text-color);
 	}
 
 	.video-description {
-		color: var(--text-muted);
 		font-size: var(--font-size-sm);
 		line-height: var(--line-height-relaxed);
+		color: var(--text-muted);
 	}
 
 	.subscribe-link {
 		display: inline-flex;
 		gap: var(--ch2);
 		align-items: center;
+
 		padding: var(--ch2) var(--ch4);
 		border-radius: var(--ch);
-		background: var(--accent-color);
-		color: var(--bg-darker);
+
 		font-weight: var(--font-weight-medium);
+		color: var(--bg-darker);
 		text-decoration: none;
+
+		background: var(--accent-color);
+
 		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.subscribe-link:hover {
-		background: var(--accent-color-hover);
 		transform: translateY(-0.25ch);
+		background: var(--accent-color-hover);
 	}
 </style>

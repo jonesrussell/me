@@ -30,43 +30,48 @@
 		--header-height: calc(var(--ch) * 4);
 
 		position: sticky;
-		top: 0;
 		z-index: 10;
-		width: 100%;
-		background: var(--bg-color);
-		color: var(--text-color);
+		top: 0;
+
 		container-type: inline-size;
-		border-bottom: var(--border-width) solid var(--border-color);
+
+		width: 100%;
 		padding-block: var(--ch);
+		border-bottom: var(--border-width) solid var(--border-color);
+
+		color: var(--text-color);
+
+		background: var(--bg-color);
 		box-shadow: var(--shadow-sm);
 	}
 
 	.header-content {
 		width: 100%;
 		max-width: min(var(--measure), 95cqi);
-		padding-inline: var(--ch2);
 		margin-inline: auto;
+		padding-inline: var(--ch2);
 	}
 
 	.header-main {
 		display: grid;
+		grid-template-columns: auto 1fr;
 		gap: var(--ch4);
 		align-items: center;
-		grid-template-columns: auto 1fr;
 
 		@container (width < 600px) {
 			grid-template-columns: 1fr;
-			justify-items: center;
 			gap: var(--ch);
+			justify-items: center;
 		}
 	}
 
 	.title {
-		color: var(--text-color);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-xl);
 		font-weight: var(--font-weight-bold);
+		color: var(--text-color);
 		text-decoration: none;
+
 		transition: color var(--transition-duration) var(--transition-timing);
 	}
 
@@ -82,19 +87,21 @@
 		& a {
 			padding: var(--ch) var(--ch2);
 			border-radius: var(--radius-sm);
-			color: var(--text-muted);
+
 			font-size: var(--font-size-base);
+			color: var(--text-muted);
 			text-decoration: none;
+
 			transition: all var(--transition-duration) var(--transition-timing);
 
 			&:hover {
-				background: var(--color-mix-light);
 				color: var(--text-color);
+				background: var(--color-mix-light);
 			}
 
 			&.active {
-				background: var(--color-mix-light);
 				color: var(--accent-color);
+				background: var(--color-mix-light);
 			}
 		}
 
@@ -106,35 +113,42 @@
 
 	.subtitle-bar {
 		position: relative;
+
 		width: 100%;
 		margin-top: var(--ch);
-		background: var(--bg-darker);
 		padding-block: var(--ch);
 		border-bottom: var(--border-width) solid var(--border-color);
+
+		background: var(--bg-darker);
 	}
 
 	.subtitle-bar::before {
 		content: '';
+
 		position: absolute;
 		top: 0;
 		left: 0;
+
 		width: 100%;
 		height: 0.125ch;
+
+		opacity: 0.5;
 		background: linear-gradient(
 			90deg,
 			var(--accent-color),
 			var(--secondary-accent)
 		);
-		opacity: 0.5;
 	}
 
 	.container {
 		max-width: min(var(--measure), 95cqi);
 		margin-inline: auto;
 		padding-inline: var(--ch2);
-		color: var(--text-muted);
+
 		font-size: var(--font-size-sm);
+		color: var(--text-muted);
 		text-align: center;
+
 		opacity: 0.9;
 	}
 </style>

@@ -120,7 +120,7 @@
 
 	/* Selection */
 	::selection {
-		background: var(--color-mix-light);
 		color: var(--text-color);
+		background: var(--color-mix-light);
 	}
 }

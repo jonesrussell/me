@@ -71,6 +71,7 @@
 <style>
 	.table {
 		width: var(--table-width);
+
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		line-height: var(--line-height-tight);
@@ -82,8 +83,8 @@
 	}
 
 	.header-row {
-		color: var(--text-color);
 		font-weight: var(--font-weight-medium);
+		color: var(--text-color);
 	}
 
 	.table-row {

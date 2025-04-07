@@ -1,69 +1,42 @@
 <script lang="ts">
-	import Footer from '$lib/components/Footer.svelte';
-	import Header from '$lib/components/Header.svelte';
-	import NewsletterCTA from '$lib/components/NewsletterCTA.svelte';
 	import '../app.css';
+	import SkipToMain from '$lib/components/SkipToMain.svelte';
+	import Header from '$lib/components/Header.svelte';
 	const { children } = $props();
 </script>
 
-<div class="layout">
+<SkipToMain />
+
+<div class="site">
 	<Header />
 
-	<main class="content">
-		<div class="content-inner">
-			{@render children()}
-		</div>
-	</main>
+	{@render children()}
 
-	<section aria-label="Newsletter Signup" class="newsletter-section">
+	<footer class="footer">
 		<div class="container">
-			<NewsletterCTA />
+			<p>
+				&copy; {new Date().getFullYear()} Limitless Developer. All rights reserved.
+			</p>
 		</div>
-	</section>
-
-	<Footer />
+	</footer>
 </div>
 
 <style>
-	:root {
-		--layout-border-width: 0.125ch;
-	}
-
-	.layout {
+	.site {
 		display: flex;
 		flex-direction: column;
-		width: 100%;
 		min-height: 100vh;
-		overflow-x: hidden;
 	}
 
-	.content {
-		flex: 1;
-		width: 100%;
-		padding: var(--ch2) var(--content-padding);
-		box-sizing: border-box;
-	}
+	.footer {
+		margin-top: auto;
+		padding: var(--space-16) var(--space-4);
+		border-top: var(--border-width) solid var(--border-color);
 
-	.content-inner {
-		display: flex;
-		flex-direction: column;
-		gap: var(--ch4);
-		width: 100%;
-		max-width: min(var(--measure), 100%);
-		margin: 0 auto;
-	}
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
+		text-align: center;
 
-	.newsletter-section {
-		padding: var(--ch4) 0;
-		background: var(--bg-alt);
-		border-top: var(--layout-border-width) solid var(--border-color);
-	}
-
-	.container {
-		width: 100%;
-		max-width: min(var(--measure), 100%);
-		margin: 0 auto;
-		padding: 0 var(--content-padding);
-		box-sizing: border-box;
+		background: var(--bg-darker);
 	}
 </style>

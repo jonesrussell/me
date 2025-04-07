@@ -21,9 +21,9 @@
 	}
 
 	.menu-item {
+		cursor: pointer;
 		padding: var(--space-1) var(--space-2);
 		transition: all var(--transition-duration) var(--transition-timing);
-		cursor: pointer;
 	}
 
 	.menu-item:hover {
@@ -31,8 +31,8 @@
 	}
 
 	.selected {
-		color: var(--accent-color);
 		font-weight: var(--font-weight-medium);
+		color: var(--accent-color);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
