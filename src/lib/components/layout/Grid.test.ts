@@ -11,8 +11,8 @@ describe('Grid', () => {
 		const grid = container.querySelector('.grid');
 		expect(grid).toBeInTheDocument();
 		expect(grid).toHaveStyle({
-			'grid-template-columns': 'repeat(1, 1fr)',
-			gap: 'var(--ch4)'
+			'grid-template-columns': 'repeat(var(--cols), 1fr)',
+			gap: 'var(--gap)'
 		});
 		expect(grid?.textContent?.trim()).toBe('Test Content');
 	});
@@ -24,7 +24,7 @@ describe('Grid', () => {
 		});
 		const grid = container.querySelector('.grid');
 		expect(grid).toHaveStyle({
-			'grid-template-columns': 'repeat(2, 1fr)'
+			'grid-template-columns': 'repeat(var(--cols), 1fr)'
 		});
 		expect(grid?.textContent?.trim()).toBe('Grid Content');
 	});
@@ -36,7 +36,7 @@ describe('Grid', () => {
 		});
 		const grid = container.querySelector('.grid');
 		expect(grid).toHaveStyle({
-			gap: 'var(--ch2)'
+			gap: 'var(--gap)'
 		});
 		expect(grid?.textContent?.trim()).toBe('Gap Content');
 	});
