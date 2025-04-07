@@ -2,18 +2,18 @@ import '@testing-library/jest-dom';
 import { render } from '@testing-library/svelte';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Footer from './Footer.svelte';
-import { currentYear } from '$lib/stores/date';
+
+// Mock the date store
+vi.mock('$lib/stores/date', () => ({
+	currentYear: {
+		subscribe: (fn: (value: number) => void) => {
+			fn(2025);
+			return () => {};
+		}
+	}
+}));
 
 describe('Footer', () => {
-	beforeEach(() => {
-		// Mock current year
-		currentYear.set(2025);
-	});
-
-	afterEach(() => {
-		currentYear.set(new Date().getFullYear());
-	});
-
 	it('renders footer content', () => {
 		const { container } = render(Footer);
 		const footer = container.querySelector('.footer');
