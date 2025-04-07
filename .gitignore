@@ -17,3 +17,8 @@ playwright-report/
 vitest.config.ts.timestamp-*
 
 coverage/
+
+# Secrets
+.secrets
+.env
+.act/

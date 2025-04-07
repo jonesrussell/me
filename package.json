@@ -14,12 +14,7 @@
 		"lint": "NODE_ENV=development prettier --check . && NODE_ENV=development eslint . && npm run lint:css",
 		"format": "NODE_ENV=development prettier --write .",
 		"test:unit": "NODE_ENV=development vitest --run",
-		"workflow": "act -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
-		"workflow:list": "act -l",
-		"workflow:test": "act -j test -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
-		"workflow:build": "act -j build -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
-		"workflow:deploy": "act -j deploy -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy",
-		"workflow:full": "act -P ubuntu-latest=mcr.microsoft.com/playwright:v1.42.1-jammy --reuse",
+		"workflow": "act -W .github/workflows/deploy.yml",
 		"lint:css": "stylelint '**/*.{css,scss,svelte}' --fix"
 	},
 	"devDependencies": {
@@ -32,6 +27,7 @@
 		"@testing-library/jest-dom": "^6.6.3",
 		"@testing-library/svelte": "^5.2.6",
 		"@types/node": "^22.10.2",
+		"@types/sanitize-html": "^2.15.0",
 		"@vitest/browser": "^3.1.1",
 		"@vitest/coverage-v8": "^3.1.1",
 		"eslint": "^9.7.0",
@@ -42,6 +38,7 @@
 		"postcss-html": "^1.7.0",
 		"prettier": "^3.3.2",
 		"prettier-plugin-svelte": "^3.2.6",
+		"sanitize-html": "^2.15.0",
 		"stylelint": "^15.11.0",
 		"stylelint-config-clean-order": "^7.0.0",
 		"stylelint-config-recommended-scss": "^13.1.0",
@@ -58,8 +55,6 @@
 	},
 	"dependencies": {
 		"@fontsource/fira-mono": "^5.2.5",
-		"@fontsource/jetbrains-mono": "^5.1.2",
-		"@types/sanitize-html": "^2.15.0",
-		"sanitize-html": "^2.15.0"
+		"@fontsource/jetbrains-mono": "^5.1.2"
 	}
 }
