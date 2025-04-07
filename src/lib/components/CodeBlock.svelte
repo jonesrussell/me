@@ -17,12 +17,7 @@
 	);
 </script>
 
-<div
-	class="code-block"
-	style="
-
---block-width: {width}ch"
->
+<div class="code-block" style="--block-width: {width}ch">
 	{#if filename}
 		<div class="file-header">
 			<span class="filename">{filename}</span>
@@ -44,32 +39,36 @@
 <style>
 	.code-block {
 		width: var(--block-width);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
-		background: var(--bg-color);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
+		background: var(--bg-darker);
 		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
 		line-height: var(--line-height-tight);
 		white-space: pre;
+		box-shadow: var(--shadow-md);
 	}
 
 	.file-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: var(--ch) var(--ch2);
-		border-bottom: calc(1 * var(--ch) / 16) solid var(--border-color);
+		padding: var(--space-2) var(--space-4);
+		border-bottom: var(--border-width) solid var(--border-color);
 	}
 
 	.filename {
 		color: var(--text-color);
+		font-weight: var(--font-weight-medium);
 	}
 
 	.language {
 		color: var(--text-muted);
-		font-size: var(--font-size-sm);
+		font-size: var(--font-size-xs);
 	}
 
 	.code-content {
-		padding: var(--ch2);
+		padding: var(--space-4);
 		overflow-x: auto;
 	}
 
@@ -83,15 +82,15 @@
 	}
 
 	.code-footer {
-		padding: var(--ch) var(--ch2);
-		border-top: calc(1 * var(--ch) / 16) solid var(--border-color);
+		padding: var(--space-2) var(--space-4);
+		border-top: var(--border-width) solid var(--border-color);
 		color: var(--text-muted);
-		font-size: var(--font-size-sm);
+		font-size: var(--font-size-xs);
 	}
 
 	.line-number {
 		color: var(--text-muted);
-		font-size: var(--font-size-sm);
+		font-size: var(--font-size-xs);
 		user-select: none;
 	}
 </style>

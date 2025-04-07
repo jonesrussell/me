@@ -102,73 +102,145 @@ html {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-/* Base styles */
-:root {
-	/* Typography */
-	--font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-	--font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-	--font-size-xs: 0.75ch;
-	--font-size-sm: 0.875ch;
-	--font-size-base: 1ch;
-	--font-size-lg: 1.125ch;
-	--font-size-xl: 1.25ch;
-	--font-size-2xl: 1.5ch;
-	--font-size-3xl: 1.875ch;
-	--font-size-4xl: 2.25ch;
-	--line-height-none: 1;
-	--line-height-tight: 1.25;
-	--line-height-normal: 1.5;
-	--line-height-relaxed: 1.75;
-	--font-weight-normal: 400;
-	--font-weight-medium: 500;
-	--font-weight-semibold: 600;
-	--font-weight-bold: 700;
+@layer base {
+	:root {
+		/* Typography */
+		--font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+		--font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-	/* Spacing */
-	--ch: 1ch;
-	--ch2: calc(var(--ch) * 2);
-	--ch4: calc(var(--ch) * 4);
-	--ch6: calc(var(--ch) * 6);
-	--ch8: calc(var(--ch) * 8);
-	--ch12: calc(var(--ch) * 12);
-	--ch16: calc(var(--ch) * 16);
-	--ch20: calc(var(--ch) * 20);
-	--ch24: calc(var(--ch) * 24);
-	--ch32: calc(var(--ch) * 32);
-	--ch40: calc(var(--ch) * 40);
-	--ch48: calc(var(--ch) * 48);
-	--ch56: calc(var(--ch) * 56);
-	--ch64: calc(var(--ch) * 64);
+		/* Font Sizes */
+		--font-size-xs: 0.75ch;
+		--font-size-sm: 0.875ch;
+		--font-size-base: 1ch;
+		--font-size-lg: 1.125ch;
+		--font-size-xl: 1.25ch;
+		--font-size-2xl: 1.5ch;
+		--font-size-3xl: 1.875ch;
+		--font-size-4xl: 2.25ch;
 
-	/* Borders */
-	--border-width: 0.125ch;
-	--radius-sm: 0.25ch;
-	--radius-md: 0.5ch;
-	--radius-lg: 1ch;
-	--radius-full: 50%;
+		/* Line Heights */
+		--line-height-none: 1;
+		--line-height-tight: 1.25;
+		--line-height-normal: 1.5;
+		--line-height-relaxed: 1.75;
 
-	/* Transitions */
-	--transition-duration: 0.2s;
-	--transition-timing: ease-in-out;
+		/* Font Weights */
+		--font-weight-normal: 400;
+		--font-weight-medium: 500;
+		--font-weight-semibold: 600;
+		--font-weight-bold: 700;
 
-	/* Layout */
-	--content-padding: var(--ch4);
-	--content-max-width: 80ch;
-	--measure: 65ch;
-	--mobile-breakpoint: 48ch;
-}
+		/* Spacing */
+		--space-1: 0.25ch;
+		--space-2: 0.5ch;
+		--space-4: 1ch;
+		--space-6: 1.5ch;
+		--space-8: 2ch;
+		--space-12: 3ch;
+		--space-16: 4ch;
+		--space-20: 5ch;
+		--space-24: 6ch;
+		--space-32: 8ch;
+		--space-40: 10ch;
+		--space-48: 12ch;
+		--space-56: 14ch;
+		--space-64: 16ch;
 
-/* Typography */
-:where(html) {
-	font-family: var(--font-sans);
-	font-size: 18px;
-	font-weight: var(--font-weight-normal);
-	line-height: var(--line-height-normal);
-}
+		/* Borders */
+		--border-width: 0.125ch;
+		--radius-sm: 0.25ch;
+		--radius-md: 0.5ch;
+		--radius-lg: 1ch;
+		--radius-full: 50%;
 
-body {
-	margin: 0;
-	padding: 0;
-	background: var(--bg-color);
-	color: var(--text-color);
+		/* Transitions */
+		--transition-duration: 0.2s;
+		--transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+		/* Layout */
+		--content-padding: var(--space-4);
+		--content-max-width: 80ch;
+		--measure: 65ch;
+		--mobile-breakpoint: 48ch;
+
+		/* Shadows */
+		--shadow-sm: 0 0.125ch 0.25ch 0 rgb(0 0 0 / 5%);
+		--shadow-md:
+			0 0.5ch 0.75ch -0.125ch rgb(0 0 0 / 10%),
+			0 0.25ch 0.5ch -0.25ch rgb(0 0 0 / 10%);
+		--shadow-lg:
+			0 1.25ch 1.875ch -0.375ch rgb(0 0 0 / 10%),
+			0 0.5ch 0.75ch -0.5ch rgb(0 0 0 / 10%);
+
+		/* Container Queries */
+		--container-padding: var(--space-4);
+		--container-max-width: var(--measure);
+	}
+
+	/* Base Typography */
+	:where(html) {
+		font-family: var(--font-sans);
+		font-size: 18px;
+		font-weight: var(--font-weight-normal);
+		line-height: var(--line-height-normal);
+	}
+
+	/* Base Layout */
+	:where(body) {
+		margin: 0;
+		padding: 0;
+		background: var(--bg-color);
+		color: var(--text-color);
+	}
+
+	/* Base Containment */
+	.container {
+		contain: layout style paint;
+		width: 100%;
+		max-width: var(--container-max-width);
+		margin-inline: auto;
+		padding-inline: var(--container-padding);
+	}
+
+	/* Base Focus Styles */
+	:where(:focus-visible) {
+		outline: var(--border-width) solid var(--accent-color);
+		outline-offset: var(--space-1);
+	}
+
+	/* Base Selection */
+	:where(::selection) {
+		background: var(--color-mix-light);
+		color: var(--text-color);
+	}
+
+	/* Container Queries */
+	@container (width > 48ch) {
+		.container {
+			--container-padding: var(--space-8);
+		}
+	}
+
+	/* Reduced Motion */
+	@media (prefers-reduced-motion: reduce) {
+		*,
+		*::before,
+		*::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+			scroll-behavior: auto !important;
+		}
+	}
+
+	/* Forced Colors Mode */
+	@media (forced-colors: active) {
+		:where(img, svg) {
+			forced-color-adjust: auto;
+		}
+
+		:where(button, [role='button']) {
+			border: var(--border-width) solid CanvasText;
+		}
+	}
 }

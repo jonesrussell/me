@@ -80,7 +80,7 @@ Commands:
 					.map(
 						(c) => `${c.cmd}:
   Lines: ${c.lines}
-  Height: ${c.height}
+
   Breakdown: ${c.breakdown}`
 					)
 					.join('\n')}
@@ -96,9 +96,9 @@ Commands:
 		flex-direction: column;
 		width: 100%;
 		max-width: min(var(--measure), 100%);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
+		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-lg);
-		background: var(--bg-color);
+		background: var(--bg-darker);
 		overflow: hidden;
 		box-shadow: var(--shadow-lg);
 	}
@@ -107,26 +107,26 @@ Commands:
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		height: var(--ch3);
-		padding: 0 var(--ch2);
+		height: var(--space-6);
+		padding: 0 var(--space-4);
 		background: var(--color-mix-light);
-		border-bottom: calc(1 * var(--ch) / 16) solid var(--border-color);
+		border-bottom: var(--border-width) solid var(--border-color);
 	}
 
 	.terminal-title {
 		color: var(--text-muted);
-		font-size: calc(1.5 * var(--ch));
+		font-size: var(--font-size-sm);
 		font-weight: var(--font-weight-medium);
 	}
 
 	.terminal-buttons {
 		display: flex;
-		gap: var(--ch);
+		gap: var(--space-2);
 	}
 
 	.terminal-buttons span {
-		width: var(--ch);
-		height: var(--ch);
+		width: var(--space-2);
+		height: var(--space-2);
 		border-radius: var(--radius-full);
 		background: var(--text-muted);
 		opacity: 0.5;
@@ -136,20 +136,20 @@ Commands:
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		gap: var(--ch);
-		padding: var(--ch2);
+		gap: var(--space-2);
+		padding: var(--space-4);
 		font-family: var(--font-mono);
-		font-size: calc(1.5 * var(--ch));
+		font-size: var(--font-size-sm);
 		line-height: var(--line-height-relaxed);
 		white-space: pre-wrap;
 	}
 
 	.command-line {
 		display: flex;
-		gap: var(--ch2);
-		margin-top: var(--ch);
+		gap: var(--space-2);
+		margin-top: var(--space-2);
 		color: var(--text-muted);
-		font-size: calc(1.5 * var(--ch));
+		font-size: var(--font-size-sm);
 		font-weight: var(--font-weight-normal);
 		line-height: var(--line-height-base);
 	}
@@ -165,10 +165,10 @@ Commands:
 	}
 
 	.command-output {
-		margin-top: var(--ch);
-		padding-left: calc(var(--ch) * 3);
+		margin-top: var(--space-2);
+		padding-left: var(--space-6);
 		color: var(--text-color);
-		font-size: calc(1.5 * var(--ch));
+		font-size: var(--font-size-sm);
 		font-weight: var(--font-weight-normal);
 		line-height: var(--line-height-relaxed);
 		animation: crt-reveal 50ms linear;
@@ -189,7 +189,7 @@ Commands:
 
 	.cursor {
 		display: inline-block;
-		width: var(--ch);
+		width: var(--space-2);
 		height: 100%;
 		color: var(--accent-color);
 		animation: blink 1s step-end infinite;
@@ -208,18 +208,28 @@ Commands:
 
 	.debug {
 		position: absolute;
-		top: calc(100% + var(--ch2));
+		top: calc(100% + var(--space-4));
 		right: 0;
 		left: 0;
 		z-index: 100;
-		margin-bottom: var(--ch4);
-		padding: var(--ch2);
-		border: calc(1 * var(--ch) / 16) solid var(--border-color);
+		margin-bottom: var(--space-8);
+		padding: var(--space-4);
+		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
-		background: var(--bg-color);
+		background: var(--bg-darker);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-xs);
 		white-space: pre;
 		box-shadow: var(--shadow-md);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.command-output {
+			animation: none;
+		}
+
+		.cursor {
+			animation: none;
+		}
 	}
 </style>

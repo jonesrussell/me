@@ -1,0 +1,126 @@
+@layer components {
+	/* Text Alignment */
+	.text-center {
+		text-align: center;
+	}
+
+	.text-left {
+		text-align: left;
+	}
+
+	.text-right {
+		text-align: right;
+	}
+
+	/* Text Colors */
+	.text-muted {
+		color: var(--text-muted);
+	}
+
+	.text-accent {
+		color: var(--accent-color);
+	}
+
+	/* Font Sizes */
+	.text-xs {
+		font-size: var(--font-size-xs);
+	}
+
+	.text-sm {
+		font-size: var(--font-size-sm);
+	}
+
+	.text-base {
+		font-size: var(--font-size-base);
+	}
+
+	.text-lg {
+		font-size: var(--font-size-lg);
+	}
+
+	.text-xl {
+		font-size: var(--font-size-xl);
+	}
+
+	/* Font Weights */
+	.font-normal {
+		font-weight: var(--font-weight-normal);
+	}
+
+	.font-medium {
+		font-weight: var(--font-weight-medium);
+	}
+
+	.font-semibold {
+		font-weight: var(--font-weight-semibold);
+	}
+
+	.font-bold {
+		font-weight: var(--font-weight-bold);
+	}
+
+	/* Line Heights */
+	.leading-none {
+		line-height: var(--line-height-none);
+	}
+
+	.leading-tight {
+		line-height: var(--line-height-tight);
+	}
+
+	.leading-normal {
+		line-height: var(--line-height-normal);
+	}
+
+	.leading-relaxed {
+		line-height: var(--line-height-relaxed);
+	}
+
+	/* Font Families */
+	.font-sans {
+		font-family: var(--font-sans);
+	}
+
+	.font-mono {
+		font-family: var(--font-mono);
+	}
+
+	/* Text Decoration */
+	.underline {
+		text-decoration: underline;
+	}
+
+	.no-underline {
+		text-decoration: none;
+	}
+
+	/* Text Transform */
+	.uppercase {
+		text-transform: uppercase;
+	}
+
+	.lowercase {
+		text-transform: lowercase;
+	}
+
+	.capitalize {
+		text-transform: capitalize;
+	}
+
+	/* Text Overflow */
+	.truncate {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.break-words {
+		word-wrap: break-word;
+	}
+
+	/* Selection */
+	::selection {
+		background: var(--color-mix-light);
+		color: var(--text-color);
+	}
+}

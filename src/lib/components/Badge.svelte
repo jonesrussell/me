@@ -14,47 +14,47 @@
 	};
 </script>
 
-<span class="badge {badgeType}"
-	>{symbols[badgeType as BadgeType]} {children()}</span
->
+<span class="badge {badgeType}">
+	{symbols[badgeType as BadgeType]}
+	{@render children()}
+</span>
 
 <style>
-	:root {
-		--font-mono: 'Courier New', courier, monospace;
-		--ch: 1ch;
-	}
-
 	.badge {
 		display: inline-flex;
-		gap: var(--ch);
+		gap: var(--space-1);
 		align-items: center;
-		padding: calc(var(--ch) / 4) var(--ch);
+		padding: var(--space-1) var(--space-2);
 		border-radius: var(--radius-sm);
+		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		line-height: var(--line-height-tight);
+		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.badge.info {
-		background: color-mix(in srgb, var(--color-info) 15%, transparent);
+		background: var(--color-mix-light);
 		color: var(--color-info);
 	}
 
 	.badge.success {
-		background: color-mix(in srgb, var(--color-success) 15%, transparent);
+		background: var(--color-mix-light);
 		color: var(--color-success);
 	}
 
 	.badge.warning {
-		background: color-mix(in srgb, var(--color-warning) 15%, transparent);
+		background: var(--color-mix-light);
 		color: var(--color-warning);
 	}
 
 	.badge.error {
-		background: color-mix(in srgb, var(--color-error) 15%, transparent);
+		background: var(--color-mix-light);
 		color: var(--color-error);
 	}
 
-	:global([data-theme='dark']) .badge {
-		opacity: 0.9;
+	@media (prefers-reduced-motion: reduce) {
+		.badge {
+			transition: none;
+		}
 	}
 </style>

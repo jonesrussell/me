@@ -107,18 +107,17 @@
 		display: flex;
 		justify-content: center;
 		width: 100%;
-		padding: var(--ch4);
-		border: calc(1 * var(--ch) / 8) solid var(--border-color);
+		padding: var(--space-8);
+		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-lg);
 		background: var(--bg-darker);
-		box-shadow: 0 var(--ch) var(--ch2)
-			color-mix(in srgb, var(--text-color) 5%, transparent);
+		box-shadow: var(--shadow-lg);
 	}
 
 	.newsletter-content {
 		display: flex;
 		flex-direction: column;
-		gap: var(--ch3);
+		gap: var(--space-6);
 		width: 100%;
 		max-width: 60ch;
 	}
@@ -126,13 +125,13 @@
 	.newsletter-header {
 		display: flex;
 		flex-direction: column;
-		gap: var(--ch2);
+		gap: var(--space-4);
 		text-align: center;
 	}
 
 	.header-title {
 		display: flex;
-		gap: var(--ch);
+		gap: var(--space-2);
 		justify-content: center;
 		align-items: center;
 		font-size: var(--font-size-lg);
@@ -159,32 +158,32 @@
 	.form {
 		display: flex;
 		flex-direction: column;
-		gap: var(--ch2);
+		gap: var(--space-4);
 	}
 
 	.form-group {
 		display: flex;
 		flex-direction: column;
-		gap: var(--ch2);
+		gap: var(--space-4);
 	}
 
 	.input-wrapper {
 		display: flex;
 		align-items: center;
-		padding: var(--ch) var(--ch2);
-		border: calc(1 * var(--ch) / 8) solid var(--border-color);
+		padding: var(--space-2) var(--space-4);
+		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
 		background: var(--bg-color);
-		transition: all 0.2s ease;
+		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.input-wrapper:focus-within {
 		border-color: var(--accent-color);
-		box-shadow: 0 0 0 calc(var(--ch) / 8) var(--accent-color-transparent);
+		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
 	}
 
 	.input-prefix {
-		margin-right: var(--ch);
+		margin-right: var(--space-2);
 		color: var(--accent-color);
 		font-weight: var(--font-weight-bold);
 	}
@@ -210,8 +209,8 @@
 	}
 
 	button {
-		padding: var(--ch2);
-		border: calc(1 * var(--ch) / 8) solid var(--accent-color);
+		padding: var(--space-4);
+		border: var(--border-width) solid var(--accent-color);
 		border-radius: var(--radius-md);
 		background: var(--accent-color);
 		color: var(--bg-darker);
@@ -219,7 +218,7 @@
 		font-size: var(--font-size-base);
 		font-weight: var(--font-weight-bold);
 		line-height: var(--line-height-tight);
-		transition: all 0.2s ease;
+		transition: all var(--transition-duration) var(--transition-timing);
 		cursor: pointer;
 	}
 
@@ -231,12 +230,12 @@
 	button:hover:not(:disabled) {
 		background: var(--accent-color-hover);
 		border-color: var(--accent-color-hover);
-		transform: translateY(calc(-1 * var(--ch) / 4));
+		transform: translateY(-0.25ch);
 	}
 
 	.button-content {
 		display: flex;
-		gap: var(--ch2);
+		gap: var(--space-4);
 		justify-content: center;
 		align-items: center;
 	}
@@ -248,14 +247,14 @@
 
 	.loading {
 		display: flex;
-		gap: var(--ch);
+		gap: var(--space-2);
 		justify-content: center;
 		align-items: center;
 	}
 
 	.dots {
 		display: flex;
-		gap: calc(2 * var(--ch) / 16);
+		gap: var(--space-1);
 	}
 
 	.dot {
@@ -280,34 +279,45 @@
 	.success-message,
 	.error-message {
 		display: flex;
-		gap: var(--ch);
+		gap: var(--space-2);
 		justify-content: center;
 		align-items: center;
-		padding: var(--ch2);
+		padding: var(--space-4);
 		border-radius: var(--radius-md);
 		font-size: var(--font-size-sm);
 	}
 
 	.success-message {
-		border: calc(1 * var(--ch) / 8) solid var(--color-success);
-		background: color-mix(in srgb, var(--color-success) 10%, transparent);
+		border: var(--border-width) solid var(--color-success);
+		background: var(--color-mix-light);
 		color: var(--color-success);
 	}
 
 	.error-message {
-		border: calc(1 * var(--ch) / 8) solid var(--color-error);
-		background: color-mix(in srgb, var(--color-error) 10%, transparent);
+		border: var(--border-width) solid var(--color-error);
+		background: var(--color-mix-light);
 		color: var(--color-error);
 	}
 
 	@media (width >= calc(37.5 * var(--ch))) {
 		.form-group {
 			flex-direction: row;
-			gap: var(--ch2);
+			gap: var(--space-4);
 		}
 
 		button {
 			min-width: 15ch;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.input-wrapper,
+		button {
+			transition: none;
+		}
+
+		.dot {
+			animation: none;
 		}
 	}
 </style>
