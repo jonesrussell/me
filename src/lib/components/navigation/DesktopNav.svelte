@@ -1,12 +1,10 @@
 <script lang="ts">
 	const { url } = $props<{ url: URL }>();
 
-	let currentPath = $state(url?.pathname ?? '/');
+	let currentPath = $state(url.pathname);
 
 	$effect(() => {
-		if (url) {
-			currentPath = url.pathname;
-		}
+		currentPath = url.pathname;
 	});
 </script>
 

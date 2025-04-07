@@ -3,7 +3,7 @@
 	import MobileNav from '$lib/components/navigation/MobileNav.svelte';
 	import SubtitleBar from './SubtitleBar.svelte';
 
-	const { url = { pathname: '/' } } = $props<{ url?: { pathname: string } }>();
+	const { url } = $props<{ url: URL }>();
 
 	let isMobileMenuOpen = $state(false);
 
