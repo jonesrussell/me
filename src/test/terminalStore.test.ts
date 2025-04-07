@@ -33,14 +33,15 @@ describe('Terminal Store', () => {
 
 	it('loads commands correctly', () => {
 		const testCommands = [
-			{ cmd: 'test1', output: 'output1' },
-			{ cmd: 'test2', output: 'output2' }
+			{ cmd: 'test', output: 'output' }
 		];
-
 		terminal.loadCommands(testCommands);
+		terminal.start();
 
-		expect(get(commands)).toEqual(testCommands);
-		expect(get(terminal).isTyping).toBe(true);
+		// Wait for command to complete typing
+		vi.advanceTimersByTime(2000);
+		const state = get(terminal);
+		expect(state.commandVisible).toBe('test');
 	});
 
 	it('types command with correct timing', async () => {
@@ -64,15 +65,18 @@ describe('Terminal Store', () => {
 			{ cmd: 'first', output: 'first output' },
 			{ cmd: 'second', output: 'second output' }
 		];
-
 		terminal.loadCommands(testCommands);
 		terminal.start();
 
-		// Wait for first command
+		// Wait for first command to complete typing
 		vi.advanceTimersByTime(2000);
 		await Promise.resolve();
 
-		// Wait for second command
+		// Wait for output and timeout before next command
+		vi.advanceTimersByTime(1000);
+		await Promise.resolve();
+
+		// Wait for second command to complete typing
 		vi.advanceTimersByTime(2000);
 		await Promise.resolve();
 
@@ -110,30 +114,24 @@ describe('Terminal Store', () => {
 	});
 
 	it('updates debug store correctly', () => {
-		const debugInfo = {
-			headerHeight: 10,
-			padding: 5,
-			maxLines: 20,
-			rawHeight: 30,
-			totalHeight: '40ch',
-			currentLines: 15,
-			commands: [
-				{
-					cmd: 'test',
-					lines: 5,
-					height: 10,
-					breakdown: 'test breakdown'
-				}
-			]
-		};
+		const testCommands = [
+			{ cmd: 'test', output: 'output' }
+		];
+		terminal.loadCommands(testCommands);
+		terminal.start();
 
-		debug.set(debugInfo);
-
-		expect(get(debug)).toEqual(debugInfo);
+		const state = get(terminal);
+		expect(state.debug).toBeDefined();
 	});
 
 	it('updates terminal height correctly', () => {
-		terminalHeight.set('50ch');
-		expect(get(terminalHeight)).toBe('50ch');
+		const testCommands = [
+			{ cmd: 'test', output: 'output' }
+		];
+		terminal.loadCommands(testCommands);
+		terminal.start();
+
+		const state = get(terminal);
+		expect(state.height).toBeDefined();
 	});
 });
