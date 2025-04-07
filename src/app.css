@@ -1,24 +1,24 @@
-@import './styles/reset.css';
-@import './styles/base.css';
-@import './styles/animations.css';
+@import url('./styles/reset.css');
+@import url('./styles/base.css');
+@import url('./styles/animations.css');
 
 /* Import shared style modules */
-@import './styles/modules/layout.css';
-@import './styles/modules/typography.css';
-@import './styles/modules/interactive.css';
-@import './styles/modules/surface.css';
-@import './styles/modules/forms.css';
-@import './styles/modules/code.css';
+@import url('./styles/modules/layout.css');
+@import url('./styles/modules/typography.css');
+@import url('./styles/modules/interactive.css');
+@import url('./styles/modules/surface.css');
+@import url('./styles/modules/forms.css');
+@import url('./styles/modules/code.css');
 
 /* Import theme styles */
-@import './styles/system/colors.css';
-@import './styles/themes/light.css';
-@import './styles/themes/dark.css';
+@import url('./styles/system/colors.css');
+@import url('./styles/themes/light.css');
+@import url('./styles/themes/dark.css');
 
 /* Import fonts */
-@import '@fontsource/fira-mono/400.css';
-@import '@fontsource/fira-mono/500.css';
-@import '@fontsource/fira-mono/700.css';
+@import url('@fontsource/fira-mono/400.css');
+@import url('@fontsource/fira-mono/500.css');
+@import url('@fontsource/fira-mono/700.css');
 
 /* Define CSS layers */
 @layer reset, base, components, utilities;
@@ -45,10 +45,10 @@
 	}
 
 	.nav-link {
-		color: var(--text-color);
-		text-decoration: none;
 		padding: var(--space-2) var(--space-4);
 		border-radius: var(--radius-md);
+		color: var(--text-color);
+		text-decoration: none;
 		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
@@ -183,7 +183,7 @@
 }
 
 /* Media queries */
-@media (max-width: 768px) {
+@media (width <= 768px) {
 	.nav {
 		flex-direction: column;
 	}
@@ -358,9 +358,9 @@ video {
 		--radius-full: 50%;
 
 		/* Shadows */
-		--shadow-sm: 0 0.125ch 0.25ch rgb(0 0 0 / 0.1);
-		--shadow-md: 0 0.25ch 0.5ch rgb(0 0 0 / 0.1);
-		--shadow-lg: 0 0.5ch 1ch rgb(0 0 0 / 0.1);
+		--shadow-sm: 0 0.125ch 0.25ch rgb(0 0 0 / 10%);
+		--shadow-md: 0 0.25ch 0.5ch rgb(0 0 0 / 10%);
+		--shadow-lg: 0 0.5ch 1ch rgb(0 0 0 / 10%);
 
 		/* Transitions */
 		--transition-duration: 150ms;
@@ -528,10 +528,10 @@ body {
 /* Utility Classes */
 .sr-only {
 	position: absolute;
-	width: 1px;
-	height: 1px;
+	width: 0.25ch;
+	height: 0.25ch;
 	padding: 0;
-	margin: -1px;
+	margin: -0.25ch;
 	overflow: hidden;
 	clip: rect(0, 0, 0, 0);
 	white-space: nowrap;

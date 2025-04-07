@@ -17,7 +17,12 @@
 	);
 </script>
 
-<div class="code-block" style="--block-width: {width}ch">
+<div
+	class="code-block"
+	style="
+
+--block-width: {width}ch"
+>
 	{#if filename}
 		<div class="file-header">
 			<span class="filename">{filename}</span>

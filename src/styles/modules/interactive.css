@@ -41,7 +41,7 @@
 
 	.link:hover {
 		color: var(--accent-color-hover);
-		border-bottom-color: currentColor;
+		border-bottom-color: currentcolor;
 	}
 
 	/* Form Elements */
