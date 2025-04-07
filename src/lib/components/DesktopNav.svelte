@@ -33,21 +33,22 @@
 
 		.desktop-nav a {
 			padding: var(--space-2) var(--space-4);
-			font-size: var(--font-size-base);
+			font-family: var(--font-mono);
+			font-size: var(--font-size-sm);
 			text-decoration: none;
 			color: var(--text-muted);
-			border-radius: var(--radius-sm);
+			border-radius: var(--radius-md);
 			transition: all var(--transition-duration) var(--transition-timing);
 		}
 
 		.desktop-nav a:hover {
 			color: var(--text-color);
-			background: var(--color-mix-light);
+			background: var(--bg-darker);
 		}
 
 		.desktop-nav a.active {
 			color: var(--accent-color);
-			background: var(--color-mix-light);
+			background: var(--bg-darker);
 		}
 	}
 

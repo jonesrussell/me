@@ -41,7 +41,7 @@
 		padding: var(--space-4);
 		background: var(--bg-color);
 		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-sm);
+		border-radius: var(--radius-md);
 		box-shadow: var(--shadow-md);
 		opacity: 0;
 		visibility: hidden;
@@ -67,22 +67,23 @@
 	.mobile-nav a {
 		width: 100%;
 		padding: var(--space-3) var(--space-4);
-		font-size: var(--font-size-base);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
 		text-align: center;
 		text-decoration: none;
 		color: var(--text-muted);
-		border-radius: var(--radius-sm);
+		border-radius: var(--radius-md);
 		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.mobile-nav a:hover {
 		color: var(--text-color);
-		background: var(--color-mix-light);
+		background: var(--bg-darker);
 	}
 
 	.mobile-nav a.active {
 		color: var(--accent-color);
-		background: var(--color-mix-light);
+		background: var(--bg-darker);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
