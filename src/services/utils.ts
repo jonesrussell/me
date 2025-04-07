@@ -1,3 +1,5 @@
+import sanitizeHtml from 'sanitize-html';
+
 // Cache for memoized results
 const memoCache = new Map<string, string>();
 
@@ -17,7 +19,18 @@ function memoize<Args extends unknown[], Return>(
 }
 
 export const sanitizeText = memoize((text: string): string => {
-	return text.replace(/<[^>]*>/g, '').trim();
+	return sanitizeHtml(text, {
+		allowedTags: [], // Remove all HTML tags
+		allowedAttributes: {}, // Remove all attributes
+		disallowedTagsMode: 'discard', // Discard disallowed tags
+		allowedIframeHostnames: [], // No iframes allowed
+		allowedSchemes: [], // No schemes allowed
+		allowedSchemesByTag: {}, // No schemes allowed for any tag
+		allowedSchemesAppliedToAttributes: [], // No schemes allowed for any attribute
+		allowProtocolRelative: false, // No protocol-relative URLs
+		enforceHtmlBoundary: true, // Enforce HTML boundary
+		parseStyleAttributes: false, // Don't parse style attributes
+	}).trim();
 });
 
 export const truncateDescription = memoize(
