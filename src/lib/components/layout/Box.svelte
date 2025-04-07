@@ -5,7 +5,7 @@
 		title = undefined,
 		width = 40,
 		style = '',
-		children = () => null
+		children
 	} = $props<{
 		title?: string;
 		width?: number;
@@ -26,7 +26,7 @@
 		{/if}
 
 		<div class="content">
-			{children()}
+			{@render children?.()}
 		</div>
 	</div>
 </div>
