@@ -6,9 +6,7 @@ import Badge from './Badge.svelte';
 describe('Badge', () => {
 	it('renders with default type', () => {
 		const { container } = render(Badge, {
-			props: {
-				children: () => 'Test Badge'
-			}
+			children: () => 'Test Badge'
 		});
 		const badge = container.querySelector('.badge');
 		expect(badge).toHaveClass('info');
@@ -17,10 +15,8 @@ describe('Badge', () => {
 
 	it('renders with success type', () => {
 		const { container } = render(Badge, {
-			props: {
-				type: 'success',
-				children: () => 'Success Badge'
-			}
+			type: 'success',
+			children: () => 'Success Badge'
 		});
 		const badge = container.querySelector('.badge');
 		expect(badge).toHaveClass('success');
@@ -29,10 +25,8 @@ describe('Badge', () => {
 
 	it('renders with warning type', () => {
 		const { container } = render(Badge, {
-			props: {
-				type: 'warning',
-				children: () => 'Warning Badge'
-			}
+			type: 'warning',
+			children: () => 'Warning Badge'
 		});
 		const badge = container.querySelector('.badge');
 		expect(badge).toHaveClass('warning');
@@ -41,10 +35,8 @@ describe('Badge', () => {
 
 	it('renders with error type', () => {
 		const { container } = render(Badge, {
-			props: {
-				type: 'error',
-				children: () => 'Error Badge'
-			}
+			type: 'error',
+			children: () => 'Error Badge'
 		});
 		const badge = container.querySelector('.badge');
 		expect(badge).toHaveClass('error');
