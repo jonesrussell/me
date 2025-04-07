@@ -1,39 +1,55 @@
 @layer components {
+	/* Navigation */
+	.nav {
+		display: flex;
+		gap: var(--space-4);
+		align-items: center;
+	}
+
+	.nav-link {
+		padding: var(--space-2) var(--space-4);
+		border-radius: var(--radius-sm);
+		color: var(--text-color);
+		text-decoration: none;
+		transition: var(--transition-fast);
+	}
+
+	.nav-link:hover {
+		background: var(--bg-darker);
+	}
+
+	.nav-link.active {
+		color: var(--accent-color);
+		background: var(--bg-darker);
+	}
+
 	/* Buttons */
 	.btn {
-		cursor: pointer;
-
 		display: inline-flex;
 		gap: var(--space-2);
 		align-items: center;
-
+		justify-content: center;
 		padding: var(--space-2) var(--space-4);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-sm);
-
-		font-size: var(--font-size-base);
 		color: var(--text-color);
-		text-decoration: none;
-
 		background: var(--bg-darker);
-
-		transition: all var(--transition-duration) var(--transition-timing);
+		transition: var(--transition-fast);
 	}
 
 	.btn:hover {
-		transform: translateY(-0.125ch);
-		background: var(--color-mix-light);
+		background: var(--bg-darkest);
 	}
 
 	.btn-primary {
 		border-color: var(--accent-color);
-		color: var(--bg-darker);
+		color: var(--text-on-accent);
 		background: var(--accent-color);
 	}
 
 	.btn-primary:hover {
-		border-color: var(--accent-color-hover);
-		background: var(--accent-color-hover);
+		border-color: var(--accent-color-dark);
+		background: var(--accent-color-dark);
 	}
 
 	/* Links */

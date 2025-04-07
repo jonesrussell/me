@@ -1,13 +1,10 @@
 @layer components {
 	/* Cards */
 	.card {
-		padding: var(--space-8);
-		border: var(--border-width) solid var(--border-color);
+		padding: var(--space-4);
 		border-radius: var(--radius-md);
-
 		background: var(--bg-darker);
-
-		transition: all var(--transition-duration) var(--transition-timing);
+		box-shadow: var(--shadow-sm);
 	}
 
 	.card:hover {

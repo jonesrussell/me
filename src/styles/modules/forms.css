@@ -47,27 +47,23 @@
 	/* Textareas */
 	.form-textarea {
 		resize: vertical;
-
 		width: 100%;
-		min-height: calc(var(--space-20));
+		min-height: calc(var(--space-32));
 		padding: var(--space-4);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-sm);
-
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
 		line-height: var(--line-height-relaxed);
 		color: var(--text-color);
-
 		background: var(--bg-darker);
-
 		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.form-textarea:focus {
 		border-color: var(--accent-color);
 		outline: none;
-		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
+		box-shadow: 0 0 0 var(--space-4) var(--accent-color-hover);
 	}
 
 	/* Selects */
@@ -156,5 +152,33 @@
 		.form-label {
 			font-size: var(--font-size-base);
 		}
+	}
+
+	/* Form styles */
+	.form-submit {
+		cursor: pointer;
+		display: inline-flex;
+		gap: var(--space-4);
+		align-items: center;
+		padding: var(--space-4) var(--space-8);
+		border: none;
+		border-radius: var(--radius-sm);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-base);
+		font-weight: var(--font-weight-medium);
+		color: var(--bg-darker);
+		text-decoration: none;
+		background: var(--accent-color);
+		transition: all var(--transition-duration) var(--transition-timing);
+	}
+
+	.form-submit:hover {
+		transform: translateY(-0.25ch);
+		background: var(--accent-color-hover);
+	}
+
+	.form-submit .contact-link-icon {
+		color: var(--bg-darker);
+		transition: transform var(--transition-duration) var(--transition-timing);
 	}
 }
