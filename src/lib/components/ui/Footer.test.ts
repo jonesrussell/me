@@ -2,16 +2,16 @@ import '@testing-library/jest-dom';
 import { render } from '@testing-library/svelte';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Footer from './Footer.svelte';
+import { currentYear } from '$lib/stores/date';
 
 describe('Footer', () => {
 	beforeEach(() => {
 		// Mock current year
-		vi.useFakeTimers();
-		vi.setSystemTime(new Date('2024-01-01'));
+		currentYear.set(2025);
 	});
 
 	afterEach(() => {
-		vi.useRealTimers();
+		currentYear.set(new Date().getFullYear());
 	});
 
 	it('renders footer content', () => {
@@ -23,7 +23,7 @@ describe('Footer', () => {
 
 	it('displays current year', () => {
 		const { container } = render(Footer);
-		expect(container.textContent).toContain('© 2024');
+		expect(container.textContent).toContain('© 2025');
 	});
 
 	it('contains source code link', () => {
