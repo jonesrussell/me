@@ -1,5 +1,9 @@
 import { writable } from 'svelte/store';
-import { truncateDescription, formatDate, extractFirstMeaningfulParagraph } from './utils';
+import {
+	truncateDescription,
+	formatDate,
+	extractFirstMeaningfulParagraph
+} from './utils';
 
 interface Post {
 	title: string;
@@ -43,7 +47,7 @@ const ERROR_RESET_TIME = 30 * 60 * 1000; // Reset error count after 30 minutes
 export const blogErrors = writable<BlogError[]>([]);
 
 function addError(error: BlogError) {
-	blogErrors.update(errors => {
+	blogErrors.update((errors) => {
 		const newErrors = [...errors, error];
 		// Keep only the last 10 errors
 		return newErrors.slice(-10);
@@ -118,7 +122,8 @@ async function fetchXML(url: string): Promise<FetchResult> {
 	} catch (error) {
 		const blogError: BlogError = {
 			type: 'FETCH_ERROR',
-			message: error instanceof Error ? error.message : 'Unknown error occurred',
+			message:
+				error instanceof Error ? error.message : 'Unknown error occurred',
 			details: error,
 			timestamp: Date.now()
 		};
@@ -194,11 +199,16 @@ function parsePost(entry: Element): Post {
 	};
 
 	try {
-		const title = entry.querySelector('title')?.textContent?.trim() || defaultPost.title;
-		const published = entry.querySelector('published')?.textContent?.trim() || defaultPost.published;
-		const link = entry.querySelector('link')?.getAttribute('href') || defaultPost.link;
+		const title =
+			entry.querySelector('title')?.textContent?.trim() || defaultPost.title;
+		const published =
+			entry.querySelector('published')?.textContent?.trim() ||
+			defaultPost.published;
+		const link =
+			entry.querySelector('link')?.getAttribute('href') || defaultPost.link;
 		const content = entry.querySelector('content')?.textContent || '';
-		const description = extractFirstMeaningfulParagraph(content) || defaultPost.description;
+		const description =
+			extractFirstMeaningfulParagraph(content) || defaultPost.description;
 
 		const post = {
 			title,
@@ -214,9 +224,14 @@ function parsePost(entry: Element): Post {
 	}
 }
 
-export async function fetchFeed(options?: PaginationOptions): Promise<PaginatedResult<Post>> {
+export async function fetchFeed(
+	options?: PaginationOptions
+): Promise<PaginatedResult<Post>> {
 	// Check cache first
-	if (feedCache && !shouldInvalidateCache(feedCache, { success: true, data: null })) {
+	if (
+		feedCache &&
+		!shouldInvalidateCache(feedCache, { success: true, data: null })
+	) {
 		const { page = 1, pageSize = 10 } = options || {};
 		const start = (page - 1) * pageSize;
 		const end = start + pageSize;
@@ -330,7 +345,8 @@ export async function loadBlogPosts(options?: PaginationOptions) {
 	} catch (error) {
 		const blogError: BlogError = {
 			type: 'FETCH_ERROR',
-			message: error instanceof Error ? error.message : 'Failed to load blog posts',
+			message:
+				error instanceof Error ? error.message : 'Failed to load blog posts',
 			details: error,
 			timestamp: Date.now()
 		};
