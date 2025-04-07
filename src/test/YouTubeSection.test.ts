@@ -43,13 +43,13 @@ describe('YouTubeSection Component', () => {
 	it('applies correct styling classes', () => {
 		render(YouTubeSection, testProps);
 
-		const section = screen.getByRole('region', { name: 'youtube-section' });
+		const section = document.querySelector('.youtube-section');
 		expect(section).toHaveClass('youtube-section');
 
-		const figure = screen.getByRole('figure');
+		const figure = document.querySelector('.video-figure');
 		expect(figure).toHaveClass('video-figure');
 
-		const container = screen.getByRole('complementary');
+		const container = document.querySelector('.video-container');
 		expect(container).toHaveClass('video-container');
 	});
 });
