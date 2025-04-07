@@ -24,29 +24,7 @@
 				<span class="menu-icon">☰</span>
 				<span class="sr-only">Toggle menu</span>
 			</button>
-			<nav class="header-nav">
-				<a
-					href="/"
-					class:active={url.pathname === '/'}
-					aria-current={url.pathname === '/' ? 'page' : undefined}>Home</a
-				>
-				<a
-					href="/blog"
-					class:active={url.pathname === '/blog'}
-					aria-current={url.pathname === '/blog' ? 'page' : undefined}>Blog</a
-				>
-				<a
-					href="/projects"
-					class:active={url.pathname === '/projects'}
-					aria-current={url.pathname === '/projects' ? 'page' : undefined}
-					>Projects</a
-				>
-				<a
-					href="/about"
-					class:active={url.pathname === '/about'}
-					aria-current={url.pathname === '/about' ? 'page' : undefined}>About</a
-				>
-			</nav>
+			<DesktopNav {url} />
 			<MobileNav
 				{url}
 				isOpen={isMobileMenuOpen}
