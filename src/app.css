@@ -1,24 +1,24 @@
-@import url('./styles/reset.css');
-@import url('./styles/base.css');
-@import url('./styles/animations.css');
+@import './styles/reset.css';
+@import './styles/base.css';
+@import './styles/animations.css';
 
 /* Import shared style modules */
-@import url('./styles/modules/layout.css');
-@import url('./styles/modules/typography.css');
-@import url('./styles/modules/interactive.css');
-@import url('./styles/modules/surface.css');
-@import url('./styles/modules/forms.css');
-@import url('./styles/modules/code.css');
+@import './styles/modules/layout.css';
+@import './styles/modules/typography.css';
+@import './styles/modules/interactive.css';
+@import './styles/modules/surface.css';
+@import './styles/modules/forms.css';
+@import './styles/modules/code.css';
 
 /* Import theme styles */
-@import url('./styles/system/colors.css');
-@import url('./styles/themes/light.css');
-@import url('./styles/themes/dark.css');
+@import './styles/system/colors.css';
+@import './styles/themes/light.css';
+@import './styles/themes/dark.css';
 
 /* Import fonts */
-@import url('@fontsource/fira-mono/400.css');
-@import url('@fontsource/fira-mono/500.css');
-@import url('@fontsource/fira-mono/700.css');
+@import '@fontsource/fira-mono/400.css';
+@import '@fontsource/fira-mono/500.css';
+@import '@fontsource/fira-mono/700.css';
 
 /* Define CSS layers */
 @layer reset, base, components, utilities;
@@ -183,7 +183,7 @@
 }
 
 /* Media queries */
-@media (width <= 768px) {
+@media (width <= 48ch) {
 	.nav {
 		flex-direction: column;
 	}
@@ -199,11 +199,11 @@
 	.surface,
 	.surface-elevated,
 	.surface-floating {
-		border: 1px solid CanvasText;
+		border: 0.125ch solid CanvasText;
 	}
 
 	.nav-link {
-		border: 1px solid CanvasText;
+		border: 0.125ch solid CanvasText;
 	}
 }
 
@@ -379,7 +379,7 @@ html {
 /* Typography */
 :where(html) {
 	font-family: var(--font-sans);
-	font-size: 18px;
+	font-size: 1ch;
 	font-weight: var(--font-weight-normal);
 	line-height: var(--line-height-normal);
 }
@@ -394,7 +394,7 @@ body {
 /* Form styles */
 .form-textarea {
 	width: 100%;
-	min-height: calc(var(--space-20));
+	min-height: calc(var(--space-32));
 	padding: var(--space-4);
 	border: var(--border-width) solid var(--border-color);
 	border-radius: var(--radius-sm);
@@ -432,7 +432,7 @@ body {
 
 .form-submit:hover {
 	background: var(--accent-color-hover);
-	transform: translateY(-0.25rem);
+	transform: translateY(-0.25ch);
 }
 
 .form-submit .contact-link-icon {
@@ -516,7 +516,7 @@ body {
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 0.125rem;
+	height: 0.125ch;
 	background: linear-gradient(
 		90deg,
 		var(--accent-color),
@@ -530,8 +530,8 @@ body {
 	position: absolute;
 	width: 0.25ch;
 	height: 0.25ch;
-	padding: 0;
 	margin: -0.25ch;
+	padding: 0;
 	overflow: hidden;
 	clip: rect(0, 0, 0, 0);
 	white-space: nowrap;

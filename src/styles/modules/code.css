@@ -41,7 +41,7 @@
 		background: var(--bg-darker);
 		color: var(--text-color);
 		font-family: var(--font-mono);
-		font-size: 0.9em;
+		font-size: 0.9ch;
 	}
 
 	/* Syntax highlighting */
