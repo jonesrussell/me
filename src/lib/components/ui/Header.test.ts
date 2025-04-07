@@ -1,21 +1,7 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/svelte';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import Header from './Header.svelte';
-
-// Mock $app/paths and $app/stores
-vi.mock('$app/paths', () => ({
-	base: ''
-}));
-
-vi.mock('$app/stores', () => ({
-	page: {
-		subscribe: (fn: (value: { url: { pathname: string } }) => void) => {
-			fn({ url: { pathname: '/blog' } });
-			return () => {};
-		}
-	}
-}));
 
 describe('Header', () => {
 	it('renders site title', () => {
@@ -37,11 +23,13 @@ describe('Header', () => {
 		const linkTexts = Array.from(navLinks || []).map(
 			(link) => link.textContent
 		);
-		expect(linkTexts).toEqual(['Home', 'Blog', 'Projects', 'About']);
+		expect(linkTexts).toEqual(['Blog', 'Projects', 'Resources', 'Contact']);
 	});
 
 	it('marks active navigation item', () => {
-		const { container } = render(Header);
+		const { container } = render(Header, {
+			url: { pathname: '/blog' }
+		});
 		const activeLink = container.querySelector('a.active');
 		expect(activeLink).toBeInTheDocument();
 		expect(activeLink?.textContent).toBe('Blog');
