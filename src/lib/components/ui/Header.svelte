@@ -1,6 +1,7 @@
 <script lang="ts">
 	import DesktopNav from '$lib/components/navigation/DesktopNav.svelte';
 	import MobileNav from '$lib/components/navigation/MobileNav.svelte';
+	import SubtitleBar from './SubtitleBar.svelte';
 
 	const { url = { pathname: '/' } } = $props<{ url?: { pathname: string } }>();
 
@@ -32,9 +33,7 @@
 			/>
 		</div>
 	</div>
-	<div class="subtitle-bar">
-		<div class="container">Limitless Developer</div>
-	</div>
+	<SubtitleBar />
 </header>
 
 <style>
@@ -117,40 +116,6 @@
 		.menu-toggle {
 			display: none;
 		}
-	}
-
-	.subtitle-bar {
-		position: relative;
-		width: 100%;
-		margin-top: var(--space-4);
-		padding-block: var(--space-4);
-		border-bottom: var(--border-width) solid var(--border-color);
-		background: var(--bg-darker);
-	}
-
-	.subtitle-bar::before {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 2px;
-		background: linear-gradient(
-			90deg,
-			var(--accent-color),
-			var(--secondary-accent)
-		);
-		opacity: 0.5;
-		content: '';
-	}
-
-	.container {
-		font-size: var(--font-size-sm);
-		text-align: center;
-		color: var(--text-muted);
-		opacity: 0.9;
-		max-width: min(var(--measure), 95cqi);
-		margin-inline: auto;
-		padding-inline: var(--space-4);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
