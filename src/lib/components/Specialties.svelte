@@ -9,6 +9,10 @@
 </script>
 
 <div class="specialties">
+	<div class="section-header">
+		<h2>My Specialties</h2>
+		<p class="section-desc">Areas where I excel and bring value to projects</p>
+	</div>
 	{#each specialties as specialty}
 		<div class="specialty">
 			<div class="specialty-icon">{specialty.icon}</div>
@@ -22,8 +26,28 @@
 
 <style>
 	.specialties {
-		display: grid;
+		display: flex;
+		flex-direction: column;
 		gap: var(--space-8);
+		width: 100%;
+	}
+
+	.section-header {
+		margin-bottom: var(--space-8);
+		text-align: center;
+	}
+
+	h2 {
+		margin: 0;
+		font-size: var(--font-size-xl);
+		font-weight: var(--font-weight-bold);
+		color: var(--text-color);
+	}
+
+	.section-desc {
+		margin-top: var(--space-2);
+		font-size: var(--font-size-base);
+		color: var(--text-muted);
 	}
 
 	@container (width < 40ch) {
