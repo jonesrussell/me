@@ -5,11 +5,27 @@
 	import Box from '$lib/components/Box.svelte';
 
 	const devToUrl = 'https://dev.to/jonesrussell' as const;
+	let currentPage = 1;
+	let hasMore = false;
+	let isLoading = false;
 
 	onMount(async () => {
-		const result = await fetchFeed();
+		const result = await fetchFeed({ page: currentPage, pageSize: 10 });
 		blogPosts.set(result.items);
+		hasMore = result.hasMore;
 	});
+
+	async function loadMore() {
+		if (isLoading || !hasMore) return;
+
+		isLoading = true;
+		currentPage++;
+
+		const result = await fetchFeed({ page: currentPage, pageSize: 10 });
+		blogPosts.update((posts) => [...posts, ...result.items]);
+		hasMore = result.hasMore;
+		isLoading = false;
+	}
 </script>
 
 <svelte:head>
@@ -93,6 +109,22 @@
 				</Box>
 			{/each}
 		</div>
+
+		{#if hasMore}
+			<div class="load-more">
+				<button
+					on:click={loadMore}
+					disabled={isLoading}
+					class="load-more-button"
+				>
+					{#if isLoading}
+						Loading...
+					{:else}
+						Load More
+					{/if}
+				</button>
+			</div>
+		{/if}
 	</div>
 </div>
 
@@ -297,5 +329,32 @@
 		.url-icon {
 			transition: none;
 		}
+	}
+
+	.load-more {
+		display: flex;
+		justify-content: center;
+		margin-top: var(--space-8);
+	}
+
+	.load-more-button {
+		padding: var(--space-4) var(--space-8);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		color: var(--text-color);
+		background: var(--bg-darker);
+		border: none;
+		border-radius: var(--radius-md);
+		cursor: pointer;
+		transition: all var(--transition-duration) var(--transition-timing);
+	}
+
+	.load-more-button:hover:not(:disabled) {
+		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
+	}
+
+	.load-more-button:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
 	}
 </style>
