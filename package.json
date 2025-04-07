@@ -45,7 +45,7 @@
 		"stylelint-config-standard": "^34.0.0",
 		"stylelint-declaration-strict-value": "^1.9.2",
 		"stylelint-order": "^6.0.3",
-		"svelte": "^5.0.0",
+		"svelte": "^5.25.8",
 		"svelte-check": "^4.0.0",
 		"typescript": "^5.0.0",
 		"typescript-eslint": "^8.0.0",
