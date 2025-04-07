@@ -1,7 +1,11 @@
+<script lang="ts">
+	import { currentYear } from '$lib/stores/date';
+</script>
+
 <footer class="footer">
 	<div class="container">
 		<p>
-			&copy; {new Date().getFullYear()} Russell Jones |
+			&copy; {$currentYear} Russell Jones |
 			<a
 				href="https://github.com/jonesrussell/me"
 				target="_blank"
