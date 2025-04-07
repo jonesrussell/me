@@ -34,9 +34,9 @@
 	];
 
 	const navLinks = [
-		{ href: '/projects', icon: '📁', text: 'Projects' },
-		{ href: '/blog', icon: '📝', text: 'Blog' },
-		{ href: '/contact', icon: '📧', text: 'Contact' }
+		{ href: '/blog', icon: '📝', text: 'Read my technical articles' },
+		{ href: '/projects', icon: '🚀', text: 'Browse my open source projects' },
+		{ href: '/contact', icon: '✉️', text: 'Get in touch' }
 	];
 </script>
 
