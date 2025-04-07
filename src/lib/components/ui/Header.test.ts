@@ -39,7 +39,9 @@ describe('Header', () => {
 		const { container } = render(Header);
 		const subtitle = container.querySelector('.subtitle-bar');
 		expect(subtitle).toBeInTheDocument();
-		expect(subtitle?.textContent?.trim()).toBe('Building elegant solutions with modern web technologies');
+		expect(subtitle?.textContent?.trim()).toBe(
+			'Building elegant solutions with modern web technologies'
+		);
 	});
 
 	it('has sticky positioning', () => {

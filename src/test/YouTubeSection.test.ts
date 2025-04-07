@@ -11,8 +11,14 @@ describe('YouTubeSection Component', () => {
 
 	it('renders section header correctly', () => {
 		render(YouTubeSection, testProps);
-		expect(screen.getByText('Check out my YouTube channel')).toBeInTheDocument();
-		expect(screen.getByText('I create content about web development, programming, and tech.')).toBeInTheDocument();
+		expect(
+			screen.getByText('Check out my YouTube channel')
+		).toBeInTheDocument();
+		expect(
+			screen.getByText(
+				'I create content about web development, programming, and tech.'
+			)
+		).toBeInTheDocument();
 	});
 
 	it('renders video iframe with correct props', () => {
@@ -20,8 +26,14 @@ describe('YouTubeSection Component', () => {
 
 		const iframe = screen.getByTitle(testProps.videoTitle);
 		expect(iframe).toBeInTheDocument();
-		expect(iframe).toHaveAttribute('src', `https://www.youtube.com/embed/${testProps.videoId}`);
-		expect(iframe).toHaveAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+		expect(iframe).toHaveAttribute(
+			'src',
+			`https://www.youtube.com/embed/${testProps.videoId}`
+		);
+		expect(iframe).toHaveAttribute(
+			'allow',
+			'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+		);
 		expect(iframe).toHaveAttribute('allowfullscreen');
 	});
 

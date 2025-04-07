@@ -33,9 +33,7 @@ describe('Terminal Component', () => {
 	});
 
 	it('shows initial command when loaded', async () => {
-		const testCommands = [
-			{ cmd: 'test', output: 'test output' }
-		];
+		const testCommands = [{ cmd: 'test', output: 'test output' }];
 		commands.set(testCommands);
 		terminal.loadCommands(testCommands);
 
