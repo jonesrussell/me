@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Terminal from '$lib/components/terminal/Terminal.svelte';
-	import Specialties from '$lib/components/Specialties.svelte';
+	import Specialties from '$lib/components/content/Specialties.svelte';
 	import YouTubeSection from '$lib/components/video/YouTubeSection.svelte';
 	import Navigation from '$lib/components/navigation/Navigation.svelte';
 
