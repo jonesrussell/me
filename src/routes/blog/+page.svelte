@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { blogPosts, fetchFeed } from '$services/blog-service';
+	import { blogPosts, fetchFeed } from '../../services/blog-service';
 	import { onMount } from 'svelte';
 	import BlogHeader from '$lib/components/blog/BlogHeader.svelte';
 	import BlogPost from '$lib/components/blog/BlogPost.svelte';
