@@ -1,13 +1,29 @@
-export function sanitizeText(text: string): string {
-    return text.replace(/<[^>]*>/g, '').trim();
+// Cache for memoized results
+const memoCache = new Map<string, string>();
+
+// Memoization helper
+function memoize<Args extends unknown[], Return>(fn: (...args: Args) => Return): (...args: Args) => Return {
+    return (...args: Args): Return => {
+        const key = JSON.stringify(args);
+        if (memoCache.has(key)) {
+            return memoCache.get(key)! as Return;
+        }
+        const result = fn(...args);
+        memoCache.set(key, result as string);
+        return result;
+    };
 }
 
-export function truncateDescription(text: string, maxLength = 280): string {
+export const sanitizeText = memoize((text: string): string => {
+    return text.replace(/<[^>]*>/g, '').trim();
+});
+
+export const truncateDescription = memoize((text: string, maxLength: number = 280): string => {
     if (!text || text.length <= maxLength) return text;
 
     // Try to find a natural sentence break
     const truncated = text.slice(0, maxLength);
-    const sentenceMatch = truncated.match(/(.*?[.!?])\s/);
+    const sentenceMatch = truncated.match(/(.*?[.!?])(?:\s|$)/);
 
     if (sentenceMatch) {
         return sentenceMatch[1] + '...';
@@ -21,9 +37,9 @@ export function truncateDescription(text: string, maxLength = 280): string {
 
     // If we can't find a good break point, just truncate
     return truncated + '...';
-}
+});
 
-export function formatDate(dateString: string): string {
+export const formatDate = memoize((dateString: string): string => {
     try {
         const date = new Date(dateString);
         if (isNaN(date.getTime())) {
@@ -38,15 +54,17 @@ export function formatDate(dateString: string): string {
         console.error('Error formatting date:', error);
         return dateString;
     }
-}
+});
 
-export function extractFirstMeaningfulParagraph(content: string): string {
-    const paragraphs = content.match(/<p>(.*?)<\/p>/g) || [];
+// Improved paragraph extraction with better HTML handling
+export const extractFirstMeaningfulParagraph = memoize((content: string): string => {
+    // Handle nested paragraphs and malformed HTML
+    const paragraphs = content.match(/<p[^>]*>(.*?)<\/p>/g) || [];
 
     // Find the first non-greeting paragraph
     for (const paragraph of paragraphs) {
-        const text = sanitizeText(paragraph.replace(/<p>|<\/p>/g, ''));
-        if (!text.match(/^(Ahnii!|Hello|Hi|Hey|Greetings)/i)) {
+        const text = sanitizeText(paragraph.replace(/<p[^>]*>|<\/p>/g, ''));
+        if (!text.match(/^(Ahnii!|Hello|Hi|Hey|Greetings|Welcome|Thanks|Thank you)/i)) {
             return text;
         }
     }
@@ -55,10 +73,15 @@ export function extractFirstMeaningfulParagraph(content: string): string {
     if (paragraphs.length > 0) {
         const firstParagraph = paragraphs[0];
         if (firstParagraph) {
-            return sanitizeText(firstParagraph.replace(/<p>|<\/p>/g, ''));
+            return sanitizeText(firstParagraph.replace(/<p[^>]*>|<\/p>/g, ''));
         }
     }
 
     // If no paragraphs found, return empty string
     return '';
-}
+});
+
+// Clear cache periodically to prevent memory leaks
+setInterval(() => {
+    memoCache.clear();
+}, 5 * 60 * 1000); // Clear every 5 minutes

@@ -12,17 +12,43 @@ interface FetchResult {
 	success: boolean;
 	data: XMLDocument | null;
 	error?: string;
+	etag?: string;
+	lastModified?: string;
 }
 
-// Cache for memoization
+// Enhanced cache interface
 interface FeedCache {
 	data: Post[];
 	timestamp: number;
 	etag?: string;
+	lastModified?: string;
+	errorCount: number;
+	lastError?: string;
+}
+
+// Error types for better error handling
+export interface BlogError {
+	type: 'FETCH_ERROR' | 'PARSE_ERROR' | 'VALIDATION_ERROR' | 'CACHE_ERROR';
+	message: string;
+	details?: unknown;
+	timestamp: number;
 }
 
 let feedCache: FeedCache | null = null;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const MAX_ERROR_COUNT = 3; // Maximum number of consecutive errors before forcing a refresh
+const ERROR_RESET_TIME = 30 * 60 * 1000; // Reset error count after 30 minutes
+
+// Error store for UI updates
+export const blogErrors = writable<BlogError[]>([]);
+
+function addError(error: BlogError) {
+	blogErrors.update(errors => {
+		const newErrors = [...errors, error];
+		// Keep only the last 10 errors
+		return newErrors.slice(-10);
+	});
+}
 
 async function fetchXML(url: string): Promise<FetchResult> {
 	try {
@@ -30,18 +56,35 @@ async function fetchXML(url: string): Promise<FetchResult> {
 		if (feedCache?.etag) {
 			headers.set('If-None-Match', feedCache.etag);
 		}
+		if (feedCache?.lastModified) {
+			headers.set('If-Modified-Since', feedCache.lastModified);
+		}
 
 		const response = await fetch(url, { headers });
 
 		if (response.status === 304) {
-			return { success: true, data: null };
+			return {
+				success: true,
+				data: null,
+				etag: response.headers.get('etag') || undefined,
+				lastModified: response.headers.get('last-modified') || undefined
+			};
 		}
 
 		if (!response.ok) {
+			const error: BlogError = {
+				type: 'FETCH_ERROR',
+				message: `Failed to fetch feed: ${response.statusText}`,
+				details: { status: response.status },
+				timestamp: Date.now()
+			};
+			addError(error);
 			return {
 				success: false,
 				data: null,
-				error: `Failed to fetch feed: ${response.statusText}`
+				error: error.message,
+				etag: response.headers.get('etag') || undefined,
+				lastModified: response.headers.get('last-modified') || undefined
 			};
 		}
 
@@ -51,25 +94,83 @@ async function fetchXML(url: string): Promise<FetchResult> {
 
 		// Validate XML structure
 		if (!xml.querySelector('entry')) {
+			const error: BlogError = {
+				type: 'PARSE_ERROR',
+				message: 'Invalid XML format: No entries found',
+				timestamp: Date.now()
+			};
+			addError(error);
 			return {
 				success: false,
 				data: null,
-				error: 'Invalid XML format: No entries found'
+				error: error.message,
+				etag: response.headers.get('etag') || undefined,
+				lastModified: response.headers.get('last-modified') || undefined
 			};
 		}
 
 		return {
 			success: true,
 			data: xml,
-			error: response.headers.get('etag') || undefined
+			etag: response.headers.get('etag') || undefined,
+			lastModified: response.headers.get('last-modified') || undefined
 		};
 	} catch (error) {
+		const blogError: BlogError = {
+			type: 'FETCH_ERROR',
+			message: error instanceof Error ? error.message : 'Unknown error occurred',
+			details: error,
+			timestamp: Date.now()
+		};
+		addError(blogError);
 		return {
 			success: false,
 			data: null,
-			error: error instanceof Error ? error.message : 'Unknown error occurred'
+			error: blogError.message
 		};
 	}
+}
+
+// Pagination interface
+interface PaginationOptions {
+	page: number;
+	pageSize: number;
+}
+
+interface PaginatedResult<T> {
+	items: T[];
+	total: number;
+	page: number;
+	pageSize: number;
+	hasMore: boolean;
+}
+
+function shouldInvalidateCache(cache: FeedCache, result: FetchResult): boolean {
+	// Force refresh if we've had too many errors
+	if (cache.errorCount >= MAX_ERROR_COUNT) {
+		return true;
+	}
+
+	// Check if etag or lastModified has changed
+	if (result.etag && result.etag !== cache.etag) {
+		return true;
+	}
+	if (result.lastModified && result.lastModified !== cache.lastModified) {
+		return true;
+	}
+
+	// Check if cache is too old
+	if (Date.now() - cache.timestamp > CACHE_DURATION) {
+		return true;
+	}
+
+	// Reset error count if it's been a while since the last error
+	if (cache.lastError && Date.now() - cache.timestamp > ERROR_RESET_TIME) {
+		cache.errorCount = 0;
+		cache.lastError = undefined;
+	}
+
+	return false;
 }
 
 function validatePost(post: Partial<Post>): post is Post {
@@ -113,45 +214,97 @@ function parsePost(entry: Element): Post {
 	}
 }
 
-export async function fetchFeed(): Promise<Post[]> {
+export async function fetchFeed(options?: PaginationOptions): Promise<PaginatedResult<Post>> {
 	// Check cache first
-	if (feedCache && Date.now() - feedCache.timestamp < CACHE_DURATION) {
-		return feedCache.data;
+	if (feedCache && !shouldInvalidateCache(feedCache, { success: true, data: null })) {
+		const { page = 1, pageSize = 10 } = options || {};
+		const start = (page - 1) * pageSize;
+		const end = start + pageSize;
+		const items = feedCache.data.slice(start, end);
+
+		return {
+			items,
+			total: feedCache.data.length,
+			page,
+			pageSize,
+			hasMore: end < feedCache.data.length
+		};
 	}
 
 	const result = await fetchXML('https://jonesrussell.github.io/blog/feed.xml');
 
 	if (!result.success) {
+		if (feedCache) {
+			feedCache.errorCount++;
+			feedCache.lastError = result.error;
+		}
 		console.error('Failed to fetch feed:', result.error);
-		return feedCache?.data || [];
+		return {
+			items: feedCache?.data || [],
+			total: feedCache?.data.length || 0,
+			page: options?.page || 1,
+			pageSize: options?.pageSize || 10,
+			hasMore: false
+		};
 	}
 
 	// If we got a 304 Not Modified, return cached data
 	if (!result.data) {
-		return feedCache?.data || [];
+		const { page = 1, pageSize = 10 } = options || {};
+		const start = (page - 1) * pageSize;
+		const end = start + pageSize;
+		const items = feedCache?.data.slice(start, end) || [];
+
+		return {
+			items,
+			total: feedCache?.data.length || 0,
+			page,
+			pageSize,
+			hasMore: end < (feedCache?.data.length || 0)
+		};
 	}
 
 	const entries = Array.from(result.data.querySelectorAll('entry'));
 	const posts = entries.map(parsePost).filter(validatePost);
 
-	// Update cache
+	// Update cache with error count reset
 	feedCache = {
 		data: posts,
 		timestamp: Date.now(),
-		etag: result.error
+		etag: result.etag,
+		lastModified: result.lastModified,
+		errorCount: 0,
+		lastError: undefined
 	};
 
-	return posts;
+	const { page = 1, pageSize = 10 } = options || {};
+	const start = (page - 1) * pageSize;
+	const end = start + pageSize;
+	const items = posts.slice(start, end);
+
+	return {
+		items,
+		total: posts.length,
+		page,
+		pageSize,
+		hasMore: end < posts.length
+	};
 }
 
 export const blogPosts = writable<Post[]>([]);
 
-export async function loadBlogPosts() {
+export async function loadBlogPosts(options?: PaginationOptions) {
 	try {
-		const posts = await fetchFeed();
-		blogPosts.set(posts);
+		const result = await fetchFeed(options);
+		blogPosts.set(result.items);
 	} catch (error) {
-		console.error('Error loading blog posts:', error);
+		const blogError: BlogError = {
+			type: 'FETCH_ERROR',
+			message: error instanceof Error ? error.message : 'Failed to load blog posts',
+			details: error,
+			timestamp: Date.now()
+		};
+		addError(blogError);
 		blogPosts.set([]);
 	}
 }
