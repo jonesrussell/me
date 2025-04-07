@@ -10,6 +10,21 @@ type TerminalState = {
 	commandVisible: string;
 	outputVisible: string;
 	isTyping: boolean;
+	debug?: {
+		headerHeight: number;
+		padding: number;
+		maxLines: number;
+		rawHeight: number;
+		totalHeight: string;
+		currentLines: number;
+		commands: {
+			cmd: string;
+			lines: number;
+			height: number;
+			breakdown: string;
+		}[];
+	};
+	height?: string;
 	loadCommands: (commands: Command[]) => void;
 	start: () => void;
 	stop: () => void;
