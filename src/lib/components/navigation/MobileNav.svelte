@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+
 	const {
-		url = new URL('/', 'https://jonesrussell.github.io/me'),
+		url = $page.url,
 		isOpen,
 		toggleMenu
 	} = $props<{
@@ -14,26 +16,29 @@
 	$effect(() => {
 		currentPath = url.pathname;
 	});
+
+	function isActive(path: string) {
+		return (
+			currentPath === path ||
+			currentPath === `${path}/` ||
+			currentPath === `/me${path}` ||
+			currentPath === `/me${path}/`
+		);
+	}
 </script>
 
 <nav class="mobile-nav" class:open={isOpen} aria-label="Main navigation">
-	<a href="/blog" class:active={currentPath === '/blog'} onclick={toggleMenu}
-		>Blog</a
-	>
-	<a
-		href="/projects"
-		class:active={currentPath === '/projects'}
-		onclick={toggleMenu}>Projects</a
+	<a href="/blog" class:active={isActive('/blog')} onclick={toggleMenu}>Blog</a>
+	<a href="/projects" class:active={isActive('/projects')} onclick={toggleMenu}
+		>Projects</a
 	>
 	<a
 		href="/resources"
-		class:active={currentPath === '/resources'}
+		class:active={isActive('/resources')}
 		onclick={toggleMenu}>Resources</a
 	>
-	<a
-		href="/contact"
-		class:active={currentPath === '/contact'}
-		onclick={toggleMenu}>Contact</a
+	<a href="/contact" class:active={isActive('/contact')} onclick={toggleMenu}
+		>Contact</a
 	>
 </nav>
 
