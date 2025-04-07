@@ -176,7 +176,7 @@ Commands:
 
 	.command-output {
 		margin-top: var(--space-2);
-		padding-left: var(--space-6);
+		padding-left: calc(var(--ch) * 3);
 
 		font-size: var(--font-size-sm);
 		font-weight: var(--font-weight-normal);

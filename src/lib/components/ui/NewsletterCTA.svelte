@@ -88,7 +88,7 @@
 
 			{#if submitStatus === 'success'}
 				<div class="success-message">
-					<span class="icon">✓</span> Successfully subscribed! Welcome aboard.
+					<span class="icon">✓</span> Message sent successfully
 				</div>
 			{/if}
 
@@ -105,15 +105,11 @@
 <style>
 	.newsletter {
 		display: flex;
-
 		width: 100%;
 		padding: var(--space-8);
-
-		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-lg);
-		justify-content: center;
+		background: var(--color-mix-light) var(--color-mix-light);
+		flex-direction: column;
+		gap: var(--ch2);
 	}
 
 	.newsletter-content {

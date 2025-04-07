@@ -24,8 +24,8 @@ Usage:
 	}>();
 </script>
 
-<div class="grid" style:--cols={cols} style:--gap={`var(--space-${gap})`}>
-	{@render children()}
+<div class="grid" style:--cols={cols} style:--gap={`var(--ch${gap})`}>
+	{children()}
 </div>
 
 <style>
