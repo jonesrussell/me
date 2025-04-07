@@ -107,7 +107,7 @@
 		display: flex;
 		width: 100%;
 		padding: var(--space-8);
-		background: var(--color-mix-light) var(--color-mix-light);
+		background: var(--color-mix-light);
 		flex-direction: column;
 		gap: var(--ch2);
 	}
