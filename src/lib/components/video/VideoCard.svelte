@@ -17,12 +17,17 @@
 				loading="lazy"
 			></iframe>
 		</div>
-		<h3 class="video-title">{video.title}</h3>
-		<p class="description">{video.description}</p>
-		<div class="topics">
-			{#each video.topics as topic}
-				<span class="topic">{topic}</span>
-			{/each}
+		<div class="video-info">
+			<h3 class="video-title">{video.title}</h3>
+			{#if video.date}
+				<time class="video-date">{video.date}</time>
+			{/if}
+			<p class="description">{video.description}</p>
+			<div class="topics">
+				{#each video.topics as topic}
+					<span class="topic">{topic}</span>
+				{/each}
+			</div>
 		</div>
 	</div>
 </Box>
@@ -52,11 +57,22 @@
 		border: 0;
 	}
 
+	.video-info {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+	}
+
 	.video-title {
-		margin: 0 0 var(--space-2) 0;
+		margin: 0;
 		font-size: var(--font-size-base);
 		line-height: var(--line-height-tight);
 		color: var(--text-color);
+	}
+
+	.video-date {
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
 	}
 
 	.description {
