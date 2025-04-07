@@ -47,13 +47,15 @@
 </section>
 
 <main class="home">
-	<Specialties {specialties} />
-	<YouTubeSection
-		channelUrl={YOUTUBE_CHANNEL}
-		videoId={YOUTUBE_VIDEO_ID}
-		videoTitle={YOUTUBE_VIDEO_TITLE}
-	/>
-	<Navigation links={navLinks} />
+	<div class="container">
+		<Specialties {specialties} />
+		<YouTubeSection
+			channelUrl={YOUTUBE_CHANNEL}
+			videoId={YOUTUBE_VIDEO_ID}
+			videoTitle={YOUTUBE_VIDEO_TITLE}
+		/>
+		<Navigation links={navLinks} />
+	</div>
 </main>
 
 <style>
@@ -66,10 +68,9 @@
 		min-height: 50vh;
 		padding: var(--space-8) var(--space-4);
 		background: linear-gradient(to bottom, var(--bg-color), var(--bg-darker));
-		container-type: inline-size;
 	}
 
-	@container (width > 48ch) {
+	@media (width >= 48ch) {
 		.hero {
 			min-height: 60vh;
 			padding: var(--space-16) var(--space-8);
@@ -77,22 +78,8 @@
 	}
 
 	.home {
-		container-type: inline-size;
-		max-width: min(var(--measure) * 1.5, 95cqi);
-		margin-inline: auto;
-		padding: var(--space-16) var(--space-4);
-	}
-
-	@container (width > 48ch) {
-		.home {
-			padding: var(--space-16) var(--space-8);
-		}
-	}
-
-	@container (width > 80ch) {
-		.home {
-			max-width: min(var(--measure) * 2, 95cqi);
-		}
+		width: 100%;
+		padding: var(--space-16) 0;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
