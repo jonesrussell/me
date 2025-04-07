@@ -1,6 +1,10 @@
 <script lang="ts">
-	const { url, isOpen, toggleMenu } = $props<{
-		url: URL;
+	const {
+		url = new URL('/', 'https://jonesrussell.github.io/me'),
+		isOpen,
+		toggleMenu
+	} = $props<{
+		url?: URL;
 		isOpen: boolean;
 		toggleMenu: () => void;
 	}>();

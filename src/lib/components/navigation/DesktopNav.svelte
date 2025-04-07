@@ -1,5 +1,7 @@
 <script lang="ts">
-	const { url } = $props<{ url: URL }>();
+	const { url = new URL('/', 'https://jonesrussell.github.io/me') } = $props<{
+		url?: URL;
+	}>();
 
 	let currentPath = $state(url.pathname);
 
