@@ -13,7 +13,7 @@ const config = {
 			base: process.env.NODE_ENV === 'production' ? '/me' : ''
 		},
 		prerender: {
-			handleHttpError: ({ path, referrer, message }) => {
+			handleHttpError: ({ path, _referrer, message }) => {
 				// ignore 404s from the root path
 				if (path === '/' || path === '/me/') {
 					return;

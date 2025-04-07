@@ -75,14 +75,18 @@ declare module '@sveltejs/kit' {
 		routeId: string | null;
 		status: number;
 		error: Error | null;
-		data: Record<string, any>;
+		data: Record<string, unknown>;
 		url: URL;
 	}
 }
 
 // Svelte 5 Component types
 declare module 'svelte' {
-	interface Component<Props = Record<string, any>, Events = Record<string, any>, Slots = string> {
+	interface Component<
+		Props extends Record<string, unknown> = Record<string, unknown>,
+		Events extends Record<string, CustomEvent<unknown>> = Record<string, CustomEvent<unknown>>,
+		Slots extends string = string
+	> {
 		(props: Props): {
 			$$prop_def: Props;
 			$$events_def: Events;
