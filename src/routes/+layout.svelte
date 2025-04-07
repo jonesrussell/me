@@ -4,9 +4,12 @@
 	import Header from '$lib/components/ui/Header.svelte';
 	import Footer from '$lib/components/ui/Footer.svelte';
 	import type { SvelteComponent } from 'svelte';
-	const { children, url } = $props<{
-		children: () => SvelteComponent;
-		url: URL;
+	import { page } from '$app/stores';
+
+	const { data } = $props<{
+		data: {
+			children: () => SvelteComponent;
+		};
 	}>();
 </script>
 
@@ -37,9 +40,9 @@
 <SkipToMain />
 
 <div class="site">
-	<Header {url} />
+	<Header url={$page.url} />
 
-	{@render children()}
+	{@render data.children()}
 
 	<Footer />
 </div>
