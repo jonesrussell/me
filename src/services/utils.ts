@@ -29,7 +29,7 @@ export const sanitizeText = memoize((text: string): string => {
 		allowedSchemesAppliedToAttributes: [], // No schemes allowed for any attribute
 		allowProtocolRelative: false, // No protocol-relative URLs
 		enforceHtmlBoundary: true, // Enforce HTML boundary
-		parseStyleAttributes: false, // Don't parse style attributes
+		parseStyleAttributes: false // Don't parse style attributes
 	}).trim();
 });
 
