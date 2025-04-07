@@ -10,17 +10,15 @@
 		title?: string;
 		width?: number;
 		style?: string;
-		children: any;
+		children?: () => any;
 	}>();
-
-	const alignedWidth = $derived(alignToGrid(width));
 </script>
 
 <div
 	class="box"
 	style="
 
---box-width: {alignedWidth}ch; {style}"
+		--box-width: {alignToGrid(width)}ch; {style}"
 >
 	<div class="box-frame">
 		{#if title}
@@ -28,11 +26,7 @@
 		{/if}
 
 		<div class="content">
-			{#if typeof children === 'function'}
-				{children()}
-			{:else}
-				{children}
-			{/if}
+			{@render children()}
 		</div>
 	</div>
 </div>
