@@ -233,29 +233,6 @@
 			},
 			{} as Record<string, Resource[]>
 		);
-
-	function getCategoryIcon(category: string): string {
-		switch (category) {
-			case 'Essential Tools & Platforms':
-				return '🚀';
-			case 'AI':
-				return '🤖';
-			case 'Documentation':
-				return '📚';
-			case 'Go':
-				return '🏃';
-			case 'Web Development':
-				return '🌐';
-			case 'DevOps':
-				return '🛠️';
-			case 'Tools':
-				return '🔧';
-			case 'Learning Paths':
-				return '📖';
-			default:
-				return '📌';
-		}
-	}
 </script>
 
 <svelte:head>
