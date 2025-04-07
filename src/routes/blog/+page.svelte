@@ -1,6 +1,6 @@
 <script lang="ts">
 	import devToProfile from '$lib/images/dev.to.jpeg?enhanced';
-	import { blogPosts, fetchFeed, formatDate } from '$services/blogService';
+	import { blogPosts, fetchFeed, formatDate } from '$services/blog-service';
 	import { onMount } from 'svelte';
 	import Box from '$lib/components/Box.svelte';
 
