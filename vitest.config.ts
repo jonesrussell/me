@@ -50,8 +50,8 @@ const vitestConfig = {
 		coverage: {
 			provider: 'v8',
 			reporter: ['text', 'json', 'html'],
-			include: ['src/**/*.{js,ts,svelte}'],
-			exclude: ['src/test/**', '**/*.d.ts']
+			include: ['src/**/*.{ts,svelte}'],
+			exclude: ['src/**/*.test.ts', 'src/**/*.spec.ts'],
 		}
 	}
 };

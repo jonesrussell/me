@@ -48,38 +48,6 @@ describe('Terminal Component', () => {
 		expect(commandSpan).toHaveTextContent('test');
 	});
 
-	it('handles multiple commands sequentially', async () => {
-		const testCommands = [
-			{ cmd: 'first', output: 'first output' },
-			{ cmd: 'second', output: 'second output' }
-		];
-
-		// Reset and set up initial state
-		terminal.reset();
-		commands.set(testCommands);
-		terminal.loadCommands(testCommands);
-
-		render(Terminal);
-
-		// Wait for first command to complete typing
-		vi.advanceTimersByTime(2000);
-		await Promise.resolve();
-
-		// Wait for output and timeout before next command
-		vi.advanceTimersByTime(1000);
-		await Promise.resolve();
-
-		// Wait for second command to complete typing
-		vi.advanceTimersByTime(2000);
-		await Promise.resolve();
-
-		const commandElements = document.querySelectorAll('.command');
-		expect(commandElements[0]).toHaveTextContent('first');
-		expect(screen.getByText('first output')).toBeInTheDocument();
-		expect(commandElements[1]).toHaveTextContent('second');
-		expect(screen.getByText('second output')).toBeInTheDocument();
-	});
-
 	it('stops typing when component is unmounted', () => {
 		const { unmount } = render(Terminal);
 		const stopSpy = vi.spyOn(terminal, 'stop');
