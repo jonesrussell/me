@@ -13,13 +13,7 @@
 		"module": "esnext",
 		"target": "esnext",
 		"lib": ["esnext", "dom"],
-		"types": ["svelte", "vitest/globals"],
-		"paths": {
-			"$lib": ["./src/lib"],
-			"$lib/*": ["./src/lib/*"],
-			"$app/state": ["./src/lib/types/sveltekit.d.ts"],
-			"$app/paths": ["./src/lib/types/sveltekit.d.ts"]
-		}
+		"types": ["svelte", "vitest/globals"]
 	},
 	"include": [
 		"src/**/*.d.ts",
@@ -27,6 +21,5 @@
 		"src/**/*.js",
 		"src/**/*.svelte",
 		"src/lib/types/**/*.d.ts"
-	],
-	"references": [{ "path": "./tsconfig.node.json" }]
+	]
 }
