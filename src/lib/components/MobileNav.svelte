@@ -15,7 +15,6 @@
 </script>
 
 <nav class="mobile-nav" class:open={isOpen} aria-label="Main navigation">
-	<a href="/" class:active={currentPath === '/'} onclick={toggleMenu}>Home</a>
 	<a href="/blog" class:active={currentPath === '/blog'} onclick={toggleMenu}
 		>Blog</a
 	>
@@ -28,6 +27,11 @@
 		href="/resources"
 		class:active={currentPath === '/resources'}
 		onclick={toggleMenu}>Resources</a
+	>
+	<a
+		href="/contact"
+		class:active={currentPath === '/contact'}
+		onclick={toggleMenu}>Contact</a
 	>
 </nav>
 
