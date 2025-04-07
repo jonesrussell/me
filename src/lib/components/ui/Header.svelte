@@ -2,7 +2,7 @@
 	import DesktopNav from '$lib/components/navigation/DesktopNav.svelte';
 	import MobileNav from '$lib/components/navigation/MobileNav.svelte';
 
-	const { url } = $props<{ url: URL }>();
+	const { url = { pathname: '/' } } = $props<{ url?: { pathname: string } }>();
 
 	let isMobileMenuOpen = $state(false);
 
@@ -14,7 +14,7 @@
 <header class="site-header">
 	<div class="header-content">
 		<div class="header-main">
-			<a href="/" class="title">Limitless Developer</a>
+			<a href="/" class="title">Russell Jones</a>
 			<button
 				class="menu-toggle"
 				type="button"
@@ -24,7 +24,29 @@
 				<span class="menu-icon">☰</span>
 				<span class="sr-only">Toggle menu</span>
 			</button>
-			<DesktopNav {url} />
+			<nav class="header-nav">
+				<a
+					href="/"
+					class:active={url.pathname === '/'}
+					aria-current={url.pathname === '/' ? 'page' : undefined}>Home</a
+				>
+				<a
+					href="/blog"
+					class:active={url.pathname === '/blog'}
+					aria-current={url.pathname === '/blog' ? 'page' : undefined}>Blog</a
+				>
+				<a
+					href="/projects"
+					class:active={url.pathname === '/projects'}
+					aria-current={url.pathname === '/projects' ? 'page' : undefined}
+					>Projects</a
+				>
+				<a
+					href="/about"
+					class:active={url.pathname === '/about'}
+					aria-current={url.pathname === '/about' ? 'page' : undefined}>About</a
+				>
+			</nav>
 			<MobileNav
 				{url}
 				isOpen={isMobileMenuOpen}
@@ -33,9 +55,7 @@
 		</div>
 	</div>
 	<div class="subtitle-bar">
-		<div class="container">
-			Building elegant solutions with modern web technologies
-		</div>
+		<div class="container">Limitless Developer</div>
 	</div>
 </header>
 

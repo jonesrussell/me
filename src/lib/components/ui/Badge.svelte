@@ -14,10 +14,9 @@
 	};
 </script>
 
-<span class="badge {badgeType}">
-	{symbols[badgeType as BadgeType]}
-	{@render children()}
-</span>
+<span class="badge {badgeType}"
+	>{symbols[badgeType as BadgeType]} {children()}</span
+>
 
 <style>
 	.badge {

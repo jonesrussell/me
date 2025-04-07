@@ -49,7 +49,10 @@
 				"vscode.css-language-features",
 				"vscode.html-language-features",
 				"vscode.json-language-features",
-				"vscode.markdown-language-features"
+				"vscode.markdown-language-features",
+				"GitHub.vscode-pull-request-github",
+				"hbenl.vscode-test-explorer",
+				"ms-playwright.playwright"
 			],
 			"settings": {
 				"editor.formatOnSave": true,

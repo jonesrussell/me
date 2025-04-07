@@ -25,7 +25,7 @@
 	.footer {
 		container-type: inline-size;
 		padding: var(--space-8) 0;
-		border-top: var(--border-width) solid var(--border-color);
+		border-top: 1px solid var(--border-color);
 		font-size: var(--font-size-sm);
 		text-align: center;
 		background: var(--bg-darker);
