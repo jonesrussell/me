@@ -4,15 +4,15 @@
 	"rules": {
 		"unit-allowed-list": [
 			"ch",
-			"ms",
+			"px",
 			"%",
 			"deg",
 			"vh",
 			"vw",
-			"px",
 			"fr",
 			"s",
-			"cqi"
+			"cqi",
+			"ms"
 		],
 		"unit-disallowed-list": ["em", "rem"],
 		"selector-pseudo-class-no-unknown": [
@@ -24,7 +24,11 @@
 		"custom-property-pattern": null,
 		"selector-class-pattern": null,
 		"keyframes-name-pattern": null,
-		"media-query-no-invalid": null
+		"media-query-no-invalid": null,
+		"no-descending-specificity": null,
+		"declaration-block-no-redundant-longhand-properties": null,
+		"font-family-no-missing-generic-family-keyword": null,
+		"value-keyword-case": ["lower", { "ignoreProperties": ["font-family"] }]
 	},
 	"overrides": [
 		{
