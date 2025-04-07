@@ -7,8 +7,8 @@
 	const devToUrl = 'https://dev.to/jonesrussell' as const;
 
 	onMount(async () => {
-		const fetchedPosts = await fetchFeed();
-		blogPosts.set(fetchedPosts);
+		const result = await fetchFeed();
+		blogPosts.set(result.items);
 	});
 </script>
 
