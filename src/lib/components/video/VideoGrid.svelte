@@ -8,7 +8,7 @@
 <section>
 	<h2>Creative Storytelling</h2>
 	<div class="video-grid">
-		{#each videos as video}
+		{#each videos as video (video.title)}
 			<VideoCard {video} />
 		{/each}
 	</div>

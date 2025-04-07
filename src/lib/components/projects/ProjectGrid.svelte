@@ -8,7 +8,7 @@
 <section>
 	<h2>Open Source Projects</h2>
 	<div class="project-grid">
-		{#each projects as project}
+		{#each projects as project (project.title)}
 			<ProjectCard {project} />
 		{/each}
 	</div>

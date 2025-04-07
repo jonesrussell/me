@@ -250,7 +250,7 @@
 			description="A curated collection of tools, documentation, and learning resources for modern software development."
 		/>
 
-		{#each Object.entries(groupedResources) as [category, items]}
+		{#each Object.entries(groupedResources) as [category, items] (category)}
 			<ResourceSection {category} resources={items} />
 		{/each}
 
