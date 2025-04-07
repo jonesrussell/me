@@ -1,10 +1,5 @@
 <script lang="ts">
-	import {
-		commands,
-		debug,
-		terminal,
-		terminalHeight
-	} from '$lib/stores/terminal';
+	import { commands, terminal, terminalHeight } from '$lib/stores/terminal';
 	import { get } from 'svelte/store';
 	const props = $props();
 	const title = props.title || '~/developer';
@@ -12,16 +7,6 @@
 	$effect(() => {
 		terminal.loadCommands(); // Will use default commands
 		return () => terminal.stop();
-	});
-
-	// Debug logging
-	$effect(() => {
-		if (import.meta.env.DEV) {
-			console.log('Terminal Debug State:', {
-				height: $terminalHeight,
-				debug: $debug
-			});
-		}
 	});
 </script>
 
@@ -59,34 +44,6 @@
 			</div>
 		{/each}
 	</div>
-	{#if import.meta.env.DEV}
-		<div class="debug">
-			<pre>
-Height Calculations:
-------------------
-Header Height: {$debug.headerHeight}ch
-Padding: {$debug.padding}ch
-Max Lines: {$debug.maxLines}
-Raw Height: {$debug.rawHeight}ch
-Final Height: {$debug.totalHeight}
-
-Current State:
--------------
-Current Lines: {$debug.currentLines}
-
-Commands:
---------
-{$debug.commands
-					.map(
-						(c) => `${c.cmd}:
-  Lines: ${c.lines}
-
-  Breakdown: ${c.breakdown}`
-					)
-					.join('\n')}
-			</pre>
-		</div>
-	{/if}
 </div>
 
 <style>
@@ -219,26 +176,6 @@ Commands:
 		50% {
 			opacity: 0;
 		}
-	}
-
-	.debug {
-		position: absolute;
-		top: calc(100% + var(--space-4));
-		right: 0;
-		left: 0;
-
-		margin-bottom: var(--space-8);
-		padding: var(--space-4);
-
-		font-family: var(--font-mono);
-		font-size: var(--font-size-xs);
-
-		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-md);
-		box-shadow: var(--shadow-md);
-		z-index: 100;
-		white-space: pre;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
