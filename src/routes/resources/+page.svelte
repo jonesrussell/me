@@ -1,19 +1,11 @@
 <script lang="ts">
-	import Box from '$lib/components/Box.svelte';
-	import Badge from '$lib/components/Badge.svelte';
-	import { onMount } from 'svelte';
-
-	interface Resource {
-		title: string;
-		description: string;
-		url: string;
-		category: string;
-		stars?: number;
-		featured?: boolean;
-	}
+	import ResourceSection from '$lib/components/ResourceSection.svelte';
+	import FeaturedVideos from '$lib/components/FeaturedVideos.svelte';
+	import ResourceHeader from '$lib/components/ResourceHeader.svelte';
+	import type { Resource, YouTubeChannel } from '$lib/types';
 
 	// YouTube channel info
-	const youtubeChannel = {
+	const youtubeChannel: YouTubeChannel = {
 		name: 'Full Stack Dev',
 		url: 'https://www.youtube.com/@fullstackdev42',
 		description: 'Practical web development tutorials and coding insights',
@@ -23,11 +15,12 @@
 				url: 'https://youtu.be/B4v7ZDLxiS4',
 				embedId: 'B4v7ZDLxiS4',
 				description:
-					'Learn how to integrate custom Google Fonts with Tailwind CSS'
+					'Learn how to integrate custom Google Fonts with Tailwind CSS',
+				topics: ['Tailwind CSS', 'Web Development', 'CSS', 'Frontend'],
+				date: 'Dec 2023'
 			}
-			// Add more featured videos as needed
 		]
-	} as const;
+	};
 
 	const resources: Resource[] = [
 		// Featured Content
@@ -36,7 +29,7 @@
 			url: youtubeChannel.url,
 			description:
 				'Live streams and tutorials on modern web development, AI pair programming, and coding best practices',
-			category: 'Featured Content',
+			category: 'Essential Tools & Platforms',
 			featured: true
 		},
 		{
@@ -44,7 +37,7 @@
 			url: 'https://cursor.sh',
 			description:
 				'The AI-first code editor. Built for pair programming with AI.',
-			category: 'Featured Content',
+			category: 'Essential Tools & Platforms',
 			featured: true
 		},
 
@@ -217,11 +210,14 @@
 
 	// Group resources by category with featured content first
 	const groupedResources = [
-		...new Set(['Featured Content', ...resources.map((r) => r.category)])
+		...new Set([
+			'Essential Tools & Platforms',
+			...resources.map((r) => r.category)
+		])
 	]
 		.sort((a, b) => {
-			if (a === 'Featured Content') return -1;
-			if (b === 'Featured Content') return 1;
+			if (a === 'Essential Tools & Platforms') return -1;
+			if (b === 'Essential Tools & Platforms') return 1;
 			return a.localeCompare(b);
 		})
 		.reduce(
@@ -240,8 +236,8 @@
 
 	function getCategoryIcon(category: string): string {
 		switch (category) {
-			case 'Featured Content':
-				return '🎥';
+			case 'Essential Tools & Platforms':
+				return '🚀';
 			case 'AI':
 				return '🤖';
 			case 'Documentation':
@@ -251,410 +247,80 @@
 			case 'Web Development':
 				return '🌐';
 			case 'DevOps':
-				return '🔄';
-			case 'Tools':
 				return '🛠️';
+			case 'Tools':
+				return '🔧';
 			case 'Learning Paths':
-				return '🎓';
+				return '📖';
 			default:
-				return '📦';
+				return '📌';
 		}
 	}
-
-	function formatUrl(url: string): string {
-		return url.replace(/^https?:\/\//, '');
-	}
-
-	// Debug layout
-	let containerWidth = $state(0);
-	let columnCount = $state(0);
-	let categoryWidths = $state<Record<string, number>>({});
-
-	onMount(() => {
-		const resizeObserver = new ResizeObserver((entries) => {
-			for (const entry of entries) {
-				if (entry.target.classList.contains('resources')) {
-					containerWidth = entry.contentRect.width;
-					console.log('Container width:', containerWidth);
-				}
-				if (entry.target.classList.contains('categories')) {
-					const computed = window.getComputedStyle(entry.target);
-					columnCount = computed.gridTemplateColumns.split(' ').length;
-					console.log('Grid columns:', columnCount);
-				}
-				if (entry.target.classList.contains('category')) {
-					const category =
-						entry.target.querySelector('h2')?.textContent?.trim() || 'unknown';
-					categoryWidths = {
-						...categoryWidths,
-						[category]: entry.contentRect.width
-					};
-					console.log('Category width:', category, entry.contentRect.width);
-				}
-			}
-		});
-
-		const containers = document.querySelectorAll(
-			'.resources, .categories, .category'
-		);
-		containers.forEach((container) => resizeObserver.observe(container));
-
-		return () => resizeObserver.disconnect();
-	});
-
-	$effect(() => {
-		console.log('Layout debug:', {
-			containerWidth,
-			columnCount,
-			categoryWidths
-		});
-	});
 </script>
 
 <svelte:head>
-	<title>Developer Resources | Russell Jones - Tools & Learning Materials</title
-	>
+	<title>Resources | Russell Jones - Go & Modern Web Development</title>
 	<meta
 		name="description"
-		content="An ever-growing collection of development resources, tools, and learning materials. Includes video tutorials, documentation, Go libraries, web development frameworks, DevOps tools, and learning paths."
+		content="Curated collection of development resources, tutorials, and tools for Go, web development, and modern software engineering."
 	/>
 </svelte:head>
 
 <div class="resources">
-	<div class="header">
-		<h1>Development Resources</h1>
-		<p class="subtitle">
-			A curated collection of tools, documentation, and learning materials.
-			Updated regularly with new discoveries and community recommendations.
-		</p>
-	</div>
+	<div class="container">
+		<ResourceHeader
+			title="Development Resources"
+			description="A curated collection of tools, documentation, and learning resources for modern software development."
+		/>
 
-	<div class="categories">
 		{#each Object.entries(groupedResources) as [category, items]}
-			<section class="category">
-				<div class="category-header">
-					<span class="category-icon">{getCategoryIcon(category)}</span>
-					<h2 class="category-title">{category}</h2>
-				</div>
-				<div class="resource-list">
-					{#if category === 'Featured Content' && items[0]?.url === youtubeChannel.url}
-						<div class="youtube-section">
-							<div class="youtube-header">
-								<span class="youtube-icon">▶</span>
-								<h3 class="youtube-title">Latest Video Tutorial</h3>
-							</div>
-							<div class="video-card">
-								<div class="video-container">
-									<iframe
-										src={`https://www.youtube.com/embed/${youtubeChannel.featuredVideos[0].embedId}`}
-										title={youtubeChannel.featuredVideos[0].title}
-										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-										allowfullscreen
-										loading="lazy"
-									></iframe>
-								</div>
-								<div class="video-info">
-									<h4 class="video-title">
-										{youtubeChannel.featuredVideos[0].title}
-									</h4>
-									<p class="video-description">
-										{youtubeChannel.featuredVideos[0].description}
-									</p>
-								</div>
-							</div>
-							<a
-								href={youtubeChannel.url}
-								class="subscribe-link"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								<span class="youtube-icon">▶</span>
-								<span>Subscribe to Channel</span>
-							</a>
-						</div>
-					{/if}
-					{#each items as resource}
-						{#if !resource.featured || category !== 'Featured Content'}
-							<Box width={60}>
-								<div class="resource">
-									<div class="resource-header">
-										<a
-											href={resource.url}
-											target="_blank"
-											rel="noopener noreferrer"
-										>
-											{resource.title}
-										</a>
-										{#if resource.stars !== undefined}
-											<Badge
-												type="info"
-												children={() => resource.stars?.toLocaleString() ?? ''}
-											/>
-										{/if}
-									</div>
-									<p class="resource-description">{resource.description}</p>
-									<a
-										href={resource.url}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="url-preview"
-									>
-										<span class="url-icon">→</span>
-										<span class="url-text">{formatUrl(resource.url)}</span>
-									</a>
-								</div>
-							</Box>
-						{/if}
-					{/each}
-				</div>
-			</section>
+			<ResourceSection {category} resources={items} />
 		{/each}
-	</div>
 
-	{#if import.meta.env.DEV}
-		<div class="debug">
-			<p>Container width: {containerWidth}px</p>
-			<p>Column count: {columnCount}</p>
-			<p>Category widths:</p>
-			<ul>
-				{#each Object.entries(categoryWidths) as [category, width]}
-					<li>{category}: {width}px</li>
-				{/each}
-			</ul>
-		</div>
-	{/if}
+		<FeaturedVideos videos={youtubeChannel.featuredVideos} />
+	</div>
 </div>
 
 <style>
-	:root {
-		--resource-border-width: 0.125ch;
-		--resource-translate: 0.25ch;
-	}
-
 	.resources {
 		width: 100%;
-		max-width: var(--content-max-width);
+		padding: var(--space-4) 0;
+	}
+
+	.container {
+		width: 100%;
+		max-width: min(var(--measure), 95cqi);
 		margin: 0 auto;
-		padding: var(--ch4) var(--content-padding);
+		padding: 0 var(--space-3);
 	}
 
-	.header {
-		margin-bottom: var(--ch8);
-		text-align: center;
+	@media (width >= 48ch) {
+		.resources {
+			padding: var(--space-8) 0;
+		}
+
+		.container {
+			padding: 0 var(--space-4);
+		}
 	}
 
-	h1 {
-		margin: 0;
+	@media (width >= 80ch) {
+		.resources {
+			padding: var(--space-12) 0;
+		}
 
-		font-size: var(--font-size-2xl);
-		font-weight: 500;
-		line-height: var(--line-height-tight);
-		color: var(--accent-color);
-
-		background: linear-gradient(
-			to right,
-			var(--accent-color),
-			var(--accent-color-hover)
-		);
-		background-clip: text;
-
-		-webkit-text-fill-color: transparent;
+		.container {
+			padding: 0 var(--space-6);
+		}
 	}
 
-	.subtitle {
-		margin: var(--ch2) auto 0;
-		font-size: var(--font-size-lg);
-		line-height: var(--line-height-relaxed);
-		color: var(--text-muted);
-	}
+	@media (width >= 120ch) {
+		.resources {
+			padding: var(--space-16) 0;
+		}
 
-	.categories {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(45ch, 1fr));
-		gap: var(--ch4);
-	}
-
-	.category {
-		display: flex;
-		flex-direction: column;
-		gap: var(--ch4);
-	}
-
-	.category-header {
-		display: flex;
-		gap: var(--ch2);
-		align-items: center;
-		margin-bottom: var(--ch2);
-	}
-
-	.category-title {
-		margin: 0;
-		font-size: var(--font-size-lg);
-		font-weight: 500;
-		color: var(--accent-color);
-	}
-
-	.category-icon {
-		font-size: var(--font-size-lg);
-	}
-
-	.resource-list {
-		display: flex;
-		flex-direction: column;
-		gap: var(--ch2);
-	}
-
-	.url-preview {
-		display: flex;
-
-		width: fit-content;
-		padding: var(--ch) var(--ch2);
-
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
-		text-decoration: none;
-		color: var(--text-muted);
-
-		background: var(--bg-darker);
-		border-radius: var(--radius-sm);
-
-		transition: all var(--transition-duration) var(--transition-timing);
-		overflow: hidden;
-		gap: var(--ch);
-		align-items: center;
-	}
-
-	.url-preview:hover {
-		color: var(--text-color);
-		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
-	}
-
-	.url-icon {
-		color: var(--accent-color);
-		transition: transform var(--transition-duration) var(--transition-timing);
-	}
-
-	.url-preview:hover .url-icon {
-		transform: translateX(var(--resource-translate));
-	}
-
-	.debug {
-		position: fixed;
-		bottom: var(--ch4);
-		left: var(--ch4);
-
-		padding: var(--ch2);
-
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
-		color: var(--text-muted);
-		background: var(--bg-darker);
-		border: var(--resource-border-width) solid var(--border-color);
-		border-radius: var(--radius-sm);
-
-		opacity: 0.8;
-	}
-
-	/* YouTube section styles */
-	.youtube-section {
-		margin-bottom: var(--ch8);
-		padding: var(--ch4);
-
-		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--ch);
-		box-shadow: var(--shadow-lg);
-	}
-
-	.youtube-header {
-		display: flex;
-		gap: var(--ch2);
-		align-items: center;
-		margin-bottom: var(--ch4);
-	}
-
-	.youtube-icon {
-		font-size: var(--font-size-2xl);
-		color: var(--accent-color);
-	}
-
-	.youtube-title {
-		font-size: var(--font-size-xl);
-		font-weight: var(--font-weight-bold);
-		color: var(--accent-color);
-
-		background: linear-gradient(
-			90deg,
-			var(--accent-color),
-			var(--secondary-accent)
-		);
-		background-clip: text;
-
-		-webkit-text-fill-color: transparent;
-	}
-
-	.video-card {
-		margin-bottom: var(--ch4);
-	}
-
-	.video-container {
-		position: relative;
-
-		width: 100%;
-		padding-bottom: 56.25%; /* 16:9 aspect ratio */
-
-		background: var(--bg-darker);
-		border-radius: var(--ch);
-
-		overflow: hidden;
-	}
-
-	.video-container iframe {
-		position: absolute;
-		top: 0;
-		left: 0;
-
-		width: 100%;
-		height: 100%;
-		border: none;
-	}
-
-	.video-info {
-		margin-top: var(--ch2);
-	}
-
-	.video-title {
-		margin-bottom: var(--ch);
-		font-size: var(--font-size-base);
-		font-weight: var(--font-weight-medium);
-		color: var(--text-color);
-	}
-
-	.video-description {
-		font-size: var(--font-size-sm);
-		line-height: var(--line-height-relaxed);
-		color: var(--text-muted);
-	}
-
-	.subscribe-link {
-		display: inline-flex;
-
-		padding: var(--ch2) var(--ch4);
-
-		font-weight: var(--font-weight-medium);
-		text-decoration: none;
-		color: var(--bg-darker);
-
-		background: var(--accent-color);
-		border-radius: var(--ch);
-
-		transition: all var(--transition-duration) var(--transition-timing);
-		gap: var(--ch2);
-		align-items: center;
-	}
-
-	.subscribe-link:hover {
-		background: var(--accent-color-hover);
-		transform: translateY(-0.25ch);
+		.container {
+			padding: 0 var(--space-8);
+		}
 	}
 </style>
