@@ -1,6 +1,6 @@
 <script lang="ts">
-	import VideoGrid from '$lib/components/VideoGrid.svelte';
-	import ProjectGrid from '$lib/components/ProjectGrid.svelte';
+	import VideoGrid from '$lib/components/video/VideoGrid.svelte';
+	import ProjectGrid from '$lib/components/projects/ProjectGrid.svelte';
 	import type { Project, Video } from '$lib/types';
 
 	const projects: Project[] = [

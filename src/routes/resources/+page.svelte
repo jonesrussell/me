@@ -1,7 +1,7 @@
 <script lang="ts">
-	import ResourceSection from '$lib/components/ResourceSection.svelte';
-	import FeaturedVideos from '$lib/components/FeaturedVideos.svelte';
-	import ResourceHeader from '$lib/components/ResourceHeader.svelte';
+	import ResourceSection from '$lib/components/resources/ResourceSection.svelte';
+	import FeaturedVideos from '$lib/components/video/FeaturedVideos.svelte';
+	import ResourceHeader from '$lib/components/resources/ResourceHeader.svelte';
 	import type { Resource, YouTubeChannel } from '$lib/types';
 
 	// YouTube channel info

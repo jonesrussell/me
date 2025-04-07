@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Terminal from '$lib/components/Terminal.svelte';
+	import Terminal from '$lib/components/terminal/Terminal.svelte';
 	import Specialties from '$lib/components/Specialties.svelte';
-	import YouTubeSection from '$lib/components/YouTubeSection.svelte';
-	import Navigation from '$lib/components/Navigation.svelte';
+	import YouTubeSection from '$lib/components/video/YouTubeSection.svelte';
+	import Navigation from '$lib/components/navigation/Navigation.svelte';
 
 	const YOUTUBE_CHANNEL = 'https://youtube.com/@fullstackdev42';
 	const YOUTUBE_VIDEO_ID = 'B4v7ZDLxiS4';
