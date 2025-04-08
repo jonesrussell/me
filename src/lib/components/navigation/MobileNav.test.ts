@@ -3,10 +3,15 @@ import { render, fireEvent } from '@testing-library/svelte';
 import { describe, expect, it, vi } from 'vitest';
 import MobileNav from './MobileNav.svelte';
 
+// Mock SvelteKit's navigation features
 vi.mock('$app/state', () => ({
 	page: {
 		url: new URL('http://localhost/')
 	}
+}));
+
+vi.mock('$app/paths', () => ({
+	base: ''
 }));
 
 describe('MobileNav', () => {
@@ -37,7 +42,12 @@ describe('MobileNav', () => {
 			isOpen: true,
 			toggleMenu
 		});
-		fireEvent.click(getByText('Blog'));
+
+		// Prevent default navigation behavior
+		const blogLink = getByText('Blog');
+		blogLink.addEventListener('click', e => e.preventDefault());
+
+		fireEvent.click(blogLink);
 		expect(toggleMenu).toHaveBeenCalled();
 	});
 });
