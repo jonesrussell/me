@@ -128,16 +128,15 @@ Using runes for state management:
 
 ```svelte
 <script lang="ts">
-  const { count } = $props<{ count: number }>();
-  let doubled = $derived(count * 2);
+	const { count } = $props<{ count: number }>();
+	let doubled = $derived(count * 2);
 
-  $effect(() => {
-    console.log('Count changed:', count);
-  });
+	$effect(() => {
+		console.log('Count changed:', count);
+	});
 </script>
 
-<div>Count: {count}</div>
-<div>Doubled: {doubled}</div>
+<div>Count: {count}</div><div>Doubled: {doubled}</div>
 ```
 
 ## Monospace Grid System
@@ -146,8 +145,8 @@ The project uses a character-based grid system for precise layouts:
 
 ```svelte
 <Grid cols={2} gap={2}>
-  <div>Perfectly</div>
-  <div>Aligned</div>
+	<div>Perfectly</div>
+	<div>Aligned</div>
 </Grid>
 ```
 

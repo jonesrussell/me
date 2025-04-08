@@ -1,6 +1,7 @@
 # In Progress
 
 - [ ] Modernize CSS Architecture (2025)
+
   - [ ] Implement CSS Nesting in all components
   - [ ] Add CSS Container Queries for responsive layouts
   - [ ] Use `:has()` selector for complex state styling
@@ -11,6 +12,7 @@
   - [ ] Add CSS Subgrid for complex layouts
 
 - [ ] Svelte 5 Migration
+
   - [ ] Convert all components to use runes
   - [ ] Replace `let` with `$state`
   - [ ] Use `$derived` for computed values
@@ -21,6 +23,7 @@
   - [ ] Implement component lifecycle hooks
 
 - [ ] Performance Optimizations
+
   - [ ] Add `enhanced:img` for better image loading
   - [ ] Implement proper lazy loading
   - [ ] Use CSS `content-visibility`
@@ -31,6 +34,7 @@
   - [ ] Add performance monitoring
 
 - [ ] Testing Infrastructure
+
   - [ ] Add Vitest configuration
   - [ ] Set up Testing Library
   - [ ] Add component test utilities
@@ -41,6 +45,7 @@
   - [ ] Implement snapshot testing
 
 - [ ] Accessibility Improvements
+
   - [ ] Add proper ARIA labels
   - [ ] Implement keyboard navigation
   - [ ] Add skip links
@@ -51,6 +56,7 @@
   - [ ] Test with assistive technologies
 
 - [ ] Modern Features
+
   - [ ] Add interactive guides
     - [ ] Docker setup guide
     - [ ] Kubernetes deployment guide
@@ -64,6 +70,7 @@
   - [ ] Add monitoring
 
 - [ ] Documentation
+
   - [ ] Add component documentation
   - [ ] Implement style guide
   - [ ] Add usage examples
@@ -74,6 +81,7 @@
   - [ ] Create contribution guide
 
 - [ ] Security
+
   - [ ] Implement CSP headers
   - [ ] Add security headers
   - [ ] Implement proper CORS
