@@ -1,5 +1,10 @@
 import { writable } from 'svelte/store';
-import { formatDate, sanitizeText, truncateDescription, extractFirstMeaningfulParagraph } from './utils';
+import {
+	formatDate,
+	sanitizeText,
+	truncateDescription,
+	extractFirstMeaningfulParagraph
+} from './utils';
 
 // Types
 export interface BlogPost {
@@ -176,7 +181,8 @@ function parsePost(entry: Element): BlogPost {
 
 	try {
 		const title = entry.querySelector('title')?.textContent?.trim() || defaultPost.title;
-		const published = entry.querySelector('published')?.textContent?.trim() || defaultPost.published;
+		const published =
+			entry.querySelector('published')?.textContent?.trim() || defaultPost.published;
 		const link = entry.querySelector('link')?.getAttribute('href') || defaultPost.link;
 		const content = entry.querySelector('content')?.textContent || '';
 		const description = extractFirstMeaningfulParagraph(content) || defaultPost.description;

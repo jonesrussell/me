@@ -12,7 +12,9 @@ describe('YouTubeSection', () => {
 	it('renders the section header', () => {
 		render(YouTubeSection, { props: mockProps });
 		expect(screen.getByText('Check out my YouTube channel')).toBeInTheDocument();
-		expect(screen.getByText('I create content about web development, programming, and tech.')).toBeInTheDocument();
+		expect(
+			screen.getByText('I create content about web development, programming, and tech.')
+		).toBeInTheDocument();
 	});
 
 	it('renders the video iframe with correct attributes', () => {
@@ -20,7 +22,10 @@ describe('YouTubeSection', () => {
 		const iframe = screen.getByTitle(mockProps.videoTitle);
 		expect(iframe).toBeInTheDocument();
 		expect(iframe).toHaveAttribute('src', `https://www.youtube.com/embed/${mockProps.videoId}`);
-		expect(iframe).toHaveAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+		expect(iframe).toHaveAttribute(
+			'allow',
+			'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+		);
 		expect(iframe).toHaveAttribute('allowfullscreen');
 	});
 

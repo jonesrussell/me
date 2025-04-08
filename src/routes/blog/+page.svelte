@@ -1,9 +1,12 @@
 <script lang="ts">
-	import { blogPosts, fetchFeed } from '../../services/blog-service';
+	import { fetchFeed } from '$lib/services/blog-service';
+	import { writable } from 'svelte/store';
 	import { onMount } from 'svelte';
 	import BlogHeader from '$lib/components/blog/BlogHeader.svelte';
 	import BlogPost from '$lib/components/blog/BlogPost.svelte';
+	import type { BlogPost as BlogPostType } from '$lib/services/blog-service';
 
+	const blogPosts = writable<BlogPostType[]>([]);
 	let currentPage = $state(1);
 	let hasMore = $state(false);
 	let isLoading = $state(false);
@@ -24,7 +27,7 @@
 
 		const result = await fetchFeed({ page: currentPage, pageSize });
 		console.log('Load more result:', result);
-		blogPosts.update((posts) => [...posts, ...result.items]);
+		blogPosts.update((posts: BlogPostType[]) => [...posts, ...result.items]);
 		hasMore = result.hasMore;
 		isLoading = false;
 	}
