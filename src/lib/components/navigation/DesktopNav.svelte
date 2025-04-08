@@ -67,8 +67,8 @@
 </style>
 
 <nav class="desktop-nav" aria-label="Main navigation">
-	<a href="/blog" class:active={isActive('/blog')}>Blog</a>
-	<a href="/projects" class:active={isActive('/projects')}>Projects</a>
-	<a href="/resources" class:active={isActive('/resources')}>Resources</a>
-	<a href="/contact" class:active={isActive('/contact')}>Contact</a>
+	<a href={`${base}/blog`} class:active={isActive('/blog')}>Blog</a>
+	<a href={`${base}/projects`} class:active={isActive('/projects')}>Projects</a>
+	<a href={`${base}/resources`} class:active={isActive('/resources')}>Resources</a>
+	<a href={`${base}/contact`} class:active={isActive('/contact')}>Contact</a>
 </nav>

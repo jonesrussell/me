@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	export const devToUrl = 'https://dev.to/jonesrussell' as const;
 </script>
 
@@ -83,7 +84,7 @@
 <header>
 	<div class="header-image">
 		<a href={devToUrl} target="_blank" rel="noopener noreferrer" aria-label="View DEV.to profile">
-			<img alt="Dev.to logo" src="/images/dev.to.jpeg" width="24" height="24" />
+			<img alt="Dev.to logo" src={`${base}/images/dev.to.jpeg`} width="24" height="24" />
 		</a>
 	</div>
 	<h1>Web Developer Blog</h1>

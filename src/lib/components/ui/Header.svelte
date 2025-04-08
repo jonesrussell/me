@@ -2,6 +2,7 @@
 	import DesktopNav from '$lib/components/navigation/DesktopNav.svelte';
 	import MobileNav from '$lib/components/navigation/MobileNav.svelte';
 	import SubtitleBar from './SubtitleBar.svelte';
+	import { base } from '$app/paths';
 
 	const { url } = $props<{ url: URL }>();
 
@@ -105,7 +106,7 @@
 <header class="site-header">
 	<div class="header-content">
 		<div class="header-main">
-			<a href="/" class="title">Russell Jones</a>
+			<a href={base} class="title">Russell Jones</a>
 			<button
 				class="menu-toggle"
 				type="button"

@@ -95,8 +95,11 @@
 </style>
 
 <nav class="mobile-nav" class:open={isOpen} aria-label="Main navigation">
-	<a href="/blog" class:active={isActive('/blog')} onclick={toggleMenu}>Blog</a>
-	<a href="/projects" class:active={isActive('/projects')} onclick={toggleMenu}>Projects</a>
-	<a href="/resources" class:active={isActive('/resources')} onclick={toggleMenu}>Resources</a>
-	<a href="/contact" class:active={isActive('/contact')} onclick={toggleMenu}>Contact</a>
+	<a href={`${base}/blog`} class:active={isActive('/blog')} onclick={toggleMenu}>Blog</a>
+	<a href={`${base}/projects`} class:active={isActive('/projects')} onclick={toggleMenu}>Projects</a
+	>
+	<a href={`${base}/resources`} class:active={isActive('/resources')} onclick={toggleMenu}
+		>Resources</a
+	>
+	<a href={`${base}/contact`} class:active={isActive('/contact')} onclick={toggleMenu}>Contact</a>
 </nav>
