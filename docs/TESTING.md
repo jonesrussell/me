@@ -55,9 +55,9 @@ Integration tests are located in the `tests` directory and use Playwright:
 import { test, expect } from '@playwright/test';
 
 test('navigation works correctly', async ({ page }) => {
-	await page.goto('/');
-	await page.click('a[href="/projects"]');
-	await expect(page).toHaveURL('/projects');
+	await page.goto('/me');
+	await page.click('a[href="/me/projects"]');
+	await expect(page).toHaveURL('/me/projects');
 });
 ```
 

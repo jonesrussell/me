@@ -12,5 +12,5 @@
 <div class="error">
 	<h1>{$page.status}: {$page.error?.message}</h1>
 	<p>Sorry, something went wrong.</p>
-	<a href="/">Return home</a>
+	<a href="/me">Return home</a>
 </div>
