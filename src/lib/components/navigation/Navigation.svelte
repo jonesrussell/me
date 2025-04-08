@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { base } from '$app/paths';
+
 	const { links } = $props<{
 		links: Array<{
 			href: string;
@@ -64,7 +66,7 @@
 
 <nav class="navigation">
 	{#each links as link (link.href)}
-		<a href={link.href} class="nav-link">
+		<a href={`${base}${link.href}`} class="nav-link">
 			<span class="nav-icon">{link.icon}</span>
 			<span class="nav-text">{link.text}</span>
 		</a>
