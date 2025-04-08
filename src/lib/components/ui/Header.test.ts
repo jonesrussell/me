@@ -31,7 +31,7 @@ describe('Header', () => {
 		const title = container.querySelector('.title');
 		expect(title).toBeInTheDocument();
 		expect(title?.textContent).toBe('Russell Jones');
-		expect(title?.getAttribute('href')).toBe('/');
+		expect(title?.getAttribute('href')).toBe('/me');
 	});
 
 	it('renders navigation items', () => {
@@ -54,7 +54,7 @@ describe('Header', () => {
 
 		await waitFor(
 			() => {
-				const activeLink = container.querySelector('.desktop-nav a[href="/blog"]');
+				const activeLink = container.querySelector('.desktop-nav a[href="/me/blog"]');
 				expect(activeLink).toBeInTheDocument();
 				expect(activeLink?.classList.contains('active')).toBe(true);
 				expect(activeLink?.textContent).toBe('Blog');
