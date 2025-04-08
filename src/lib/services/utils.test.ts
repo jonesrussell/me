@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { sanitizeText } from '../lib/services/utils';
+import { sanitizeText } from './utils';
 
 describe('sanitizeText', () => {
 	it('removes all HTML tags', () => {

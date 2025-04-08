@@ -1,4 +1,3 @@
-// src/stores.ts
 import { writable } from 'svelte/store';
 
 // Initialize theme from localStorage or default to false (light)

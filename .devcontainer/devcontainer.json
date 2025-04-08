@@ -52,7 +52,8 @@
 				"vscode.markdown-language-features",
 				"GitHub.vscode-pull-request-github",
 				"hbenl.vscode-test-explorer",
-				"ms-playwright.playwright"
+				"ms-playwright.playwright",
+				"esbenp.prettier-vscode"
 			],
 			"settings": {
 				"editor.formatOnSave": true,

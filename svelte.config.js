@@ -14,7 +14,7 @@ const config = {
 		},
 		prerender: {
 			entries: ['*'],
-			handleHttpError: ({ path, _referrer, message }) => {
+			handleHttpError: ({ path, _referrer, _message }) => {
 				// In production, all paths must start with /me
 				if (process.env.NODE_ENV === 'production' && !path.startsWith('/me')) {
 					// Instead of throwing an error, we'll return a 404 for invalid paths

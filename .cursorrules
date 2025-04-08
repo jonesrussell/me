@@ -9,6 +9,9 @@ general_rules:
   - use_typescript: true
   - add_comments: true
   - maintain_documentation: true
+  - follow_solid_principles: true
+  - keep_functions_pure: true
+  - minimize_side_effects: true
 
 code_style:
   - use_semicolons: true
@@ -17,6 +20,44 @@ code_style:
   - max_line_length: 100
   - indent_style: tabs
   - indent_size: 2
+  - use_consistent_naming: true
+  - prefix_interfaces_with_i: true
+  - suffix_types_with_type: true
+
+separation_of_concerns:
+  - organize_by_feature: true
+  - separate_business_logic: true
+  - isolate_ui_components: true
+  - keep_services_stateless: true
+  - use_dependency_injection: true
+  - minimize_component_logic: true
+
+type_organization:
+  - centralize_shared_types: true
+  - use_type_aliases: true
+  - prefer_interfaces_over_types: true
+  - group_related_types: true
+  - document_complex_types: true
+  - use_type_guards: true
+  - export_types_separately: true
+
+services:
+  - use_service_factories: true
+  - implement_error_handling: true
+  - add_request_caching: true
+  - use_service_interfaces: true
+  - implement_retry_logic: true
+  - add_request_timeouts: true
+  - use_service_middleware: true
+
+store_management:
+  - use_custom_stores: true
+  - implement_store_subscriptions: true
+  - use_store_derivations: true
+  - add_store_persistence: true
+  - implement_store_actions: true
+  - use_store_middleware: true
+  - keep_stores_small: true
 
 svelte_patterns:
   - use_runes: true
@@ -27,6 +68,8 @@ svelte_patterns:
   - keep_components_small: true
   - use_semantic_html: true
   - use_render_instead_of_slots: true
+  - use_props_validation: true
+  - implement_error_boundaries: true
 
 testing_guidelines:
   - write_unit_tests: true
@@ -36,6 +79,12 @@ testing_guidelines:
   - test_accessibility: true
   - test_error_cases: true
   - use_vitest_and_testing_library: true
+  - mock_external_dependencies: true
+  - test_edge_cases: true
+  - use_test_fixtures: true
+  - implement_test_utilities: true
+  - follow_aaa_pattern: true
+  - use_snapshot_testing: true
 
 monospace_design:
   - use_monospace_fonts: true
@@ -50,3 +99,8 @@ best_practices:
   - follow_accessibility_standards: true
   - use_semantic_versioning: true
   - keep_dependencies_updated: true
+  - implement_progressive_enhancement: true
+  - use_environment_variables: true
+  - follow_security_guidelines: true
+  - implement_analytics: true
+  - use_performance_monitoring: true
