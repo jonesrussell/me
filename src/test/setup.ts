@@ -14,11 +14,12 @@ const dom = new JSDOM(
 );
 
 // Enhanced type definitions for global window
-type TestWindow = Window & typeof globalThis & {
-	matchMedia: (query: string) => MediaQueryList;
-	ResizeObserver: new (callback: ResizeObserverCallback) => ResizeObserver;
-	IntersectionObserver: typeof IntersectionObserver;
-};
+type TestWindow = Window &
+	typeof globalThis & {
+		matchMedia: (query: string) => MediaQueryList;
+		ResizeObserver: new (callback: ResizeObserverCallback) => ResizeObserver;
+		IntersectionObserver: typeof IntersectionObserver;
+	};
 
 // Set up global variables with proper typing
 global.document = dom.window.document;
@@ -184,8 +185,7 @@ vi.mock('*.css', () => ({
 }));
 
 // Suppress CSS parsing warnings
-const suppressCSSWarnings = (message: string) =>
-	message.includes('Could not parse CSS stylesheet');
+const suppressCSSWarnings = (message: string) => message.includes('Could not parse CSS stylesheet');
 
 const originalError = console.error;
 console.error = (...args) => {
@@ -199,8 +199,8 @@ console.error = (...args) => {
 expect.extend({
 	toHaveStyle(received: HTMLElement, expected: Record<string, string>) {
 		const actual = window.getComputedStyle(received);
-		const pass = Object.entries(expected).every(([key, value]) =>
-			actual.getPropertyValue(key) === value
+		const pass = Object.entries(expected).every(
+			([key, value]) => actual.getPropertyValue(key) === value
 		);
 		return {
 			pass,

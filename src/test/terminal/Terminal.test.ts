@@ -85,7 +85,9 @@ describe('Terminal', () => {
 		});
 
 		it('maintains proper heading structure', () => {
-			const { container } = render(Terminal, { props: { command: 'test', title: 'Test Terminal' } });
+			const { container } = render(Terminal, {
+				props: { command: 'test', title: 'Test Terminal' }
+			});
 			const title = container.querySelector('.terminal-title');
 			expect(title?.textContent).toBe('Test Terminal');
 		});
