@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { blogErrors } from '$lib/services/blog-service';
 	import type { BlogError } from '$lib/services/blog-service';
-	import Box from '$lib/components/layout/Box.svelte';
+	import Box from '$lib/components/ui/Box.svelte';
 
 	const formatErrorType = (type: BlogError['type']): string => {
 		switch (type) {

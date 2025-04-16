@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Box from '$lib/components/layout/Box.svelte';
+	import Box from '$lib/components/ui/Box.svelte';
 	import type { Video } from '$lib/types';
 
 	const { video } = $props<{ video: Video }>();

@@ -2,7 +2,7 @@
 	import ErrorBoundary from './ErrorBoundary.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Input from '$lib/components/ui/Input.svelte';
-	import Box from '$lib/components/layout/Box.svelte';
+	import Box from '$lib/components/ui/Box.svelte';
 
 	let email = $state('');
 	let isSubmitting = $state(false);
