@@ -12,18 +12,7 @@ declare global {
 		// interface Platform {}
 		type ThemeMode = 'auto' | 'light' | 'dark';
 
-		interface EnhancedImage {
-			sources: {
-				'image/webp': string;
-				'image/jpeg': string;
-			};
-			img: {
-				src: string;
-				width: number;
-				height: number;
-				alt: string;
-			};
-		}
+		import type { EnhancedImage } from '$lib/types';
 
 		interface TreeNode {
 			name: string;

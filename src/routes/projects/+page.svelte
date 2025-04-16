@@ -61,48 +61,46 @@
 	.projects {
 		width: 100%;
 		padding: var(--space-8) 0;
-	}
+		container-type: inline-size;
+		container-name: projects-page;
 
-	.container {
-		width: 100%;
-		max-width: min(var(--measure), 95cqi);
-		margin: 0 auto;
-		padding: 0 var(--space-4);
-	}
+		& .container {
+			width: 100%;
+			max-width: min(160ch, 95cqi);
+			margin: 0 auto;
+			padding: 0 var(--space-4);
+		}
 
-	h1 {
-		margin: 0;
-		font-size: var(--font-size-xl);
-		line-height: var(--line-height-tight);
-		text-align: center;
-		color: var(--text-color);
-	}
+		& h1 {
+			margin: 0;
+			font-size: var(--font-size-xl);
+			line-height: var(--line-height-tight);
+			text-align: center;
+			color: var(--text-color);
+		}
 
-	.intro {
-		margin: var(--space-4) 0 var(--space-8) 0;
-		font-size: var(--font-size-base);
-		line-height: var(--line-height-relaxed);
-		text-align: center;
-		color: var(--text-muted);
-	}
+		& .intro {
+			margin: var(--space-4) 0 var(--space-8) 0;
+			font-size: var(--font-size-base);
+			line-height: var(--line-height-relaxed);
+			text-align: center;
+			color: var(--text-muted);
+		}
 
-	@media (width >= 48ch) {
-		.projects {
+		@container projects-page (width >= 48ch) {
 			padding: var(--space-12) 0;
+
+			& h1 {
+				font-size: var(--font-size-2xl);
+			}
+
+			& .intro {
+				margin: var(--space-6) 0 var(--space-12) 0;
+				font-size: var(--font-size-lg);
+			}
 		}
 
-		h1 {
-			font-size: var(--font-size-2xl);
-		}
-
-		.intro {
-			margin: var(--space-6) 0 var(--space-12) 0;
-			font-size: var(--font-size-lg);
-		}
-	}
-
-	@media (width >= 80ch) {
-		.projects {
+		@container projects-page (width >= 80ch) {
 			padding: var(--space-16) 0;
 		}
 	}

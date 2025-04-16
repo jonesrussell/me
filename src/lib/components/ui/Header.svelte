@@ -106,7 +106,7 @@
 <header class="site-header">
 	<div class="header-content">
 		<div class="header-main">
-			<a href={base} class="title">Russell Jones</a>
+			<a href={base || '/'} class="title">Russell Jones</a>
 			<button
 				class="menu-toggle"
 				type="button"

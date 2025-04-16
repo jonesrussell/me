@@ -6,10 +6,3 @@ export interface Resource {
 	stars?: number;
 	featured?: boolean;
 }
-
-export interface TreeNode {
-	name: string;
-	description?: string;
-	url?: string;
-	children?: TreeNode[];
-}

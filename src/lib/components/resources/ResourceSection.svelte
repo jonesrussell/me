@@ -34,45 +34,44 @@
 <style>
 	.category-section {
 		margin: var(--space-6) 0;
-	}
+		container-type: inline-size;
+		container-name: resource-section;
 
-	h2 {
-		margin: 0 0 var(--space-3) 0;
-		font-size: var(--font-size-base);
-		line-height: var(--line-height-tight);
-		color: var(--text-color);
-	}
+		& h2 {
+			margin: 0 0 var(--space-3) 0;
+			font-size: var(--font-size-base);
+			line-height: var(--line-height-tight);
+			color: var(--text-color);
+		}
 
-	.resource-grid {
-		display: grid;
-		gap: var(--space-3);
-	}
+		& .resource-grid {
+			display: grid;
+			gap: var(--space-3);
+		}
 
-	@media (width >= 48ch) {
-		.category-section {
+		@container resource-section (width >= 48ch) {
 			margin: var(--space-8) 0;
+
+			& h2 {
+				font-size: var(--font-size-lg);
+			}
+
+			& .resource-grid {
+				gap: var(--space-4);
+			}
 		}
 
-		h2 {
-			font-size: var(--font-size-lg);
+		@container resource-section (width >= 80ch) {
+			& .resource-grid {
+				grid-template-columns: repeat(2, 1fr);
+				gap: var(--space-6);
+			}
 		}
 
-		.resource-grid {
-			gap: var(--space-4);
-		}
-	}
-
-	@media (width >= 80ch) {
-		.resource-grid {
-			grid-template-columns: repeat(auto-fit, minmax(45ch, 1fr));
-			gap: var(--space-6);
-		}
-	}
-
-	@media (width >= 120ch) {
-		.resource-grid {
-			grid-template-columns: repeat(auto-fit, minmax(50ch, 1fr));
-			gap: var(--space-8);
+		@container resource-section (width >= 120ch) {
+			& .resource-grid {
+				gap: var(--space-8);
+			}
 		}
 	}
 </style>
