@@ -54,7 +54,7 @@
 			color: var(--link-hover);
 		}
 
-		@container resource-card (width >= 48ch) {
+		@media (min-width: 48ch) {
 			padding: var(--space-6);
 
 			& .resource-header {
@@ -80,14 +80,12 @@
 				</a>
 			</h3>
 			{#if resource.stars}
-				<Badge type="info">
-					⭐ {resource.stars.toLocaleString()}
-				</Badge>
+				<Badge type="info" children={() => `⭐ ${resource.stars.toLocaleString()}`} />
 			{/if}
 		</div>
 		<p class="description">{resource.description}</p>
 		<div class="category">
-			<Badge type="info">{resource.category}</Badge>
+			<Badge type="info" children={() => resource.category} />
 		</div>
 	</div>
 </Box>
