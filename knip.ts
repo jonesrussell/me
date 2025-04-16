@@ -8,7 +8,15 @@ const config: KnipConfig = {
 		'$lib/**',
 		'$env/**',
 		'$service-worker',
-		'@sveltejs/kit/**'
+		'@sveltejs/kit/**',
+		'@fontsource/**',
+		'src/lib/components/blog/BlogHeader.svelte',
+		'src/lib/components/navigation/DesktopNav.svelte',
+		'src/lib/components/navigation/MobileNav.svelte',
+		'src/lib/components/navigation/Navigation.svelte',
+		'src/lib/components/ui/Header.svelte',
+		'src/routes/+error.svelte',
+		'src/routes/+layout.svelte'
 	],
 	svelte: {
 		entry: [
@@ -20,9 +28,11 @@ const config: KnipConfig = {
 		]
 	},
 	ignoreDependencies: [
-		'@sveltejs/kit',
-		'@sveltejs/adapter-auto',
-		'@sveltejs/vite-plugin-svelte'
+		'@fontsource/fira-mono',
+		'@fontsource/jetbrains-mono'
+	],
+	ignoreBinaries: [
+		'act'
 	]
 };
 
