@@ -1,9 +1,10 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/svelte';
+import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
 import Terminal from '$lib/components/terminal/Terminal.svelte';
 import { terminal, commands } from '$lib/stores/terminal';
 
-describe('Terminal Component', () => {
+describe('Terminal', () => {
 	beforeEach(() => {
 		terminal.reset();
 		commands.set([]);
@@ -16,12 +17,16 @@ describe('Terminal Component', () => {
 
 	it('renders with default title', () => {
 		render(Terminal);
-		expect(screen.getByText('~/developer')).toBeInTheDocument();
+		const title = document.querySelector('.terminal-title');
+		expect(title).toBeInTheDocument();
+		expect(title?.textContent).toBe('~/developer');
 	});
 
 	it('renders with custom title', () => {
 		render(Terminal, { title: 'custom-terminal' });
-		expect(screen.getByText('custom-terminal')).toBeInTheDocument();
+		const title = document.querySelector('.terminal-title');
+		expect(title).toBeInTheDocument();
+		expect(title?.textContent).toBe('custom-terminal');
 	});
 
 	it('displays terminal buttons', () => {
@@ -41,9 +46,13 @@ describe('Terminal Component', () => {
 		vi.advanceTimersByTime(1000);
 		await Promise.resolve();
 
-		expect(screen.getByText('$')).toBeInTheDocument();
-		const commandSpan = document.querySelector('.command');
-		expect(commandSpan).toHaveTextContent('test');
+		const prompt = document.querySelector('.prompt');
+		expect(prompt).toBeInTheDocument();
+		expect(prompt?.textContent).toBe('$');
+
+		const command = document.querySelector('.command');
+		expect(command).toBeInTheDocument();
+		expect(command?.textContent).toBe('test');
 	});
 
 	it('stops typing when component is unmounted', () => {
@@ -58,6 +67,7 @@ describe('Terminal Component', () => {
 	it('applies correct styling classes', () => {
 		render(Terminal);
 		const frame = document.querySelector('.terminal-frame');
+		expect(frame).toBeInTheDocument();
 		expect(frame).toHaveClass('terminal-frame');
 	});
 });
