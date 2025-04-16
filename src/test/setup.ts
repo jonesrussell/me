@@ -4,9 +4,12 @@ import { afterEach, vi } from 'vitest';
 import { JSDOM } from 'jsdom';
 
 // Create a JSDOM instance
-const dom = new JSDOM('<!DOCTYPE html><html><head></head><body><div id="app"></div></body></html>', {
-	url: 'http://localhost'
-});
+const dom = new JSDOM(
+	'<!DOCTYPE html><html><head></head><body><div id="app"></div></body></html>',
+	{
+		url: 'http://localhost'
+	}
+);
 
 // Set up global variables
 global.document = dom.window.document;
@@ -48,15 +51,17 @@ class MockResizeObserver implements ResizeObserver {
 global.ResizeObserver = MockResizeObserver;
 
 // Mock IntersectionObserver
-global.IntersectionObserver = vi.fn().mockImplementation((_callback: IntersectionObserverCallback) => ({
-	observe: vi.fn(),
-	unobserve: vi.fn(),
-	disconnect: vi.fn(),
-	takeRecords: vi.fn().mockReturnValue([]),
-	root: null,
-	rootMargin: '',
-	thresholds: []
-}));
+global.IntersectionObserver = vi
+	.fn()
+	.mockImplementation((_callback: IntersectionObserverCallback) => ({
+		observe: vi.fn(),
+		unobserve: vi.fn(),
+		disconnect: vi.fn(),
+		takeRecords: vi.fn().mockReturnValue([]),
+		root: null,
+		rootMargin: '',
+		thresholds: []
+	}));
 
 // Mock SvelteKit modules
 vi.mock('$app/paths', () => ({
