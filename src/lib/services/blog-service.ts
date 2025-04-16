@@ -1,10 +1,5 @@
 import { writable } from 'svelte/store';
-import {
-	formatDate,
-	sanitizeText,
-	truncateDescription,
-	extractFirstMeaningfulParagraph
-} from './utils';
+import { formatDate, sanitizeText } from './utils';
 
 // Types
 export interface BlogPost {
@@ -66,18 +61,6 @@ function addError(error: BlogError) {
 		const newErrors = [...errors, error];
 		return newErrors.slice(-10); // Keep only last 10 errors
 	});
-}
-
-function validatePost(post: Partial<BlogPost>): post is BlogPost {
-	return (
-		typeof post.title === 'string' &&
-		typeof post.published === 'string' &&
-		typeof post.link === 'string' &&
-		typeof post.description === 'string' &&
-		post.title.length > 0 &&
-		post.published.length > 0 &&
-		post.link.length > 0
-	);
 }
 
 function shouldInvalidateCache(cache: FeedCache, result: FetchResult): boolean {
@@ -173,12 +156,14 @@ function parsePost(entry: Element): BlogPost {
 			throw new Error('Missing required fields in blog post');
 		}
 
-		return {
+		const post = {
 			title,
 			link,
 			published,
 			description: sanitizeText(description)
 		};
+
+		return post;
 	} catch (err) {
 		const error: BlogError = {
 			type: 'VALIDATION_ERROR',
