@@ -10,7 +10,7 @@
 		title?: string;
 		width?: number;
 		style?: string;
-		children: () => string;
+		children: unknown;
 	}>();
 </script>
 
@@ -51,14 +51,6 @@
 		color: var(--text-muted);
 	}
 
-	.content {
-		flex: 1;
-		padding: var(--space-4);
-		color: var(--text-color);
-		word-break: break-word;
-		overflow-wrap: break-word;
-	}
-
 	@media (prefers-reduced-motion: reduce) {
 		.box {
 			transition: none;
@@ -73,8 +65,6 @@
 				<div class="title">{title}</div>
 			</div>
 		{/if}
-		<div class="content">
-			{children()}
-		</div>
+		{children}
 	</div>
 </div>
