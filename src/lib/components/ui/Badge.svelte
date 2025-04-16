@@ -59,5 +59,5 @@
 
 <span class="badge {badgeType}">
 	{symbols[badgeType as BadgeType]}
-	{@render children()}
+	{children()}
 </span>
