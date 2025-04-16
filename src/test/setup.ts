@@ -11,11 +11,23 @@ expect.extend(
 	>
 );
 
+// Create a container for Svelte components
+const container = document.createElement('div');
+container.id = 'test-container';
+document.body.appendChild(container);
+
+// Mock fetch
+global.fetch = vi.fn();
+
 // Cleanup after each test
 afterEach(() => {
 	cleanup();
 	vi.clearAllMocks();
-	vi.clearAllTimers();
+});
+
+// Clean up after all tests
+afterAll(() => {
+	container.remove();
 });
 
 // Mock CSS modules
