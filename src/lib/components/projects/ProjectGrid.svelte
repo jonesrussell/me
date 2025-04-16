@@ -16,9 +16,11 @@
 	.project-grid {
 		display: grid;
 		gap: var(--space-4);
+		container-type: inline-size;
+		container-name: project-grid;
 	}
 
-	@media (width >= 48ch) {
+	@container project-grid (width >= 48ch) {
 		h2 {
 			margin: var(--space-12) 0 var(--space-6) 0;
 			font-size: var(--font-size-xl);
@@ -29,9 +31,9 @@
 		}
 	}
 
-	@media (width >= 80ch) {
+	@container project-grid (width >= 80ch) {
 		.project-grid {
-			grid-template-columns: repeat(auto-fit, minmax(50ch, 1fr));
+			grid-template-columns: repeat(2, 1fr);
 			gap: var(--space-8);
 		}
 	}
