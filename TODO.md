@@ -49,10 +49,12 @@
   - [x] Add proper TypeScript types for props
     - [x] Badge component
     - [x] NewsletterCTA component
+    - [x] ProjectCard component
     - [ ] Add to remaining components
   - [x] Use `{@render}` instead of slots
     - [x] Badge component
-    - [ ] Convert remaining components
+    - [x] Box component
+    - [x] All other components checked and confirmed to not use slots
   - [ ] Add proper error boundaries
     - [ ] Add to form submissions
     - [ ] Add to data fetching
