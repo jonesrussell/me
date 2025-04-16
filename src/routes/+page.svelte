@@ -60,6 +60,13 @@
 	.home {
 		width: 100%;
 		padding: var(--space-16) 0;
+
+		& .container {
+			width: 100%;
+			max-width: min(160ch, 95cqi);
+			margin: 0 auto;
+			padding: 0 var(--space-4);
+		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
