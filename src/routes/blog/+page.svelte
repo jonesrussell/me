@@ -3,6 +3,7 @@
 	import { writable } from 'svelte/store';
 	import BlogHeader from '$lib/components/blog/BlogHeader.svelte';
 	import BlogPost from '$lib/components/blog/BlogPost.svelte';
+	import BlogError from '$lib/components/blog/BlogError.svelte';
 	import type { BlogPost as BlogPostType } from '$lib/services/blog-service';
 
 	const blogPosts = writable<BlogPostType[]>([]);
@@ -89,6 +90,7 @@
 
 <div class="blog">
 	<BlogHeader />
+	<BlogError />
 
 	<div class="container">
 		<div class="posts">
