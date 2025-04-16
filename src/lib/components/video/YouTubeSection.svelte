@@ -1,8 +1,10 @@
 <script lang="ts">
-	const { channelUrl, videoId, videoTitle } = $props<{
+	const { channelUrl, videoId, videoTitle, sectionTitle, sectionSubtitle } = $props<{
 		channelUrl: string;
 		videoId: string;
 		videoTitle: string;
+		sectionTitle: string;
+		sectionSubtitle: string;
 	}>();
 </script>
 
@@ -16,8 +18,8 @@
 
 <section class="youtube-section">
 	<div class="section-header">
-		<h2>Check out my YouTube channel</h2>
-		<p class="section-desc">I create content about web development, programming, and tech.</p>
+		<h2>{sectionTitle}</h2>
+		<p class="section-desc">{sectionSubtitle}</p>
 	</div>
 
 	<figure class="video-figure">
