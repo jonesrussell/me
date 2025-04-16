@@ -24,19 +24,19 @@ const mockVideos: Video[] = [
 
 describe('FeaturedVideos', () => {
 	it('renders the section title', () => {
-		const { container } = render(FeaturedVideos, { videos: mockVideos });
+		const { container } = render(FeaturedVideos, { props: { videos: mockVideos } });
 		const title = container.querySelector('h2');
 		expect(title).toHaveTextContent('🎥 Featured Videos');
 	});
 
 	it('renders all featured videos in the grid', () => {
-		const { container } = render(FeaturedVideos, { videos: mockVideos });
+		const { container } = render(FeaturedVideos, { props: { videos: mockVideos } });
 		const videoCards = container.querySelectorAll('.video-card');
 		expect(videoCards).toHaveLength(mockVideos.length);
 	});
 
 	it('renders video titles correctly', () => {
-		const { container } = render(FeaturedVideos, { videos: mockVideos });
+		const { container } = render(FeaturedVideos, { props: { videos: mockVideos } });
 		const titles = container.querySelectorAll('.video-title');
 		expect(titles).toHaveLength(mockVideos.length);
 		titles.forEach((title, index) => {
@@ -45,13 +45,13 @@ describe('FeaturedVideos', () => {
 	});
 
 	it('handles empty video list', () => {
-		const { container } = render(FeaturedVideos, { videos: [] });
+		const { container } = render(FeaturedVideos, { props: { videos: [] } });
 		const videoCards = container.querySelectorAll('.video-card');
 		expect(videoCards).toHaveLength(0);
 	});
 
 	it('has correct CSS classes for responsive layout', () => {
-		const { container } = render(FeaturedVideos, { videos: mockVideos });
+		const { container } = render(FeaturedVideos, { props: { videos: mockVideos } });
 		const section = container.querySelector('section');
 		expect(section).toHaveClass('featured-videos');
 
@@ -60,7 +60,7 @@ describe('FeaturedVideos', () => {
 	});
 
 	it('is accessible', () => {
-		const { container } = render(FeaturedVideos, { videos: mockVideos });
+		const { container } = render(FeaturedVideos, { props: { videos: mockVideos } });
 
 		// Check semantic structure
 		const section = container.querySelector('section');
