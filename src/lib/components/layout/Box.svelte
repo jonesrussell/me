@@ -10,7 +10,7 @@
 		title?: string;
 		width?: number;
 		style?: string;
-		children?: () => unknown;
+		children: () => unknown;
 	}>();
 </script>
 
@@ -83,7 +83,7 @@
 		{/if}
 
 		<div class="content">
-			{children?.()}
+			{@render children()}
 		</div>
 	</div>
 </div>
