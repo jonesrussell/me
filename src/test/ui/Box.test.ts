@@ -4,13 +4,15 @@ import Box from '$lib/components/ui/Box.svelte';
 
 describe('Box', () => {
 	it('renders with default props', () => {
-		const { getByText } = render(Box, {
+		const { container } = render(Box, {
 			props: {
 				children: 'Test Content'
 			}
 		});
 
-		expect(getByText('Test Content')).toBeInTheDocument();
+		const content = container.querySelector('.box-content');
+		if (!content) throw new Error('Box content not found');
+		expect(content.textContent).toBe('Test Content');
 	});
 
 	it('renders with custom width', () => {
@@ -22,18 +24,21 @@ describe('Box', () => {
 		});
 
 		const box = container.querySelector('.box');
+		if (!box) throw new Error('Box element not found');
 		expect(box).toHaveStyle({ '--box-width': '60ch' });
 	});
 
 	it('renders with title', () => {
-		const { getByText } = render(Box, {
+		const { container } = render(Box, {
 			props: {
 				title: 'Test Title',
 				children: 'Content'
 			}
 		});
 
-		expect(getByText('Test Title')).toBeInTheDocument();
+		const title = container.querySelector('.header');
+		if (!title) throw new Error('Title element not found');
+		expect(title.textContent).toBe('Test Title');
 	});
 
 	it('renders without title when not provided', () => {
@@ -55,6 +60,7 @@ describe('Box', () => {
 		});
 
 		const box = container.querySelector('.box');
+		if (!box) throw new Error('Box element not found');
 		expect(box).toHaveStyle({ marginTop: '1rem' });
 	});
 
@@ -68,21 +74,28 @@ describe('Box', () => {
 		const box = container.querySelector('.box');
 		const boxFrame = container.querySelector('.box-frame');
 
+		if (!box) throw new Error('Box element not found');
+		if (!boxFrame) throw new Error('Box frame element not found');
+
 		expect(box).toBeInTheDocument();
 		expect(boxFrame).toBeInTheDocument();
 	});
 
 	it('is accessible', () => {
-		const { getByText } = render(Box, {
+		const { container } = render(Box, {
 			props: {
 				title: 'Accessible Box',
 				children: 'Content'
 			}
 		});
 
-		// Check title is visible when provided
-		expect(getByText('Accessible Box')).toBeInTheDocument();
-		// Check content is readable
-		expect(getByText('Content')).toBeInTheDocument();
+		const title = container.querySelector('.header');
+		const content = container.querySelector('.box-content');
+
+		if (!title) throw new Error('Title element not found');
+		if (!content) throw new Error('Content element not found');
+
+		expect(title.textContent).toBe('Accessible Box');
+		expect(content.textContent).toBe('Content');
 	});
 });

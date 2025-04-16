@@ -7,8 +7,8 @@ describe('SubtitleBar', () => {
 	it('renders with default text', () => {
 		const { container } = render(SubtitleBar);
 		const subtitle = container.querySelector('.subtitle-bar');
-		expect(subtitle).toBeInTheDocument();
-		expect(subtitle?.textContent?.trim()).toBe(
+		if (!subtitle) throw new Error('Subtitle element not found');
+		expect(subtitle.textContent?.trim()).toBe(
 			'Building elegant solutions with modern web technologies'
 		);
 	});
@@ -20,14 +20,14 @@ describe('SubtitleBar', () => {
 			}
 		});
 		const subtitle = container.querySelector('.subtitle-bar');
-		expect(subtitle).toBeInTheDocument();
-		expect(subtitle?.textContent?.trim()).toBe('Custom Subtitle');
+		if (!subtitle) throw new Error('Subtitle element not found');
+		expect(subtitle.textContent?.trim()).toBe('Custom Subtitle');
 	});
 
 	it('has proper styling', () => {
 		const { container } = render(SubtitleBar);
 		const subtitle = container.querySelector('.subtitle-bar');
-		expect(subtitle).toBeInTheDocument();
+		if (!subtitle) throw new Error('Subtitle element not found');
 		expect(subtitle).toHaveClass('subtitle-bar');
 	});
 });
