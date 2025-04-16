@@ -3,10 +3,7 @@ import type { KnipConfig } from 'knip';
 const config: KnipConfig = {
 	project: ['src/**/*.{svelte,ts}'],
 	ignore: [
-		'**/*.d.ts',
-		'$app/paths',
-		'$app/state',
-		'$app/stores'
+		'**/*.d.ts'
 	],
 	svelte: {
 		entry: [
