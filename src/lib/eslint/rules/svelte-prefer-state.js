@@ -25,10 +25,12 @@ export default {
 		 * @returns {boolean}
 		 */
 		const isReassigned = (node) => {
-			const sourceCode = context.getSourceCode();
-			const text = sourceCode.getText();
-			const id = node.declarations[0]?.id;
-			if (!id || id.type !== 'Identifier') return false;
+			const text = context.sourceCode.getText();
+			const decl = node.declarations[0];
+			if (!decl || decl.id.type !== 'Identifier') return false;
+
+			/** @type {import('estree').Identifier} */
+			const id = decl.id;
 
 			// Count assignments to this variable
 			const assignments = text.match(new RegExp(`${id.name}\\s*=`)) || [];
@@ -39,37 +41,44 @@ export default {
 			VariableDeclaration(node) {
 				if (node.kind === 'let') {
 					// Check if the variable is used in the template
-					const isUsedInTemplate = node.declarations.some(decl => {
+					const isUsedInTemplate = node.declarations.some((decl) => {
 						if (decl.id.type !== 'Identifier') return false;
 
 						// Get the source code and check if the variable is used in the template
-						const sourceCode = context.getSourceCode();
-						const templateContent = sourceCode.ast.tokens
-							?.filter(isTemplateToken)
-							.map(token => token.value)
-							.join('') || '';
+						const templateContent =
+							context.sourceCode.ast.tokens
+								?.filter(isTemplateToken)
+								.map((token) => token.value)
+								.join('') || '';
 
 						return templateContent.includes(decl.id.name);
 					});
 
 					if (isUsedInTemplate) {
+						const decl = node.declarations[0];
+						if (decl.id.type !== 'Identifier') return;
+
+						const init = decl.init;
+						// Skip if it's already using $state
+						if (
+							init?.type === 'CallExpression' &&
+							init.callee.type === 'Identifier' &&
+							init.callee.name === '$state'
+						) {
+							return;
+						}
+
 						context.report({
 							node,
 							message: 'Use $state instead of let for reactive variables in Svelte 5',
 							fix(fixer) {
-								const decl = node.declarations[0];
-								if (decl.id.type !== 'Identifier') return null;
+								const initText = init ? context.sourceCode.getText(init) : 'undefined';
+								const willBeReassigned = isReassigned(node);
 
-								const init = decl.init;
-								// Don't wrap in $state if it's already a $state call
-								if (init?.type === 'CallExpression' &&
-									init.callee.type === 'Identifier' &&
-									init.callee.name === '$state') {
+								// Type guard to ensure we have an Identifier
+								if (decl.id.type !== 'Identifier') {
 									return null;
 								}
-
-								const initText = init ? context.getSourceCode().getText(init) : 'undefined';
-								const willBeReassigned = isReassigned(node);
 
 								return fixer.replaceText(
 									node,
