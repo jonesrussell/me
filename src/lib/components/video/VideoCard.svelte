@@ -97,7 +97,7 @@
 	}
 </style>
 
-<Box>
+<Box width={40}>
 	<div class="video-card">
 		<div class="video-container">
 			<iframe
