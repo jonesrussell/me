@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Badge from './Badge.svelte';
-	import Box from '../layout/Box.svelte';
 
 	const { children } = $props<{
 		children: () => unknown;
@@ -12,65 +11,49 @@
 		error = null;
 	}
 
-	$effect(() => {
+	$effect.root(() => {
 		try {
-			error = null;
 			children();
 		} catch (e) {
-			error = e instanceof Error ? e : new Error(String(e));
+			if (e instanceof Error) {
+				error = e;
+			}
 		}
 	});
 </script>
 
 <style>
 	.error-boundary {
-		width: 100%;
-	}
-
-	.error-content {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-4);
 		padding: var(--space-4);
-	}
-
-	.error-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+		border: 1px solid var(--color-error);
+		border-radius: var(--radius-md);
+		background-color: var(--color-error-bg);
 	}
 
 	.error-message {
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
-		color: var(--text-color);
-		white-space: pre-wrap;
+		margin: var(--space-2) 0;
+		color: var(--color-error);
 	}
 
-	.retry-button {
+	button {
+		background-color: var(--color-error);
+		color: white;
+		border: none;
 		padding: var(--space-2) var(--space-4);
-		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-sm);
-		color: var(--text-color);
 		cursor: pointer;
-		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
-	.retry-button:hover {
-		background: var(--bg-color);
+	button:hover {
+		background-color: var(--color-error-dark);
 	}
 </style>
 
 {#if error}
 	<div class="error-boundary">
-		<div class="error-content">
-			<div class="error-header">
-				<Badge type="error">Error</Badge>
-				<button class="retry-button" onclick={resetError}>Retry</button>
-			</div>
-			<div class="error-message">{error.message}</div>
-		</div>
+		<Badge type="error">Error</Badge>
+		<p class="error-message">{error.message}</p>
+		<button onclick={resetError}>Try Again</button>
 	</div>
 {:else}
 	{@render children()}
