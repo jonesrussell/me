@@ -20,20 +20,34 @@ export default {
 			return tokenType === 'HTML' || tokenType === 'HTMLText';
 		};
 
+		/**
+		 * @param {import('estree').VariableDeclaration} node
+		 * @returns {boolean}
+		 */
+		const isReassigned = (node) => {
+			const sourceCode = context.getSourceCode();
+			const text = sourceCode.getText();
+			const id = node.declarations[0]?.id;
+			if (!id || id.type !== 'Identifier') return false;
+
+			// Count assignments to this variable
+			const assignments = text.match(new RegExp(`${id.name}\\s*=`)) || [];
+			return assignments.length > 1;
+		};
+
 		return {
 			VariableDeclaration(node) {
 				if (node.kind === 'let') {
 					// Check if the variable is used in the template
-					const isUsedInTemplate = node.declarations.some((decl) => {
+					const isUsedInTemplate = node.declarations.some(decl => {
 						if (decl.id.type !== 'Identifier') return false;
 
 						// Get the source code and check if the variable is used in the template
 						const sourceCode = context.getSourceCode();
-						const templateContent =
-							sourceCode.ast.tokens
-								?.filter(isTemplateToken)
-								.map((token) => token.value)
-								.join('') || '';
+						const templateContent = sourceCode.ast.tokens
+							?.filter(isTemplateToken)
+							.map(token => token.value)
+							.join('') || '';
 
 						return templateContent.includes(decl.id.name);
 					});
@@ -47,9 +61,20 @@ export default {
 								if (decl.id.type !== 'Identifier') return null;
 
 								const init = decl.init;
-								const initText = init ? context.getSourceCode().getText(init) : 'undefined';
+								// Don't wrap in $state if it's already a $state call
+								if (init?.type === 'CallExpression' &&
+									init.callee.type === 'Identifier' &&
+									init.callee.name === '$state') {
+									return null;
+								}
 
-								return fixer.replaceText(node, `const ${decl.id.name} = $state(${initText});`);
+								const initText = init ? context.getSourceCode().getText(init) : 'undefined';
+								const willBeReassigned = isReassigned(node);
+
+								return fixer.replaceText(
+									node,
+									`${willBeReassigned ? 'let' : 'const'} ${decl.id.name} = $state(${initText});`
+								);
 							}
 						});
 					}
