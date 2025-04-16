@@ -3,10 +3,9 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import Input from '$lib/components/ui/Input.svelte';
 	import Box from '$lib/components/layout/Box.svelte';
-	import { createEventDispatcher } from 'svelte';
 
-	const dispatch = createEventDispatcher<{
-		submit: { email: string };
+	const { onSubmit = () => {} } = $props<{
+		onSubmit?: (event: { email: string }) => void;
 	}>();
 
 	let email = $state('');
@@ -24,7 +23,7 @@
 		try {
 			// Simulate API call
 			await new Promise((resolve) => setTimeout(resolve, 1000));
-			dispatch('submit', { email });
+			onSubmit({ email });
 			email = '';
 			success = true;
 		} catch (e) {
@@ -83,7 +82,7 @@
 					required
 				/>
 				<Button type="submit" disabled={!email || isSubmitting}>
-					{isSubmitting ? 'Loading...' : 'Subscribe ⟶'}
+					{isSubmitting ? 'Loading' : 'Subscribe ⟶'}
 				</Button>
 			</form>
 			{#if success}
