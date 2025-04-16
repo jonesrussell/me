@@ -32,6 +32,12 @@ const config = {
 		if (warning.code === 'a11y-no-noninteractive-element-interactions') return;
 		if (warning.code === 'a11y-click-events-have-key-events') return;
 		handler(warning);
+	},
+	// Add compiler options for testing
+	compilerOptions: {
+		dev: true,
+		css: 'injected',
+		runes: true
 	}
 };
 
