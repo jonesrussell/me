@@ -4,12 +4,7 @@ import { afterEach, vi } from 'vitest';
 import { JSDOM } from 'jsdom';
 
 // Create a JSDOM instance
-const dom = new JSDOM(
-	'<!DOCTYPE html><html><head></head><body><div id="app"></div></body></html>',
-	{
-		url: 'http://localhost'
-	}
-);
+const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>');
 
 // Set up global variables
 global.document = dom.window.document;
@@ -74,6 +69,27 @@ vi.mock('$app/stores', () => ({
 	navigating: { subscribe: vi.fn() },
 	updated: { subscribe: vi.fn() }
 }));
+
+// Mock CSS modules
+Object.defineProperty(window, 'CSS', {
+	value: {
+		supports: () => true,
+		escape: (str: string) => str,
+	},
+});
+
+// Mock getComputedStyle
+Object.defineProperty(window, 'getComputedStyle', {
+	value: () => ({
+		getPropertyValue: () => '',
+	}),
+});
+
+// Mock CSS parsing
+const originalCreateStylesheet = dom.window.document.createElement('style').sheet;
+Object.defineProperty(dom.window.document.createElement('style'), 'sheet', {
+	get: () => originalCreateStylesheet,
+});
 
 // Cleanup after each test
 afterEach(() => {

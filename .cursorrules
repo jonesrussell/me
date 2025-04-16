@@ -1,8 +1,22 @@
-# STOP FUCKING TRYING TO USE SLOTS
-
 # Core Development Guidelines
+testing_guidelines:
+  - Focus on testing functionality rather than specific CSS implementations
+  - write_unit_tests: true
+  - test_components_in_isolation: true
+  - test_user_interactions: true
+  - test_state_management: true
+  - test_accessibility: true
+  - test_error_cases: true
+  - use_vitest_and_testing_library: true
+  - mock_external_dependencies: true
+  - test_edge_cases: true
+  - use_test_fixtures: true
+  - implement_test_utilities: true
+  - follow_aaa_pattern: true
+  - use_snapshot_testing: true
+
 branding:
-  - title: 'Limitless Developer'
+  - title: 'Russell Jones'
   - description: 'Building elegant solutions with modern web technologies'
 
 general_rules:
@@ -70,21 +84,6 @@ svelte_patterns:
   - use_render_instead_of_slots: true
   - use_props_validation: true
   - implement_error_boundaries: true
-
-testing_guidelines:
-  - write_unit_tests: true
-  - test_components_in_isolation: true
-  - test_user_interactions: true
-  - test_state_management: true
-  - test_accessibility: true
-  - test_error_cases: true
-  - use_vitest_and_testing_library: true
-  - mock_external_dependencies: true
-  - test_edge_cases: true
-  - use_test_fixtures: true
-  - implement_test_utilities: true
-  - follow_aaa_pattern: true
-  - use_snapshot_testing: true
 
 monospace_design:
   - use_monospace_fonts: true
