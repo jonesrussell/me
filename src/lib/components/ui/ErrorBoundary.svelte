@@ -7,7 +7,7 @@
 		children: ChildrenType;
 	}>();
 
-	const error = $state<Error | null>(null);
+	let error = $state<Error | null>(null);
 
 	function resetError() {
 		error = null;
