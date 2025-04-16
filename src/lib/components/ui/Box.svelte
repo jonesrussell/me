@@ -65,6 +65,8 @@
 				<div class="title">{title}</div>
 			</div>
 		{/if}
-		{children}
+		<div class="content">
+			{@render children()}
+		</div>
 	</div>
 </div>
