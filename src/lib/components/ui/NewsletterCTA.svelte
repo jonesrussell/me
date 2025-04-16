@@ -9,11 +9,12 @@
 		submit: { email: string };
 	}>();
 
-	let email = '';
-	let isSubmitting = false;
-	let error: string | null = null;
+	let email = $state('');
+	let isSubmitting = $state(false);
+	let error = $state<string | null>(null);
 
-	async function handleSubmit() {
+	async function handleSubmit(event: SubmitEvent) {
+		event.preventDefault();
 		if (!email) return;
 		isSubmitting = true;
 		error = null;
@@ -56,15 +57,16 @@
 		<h2>Subscribe to our newsletter</h2>
 		<p>Get the latest updates and news delivered to your inbox.</p>
 		<ErrorBoundary>
-			<form class="form-group" on:submit|preventDefault={handleSubmit}>
+			<form class="form-group" onsubmit={handleSubmit}>
 				<Input
 					type="email"
-					placeholder="Enter your email"
+					placeholder="your.email@example.com"
 					bind:value={email}
 					disabled={isSubmitting}
+					required
 				/>
 				<Button type="submit" disabled={!email || isSubmitting}>
-					{isSubmitting ? 'Subscribing...' : 'Subscribe'}
+					{isSubmitting ? 'Subscribing...' : 'Subscribe ⟶'}
 				</Button>
 			</form>
 		</ErrorBoundary>
