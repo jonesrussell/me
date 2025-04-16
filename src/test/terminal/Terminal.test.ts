@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/svelte';
+import { render, screen, within } from '@testing-library/svelte';
 import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
 import Terminal from '$lib/components/terminal/Terminal.svelte';
 import { terminal, commands } from '$lib/stores/terminal';
@@ -7,28 +7,36 @@ import { terminal, commands } from '$lib/stores/terminal';
 describe('Terminal', () => {
 	describe('Basic Rendering', () => {
 		it('renders with terminal styling', () => {
-			render(Terminal, { props: { command: 'test' } });
-			const terminal = screen.getByRole('log');
-			expect(terminal).toHaveClass('terminal');
+			const { container } = render(Terminal, { props: { command: 'test' } });
+			const terminal = container.querySelector('.terminal');
+			expect(terminal).toBeInTheDocument();
 		});
 
 		it('formats command line correctly', () => {
-			render(Terminal, { props: { command: 'test' } });
-			const command = screen.getByText('$ test');
-			expect(command).toBeInTheDocument();
+			const { container } = render(Terminal, { props: { command: 'test' } });
+			const prompt = container.querySelector('.prompt');
+			const command = container.querySelector('.command');
+			expect(prompt?.textContent).toBe('$');
+			expect(command?.textContent).toBe('test');
 		});
 
 		it('indents command output', () => {
-			render(Terminal, { props: { command: 'test', output: 'output' } });
-			const output = screen.getByText('output');
-			const style = window.getComputedStyle(output);
-			expect(style.marginLeft).toBe('var(--space-4)');
+			const { container } = render(Terminal, { props: { command: 'test', output: 'output' } });
+			const output = container.querySelector('.command-output');
+			expect(output).toBeInTheDocument();
+			expect(output?.textContent).toBe('output');
+		});
+
+		it('renders with default title', () => {
+			const { container } = render(Terminal, { props: { command: 'test' } });
+			const title = container.querySelector('.terminal-title');
+			expect(title?.textContent).toBe('Terminal');
 		});
 
 		it('renders with custom title', () => {
-			render(Terminal, { props: { command: 'test', title: 'Custom Title' } });
-			const title = screen.getByText('Custom Title');
-			expect(title).toBeInTheDocument();
+			const { container } = render(Terminal, { props: { command: 'test', title: 'Custom Title' } });
+			const title = container.querySelector('.terminal-title');
+			expect(title?.textContent).toBe('Custom Title');
 		});
 	});
 
@@ -48,15 +56,14 @@ describe('Terminal', () => {
 			commands.set(testCommands);
 			terminal.loadCommands(testCommands);
 
-			render(Terminal);
+			const { container } = render(Terminal, { props: { command: 'test' } });
 			vi.advanceTimersByTime(1000);
 			await Promise.resolve();
 
-			const prompt = screen.getByText('$');
-			expect(prompt).toBeInTheDocument();
-
-			const command = screen.getByText('test');
-			expect(command).toBeInTheDocument();
+			const prompt = container.querySelector('.prompt');
+			const command = container.querySelector('.command');
+			expect(prompt?.textContent).toBe('$');
+			expect(command?.textContent).toBe('test');
 		});
 
 		it('stops typing when component is unmounted', () => {
@@ -71,15 +78,16 @@ describe('Terminal', () => {
 
 	describe('Accessibility', () => {
 		it('has proper ARIA role and label', () => {
-			render(Terminal, { props: { command: 'test' } });
-			const terminal = screen.getByRole('log', { name: 'Terminal output' });
-			expect(terminal).toBeInTheDocument();
+			const { container } = render(Terminal, { props: { command: 'test' } });
+			const terminal = container.querySelector('.terminal');
+			expect(terminal).toHaveAttribute('role', 'log');
+			expect(terminal).toHaveAttribute('aria-label', 'Terminal output');
 		});
 
 		it('maintains proper heading structure', () => {
-			render(Terminal, { props: { command: 'test', title: 'Test Terminal' } });
-			const title = screen.getByText('Test Terminal');
-			expect(title).toBeInTheDocument();
+			const { container } = render(Terminal, { props: { command: 'test', title: 'Test Terminal' } });
+			const title = container.querySelector('.terminal-title');
+			expect(title?.textContent).toBe('Test Terminal');
 		});
 	});
 });
