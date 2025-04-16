@@ -2,14 +2,33 @@
 
 - [ ] Modernize CSS Architecture (2025)
 
-  - [ ] Implement CSS Nesting in all components
-  - [ ] Add CSS Container Queries for responsive layouts
+  - [x] Implement CSS Nesting in all components
+    - [x] Resources page
+    - [x] ResourceSection component
+    - [ ] Apply to remaining components
+  - [x] Add CSS Container Queries for responsive layouts
+    - [x] Resources page container
+    - [x] ResourceSection component
+    - [ ] Apply to remaining components
   - [ ] Use `:has()` selector for complex state styling
+    - [ ] Add for resource card hover states
+    - [ ] Add for navigation active states
   - [ ] Implement CSS Cascade Layers
-  - [ ] Use CSS Logical Properties for RTL support
+    - [ ] Define base layer
+    - [ ] Define component layer
+    - [ ] Define utility layer
+  - [x] Use CSS Logical Properties for RTL support
+    - [x] Add to resources layout
+    - [ ] Apply to remaining components
   - [ ] Add CSS View Transitions for animations
+    - [ ] Add page transitions
+    - [ ] Add component transitions
   - [ ] Implement CSS Color Mixing for themes
+    - [ ] Add color mixing utilities
+    - [ ] Update theme system
   - [ ] Add CSS Subgrid for complex layouts
+    - [ ] Apply to resource grid
+    - [ ] Apply to project grid
 
 - [ ] Svelte 5 Migration
 
