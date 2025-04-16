@@ -69,7 +69,7 @@
 
 {#if $blogErrors.length > 0}
 	<Box width={80}>
-		{#each $blogErrors as error}
+		{#each $blogErrors as error (error.timestamp)}
 			<div class="error">
 				<div class="header">
 					<span class="type">{formatErrorType(error.type)}</span>

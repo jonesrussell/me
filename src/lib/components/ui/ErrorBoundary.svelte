@@ -8,13 +8,17 @@
 
 	let error = $state<Error | null>(null);
 
-	function handleError(e: Error) {
-		error = e;
-	}
-
 	function resetError() {
 		error = null;
 	}
+
+	$effect(() => {
+		try {
+			children();
+		} catch (e) {
+			error = e instanceof Error ? e : new Error(String(e));
+		}
+	});
 </script>
 
 <style>
