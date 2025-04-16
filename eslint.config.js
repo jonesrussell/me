@@ -4,7 +4,6 @@ import { includeIgnoreFile } from '@eslint/compat';
 import globals from 'globals';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
-import svelteConfig from './svelte.config.js';
 import sveltePlugin from './src/lib/eslint/plugins/svelte-render.js';
 
 const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
@@ -47,7 +46,10 @@ export default ts.config(
 			'svelte/no-target-blank': 'error',
 			'svelte/valid-compile': 'error',
 			'svelte/no-reactive-reassign': 'error',
-			'svelte/render-children': 'error'
+			'svelte/render-children': 'error',
+			'svelte/no-slots': 'error',
+			'svelte/prefer-state': 'error',
+			'svelte/prefer-derived': 'error'
 		}
 	}
 );
