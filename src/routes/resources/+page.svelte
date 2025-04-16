@@ -182,6 +182,14 @@
 			stars: 37800,
 			category: 'Tools'
 		},
+		{
+			title: 'Knip',
+			url: 'https://github.com/webpro/knip',
+			description:
+				'Find unused files, dependencies, and exports in your JavaScript and TypeScript projects',
+			stars: 3000,
+			category: 'Tools'
+		},
 
 		// Learning Paths
 		{
@@ -240,6 +248,7 @@
 		max-width: min(var(--measure), 95cqi);
 		margin: 0 auto;
 		padding: 0 var(--space-3);
+		container-type: inline-size;
 	}
 
 	@media (width >= 48ch) {
