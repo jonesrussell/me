@@ -21,13 +21,8 @@ const config: KnipConfig = {
 			'src/params/*.{js,ts}'
 		]
 	},
-	ignoreDependencies: [
-		'@fontsource/fira-mono',
-		'@fontsource/jetbrains-mono'
-	],
-	ignoreBinaries: [
-		'act'
-	]
+	ignoreDependencies: ['@fontsource/fira-mono', '@fontsource/jetbrains-mono'],
+	ignoreBinaries: ['act']
 };
 
 export default config;

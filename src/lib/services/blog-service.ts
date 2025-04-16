@@ -159,9 +159,15 @@ async function fetchXML(url: string): Promise<FetchResult> {
 function parsePost(entry: Element): BlogPost {
 	try {
 		const title = entry.querySelector('title')?.textContent?.trim();
-		const link = entry.querySelector('link')?.getAttribute('href') || entry.querySelector('link')?.textContent?.trim();
-		const published = entry.querySelector('published')?.textContent?.trim() || entry.querySelector('pubDate')?.textContent?.trim();
-		const description = entry.querySelector('description')?.textContent?.trim() || entry.querySelector('content')?.textContent?.trim();
+		const link =
+			entry.querySelector('link')?.getAttribute('href') ||
+			entry.querySelector('link')?.textContent?.trim();
+		const published =
+			entry.querySelector('published')?.textContent?.trim() ||
+			entry.querySelector('pubDate')?.textContent?.trim();
+		const description =
+			entry.querySelector('description')?.textContent?.trim() ||
+			entry.querySelector('content')?.textContent?.trim();
 
 		if (!title || !link || !published || !description) {
 			throw new Error('Missing required fields in blog post');
