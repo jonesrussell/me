@@ -116,88 +116,72 @@ async function fetchXML(url: string): Promise<FetchResult> {
 			const error: BlogError = {
 				type: 'FETCH_ERROR',
 				message: `Failed to fetch feed: ${response.statusText}`,
-				details: { status: response.status },
+				details: { status: response.status, url },
 				timestamp: Date.now()
 			};
 			addError(error);
-			return {
-				success: false,
-				data: null,
-				error: error.message,
-				etag: response.headers.get('etag') || undefined,
-				lastModified: response.headers.get('last-modified') || undefined
-			};
+			return { success: false, data: null, error: error.message };
 		}
 
 		const text = await response.text();
 		const parser = new DOMParser();
-		const xml = parser.parseFromString(text, 'application/xml');
+		const xmlDoc = parser.parseFromString(text, 'text/xml');
 
-		if (!xml.querySelector('entry')) {
+		if (xmlDoc.documentElement.nodeName === 'parsererror') {
 			const error: BlogError = {
 				type: 'PARSE_ERROR',
-				message: 'Invalid XML format: No entries found',
+				message: 'Failed to parse XML feed',
+				details: { text },
 				timestamp: Date.now()
 			};
 			addError(error);
-			return {
-				success: false,
-				data: null,
-				error: error.message,
-				etag: response.headers.get('etag') || undefined,
-				lastModified: response.headers.get('last-modified') || undefined
-			};
+			return { success: false, data: null, error: error.message };
 		}
 
 		return {
 			success: true,
-			data: xml,
+			data: xmlDoc,
 			etag: response.headers.get('etag') || undefined,
 			lastModified: response.headers.get('last-modified') || undefined
 		};
-	} catch (error) {
-		const blogError: BlogError = {
+	} catch (err) {
+		const error: BlogError = {
 			type: 'FETCH_ERROR',
-			message: error instanceof Error ? error.message : 'Unknown error occurred',
-			details: error,
+			message: err instanceof Error ? err.message : 'Unknown error occurred while fetching feed',
+			details: err,
 			timestamp: Date.now()
 		};
-		addError(blogError);
-		return {
-			success: false,
-			data: null,
-			error: blogError.message
-		};
+		addError(error);
+		return { success: false, data: null, error: error.message };
 	}
 }
 
 function parsePost(entry: Element): BlogPost {
-	const defaultPost: BlogPost = {
-		title: 'Untitled',
-		published: new Date().toISOString(),
-		link: '',
-		description: 'No description available'
-	};
-
 	try {
-		const title = entry.querySelector('title')?.textContent?.trim() || defaultPost.title;
-		const published =
-			entry.querySelector('published')?.textContent?.trim() || defaultPost.published;
-		const link = entry.querySelector('link')?.getAttribute('href') || defaultPost.link;
-		const content = entry.querySelector('content')?.textContent || '';
-		const description = extractFirstMeaningfulParagraph(content) || defaultPost.description;
+		const title = entry.querySelector('title')?.textContent?.trim();
+		const link = entry.querySelector('link')?.getAttribute('href') || entry.querySelector('link')?.textContent?.trim();
+		const published = entry.querySelector('published')?.textContent?.trim() || entry.querySelector('pubDate')?.textContent?.trim();
+		const description = entry.querySelector('description')?.textContent?.trim() || entry.querySelector('content')?.textContent?.trim();
 
-		const post = {
+		if (!title || !link || !published || !description) {
+			throw new Error('Missing required fields in blog post');
+		}
+
+		return {
 			title,
-			published,
 			link,
-			description: truncateDescription(description)
+			published,
+			description: sanitizeText(description)
 		};
-
-		return validatePost(post) ? post : defaultPost;
-	} catch (error) {
-		console.error('Error parsing post:', error);
-		return defaultPost;
+	} catch (err) {
+		const error: BlogError = {
+			type: 'VALIDATION_ERROR',
+			message: err instanceof Error ? err.message : 'Failed to parse blog post',
+			details: { entry: entry.outerHTML },
+			timestamp: Date.now()
+		};
+		addError(error);
+		throw error;
 	}
 }
 
