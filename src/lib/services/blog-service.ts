@@ -190,25 +190,6 @@ export function formatPostDate(dateString: string): string {
 	return formatDate(dateString);
 }
 
-/**
- * Sanitizes a blog post description by removing HTML tags and normalizing whitespace.
- * @param description - The raw description text
- * @returns The sanitized description
- */
-export function sanitizePostDescription(description: string): string {
-	return sanitizeText(description);
-}
-
-/**
- * Truncates a blog post description to a specified length.
- * @param description - The description text to truncate
- * @param maxLength - Maximum length of the truncated text (default: 280)
- * @returns The truncated description
- */
-export function truncatePostDescription(description: string, maxLength: number = 280): string {
-	return truncateDescription(description, maxLength);
-}
-
 export async function fetchFeed(options?: PaginationOptions): Promise<PaginatedResult<BlogPost>> {
 	if (feedCache && !shouldInvalidateCache(feedCache, { success: true, data: null })) {
 		const { page = 1, pageSize = 10 } = options || {};
@@ -269,14 +250,4 @@ export async function fetchFeed(options?: PaginationOptions): Promise<PaginatedR
 		pageSize,
 		hasMore: end < posts.length
 	};
-}
-
-/**
- * Loads blog posts with pagination support.
- * @param options - Pagination options
- * @returns A promise that resolves to an array of blog posts
- */
-export async function loadBlogPosts(options?: PaginationOptions) {
-	const result = await fetchFeed(options);
-	return result.items;
 }
