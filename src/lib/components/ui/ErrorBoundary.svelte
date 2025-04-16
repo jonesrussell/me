@@ -1,8 +1,10 @@
 <script lang="ts">
 	import Badge from './Badge.svelte';
 
+	type ChildrenType = () => string | HTMLElement;
+
 	const { children } = $props<{
-		children: () => unknown;
+		children: ChildrenType;
 	}>();
 
 	let error = $state<Error | null>(null);
