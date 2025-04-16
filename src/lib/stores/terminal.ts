@@ -180,22 +180,6 @@ function createTerminal() {
 
 export const terminal = createTerminal();
 
-// Debug store for terminal calculations
-export const debug = writable({
-	headerHeight: 0,
-	padding: 0,
-	maxLines: 0,
-	rawHeight: 0,
-	totalHeight: '',
-	currentLines: 0,
-	commands: [] as {
-		cmd: string;
-		lines: number;
-		height: number;
-		breakdown: string;
-	}[]
-});
-
 // Terminal height store
 export const terminalHeight = writable('35ch');
 
