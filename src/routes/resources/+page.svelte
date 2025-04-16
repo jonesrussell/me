@@ -241,43 +241,38 @@
 	.resources {
 		width: 100%;
 		padding: var(--space-4) 0;
-	}
 
-	.container {
-		width: 100%;
-		max-width: min(var(--measure), 95cqi);
-		margin: 0 auto;
-		padding: 0 var(--space-3);
-		container-type: inline-size;
-	}
+		& .container {
+			width: 100%;
+			max-width: min(var(--measure), 95cqi);
+			margin: 0 auto;
+			padding: 0 var(--space-3);
+			container-type: inline-size;
+			container-name: resources-container;
+		}
 
-	@media (width >= 48ch) {
-		.resources {
+		@container resources-container (width >= 48ch) {
 			padding: var(--space-8) 0;
+
+			& .container {
+				padding: 0 var(--space-4);
+			}
 		}
 
-		.container {
-			padding: 0 var(--space-4);
-		}
-	}
-
-	@media (width >= 80ch) {
-		.resources {
+		@container resources-container (width >= 80ch) {
 			padding: var(--space-12) 0;
+
+			& .container {
+				padding: 0 var(--space-6);
+			}
 		}
 
-		.container {
-			padding: 0 var(--space-6);
-		}
-	}
-
-	@media (width >= 120ch) {
-		.resources {
+		@container resources-container (width >= 120ch) {
 			padding: var(--space-16) 0;
-		}
 
-		.container {
-			padding: 0 var(--space-8);
+			& .container {
+				padding: 0 var(--space-8);
+			}
 		}
 	}
 </style>
