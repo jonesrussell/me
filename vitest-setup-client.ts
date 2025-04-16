@@ -67,3 +67,33 @@ console.error = (...args) => {
 	}
 	originalError(...args);
 };
+
+// Mock SvelteKit modules
+vi.mock('$app/paths', () => ({
+	base: '',
+	assets: ''
+}));
+
+vi.mock('$app/stores', () => ({
+	page: {
+		subscribe: vi.fn()
+	},
+	navigating: {
+		subscribe: vi.fn()
+	},
+	updated: {
+		subscribe: vi.fn()
+	}
+}));
+
+// Mock navigation
+vi.mock('$app/navigation', () => ({
+	afterNavigate: vi.fn(),
+	beforeNavigate: vi.fn(),
+	disableScrollHandling: vi.fn(),
+	goto: vi.fn(),
+	invalidate: vi.fn(),
+	invalidateAll: vi.fn(),
+	preloadCode: vi.fn(),
+	preloadData: vi.fn()
+}));
