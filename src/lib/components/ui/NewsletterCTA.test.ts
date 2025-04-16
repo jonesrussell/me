@@ -1,26 +1,25 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/svelte';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/svelte';
 import NewsletterCTA from './NewsletterCTA.svelte';
 
-describe('NewsletterCTA', () => {
-	let container: HTMLElement;
+// Mock fetch
+const mockFetch = vi.fn();
+global.fetch = mockFetch;
 
+describe('NewsletterCTA', () => {
 	beforeEach(() => {
-		vi.clearAllMocks();
-		global.fetch = vi.fn();
-		container = document.createElement('div');
-		container.id = 'test-container';
-		document.body.appendChild(container);
-		document.head.innerHTML = '';
+		// Reset fetch mock before each test
+		mockFetch.mockReset();
+		// Clear the app container
+		document.getElementById('app')!.innerHTML = '';
 	});
 
 	afterEach(() => {
-		container.remove();
-		document.head.innerHTML = '';
+		cleanup();
 	});
 
 	it('renders the component with initial state', () => {
-		const { unmount } = render(NewsletterCTA, { target: container });
+		render(NewsletterCTA, { target: document.getElementById('app')! });
 
 		// Check if the form elements are present
 		expect(screen.getByRole('textbox', { name: '' })).toBeInTheDocument();
@@ -32,12 +31,10 @@ describe('NewsletterCTA', () => {
 		expect(screen.queryByText('Loading')).not.toBeInTheDocument();
 		expect(screen.queryByText(/success/i)).not.toBeInTheDocument();
 		expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
-
-		unmount();
 	});
 
 	it('enables the submit button when email is not empty', async () => {
-		const { unmount } = render(NewsletterCTA, { target: container });
+		render(NewsletterCTA, { target: document.getElementById('app')! });
 
 		const input = screen.getByPlaceholderText('your.email@example.com');
 		const button = screen.getByRole('button');
@@ -50,17 +47,15 @@ describe('NewsletterCTA', () => {
 
 		// Button should be enabled
 		expect(button).not.toBeDisabled();
-
-		unmount();
 	});
 
 	it('shows loading state during submission', async () => {
-		const { unmount } = render(NewsletterCTA, { target: container });
+		render(NewsletterCTA, { target: document.getElementById('app')! });
 
 		const input = screen.getByPlaceholderText('your.email@example.com');
 
 		// Set up mock fetch to delay response
-		vi.mocked(global.fetch).mockImplementationOnce(() => new Promise(() => {}));
+		mockFetch.mockImplementationOnce(() => new Promise(() => {}));
 
 		// Enter email and submit
 		await fireEvent.input(input, { target: { value: 'test@example.com' } });
@@ -69,17 +64,15 @@ describe('NewsletterCTA', () => {
 		// Check loading state
 		expect(screen.getByRole('button')).toBeDisabled();
 		expect(screen.getByText('Loading')).toBeInTheDocument();
-
-		unmount();
 	});
 
 	it('handles successful submission', async () => {
-		const { unmount } = render(NewsletterCTA, { target: container });
+		render(NewsletterCTA, { target: document.getElementById('app')! });
 
 		const input = screen.getByPlaceholderText('your.email@example.com');
 
 		// Mock successful response
-		vi.mocked(global.fetch).mockImplementationOnce(() =>
+		mockFetch.mockImplementationOnce(() =>
 			Promise.resolve({
 				ok: true,
 				status: 200,
@@ -98,17 +91,15 @@ describe('NewsletterCTA', () => {
 
 		// Check if email is cleared
 		expect(input).toHaveValue('');
-
-		unmount();
 	});
 
 	it('handles submission error', async () => {
-		const { unmount } = render(NewsletterCTA, { target: container });
+		render(NewsletterCTA, { target: document.getElementById('app')! });
 
 		const input = screen.getByPlaceholderText('your.email@example.com');
 
 		// Mock error response
-		vi.mocked(global.fetch).mockImplementationOnce(() =>
+		mockFetch.mockImplementationOnce(() =>
 			Promise.resolve({
 				ok: false,
 				status: 500,
@@ -127,12 +118,10 @@ describe('NewsletterCTA', () => {
 
 		// Check if button is re-enabled
 		expect(screen.getByRole('button')).not.toBeDisabled();
-
-		unmount();
 	});
 
 	it('is accessible', async () => {
-		const { unmount } = render(NewsletterCTA, { target: container });
+		render(NewsletterCTA, { target: document.getElementById('app')! });
 
 		// Check input accessibility
 		const input = screen.getByRole('textbox');
@@ -148,7 +137,5 @@ describe('NewsletterCTA', () => {
 		// Check form accessibility
 		const form = input.closest('form');
 		expect(form).toHaveAttribute('novalidate');
-
-		unmount();
 	});
 });
