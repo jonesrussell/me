@@ -4,10 +4,10 @@
 	import Input from '$lib/components/ui/Input.svelte';
 	import Box from '$lib/components/ui/Box.svelte';
 
-	const email = $state($state(''));
-	let isSubmitting = $state(false);
-	const error = $state($state<string | null>(null));
-	const success = $state($state(false));
+	const email = $state('');
+	const isSubmitting = $state(false);
+	const error = $state<string | null>(null);
+	const success = $state(false);
 
 	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();

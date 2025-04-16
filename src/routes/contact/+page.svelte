@@ -1,7 +1,7 @@
 <script lang="ts">
-	const name = $state($state(''));
-	const email = $state($state(''));
-	const message = $state($state(''));
+	const name = $state('');
+	const email = $state('');
+	const message = $state('');
 
 	function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
