@@ -3,7 +3,12 @@ import type { KnipConfig } from 'knip';
 const config: KnipConfig = {
 	project: ['src/**/*.{svelte,ts}'],
 	ignore: [
-		'**/*.d.ts'
+		'**/*.d.ts',
+		'$app/**',
+		'$lib/**',
+		'$env/**',
+		'$service-worker',
+		'@sveltejs/kit/**'
 	],
 	svelte: {
 		entry: [
@@ -13,7 +18,12 @@ const config: KnipConfig = {
 			'src/hooks.{server,client}.{js,ts}',
 			'src/params/*.{js,ts}'
 		]
-	}
+	},
+	ignoreDependencies: [
+		'@sveltejs/kit',
+		'@sveltejs/adapter-auto',
+		'@sveltejs/vite-plugin-svelte'
+	]
 };
 
 export default config;
