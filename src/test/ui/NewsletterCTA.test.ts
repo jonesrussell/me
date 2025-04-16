@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/svelte';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { render, fireEvent, waitFor, cleanup } from '@testing-library/svelte';
 import NewsletterCTA from '$lib/components/ui/NewsletterCTA.svelte';
 
 // Mock fetch
@@ -8,42 +8,53 @@ global.fetch = mockFetch;
 
 describe('NewsletterCTA', () => {
 	beforeEach(() => {
+		// Create app container if it doesn't exist
+		if (!document.getElementById('app')) {
+			const app = document.createElement('div');
+			app.id = 'app';
+			document.body.appendChild(app);
+		}
 		// Reset fetch mock before each test
 		mockFetch.mockReset();
-		// Clear the app container
-		document.getElementById('app')!.innerHTML = '';
 	});
 
 	afterEach(() => {
 		cleanup();
+		// Clear the app container
+		const app = document.getElementById('app');
+		if (app) {
+			app.innerHTML = '';
+		}
 	});
 
 	it('renders the component with initial state', () => {
 		render(NewsletterCTA, { target: document.getElementById('app')! });
 
 		// Check if the form elements are present
-		expect(screen.getByRole('textbox', { name: '' })).toBeInTheDocument();
-		expect(screen.getByPlaceholderText('your.email@example.com')).toBeInTheDocument();
-		expect(screen.getByRole('button', { name: 'Subscribe ⟶' })).toBeInTheDocument();
+		const input = document.querySelector('input[type="email"]');
+		expect(input).toBeInTheDocument();
+		expect(input).toHaveAttribute('placeholder', 'your.email@example.com');
 
-		// Check if the initial state is correct
-		expect(screen.getByRole('button')).toBeDisabled();
-		expect(screen.queryByText('Loading')).not.toBeInTheDocument();
-		expect(screen.queryByText(/success/i)).not.toBeInTheDocument();
-		expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
+		const button = document.querySelector('button[type="submit"]');
+		expect(button).toBeInTheDocument();
+		expect(button?.textContent).toBe('Subscribe ⟶');
+		expect(button).toBeDisabled();
+
+		// Check initial state
+		expect(document.querySelector('.status-message')).not.toBeInTheDocument();
 	});
 
 	it('enables the submit button when email is not empty', async () => {
 		render(NewsletterCTA, { target: document.getElementById('app')! });
 
-		const input = screen.getByPlaceholderText('your.email@example.com');
-		const button = screen.getByRole('button');
+		const input = document.querySelector('input[type="email"]');
+		const button = document.querySelector('button[type="submit"]');
 
 		// Initially, button should be disabled
 		expect(button).toBeDisabled();
 
 		// Enter email
-		await fireEvent.input(input, { target: { value: 'test@example.com' } });
+		await fireEvent.input(input!, { target: { value: 'test@example.com' } });
 
 		// Button should be enabled
 		expect(button).not.toBeDisabled();
@@ -52,24 +63,25 @@ describe('NewsletterCTA', () => {
 	it('shows loading state during submission', async () => {
 		render(NewsletterCTA, { target: document.getElementById('app')! });
 
-		const input = screen.getByPlaceholderText('your.email@example.com');
+		const input = document.querySelector('input[type="email"]');
+		const button = document.querySelector('button[type="submit"]');
 
 		// Set up mock fetch to delay response
 		mockFetch.mockImplementationOnce(() => new Promise(() => {}));
 
 		// Enter email and submit
-		await fireEvent.input(input, { target: { value: 'test@example.com' } });
-		await fireEvent.submit(screen.getByRole('textbox').closest('form')!);
+		await fireEvent.input(input!, { target: { value: 'test@example.com' } });
+		await fireEvent.submit(input!.closest('form')!);
 
 		// Check loading state
-		expect(screen.getByRole('button')).toBeDisabled();
-		expect(screen.getByText('Loading')).toBeInTheDocument();
+		expect(button).toBeDisabled();
+		expect(button?.textContent).toBe('Loading');
 	});
 
 	it('handles successful submission', async () => {
 		render(NewsletterCTA, { target: document.getElementById('app')! });
 
-		const input = screen.getByPlaceholderText('your.email@example.com');
+		const input = document.querySelector('input[type="email"]');
 
 		// Mock successful response
 		mockFetch.mockImplementationOnce(() =>
@@ -81,12 +93,14 @@ describe('NewsletterCTA', () => {
 		);
 
 		// Enter email and submit
-		await fireEvent.input(input, { target: { value: 'test@example.com' } });
-		await fireEvent.submit(screen.getByRole('textbox').closest('form')!);
+		await fireEvent.input(input!, { target: { value: 'test@example.com' } });
+		await fireEvent.submit(input!.closest('form')!);
 
 		// Wait for success state
 		await waitFor(() => {
-			expect(screen.getByText(/success/i)).toBeInTheDocument();
+			const successMessage = document.querySelector('.status-message.status-success');
+			expect(successMessage).toBeInTheDocument();
+			expect(successMessage?.textContent).toBe("Success! You've been subscribed.");
 		});
 
 		// Check if email is cleared
@@ -96,7 +110,8 @@ describe('NewsletterCTA', () => {
 	it('handles submission error', async () => {
 		render(NewsletterCTA, { target: document.getElementById('app')! });
 
-		const input = screen.getByPlaceholderText('your.email@example.com');
+		const input = document.querySelector('input[type="email"]');
+		const button = document.querySelector('button[type="submit"]');
 
 		// Mock error response
 		mockFetch.mockImplementationOnce(() =>
@@ -108,34 +123,36 @@ describe('NewsletterCTA', () => {
 		);
 
 		// Enter email and submit
-		await fireEvent.input(input, { target: { value: 'test@example.com' } });
-		await fireEvent.submit(screen.getByRole('textbox').closest('form')!);
+		await fireEvent.input(input!, { target: { value: 'test@example.com' } });
+		await fireEvent.submit(input!.closest('form')!);
 
 		// Wait for error state
 		await waitFor(() => {
-			expect(screen.getByText(/failed to subscribe/i)).toBeInTheDocument();
+			const errorMessage = document.querySelector('.status-message.status-error');
+			expect(errorMessage).toBeInTheDocument();
+			expect(errorMessage?.textContent).toBe('Failed to subscribe');
 		});
 
 		// Check if button is re-enabled
-		expect(screen.getByRole('button')).not.toBeDisabled();
+		expect(button).not.toBeDisabled();
 	});
 
 	it('is accessible', async () => {
 		render(NewsletterCTA, { target: document.getElementById('app')! });
 
 		// Check input accessibility
-		const input = screen.getByRole('textbox');
+		const input = document.querySelector('input[type="email"]');
 		expect(input).toHaveAttribute('type', 'email');
 		expect(input).toHaveAttribute('required');
 		expect(input).toHaveAttribute('placeholder', 'your.email@example.com');
 
 		// Check button accessibility
-		const button = screen.getByRole('button');
+		const button = document.querySelector('button[type="submit"]');
 		expect(button).toHaveAttribute('type', 'submit');
-		expect(button).toHaveTextContent('Subscribe ⟶');
+		expect(button?.textContent).toBe('Subscribe ⟶');
 
 		// Check form accessibility
-		const form = input.closest('form');
+		const form = input!.closest('form');
 		expect(form).toHaveAttribute('novalidate');
 	});
 });

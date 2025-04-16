@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/svelte';
+import { render } from '@testing-library/svelte';
 import YouTubeSection from '$lib/components/video/YouTubeSection.svelte';
 
 describe('YouTubeSection Component', () => {
