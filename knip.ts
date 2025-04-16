@@ -1,7 +1,6 @@
 import type { KnipConfig } from 'knip';
 
 const config: KnipConfig = {
-	entry: ['src/routes/**/*.{svelte,ts}'],
 	project: ['src/**/*.{svelte,ts}'],
 	ignore: [
 		'**/*.d.ts',
@@ -9,17 +8,15 @@ const config: KnipConfig = {
 		'$app/state',
 		'$app/stores'
 	],
-	ignoreDependencies: [
-		'@sveltejs/kit',
-		'@fontsource/jetbrains-mono',
-		'@fontsource/fira-mono',
-		'@neoconfetti/svelte'
-	],
 	svelte: {
-		config: ['svelte.config.js']
-	},
-	ignoreExportsUsedInFile: true,
-	ignoreBinaries: ['act']
+		entry: [
+			'svelte.config.js',
+			'vite.config.ts',
+			'src/routes/**/+{page,server,page.server,error,layout,layout.server}{,@*}.{js,ts,svelte}',
+			'src/hooks.{server,client}.{js,ts}',
+			'src/params/*.{js,ts}'
+		]
+	}
 };
 
 export default config;
