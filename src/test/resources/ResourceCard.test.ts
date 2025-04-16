@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/svelte';
-import { tick } from 'svelte';
 import ResourceCard from '$lib/components/resources/ResourceCard.svelte';
 
 const mockResource = {
@@ -12,7 +11,7 @@ const mockResource = {
 };
 
 describe('ResourceCard', () => {
-	it('renders resource title as a link', async () => {
+	it('renders resource title as a link', () => {
 		const { container } = render(ResourceCard, {
 			props: {
 				resource: mockResource
@@ -21,13 +20,13 @@ describe('ResourceCard', () => {
 
 		const title = container.querySelector('h3 a');
 		expect(title).toBeInTheDocument();
-		expect(title?.textContent?.trim()).toBe(mockResource.title);
+		expect(title?.textContent).toBe(mockResource.title);
 		expect(title).toHaveAttribute('href', mockResource.url);
 		expect(title).toHaveAttribute('target', '_blank');
 		expect(title).toHaveAttribute('rel', 'noopener noreferrer');
 	});
 
-	it('renders resource description', async () => {
+	it('renders resource description', () => {
 		const { container } = render(ResourceCard, {
 			props: {
 				resource: mockResource
@@ -36,10 +35,10 @@ describe('ResourceCard', () => {
 
 		const description = container.querySelector('.description');
 		expect(description).toBeInTheDocument();
-		expect(description?.textContent?.trim()).toBe(mockResource.description);
+		expect(description?.textContent).toBe(mockResource.description);
 	});
 
-	it('renders star count badge', async () => {
+	it('renders star count badge', () => {
 		const { container } = render(ResourceCard, {
 			props: {
 				resource: mockResource
@@ -48,11 +47,10 @@ describe('ResourceCard', () => {
 
 		const badge = container.querySelector('.badge');
 		expect(badge).toBeInTheDocument();
-		// Check that the badge contains the star count
 		expect(badge?.textContent).toContain('⭐ 1,000');
 	});
 
-	it('renders category badge', async () => {
+	it('renders category badge', () => {
 		const { container } = render(ResourceCard, {
 			props: {
 				resource: mockResource
@@ -61,11 +59,10 @@ describe('ResourceCard', () => {
 
 		const categoryBadge = container.querySelector('.category .badge');
 		expect(categoryBadge).toBeInTheDocument();
-		// Check that the badge contains the category
 		expect(categoryBadge?.textContent).toContain(mockResource.category);
 	});
 
-	it('handles resource without stars', async () => {
+	it('handles resource without stars', () => {
 		const resourceWithoutStars = { ...mockResource, stars: undefined };
 		const { container } = render(ResourceCard, {
 			props: {
@@ -77,7 +74,7 @@ describe('ResourceCard', () => {
 		expect(starBadge?.textContent).not.toContain('⭐');
 	});
 
-	it('has proper CSS classes for styling', async () => {
+	it('has proper CSS classes for styling', () => {
 		const { container } = render(ResourceCard, {
 			props: {
 				resource: mockResource
@@ -90,7 +87,7 @@ describe('ResourceCard', () => {
 		expect(container.querySelector('.category')).toBeInTheDocument();
 	});
 
-	it('is accessible', async () => {
+	it('is accessible', () => {
 		const { container } = render(ResourceCard, {
 			props: {
 				resource: mockResource

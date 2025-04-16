@@ -14,6 +14,7 @@
 
 	$effect(() => {
 		try {
+			error = null;
 			children();
 		} catch (e) {
 			error = e instanceof Error ? e : new Error(String(e));
@@ -48,40 +49,29 @@
 
 	.retry-button {
 		padding: var(--space-2) var(--space-4);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
-		color: var(--text-color);
 		background: var(--bg-darker);
 		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-md);
+		border-radius: var(--radius-sm);
+		color: var(--text-color);
 		cursor: pointer;
 		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.retry-button:hover {
-		background: var(--color-mix-light);
-		transform: translateY(-0.125ch);
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.retry-button {
-			transition: none;
-		}
+		background: var(--bg-color);
 	}
 </style>
 
-<div class="error-boundary">
-	{#if error}
-		<Box width={40}>
-			<div class="error-content">
-				<div class="error-header">
-					<Badge type="error">Error</Badge>
-					<button class="retry-button" onclick={resetError}>Retry</button>
-				</div>
-				<pre class="error-message">{error.message}</pre>
+{#if error}
+	<div class="error-boundary">
+		<div class="error-content">
+			<div class="error-header">
+				<Badge type="error">Error</Badge>
+				<button class="retry-button" onclick={resetError}>Retry</button>
 			</div>
-		</Box>
-	{:else}
-		{@render children()}
-	{/if}
-</div>
+			<div class="error-message">{error.message}</div>
+		</div>
+	</div>
+{:else}
+	{@render children()}
+{/if}

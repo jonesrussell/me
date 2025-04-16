@@ -7,7 +7,8 @@ const mockPost = {
 	title: 'Test Blog Post',
 	link: 'https://example.com/test-post',
 	published: '2024-04-16T12:00:00Z',
-	description: 'This is a test blog post description that might be quite long and need truncating in the UI.'
+	description:
+		'This is a test blog post description that might be quite long and need truncating in the UI.'
 };
 
 describe('BlogPost', () => {

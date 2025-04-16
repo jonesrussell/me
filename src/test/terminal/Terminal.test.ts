@@ -23,9 +23,8 @@ describe('Terminal', () => {
 		const { container } = render(Terminal);
 		const output = container.querySelector('.command-output');
 		expect(output).toBeInTheDocument();
-		expect(output).toHaveStyle({
-			'margin-left': 'var(--space-4)'
-		});
+		const style = window.getComputedStyle(output!);
+		expect(style.marginLeft).toBe('var(--space-4)');
 	});
 
 	it('renders with custom title', () => {
