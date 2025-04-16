@@ -10,7 +10,7 @@
 		title?: string;
 		width?: number;
 		style?: string;
-		children: () => unknown;
+		children: () => string;
 	}>();
 </script>
 
@@ -53,14 +53,10 @@
 
 	.content {
 		flex: 1;
-
-		padding: var(--space-2) var(--space-4);
-
+		padding: var(--space-4);
 		color: var(--text-color);
 		word-break: break-word;
 		overflow-wrap: break-word;
-
-		background: var(--bg-color);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
@@ -70,20 +66,15 @@
 	}
 </style>
 
-<div
-	class="box"
-	style="
-		--box-width: {alignToGrid(width)}ch; {style}"
->
+<div class="box" style="--box-width: {alignToGrid(width)}ch; {style}">
 	<div class="box-frame">
 		{#if title}
 			<div class="header">
 				<div class="title">{title}</div>
 			</div>
 		{/if}
-
 		<div class="content">
-			{@render children()}
+			{children()}
 		</div>
 	</div>
 </div>
