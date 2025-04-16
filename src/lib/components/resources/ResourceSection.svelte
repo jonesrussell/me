@@ -64,14 +64,13 @@
 
 	@media (width >= 80ch) {
 		.resource-grid {
-			grid-template-columns: repeat(auto-fit, minmax(45ch, 1fr));
+			grid-template-columns: repeat(2, 1fr);
 			gap: var(--space-6);
 		}
 	}
 
 	@media (width >= 120ch) {
 		.resource-grid {
-			grid-template-columns: repeat(auto-fit, minmax(50ch, 1fr));
 			gap: var(--space-8);
 		}
 	}
