@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { commands, terminal, terminalHeight } from '$lib/stores/terminal';
-	import { get } from 'svelte/store';
+	import { terminal } from '$lib/stores/terminal';
 
 	const {
 		command,

@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen, within } from '@testing-library/svelte';
+import { render } from '@testing-library/svelte';
 import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
 import Terminal from '$lib/components/terminal/Terminal.svelte';
 import { terminal, commands } from '$lib/stores/terminal';

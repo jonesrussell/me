@@ -46,12 +46,6 @@ const createStyleElement = (id: string, parent: HTMLElement) => {
 	return style;
 };
 
-const createMockObserver = () => ({
-	observe: vi.fn(),
-	unobserve: vi.fn(),
-	disconnect: vi.fn()
-});
-
 const setupErrorBoundary = () => {
 	if (typeof window === 'undefined') return () => {};
 	const originalOnError = window.onerror;
@@ -132,7 +126,7 @@ class MockResizeObserver implements ResizeObserver {
 	observe = vi.fn();
 	unobserve = vi.fn();
 	disconnect = vi.fn();
-	constructor(callback: ResizeObserverCallback) {
+	constructor(_callback: ResizeObserverCallback) {
 		return this;
 	}
 }
@@ -140,13 +134,17 @@ class MockResizeObserver implements ResizeObserver {
 global.ResizeObserver = MockResizeObserver;
 
 // Mock IntersectionObserver
-global.IntersectionObserver = vi.fn().mockImplementation(() => ({
-	...createMockObserver(),
-	root: null,
-	rootMargin: '',
-	thresholds: [],
-	takeRecords: vi.fn().mockReturnValue([])
-}));
+global.IntersectionObserver = vi
+	.fn()
+	.mockImplementation((_callback: IntersectionObserverCallback) => ({
+		observe: vi.fn(),
+		unobserve: vi.fn(),
+		disconnect: vi.fn(),
+		takeRecords: vi.fn().mockReturnValue([]),
+		root: null,
+		rootMargin: '',
+		thresholds: []
+	}));
 
 // Mock SvelteKit modules
 vi.mock('$app/paths', () => ({
