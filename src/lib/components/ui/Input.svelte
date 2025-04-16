@@ -44,5 +44,14 @@
 </style>
 
 <div class="input-container">
-	<input {type} {placeholder} {disabled} {required} bind:value class="input" />
+	<input
+		{type}
+		{placeholder}
+		{disabled}
+		{required}
+		bind:value
+		class="input"
+		role="textbox"
+		aria-label={placeholder || 'Text input'}
+	/>
 </div>
