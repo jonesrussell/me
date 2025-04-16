@@ -1,8 +1,14 @@
 export interface EnhancedImage {
-	src: string;
-	width: number;
-	height: number;
-	format: string;
+	sources: {
+		'image/webp': string;
+		'image/jpeg': string;
+	};
+	img: {
+		src: string;
+		width: number;
+		height: number;
+		alt: string;
+	};
 	blurDataURL?: string;
 	blurWidth?: number;
 	blurHeight?: number;

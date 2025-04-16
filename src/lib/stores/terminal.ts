@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-export type Command = {
+type Command = {
 	cmd: string;
 	output: string;
 	completed?: boolean;
