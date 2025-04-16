@@ -1,6 +1,6 @@
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { fileURLToPath } from 'url';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
 	plugins: [
@@ -13,19 +13,9 @@ export default defineConfig({
 			}
 		})
 	],
-	resolve: {
-		alias: {
-			$lib: fileURLToPath(new URL('./src/lib', import.meta.url)),
-			$app: fileURLToPath(new URL('./node_modules/@sveltejs/kit/src/runtime/app', import.meta.url)),
-			__sveltekit: fileURLToPath(
-				new URL('./node_modules/@sveltejs/kit/src/runtime', import.meta.url)
-			)
-		},
-		conditions: ['browser']
-	},
 	test: {
-		include: ['src/**/*.{test,spec}.{js,ts,svelte}'],
 		environment: 'jsdom',
+		include: ['src/**/*.{test,spec}.{js,ts,svelte}'],
 		setupFiles: ['src/test/setup.ts'],
 		globals: true,
 		css: true,
@@ -34,13 +24,18 @@ export default defineConfig({
 			reporter: ['text', 'json', 'html'],
 			include: ['src/**/*.{ts,svelte}'],
 			exclude: ['src/**/*.test.ts', 'src/**/*.spec.ts']
-		},
-		deps: {
-			optimizer: {
-				web: {
-					include: ['@sveltejs/kit']
+		}
+	},
+	resolve: process.env.VITEST
+		? {
+				conditions: ['browser'],
+				alias: {
+					$lib: fileURLToPath(new URL('./src/lib', import.meta.url)),
+					$app: fileURLToPath(new URL('./node_modules/@sveltejs/kit/src/runtime/app', import.meta.url)),
+					__sveltekit: fileURLToPath(
+						new URL('./node_modules/@sveltejs/kit/src/runtime', import.meta.url)
+					)
 				}
 			}
-		}
-	}
+		: undefined
 });
