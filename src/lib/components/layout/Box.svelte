@@ -73,12 +73,13 @@
 <div
 	class="box"
 	style="
-
 		--box-width: {alignToGrid(width)}ch; {style}"
 >
 	<div class="box-frame">
 		{#if title}
-			<div class="header">{title}</div>
+			<div class="header">
+				<div class="title">{title}</div>
+			</div>
 		{/if}
 
 		<div class="content">
