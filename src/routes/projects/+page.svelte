@@ -66,7 +66,7 @@
 
 		& .container {
 			width: 100%;
-			max-width: min(var(--measure), 95cqi);
+			max-width: min(160ch, 95cqi);
 			margin: 0 auto;
 			padding: 0 var(--space-4);
 		}
