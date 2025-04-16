@@ -1,94 +1,58 @@
-import { describe, it, expect } from 'vitest';
-import { render } from '@testing-library/svelte';
+import { describe, it, expect, vi } from 'vitest';
+import { renderComponent, simulateInput, testComponentEvent } from '../test-utils';
 import Input from '$lib/components/ui/Input.svelte';
 
-describe('Input', () => {
-	// Core functionality tests
-	it('renders an input element with default props', () => {
-		const { container } = render(Input);
-		const input = container.querySelector('input');
-		expect(input).toBeInTheDocument();
-		if (!input) throw new Error('Input element not found');
-		expect(input).toHaveAttribute('type', 'text');
-		expect(input).not.toBeDisabled();
-		expect(input).not.toBeRequired();
+describe('Input Component', () => {
+	it('initializes with default value', () => {
+		const { getByTestId } = renderComponent(Input);
+		const input = getByTestId('input') as HTMLInputElement;
+		expect(input.value).toBe('');
 	});
 
-	it('handles different input types correctly', () => {
-		const { container } = render(Input, { props: { type: 'email' } });
-		const input = container.querySelector('input');
-		if (!input) throw new Error('Input element not found');
-		expect(input).toHaveAttribute('type', 'email');
+	it('updates value on user input', async () => {
+		const { getByTestId } = renderComponent(Input);
+		const input = getByTestId('input') as HTMLInputElement;
 
-		const { container: container2 } = render(Input, { props: { type: 'password' } });
-		const input2 = container2.querySelector('input');
-		if (!input2) throw new Error('Input element not found');
-		expect(input2).toHaveAttribute('type', 'password');
+		await simulateInput(input, 'test value');
+		expect(input.value).toBe('test value');
 	});
 
-	// User interaction tests
-	it('updates value when user types', async () => {
-		const { container } = render(Input);
-		const input = container.querySelector('input');
-		if (!input) throw new Error('Input element not found');
-
-		input.value = 'test value';
-		input.dispatchEvent(new Event('input'));
-
-		expect(input).toHaveValue('test value');
+	it('emits change event with new value', async () => {
+		const onChange = vi.fn();
+		await testComponentEvent(
+			Input,
+			{ onChange },
+			'change',
+			{ value: 'test value' },
+			onChange
+		);
 	});
 
-	// Accessibility tests
-	it('supports accessibility attributes', () => {
-		const { container } = render(Input, {
-			props: {
-				placeholder: 'Enter your name',
-				required: true,
-				disabled: false
-			}
-		});
-
-		const input = container.querySelector('input');
-		if (!input) throw new Error('Input element not found');
-		expect(input).toHaveAttribute('placeholder', 'Enter your name');
-		expect(input).toBeRequired();
-		expect(input).not.toBeDisabled();
+	it('respects disabled state', () => {
+		const { getByTestId } = renderComponent(Input, { disabled: true });
+		const input = getByTestId('input') as HTMLInputElement;
+		expect(input.disabled).toBe(true);
 	});
 
-	// State management tests
-	it('maintains disabled state correctly', () => {
-		const { container } = render(Input, { props: { disabled: true } });
-		const input = container.querySelector('input');
-		if (!input) throw new Error('Input element not found');
-		expect(input).toBeDisabled();
-
-		const { container: container2 } = render(Input, { props: { disabled: false } });
-		const input2 = container2.querySelector('input');
-		if (!input2) throw new Error('Input element not found');
-		expect(input2).not.toBeDisabled();
+	it('handles required validation', () => {
+		const { getByTestId } = renderComponent(Input, { required: true });
+		const input = getByTestId('input') as HTMLInputElement;
+		expect(input.required).toBe(true);
 	});
 
-	// Edge cases
-	it('handles empty values correctly', async () => {
-		const { container } = render(Input);
-		const input = container.querySelector('input');
-		if (!input) throw new Error('Input element not found');
-
-		input.value = '';
-		input.dispatchEvent(new Event('input'));
-
-		expect(input).toHaveValue('');
+	it('supports different input types', () => {
+		const { getByTestId } = renderComponent(Input, { type: 'email' });
+		const input = getByTestId('input') as HTMLInputElement;
+		expect(input.type).toBe('email');
 	});
 
-	it('handles special characters in input', async () => {
-		const { container } = render(Input);
-		const input = container.querySelector('input');
-		if (!input) throw new Error('Input element not found');
+	it('maintains value after rerender', async () => {
+		const { getByTestId, rerender } = renderComponent(Input);
+		const input = getByTestId('input') as HTMLInputElement;
 
-		const specialChars = '!@#$%^&*()_+';
-		input.value = specialChars;
-		input.dispatchEvent(new Event('input'));
+		await simulateInput(input, 'test value');
+		await rerender({});
 
-		expect(input).toHaveValue(specialChars);
+		expect(input.value).toBe('test value');
 	});
 });
