@@ -53,7 +53,8 @@
 				"GitHub.vscode-pull-request-github",
 				"hbenl.vscode-test-explorer",
 				"ms-playwright.playwright",
-				"esbenp.prettier-vscode"
+				"esbenp.prettier-vscode",
+				"ms-azuretools.vscode-docker"
 			],
 			"settings": {
 				"editor.formatOnSave": true,
@@ -80,6 +81,5 @@
 	},
 	"remoteEnv": {
 		"NODE_ENV": "development"
-	},
-	"updateContentCommand": "git config --global user.name \"${localEnv:GIT_USER_NAME}\" && git config --global user.email \"${localEnv:GIT_USER_EMAIL}\""
+	}
 }
