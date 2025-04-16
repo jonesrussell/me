@@ -17,17 +17,25 @@ describe('Navigation Component', () => {
 	];
 
 	it('renders all navigation links', () => {
-		render(Navigation, { links: testLinks });
+		render(Navigation, { props: { links: testLinks } });
 
-		testLinks.forEach(link => {
-			const navLink = screen.getByText(link.text).closest('a');
-			expect(navLink).toHaveAttribute('href', link.href);
-			expect(screen.getByText(link.icon)).toBeInTheDocument();
+		const navLinks = document.querySelectorAll('.nav-link');
+		const navTexts = document.querySelectorAll('.nav-text');
+		const navIcons = document.querySelectorAll('.nav-icon');
+
+		expect(navLinks.length).toBe(testLinks.length);
+		expect(navTexts.length).toBe(testLinks.length);
+		expect(navIcons.length).toBe(testLinks.length);
+
+		testLinks.forEach((link, index) => {
+			expect(navLinks[index]).toHaveAttribute('href', link.href);
+			expect(navTexts[index].textContent).toBe(link.text);
+			expect(navIcons[index].textContent).toBe(link.icon);
 		});
 	});
 
 	it('applies correct styling classes', () => {
-		render(Navigation, { links: testLinks });
+		render(Navigation, { props: { links: testLinks } });
 
 		const nav = document.querySelector('.navigation');
 		expect(nav).toHaveClass('navigation');
@@ -39,7 +47,7 @@ describe('Navigation Component', () => {
 	});
 
 	it('handles empty links array', () => {
-		render(Navigation, { links: [] });
+		render(Navigation, { props: { links: [] } });
 		const nav = document.querySelector('.navigation');
 		expect(nav).toBeInTheDocument();
 		const links = document.querySelectorAll('.nav-link');
@@ -48,15 +56,19 @@ describe('Navigation Component', () => {
 
 	it('renders with single link', () => {
 		const singleLink = [testLinks[0]];
-		render(Navigation, { links: singleLink });
+		render(Navigation, { props: { links: singleLink } });
 
-		const link = screen.getByText(singleLink[0].text).closest('a');
-		expect(link).toHaveAttribute('href', singleLink[0].href);
-		expect(screen.getByText(singleLink[0].icon)).toBeInTheDocument();
+		const navLink = document.querySelector('.nav-link');
+		const navText = document.querySelector('.nav-text');
+		const navIcon = document.querySelector('.nav-icon');
+
+		expect(navLink).toHaveAttribute('href', singleLink[0].href);
+		expect(navText?.textContent).toBe(singleLink[0].text);
+		expect(navIcon?.textContent).toBe(singleLink[0].icon);
 	});
 
 	it('applies correct icon and text classes', () => {
-		render(Navigation, { links: testLinks });
+		render(Navigation, { props: { links: testLinks } });
 
 		const icons = document.querySelectorAll('.nav-icon');
 		icons.forEach(icon => {

@@ -17,23 +17,36 @@ describe('Specialties Component', () => {
 	];
 
 	it('renders section header correctly', () => {
-		render(Specialties, { specialties: testSpecialties });
-		expect(screen.getByText('My Specialties')).toBeInTheDocument();
-		expect(screen.getByText('Areas where I excel and bring value to projects')).toBeInTheDocument();
+		render(Specialties, { props: { specialties: testSpecialties } });
+		const header = document.querySelector('h2');
+		expect(header).toBeInTheDocument();
+		expect(header?.textContent).toBe('My Specialties');
+
+		const description = document.querySelector('.section-desc');
+		expect(description).toBeInTheDocument();
+		expect(description?.textContent).toBe('Areas where I excel and bring value to projects');
 	});
 
 	it('renders all specialties', () => {
-		render(Specialties, { specialties: testSpecialties });
+		render(Specialties, { props: { specialties: testSpecialties } });
 
-		testSpecialties.forEach(specialty => {
-			expect(screen.getByText(specialty.title)).toBeInTheDocument();
-			expect(screen.getByText(specialty.description)).toBeInTheDocument();
-			expect(screen.getByText(specialty.icon)).toBeInTheDocument();
+		const titles = document.querySelectorAll('.specialty-title');
+		const descriptions = document.querySelectorAll('.specialty-desc');
+		const icons = document.querySelectorAll('.specialty-icon');
+
+		expect(titles.length).toBe(testSpecialties.length);
+		expect(descriptions.length).toBe(testSpecialties.length);
+		expect(icons.length).toBe(testSpecialties.length);
+
+		testSpecialties.forEach((specialty, index) => {
+			expect(titles[index].textContent).toBe(specialty.title);
+			expect(descriptions[index].textContent).toBe(specialty.description);
+			expect(icons[index].textContent).toBe(specialty.icon);
 		});
 	});
 
 	it('applies correct styling classes', () => {
-		render(Specialties, { specialties: testSpecialties });
+		render(Specialties, { props: { specialties: testSpecialties } });
 
 		const container = document.querySelector('.specialties-container');
 		expect(container).toHaveClass('specialties-container');
@@ -45,18 +58,29 @@ describe('Specialties Component', () => {
 	});
 
 	it('handles empty specialties array', () => {
-		render(Specialties, { specialties: [] });
-		expect(screen.getByText('My Specialties')).toBeInTheDocument();
+		render(Specialties, { props: { specialties: [] } });
+		const header = document.querySelector('h2');
+		expect(header).toBeInTheDocument();
+		expect(header?.textContent).toBe('My Specialties');
+
 		const specialties = document.querySelectorAll('.specialty');
 		expect(specialties.length).toBe(0);
 	});
 
 	it('renders with single specialty', () => {
 		const singleSpecialty = [testSpecialties[0]];
-		render(Specialties, { specialties: singleSpecialty });
+		render(Specialties, { props: { specialties: singleSpecialty } });
 
-		expect(screen.getByText(singleSpecialty[0].title)).toBeInTheDocument();
-		expect(screen.getByText(singleSpecialty[0].description)).toBeInTheDocument();
-		expect(screen.getByText(singleSpecialty[0].icon)).toBeInTheDocument();
+		const title = document.querySelector('.specialty-title');
+		expect(title).toBeInTheDocument();
+		expect(title?.textContent).toBe(singleSpecialty[0].title);
+
+		const desc = document.querySelector('.specialty-desc');
+		expect(desc).toBeInTheDocument();
+		expect(desc?.textContent).toBe(singleSpecialty[0].description);
+
+		const icon = document.querySelector('.specialty-icon');
+		expect(icon).toBeInTheDocument();
+		expect(icon?.textContent).toBe(singleSpecialty[0].icon);
 	});
 });

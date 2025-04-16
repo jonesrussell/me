@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/svelte';
-import NewsletterCTA from './NewsletterCTA.svelte';
+import NewsletterCTA from '$lib/components/ui/NewsletterCTA.svelte';
 
 // Mock fetch
 const mockFetch = vi.fn();

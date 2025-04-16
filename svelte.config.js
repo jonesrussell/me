@@ -15,9 +15,7 @@ const config = {
 		prerender: {
 			entries: ['*'],
 			handleHttpError: ({ path, _referrer, _message }) => {
-				// In production, all paths must start with /me
 				if (process.env.NODE_ENV === 'production' && !path.startsWith('/me')) {
-					// Instead of throwing an error, we'll return a 404 for invalid paths
 					return { status: 404 };
 				}
 			}
@@ -28,16 +26,9 @@ const config = {
 		}
 	},
 	onwarn: (warning, handler) => {
-		// Suppress warnings about slots in Svelte 5
 		if (warning.code === 'a11y-no-noninteractive-element-interactions') return;
 		if (warning.code === 'a11y-click-events-have-key-events') return;
 		handler(warning);
-	},
-	// Add compiler options for testing
-	compilerOptions: {
-		dev: true,
-		css: 'injected',
-		runes: true
 	}
 };
 

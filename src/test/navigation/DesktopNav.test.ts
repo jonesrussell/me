@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/svelte';
 import { describe, expect, it, vi } from 'vitest';
-import DesktopNav from './DesktopNav.svelte';
+import DesktopNav from '$lib/components/navigation/DesktopNav.svelte';
 
 vi.mock('$app/state', () => ({
 	page: {

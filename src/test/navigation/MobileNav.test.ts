@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, fireEvent } from '@testing-library/svelte';
 import { describe, expect, it, vi } from 'vitest';
-import MobileNav from './MobileNav.svelte';
+import MobileNav from '$lib/components/navigation/MobileNav.svelte';
 
 // Mock SvelteKit's navigation features
 vi.mock('$app/state', () => ({

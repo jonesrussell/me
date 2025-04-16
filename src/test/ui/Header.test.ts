@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, waitFor } from '@testing-library/svelte';
 import { describe, expect, it, vi } from 'vitest';
-import Header from './Header.svelte';
+import Header from '$lib/components/ui/Header.svelte';
 
 // Mock SvelteKit stores
 vi.mock('$app/stores', () => ({
