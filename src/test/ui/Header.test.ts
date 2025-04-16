@@ -29,20 +29,20 @@ describe('Header', () => {
 	it('renders site title', () => {
 		const { container } = render(Header, { url: mockUrl });
 		const title = container.querySelector('.title');
-		expect(title).toBeInTheDocument();
-		expect(title?.textContent).toBe('Russell Jones');
-		expect(title?.getAttribute('href')).toBe('/me');
+		if (!title) throw new Error('Title element not found');
+		expect(title.textContent).toBe('Russell Jones');
+		expect(title.getAttribute('href')).toBe('/me');
 	});
 
 	it('renders navigation items', () => {
 		const { container } = render(Header, { url: mockUrl });
 		const nav = container.querySelector('.desktop-nav');
-		expect(nav).toBeInTheDocument();
+		if (!nav) throw new Error('Navigation element not found');
 
-		const navLinks = nav?.querySelectorAll('a');
+		const navLinks = nav.querySelectorAll('a');
 		expect(navLinks).toHaveLength(4);
 
-		const linkTexts = Array.from(navLinks || []).map(link => link.textContent);
+		const linkTexts = Array.from(navLinks).map(link => link.textContent);
 		expect(linkTexts).toEqual(['Blog', 'Projects', 'Resources', 'Contact']);
 	});
 
@@ -55,9 +55,9 @@ describe('Header', () => {
 		await waitFor(
 			() => {
 				const activeLink = container.querySelector('.desktop-nav a[href="/me/blog"]');
-				expect(activeLink).toBeInTheDocument();
-				expect(activeLink?.classList.contains('active')).toBe(true);
-				expect(activeLink?.textContent).toBe('Blog');
+				if (!activeLink) throw new Error('Active link not found');
+				expect(activeLink.classList.contains('active')).toBe(true);
+				expect(activeLink.textContent).toBe('Blog');
 			},
 			{ timeout: 1000 }
 		);
@@ -66,8 +66,8 @@ describe('Header', () => {
 	it('renders subtitle', () => {
 		const { container } = render(Header, { url: mockUrl });
 		const subtitle = container.querySelector('.subtitle-bar');
-		expect(subtitle).toBeInTheDocument();
-		expect(subtitle?.textContent?.trim()).toBe(
+		if (!subtitle) throw new Error('Subtitle element not found');
+		expect(subtitle.textContent?.trim()).toBe(
 			'Building elegant solutions with modern web technologies'
 		);
 	});
@@ -75,16 +75,28 @@ describe('Header', () => {
 	it('has sticky positioning', () => {
 		const { container } = render(Header, { url: mockUrl });
 		const header = container.querySelector('.site-header');
-		expect(header).toBeInTheDocument();
+		if (!header) throw new Error('Header element not found');
 		expect(header).toHaveClass('site-header');
 	});
 
 	it('renders header with navigation', () => {
-		const { getAllByText } = render(Header);
-		const blogLinks = getAllByText('Blog');
-		expect(blogLinks).toHaveLength(2); // One in desktop nav, one in mobile nav
-		expect(getAllByText('Projects')).toHaveLength(2);
-		expect(getAllByText('Resources')).toHaveLength(2);
-		expect(getAllByText('Contact')).toHaveLength(2);
+		const { container } = render(Header);
+		const desktopNav = container.querySelector('.desktop-nav');
+		const mobileNav = container.querySelector('.mobile-nav');
+
+		if (!desktopNav) throw new Error('Desktop navigation not found');
+		if (!mobileNav) throw new Error('Mobile navigation not found');
+
+		// Check desktop nav links
+		const desktopLinks = desktopNav.querySelectorAll('a');
+		expect(desktopLinks).toHaveLength(4);
+		const desktopTexts = Array.from(desktopLinks).map(link => link.textContent);
+		expect(desktopTexts).toEqual(['Blog', 'Projects', 'Resources', 'Contact']);
+
+		// Check mobile nav links
+		const mobileLinks = mobileNav.querySelectorAll('a');
+		expect(mobileLinks).toHaveLength(4);
+		const mobileTexts = Array.from(mobileLinks).map(link => link.textContent);
+		expect(mobileTexts).toEqual(['Blog', 'Projects', 'Resources', 'Contact']);
 	});
 });

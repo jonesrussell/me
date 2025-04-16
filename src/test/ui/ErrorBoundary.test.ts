@@ -1,20 +1,22 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/svelte';
+import { render } from '@testing-library/svelte';
 import ErrorBoundary from '$lib/components/ui/ErrorBoundary.svelte';
 
 describe('ErrorBoundary', () => {
 	it('renders children when no error occurs', () => {
-		render(ErrorBoundary, {
+		const { container } = render(ErrorBoundary, {
 			props: {
 				children: () => 'Test Content'
 			}
 		});
 
-		expect(screen.getByText('Test Content')).toBeInTheDocument();
+		const content = container.querySelector('.error-boundary-content');
+		if (!content) throw new Error('Content element not found');
+		expect(content.textContent).toBe('Test Content');
 	});
 
 	it('renders error message when error occurs', () => {
-		render(ErrorBoundary, {
+		const { container } = render(ErrorBoundary, {
 			props: {
 				children: () => {
 					throw new Error('Test Error');
@@ -22,14 +24,22 @@ describe('ErrorBoundary', () => {
 			}
 		});
 
-		expect(screen.getByText('Test Error')).toBeInTheDocument();
-		expect(screen.getByText('Error')).toBeInTheDocument();
-		expect(screen.getByRole('button', { name: 'Try Again' })).toBeInTheDocument();
+		const errorMessage = container.querySelector('.error-message');
+		const errorTitle = container.querySelector('.error-title');
+		const retryButton = container.querySelector('button');
+
+		if (!errorMessage) throw new Error('Error message element not found');
+		if (!errorTitle) throw new Error('Error title element not found');
+		if (!retryButton) throw new Error('Retry button not found');
+
+		expect(errorMessage.textContent).toBe('Test Error');
+		expect(errorTitle.textContent).toBe('Error');
+		expect(retryButton.textContent).toBe('Try Again');
 	});
 
 	it('resets error when Try Again is clicked', async () => {
 		let shouldThrow = true;
-		render(ErrorBoundary, {
+		const { container } = render(ErrorBoundary, {
 			props: {
 				children: () => {
 					if (shouldThrow) {
@@ -42,19 +52,24 @@ describe('ErrorBoundary', () => {
 		});
 
 		// Initially shows error
-		expect(screen.getByText('Test Error')).toBeInTheDocument();
+		const errorMessage = container.querySelector('.error-message');
+		if (!errorMessage) throw new Error('Error message element not found');
+		expect(errorMessage.textContent).toBe('Test Error');
 
 		// Click Try Again
-		const button = screen.getByRole('button', { name: 'Try Again' });
+		const button = container.querySelector('button');
+		if (!button) throw new Error('Retry button not found');
 		await button.click();
 
 		// Should show recovered content
-		expect(screen.getByText('Recovered Content')).toBeInTheDocument();
-		expect(screen.queryByText('Test Error')).not.toBeInTheDocument();
+		const content = container.querySelector('.error-boundary-content');
+		if (!content) throw new Error('Content element not found');
+		expect(content.textContent).toBe('Recovered Content');
+		expect(container.querySelector('.error-message')).not.toBeInTheDocument();
 	});
 
 	it('has proper CSS classes for styling', () => {
-		render(ErrorBoundary, {
+		const { container } = render(ErrorBoundary, {
 			props: {
 				children: () => {
 					throw new Error('Test Error');
@@ -62,8 +77,13 @@ describe('ErrorBoundary', () => {
 			}
 		});
 
-		const errorBoundary = screen.getByText('Test Error').closest('.error-boundary');
+		const errorBoundary = container.querySelector('.error-boundary');
+		const errorMessage = container.querySelector('.error-message');
+
+		if (!errorBoundary) throw new Error('Error boundary element not found');
+		if (!errorMessage) throw new Error('Error message element not found');
+
 		expect(errorBoundary).toBeInTheDocument();
-		expect(screen.getByText('Test Error')).toHaveClass('error-message');
+		expect(errorMessage).toHaveClass('error-message');
 	});
 });

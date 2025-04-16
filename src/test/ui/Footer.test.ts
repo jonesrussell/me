@@ -21,8 +21,8 @@ describe('Footer', () => {
 	it('renders footer content', () => {
 		const { container } = render(Footer);
 		const footer = container.querySelector('.footer');
-		expect(footer).toBeInTheDocument();
-		expect(footer?.textContent).toContain('Russell Jones');
+		if (!footer) throw new Error('Footer element not found');
+		expect(footer.textContent).toContain('Russell Jones');
 	});
 
 	it('displays current year', () => {
@@ -33,8 +33,8 @@ describe('Footer', () => {
 	it('contains source code link', () => {
 		const { container } = render(Footer);
 		const sourceLink = container.querySelector('a[href="https://github.com/jonesrussell/me"]');
-		expect(sourceLink).toBeInTheDocument();
-		expect(sourceLink?.textContent?.trim()).toBe('Source Code');
+		if (!sourceLink) throw new Error('Source code link not found');
+		expect(sourceLink.textContent?.trim()).toBe('Source Code');
 		expect(sourceLink).toHaveAttribute('target', '_blank');
 		expect(sourceLink).toHaveAttribute('rel', 'noopener noreferrer');
 	});
@@ -44,8 +44,8 @@ describe('Footer', () => {
 		const licenseLink = container.querySelector(
 			'a[href="https://github.com/jonesrussell/me/blob/main/LICENSE"]'
 		);
-		expect(licenseLink).toBeInTheDocument();
-		expect(licenseLink?.textContent?.trim()).toBe('MIT');
+		if (!licenseLink) throw new Error('License link not found');
+		expect(licenseLink.textContent?.trim()).toBe('MIT');
 		expect(licenseLink).toHaveAttribute('target', '_blank');
 		expect(licenseLink).toHaveAttribute('rel', 'noopener noreferrer');
 	});
@@ -53,6 +53,7 @@ describe('Footer', () => {
 	it('has proper styling', () => {
 		const { container } = render(Footer);
 		const footer = container.querySelector('.footer');
+		if (!footer) throw new Error('Footer element not found');
 		expect(footer).toHaveStyle({
 			'text-align': 'center',
 			'border-top': '1px solid var(--border-color)'
