@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, cleanup } from '@testing-library/svelte';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import Footer from './Footer.svelte';
+import Footer from '$lib/components/ui/Footer.svelte';
 
 // Mock the date store
 vi.mock('$lib/stores/date', () => ({

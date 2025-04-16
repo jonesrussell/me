@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/svelte';
-import { describe, expect, it } from 'vitest';
-import Terminal from './Terminal.svelte';
+import { render, screen } from '@testing-library/svelte';
+import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
+import Terminal from '$lib/components/terminal/Terminal.svelte';
+import { terminal, commands } from '$lib/stores/terminal';
 
 describe('Terminal', () => {
 	it('has terminal styling', () => {
