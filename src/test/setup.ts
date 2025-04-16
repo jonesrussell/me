@@ -4,7 +4,7 @@ import { afterEach, beforeEach, vi } from 'vitest';
 import { JSDOM } from 'jsdom';
 
 // Create a JSDOM instance with proper configuration
-const dom = new JSDOM('<!DOCTYPE html><html><body><div id="app"></div></body></html>', {
+const dom = new JSDOM('<!DOCTYPE html><html><head></head><body><div id="app"></div></body></html>', {
 	url: 'http://localhost',
 	pretendToBeVisual: true,
 	runScripts: 'dangerously'
@@ -36,12 +36,15 @@ global.cancelAnimationFrame = (handle: number) => {
 
 // Setup and cleanup
 beforeEach(() => {
+	// Ensure document structure is clean
+	document.head.innerHTML = '';
 	appContainer.innerHTML = '';
 });
 
 afterEach(() => {
 	cleanup();
 	vi.clearAllMocks();
+	document.head.innerHTML = '';
 	appContainer.innerHTML = '';
 });
 

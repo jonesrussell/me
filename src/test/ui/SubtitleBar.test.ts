@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/svelte';
 import { describe, expect, it } from 'vitest';
-import SubtitleBar from './SubtitleBar.svelte';
+import SubtitleBar from '$lib/components/ui/SubtitleBar.svelte';
 
 describe('SubtitleBar', () => {
 	it('renders with default text', () => {
