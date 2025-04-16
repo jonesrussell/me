@@ -11,14 +11,16 @@ describe('NewsletterCTA', () => {
 		container = document.createElement('div');
 		container.id = 'test-container';
 		document.body.appendChild(container);
+		document.head.innerHTML = '';
 	});
 
 	afterEach(() => {
 		container.remove();
+		document.head.innerHTML = '';
 	});
 
 	it('renders the component with initial state', () => {
-		render(NewsletterCTA, { target: container });
+		const { unmount } = render(NewsletterCTA, { target: container });
 
 		// Check if the form elements are present
 		expect(screen.getByRole('textbox', { name: '' })).toBeInTheDocument();
@@ -30,10 +32,12 @@ describe('NewsletterCTA', () => {
 		expect(screen.queryByText('Loading')).not.toBeInTheDocument();
 		expect(screen.queryByText(/success/i)).not.toBeInTheDocument();
 		expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
+
+		unmount();
 	});
 
 	it('enables the submit button when email is not empty', async () => {
-		render(NewsletterCTA, { target: container });
+		const { unmount } = render(NewsletterCTA, { target: container });
 
 		const input = screen.getByPlaceholderText('your.email@example.com');
 		const button = screen.getByRole('button');
@@ -46,10 +50,12 @@ describe('NewsletterCTA', () => {
 
 		// Button should be enabled
 		expect(button).not.toBeDisabled();
+
+		unmount();
 	});
 
 	it('shows loading state during submission', async () => {
-		render(NewsletterCTA, { target: container });
+		const { unmount } = render(NewsletterCTA, { target: container });
 
 		const input = screen.getByPlaceholderText('your.email@example.com');
 
@@ -63,10 +69,12 @@ describe('NewsletterCTA', () => {
 		// Check loading state
 		expect(screen.getByRole('button')).toBeDisabled();
 		expect(screen.getByText('Loading')).toBeInTheDocument();
+
+		unmount();
 	});
 
 	it('handles successful submission', async () => {
-		render(NewsletterCTA, { target: container });
+		const { unmount } = render(NewsletterCTA, { target: container });
 
 		const input = screen.getByPlaceholderText('your.email@example.com');
 
@@ -90,10 +98,12 @@ describe('NewsletterCTA', () => {
 
 		// Check if email is cleared
 		expect(input).toHaveValue('');
+
+		unmount();
 	});
 
 	it('handles submission error', async () => {
-		render(NewsletterCTA, { target: container });
+		const { unmount } = render(NewsletterCTA, { target: container });
 
 		const input = screen.getByPlaceholderText('your.email@example.com');
 
@@ -117,10 +127,12 @@ describe('NewsletterCTA', () => {
 
 		// Check if button is re-enabled
 		expect(screen.getByRole('button')).not.toBeDisabled();
+
+		unmount();
 	});
 
 	it('is accessible', async () => {
-		render(NewsletterCTA, { target: container });
+		const { unmount } = render(NewsletterCTA, { target: container });
 
 		// Check input accessibility
 		const input = screen.getByRole('textbox');
@@ -136,5 +148,7 @@ describe('NewsletterCTA', () => {
 		// Check form accessibility
 		const form = input.closest('form');
 		expect(form).toHaveAttribute('novalidate');
+
+		unmount();
 	});
 });
