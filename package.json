@@ -26,6 +26,7 @@
 		"@eslint/compat": "^1.2.5",
 		"@eslint/js": "^9.18.0",
 		"@fontsource/fira-mono": "^5.0.0",
+		"@fontsource/jetbrains-mono": "^5.2.5",
 		"@neoconfetti/svelte": "^2.0.0",
 		"@sveltejs/adapter-static": "^3.0.8",
 		"@sveltejs/enhanced-img": "^0.4.4",
@@ -53,7 +54,6 @@
 		"vitest": "^3.1.1"
 	},
 	"dependencies": {
-		"@fontsource/jetbrains-mono": "^5.2.5",
 		"sanitize-html": "^2.15.0"
 	}
 }
