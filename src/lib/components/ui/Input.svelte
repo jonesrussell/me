@@ -1,19 +1,17 @@
 <script lang="ts">
-	const {
+	let {
 		type = 'text',
 		placeholder = '',
 		disabled = false,
-		value = $bindable(''),
-		required = false
+		required = false,
+		value = $bindable('')
 	} = $props<{
 		type?: string;
 		placeholder?: string;
 		disabled?: boolean;
-		value?: string;
 		required?: boolean;
+		value?: string;
 	}>();
-
-	let inputValue = $state(value);
 </script>
 
 <style>
@@ -46,5 +44,5 @@
 </style>
 
 <div class="input-container">
-	<input {type} {placeholder} {disabled} {required} bind:value={inputValue} class="input" />
+	<input {type} {placeholder} {disabled} {required} bind:value class="input" />
 </div>

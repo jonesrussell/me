@@ -4,10 +4,6 @@
 	import Input from '$lib/components/ui/Input.svelte';
 	import Box from '$lib/components/layout/Box.svelte';
 
-	const { onSubmit = () => {} } = $props<{
-		onSubmit?: (event: { email: string }) => void;
-	}>();
-
 	let email = $state('');
 	let isSubmitting = $state(false);
 	let error = $state<string | null>(null);
@@ -16,14 +12,20 @@
 	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
 		if (!email) return;
+
 		isSubmitting = true;
 		error = null;
 		success = false;
 
 		try {
-			// Simulate API call
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-			onSubmit({ email });
+			const response = await fetch('/api/newsletter', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ email })
+			});
+
+			if (!response.ok) throw new Error('Failed to subscribe');
+
 			email = '';
 			success = true;
 		} catch (e) {
