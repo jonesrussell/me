@@ -283,22 +283,22 @@
 		</div>
 
 		<form class="form" onsubmit={handleSubmit}>
-			<div class="form-group">
-				<div class="input-wrapper">
-					<span class="input-prefix">→</span>
+			<div class="form-group svelte-1ewipsr">
+				<div class="input-wrapper svelte-1ewipsr">
+					<span class="input-prefix svelte-1ewipsr">→</span>
 					<input
 						type="email"
 						id="email"
 						name="email"
-						bind:value={email}
 						placeholder="your.email@example.com"
 						required
+						bind:value={email}
 					/>
 				</div>
-				<button type="submit" disabled={submitStatus === 'loading'}>
+				<button type="submit" disabled={!email || submitStatus === 'loading'}>
 					{#if submitStatus === 'loading'}
 						<div class="loading">
-							<span>Subscribing</span>
+							<span>Loading</span>
 							<span class="dots">
 								<span class="dot">.</span>
 								<span class="dot">.</span>
