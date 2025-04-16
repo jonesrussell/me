@@ -92,6 +92,7 @@
   - [ ] Add security testing
 
 - [ ] Development Experience
+
   - [ ] Add proper linting
   - [ ] Implement proper formatting
   - [ ] Add commit hooks
@@ -100,3 +101,9 @@
   - [ ] Implement proper logging
   - [ ] Add development tools
   - [ ] Create development guide
+
+- [ ] Code Cleanup
+  - [ ] Audit and remove unused components from `/src/lib/components/`
+  - [ ] Remove unused CSS styles
+  - [ ] Remove unused utility functions
+  - [ ] Remove unused TypeScript types
