@@ -4,12 +4,6 @@ const config: KnipConfig = {
 	project: ['src/**/*.{svelte,ts}'],
 	ignore: [
 		'**/*.d.ts',
-		'$app/**',
-		'$lib/**',
-		'$env/**',
-		'$service-worker',
-		'@sveltejs/kit/**',
-		'@fontsource/**',
 		'src/lib/components/blog/BlogHeader.svelte',
 		'src/lib/components/navigation/DesktopNav.svelte',
 		'src/lib/components/navigation/MobileNav.svelte',
