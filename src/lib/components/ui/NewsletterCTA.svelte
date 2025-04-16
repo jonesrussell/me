@@ -48,15 +48,16 @@
 		background: var(--color-mix-light);
 		flex-direction: column;
 		gap: var(--ch2);
+		align-items: center;
 	}
 
 	.newsletter-content {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-6);
-
 		width: 100%;
 		max-width: 60ch;
+		margin: 0 auto;
 	}
 
 	.newsletter-header {
