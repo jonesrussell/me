@@ -117,7 +117,7 @@
 	}
 </style>
 
-<Box>
+<Box width={40}>
 	<div class="project">
 		<div class="project-header">
 			<h3>
