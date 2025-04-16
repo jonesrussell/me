@@ -1,102 +1,80 @@
 import { describe, it, expect } from 'vitest';
-import { render } from '@testing-library/svelte';
-import { tick } from 'svelte';
+import { render, screen } from '@testing-library/svelte';
 import Badge from '$lib/components/ui/Badge.svelte';
 
 describe('Badge', () => {
-	it('renders with default info type', async () => {
-		const { container } = render(Badge, {
+	it('renders with default info type', () => {
+		render(Badge, {
 			props: {
-				children: () => 'Test Badge'
+				children: 'Test Badge'
 			}
 		});
 
-		await tick();
-		await tick(); // Double tick to ensure all updates are processed
-		const badge = container.querySelector('.badge');
+		const badge = screen.getByText('ℹ Test Badge');
 		expect(badge).toBeInTheDocument();
-		expect(badge).toHaveClass('info');
-		expect(badge?.textContent?.replace(/\s+/g, ' ').trim()).toBe('ℹ Test Badge');
+		expect(badge).toHaveClass('badge', 'info');
 	});
 
-	it('renders success badge', async () => {
-		const { container } = render(Badge, {
+	it('renders success badge', () => {
+		render(Badge, {
 			props: {
 				type: 'success',
-				children: () => 'Success'
+				children: 'Success'
 			}
 		});
 
-		await tick();
-		await tick(); // Double tick to ensure all updates are processed
-		const badge = container.querySelector('.badge');
+		const badge = screen.getByText('✓ Success');
 		expect(badge).toBeInTheDocument();
-		expect(badge).toHaveClass('success');
-		expect(badge?.textContent?.replace(/\s+/g, ' ').trim()).toBe('✓ Success');
+		expect(badge).toHaveClass('badge', 'success');
 	});
 
-	it('renders warning badge', async () => {
-		const { container } = render(Badge, {
+	it('renders warning badge', () => {
+		render(Badge, {
 			props: {
 				type: 'warning',
-				children: () => 'Warning'
+				children: 'Warning'
 			}
 		});
 
-		await tick();
-		await tick(); // Double tick to ensure all updates are processed
-		const badge = container.querySelector('.badge');
+		const badge = screen.getByText('⚠ Warning');
 		expect(badge).toBeInTheDocument();
-		expect(badge).toHaveClass('warning');
-		expect(badge?.textContent?.replace(/\s+/g, ' ').trim()).toBe('⚠ Warning');
+		expect(badge).toHaveClass('badge', 'warning');
 	});
 
-	it('renders error badge', async () => {
-		const { container } = render(Badge, {
+	it('renders error badge', () => {
+		render(Badge, {
 			props: {
 				type: 'error',
-				children: () => 'Error'
+				children: 'Error'
 			}
 		});
 
-		await tick();
-		await tick(); // Double tick to ensure all updates are processed
-		const badge = container.querySelector('.badge');
+		const badge = screen.getByText('✗ Error');
 		expect(badge).toBeInTheDocument();
-		expect(badge).toHaveClass('error');
-		expect(badge?.textContent?.replace(/\s+/g, ' ').trim()).toBe('✗ Error');
+		expect(badge).toHaveClass('badge', 'error');
 	});
 
-	it('has proper CSS classes for styling', async () => {
-		const { container } = render(Badge, {
+	it('has proper CSS classes for styling', () => {
+		render(Badge, {
 			props: {
-				children: () => 'Test'
+				children: 'Test'
 			}
 		});
 
-		await tick();
-		await tick(); // Double tick to ensure all updates are processed
-		const badge = container.querySelector('.badge');
+		const badge = screen.getByText('ℹ Test');
 		expect(badge).toBeInTheDocument();
-		expect(badge).toHaveClass('badge');
-		expect(badge).toHaveClass('info');
+		expect(badge).toHaveClass('badge', 'info');
 	});
 
-	it('is accessible', async () => {
-		const { container } = render(Badge, {
+	it('is accessible', () => {
+		render(Badge, {
 			props: {
-				children: () => 'Accessibility Test'
+				children: 'Accessibility Test'
 			}
 		});
 
-		await tick();
-		await tick(); // Double tick to ensure all updates are processed
-		// Check semantic structure
-		const badge = container.querySelector('.badge');
+		const badge = screen.getByText('ℹ Accessibility Test');
 		expect(badge).toBeInTheDocument();
-		expect(badge?.tagName.toLowerCase()).toBe('span');
-
-		// Check content is readable
-		expect(badge?.textContent?.replace(/\s+/g, ' ').trim()).toBe('ℹ Accessibility Test');
+		expect(badge.tagName.toLowerCase()).toBe('span');
 	});
 });

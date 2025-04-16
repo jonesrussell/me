@@ -3,7 +3,7 @@
 
 	const { type: badgeType = 'info' as BadgeType, children } = $props<{
 		type?: BadgeType;
-		children: () => string;
+		children: string | (() => string);
 	}>();
 
 	const symbols: Record<BadgeType, string> = {
@@ -59,5 +59,5 @@
 
 <span class="badge {badgeType}">
 	{symbols[badgeType as BadgeType]}
-	{children()}
+	{typeof children === 'function' ? children() : children}
 </span>
