@@ -1,5 +1,5 @@
 <script lang="ts">
-	let {
+	const {
 		type = 'text',
 		placeholder = '',
 		disabled = false,
@@ -23,10 +23,8 @@
 		'aria-describedby'?: string;
 	}>();
 
-	let inputValue = $state(value);
-
 	$effect(() => {
-		onInput(inputValue);
+		onInput(value);
 	});
 </script>
 
@@ -78,7 +76,8 @@
 		{placeholder}
 		{disabled}
 		{required}
-		bind:value={inputValue}
+		{value}
+		oninput={(e) => onInput((e.target as HTMLInputElement).value)}
 		{name}
 		{id}
 		class="input"
