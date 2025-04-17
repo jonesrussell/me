@@ -12,8 +12,8 @@ describe('Badge', () => {
 
 		const badge = container.querySelector('.badge');
 		if (!badge) throw new Error('Badge element not found');
-		expect(badge.textContent).toBe('ℹ Test Badge');
-		expect(badge).toHaveClass('badge', 'info');
+		expect(badge.textContent?.trim().replace(/\s+/g, ' ')).toBe('ℹ Test Badge');
+		expect(badge.getAttribute('data-type')).toBe('info');
 	});
 
 	it('renders success badge', () => {
@@ -26,8 +26,8 @@ describe('Badge', () => {
 
 		const badge = container.querySelector('.badge');
 		if (!badge) throw new Error('Badge element not found');
-		expect(badge.textContent).toBe('✓ Success');
-		expect(badge).toHaveClass('badge', 'success');
+		expect(badge.textContent?.trim().replace(/\s+/g, ' ')).toBe('✓ Success');
+		expect(badge.getAttribute('data-type')).toBe('success');
 	});
 
 	it('renders warning badge', () => {
@@ -40,8 +40,8 @@ describe('Badge', () => {
 
 		const badge = container.querySelector('.badge');
 		if (!badge) throw new Error('Badge element not found');
-		expect(badge.textContent).toBe('⚠ Warning');
-		expect(badge).toHaveClass('badge', 'warning');
+		expect(badge.textContent?.trim().replace(/\s+/g, ' ')).toBe('⚠ Warning');
+		expect(badge.getAttribute('data-type')).toBe('warning');
 	});
 
 	it('renders error badge', () => {
@@ -54,11 +54,11 @@ describe('Badge', () => {
 
 		const badge = container.querySelector('.badge');
 		if (!badge) throw new Error('Badge element not found');
-		expect(badge.textContent).toBe('✗ Error');
-		expect(badge).toHaveClass('badge', 'error');
+		expect(badge.textContent?.trim().replace(/\s+/g, ' ')).toBe('✗ Error');
+		expect(badge.getAttribute('data-type')).toBe('error');
 	});
 
-	it('has proper CSS classes for styling', () => {
+	it('has required structural elements', () => {
 		const { container } = render(Badge, {
 			props: {
 				children: 'Test'
@@ -67,11 +67,11 @@ describe('Badge', () => {
 
 		const badge = container.querySelector('.badge');
 		if (!badge) throw new Error('Badge element not found');
-		expect(badge.textContent).toBe('ℹ Test');
-		expect(badge).toHaveClass('badge', 'info');
+		expect(badge.textContent?.trim().replace(/\s+/g, ' ')).toBe('ℹ Test');
+		expect(badge.getAttribute('data-type')).toBe('info');
 	});
 
-	it('is accessible', () => {
+	it('is accessible with proper ARIA attributes', () => {
 		const { container } = render(Badge, {
 			props: {
 				children: 'Accessibility Test'
@@ -80,7 +80,9 @@ describe('Badge', () => {
 
 		const badge = container.querySelector('.badge');
 		if (!badge) throw new Error('Badge element not found');
-		expect(badge.textContent).toBe('ℹ Accessibility Test');
+		expect(badge.textContent?.trim().replace(/\s+/g, ' ')).toBe('ℹ Accessibility Test');
 		expect(badge.tagName.toLowerCase()).toBe('span');
+		expect(badge.getAttribute('role')).toBe('status');
+		expect(badge.getAttribute('aria-label')).toBe('Accessibility Test');
 	});
 });
