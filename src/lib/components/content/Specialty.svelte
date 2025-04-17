@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { slideIn, fadeIn, hoverScale } from '$lib/utils/animations';
+	import { slideIn, hoverScale } from '$lib/utils/animations';
 
-	const { specialty, index, isIntersecting } = $props<{
+	const { specialty, index, isIntersecting, isRevealed } = $props<{
 		specialty: {
 			title: string;
 			description: string;
@@ -9,6 +9,7 @@
 		};
 		index: number;
 		isIntersecting: boolean;
+		isRevealed: boolean;
 	}>();
 </script>
 
@@ -24,6 +25,9 @@
 		align-items: center;
 		gap: var(--space-4);
 		transition: background 0.3s ease-out;
+		/* Initial state */
+		opacity: 0;
+		transform: translateX(var(--initial-offset));
 	}
 
 	.specialty.intersecting {
@@ -71,20 +75,32 @@
 	@media (prefers-reduced-motion: reduce) {
 		.specialty {
 			transition: none;
+			transform: none;
+			opacity: 1;
 		}
 	}
 </style>
 
-<div
-	class="specialty"
-	class:intersecting={isIntersecting}
-	use:hoverScale
-	in:slideIn={{ delay: index * 100 }}
-	out:fadeIn
->
-	<div class="specialty-icon">{specialty.icon}</div>
-	<div class="specialty-content">
-		<div class="specialty-title">{specialty.title}</div>
-		<div class="specialty-desc">{specialty.description}</div>
+{#if isRevealed}
+	<div
+		class="specialty"
+		class:intersecting={isIntersecting}
+		use:hoverScale
+		in:slideIn={{ delay: index * 100, index }}
+		style="--initial-offset: {index % 2 === 0 ? '-100%' : '100%'}"
+	>
+		<div class="specialty-icon">{specialty.icon}</div>
+		<div class="specialty-content">
+			<div class="specialty-title">{specialty.title}</div>
+			<div class="specialty-desc">{specialty.description}</div>
+		</div>
 	</div>
-</div>
+{:else}
+	<div class="specialty" style="--initial-offset: {index % 2 === 0 ? '-100%' : '100%'}">
+		<div class="specialty-icon">{specialty.icon}</div>
+		<div class="specialty-content">
+			<div class="specialty-title">{specialty.title}</div>
+			<div class="specialty-desc">{specialty.description}</div>
+		</div>
+	</div>
+{/if}
