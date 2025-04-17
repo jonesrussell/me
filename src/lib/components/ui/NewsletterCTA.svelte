@@ -127,6 +127,18 @@
 		gap: var(--space-4);
 	}
 
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
 	button {
 		padding: var(--space-4);
 		font-family: var(--font-mono);
@@ -242,8 +254,9 @@
 		<svelte:boundary onerror={handleBoundaryError}>
 			<form class="form" onsubmit={handleSubmit}>
 				<div class="form-group">
+					<label for="field-email" class="visually-hidden">Email</label>
 					<FormField
-						label="Email"
+						label=""
 						name="email"
 						type="email"
 						required
