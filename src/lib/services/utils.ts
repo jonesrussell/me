@@ -25,7 +25,10 @@ export const sanitizeText = memoize((text: string): string => {
 		let previous;
 		do {
 			previous = withoutScripts;
-			withoutScripts = withoutScripts.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+			withoutScripts = withoutScripts.replace(
+				/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+				''
+			);
 		} while (withoutScripts !== previous);
 
 		// Then use DOM parsing for additional security
@@ -61,9 +64,7 @@ export const sanitizeText = memoize((text: string): string => {
 		const sanitized = div.textContent || '';
 
 		// Normalize whitespace and trim
-		return sanitized
-			.replace(/\s+/g, ' ')
-			.trim();
+		return sanitized.replace(/\s+/g, ' ').trim();
 	} catch (error) {
 		console.error('Error sanitizing text:', error);
 		// Fallback to basic sanitization if DOM parsing fails
