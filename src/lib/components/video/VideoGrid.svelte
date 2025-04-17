@@ -1,6 +1,6 @@
 <script lang="ts">
 	import VideoCard from './VideoCard.svelte';
-	import type { Video } from '$lib/types';
+	import type { Video } from '$lib/types/video';
 
 	const { videos } = $props<{ videos: Video[] }>();
 </script>
@@ -34,10 +34,10 @@
 	}
 </style>
 
-<section>
-	<h2>Creative Storytelling</h2>
+<section aria-labelledby="video-grid-title" aria-label="Video grid">
+	<h2 id="video-grid-title">Featured Videos</h2>
 	<div class="video-grid">
-		{#each videos as video (video.title)}
+		{#each videos as video (video.embedId)}
 			<VideoCard {video} />
 		{/each}
 	</div>
