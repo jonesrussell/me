@@ -17,9 +17,9 @@ import type { RenderResult } from '@testing-library/svelte';
 import { fireEvent } from '@testing-library/dom';
 import type { Mock } from 'vitest';
 import type { SvelteComponent } from 'svelte';
-import type { Matcher, MatcherOptions } from '@testing-library/dom';
-import { expect } from 'vitest';
+import { expect, afterEach } from 'vitest';
 import type { Video } from '$lib/types';
+import { JSDOM } from 'jsdom';
 
 /**
  * Interface representing a Svelte component instance with dynamic properties
@@ -30,26 +30,34 @@ interface ComponentInstance {
 }
 
 /**
- * Sets up the document head for style injection during tests
- * This is necessary for components that rely on global styles or CSS-in-JS solutions
- *
- * @returns The created head element
+ * Sets up the DOM environment for testing
+ * This is necessary for components that rely on browser APIs
  */
-const setupDocument = () => {
-	const head = document.createElement('head');
-	document.body.appendChild(head);
-	return head;
+const setupDOM = () => {
+	const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>');
+	global.document = dom.window.document;
+	global.window = dom.window as unknown as Window & typeof globalThis;
+};
+
+/**
+ * Cleans up the DOM environment after tests
+ */
+const cleanupDOM = () => {
+	// @ts-expect-error - We know these are optional in the test environment
+	global.document = undefined;
+	// @ts-expect-error - We know these are optional in the test environment
+	global.window = undefined;
 };
 
 /**
  * Type definition for Svelte 5 components
  * Represents the structure of a Svelte 5 component with its props, events, and slots
  */
-type Svelte5Component = {
+type Svelte5Component<T extends SvelteComponent> = {
 	$$prop_def: Record<string, unknown>;
 	$$events_def: Record<string, CustomEvent<unknown>>;
 	$$slot_def: string;
-};
+} & (new (options: { target: HTMLElement; props: Record<string, unknown> }) => T);
 
 /**
  * Renders a Svelte component with the provided props
@@ -60,11 +68,16 @@ type Svelte5Component = {
  * @returns A RenderResult containing the rendered component and testing utilities
  */
 export function renderComponent<T extends SvelteComponent>(
-	Component: Svelte5Component,
+	Component: Svelte5Component<T>,
 	props: Record<string, unknown> = {}
 ): RenderResult<T> {
-	setupDocument();
-	return render(Component as any, { props });
+	setupDOM();
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const result = render(Component as any, { props }) as RenderResult<T>;
+	afterEach(() => {
+		cleanupDOM();
+	});
+	return result;
 }
 
 /**
@@ -153,7 +166,7 @@ export function createMockStore<T>(initialValue: T) {
  * @param expectedState - The expected state after the action
  */
 export async function testStateChange<T extends SvelteComponent>(
-	Component: Svelte5Component,
+	Component: Svelte5Component<T>,
 	props: Record<string, unknown>,
 	action: (result: ReturnType<typeof renderComponent<T>>) => Promise<void>,
 	expectedState: Record<string, unknown>
@@ -179,7 +192,7 @@ export async function testStateChange<T extends SvelteComponent>(
  * @param expectedHandlerCall - The mock function that should be called
  */
 export async function testComponentEvent<T extends SvelteComponent>(
-	Component: Svelte5Component,
+	Component: Svelte5Component<T>,
 	props: Record<string, unknown>,
 	eventName: string,
 	eventData: unknown = {},
