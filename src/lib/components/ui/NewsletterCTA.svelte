@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import FormField from './FormField.svelte';
 
 	let email = $state('');
 	let submitStatus = $state<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -13,9 +14,22 @@
 		console.error('Newsletter form error:', error);
 	}
 
+	function validateEmail() {
+		if (!email) {
+			errorMessage = 'Email is required';
+			return false;
+		}
+		if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+			errorMessage = 'Please enter a valid email address';
+			return false;
+		}
+		errorMessage = '';
+		return true;
+	}
+
 	async function handleSubmit(event: Event) {
 		event.preventDefault();
-		if (!email) return;
+		if (!validateEmail()) return;
 
 		submitStatus = 'loading';
 
@@ -113,47 +127,6 @@
 		gap: var(--space-4);
 	}
 
-	.input-wrapper {
-		display: flex;
-		padding: var(--space-2) var(--space-4);
-		background: var(--bg-color);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-md);
-		transition: all var(--transition-duration) var(--transition-timing);
-		align-items: center;
-	}
-
-	.input-wrapper:focus-within {
-		border-color: var(--accent-color);
-		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
-	}
-
-	.input-prefix {
-		margin-right: var(--space-2);
-		font-weight: var(--font-weight-bold);
-		color: var(--accent-color);
-	}
-
-	input {
-		width: 100%;
-		padding: 0;
-		font-family: var(--font-mono);
-		font-size: var(--font-size-base);
-		color: var(--text-color);
-		background: transparent;
-		border: none;
-		flex: 1;
-	}
-
-	input:focus {
-		outline: none;
-	}
-
-	input::placeholder {
-		color: var(--text-muted);
-		opacity: 0.5;
-	}
-
 	button {
 		padding: var(--space-4);
 		font-family: var(--font-mono);
@@ -248,22 +221,6 @@
 	@media (width >= calc(37.5 * var(--ch))) {
 		.form-group {
 			flex-direction: row;
-			gap: var(--space-4);
-		}
-
-		button {
-			min-width: 15ch;
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.input-wrapper,
-		button {
-			transition: none;
-		}
-
-		.dot {
-			animation: none;
 		}
 	}
 </style>
@@ -276,69 +233,54 @@
 				<h3>Stay Updated</h3>
 				<span class="bracket">]</span>
 			</div>
-			<p class="description">Get the latest updates on web development and tech insights.</p>
+			<p class="description">
+				Subscribe to my newsletter for updates on web development, tech insights, and open source
+				projects.
+			</p>
 		</div>
 
-		<svelte:boundary onerror={handleBoundaryError}>
-			<form class="form" onsubmit={handleSubmit}>
-				<div class="form-group">
-					<div class="input-wrapper">
-						<span class="input-prefix">→</span>
-						<input
-							type="email"
-							id="email"
-							name="email"
-							placeholder="your.email@example.com"
-							required
-							bind:value={email}
-						/>
-					</div>
-					<button type="submit" disabled={!email || submitStatus === 'loading'}>
-						{#if submitStatus === 'loading'}
-							<div class="loading">
-								<span>Loading</span>
-								<span class="dots">
-									<span class="dot">.</span>
-									<span class="dot">.</span>
-									<span class="dot">.</span>
-								</span>
+		<form class="form" onsubmit={handleSubmit}>
+			<div class="form-group">
+				<FormField
+					label="Email"
+					name="email"
+					type="email"
+					required
+					value={email}
+					onInput={(value) => (email = value)}
+					error={errorMessage}
+					placeholder="your.email@example.com"
+				/>
+				<button type="submit" disabled={submitStatus === 'loading'}>
+					{#if submitStatus === 'loading'}
+						<div class="loading">
+							<span>Subscribing</span>
+							<div class="dots">
+								<span class="dot">.</span>
+								<span class="dot">.</span>
+								<span class="dot">.</span>
 							</div>
-						{:else}
-							<span class="button-content">
-								<span class="button-text">Subscribe</span>
-								<span class="button-icon">⟶</span>
-							</span>
-						{/if}
-					</button>
-				</div>
-
-				{#if submitStatus === 'success'}
-					<div class="success-message">
-						<span class="icon">✓</span> Message sent successfully
-					</div>
-				{/if}
-
-				{#if submitStatus === 'error'}
-					<div class="error-message">
-						<span class="icon">✗</span>
-						{errorMessage}
-					</div>
-				{/if}
-			</form>
-		</svelte:boundary>
-
-		{#if boundaryError}
-			<div class="error-message">
-				<span class="icon">✗</span>
-				An error occurred. {#if resetBoundary}
-					<button
-						onclick={() => {
-							boundaryError = null;
-							resetBoundary?.();
-						}}>Try again</button
-					>
-				{/if}
+						</div>
+					{:else}
+						<div class="button-content">
+							<span>Subscribe</span>
+							<span class="button-icon">→</span>
+						</div>
+					{/if}
+				</button>
 			</div>
-		{/if}
+
+			{#if submitStatus === 'success'}
+				<div class="success-message">
+					<span>✓</span>
+					<span>Thanks for subscribing!</span>
+				</div>
+			{:else if submitStatus === 'error'}
+				<div class="error-message">
+					<span>✕</span>
+					<span>{errorMessage}</span>
+				</div>
+			{/if}
+		</form>
 	</div>
 </div>

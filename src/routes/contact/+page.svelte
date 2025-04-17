@@ -1,10 +1,30 @@
 <script lang="ts">
+	import FormField from '$lib/components/ui/FormField.svelte';
+
 	let name = $state('');
 	let email = $state('');
 	let message = $state('');
+	let errors = $state<Record<string, string>>({});
+
+	function validateForm() {
+		const newErrors: Record<string, string> = {};
+
+		if (!name) newErrors.name = 'Name is required';
+		if (!email) {
+			newErrors.email = 'Email is required';
+		} else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+			newErrors.email = 'Please enter a valid email address';
+		}
+		if (!message) newErrors.message = 'Message is required';
+
+		errors = newErrors;
+		return Object.keys(newErrors).length === 0;
+	}
 
 	function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
+		if (!validateForm()) return;
+
 		// TODO: Implement form submission
 		console.log({ name, email, message });
 	}
@@ -88,40 +108,6 @@
 		margin-bottom: var(--space-4);
 	}
 
-	.form-label {
-		display: block;
-		margin-bottom: var(--space-2);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
-		color: var(--text-muted);
-	}
-
-	.form-input,
-	.form-textarea {
-		width: 100%;
-		padding: var(--space-3) var(--space-4);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-base);
-		color: var(--text-color);
-		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-md);
-		transition: all var(--transition-duration) var(--transition-timing);
-	}
-
-	.form-textarea {
-		resize: vertical;
-		height: 12ch;
-		line-height: var(--line-height-relaxed);
-	}
-
-	.form-input:focus,
-	.form-textarea:focus {
-		border-color: var(--accent-color);
-		outline: none;
-		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
-	}
-
 	.form-submit {
 		display: flex;
 		width: 100%;
@@ -162,8 +148,6 @@
 
 	@media (prefers-reduced-motion: reduce) {
 		.contact-link,
-		.form-input,
-		.form-textarea,
 		.form-submit {
 			transition: none;
 		}
@@ -218,36 +202,41 @@
 				<h2 class="form-heading">Send a Message</h2>
 				<form onsubmit={handleSubmit}>
 					<div class="form-group">
-						<label class="form-label" for="name">Name</label>
-						<input
+						<FormField
+							label="Name"
+							name="name"
 							type="text"
-							id="name"
-							class="form-input"
-							bind:value={name}
+							required
+							value={name}
+							onInput={(value) => (name = value)}
+							error={errors.name}
 							placeholder="Your name"
-							required
 						/>
 					</div>
 					<div class="form-group">
-						<label class="form-label" for="email">Email</label>
-						<input
+						<FormField
+							label="Email"
+							name="email"
 							type="email"
-							id="email"
-							class="form-input"
-							bind:value={email}
-							placeholder="your.email@example.com"
 							required
+							value={email}
+							onInput={(value) => (email = value)}
+							error={errors.email}
+							placeholder="your.email@example.com"
 						/>
 					</div>
 					<div class="form-group">
-						<label class="form-label" for="message">Message</label>
-						<textarea
-							id="message"
-							class="form-textarea"
-							bind:value={message}
-							placeholder="Type your message here..."
+						<FormField
+							label="Message"
+							name="message"
+							type="textarea"
 							required
-						></textarea>
+							value={message}
+							onInput={(value) => (message = value)}
+							error={errors.message}
+							placeholder="Type your message here..."
+							rows={6}
+						/>
 					</div>
 					<button type="submit" class="form-submit">
 						<span>Send Message</span>

@@ -4,14 +4,30 @@
 		placeholder = '',
 		disabled = false,
 		required = false,
-		value = $bindable('')
+		value = '',
+		onInput = (value: string) => {},
+		name = '',
+		id = '',
+		'aria-invalid': ariaInvalid = false,
+		'aria-describedby': ariaDescribedby = undefined
 	} = $props<{
 		type?: string;
 		placeholder?: string;
 		disabled?: boolean;
 		required?: boolean;
 		value?: string;
+		onInput?: (value: string) => void;
+		name?: string;
+		id?: string;
+		'aria-invalid'?: boolean;
+		'aria-describedby'?: string;
 	}>();
+
+	let inputValue = $state(value);
+
+	$effect(() => {
+		onInput(inputValue);
+	});
 </script>
 
 <style>
@@ -49,9 +65,13 @@
 		{placeholder}
 		{disabled}
 		{required}
-		bind:value
+		bind:value={inputValue}
+		{name}
+		{id}
 		class="input"
 		role="textbox"
 		aria-label={placeholder || 'Text input'}
+		aria-invalid={ariaInvalid}
+		aria-describedby={ariaDescribedby}
 	/>
 </div>
