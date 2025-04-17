@@ -1,6 +1,10 @@
 {
 	"extends": ["stylelint-config-standard", "stylelint-config-clean-order"],
-	"plugins": ["stylelint-order"],
+	"plugins": [
+		"stylelint-order",
+		"stylelint-value-no-unknown-custom-properties",
+		"stylelint-declaration-block-no-ignored-properties"
+	],
 	"ignoreFiles": ["**/coverage/**"],
 	"rules": {
 		"unit-allowed-list": ["ch", "px", "%", "deg", "vh", "vw", "fr", "s", "cqi", "ms", "rem"],
@@ -8,10 +12,10 @@
 		"selector-pseudo-class-no-unknown": [
 			true,
 			{
-				"ignorePseudoClasses": ["global"]
+				"ignorePseudoClasses": ["global", "where"]
 			}
 		],
-		"custom-property-pattern": null,
+		"custom-property-pattern": "^--[a-z0-9-]+$",
 		"selector-class-pattern": null,
 		"keyframes-name-pattern": null,
 		"media-query-no-invalid": null,
@@ -78,7 +82,16 @@
 		"at-rule-no-unknown": [
 			true,
 			{
-				"ignoreAtRules": ["tailwind", "apply", "variants", "responsive", "screen", "layer"]
+				"ignoreAtRules": [
+					"tailwind",
+					"apply",
+					"variants",
+					"responsive",
+					"screen",
+					"layer",
+					"container",
+					"supports"
+				]
 			}
 		],
 		"no-duplicate-at-import-rules": true,
@@ -90,7 +103,42 @@
 				"ignore": ["after-comment", "blockless-after-same-name-blockless"],
 				"ignoreAtRules": ["import", "layer"]
 			}
-		]
+		],
+		"value-no-unknown-custom-properties": true,
+		"declaration-block-no-ignored-properties": true,
+		"no-duplicate-custom-properties": true,
+		"declaration-block-no-duplicate-properties": true,
+		"shorthand-property-no-redundant-values": true,
+		"max-nesting-depth": 3,
+		"selector-max-id": 0,
+		"selector-max-type": 2,
+		"selector-max-combinators": 2,
+		"selector-max-specificity": "0,3,0",
+		"color-hex-case": "lower",
+		"color-hex-length": "short",
+		"color-named": "never",
+		"color-no-invalid-hex": true,
+		"font-family-name-quotes": "always-where-recommended",
+		"font-weight-notation": "numeric",
+		"number-leading-zero": "always",
+		"number-no-trailing-zeros": true,
+		"length-zero-no-unit": true,
+		"string-quotes": "double",
+		"unit-case": "lower",
+		"time-min-milliseconds": 100,
+		"function-calc-no-unspaced-operator": true,
+		"function-linear-gradient-no-nonstandard-direction": true,
+		"function-name-case": "lower",
+		"function-url-quotes": "always",
+		"function-whitespace-after": "always",
+		"declaration-no-important": true,
+		"value-no-vendor-prefix": true,
+		"property-no-vendor-prefix": true,
+		"selector-no-vendor-prefix": true,
+		"at-rule-no-vendor-prefix": true,
+		"keyframe-declaration-no-important": true,
+		"comment-no-empty": true,
+		"comment-word-disallowed-list": ["/^TODO:/i", "/^FIXME:/i"]
 	},
 	"overrides": [
 		{
