@@ -39,7 +39,7 @@
 	.input {
 		width: 100%;
 		min-width: 0;
-		padding: var(--space-3) var(--space-4);
+		padding: var(--space-4) var(--space-6);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
 		background: var(--bg-darker);

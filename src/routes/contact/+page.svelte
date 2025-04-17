@@ -83,7 +83,7 @@
 
 	.contact-link {
 		display: flex;
-		padding: var(--space-3) var(--space-4);
+		padding: var(--space-4) var(--space-6);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		text-decoration: none;
@@ -109,7 +109,6 @@
 
 	.form-group {
 		width: 100%;
-		margin-bottom: var(--space-4);
 	}
 
 	form {
@@ -122,7 +121,7 @@
 	.form-submit {
 		display: flex;
 		width: 100%;
-		padding: var(--space-3) var(--space-4);
+		padding: var(--space-4) var(--space-6);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
 		font-weight: var(--font-weight-medium);
@@ -135,6 +134,7 @@
 		gap: var(--space-2);
 		align-items: center;
 		justify-content: center;
+		margin-top: var(--space-4);
 	}
 
 	.form-submit:hover {
