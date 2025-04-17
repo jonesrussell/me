@@ -1,62 +1,104 @@
+/**
+ * Test Utilities for Svelte 5 Components
+ *
+ * This module provides a comprehensive set of testing utilities specifically designed for Svelte 5 components.
+ * It includes functions for component rendering, state management, event simulation, and common testing patterns.
+ *
+ * Key Features:
+ * - Type-safe component rendering with Svelte 5 support
+ * - DOM event simulation utilities
+ * - State management and testing helpers
+ * - Mock data generation
+ * - Component lifecycle management
+ */
+
 import { render } from '@testing-library/svelte';
 import type { RenderResult } from '@testing-library/svelte';
 import { fireEvent } from '@testing-library/dom';
 import type { Mock } from 'vitest';
 import type { SvelteComponent } from 'svelte';
 import type { Matcher, MatcherOptions } from '@testing-library/dom';
-import { afterEach, beforeEach, expect } from 'vitest';
-import { cleanup } from '@testing-library/svelte';
+import { expect } from 'vitest';
 import type { Video } from '$lib/types';
 
+/**
+ * Interface representing a Svelte component instance with dynamic properties
+ * Used for type-safe access to component instance properties during testing
+ */
 interface ComponentInstance {
 	[key: string]: unknown;
 }
 
-type TestComponent = SvelteComponent<Record<string, unknown>>;
-
-// Create a document head for style injection
+/**
+ * Sets up the document head for style injection during tests
+ * This is necessary for components that rely on global styles or CSS-in-JS solutions
+ *
+ * @returns The created head element
+ */
 const setupDocument = () => {
 	const head = document.createElement('head');
 	document.body.appendChild(head);
 	return head;
 };
 
-// Clean up after each test
-afterEach(() => {
-	cleanup();
-	document.head.innerHTML = '';
-});
+/**
+ * Type definition for Svelte 5 components
+ * Represents the structure of a Svelte 5 component with its props, events, and slots
+ */
+type Svelte5Component = {
+	$$prop_def: Record<string, unknown>;
+	$$events_def: Record<string, CustomEvent<unknown>>;
+	$$slot_def: string;
+};
 
-// Set up before each test
-beforeEach(() => {
-	setupDocument();
-});
-
-export function renderComponent(
-	component: typeof SvelteComponent,
+/**
+ * Renders a Svelte component with the provided props
+ * This is a wrapper around @testing-library/svelte's render function with Svelte 5 support
+ *
+ * @param Component - The Svelte component to render
+ * @param props - Optional props to pass to the component
+ * @returns A RenderResult containing the rendered component and testing utilities
+ */
+export function renderComponent<T extends SvelteComponent>(
+	Component: Svelte5Component,
 	props: Record<string, unknown> = {}
-): Omit<RenderResult<TestComponent>, 'getByTestId'> & {
-	getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement;
-	fireEvent: typeof fireEvent;
-} {
-	const result = render(component, { props });
-	return {
-		...result,
-		getByTestId: (id: Matcher, options?: MatcherOptions) => result.getByTestId(id, options),
-		fireEvent
-	};
+): RenderResult<T> {
+	setupDocument();
+	return render(Component as any, { props });
 }
 
+/**
+ * Creates a function that returns static content
+ * Useful for testing components that accept slot content
+ *
+ * @param content - The static content to return
+ * @returns A function that returns the provided content
+ */
 export function createChildrenFunction(content: string) {
 	return () => content;
 }
 
+/**
+ * Simulates user input on an element
+ * This function handles the complete input lifecycle including focus, input, and blur events
+ *
+ * @param element - The HTML element to simulate input on
+ * @param value - The value to input
+ */
 export async function simulateInput(element: HTMLElement, value: string): Promise<void> {
 	element.focus();
 	await fireEvent.input(element, { target: { value } });
 	await fireEvent.blur(element);
 }
 
+/**
+ * Simulates a key press event on an element
+ * Handles both keyDown and keyUp events with optional keyboard event options
+ *
+ * @param element - The HTML element to simulate the key press on
+ * @param key - The key to simulate pressing
+ * @param options - Optional keyboard event options
+ */
 export async function simulateKeyPress(
 	element: HTMLElement,
 	key: string,
@@ -66,10 +108,23 @@ export async function simulateKeyPress(
 	await fireEvent.keyUp(element, { key, ...options });
 }
 
+/**
+ * Waits for a state update to complete
+ * This is necessary when testing components that use Svelte's reactivity system
+ *
+ * @returns A promise that resolves after the state update
+ */
 export function waitForStateUpdate(): Promise<void> {
 	return new Promise(resolve => setTimeout(resolve, 0));
 }
 
+/**
+ * Creates a mock store with subscription capabilities
+ * Useful for testing components that depend on Svelte stores
+ *
+ * @param initialValue - The initial value for the store
+ * @returns An object with subscribe, set, and get methods
+ */
 export function createMockStore<T>(initialValue: T) {
 	let value = initialValue;
 	const subscribers = new Set<(value: T) => void>();
@@ -88,13 +143,22 @@ export function createMockStore<T>(initialValue: T) {
 	};
 }
 
-export async function testStateChange(
-	component: typeof SvelteComponent,
+/**
+ * Tests state changes in a component
+ * Renders a component, performs an action, and verifies the expected state
+ *
+ * @param Component - The component to test
+ * @param props - Props to pass to the component
+ * @param action - The action to perform that should trigger state changes
+ * @param expectedState - The expected state after the action
+ */
+export async function testStateChange<T extends SvelteComponent>(
+	Component: Svelte5Component,
 	props: Record<string, unknown>,
-	action: (result: ReturnType<typeof renderComponent>) => Promise<void>,
+	action: (result: ReturnType<typeof renderComponent<T>>) => Promise<void>,
 	expectedState: Record<string, unknown>
 ): Promise<void> {
-	const result = renderComponent(component, props);
+	const result = renderComponent<T>(Component, props);
 	await action(result);
 	await waitForStateUpdate();
 
@@ -104,14 +168,24 @@ export async function testStateChange(
 	});
 }
 
-export async function testComponentEvent(
-	component: typeof SvelteComponent,
+/**
+ * Tests component events
+ * Verifies that event handlers are called with the correct data
+ *
+ * @param Component - The component to test
+ * @param props - Props to pass to the component
+ * @param eventName - The name of the event to test
+ * @param eventData - The data to pass with the event
+ * @param expectedHandlerCall - The mock function that should be called
+ */
+export async function testComponentEvent<T extends SvelteComponent>(
+	Component: Svelte5Component,
 	props: Record<string, unknown>,
 	eventName: string,
 	eventData: unknown = {},
 	expectedHandlerCall: Mock
 ): Promise<void> {
-	const result = renderComponent(component, {
+	const result = renderComponent<T>(Component, {
 		...props,
 		[eventName]: expectedHandlerCall
 	});
@@ -126,6 +200,10 @@ export async function testComponentEvent(
 	expect(expectedHandlerCall).toHaveBeenCalledWith(eventData);
 }
 
+/**
+ * Mock video data for testing
+ * Provides consistent test data for components that work with video content
+ */
 export const mockVideos: Video[] = [
 	{
 		embedId: 'video1',
@@ -145,6 +223,10 @@ export const mockVideos: Video[] = [
 	}
 ];
 
+/**
+ * Cleans up the document head after tests
+ * Removes any styles or other elements added during testing
+ */
 export const cleanupDocument = () => {
 	document.head.innerHTML = '';
 };
