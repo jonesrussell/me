@@ -1,12 +1,27 @@
 import { render } from '@testing-library/svelte';
+import type { RenderResult } from '@testing-library/svelte';
 import { fireEvent } from '@testing-library/dom';
 import type { Mock } from 'vitest';
+import type { SvelteComponent } from 'svelte';
+import type { Matcher, MatcherOptions } from '@testing-library/dom';
 
-export function renderComponent(component: any, props: Record<string, unknown> = {}) {
+interface ComponentInstance {
+	[key: string]: unknown;
+}
+
+type TestComponent = SvelteComponent<Record<string, unknown>>;
+
+export function renderComponent(
+	component: typeof SvelteComponent,
+	props: Record<string, unknown> = {}
+): Omit<RenderResult<TestComponent>, 'getByTestId'> & {
+	getByTestId: (id: Matcher, options?: MatcherOptions) => HTMLElement;
+	fireEvent: typeof fireEvent;
+} {
 	const result = render(component, { props });
 	return {
 		...result,
-		getByTestId: (id: string) => result.getByTestId(id),
+		getByTestId: (id: Matcher, options?: MatcherOptions) => result.getByTestId(id, options),
 		fireEvent
 	};
 }
@@ -49,7 +64,7 @@ export function createMockStore<T>(initialValue: T) {
 }
 
 export async function testStateChange(
-	component: any,
+	component: typeof SvelteComponent,
 	props: Record<string, unknown>,
 	action: (result: ReturnType<typeof renderComponent>) => Promise<void>,
 	expectedState: Record<string, unknown>
@@ -59,13 +74,13 @@ export async function testStateChange(
 	await waitForStateUpdate();
 
 	Object.entries(expectedState).forEach(([key, value]) => {
-		const componentInstance = result.component as any;
+		const componentInstance = result.component as ComponentInstance;
 		expect(componentInstance[key]).toEqual(value);
 	});
 }
 
 export async function testComponentEvent(
-	component: any,
+	component: typeof SvelteComponent,
 	props: Record<string, unknown>,
 	eventName: string,
 	eventData: unknown = {},
