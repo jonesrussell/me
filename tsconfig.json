@@ -19,7 +19,6 @@
 			"vitest/importMeta",
 			"node",
 			"jsdom",
-			"sanitize-html",
 			"@sveltejs/kit"
 		]
 	},
