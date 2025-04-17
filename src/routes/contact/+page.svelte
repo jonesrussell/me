@@ -157,6 +157,32 @@
 			transition: none;
 		}
 	}
+
+	.contact-heading {
+		font-size: var(--font-size-4xl);
+		font-weight: var(--font-weight-bold);
+		color: var(--accent-color);
+		margin-bottom: var(--space-8);
+		line-height: var(--line-height-tight);
+	}
+
+	.form-heading {
+		font-size: var(--font-size-3xl);
+		font-weight: var(--font-weight-bold);
+		color: var(--accent-color);
+		margin-bottom: var(--space-6);
+		line-height: var(--line-height-tight);
+	}
+
+	@media (width >= 48ch) {
+		.contact-heading {
+			font-size: var(--font-size-5xl);
+		}
+
+		.form-heading {
+			font-size: var(--font-size-4xl);
+		}
+	}
 </style>
 
 <svelte:head>
