@@ -4,6 +4,14 @@
 	let email = $state('');
 	let submitStatus = $state<'idle' | 'loading' | 'success' | 'error'>('idle');
 	let errorMessage = $state('');
+	let boundaryError = $state<unknown>(null);
+	let resetBoundary = $state<(() => void) | null>(null);
+
+	function handleBoundaryError(error: unknown, reset: () => void) {
+		boundaryError = error;
+		resetBoundary = reset;
+		console.error('Newsletter form error:', error);
+	}
 
 	async function handleSubmit(event: Event) {
 		event.preventDefault();
@@ -271,50 +279,66 @@
 			<p class="description">Get the latest updates on web development and tech insights.</p>
 		</div>
 
-		<form class="form" onsubmit={handleSubmit}>
-			<div class="form-group">
-				<div class="input-wrapper">
-					<span class="input-prefix">→</span>
-					<input
-						type="email"
-						id="email"
-						name="email"
-						placeholder="your.email@example.com"
-						required
-						bind:value={email}
-					/>
-				</div>
-				<button type="submit" disabled={!email || submitStatus === 'loading'}>
-					{#if submitStatus === 'loading'}
-						<div class="loading">
-							<span>Loading</span>
-							<span class="dots">
-								<span class="dot">.</span>
-								<span class="dot">.</span>
-								<span class="dot">.</span>
+		<svelte:boundary onerror={handleBoundaryError}>
+			<form class="form" onsubmit={handleSubmit}>
+				<div class="form-group">
+					<div class="input-wrapper">
+						<span class="input-prefix">→</span>
+						<input
+							type="email"
+							id="email"
+							name="email"
+							placeholder="your.email@example.com"
+							required
+							bind:value={email}
+						/>
+					</div>
+					<button type="submit" disabled={!email || submitStatus === 'loading'}>
+						{#if submitStatus === 'loading'}
+							<div class="loading">
+								<span>Loading</span>
+								<span class="dots">
+									<span class="dot">.</span>
+									<span class="dot">.</span>
+									<span class="dot">.</span>
+								</span>
+							</div>
+						{:else}
+							<span class="button-content">
+								<span class="button-text">Subscribe</span>
+								<span class="button-icon">⟶</span>
 							</span>
-						</div>
-					{:else}
-						<span class="button-content">
-							<span class="button-text">Subscribe</span>
-							<span class="button-icon">⟶</span>
-						</span>
-					{/if}
-				</button>
+						{/if}
+					</button>
+				</div>
+
+				{#if submitStatus === 'success'}
+					<div class="success-message">
+						<span class="icon">✓</span> Message sent successfully
+					</div>
+				{/if}
+
+				{#if submitStatus === 'error'}
+					<div class="error-message">
+						<span class="icon">✗</span>
+						{errorMessage}
+					</div>
+				{/if}
+			</form>
+		</svelte:boundary>
+
+		{#if boundaryError}
+			<div class="error-message">
+				<span class="icon">✗</span>
+				An error occurred. {#if resetBoundary}
+					<button
+						onclick={() => {
+							boundaryError = null;
+							resetBoundary?.();
+						}}>Try again</button
+					>
+				{/if}
 			</div>
-
-			{#if submitStatus === 'success'}
-				<div class="success-message">
-					<span class="icon">✓</span> Message sent successfully
-				</div>
-			{/if}
-
-			{#if submitStatus === 'error'}
-				<div class="error-message">
-					<span class="icon">✗</span>
-					{errorMessage}
-				</div>
-			{/if}
-		</form>
+		{/if}
 	</div>
 </div>
