@@ -18,7 +18,12 @@ function memoize<Args extends unknown[], Return>(
 
 export const sanitizeText = memoize((text: string): string => {
 	// First remove script tags and their content
-	const withoutScripts = text.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+	let withoutScripts = text;
+	let previous;
+	do {
+		previous = withoutScripts;
+		withoutScripts = withoutScripts.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+	} while (withoutScripts !== previous);
 
 	// Then remove other HTML tags
 	return withoutScripts
