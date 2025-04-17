@@ -130,16 +130,18 @@
 	font-size: var(--font-size-4xl);
 	font-weight: var(--font-weight-bold);
 	line-height: var(--line-height-tight);
-	color: var(--text-color);
-	margin-bottom: var(--space-8);
+	color: var(--accent-color);
+	margin-block-end: var(--space-8);
+	font-family: var(--font-mono);
 }
 
 :global(h2) {
 	font-size: var(--font-size-3xl);
 	font-weight: var(--font-weight-bold);
 	line-height: var(--line-height-tight);
-	color: var(--text-color);
-	margin-bottom: var(--space-6);
+	color: var(--accent-color);
+	margin-block-end: var(--space-6);
+	font-family: var(--font-mono);
 }
 
 :global(h3) {
@@ -147,7 +149,8 @@
 	font-weight: var(--font-weight-medium);
 	line-height: var(--line-height-tight);
 	color: var(--text-color);
-	margin-bottom: var(--space-4);
+	margin-block-end: var(--space-4);
+	font-family: var(--font-mono);
 }
 
 :global(h4) {
@@ -155,7 +158,8 @@
 	font-weight: var(--font-weight-medium);
 	line-height: var(--line-height-tight);
 	color: var(--text-color);
-	margin-bottom: var(--space-4);
+	margin-block-end: var(--space-4);
+	font-family: var(--font-mono);
 }
 
 :global(h5) {
@@ -163,7 +167,8 @@
 	font-weight: var(--font-weight-medium);
 	line-height: var(--line-height-tight);
 	color: var(--text-color);
-	margin-bottom: var(--space-4);
+	margin-block-end: var(--space-4);
+	font-family: var(--font-mono);
 }
 
 :global(h6) {
@@ -171,7 +176,8 @@
 	font-weight: var(--font-weight-medium);
 	line-height: var(--line-height-tight);
 	color: var(--text-color);
-	margin-bottom: var(--space-4);
+	margin-block-end: var(--space-4);
+	font-family: var(--font-mono);
 }
 
 /* Accent headings */
