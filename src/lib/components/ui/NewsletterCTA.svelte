@@ -1,24 +1,22 @@
 <script lang="ts">
-	import ErrorBoundary from './ErrorBoundary.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
-	import Input from '$lib/components/ui/Input.svelte';
-	import Box from '$lib/components/ui/Box.svelte';
+	import { onMount } from 'svelte';
 
 	let email = $state('');
 	let submitStatus = $state<'idle' | 'loading' | 'success' | 'error'>('idle');
 	let errorMessage = $state('');
 
-	async function handleSubmit(event: SubmitEvent) {
+	async function handleSubmit(event: Event) {
 		event.preventDefault();
 		if (!email) return;
 
 		submitStatus = 'loading';
-		errorMessage = '';
 
 		try {
 			const response = await fetch('/api/newsletter', {
 				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
+				headers: {
+					'Content-Type': 'application/json'
+				},
 				body: JSON.stringify({ email })
 			});
 
@@ -33,6 +31,13 @@
 			errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
 		}
 	}
+
+	onMount(() => {
+		const form = document.querySelector('form');
+		if (form) {
+			form.setAttribute('novalidate', '');
+		}
+	});
 </script>
 
 <style>
@@ -121,6 +126,51 @@
 		color: var(--accent-color);
 	}
 
+	input {
+		width: 100%;
+		padding: 0;
+		font-family: var(--font-mono);
+		font-size: var(--font-size-base);
+		color: var(--text-color);
+		background: transparent;
+		border: none;
+		flex: 1;
+	}
+
+	input:focus {
+		outline: none;
+	}
+
+	input::placeholder {
+		color: var(--text-muted);
+		opacity: 0.5;
+	}
+
+	button {
+		padding: var(--space-4);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-base);
+		font-weight: var(--font-weight-bold);
+		line-height: var(--line-height-tight);
+		color: var(--bg-darker);
+		background: var(--accent-color);
+		border: var(--border-width) solid var(--accent-color);
+		border-radius: var(--radius-md);
+		transition: all var(--transition-duration) var(--transition-timing);
+		cursor: pointer;
+	}
+
+	button:disabled {
+		cursor: not-allowed;
+		opacity: 0.7;
+	}
+
+	button:hover:not(:disabled) {
+		background: var(--accent-color-hover);
+		transform: translateY(-0.25ch);
+		border-color: var(--accent-color-hover);
+	}
+
 	.button-content {
 		display: flex;
 		gap: var(--space-4);
@@ -192,10 +242,15 @@
 			flex-direction: row;
 			gap: var(--space-4);
 		}
+
+		button {
+			min-width: 15ch;
+		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.input-wrapper {
+		.input-wrapper,
+		button {
 			transition: none;
 		}
 
@@ -205,64 +260,61 @@
 	}
 </style>
 
-<Box width={40}>
-	<div class="newsletter">
-		<div class="newsletter-content">
-			<div class="newsletter-header">
-				<div class="header-title">
-					<span class="bracket">[</span>
-					<h3>Stay Updated</h3>
-					<span class="bracket">]</span>
+<div class="newsletter">
+	<div class="newsletter-content">
+		<div class="newsletter-header">
+			<div class="header-title">
+				<span class="bracket">[</span>
+				<h3>Stay Updated</h3>
+				<span class="bracket">]</span>
+			</div>
+			<p class="description">Get the latest updates on web development and tech insights.</p>
+		</div>
+
+		<form class="form" onsubmit={handleSubmit}>
+			<div class="form-group">
+				<div class="input-wrapper">
+					<span class="input-prefix">→</span>
+					<input
+						type="email"
+						id="email"
+						name="email"
+						placeholder="your.email@example.com"
+						required
+						bind:value={email}
+					/>
 				</div>
-				<p class="description">Get the latest updates on web development and tech insights.</p>
+				<button type="submit" disabled={!email || submitStatus === 'loading'}>
+					{#if submitStatus === 'loading'}
+						<div class="loading">
+							<span>Loading</span>
+							<span class="dots">
+								<span class="dot">.</span>
+								<span class="dot">.</span>
+								<span class="dot">.</span>
+							</span>
+						</div>
+					{:else}
+						<span class="button-content">
+							<span class="button-text">Subscribe</span>
+							<span class="button-icon">⟶</span>
+						</span>
+					{/if}
+				</button>
 			</div>
 
-			<ErrorBoundary>
-				<form class="form" onsubmit={handleSubmit} novalidate>
-					<div class="form-group">
-						<div class="input-wrapper">
-							<span class="input-prefix">→</span>
-							<Input
-								type="email"
-								placeholder="your.email@example.com"
-								required
-								bind:value={email}
-								disabled={submitStatus === 'loading'}
-							/>
-						</div>
-						<Button type="submit" disabled={!email || submitStatus === 'loading'}>
-							{#if submitStatus === 'loading'}
-								<div class="loading">
-									<span>Loading</span>
-									<span class="dots">
-										<span class="dot">.</span>
-										<span class="dot">.</span>
-										<span class="dot">.</span>
-									</span>
-								</div>
-							{:else}
-								<span class="button-content">
-									<span class="button-text">Subscribe</span>
-									<span class="button-icon">⟶</span>
-								</span>
-							{/if}
-						</Button>
-					</div>
+			{#if submitStatus === 'success'}
+				<div class="success-message">
+					<span class="icon">✓</span> Message sent successfully
+				</div>
+			{/if}
 
-					{#if submitStatus === 'success'}
-						<div class="success-message">
-							<span class="icon">✓</span> Message sent successfully
-						</div>
-					{/if}
-
-					{#if submitStatus === 'error'}
-						<div class="error-message">
-							<span class="icon">✗</span>
-							{errorMessage}
-						</div>
-					{/if}
-				</form>
-			</ErrorBoundary>
-		</div>
+			{#if submitStatus === 'error'}
+				<div class="error-message">
+					<span class="icon">✗</span>
+					{errorMessage}
+				</div>
+			{/if}
+		</form>
 	</div>
-</Box>
+</div>
