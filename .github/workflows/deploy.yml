@@ -89,9 +89,26 @@ jobs:
           key: build-${{ runner.os }}-${{ github.sha }}-${{ hashFiles('package-lock.json') }}
           restore-keys: build-${{ runner.os }}-${{ github.sha }}-
             build-${{ runner.os }}-
-      - run: |
-          npm ci --prefer-offline --no-audit
+      - name: Clean build directory
+        run: |
+          rm -rf build/
+          rm -rf .svelte-kit/
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+      - name: Build
+        run: |
           npm run build
+          # Remove any symlinks or hard links
+          find build/ -type l -delete
+          # Remove any large files that might be unnecessary
+          find build/ -type f -size +10M -delete
+      - name: Verify build size
+        run: |
+          du -sh build/
+          if [ $(du -s build/ | cut -f1) -gt 10000000 ]; then
+            echo "Build size exceeds 10GB limit"
+            exit 1
+          fi
       - uses: actions/upload-artifact@v4
         if: ${{ !env.ACT }}
         with:
