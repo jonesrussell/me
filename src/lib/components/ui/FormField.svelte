@@ -1,19 +1,7 @@
 <script lang="ts">
 	import Input from './Input.svelte';
 
-	const {
-		label = '',
-		name = '',
-		type = 'text',
-		placeholder = '',
-		disabled = false,
-		required = false,
-		value = '',
-		onInput = (value: string) => {},
-		error = '',
-		helperText = '',
-		rows = 3
-	} = $props<{
+	const props = $props<{
 		label?: string;
 		name?: string;
 		type?: string;
@@ -27,17 +15,13 @@
 		rows?: number;
 	}>();
 
-	const fieldId = `field-${name || Math.random().toString(36).substring(2, 9)}`;
-	const isInvalid = $derived(error.length > 0);
-	const isTextarea = $derived(type === 'textarea');
-	let textareaValue = $state(value);
+	const fieldId = `field-${props.name || Math.random().toString(36).substring(2, 9)}`;
+	const isInvalid = $derived((props.error ?? '').length > 0);
+	const isTextarea = $derived(props.type === 'textarea');
+	let fieldValue = $state(props.value ?? '');
 
 	$effect(() => {
-		if (isTextarea) {
-			onInput(textareaValue);
-		} else {
-			onInput(value);
-		}
+		fieldValue = props.value ?? '';
 	});
 </script>
 
@@ -131,10 +115,10 @@
 </style>
 
 <div class="form-field">
-	{#if label}
+	{#if props.label}
 		<label for={fieldId} class="label">
-			{label}
-			{#if required}
+			{props.label}
+			{#if props.required}
 				<span class="required" aria-hidden="true">*</span>
 			{/if}
 		</label>
@@ -143,40 +127,49 @@
 	<div class="input-wrapper">
 		{#if isTextarea}
 			<textarea
-				{name}
+				name={props.name ?? ''}
 				id={fieldId}
 				class="textarea"
-				{placeholder}
-				{disabled}
-				{required}
-				{rows}
-				bind:value={textareaValue}
+				placeholder={props.placeholder ?? ''}
+				disabled={props.disabled ?? false}
+				required={props.required ?? false}
+				rows={props.rows ?? 3}
+				bind:value={fieldValue}
+				oninput={() => props.onInput?.(fieldValue)}
 				aria-invalid={isInvalid}
-				aria-describedby={error ? `${fieldId}-error` : helperText ? `${fieldId}-helper` : undefined}
+				aria-describedby={props.error
+					? `${fieldId}-error`
+					: props.helperText
+						? `${fieldId}-helper`
+						: undefined}
 			></textarea>
 		{:else}
 			<Input
-				{type}
-				{placeholder}
-				{disabled}
-				{required}
-				{value}
-				{onInput}
-				{name}
+				type={props.type ?? 'text'}
+				placeholder={props.placeholder ?? ''}
+				disabled={props.disabled ?? false}
+				required={props.required ?? false}
+				value={fieldValue}
+				onInput={props.onInput}
+				name={props.name ?? ''}
 				id={fieldId}
 				aria-invalid={isInvalid}
-				aria-describedby={error ? `${fieldId}-error` : helperText ? `${fieldId}-helper` : undefined}
+				aria-describedby={props.error
+					? `${fieldId}-error`
+					: props.helperText
+						? `${fieldId}-helper`
+						: undefined}
 			/>
 		{/if}
 	</div>
 
-	{#if error}
+	{#if props.error}
 		<div id={`${fieldId}-error`} class="error" role="alert">
-			{error}
+			{props.error}
 		</div>
-	{:else if helperText}
+	{:else if props.helperText}
 		<div id={`${fieldId}-helper`} class="helper">
-			{helperText}
+			{props.helperText}
 		</div>
 	{/if}
 </div>
