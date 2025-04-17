@@ -30,6 +30,14 @@
 		transform: translateX(var(--initial-offset));
 	}
 
+	.specialty.revealed {
+		opacity: 1;
+		transform: translateX(0);
+		transition:
+			opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+			transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
 	.specialty.intersecting {
 		background: var(--color-mix-medium);
 		border-color: var(--accent-color);
@@ -78,29 +86,25 @@
 			transform: none;
 			opacity: 1;
 		}
+
+		.specialty.revealed {
+			transition: none;
+			transform: none;
+			opacity: 1;
+		}
 	}
 </style>
 
-{#if isRevealed}
-	<div
-		class="specialty"
-		class:intersecting={isIntersecting}
-		use:hoverScale
-		in:slideIn={{ delay: index * 100, index }}
-		style="--initial-offset: {index % 2 === 0 ? '-100%' : '100%'}"
-	>
-		<div class="specialty-icon">{specialty.icon}</div>
-		<div class="specialty-content">
-			<div class="specialty-title">{specialty.title}</div>
-			<div class="specialty-desc">{specialty.description}</div>
-		</div>
+<div
+	class="specialty"
+	class:revealed={isRevealed}
+	class:intersecting={isIntersecting}
+	use:hoverScale
+	style="--initial-offset: {index % 2 === 0 ? '-100%' : '100%'}"
+>
+	<div class="specialty-icon">{specialty.icon}</div>
+	<div class="specialty-content">
+		<div class="specialty-title">{specialty.title}</div>
+		<div class="specialty-desc">{specialty.description}</div>
 	</div>
-{:else}
-	<div class="specialty" style="--initial-offset: {index % 2 === 0 ? '-100%' : '100%'}">
-		<div class="specialty-icon">{specialty.icon}</div>
-		<div class="specialty-content">
-			<div class="specialty-title">{specialty.title}</div>
-			<div class="specialty-desc">{specialty.description}</div>
-		</div>
-	</div>
-{/if}
+</div>
