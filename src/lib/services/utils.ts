@@ -33,13 +33,7 @@ export const sanitizeText = memoize((text: string): string => {
 			.trim(); // Remove leading/trailing spaces
 	} catch (error) {
 		console.error('Error sanitizing text:', error);
-		// Fallback to basic sanitization if sanitize-html fails
-		return text
-			.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-			.replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
-			.replace(/<[^>]*>/g, ' ')
-			.replace(/\s+/g, ' ')
-			.trim();
+		return ''; // Return empty string on error
 	}
 });
 
