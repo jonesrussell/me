@@ -55,9 +55,9 @@ test.describe('Route Navigation', () => {
 	test('should maintain consistent navigation across pages', async ({ page }) => {
 		// Arrange
 		const routes = [
-			{ path: 'blog', text: 'Read my technical articles' },
-			{ path: 'projects', text: 'Browse my open source projects' },
-			{ path: 'contact', text: 'Get in touch' }
+			{ path: 'blog', text: 'Blog' },
+			{ path: 'projects', text: 'Projects' },
+			{ path: 'contact', text: 'Contact' }
 		];
 
 		// Act & Assert
@@ -66,9 +66,14 @@ test.describe('Route Navigation', () => {
 			await page.goto(`/${route.path}`, { waitUntil: 'networkidle' });
 			await page.waitForSelector('.site');
 
-			// Check for navigation links on the current page
+			// Check desktop navigation
+			const desktopNav = page.locator('.desktop-nav');
+			await expect(desktopNav).toBeVisible();
+
 			for (const link of routes) {
-				await expect(page.locator(`text=${link.text}`)).toBeVisible({ timeout: 10000 });
+				const navLink = desktopNav.locator(`a[href="/${link.path}"]`);
+				await expect(navLink).toBeVisible({ timeout: 10000 });
+				await expect(navLink).toContainText(link.text);
 			}
 		}
 	});
