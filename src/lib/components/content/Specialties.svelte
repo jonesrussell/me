@@ -11,20 +11,12 @@
 	}>();
 
 	let elements = $state<HTMLElement[]>([]);
-	let intersectingStates = $state<boolean[]>([]);
 	let activeIntersection = $state<number | null>(null);
-
-	$effect(() => {
-		intersectingStates = specialties.map(() => false);
-	});
 
 	function handleIntersect(event: CustomEvent<IntersectionObserverEntry>, index: number) {
 		const entry = event.detail;
 
 		if (entry.isIntersecting) {
-			if (!intersectingStates[index]) {
-				intersectingStates[index] = true;
-			}
 			activeIntersection = index;
 		} else if (activeIntersection === index) {
 			activeIntersection = null;
@@ -88,12 +80,7 @@
 				rootMargin="0px 0px -200px 0px"
 			>
 				<div bind:this={elements[i]}>
-					<Specialty
-						{specialty}
-						index={i}
-						isVisible={intersectingStates[i]}
-						isIntersecting={activeIntersection === i}
-					/>
+					<Specialty {specialty} index={i} isIntersecting={activeIntersection === i} />
 				</div>
 			</IntersectionObserver>
 		{/each}

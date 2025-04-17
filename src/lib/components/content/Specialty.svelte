@@ -1,14 +1,13 @@
 <script lang="ts">
-	import { elasticOut, expoOut } from 'svelte/easing';
+	import { slideIn, fadeIn, hoverScale } from '$lib/utils/animations';
 
-	const { specialty, index, isVisible, isIntersecting } = $props<{
+	const { specialty, index, isIntersecting } = $props<{
 		specialty: {
 			title: string;
 			description: string;
 			icon: string;
 		};
 		index: number;
-		isVisible: boolean;
 		isIntersecting: boolean;
 	}>();
 </script>
@@ -24,30 +23,12 @@
 		flex-direction: column;
 		align-items: center;
 		gap: var(--space-4);
-		opacity: 0;
-		transform: translateX(-100%);
-		transition:
-			opacity 0.5s expoOut,
-			transform 0.5s elasticOut,
-			background 0.3s ease-out;
-	}
-
-	.specialty.visible {
-		opacity: 1;
-		transform: translateX(0);
+		transition: background 0.3s ease-out;
 	}
 
 	.specialty.intersecting {
 		background: var(--color-mix-medium);
 		border-color: var(--accent-color);
-	}
-
-	.specialty:hover {
-		background: var(--color-mix-light);
-		transform: translateY(-0.125ch) translateX(0);
-		transition:
-			transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-			background 0.2s ease-out;
 	}
 
 	.specialty-icon {
@@ -90,26 +71,16 @@
 	@media (prefers-reduced-motion: reduce) {
 		.specialty {
 			transition: none;
-			transform: none;
-		}
-
-		.specialty.visible {
-			opacity: 1;
-			transform: none;
 		}
 	}
 </style>
 
 <div
 	class="specialty"
-	class:visible={isVisible}
 	class:intersecting={isIntersecting}
-	style="transform: {isVisible
-		? 'translateX(0)'
-		: index % 2 === 0
-			? 'translateX(-100%)'
-			: 'translateX(100%)'};
-	transition-delay: {isVisible ? `${index * 0.1}s` : '0s'};"
+	use:hoverScale
+	in:slideIn={{ delay: index * 100 }}
+	out:fadeIn
 >
 	<div class="specialty-icon">{specialty.icon}</div>
 	<div class="specialty-content">
