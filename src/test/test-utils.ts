@@ -4,12 +4,33 @@ import { fireEvent } from '@testing-library/dom';
 import type { Mock } from 'vitest';
 import type { SvelteComponent } from 'svelte';
 import type { Matcher, MatcherOptions } from '@testing-library/dom';
+import { afterEach, beforeEach } from 'vitest';
+import { cleanup } from '@testing-library/svelte';
+import type { Video } from '$lib/types';
 
 interface ComponentInstance {
 	[key: string]: unknown;
 }
 
 type TestComponent = SvelteComponent<Record<string, unknown>>;
+
+// Create a document head for style injection
+const setupDocument = () => {
+	const head = document.createElement('head');
+	document.body.appendChild(head);
+	return head;
+};
+
+// Clean up after each test
+afterEach(() => {
+	cleanup();
+	document.head.innerHTML = '';
+});
+
+// Set up before each test
+beforeEach(() => {
+	setupDocument();
+});
 
 export function renderComponent(
 	component: typeof SvelteComponent,
@@ -104,3 +125,26 @@ export async function testComponentEvent(
 
 	expect(expectedHandlerCall).toHaveBeenCalledWith(eventData);
 }
+
+export const mockVideos: Video[] = [
+	{
+		embedId: 'video1',
+		title: 'First Test Video',
+		description: 'Description for first video',
+		date: '2024-04-16',
+		topics: ['testing', 'svelte'],
+		url: 'https://youtube.com/watch?v=video1'
+	},
+	{
+		embedId: 'video2',
+		title: 'Second Test Video',
+		description: 'Description for second video',
+		date: '2024-04-15',
+		topics: ['vitest', 'typescript'],
+		url: 'https://youtube.com/watch?v=video2'
+	}
+];
+
+export const cleanupDocument = () => {
+	document.head.innerHTML = '';
+};
