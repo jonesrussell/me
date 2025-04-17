@@ -14,6 +14,13 @@ testing_guidelines:
   - implement_test_utilities: true
   - follow_aaa_pattern: true
   - use_snapshot_testing: true
+  - test_component_rendering: true
+  - test_prop_validation: true
+  - test_children_rendering: true
+  - use_async_testing: true
+  - test_component_structure: true
+  - test_style_applications: true
+  - test_responsive_behavior: true
 
 branding:
   - title: 'Russell Jones'
@@ -26,6 +33,10 @@ general_rules:
   - follow_solid_principles: true
   - keep_functions_pure: true
   - minimize_side_effects: true
+  - use_strict_type_checking: true
+  - validate_props_at_runtime: true
+  - handle_edge_cases_gracefully: true
+  - use_consistent_error_handling: true
 
 code_style:
   - use_semicolons: true
@@ -37,6 +48,10 @@ code_style:
   - use_consistent_naming: true
   - prefix_interfaces_with_i: true
   - suffix_types_with_type: true
+  - use_descriptive_test_names: true
+  - group_related_tests: true
+  - use_clear_test_structure: true
+  - document_test_cases: true
 
 separation_of_concerns:
   - organize_by_feature: true
@@ -45,6 +60,9 @@ separation_of_concerns:
   - keep_services_stateless: true
   - use_dependency_injection: true
   - minimize_component_logic: true
+  - separate_test_utilities: true
+  - isolate_test_dependencies: true
+  - maintain_test_independence: true
 
 type_organization:
   - centralize_shared_types: true
@@ -54,6 +72,9 @@ type_organization:
   - document_complex_types: true
   - use_type_guards: true
   - export_types_separately: true
+  - type_test_utilities: true
+  - type_component_props: true
+  - type_test_fixtures: true
 
 services:
   - use_service_factories: true
@@ -63,6 +84,9 @@ services:
   - implement_retry_logic: true
   - add_request_timeouts: true
   - use_service_middleware: true
+  - mock_services_in_tests: true
+  - test_service_errors: true
+  - validate_service_responses: true
 
 store_management:
   - use_custom_stores: true
@@ -72,6 +96,9 @@ store_management:
   - implement_store_actions: true
   - use_store_middleware: true
   - keep_stores_small: true
+  - test_store_updates: true
+  - test_store_subscriptions: true
+  - test_store_derivations: true
 
 svelte_patterns:
   - use_runes: true
@@ -84,12 +111,20 @@ svelte_patterns:
   - use_render_instead_of_slots: true
   - use_props_validation: true
   - implement_error_boundaries: true
+  - test_component_props: true
+  - test_component_events: true
+  - test_component_state: true
+  - test_component_effects: true
 
 monospace_design:
   - use_monospace_fonts: true
   - align_to_character_grid: true
   - use_consistent_spacing: true
   - maintain_visual_hierarchy: true
+  - test_responsive_layouts: true
+  - test_typography_scales: true
+  - test_color_contrast: true
+  - test_spacing_consistency: true
 
 best_practices:
   - handle_errors_gracefully: true
@@ -103,3 +138,7 @@ best_practices:
   - follow_security_guidelines: true
   - implement_analytics: true
   - use_performance_monitoring: true
+  - write_maintainable_tests: true
+  - use_consistent_testing_patterns: true
+  - document_test_requirements: true
+  - review_test_coverage: true
