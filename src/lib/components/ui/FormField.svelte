@@ -30,10 +30,14 @@
 	const fieldId = `field-${name || Math.random().toString(36).substring(2, 9)}`;
 	const isInvalid = $derived(error.length > 0);
 	const isTextarea = $derived(type === 'textarea');
-	let inputValue = $state(value);
+	let textareaValue = $state(value);
 
 	$effect(() => {
-		onInput(inputValue);
+		if (isTextarea) {
+			onInput(textareaValue);
+		} else {
+			onInput(value);
+		}
 	});
 </script>
 
@@ -146,7 +150,7 @@
 				{disabled}
 				{required}
 				{rows}
-				bind:value={inputValue}
+				bind:value={textareaValue}
 				aria-invalid={isInvalid}
 				aria-describedby={error ? `${fieldId}-error` : helperText ? `${fieldId}-helper` : undefined}
 			></textarea>
@@ -156,8 +160,8 @@
 				{placeholder}
 				{disabled}
 				{required}
-				value={inputValue}
-				onInput={(value) => (inputValue = value)}
+				{value}
+				{onInput}
 				{name}
 				id={fieldId}
 				aria-invalid={isInvalid}
