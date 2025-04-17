@@ -87,18 +87,18 @@
 		.specialties {
 			display: grid;
 			grid-template-columns: repeat(2, 1fr);
-			gap: var(--space-2);
+			gap: var(--space-4);
 		}
 
 		.specialty {
 			flex-direction: row;
 			text-align: left;
 			align-items: flex-start;
-			padding: var(--space-3);
+			padding: var(--space-4);
 		}
 
 		.specialty-icon {
-			margin-right: var(--space-2);
+			margin-right: var(--space-3);
 		}
 	}
 
