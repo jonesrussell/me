@@ -8,7 +8,7 @@ export default defineConfig({
 			hot: !process.env.VITEST,
 			compilerOptions: {
 				dev: true,
-				css: 'injected',
+				css: 'external',
 				runes: true
 			}
 		})
@@ -18,7 +18,7 @@ export default defineConfig({
 		include: ['src/**/*.{test,spec}.{js,ts,svelte}'],
 		setupFiles: ['src/test/setup.ts'],
 		globals: true,
-		css: true,
+		css: false,
 		coverage: {
 			provider: 'v8',
 			reporter: ['text', 'json', 'html'],

@@ -27,6 +27,8 @@ Object.defineProperty(window, 'matchMedia', {
 		matches: false,
 		media: query,
 		onchange: null,
+		addListener: vi.fn(),
+		removeListener: vi.fn(),
 		addEventListener: vi.fn(),
 		removeEventListener: vi.fn(),
 		dispatchEvent: vi.fn()
@@ -71,11 +73,10 @@ vi.mock('$app/stores', () => ({
 }));
 
 // Mock CSS modules
-Object.defineProperty(window, 'CSS', {
-	value: {
-		supports: () => true,
-		escape: (str: string) => str
-	}
+vi.mock('*.css', () => {
+	return {
+		default: {}
+	};
 });
 
 // Mock getComputedStyle
@@ -90,6 +91,57 @@ const originalCreateStylesheet = dom.window.document.createElement('style').shee
 Object.defineProperty(dom.window.document.createElement('style'), 'sheet', {
 	get: () => originalCreateStylesheet
 });
+
+// Define CSS custom properties for testing
+const style = document.createElement('style');
+style.textContent = `
+	:root {
+		/* Colors */
+		--border-color: #ccc;
+		--background-color: #fff;
+		--text-color: #000;
+		--text-muted: #666;
+		--primary-color: #007bff;
+		--accent-color: #007bff;
+		--bg-color: #fff;
+		--bg-darker: #f8f9fa;
+		--error-color: #dc3545;
+		--warning-color: #ffc107;
+		--success-color: #28a745;
+		--info-color: #17a2b8;
+
+		/* Typography */
+		--font-mono: monospace;
+		--font-size-sm: 0.875rem;
+		--font-size-base: 1rem;
+		--font-size-xl: 1.25rem;
+		--font-weight-bold: 700;
+
+		/* Spacing */
+		--space-1: 0.25rem;
+		--space-2: 0.5rem;
+		--space-3: 0.75rem;
+		--space-4: 1rem;
+		--space-8: 2rem;
+
+		/* Borders & Shadows */
+		--border-width: 1px;
+		--radius-sm: 0.25rem;
+		--radius-md: 0.5rem;
+		--radius-lg: 1rem;
+		--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+		--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+		/* Transitions */
+		--transition-duration: 0.2s;
+		--transition-timing: ease-in-out;
+
+		/* Layout */
+		--measure: 65ch;
+		--max-width: 1200px;
+	}
+`;
+document.head.appendChild(style);
 
 // Cleanup after each test
 afterEach(() => {
