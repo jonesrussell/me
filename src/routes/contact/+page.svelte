@@ -157,32 +157,6 @@
 			transition: none;
 		}
 	}
-
-	.contact-heading {
-		font-size: var(--font-size-4xl);
-		font-weight: var(--font-weight-bold);
-		color: var(--accent-color);
-		margin-bottom: var(--space-8);
-		line-height: var(--line-height-tight);
-	}
-
-	.form-heading {
-		font-size: var(--font-size-3xl);
-		font-weight: var(--font-weight-bold);
-		color: var(--accent-color);
-		margin-bottom: var(--space-6);
-		line-height: var(--line-height-tight);
-	}
-
-	@media (width >= 48ch) {
-		.contact-heading {
-			font-size: var(--font-size-5xl);
-		}
-
-		.form-heading {
-			font-size: var(--font-size-4xl);
-		}
-	}
 </style>
 
 <svelte:head>
@@ -197,7 +171,7 @@
 	<div class="container">
 		<div class="contact-grid">
 			<section class="contact-info" aria-label="Contact Information">
-				<h1 class="contact-heading">Get in Touch</h1>
+				<h1>Get in Touch</h1>
 				<p class="contact-text">
 					Have a question or want to work together? I'd love to hear from you. Let's build something
 					amazing together.
