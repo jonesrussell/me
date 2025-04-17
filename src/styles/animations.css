@@ -20,10 +20,10 @@
 	}
 }
 
-.fade-in {
+:global(.fade-in) {
 	animation: fade-in var(--transition-duration) var(--transition-timing) forwards;
 }
 
-.slide-up {
+:global(.slide-up) {
 	animation: slide-up var(--transition-duration) var(--transition-timing) forwards;
 }

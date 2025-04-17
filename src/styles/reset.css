@@ -3,24 +3,21 @@
 	/* Remove all animations and transitions for people that prefer not to see them */
 	@media (prefers-reduced-motion: reduce) {
 		:where(*, *::before, *::after) {
-			scroll-behavior: auto !important;
-			transition-duration: 0.01ms !important;
-			animation-duration: 0.01ms !important;
-			animation-iteration-count: 1 !important;
+			scroll-behavior: auto;
+			transition-duration: 0.01ms;
+			animation-duration: 0.01ms;
+			animation-iteration-count: 1;
 		}
 	}
 
 	/* Box sizing rules */
 	:where(*, *::before, *::after) {
 		box-sizing: border-box;
-		margin: 0;
-		padding: 0;
 	}
 
 	/* Set core root defaults */
 	:where(html) {
 		block-size: 100%;
-
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 		text-size-adjust: 100%;
@@ -30,12 +27,16 @@
 	/* Set core body defaults */
 	:where(body) {
 		min-block-size: 100%;
-		line-height: 1.5;
+		line-height: var(--line-height-base);
+		margin: 0;
+		padding: 0;
 	}
 
 	/* Remove list styles */
 	:where(ul, ol) {
 		list-style: none;
+		margin: 0;
+		padding: 0;
 	}
 
 	/* Set core anchor defaults */
@@ -53,5 +54,17 @@
 	/* Inherit fonts for inputs and buttons */
 	:where(input, button, textarea, select) {
 		font: inherit;
+	}
+
+	/* Selection styles */
+	:where(::selection) {
+		color: var(--bg-color);
+		background: var(--accent-color);
+	}
+
+	/* Focus styles */
+	:where(:focus-visible) {
+		outline: 2px solid var(--accent-color);
+		outline-offset: 2px;
 	}
 }

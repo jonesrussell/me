@@ -22,3 +22,8 @@ coverage/
 .secrets
 .env
 .act/
+
+# Playwright
+/playwright-report/
+/blob-report/
+/playwright/.cache/

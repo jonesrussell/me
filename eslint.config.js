@@ -18,21 +18,12 @@ export default ts.config(
 	...svelte.configs.prettier,
 	{
 		languageOptions: {
-			globals: { ...globals.browser, ...globals.node, ...globals.es2021 }
+			globals: { ...globals.browser, ...globals.node }
 		},
-		rules: {
-			'no-undef': 'off',
-			'@typescript-eslint/no-explicit-any': 'warn',
-			'@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-			'svelte/no-at-html-tags': 'error',
-			'svelte/no-target-blank': 'error',
-			'svelte/valid-compile': 'error',
-			'svelte/no-reactive-reassign': 'error'
-		}
+		rules: { 'no-undef': 'off' }
 	},
 	{
 		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
-		ignores: ['eslint.config.js', 'svelte.config.js'],
 		languageOptions: {
 			parserOptions: {
 				projectService: true,
