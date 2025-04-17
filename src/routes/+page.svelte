@@ -81,7 +81,7 @@
 </style>
 
 <svelte:head>
-	<title>Russell Jones | Limitless Developer</title>
+	<title>Russell Jones | Developing without limits</title>
 	<meta
 		name="description"
 		content="Limitless Developer from Canada specializing in JavaScript, Go, Cloud Technologies, and Open Source. Building elegant solutions with modern web technologies."
