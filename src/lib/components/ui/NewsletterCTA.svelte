@@ -8,12 +8,6 @@
 	let boundaryError = $state<unknown>(null);
 	let resetBoundary = $state<(() => void) | null>(null);
 
-	function handleBoundaryError(error: unknown, reset: () => void) {
-		boundaryError = error;
-		resetBoundary = reset;
-		console.error('Newsletter form error:', error);
-	}
-
 	function validateEmail() {
 		if (!email) {
 			errorMessage = 'Email is required';
@@ -52,6 +46,12 @@
 			submitStatus = 'error';
 			errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
 		}
+	}
+
+	function handleBoundaryError(error: unknown, reset: () => void) {
+		boundaryError = error;
+		resetBoundary = reset;
+		console.error('Newsletter form error:', error);
 	}
 
 	onMount(() => {
@@ -239,48 +239,61 @@
 			</p>
 		</div>
 
-		<form class="form" onsubmit={handleSubmit}>
-			<div class="form-group">
-				<FormField
-					label="Email"
-					name="email"
-					type="email"
-					required
-					value={email}
-					onInput={(value) => (email = value)}
-					error={errorMessage}
-					placeholder="your.email@example.com"
-				/>
-				<button type="submit" disabled={submitStatus === 'loading'}>
-					{#if submitStatus === 'loading'}
-						<div class="loading">
-							<span>Subscribing</span>
-							<div class="dots">
-								<span class="dot">.</span>
-								<span class="dot">.</span>
-								<span class="dot">.</span>
+		<svelte:boundary onerror={handleBoundaryError}>
+			<form class="form" onsubmit={handleSubmit}>
+				<div class="form-group">
+					<FormField
+						label="Email"
+						name="email"
+						type="email"
+						required
+						value={email}
+						onInput={(value) => (email = value)}
+						error={errorMessage}
+						placeholder="your.email@example.com"
+					/>
+					<button type="submit" disabled={submitStatus === 'loading'}>
+						{#if submitStatus === 'loading'}
+							<div class="loading">
+								<span>Subscribing</span>
+								<div class="dots">
+									<span class="dot">.</span>
+									<span class="dot">.</span>
+									<span class="dot">.</span>
+								</div>
 							</div>
-						</div>
-					{:else}
-						<div class="button-content">
-							<span>Subscribe</span>
-							<span class="button-icon">→</span>
-						</div>
-					{/if}
-				</button>
-			</div>
+						{:else}
+							<div class="button-content">
+								<span>Subscribe</span>
+								<span class="button-icon">→</span>
+							</div>
+						{/if}
+					</button>
+				</div>
 
-			{#if submitStatus === 'success'}
-				<div class="success-message">
-					<span>✓</span>
-					<span>Thanks for subscribing!</span>
-				</div>
-			{:else if submitStatus === 'error'}
-				<div class="error-message">
-					<span>✕</span>
-					<span>{errorMessage}</span>
-				</div>
-			{/if}
-		</form>
+				{#if submitStatus === 'success'}
+					<div class="success-message">
+						<span>✓</span>
+						<span>Thanks for subscribing!</span>
+					</div>
+				{:else if submitStatus === 'error'}
+					<div class="error-message">
+						<span>✕</span>
+						<span>{errorMessage}</span>
+					</div>
+				{/if}
+			</form>
+		</svelte:boundary>
+
+		{#if boundaryError}
+			<div class="error-message">
+				<span>✕</span>
+				<span
+					>An unexpected error occurred. {#if resetBoundary}<button onclick={resetBoundary}
+							>Try again</button
+						>{/if}</span
+				>
+			</div>
+		{/if}
 	</div>
 </div>
