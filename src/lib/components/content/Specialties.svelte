@@ -1,4 +1,8 @@
 <script lang="ts">
+	import IntersectionObserver from 'svelte-intersection-observer';
+	import { fade } from 'svelte/transition';
+	import { cubicOut } from 'svelte/easing';
+
 	const { specialties } = $props<{
 		specialties: Array<{
 			title: string;
@@ -7,56 +11,21 @@
 		}>;
 	}>();
 
-	let revealedStates = $state<boolean[]>([]);
+	let elements = $state<HTMLElement[]>([]);
+	let intersectingStates = $state<boolean[]>([]);
 
 	$effect(() => {
-		revealedStates = specialties.map(() => false);
-		console.log('Initialized revealed states:', revealedStates);
+		intersectingStates = specialties.map(() => false);
 	});
 
-	$effect(() => {
-		const observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					const index = specialties.findIndex(
-						(_: unknown, i: number) =>
-							entry.target === document.querySelector(`.specialty:nth-child(${i + 1})`)
-					);
+	function handleIntersect(event: CustomEvent<IntersectionObserverEntry>, index: number) {
+		const entry = event.detail;
+		console.log(`Item ${index} is intersecting:`, entry.isIntersecting);
 
-					console.log(`Item ${index} intersection:`, {
-						isIntersecting: entry.isIntersecting,
-						intersectionRatio: entry.intersectionRatio,
-						boundingClientRect: entry.boundingClientRect
-					});
-
-					if (index !== -1 && entry.isIntersecting) {
-						console.log(`Scheduling reveal for item ${index} (${specialties[index].title})`);
-						setTimeout(() => {
-							revealedStates[index] = true;
-							console.log(`Revealed item ${index} (${specialties[index].title})`);
-							console.log('Current revealed states:', revealedStates);
-						}, index * 150);
-					}
-				});
-			},
-			{
-				threshold: 0.2,
-				rootMargin: '0px 0px -50px 0px'
-			}
-		);
-
-		const elements = document.querySelectorAll('.specialty');
-		console.log(`Observing ${elements.length} specialty items`);
-		elements.forEach((element, index) => {
-			console.log(`Setting up observer for item ${index}`);
-			observer.observe(element);
-		});
-
-		return () => {
-			console.log('Cleaning up observers');
-			elements.forEach((element) => observer.unobserve(element));
-		};
-	});
+		if (entry.isIntersecting && !intersectingStates[index]) {
+			intersectingStates[index] = true;
+		}
+	}
 </script>
 
 <style>
@@ -104,10 +73,12 @@
 		gap: var(--space-4);
 		opacity: 0;
 		transform: translateX(-100%);
-		transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+		transition:
+			opacity 1s ease-out,
+			transform 1s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
-	.specialty.revealed {
+	.specialty.visible {
 		opacity: 1;
 		transform: translateX(0);
 	}
@@ -166,7 +137,7 @@
 			transform: none;
 		}
 
-		.specialty.revealed {
+		.specialty.visible {
 			opacity: 1;
 			transform: none;
 		}
@@ -180,21 +151,29 @@
 	</div>
 	<div class="specialties">
 		{#each specialties as specialty, i (specialty.title)}
-			<div
-				class="specialty"
-				class:revealed={revealedStates[i]}
-				style="transform: {revealedStates[i]
-					? 'translateX(0)'
-					: i % 2 === 0
-						? 'translateX(-100%)'
-						: 'translateX(100%)'};"
+			<IntersectionObserver
+				element={elements[i]}
+				on:observe={(e) => handleIntersect(e, i)}
+				threshold={0}
+				rootMargin="0px 0px -200px 0px"
 			>
-				<div class="specialty-icon">{specialty.icon}</div>
-				<div class="specialty-content">
-					<div class="specialty-title">{specialty.title}</div>
-					<div class="specialty-desc">{specialty.description}</div>
+				<div
+					bind:this={elements[i]}
+					class="specialty"
+					class:visible={intersectingStates[i]}
+					style="transform: {intersectingStates[i]
+						? 'translateX(0)'
+						: i % 2 === 0
+							? 'translateX(-100%)'
+							: 'translateX(100%)'};"
+				>
+					<div class="specialty-icon">{specialty.icon}</div>
+					<div class="specialty-content">
+						<div class="specialty-title">{specialty.title}</div>
+						<div class="specialty-desc">{specialty.description}</div>
+					</div>
 				</div>
-			</div>
+			</IntersectionObserver>
 		{/each}
 	</div>
 </div>
