@@ -4,7 +4,7 @@ import { fireEvent } from '@testing-library/dom';
 import type { Mock } from 'vitest';
 import type { SvelteComponent } from 'svelte';
 import type { Matcher, MatcherOptions } from '@testing-library/dom';
-import { afterEach, beforeEach } from 'vitest';
+import { afterEach, beforeEach, expect } from 'vitest';
 import { cleanup } from '@testing-library/svelte';
 import type { Video } from '$lib/types';
 
