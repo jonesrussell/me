@@ -74,21 +74,21 @@ vi.mock('$app/stores', () => ({
 Object.defineProperty(window, 'CSS', {
 	value: {
 		supports: () => true,
-		escape: (str: string) => str,
-	},
+		escape: (str: string) => str
+	}
 });
 
 // Mock getComputedStyle
 Object.defineProperty(window, 'getComputedStyle', {
 	value: () => ({
-		getPropertyValue: () => '',
-	}),
+		getPropertyValue: () => ''
+	})
 });
 
 // Mock CSS parsing
 const originalCreateStylesheet = dom.window.document.createElement('style').sheet;
 Object.defineProperty(dom.window.document.createElement('style'), 'sheet', {
-	get: () => originalCreateStylesheet,
+	get: () => originalCreateStylesheet
 });
 
 // Cleanup after each test
