@@ -1,3 +1,5 @@
+import sanitizeHtml from 'sanitize-html';
+
 // Cache for memoized results
 const memoCache = new Map<string, string>();
 
@@ -20,54 +22,18 @@ export const sanitizeText = memoize((text: string): string => {
 	if (!text) return '';
 
 	try {
-		// First use regex to remove script tags with a do-while loop for nested cases
-		let withoutScripts = text;
-		let previous;
-		do {
-			previous = withoutScripts;
-			withoutScripts = withoutScripts.replace(
-				/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
-				''
-			);
-		} while (withoutScripts !== previous);
+		const options = {
+			allowedTags: [], // Remove all HTML tags
+			allowedAttributes: {} // Remove all attributes
+		};
 
-		// Then use DOM parsing for additional security
-		const div = document.createElement('div');
-		div.innerHTML = withoutScripts;
-
-		// Remove any remaining script tags and their content
-		const scripts = div.getElementsByTagName('script');
-		while (scripts.length > 0) {
-			scripts[0].parentNode?.removeChild(scripts[0]);
-		}
-
-		// Remove style tags and their content
-		const styles = div.getElementsByTagName('style');
-		while (styles.length > 0) {
-			styles[0].parentNode?.removeChild(styles[0]);
-		}
-
-		// Remove any elements with event handlers
-		const elements = div.getElementsByTagName('*');
-		for (let i = 0; i < elements.length; i++) {
-			const element = elements[i];
-			const attributes = element.attributes;
-			for (let j = attributes.length - 1; j >= 0; j--) {
-				const attr = attributes[j];
-				if (attr.name.startsWith('on')) {
-					element.removeAttribute(attr.name);
-				}
-			}
-		}
-
-		// Get the sanitized text content
-		const sanitized = div.textContent || '';
-
-		// Normalize whitespace and trim
-		return sanitized.replace(/\s+/g, ' ').trim();
+		// Sanitize and normalize spaces
+		return sanitizeHtml(text, options)
+			.replace(/\s+/g, ' ') // Replace multiple spaces with single space
+			.trim(); // Remove leading/trailing spaces
 	} catch (error) {
 		console.error('Error sanitizing text:', error);
-		// Fallback to basic sanitization if DOM parsing fails
+		// Fallback to basic sanitization if sanitize-html fails
 		return text
 			.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
 			.replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
