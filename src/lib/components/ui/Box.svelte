@@ -17,15 +17,12 @@
 <style>
 	.box {
 		width: var(--box-width);
-
 		font-family: var(--font-mono);
 		line-height: var(--line-height-tight);
-
 		background: var(--bg-darker);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
 		box-shadow: var(--shadow-sm);
-
 		transition: all var(--transition-duration) var(--transition-timing);
 		min-width: var(--box-width);
 		max-width: var(--box-width);
@@ -58,7 +55,7 @@
 	}
 </style>
 
-<div class="box" style="--box-width: {alignToGrid(width)}ch; {style}">
+<div class="box" style="width: {alignToGrid(width)}ch; {style}">
 	<div class="box-frame">
 		{#if title}
 			<div class="header">
@@ -66,7 +63,7 @@
 			</div>
 		{/if}
 		<div class="content">
-			{children()}
+			{@render children()}
 		</div>
 	</div>
 </div>
