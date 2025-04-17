@@ -33,28 +33,41 @@
 <style>
 	.input-container {
 		width: 100%;
+		position: relative;
 	}
 
 	.input {
 		width: 100%;
-		padding: 0.5rem;
-		border: 1px solid var(--border-color);
-		border-radius: 0.25rem;
-		background-color: var(--background-color);
+		min-width: 0;
+		padding: var(--space-3) var(--space-4);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
+		background: var(--bg-darker);
 		color: var(--text-color);
-		font-family: var(--monospace-font);
-		font-size: 0.875rem;
-		line-height: 1.5;
-		transition: border-color 0.2s ease-in-out;
+		font-family: var(--font-mono);
+		font-size: var(--font-size-base);
+		line-height: var(--line-height-base);
+		transition: all var(--transition-duration) var(--transition-timing);
+		box-sizing: border-box;
 
 		&:focus {
 			outline: none;
-			border-color: var(--primary-color);
+			border-color: var(--accent-color);
+			box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
 		}
 
 		&:disabled {
-			opacity: 0.5;
+			opacity: 0.7;
 			cursor: not-allowed;
+		}
+
+		&[aria-invalid='true'] {
+			border-color: var(--error-color);
+		}
+
+		&[aria-invalid='true']:focus {
+			border-color: var(--error-color);
+			box-shadow: 0 0 0 var(--space-1) var(--error-color);
 		}
 	}
 </style>

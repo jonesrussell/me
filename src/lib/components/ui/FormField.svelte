@@ -43,6 +43,7 @@
 		flex-direction: column;
 		gap: var(--space-2);
 		width: 100%;
+		min-width: 0;
 	}
 
 	.label {
@@ -52,6 +53,7 @@
 		display: flex;
 		align-items: center;
 		gap: var(--space-2);
+		width: 100%;
 	}
 
 	.required {
@@ -61,6 +63,7 @@
 	.input-wrapper {
 		position: relative;
 		width: 100%;
+		min-width: 0;
 	}
 
 	.error {
@@ -77,6 +80,7 @@
 
 	.textarea {
 		width: 100%;
+		min-width: 0;
 		padding: var(--space-3) var(--space-4);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
@@ -88,21 +92,28 @@
 		resize: vertical;
 		min-height: 12ch;
 		line-height: var(--line-height-relaxed);
+		box-sizing: border-box;
+
+		&:focus {
+			outline: none;
+			border-color: var(--accent-color);
+			box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
+		}
+
+		&[aria-invalid='true'] {
+			border-color: var(--error-color);
+		}
+
+		&[aria-invalid='true']:focus {
+			border-color: var(--error-color);
+			box-shadow: 0 0 0 var(--space-1) var(--error-color);
+		}
 	}
 
-	.textarea:focus {
-		border-color: var(--accent-color);
-		outline: none;
-		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
-	}
-
-	.textarea[aria-invalid='true'] {
-		border-color: var(--error-color);
-	}
-
-	.textarea[aria-invalid='true']:focus {
-		border-color: var(--error-color);
-		box-shadow: 0 0 0 var(--space-1) var(--error-color);
+	:global(.input) {
+		width: 100%;
+		min-width: 0;
+		box-sizing: border-box;
 	}
 
 	:global(.input[aria-invalid='true']) {
