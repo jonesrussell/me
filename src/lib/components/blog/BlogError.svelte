@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { blogErrors } from '$lib/services/blog-service';
 	import type { BlogError } from '$lib/services/blog-service';
-	import Box from '$lib/components/layout/Box.svelte';
+	import Box from '$lib/components/ui/Box.svelte';
 
 	const formatErrorType = (type: BlogError['type']): string => {
 		switch (type) {
@@ -69,8 +69,8 @@
 
 {#if $blogErrors.length > 0}
 	<Box width={80}>
-		{#each $blogErrors as error}
-			<div class="error">
+		{#each $blogErrors as error (error.timestamp)}
+			<div class="error" role="alert">
 				<div class="header">
 					<span class="type">{formatErrorType(error.type)}</span>
 					<span class="timestamp">{formatTimestamp(error.timestamp)}</span>

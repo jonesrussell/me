@@ -12,8 +12,6 @@ declare global {
 		// interface Platform {}
 		type ThemeMode = 'auto' | 'light' | 'dark';
 
-		import type { EnhancedImage } from '$lib/types';
-
 		interface TreeNode {
 			name: string;
 			url?: string;

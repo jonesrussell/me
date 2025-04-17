@@ -1,10 +1,30 @@
 <script lang="ts">
+	import FormField from '$lib/components/ui/FormField.svelte';
+
 	let name = $state('');
 	let email = $state('');
 	let message = $state('');
+	let errors = $state<Record<string, string>>({});
+
+	function validateForm() {
+		const newErrors: Record<string, string> = {};
+
+		if (!name) newErrors.name = 'Name is required';
+		if (!email) {
+			newErrors.email = 'Email is required';
+		} else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+			newErrors.email = 'Please enter a valid email address';
+		}
+		if (!message) newErrors.message = 'Message is required';
+
+		errors = newErrors;
+		return Object.keys(newErrors).length === 0;
+	}
 
 	function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
+		if (!validateForm()) return;
+
 		// TODO: Implement form submission
 		console.log({ name, email, message });
 	}
@@ -25,23 +45,26 @@
 
 	.contact-grid {
 		display: grid;
-		grid-template-columns: minmax(35ch, 1fr) minmax(45ch, 2fr);
+		grid-template-columns: 1fr;
 		gap: var(--space-8);
 	}
 
-	h1,
-	h2 {
-		margin-bottom: var(--space-4);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-lg);
-		font-weight: 500;
-		color: var(--accent-color);
+	@media (width >= 48ch) {
+		.contact-grid {
+			grid-template-columns: minmax(30ch, 35ch) minmax(45ch, 60ch);
+			align-items: start;
+		}
 	}
 
 	.contact-info {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-4);
+		width: 100%;
+	}
+
+	.contact-form {
+		width: 100%;
 	}
 
 	.contact-text {
@@ -60,7 +83,7 @@
 
 	.contact-link {
 		display: flex;
-		padding: var(--space-3) var(--space-4);
+		padding: var(--space-4) var(--space-6);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		text-decoration: none;
@@ -85,50 +108,23 @@
 	}
 
 	.form-group {
-		margin-bottom: var(--space-4);
-	}
-
-	.form-label {
-		display: block;
-		margin-bottom: var(--space-2);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
-		color: var(--text-muted);
-	}
-
-	.form-input,
-	.form-textarea {
 		width: 100%;
-		padding: var(--space-3) var(--space-4);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-base);
-		color: var(--text-color);
-		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-md);
-		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
-	.form-textarea {
-		resize: vertical;
-		height: 12ch;
-		line-height: var(--line-height-relaxed);
-	}
-
-	.form-input:focus,
-	.form-textarea:focus {
-		border-color: var(--accent-color);
-		outline: none;
-		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
+	form {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-4);
 	}
 
 	.form-submit {
 		display: flex;
 		width: 100%;
-		padding: var(--space-3) var(--space-4);
+		padding: var(--space-4) var(--space-6);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
-		font-weight: 500;
+		font-weight: var(--font-weight-medium);
 		color: var(--bg-darker);
 		background: var(--accent-color);
 		border: none;
@@ -138,6 +134,7 @@
 		gap: var(--space-2);
 		align-items: center;
 		justify-content: center;
+		margin-top: var(--space-4);
 	}
 
 	.form-submit:hover {
@@ -154,16 +151,8 @@
 		transform: translateX(var(--space-2));
 	}
 
-	@media (width <= 48ch) {
-		.contact-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-
 	@media (prefers-reduced-motion: reduce) {
 		.contact-link,
-		.form-input,
-		.form-textarea,
 		.form-submit {
 			transition: none;
 		}
@@ -182,7 +171,7 @@
 	<div class="container">
 		<div class="contact-grid">
 			<section class="contact-info" aria-label="Contact Information">
-				<h1 class="contact-heading">Get in Touch</h1>
+				<h1>Get in Touch</h1>
 				<p class="contact-text">
 					Have a question or want to work together? I'd love to hear from you. Let's build something
 					amazing together.
@@ -218,36 +207,41 @@
 				<h2 class="form-heading">Send a Message</h2>
 				<form onsubmit={handleSubmit}>
 					<div class="form-group">
-						<label class="form-label" for="name">Name</label>
-						<input
+						<FormField
+							label="Name"
+							name="name"
 							type="text"
-							id="name"
-							class="form-input"
-							bind:value={name}
+							required
+							value={name}
+							onInput={(value) => (name = value)}
+							error={errors.name}
 							placeholder="Your name"
-							required
 						/>
 					</div>
 					<div class="form-group">
-						<label class="form-label" for="email">Email</label>
-						<input
+						<FormField
+							label="Email"
+							name="email"
 							type="email"
-							id="email"
-							class="form-input"
-							bind:value={email}
-							placeholder="your.email@example.com"
 							required
+							value={email}
+							onInput={(value) => (email = value)}
+							error={errors.email}
+							placeholder="your.email@example.com"
 						/>
 					</div>
 					<div class="form-group">
-						<label class="form-label" for="message">Message</label>
-						<textarea
-							id="message"
-							class="form-textarea"
-							bind:value={message}
-							placeholder="Type your message here..."
+						<FormField
+							label="Message"
+							name="message"
+							type="textarea"
 							required
-						></textarea>
+							value={message}
+							onInput={(value) => (message = value)}
+							error={errors.message}
+							placeholder="Type your message here..."
+							rows={6}
+						/>
 					</div>
 					<button type="submit" class="form-submit">
 						<span>Send Message</span>

@@ -1,106 +1,94 @@
-# STOP FUCKING TRYING TO USE SLOTS
+### Core Development Guidelines
 
-# Core Development Guidelines
-branding:
-  - title: 'Limitless Developer'
-  - description: 'Building elegant solutions with modern web technologies'
+#### **Testing Practices**
+- Prioritize testing functionality over CSS implementations.
+- Write unit tests for every component and test them in isolation.
+- Focus on user interactions, state management, and accessibility during testing.
+- Verify error handling and edge cases to ensure robustness.
+- Utilize Vitest and Testing Library for test execution.
+- Mock external dependencies to simulate realistic scenarios.
+- Incorporate edge case testing and use fixtures for consistency.
+- Build test utilities for common setups and follow the Arrange-Act-Assert (AAA) pattern.
+- Use snapshot testing to confirm rendering consistency.
+- Evaluate component rendering, validate props, and check child element rendering.
+- Include asynchronous testing and assess component structure, style application, and responsiveness.
+- Avoid relying on test IDs; instead, utilize semantic HTML, roles, and labels for meaningful tests.
 
-general_rules:
-  - use_typescript: true
-  - add_comments: true
-  - maintain_documentation: true
-  - follow_solid_principles: true
-  - keep_functions_pure: true
-  - minimize_side_effects: true
+---
 
-code_style:
-  - use_semicolons: true
-  - use_strict_types: true
-  - prefer_const: true
-  - max_line_length: 100
-  - indent_style: tabs
-  - indent_size: 2
-  - use_consistent_naming: true
-  - prefix_interfaces_with_i: true
-  - suffix_types_with_type: true
+#### **Branding**
+- Title: Russell Jones
+- Description: Crafting elegant solutions with modern web technologies.
 
-separation_of_concerns:
-  - organize_by_feature: true
-  - separate_business_logic: true
-  - isolate_ui_components: true
-  - keep_services_stateless: true
-  - use_dependency_injection: true
-  - minimize_component_logic: true
+---
 
-type_organization:
-  - centralize_shared_types: true
-  - use_type_aliases: true
-  - prefer_interfaces_over_types: true
-  - group_related_types: true
-  - document_complex_types: true
-  - use_type_guards: true
-  - export_types_separately: true
+#### **General Development Rules**
+- Embrace TypeScript for safer and more maintainable code.
+- Keep your code well-documented with comments and updated documentation.
+- Adhere to SOLID principles for clean architecture.
+- Focus on pure functions, minimize side effects, and use strict type checking.
+- Validate props at runtime and gracefully handle edge cases.
+- Implement consistent error handling practices.
 
-services:
-  - use_service_factories: true
-  - implement_error_handling: true
-  - add_request_caching: true
-  - use_service_interfaces: true
-  - implement_retry_logic: true
-  - add_request_timeouts: true
-  - use_service_middleware: true
+---
 
-store_management:
-  - use_custom_stores: true
-  - implement_store_subscriptions: true
-  - use_store_derivations: true
-  - add_store_persistence: true
-  - implement_store_actions: true
-  - use_store_middleware: true
-  - keep_stores_small: true
+#### **Code Style**
+- Use semicolons consistently and favor strict types.
+- Prefer `const` where applicable, and limit lines to 100 characters.
+- Indent with tabs (2 spaces per tab) for readability.
+- Follow a consistent naming convention, prefix interfaces with "I," and suffix types with "Type."
+- Name tests descriptively, group related ones, and ensure clear structure with case documentation.
 
-svelte_patterns:
-  - use_runes: true
-  - prefer_$state_over_let: true
-  - prefer_$derived_over_computed: true
-  - use_$effect_for_side_effects: true
-  - use_typescript_for_props: true
-  - keep_components_small: true
-  - use_semantic_html: true
-  - use_render_instead_of_slots: true
-  - use_props_validation: true
-  - implement_error_boundaries: true
+---
 
-testing_guidelines:
-  - write_unit_tests: true
-  - test_components_in_isolation: true
-  - test_user_interactions: true
-  - test_state_management: true
-  - test_accessibility: true
-  - test_error_cases: true
-  - use_vitest_and_testing_library: true
-  - mock_external_dependencies: true
-  - test_edge_cases: true
-  - use_test_fixtures: true
-  - implement_test_utilities: true
-  - follow_aaa_pattern: true
-  - use_snapshot_testing: true
+#### **Separation of Concerns**
+- Organize files by feature and isolate UI components from business logic.
+- Ensure services are stateless and use dependency injection for flexibility.
+- Minimize logic within components and maintain test independence through utility separation.
 
-monospace_design:
-  - use_monospace_fonts: true
-  - align_to_character_grid: true
-  - use_consistent_spacing: true
-  - maintain_visual_hierarchy: true
+---
 
-best_practices:
-  - handle_errors_gracefully: true
-  - validate_user_input: true
-  - optimize_performance: true
-  - follow_accessibility_standards: true
-  - use_semantic_versioning: true
-  - keep_dependencies_updated: true
-  - implement_progressive_enhancement: true
-  - use_environment_variables: true
-  - follow_security_guidelines: true
-  - implement_analytics: true
-  - use_performance_monitoring: true
+#### **Type Organization**
+- Centralize shared types and use aliases for clarity.
+- Prefer interfaces over type aliases and document complex types.
+- Group related types and create type utilities for testing and components.
+- Export types separately for better module management.
+
+---
+
+#### **Services**
+- Use service factories and implement error handling mechanisms.
+- Add request caching, retry logic, timeouts, and middleware for service stability.
+- Mock services during testing, validate responses, and test error scenarios.
+
+---
+
+#### **Store Management**
+- Build custom stores with subscriptions, derivations, and persistence.
+- Implement actions and middleware, keeping stores lightweight and focused.
+- Test updates, subscriptions, and derivations thoroughly.
+
+---
+
+#### **Svelte Patterns**
+- Leverage runes and prefer `$state` over `let` variables.
+- Use `$derived` instead of computed properties and `$effect` for side effects.
+- Apply TypeScript for props and design components to be small and semantic.
+- Favor render functions over slots, validate props, and implement error boundaries.
+- Test component props, events, state, and effects methodically.
+
+---
+
+#### **Monospace Design**
+- Utilize monospace fonts aligned to character grids for precision.
+- Ensure consistent spacing and maintain visual hierarchy in layouts.
+- Test responsive designs, typography scales, color contrasts, and spacing rigorously.
+
+---
+
+#### **Best Practices**
+- Handle errors gracefully and validate user input effectively.
+- Optimize performance and follow accessibility standards.
+- Adopt semantic versioning and keep dependencies up-to-date.
+- Incorporate progressive enhancement, secure coding guidelines, and analytics.
+- Monitor performance and write maintainable, well-documented tests with consistent patterns.

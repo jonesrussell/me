@@ -1,4 +1,4 @@
-import sanitize from 'sanitize-html';
+import sanitizeHtml from 'sanitize-html';
 
 // Cache for memoized results
 const memoCache = new Map<string, string>();
@@ -19,18 +19,22 @@ function memoize<Args extends unknown[], Return>(
 }
 
 export const sanitizeText = memoize((text: string): string => {
-	return sanitize(text, {
-		allowedTags: [], // Remove all HTML tags
-		allowedAttributes: {}, // Remove all attributes
-		disallowedTagsMode: 'discard', // Discard disallowed tags
-		allowedIframeHostnames: [], // No iframes allowed
-		allowedSchemes: [], // No schemes allowed
-		allowedSchemesByTag: {}, // No schemes allowed for any tag
-		allowedSchemesAppliedToAttributes: [], // No schemes allowed for any attribute
-		allowProtocolRelative: false, // No protocol-relative URLs
-		enforceHtmlBoundary: true, // Enforce HTML boundary
-		parseStyleAttributes: false // Don't parse style attributes
-	}).trim();
+	if (!text) return '';
+
+	try {
+		const options = {
+			allowedTags: [], // Remove all HTML tags
+			allowedAttributes: {} // Remove all attributes
+		};
+
+		// Sanitize and normalize spaces
+		return sanitizeHtml(text, options)
+			.replace(/\s+/g, ' ') // Replace multiple spaces with single space
+			.trim(); // Remove leading/trailing spaces
+	} catch (error) {
+		console.error('Error sanitizing text:', error);
+		return ''; // Return empty string on error
+	}
 });
 
 /**

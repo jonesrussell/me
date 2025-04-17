@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Box from '$lib/components/layout/Box.svelte';
-	import type { Video } from '$lib/types';
+	import Box from '$lib/components/ui/Box.svelte';
+	import type { Video } from '$lib/types/video';
 
 	const { video } = $props<{ video: Video }>();
 </script>
@@ -98,7 +98,7 @@
 </style>
 
 <Box width={40}>
-	<div class="video-card">
+	<article class="video-card">
 		<div class="video-container">
 			<iframe
 				src={`https://www.youtube.com/embed/${video.embedId}`}
@@ -121,5 +121,5 @@
 				{/each}
 			</div>
 		</div>
-	</div>
+	</article>
 </Box>
