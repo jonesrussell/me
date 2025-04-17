@@ -16,6 +16,8 @@
 		position: relative;
 
 		width: 100%;
+		max-width: min(var(--measure), 95cqi);
+		margin-inline: auto;
 
 		background: var(--bg-darker);
 		border: var(--border-width) solid var(--border-color);
@@ -24,7 +26,12 @@
 
 		overflow: hidden;
 		flex-direction: column;
-		max-width: min(var(--measure), 100%);
+	}
+
+	@media (min-width: var(--container-md)) {
+		.terminal-frame {
+			max-width: min(var(--container-lg), 100%);
+		}
 	}
 
 	.terminal-header {
@@ -64,6 +71,8 @@
 		position: relative;
 
 		padding: var(--space-4);
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
 
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
@@ -71,11 +80,13 @@
 		flex-direction: column;
 		gap: var(--space-2);
 		white-space: pre-wrap;
+		word-break: break-word;
 	}
 
 	.command-line {
 		display: flex;
 		gap: var(--space-2);
+		flex-wrap: wrap;
 
 		margin-top: var(--space-2);
 
@@ -88,11 +99,13 @@
 	.prompt {
 		font-weight: var(--font-weight-bold);
 		color: var(--accent-color);
+		white-space: nowrap;
 	}
 
 	.command {
 		font-weight: var(--font-weight-normal);
 		color: var(--text-color);
+		word-break: break-word;
 	}
 
 	.command-output {
@@ -103,7 +116,8 @@
 		font-weight: var(--font-weight-normal);
 		line-height: var(--line-height-relaxed);
 		color: var(--text-color);
-		white-space: pre;
+		white-space: pre-wrap;
+		word-break: break-word;
 
 		animation: crt-reveal 50ms linear;
 	}
