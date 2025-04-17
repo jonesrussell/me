@@ -21,7 +21,12 @@ const config: KnipConfig = {
 			'src/params/*.{js,ts}'
 		]
 	},
-	ignoreDependencies: ['@fontsource/fira-mono', '@fontsource/jetbrains-mono'],
+	ignoreDependencies: [
+		'@fontsource/fira-mono',
+		'@fontsource/jetbrains-mono',
+		'eslint-plugin-svelte',
+		'svelte-eslint-parser'
+	],
 	ignoreBinaries: ['act']
 };
 
