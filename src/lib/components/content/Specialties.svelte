@@ -20,7 +20,6 @@
 
 	function handleIntersect(event: CustomEvent<IntersectionObserverEntry>, index: number) {
 		const entry = event.detail;
-		console.log(`Item ${index} intersecting:`, entry.isIntersecting);
 
 		if (entry.isIntersecting) {
 			revealedStates[index] = true;
