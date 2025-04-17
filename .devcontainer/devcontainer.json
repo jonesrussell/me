@@ -35,27 +35,20 @@
 		}
 	},
 	"mounts": [
-		"type=bind,source=/home/${localEnv:USER}/.ssh,target=/home/node/.ssh,readonly",
-		"type=volume,src=node_modules,target=/workspace/node_modules",
-		"type=volume,src=vscode-extensions,target=/root/.vscode-server/extensions"
+		"type=bind,source=/home/${localEnv:USER}/.ssh,target=/home/node/.ssh,readonly"
 	],
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"svelte.svelte-vscode",
 				"github.vscode-github-actions",
-				"vscode.typescript-language-features",
 				"stylelint.vscode-stylelint",
-				"vscode.css-language-features",
-				"vscode.html-language-features",
-				"vscode.json-language-features",
-				"vscode.markdown-language-features",
 				"GitHub.vscode-pull-request-github",
 				"hbenl.vscode-test-explorer",
 				"ms-playwright.playwright",
 				"esbenp.prettier-vscode",
 				"ms-azuretools.vscode-docker",
-				"GitHub.vscode-github-actions"
+				"dbaeumer.vscode-eslint"
 			],
 			"settings": {
 				"editor.formatOnSave": true,
