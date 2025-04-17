@@ -133,7 +133,7 @@ jobs:
 
       - name: Install Playwright dependencies
         if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npx playwright install-deps
+        run: sudo npx playwright install-deps
 
       - name: Build
         env:
