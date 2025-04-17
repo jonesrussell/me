@@ -3,10 +3,10 @@
 	/* Remove all animations and transitions for people that prefer not to see them */
 	@media (prefers-reduced-motion: reduce) {
 		:where(*, *::before, *::after) {
-			scroll-behavior: auto !important;
-			transition-duration: 0.01ms !important;
-			animation-duration: 0.01ms !important;
-			animation-iteration-count: 1 !important;
+			scroll-behavior: auto;
+			transition-duration: 0.01ms;
+			animation-duration: 0.01ms;
+			animation-iteration-count: 1;
 		}
 	}
 
@@ -54,5 +54,17 @@
 	/* Inherit fonts for inputs and buttons */
 	:where(input, button, textarea, select) {
 		font: inherit;
+	}
+
+	/* Selection styles */
+	:where(::selection) {
+		color: var(--bg-color);
+		background: var(--accent-color);
+	}
+
+	/* Focus styles */
+	:where(:focus-visible) {
+		outline: 2px solid var(--accent-color);
+		outline-offset: 2px;
 	}
 }
