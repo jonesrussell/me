@@ -91,9 +91,15 @@ jobs:
             libxshmfence1 \
             libvpx7 \
             libvpx-dev \
-            libwebp6 \
+            libwebp7 \
             libwebpdemux2 \
-            libwebpmux3
+            libwebpmux3 \
+            libnss3 \
+            libnss3-dev \
+            libnspr4 \
+            libnspr4-dev \
+            libopus0 \
+            libopus-dev
 
       - name: Type check
         run: npm run check
