@@ -4,9 +4,14 @@ import type { TransitionConfig } from 'svelte/transition';
 interface SlideInParams {
 	delay?: number;
 	duration?: number;
+	index?: number;
 }
 
-export function slideIn(node: HTMLElement, { delay = 0, duration = 700 }: SlideInParams = {}): TransitionConfig {
+export function slideIn(node: HTMLElement, { delay = 0, duration = 700, index = 0 }: SlideInParams = {}): TransitionConfig {
+	// Set initial state
+	node.style.opacity = '0';
+	node.style.transform = `translateX(${index % 2 === 0 ? '-100%' : '100%'})`;
+
 	return {
 		duration,
 		delay,
@@ -14,7 +19,7 @@ export function slideIn(node: HTMLElement, { delay = 0, duration = 700 }: SlideI
 			const eased = elasticOut(t);
 			return `
 				opacity: ${t};
-				transform: translateX(${(1 - eased) * 100}%);
+				transform: translateX(${(1 - eased) * (index % 2 === 0 ? -100 : 100)}%);
 			`;
 		}
 	};

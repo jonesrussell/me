@@ -12,11 +12,18 @@
 
 	let elements = $state<HTMLElement[]>([]);
 	let activeIntersection = $state<number | null>(null);
+	let revealedStates = $state<boolean[]>([]);
+
+	$effect(() => {
+		revealedStates = specialties.map(() => false);
+	});
 
 	function handleIntersect(event: CustomEvent<IntersectionObserverEntry>, index: number) {
 		const entry = event.detail;
+		console.log(`Item ${index} intersecting:`, entry.isIntersecting);
 
 		if (entry.isIntersecting) {
+			revealedStates[index] = true;
 			activeIntersection = index;
 		} else if (activeIntersection === index) {
 			activeIntersection = null;
@@ -76,11 +83,16 @@
 			<IntersectionObserver
 				element={elements[i]}
 				on:observe={(e) => handleIntersect(e, i)}
-				threshold={0}
-				rootMargin="0px 0px -200px 0px"
+				threshold={0.1}
+				rootMargin="-50px"
 			>
 				<div bind:this={elements[i]}>
-					<Specialty {specialty} index={i} isIntersecting={activeIntersection === i} />
+					<Specialty
+						{specialty}
+						index={i}
+						isIntersecting={activeIntersection === i}
+						isRevealed={revealedStates[i]}
+					/>
 				</div>
 			</IntersectionObserver>
 		{/each}
