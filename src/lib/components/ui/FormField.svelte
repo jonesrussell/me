@@ -81,7 +81,7 @@
 	.textarea {
 		width: 100%;
 		min-width: 0;
-		padding: var(--space-3) var(--space-4);
+		padding: var(--space-4) var(--space-6);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
 		color: var(--text-color);
