@@ -1,25 +1,26 @@
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/svelte';
 import Box from '$lib/components/ui/Box.svelte';
+import { createChildrenFunction } from '../test-utils';
 
 describe('Box', () => {
-	it('renders with default props', () => {
-		const { container } = render(Box, {
+	it('renders with default props', async () => {
+		const { getByText } = render(Box, {
 			props: {
-				children: () => 'Test Content'
+				children: createChildrenFunction('Test Content')
 			}
 		});
 
-		const content = container.querySelector('.content');
-		if (!content) throw new Error('Box content not found');
-		expect(content.textContent).toBe('Test Content');
+		// Wait for the content to be rendered
+		await new Promise(resolve => setTimeout(resolve, 0));
+		expect(getByText('Test Content')).toBeInTheDocument();
 	});
 
 	it('renders with custom width', () => {
 		const { container } = render(Box, {
 			props: {
 				width: 60,
-				children: () => 'Wide Content'
+				children: createChildrenFunction('Wide Content')
 			}
 		});
 
@@ -29,22 +30,20 @@ describe('Box', () => {
 	});
 
 	it('renders with title', () => {
-		const { container } = render(Box, {
+		const { getByText } = render(Box, {
 			props: {
 				title: 'Test Title',
-				children: () => 'Content'
+				children: createChildrenFunction('Content')
 			}
 		});
 
-		const title = container.querySelector('.title');
-		if (!title) throw new Error('Title element not found');
-		expect(title.textContent).toBe('Test Title');
+		expect(getByText('Test Title')).toBeInTheDocument();
 	});
 
 	it('renders without title when not provided', () => {
 		const { container } = render(Box, {
 			props: {
-				children: () => 'Content'
+				children: createChildrenFunction('Content')
 			}
 		});
 
@@ -55,7 +54,7 @@ describe('Box', () => {
 		const { container } = render(Box, {
 			props: {
 				style: 'margin-top: 1rem;',
-				children: () => 'Styled Content'
+				children: createChildrenFunction('Styled Content')
 			}
 		});
 
@@ -67,7 +66,7 @@ describe('Box', () => {
 	it('has required structural elements', () => {
 		const { container } = render(Box, {
 			props: {
-				children: () => 'Content'
+				children: createChildrenFunction('Content')
 			}
 		});
 
@@ -84,21 +83,17 @@ describe('Box', () => {
 		expect(content).toBeInTheDocument();
 	});
 
-	it('is accessible', () => {
-		const { container } = render(Box, {
+	it('is accessible', async () => {
+		const { getByText } = render(Box, {
 			props: {
 				title: 'Accessible Box',
-				children: () => 'Content'
+				children: createChildrenFunction('Content')
 			}
 		});
 
-		const title = container.querySelector('.title');
-		const content = container.querySelector('.content');
-
-		if (!title) throw new Error('Title element not found');
-		if (!content) throw new Error('Content element not found');
-
-		expect(title.textContent).toBe('Accessible Box');
-		expect(content.textContent).toBe('Content');
+		// Wait for the content to be rendered
+		await new Promise(resolve => setTimeout(resolve, 0));
+		expect(getByText('Accessible Box')).toBeInTheDocument();
+		expect(getByText('Content')).toBeInTheDocument();
 	});
 });

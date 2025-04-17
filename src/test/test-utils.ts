@@ -26,6 +26,10 @@ export function renderComponent(
 	};
 }
 
+export function createChildrenFunction(content: string) {
+	return () => content;
+}
+
 export async function simulateInput(element: HTMLElement, value: string): Promise<void> {
 	element.focus();
 	await fireEvent.input(element, { target: { value } });
