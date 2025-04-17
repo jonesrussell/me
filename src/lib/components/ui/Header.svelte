@@ -19,7 +19,8 @@
 		z-index: 10;
 		top: 0;
 		width: 100%;
-		padding-block: var(--space-4);
+		padding-block-start: var(--space-4);
+		padding-block-end: 0;
 		border-bottom: var(--border-width) solid var(--border-color);
 		background: var(--bg-color);
 		box-shadow: var(--shadow-sm);

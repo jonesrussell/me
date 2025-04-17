@@ -12,12 +12,13 @@
 	.specialties-container {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-8);
+		gap: var(--space-4);
 		width: 100%;
 	}
 
 	.section-header {
 		text-align: center;
+		margin-bottom: var(--space-2);
 	}
 
 	h2 {
@@ -36,7 +37,8 @@
 	.specialties {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-8);
+		gap: var(--space-4);
+		margin-top: var(--space-2);
 	}
 
 	.specialty {
@@ -59,23 +61,25 @@
 
 	.specialty-icon {
 		font-size: var(--font-size-2xl);
+		line-height: var(--line-height-tight);
 	}
 
 	.specialty-content {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-2);
+		gap: var(--space-1);
 	}
 
 	.specialty-title {
 		font-size: var(--font-size-lg);
 		font-weight: var(--font-weight-bold);
 		color: var(--text-color);
+		line-height: var(--line-height-tight);
 	}
 
 	.specialty-desc {
 		font-size: var(--font-size-base);
-		line-height: var(--line-height-relaxed);
+		line-height: var(--line-height-base);
 		color: var(--text-muted);
 	}
 
@@ -83,16 +87,18 @@
 		.specialties {
 			display: grid;
 			grid-template-columns: repeat(2, 1fr);
+			gap: var(--space-2);
 		}
 
 		.specialty {
 			flex-direction: row;
 			text-align: left;
 			align-items: flex-start;
+			padding: var(--space-3);
 		}
 
 		.specialty-icon {
-			margin-right: var(--space-4);
+			margin-right: var(--space-2);
 		}
 	}
 
