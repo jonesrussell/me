@@ -2,9 +2,11 @@
 	import DesktopNav from '$lib/components/navigation/DesktopNav.svelte';
 	import MobileNav from '$lib/components/navigation/MobileNav.svelte';
 	import SubtitleBar from './SubtitleBar.svelte';
-	import { base } from '$app/paths';
 
-	const { url } = $props<{ url: URL }>();
+	const { url, base = '/' } = $props<{
+		url: URL;
+		base?: string;
+	}>();
 
 	let isMobileMenuOpen = $state(false);
 
@@ -19,37 +21,36 @@
 		z-index: 10;
 		top: 0;
 		width: 100%;
-		padding-block: var(--space-4);
-		border-bottom: var(--border-width) solid var(--border-color);
-		background: var(--bg-color);
-		box-shadow: var(--shadow-sm);
+		padding-block: var(--space-4, 1rem);
+		border-bottom: var(--border-width, 1px) solid var(--border-color, #e5e7eb);
+		background: var(--bg-color, #ffffff);
+		box-shadow: var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05));
 	}
 
 	.header-content {
 		width: 100%;
-		max-width: min(var(--measure), 95cqi);
+		max-width: min(var(--measure, 65ch), 95cqi);
 		margin-inline: auto;
-		padding-inline: var(--space-4);
+		padding-inline: var(--space-4, 1rem);
 	}
 
 	.header-main {
 		display: grid;
 		grid-template-columns: 1fr auto;
-		gap: var(--space-4);
+		gap: var(--space-4, 1rem);
 		align-items: center;
 		position: relative;
-		container-type: inline-size;
 	}
 
 	.menu-toggle {
 		display: flex;
 		width: 2.5rem;
 		height: 2.5rem;
-		padding: var(--space-2);
-		color: var(--text-color);
+		padding: var(--space-2, 0.5rem);
+		color: var(--text-color, #000000);
 		background: transparent;
 		border: none;
-		transition: all var(--transition-duration) var(--transition-timing);
+		transition: all var(--transition-duration, 0.2s) var(--transition-timing, ease);
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
@@ -57,11 +58,11 @@
 	}
 
 	.menu-toggle:hover {
-		color: var(--accent-color);
+		color: var(--accent-color, #3b82f6);
 	}
 
 	.menu-icon {
-		font-size: var(--font-size-xl);
+		font-size: var(--font-size-xl, 1.25rem);
 	}
 
 	.sr-only {
@@ -89,7 +90,7 @@
 		color: var(--accent-color);
 	}
 
-	@container (width > 48ch) {
+	@media (min-width: 48ch) {
 		.menu-toggle {
 			display: none;
 		}
@@ -106,7 +107,7 @@
 <header class="site-header">
 	<div class="header-content">
 		<div class="header-main">
-			<a href={base || '/'} class="title">Russell Jones</a>
+			<a href={base} class="title">Russell Jones</a>
 			<button
 				class="menu-toggle"
 				type="button"

@@ -7,6 +7,9 @@
 	const YOUTUBE_CHANNEL = 'https://youtube.com/@fullstackdev42';
 	const YOUTUBE_VIDEO_ID = 'B4v7ZDLxiS4';
 	const YOUTUBE_VIDEO_TITLE = 'Add a Google Font to Tailwind CSS | 2023';
+	const YOUTUBE_SECTION_TITLE = 'Latest Video';
+	const YOUTUBE_SECTION_SUBTITLE = 'Check out my latest YouTube tutorial';
+	const TERMINAL_COMMAND = 'npm run dev';
 
 	const specialties = [
 		{
@@ -86,7 +89,7 @@
 </svelte:head>
 
 <section class="hero">
-	<Terminal />
+	<Terminal command={TERMINAL_COMMAND} />
 </section>
 
 <main class="home">
@@ -96,6 +99,8 @@
 			channelUrl={YOUTUBE_CHANNEL}
 			videoId={YOUTUBE_VIDEO_ID}
 			videoTitle={YOUTUBE_VIDEO_TITLE}
+			sectionTitle={YOUTUBE_SECTION_TITLE}
+			sectionSubtitle={YOUTUBE_SECTION_SUBTITLE}
 		/>
 		<Navigation links={navLinks} />
 	</div>
