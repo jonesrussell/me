@@ -60,51 +60,9 @@ jobs:
           npm ci --prefer-offline --no-audit
           npm rebuild @rollup/rollup-linux-x64-gnu
 
-      - name: Install WebKit dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libwoff1
-
-      - name: Install Playwright system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libgtk-3-0 \
-            libatk1.0-0 \
-            libatk-bridge2.0-0 \
-            libcups2 \
-            libdrm2 \
-            libxkbcommon0 \
-            libxcomposite1 \
-            libxdamage1 \
-            libxfixes3 \
-            libxrandr2 \
-            libgbm1 \
-            libpango-1.0-0 \
-            libcairo2 \
-            libasound2 \
-            libx11-xcb1 \
-            libxcb1 \
-            libxcb-dri3-0 \
-            libx11-6 \
-            libxext6 \
-            libxshmfence1 \
-            libvpx7 \
-            libvpx-dev \
-            libwebp7 \
-            libwebpdemux2 \
-            libwebpmux3 \
-            libnss3 \
-            libnss3-dev \
-            libnspr4 \
-            libnspr4-dev \
-            libopus0 \
-            libopus-dev \
-            libharfbuzz-icu0 \
-            libharfbuzz0b \
-            libharfbuzz-dev \
-            libicu-dev \
-            libicu70
+      - name: Install Playwright Browsers
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps
 
       - name: Type check
         run: npm run check
@@ -114,10 +72,6 @@ jobs:
 
       - name: Test
         run: npm test
-
-      - name: Install Playwright Browsers
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps
 
       - name: Run Playwright tests
         run: npx playwright test
@@ -183,6 +137,7 @@ jobs:
           sudo apt-get install -y software-properties-common
           sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
           sudo apt-get update
+          sudo apt-get install -y libavif9 libavif-dev
           npx playwright install-deps
 
       - name: Build
