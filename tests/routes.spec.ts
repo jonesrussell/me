@@ -68,8 +68,10 @@ test.describe('Route Navigation', () => {
 			await page.waitForSelector('.site');
 
 			// Check for navigation links in the home page navigation
-			await page.goto('/');
+			await page.goto('/', { waitUntil: 'networkidle' });
 			await page.waitForSelector('.site');
+			// Wait for any pending navigations to complete
+			await page.waitForLoadState('networkidle');
 			for (const link of routes) {
 				await expect(page.locator(`text=${link.text}`)).toBeVisible({ timeout: 10000 });
 			}
