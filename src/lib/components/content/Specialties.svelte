@@ -6,6 +6,57 @@
 			icon: string;
 		}>;
 	}>();
+
+	let revealedStates = $state<boolean[]>([]);
+
+	$effect(() => {
+		revealedStates = specialties.map(() => false);
+		console.log('Initialized revealed states:', revealedStates);
+	});
+
+	$effect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					const index = specialties.findIndex(
+						(_: unknown, i: number) =>
+							entry.target === document.querySelector(`.specialty:nth-child(${i + 1})`)
+					);
+
+					console.log(`Item ${index} intersection:`, {
+						isIntersecting: entry.isIntersecting,
+						intersectionRatio: entry.intersectionRatio,
+						boundingClientRect: entry.boundingClientRect
+					});
+
+					if (index !== -1 && entry.isIntersecting) {
+						console.log(`Scheduling reveal for item ${index} (${specialties[index].title})`);
+						setTimeout(() => {
+							revealedStates[index] = true;
+							console.log(`Revealed item ${index} (${specialties[index].title})`);
+							console.log('Current revealed states:', revealedStates);
+						}, index * 150);
+					}
+				});
+			},
+			{
+				threshold: 0.2,
+				rootMargin: '0px 0px -50px 0px'
+			}
+		);
+
+		const elements = document.querySelectorAll('.specialty');
+		console.log(`Observing ${elements.length} specialty items`);
+		elements.forEach((element, index) => {
+			console.log(`Setting up observer for item ${index}`);
+			observer.observe(element);
+		});
+
+		return () => {
+			console.log('Cleaning up observers');
+			elements.forEach((element) => observer.unobserve(element));
+		};
+	});
 </script>
 
 <style>
@@ -48,15 +99,22 @@
 		background: var(--bg-darker);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
-		transition: all var(--transition-duration) var(--transition-timing);
 		flex-direction: column;
 		align-items: center;
 		gap: var(--space-4);
+		opacity: 0;
+		transform: translateX(-100%);
+		transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.specialty.revealed {
+		opacity: 1;
+		transform: translateX(0);
 	}
 
 	.specialty:hover {
 		background: var(--color-mix-light);
-		transform: translateY(-0.125ch);
+		transform: translateY(-0.125ch) translateX(0);
 	}
 
 	.specialty-icon {
@@ -107,6 +165,11 @@
 			transition: none;
 			transform: none;
 		}
+
+		.specialty.revealed {
+			opacity: 1;
+			transform: none;
+		}
 	}
 </style>
 
@@ -116,8 +179,16 @@
 		<p class="section-desc">Areas where I excel and bring value to projects</p>
 	</div>
 	<div class="specialties">
-		{#each specialties as specialty (specialty.title)}
-			<div class="specialty">
+		{#each specialties as specialty, i (specialty.title)}
+			<div
+				class="specialty"
+				class:revealed={revealedStates[i]}
+				style="transform: {revealedStates[i]
+					? 'translateX(0)'
+					: i % 2 === 0
+						? 'translateX(-100%)'
+						: 'translateX(100%)'};"
+			>
 				<div class="specialty-icon">{specialty.icon}</div>
 				<div class="specialty-content">
 					<div class="specialty-title">{specialty.title}</div>
