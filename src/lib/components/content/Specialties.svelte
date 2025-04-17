@@ -1,7 +1,7 @@
 <script lang="ts">
 	import IntersectionObserver from 'svelte-intersection-observer';
 	import { fade } from 'svelte/transition';
-	import { cubicOut } from 'svelte/easing';
+	import { elasticOut, expoOut } from 'svelte/easing';
 
 	const { specialties } = $props<{
 		specialties: Array<{
@@ -74,8 +74,8 @@
 		opacity: 0;
 		transform: translateX(-100%);
 		transition:
-			opacity 1s ease-out,
-			transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+			opacity 0.5s expoOut,
+			transform 0.5s elasticOut;
 	}
 
 	.specialty.visible {
@@ -86,6 +86,7 @@
 	.specialty:hover {
 		background: var(--color-mix-light);
 		transform: translateY(-0.125ch) translateX(0);
+		transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.specialty-icon {
@@ -165,7 +166,8 @@
 						? 'translateX(0)'
 						: i % 2 === 0
 							? 'translateX(-100%)'
-							: 'translateX(100%)'};"
+							: 'translateX(100%)'};
+					transition-delay: {intersectingStates[i] ? `${i * 0.1}s` : '0s'};"
 				>
 					<div class="specialty-icon">{specialty.icon}</div>
 					<div class="specialty-content">
