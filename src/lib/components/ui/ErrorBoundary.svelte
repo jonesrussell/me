@@ -1,10 +1,9 @@
 <script lang="ts">
 	import Badge from './Badge.svelte';
 
-	type ChildrenType = () => string | HTMLElement;
-
-	const { children } = $props<{
-		children: ChildrenType;
+	const { children, fallback } = $props<{
+		children: () => unknown;
+		fallback?: (error: Error) => unknown;
 	}>();
 
 	let error = $state<Error | null>(null);
@@ -13,16 +12,18 @@
 		error = null;
 	}
 
-	$effect.root(() => {
+	function handleError(e: unknown) {
+		error = e instanceof Error ? e : new Error(String(e));
+	}
+
+	function renderContent() {
 		try {
-			const result = children();
-			if (!result) {
-				throw new Error('No content rendered');
-			}
+			return children();
 		} catch (e) {
-			error = e instanceof Error ? e : new Error(String(e));
+			handleError(e);
+			return null;
 		}
-	});
+	}
 </script>
 
 <style>
@@ -36,6 +37,14 @@
 	.error-message {
 		margin: var(--space-2, 0.5rem) 0;
 		color: var(--color-error, #dc2626);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+	}
+
+	.error-stack {
+		margin-top: var(--space-2);
+		font-size: var(--font-size-xs);
+		opacity: 0.8;
 	}
 
 	button {
@@ -53,11 +62,18 @@
 </style>
 
 {#if error}
-	<div class="error-boundary" data-testid="error-boundary">
-		<Badge type="error">Error</Badge>
-		<p class="error-message" data-testid="error-message">{error.message}</p>
-		<button onclick={resetError} data-testid="retry-button">Try Again</button>
-	</div>
+	{#if fallback}
+		{@render fallback(error)}
+	{:else}
+		<div class="error-boundary" data-testid="error-boundary">
+			<Badge type="error">Error</Badge>
+			<p class="error-message" data-testid="error-message">{error.message}</p>
+			{#if error.stack}
+				<pre class="error-stack">{error.stack}</pre>
+			{/if}
+			<button onclick={resetError} data-testid="retry-button">Try Again</button>
+		</div>
+	{/if}
 {:else}
-	{@render children()}
+	{@render renderContent()}
 {/if}
