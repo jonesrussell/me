@@ -6,15 +6,12 @@ on:
   pull_request:
     branches: ['main']
     types: [opened, synchronize]
-  # Allow manual trigger
-  workflow_dispatch:
+  workflow_dispatch: # Manual trigger
 
-# Allow one concurrent deployment
 concurrency:
   group: 'pages'
   cancel-in-progress: true
 
-# Default to bash
 defaults:
   run:
     shell: bash
@@ -28,12 +25,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Install dependencies
-        run: npm ci
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-      - name: Run Playwright tests
-        run: npx playwright test
+      - run: |
+          npm ci
+          npx playwright install --with-deps
+          npx playwright test
       - uses: actions/upload-artifact@v4
         if: ${{ !env.ACT }}
         with:
@@ -48,103 +43,51 @@ jobs:
     permissions:
       contents: read
       pull-requests: read
-      actions: write
     env:
       DEBIAN_FRONTEND: noninteractive
       NODE_ENV: test
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: true
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
-
-      - name: Cache npm dependencies
-        uses: actions/cache@v4
+      - uses: actions/cache@v4
         id: npm-cache
         with:
           path: |
             node_modules
             .npm
           key: deps-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            deps-${{ runner.os }}-
-
-      - name: Install dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: |
+          restore-keys: deps-${{ runner.os }}-
+      - run: |
           npm ci --prefer-offline --no-audit
-          npm rebuild @rollup/rollup-linux-x64-gnu
-
-      - name: Type check
-        run: npm run check
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Test
-        run: npm test
+          npm run check && npm run lint && npm test
 
   build:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: test
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    permissions:
-      contents: read
-      pull-requests: read
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
-
-      - name: Cache npm dependencies
-        uses: actions/cache@v4
-        id: npm-cache
-        with:
-          path: |
-            node_modules
-            .npm
-          key: deps-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            deps-${{ runner.os }}-
-
-      - name: Cache build output
-        uses: actions/cache@v4
-        id: build-cache
+      - uses: actions/cache@v4
         with:
           path: |
             build
             .svelte-kit
           key: build-${{ runner.os }}-${{ github.sha }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            build-${{ runner.os }}-${{ github.sha }}-
+          restore-keys: build-${{ runner.os }}-${{ github.sha }}-
             build-${{ runner.os }}-
-
-      - name: Install dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: |
+      - run: |
           npm ci --prefer-offline --no-audit
-          npm rebuild @rollup/rollup-linux-x64-gnu
-
-      - name: Build
-        env:
-          BASE_PATH: '/${{ github.event.repository.name }}'
-          NODE_ENV: production
-        run: npm run build
-
-      - name: Upload Pages artifact
+          npm run build
+      - uses: actions/upload-artifact@v4
         if: ${{ !env.ACT }}
-        uses: actions/upload-artifact@v3
         with:
           path: build/
           retention-days: 30
@@ -160,8 +103,6 @@ jobs:
     permissions:
       pages: write
       id-token: write
-      contents: read
-      pull-requests: read
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
