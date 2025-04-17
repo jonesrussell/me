@@ -13,6 +13,7 @@
 
 	let elements = $state<HTMLElement[]>([]);
 	let intersectingStates = $state<boolean[]>([]);
+	let activeIntersection = $state<number | null>(null);
 
 	$effect(() => {
 		intersectingStates = specialties.map(() => false);
@@ -22,8 +23,13 @@
 		const entry = event.detail;
 		console.log(`Item ${index} is intersecting:`, entry.isIntersecting);
 
-		if (entry.isIntersecting && !intersectingStates[index]) {
-			intersectingStates[index] = true;
+		if (entry.isIntersecting) {
+			if (!intersectingStates[index]) {
+				intersectingStates[index] = true;
+			}
+			activeIntersection = index;
+		} else if (activeIntersection === index) {
+			activeIntersection = null;
 		}
 	}
 </script>
@@ -75,7 +81,8 @@
 		transform: translateX(-100%);
 		transition:
 			opacity 0.5s expoOut,
-			transform 0.5s elasticOut;
+			transform 0.5s elasticOut,
+			background 0.3s ease-out;
 	}
 
 	.specialty.visible {
@@ -83,10 +90,17 @@
 		transform: translateX(0);
 	}
 
+	.specialty.intersecting {
+		background: var(--color-mix-medium);
+		border-color: var(--accent-color);
+	}
+
 	.specialty:hover {
 		background: var(--color-mix-light);
 		transform: translateY(-0.125ch) translateX(0);
-		transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+		transition:
+			transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+			background 0.2s ease-out;
 	}
 
 	.specialty-icon {
@@ -162,6 +176,7 @@
 					bind:this={elements[i]}
 					class="specialty"
 					class:visible={intersectingStates[i]}
+					class:intersecting={activeIntersection === i}
 					style="transform: {intersectingStates[i]
 						? 'translateX(0)'
 						: i % 2 === 0
