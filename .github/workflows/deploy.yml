@@ -131,6 +131,10 @@ jobs:
           npm ci --prefer-offline --no-audit
           npm rebuild @rollup/rollup-linux-x64-gnu
 
+      - name: Install Playwright dependencies
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npx playwright install-deps
+
       - name: Build
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'
