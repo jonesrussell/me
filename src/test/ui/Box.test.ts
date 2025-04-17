@@ -6,7 +6,7 @@ describe('Box', () => {
 	it('renders with default props', () => {
 		const { container } = render(Box, {
 			props: {
-				children: 'Test Content'
+				children: () => 'Test Content'
 			}
 		});
 
@@ -19,7 +19,7 @@ describe('Box', () => {
 		const { container } = render(Box, {
 			props: {
 				width: 60,
-				children: 'Wide Content'
+				children: () => 'Wide Content'
 			}
 		});
 
@@ -32,7 +32,7 @@ describe('Box', () => {
 		const { container } = render(Box, {
 			props: {
 				title: 'Test Title',
-				children: 'Content'
+				children: () => 'Content'
 			}
 		});
 
@@ -44,7 +44,7 @@ describe('Box', () => {
 	it('renders without title when not provided', () => {
 		const { container } = render(Box, {
 			props: {
-				children: 'Content'
+				children: () => 'Content'
 			}
 		});
 
@@ -55,7 +55,7 @@ describe('Box', () => {
 		const { container } = render(Box, {
 			props: {
 				style: 'margin-top: 1rem;',
-				children: 'Styled Content'
+				children: () => 'Styled Content'
 			}
 		});
 
@@ -67,7 +67,7 @@ describe('Box', () => {
 	it('has required structural elements', () => {
 		const { container } = render(Box, {
 			props: {
-				children: 'Content'
+				children: () => 'Content'
 			}
 		});
 
@@ -88,7 +88,7 @@ describe('Box', () => {
 		const { container } = render(Box, {
 			props: {
 				title: 'Accessible Box',
-				children: 'Content'
+				children: () => 'Content'
 			}
 		});
 
