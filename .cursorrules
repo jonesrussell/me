@@ -21,6 +21,9 @@ testing_guidelines:
   - test_component_structure: true
   - test_style_applications: true
   - test_responsive_behavior: true
+  - no_test_ids: true
+  - use_semantic_html_for_testing: true
+  - test_using_roles_and_labels: true
 
 branding:
   - title: 'Russell Jones'
