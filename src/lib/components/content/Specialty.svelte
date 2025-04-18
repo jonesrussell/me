@@ -19,8 +19,8 @@
 		display: flex;
 		padding: var(--space-6);
 		text-align: center;
-		background: hsl(220, 15%, 20%);
-		border: var(--border-width) solid hsl(220, 15%, 30%);
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
 		flex-direction: column;
 		align-items: center;
@@ -39,20 +39,20 @@
 	}
 
 	.specialty.intersecting {
-		background: hsl(220, 15%, 25%);
-		border-color: hsl(220, 100%, 70%);
-		box-shadow: 0 0 0 1px hsl(220, 100%, 70%);
+		background: var(--color-mix-medium);
+		border-color: var(--accent-color);
+		box-shadow: 0 0 0 1px var(--accent-color);
 	}
 
 	.specialty:hover {
-		background: hsl(220, 15%, 22%);
+		background: var(--color-mix-light);
 		transform: translateY(-0.125ch);
 	}
 
 	.specialty-icon {
 		font-size: var(--font-size-2xl);
 		line-height: var(--line-height-tight);
-		color: hsl(220, 100%, 70%);
+		color: var(--accent-color);
 	}
 
 	.specialty-content {
@@ -64,14 +64,14 @@
 	.specialty-title {
 		font-size: var(--font-size-lg);
 		font-weight: var(--font-weight-bold);
-		color: hsl(220, 100%, 90%);
+		color: var(--text-color);
 		line-height: var(--line-height-tight);
 	}
 
 	.specialty-desc {
 		font-size: var(--font-size-base);
 		line-height: var(--line-height-base);
-		color: hsl(220, 15%, 70%);
+		color: var(--text-muted);
 	}
 
 	@media (width >= 80ch) {
