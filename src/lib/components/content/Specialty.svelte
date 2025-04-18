@@ -19,8 +19,8 @@
 		display: flex;
 		padding: var(--space-6);
 		text-align: center;
-		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
+		background: hsl(220, 15%, 20%);
+		border: var(--border-width) solid hsl(220, 15%, 30%);
 		border-radius: var(--radius-md);
 		flex-direction: column;
 		align-items: center;
@@ -39,13 +39,20 @@
 	}
 
 	.specialty.intersecting {
-		background: var(--color-mix-medium);
-		border-color: var(--accent-color);
+		background: hsl(220, 15%, 25%);
+		border-color: hsl(220, 100%, 70%);
+		box-shadow: 0 0 0 1px hsl(220, 100%, 70%);
+	}
+
+	.specialty:hover {
+		background: hsl(220, 15%, 22%);
+		transform: translateY(-0.125ch);
 	}
 
 	.specialty-icon {
 		font-size: var(--font-size-2xl);
 		line-height: var(--line-height-tight);
+		color: hsl(220, 100%, 70%);
 	}
 
 	.specialty-content {
@@ -57,17 +64,17 @@
 	.specialty-title {
 		font-size: var(--font-size-lg);
 		font-weight: var(--font-weight-bold);
-		color: var(--text-color);
+		color: hsl(220, 100%, 90%);
 		line-height: var(--line-height-tight);
 	}
 
 	.specialty-desc {
 		font-size: var(--font-size-base);
 		line-height: var(--line-height-base);
-		color: var(--text-muted);
+		color: hsl(220, 15%, 70%);
 	}
 
-	@media (width >= 48ch) {
+	@media (width >= 80ch) {
 		.specialty {
 			flex-direction: row;
 			text-align: left;
