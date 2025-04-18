@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { slideIn, hoverScale } from '$lib/utils/animations';
+	import { fade } from 'svelte/transition';
+	import { hoverScale } from '$lib/utils/animations';
 
 	const { specialty, index, isIntersecting, isRevealed } = $props<{
 		specialty: {
@@ -25,17 +26,16 @@
 		align-items: center;
 		gap: var(--space-4);
 		transition: background 0.3s ease-out;
-		/* Initial state */
 		opacity: 0;
 		transform: translateX(var(--initial-offset));
-	}
-
-	.specialty.revealed {
-		opacity: 1;
-		transform: translateX(0);
 		transition:
 			opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
 			transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.specialty.visible {
+		opacity: 1;
+		transform: translateX(0);
 	}
 
 	.specialty.intersecting {
@@ -87,7 +87,7 @@
 			opacity: 1;
 		}
 
-		.specialty.revealed {
+		.specialty.visible {
 			transition: none;
 			transform: none;
 			opacity: 1;
@@ -97,7 +97,7 @@
 
 <div
 	class="specialty"
-	class:revealed={isRevealed}
+	class:visible={isRevealed}
 	class:intersecting={isIntersecting}
 	use:hoverScale
 	style="--initial-offset: {index % 2 === 0 ? '-100%' : '100%'}"
