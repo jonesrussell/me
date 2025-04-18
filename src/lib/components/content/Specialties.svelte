@@ -63,7 +63,7 @@
 		margin-top: var(--space-2);
 	}
 
-	@media (width >= 48ch) {
+	@media (width >= 80ch) {
 		.specialties {
 			display: grid;
 			grid-template-columns: repeat(2, 1fr);
