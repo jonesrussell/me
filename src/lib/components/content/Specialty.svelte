@@ -80,6 +80,11 @@
 			text-align: left;
 			align-items: flex-start;
 			padding: var(--space-4);
+			transform: scale(0.95);
+		}
+
+		.specialty.visible {
+			transform: scale(1);
 		}
 
 		.specialty-icon {
