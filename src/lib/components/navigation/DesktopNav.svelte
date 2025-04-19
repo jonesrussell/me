@@ -35,7 +35,9 @@
 			flex-direction: row;
 			gap: var(--space-4);
 			justify-content: flex-end;
+			align-items: center;
 			z-index: 15;
+			flex-wrap: nowrap;
 		}
 
 		.desktop-nav a {
@@ -46,6 +48,7 @@
 			color: var(--text-muted);
 			border-radius: var(--radius-md);
 			transition: all var(--transition-duration) var(--transition-timing);
+			white-space: nowrap;
 		}
 
 		.desktop-nav a:hover {

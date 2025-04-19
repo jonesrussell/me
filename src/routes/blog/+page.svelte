@@ -40,91 +40,112 @@
 		padding: var(--space-16) 0;
 		container-type: inline-size;
 		container-name: blog-page;
+	}
 
-		& .container {
-			width: 100%;
-			max-width: min(160ch, 95cqi);
-			margin: 0 auto;
-			padding: 0 var(--space-4);
-		}
-
-		& .hero {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			text-align: center;
-			padding: var(--space-16) 0;
-			margin-bottom: var(--space-16);
-			background: linear-gradient(to bottom, var(--surface-color) 0%, var(--bg-color) 100%);
-			border-radius: var(--radius-lg);
-			position: relative;
-			overflow: hidden;
-		}
-
-		& .hero::before {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background: radial-gradient(circle at 50% 50%, var(--accent-color) 0%, transparent 70%);
-			opacity: 0.1;
-			z-index: 0;
-		}
-
-		& h1 {
-			margin: 0;
-			font-size: var(--font-size-2xl);
-			font-weight: var(--font-weight-bold);
-			line-height: var(--line-height-tight);
-			text-align: center;
-			color: var(--text-color);
-			position: relative;
-			z-index: 1;
-			background: linear-gradient(to right, var(--accent-color), var(--accent-color-hover));
-			background-clip: text;
-			-webkit-text-fill-color: transparent;
-			text-shadow: 0 0 20px color-mix(in srgb, var(--accent-color) 20%, transparent);
-		}
-
-		& .subtitle {
-			margin: var(--space-4) 0 0 0;
-			font-size: var(--font-size-lg);
-			line-height: var(--line-height-relaxed);
-			text-align: center;
-			color: var(--text-muted);
-			position: relative;
-			z-index: 1;
-			max-width: 60ch;
-		}
-
-		@container blog-page (width >= 48ch) {
-			& .hero {
-				padding: var(--space-24) 0;
-			}
-
-			& h1 {
-				font-size: var(--font-size-3xl);
-			}
-
-			& .subtitle {
-				font-size: var(--font-size-xl);
-				margin: var(--space-6) 0 0 0;
-			}
-		}
-
-		@container blog-page (width >= 80ch) {
-			& h1 {
-				font-size: var(--font-size-4xl);
-			}
-		}
+	.container {
+		width: 100%;
+		max-width: min(40ch, 95cqi);
+		margin: 0 auto;
+		padding: 0 var(--space-4);
 	}
 
 	.posts {
 		display: grid;
+		grid-template-columns: minmax(min(100%, 30ch), 1fr);
 		gap: var(--space-8);
+		width: 100%;
+	}
+
+	/* Tablet and up */
+	@media (width >= 48ch) {
+		.container {
+			max-width: min(80ch, 95cqi);
+		}
+
+		.posts {
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30ch), 1fr));
+		}
+	}
+
+	/* Desktop */
+	@media (width >= 80ch) {
+		.container {
+			max-width: min(160ch, 95cqi);
+		}
+
+		.posts {
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
+		}
+	}
+
+	.hero {
+		width: 100%;
+		min-height: 50vh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		background: linear-gradient(to bottom, var(--surface-color) 0%, var(--bg-color) 100%);
+		border-radius: var(--radius-lg);
+		position: relative;
+		overflow: hidden;
+		padding: var(--space-24) 0;
+		margin: calc(-1 * var(--space-24)) 0 0 0;
+	}
+
+	.hero::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(circle at center, var(--color-mix-faint) 0%, transparent 70%);
+		pointer-events: none;
+	}
+
+	h1 {
+		font-family: var(--font-mono);
+		font-size: var(--font-size-5xl);
+		font-weight: var(--font-weight-bold);
+		line-height: var(--line-height-tight);
+		letter-spacing: var(--letter-spacing-tight);
+		color: var(--text-color);
+		margin: 0 0 var(--space-6) 0;
+		text-shadow: 0 2px 4px var(--color-mix-faint);
+		background: linear-gradient(to right, var(--text-color), var(--text-muted));
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+
+	.subtitle {
+		font-family: var(--font-mono);
+		font-size: var(--font-size-xl);
+		font-weight: var(--font-weight-normal);
+		line-height: var(--line-height-base);
+		letter-spacing: var(--letter-spacing-base);
+		color: var(--text-muted);
+		margin: 0;
+		max-width: var(--measure);
+	}
+
+	@media (min-width: 640px) {
+		h1 {
+			font-size: var(--font-size-6xl);
+		}
+
+		.subtitle {
+			font-size: var(--font-size-2xl);
+		}
+	}
+
+	@media (min-width: 1024px) {
+		h1 {
+			font-size: var(--font-size-7xl);
+		}
+
+		.subtitle {
+			font-size: var(--font-size-3xl);
+		}
 	}
 
 	.load-more {
