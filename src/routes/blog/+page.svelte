@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fetchFeed } from '$lib/services/blog-service';
 	import { writable } from 'svelte/store';
-	import BlogHeader from '$lib/components/blog/BlogHeader.svelte';
+	import DevTo from '$lib/components/blog/DevTo.svelte';
 	import BlogPost from '$lib/components/blog/BlogPost.svelte';
 	import BlogError from '$lib/components/blog/BlogError.svelte';
 	import type { BlogPost as BlogPostType } from '$lib/services/blog-service';
@@ -35,6 +35,23 @@
 </script>
 
 <style>
+	h1 {
+		margin: 0;
+		font-size: var(--font-size-2xl);
+		font-weight: var(--font-weight-medium);
+		line-height: var(--line-height-tight);
+		color: var(--accent-color);
+		background: linear-gradient(to right, var(--accent-color), var(--accent-color-hover));
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+
+	.subtitle {
+		margin: var(--space-4) auto 0;
+		font-size: var(--font-size-lg);
+		color: var(--text-muted);
+	}
+
 	.blog {
 		width: 100%;
 		padding: var(--space-16) 0;
@@ -89,7 +106,9 @@
 </svelte:head>
 
 <div class="blog">
-	<BlogHeader />
+	<h1>Web Developer Blog</h1>
+	<p class="subtitle">Open Source Enthusiast</p>
+
 	<BlogError />
 
 	<div class="container">
@@ -111,4 +130,6 @@
 			</div>
 		{/if}
 	</div>
+
+	<DevTo />
 </div>
