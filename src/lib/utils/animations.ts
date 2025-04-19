@@ -7,7 +7,10 @@ interface SlideInParams {
 	index?: number;
 }
 
-export function slideIn(node: HTMLElement, { delay = 0, duration = 700, index = 0 }: SlideInParams = {}): TransitionConfig {
+export function slideIn(
+	node: HTMLElement,
+	{ delay = 0, duration = 700, index = 0 }: SlideInParams = {}
+): TransitionConfig {
 	// Set initial state
 	node.style.opacity = '0';
 	node.style.transform = `translateX(${index % 2 === 0 ? '-100%' : '100%'})`;
@@ -15,7 +18,7 @@ export function slideIn(node: HTMLElement, { delay = 0, duration = 700, index = 
 	return {
 		duration,
 		delay,
-		css: (t) => {
+		css: t => {
 			const eased = elasticOut(t);
 			return `
 				opacity: ${t};
@@ -25,11 +28,14 @@ export function slideIn(node: HTMLElement, { delay = 0, duration = 700, index = 
 	};
 }
 
-export function fadeIn(node: HTMLElement, { delay = 0, duration = 500 }: SlideInParams = {}): TransitionConfig {
+export function fadeIn(
+	node: HTMLElement,
+	{ delay = 0, duration = 500 }: SlideInParams = {}
+): TransitionConfig {
 	return {
 		duration,
 		delay,
-		css: (t) => {
+		css: t => {
 			const eased = expoOut(t);
 			return `
 				opacity: ${eased};

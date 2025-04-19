@@ -111,7 +111,7 @@
 
 	{#if isOpen}
 		<div class="dropdown" transition:fade={{ duration: 150 }}>
-			{#each themes as { value, label, icon }}
+			{#each themes as { value, label, icon } (value)}
 				<button
 					class="theme-option"
 					class:active={$theme === value}
