@@ -6,7 +6,7 @@
 	--text-muted: rgb(148 163 184);
 	--border-color: rgb(40 50 60);
 
-	/* Primary Accent - Deep Emerald */
+	/* Primary Accent - Emerald */
 	--accent-color: rgb(16 185 129);
 	--accent-color-hover: rgb(52 211 153);
 
@@ -19,8 +19,8 @@
 	--color-mix-faint: rgb(16 185 129 / 5%);
 
 	/* Status Colors */
-	--color-info: rgb(59 130 246);
-	--color-success: rgb(34 197 94);
-	--color-warning: rgb(234 179 8);
-	--color-error: rgb(239 68 68);
+	--color-info: var(--color-blue-400);
+	--color-success: var(--color-green-400);
+	--color-warning: var(--color-yellow-400);
+	--color-error: var(--color-red-400);
 }

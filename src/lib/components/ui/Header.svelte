@@ -2,6 +2,7 @@
 	import DesktopNav from '$lib/components/navigation/DesktopNav.svelte';
 	import MobileNav from '$lib/components/navigation/MobileNav.svelte';
 	import SubtitleBar from './SubtitleBar.svelte';
+	import ThemeToggle from '../ThemeToggle.svelte';
 	import { base } from '$app/paths';
 
 	const { url } = $props<{ url: URL }>();
@@ -40,6 +41,12 @@
 		align-items: center;
 		position: relative;
 		container-type: inline-size;
+	}
+
+	.header-right {
+		display: flex;
+		align-items: center;
+		gap: var(--space-4);
 	}
 
 	.menu-toggle {
@@ -108,15 +115,18 @@
 	<div class="header-content">
 		<div class="header-main">
 			<a href={base || '/'} class="title">Russell Jones</a>
-			<button
-				class="menu-toggle"
-				type="button"
-				onclick={toggleMobileMenu}
-				aria-expanded={isMobileMenuOpen}
-			>
-				<span class="menu-icon">☰</span>
-				<span class="sr-only">Toggle menu</span>
-			</button>
+			<div class="header-right">
+				<ThemeToggle />
+				<button
+					class="menu-toggle"
+					type="button"
+					onclick={toggleMobileMenu}
+					aria-expanded={isMobileMenuOpen}
+				>
+					<span class="menu-icon">☰</span>
+					<span class="sr-only">Toggle menu</span>
+				</button>
+			</div>
 			<DesktopNav {url} />
 			<MobileNav {url} isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
 		</div>
