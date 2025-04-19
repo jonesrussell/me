@@ -23,14 +23,25 @@ export const sanitizeText = memoize((text: string): string => {
 
 	try {
 		const options = {
-			allowedTags: [], // Remove all HTML tags
-			allowedAttributes: {} // Remove all attributes
+			allowedTags: [
+				'p', 'br', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li',
+				'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'code', 'pre'
+			],
+			allowedAttributes: {
+				'a': ['href', 'title', 'target'],
+				'code': ['class'],
+				'pre': ['class']
+			},
+			allowedSchemes: ['http', 'https', 'mailto'],
+			transformTags: {
+				'a': (tagName: string, attribs: { [key: string]: string }) => ({
+					tagName,
+					attribs: { ...attribs, target: '_blank', rel: 'noopener noreferrer' }
+				})
+			}
 		};
 
-		// Sanitize and normalize spaces
-		return sanitizeHtml(text, options)
-			.replace(/\s+/g, ' ') // Replace multiple spaces with single space
-			.trim(); // Remove leading/trailing spaces
+		return sanitizeHtml(text, options).trim();
 	} catch (error) {
 		console.error('Error sanitizing text:', error);
 		return ''; // Return empty string on error

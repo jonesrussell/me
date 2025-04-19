@@ -7,6 +7,7 @@ export interface BlogPost {
 	link: string;
 	published: string;
 	description: string;
+	slug: string;
 }
 
 interface FetchResult {
@@ -50,6 +51,7 @@ interface PaginatedResult<T> {
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 const MAX_ERROR_COUNT = 3;
 const ERROR_RESET_TIME = 30 * 60 * 1000; // 30 minutes
+const FEED_URL = 'https://jonesrussell.github.io/blog/feed.xml';
 
 // State
 let feedCache: FeedCache | null = null;
@@ -160,7 +162,8 @@ function parsePost(entry: Element): BlogPost {
 			title,
 			link,
 			published,
-			description: sanitizeText(description)
+			description: sanitizeText(description),
+			slug: generateSlug(title)
 		};
 
 		return post;
@@ -181,64 +184,55 @@ export function formatPostDate(dateString: string): string {
 	return formatDate(dateString);
 }
 
-export async function fetchFeed(options?: PaginationOptions): Promise<PaginatedResult<BlogPost>> {
-	if (feedCache && !shouldInvalidateCache(feedCache, { success: true, data: null })) {
-		const { page = 1, pageSize = 10 } = options || {};
+function generateSlug(title: string): string {
+	return title
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/(^-|-$)/g, '');
+}
+
+export async function fetchFeed({ page = 1, pageSize = 5 } = {}): Promise<{
+	items: BlogPost[];
+	hasMore: boolean;
+}> {
+	try {
+		const result = await fetchXML(FEED_URL);
+		if (!result.success || !result.data) {
+			throw new Error('Failed to fetch feed');
+		}
+
+		const entries = Array.from(result.data.querySelectorAll('entry'));
+		const posts = entries.map(parsePost);
 		const start = (page - 1) * pageSize;
 		const end = start + pageSize;
-		const items = feedCache.data.slice(start, end);
+		const items = posts.slice(start, end);
 
 		return {
 			items,
-			total: feedCache.data.length,
-			page,
-			pageSize,
-			hasMore: end < feedCache.data.length
+			hasMore: end < posts.length
 		};
+	} catch (error) {
+		throw new Error('Failed to fetch blog posts');
 	}
+}
 
-	const result = await fetchXML('https://jonesrussell.github.io/blog/feed.xml');
-
-	if (!result.success || !result.data) {
-		if (feedCache) {
-			return {
-				items: feedCache.data,
-				total: feedCache.data.length,
-				page: 1,
-				pageSize: 10,
-				hasMore: false
-			};
+export async function fetchPost(slug: string): Promise<BlogPost> {
+	try {
+		const result = await fetchXML(FEED_URL);
+		if (!result.success || !result.data) {
+			throw new Error('Failed to fetch feed');
 		}
-		return {
-			items: [],
-			total: 0,
-			page: 1,
-			pageSize: 10,
-			hasMore: false
-		};
+
+		const entries = Array.from(result.data.querySelectorAll('entry'));
+		const posts = entries.map(parsePost);
+		const post = posts.find(post => post.slug === slug);
+
+		if (!post) {
+			throw new Error('Post not found');
+		}
+
+		return post;
+	} catch (error) {
+		throw new Error('Failed to fetch blog post');
 	}
-
-	const entries = Array.from(result.data.querySelectorAll('entry'));
-	const posts = entries.map(parsePost);
-
-	feedCache = {
-		data: posts,
-		timestamp: Date.now(),
-		etag: result.etag,
-		lastModified: result.lastModified,
-		errorCount: 0
-	};
-
-	const { page = 1, pageSize = 10 } = options || {};
-	const start = (page - 1) * pageSize;
-	const end = start + pageSize;
-	const items = posts.slice(start, end);
-
-	return {
-		items,
-		total: posts.length,
-		page,
-		pageSize,
-		hasMore: end < posts.length
-	};
 }

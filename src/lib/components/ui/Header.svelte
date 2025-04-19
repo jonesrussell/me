@@ -36,7 +36,7 @@
 
 	.header-main {
 		display: grid;
-		grid-template-columns: 1fr auto;
+		grid-template-columns: auto 1fr auto;
 		gap: var(--space-4);
 		align-items: center;
 		position: relative;
@@ -47,6 +47,12 @@
 		display: flex;
 		align-items: center;
 		gap: var(--space-4);
+		justify-self: end;
+	}
+
+	.nav-container {
+		justify-self: end;
+		margin-right: var(--space-4);
 	}
 
 	.menu-toggle {
@@ -115,6 +121,9 @@
 	<div class="header-content">
 		<div class="header-main">
 			<a href={base || '/'} class="title">Russell Jones</a>
+			<div class="nav-container">
+				<DesktopNav {url} />
+			</div>
 			<div class="header-right">
 				<ThemeToggle />
 				<button
@@ -127,7 +136,6 @@
 					<span class="sr-only">Toggle menu</span>
 				</button>
 			</div>
-			<DesktopNav {url} />
 			<MobileNav {url} isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
 		</div>
 	</div>

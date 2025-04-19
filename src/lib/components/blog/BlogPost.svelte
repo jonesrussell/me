@@ -2,12 +2,15 @@
 	import { fade } from 'svelte/transition';
 	import { elasticOut } from 'svelte/easing';
 	import { formatPostDate } from '$lib/services/blog-service';
+	import { page } from '$app/stores';
+	import { base } from '$app/paths';
 
 	export let post: {
 		title: string;
 		link: string;
 		published: string;
 		description: string;
+		slug: string;
 	};
 
 	const getSummary = (text: string) => {
@@ -27,9 +30,10 @@
 	article {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-6);
+		gap: var(--space-4);
 		width: 100%;
-		padding: var(--space-8);
+		max-width: 100%;
+		padding: var(--space-4);
 		border-radius: var(--radius-lg);
 		background: var(--surface-color);
 		border: var(--border-width) solid var(--border-color);
@@ -38,31 +42,25 @@
 			transform var(--transition-duration) var(--transition-timing),
 			box-shadow var(--transition-duration) var(--transition-timing),
 			border-color var(--transition-duration) var(--transition-timing);
-	}
-
-	article:hover {
-		transform: translateY(-2px);
-		box-shadow: var(--shadow-md);
-		border-color: var(--accent-color);
+		box-sizing: border-box;
+		contain: layout style paint;
 	}
 
 	.post-content {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-6);
+		gap: var(--space-4);
+		width: 100%;
+		contain: layout style paint;
 	}
 
 	h2 {
 		margin: 0;
-		font-size: var(--font-size-xl);
+		font-size: var(--font-size-lg);
 		font-weight: var(--font-weight-medium);
 		line-height: var(--line-height-tight);
 		color: var(--text-color);
 		transition: color var(--transition-duration) var(--transition-timing);
-	}
-
-	article:hover h2 {
-		color: var(--accent-color);
 	}
 
 	.metadata {
@@ -93,11 +91,34 @@
 		color: inherit;
 	}
 
-	@container blog-page (width >= 48ch) {
+	article:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-md);
+		border-color: var(--accent-color);
+	}
+
+	article:hover h2 {
+		color: var(--accent-color);
+	}
+
+	/* Tablet and up */
+	@media (width >= 48ch) {
 		article {
-			padding: var(--space-10);
+			gap: var(--space-6);
+			padding: var(--space-8);
 		}
 
+		.post-content {
+			gap: var(--space-6);
+		}
+
+		h2 {
+			font-size: var(--font-size-xl);
+		}
+	}
+
+	/* Desktop */
+	@media (width >= 80ch) {
 		h2 {
 			font-size: var(--font-size-2xl);
 		}
@@ -109,13 +130,13 @@
 </style>
 
 <article in:fade={{ duration: 500, easing: elasticOut }}>
-	<a href={post.link} target="_blank" rel="noopener noreferrer">
+	<a href="{base}/blog/{post.slug}">
 		<div class="post-content">
 			<h2>{post.title}</h2>
 			<div class="metadata">
 				<time datetime={post.published}>{formatPostDate(post.published)}</time>
 			</div>
-			<p class="excerpt">{getSummary(post.description)}</p>
+			<p class="excerpt">{post.description}</p>
 		</div>
 	</a>
 </article>
