@@ -34,27 +34,25 @@ export interface BlogError {
 	timestamp: number;
 }
 
-interface PaginationOptions {
+type PaginationOptions = {
 	page: number;
 	pageSize: number;
-}
+};
 
-interface PaginatedResult<T> {
+type PaginatedResult<T> = {
 	items: T[];
-	total: number;
-	page: number;
-	pageSize: number;
 	hasMore: boolean;
-}
+};
 
 // Constants
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const CACHE_DURATION = 1000 * 60 * 30; // 30 minutes
 const MAX_ERROR_COUNT = 3;
 const ERROR_RESET_TIME = 30 * 60 * 1000; // 30 minutes
-const FEED_URL = 'https://jonesrussell.github.io/blog/feed.xml';
+const FEED_URL = 'https://dev.to/api/articles?username=fullstackdev42';
+const FEED_CACHE_KEY = 'blog-feed-cache';
 
 // State
-let feedCache: FeedCache | null = null;
+const feedCache = new Map<string, { data: BlogPost[]; timestamp: number }>();
 export const blogErrors = writable<BlogError[]>([]);
 
 // Utility Functions
@@ -191,28 +189,46 @@ function generateSlug(title: string): string {
 		.replace(/(^-|-$)/g, '');
 }
 
-export async function fetchFeed({ page = 1, pageSize = 5 } = {}): Promise<{
-	items: BlogPost[];
-	hasMore: boolean;
-}> {
+export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions): Promise<PaginatedResult<BlogPost>> {
+	const cacheKey = `${FEED_CACHE_KEY}-${page}-${pageSize}`;
+	const cached = feedCache.get(cacheKey);
+	const now = Date.now();
+
+	if (cached && now - cached.timestamp < CACHE_DURATION) {
+		return {
+			items: cached.data,
+			hasMore: cached.data.length === pageSize
+		};
+	}
+
 	try {
-		const result = await fetchXML(FEED_URL);
-		if (!result.success || !result.data) {
-			throw new Error('Failed to fetch feed');
+		const response = await fetch(FEED_URL);
+		const data = await response.json();
+
+		if (!Array.isArray(data)) {
+			throw new Error('Invalid response format');
 		}
 
-		const entries = Array.from(result.data.querySelectorAll('entry'));
-		const posts = entries.map(parsePost);
-		const start = (page - 1) * pageSize;
-		const end = start + pageSize;
-		const items = posts.slice(start, end);
+		const posts = data.map((post: any) => ({
+			title: post.title,
+			link: post.url,
+			pubDate: new Date(post.published_at).toLocaleDateString(),
+			description: post.description,
+			categories: post.tags
+		}));
+
+		feedCache.set(cacheKey, { data: posts, timestamp: now });
 
 		return {
-			items,
-			hasMore: end < posts.length
+			items: posts,
+			hasMore: posts.length === pageSize
 		};
-	} catch (error) {
-		throw new Error('Failed to fetch blog posts');
+	} catch (err) {
+		console.error('Error fetching blog feed:', err);
+		return {
+			items: [],
+			hasMore: false
+		};
 	}
 }
 

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import ResourceSection from '$lib/components/resources/ResourceSection.svelte';
 	import FeaturedVideos from '$lib/components/video/FeaturedVideos.svelte';
-	import ResourceHeader from '$lib/components/resources/ResourceHeader.svelte';
 	import type { Resource, YouTubeChannel } from '$lib/types';
 
 	// YouTube channel info
@@ -375,7 +374,7 @@
 
 	<div class="container">
 		<div class="sections">
-			{#each Object.entries(groupedResources) as [category, resources]}
+			{#each Object.entries(groupedResources) as [category, resources] (category)}
 				<ResourceSection {category} {resources} />
 			{/each}
 		</div>
