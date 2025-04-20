@@ -24,17 +24,34 @@ export const sanitizeText = memoize((text: string): string => {
 	try {
 		const options = {
 			allowedTags: [
-				'p', 'br', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li',
-				'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'code', 'pre'
+				'p',
+				'br',
+				'b',
+				'i',
+				'em',
+				'strong',
+				'a',
+				'ul',
+				'ol',
+				'li',
+				'h1',
+				'h2',
+				'h3',
+				'h4',
+				'h5',
+				'h6',
+				'blockquote',
+				'code',
+				'pre'
 			],
 			allowedAttributes: {
-				'a': ['href', 'title', 'target'],
-				'code': ['class'],
-				'pre': ['class']
+				a: ['href', 'title', 'target'],
+				code: ['class'],
+				pre: ['class']
 			},
 			allowedSchemes: ['http', 'https', 'mailto'],
 			transformTags: {
-				'a': (tagName: string, attribs: { [key: string]: string }) => ({
+				a: (tagName: string, attribs: { [key: string]: string }) => ({
 					tagName,
 					attribs: { ...attribs, target: '_blank', rel: 'noopener noreferrer' }
 				})
