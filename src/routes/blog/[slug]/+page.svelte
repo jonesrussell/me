@@ -264,7 +264,7 @@
 				</div>
 			</header>
 			<div class="content">
-				{@html post.description}
+				{post.content}
 			</div>
 		{:else}
 			<div class="loading">Loading...</div>
