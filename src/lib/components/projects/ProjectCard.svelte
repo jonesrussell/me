@@ -1,7 +1,8 @@
 <script lang="ts">
 	import Box from '$lib/components/ui/Box.svelte';
+	import type { Project } from '$lib/types/project';
 
-	const { project } = $props();
+	const { project } = $props<{ project: Project }>();
 </script>
 
 <style>
