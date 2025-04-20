@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { BlogPost as BlogPostType } from '$lib/services/blog-service';
+	import type { BlogPost } from '$lib/types/blog';
 
-	const { post } = $props<{ post: BlogPostType }>();
+	const { post } = $props<{ post: BlogPost }>();
 </script>
 
 <style>

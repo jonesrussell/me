@@ -4,34 +4,25 @@
 	import DevTo from '$lib/components/blog/DevTo.svelte';
 	import BlogPost from '$lib/components/blog/BlogPost.svelte';
 	import BlogError from '$lib/components/blog/BlogError.svelte';
-	import type { BlogPost as BlogPostType } from '$lib/services/blog-service';
+	import type { BlogPost as BlogPostType } from '$lib/types/blog';
 
 	const blogPosts = writable<BlogPostType[]>([]);
 	let currentPage = $state(1);
 	let isLoading = $state(false);
+	let hasMore = $state(true);
 	const pageSize = 5;
-	let hasMore = $derived(false);
-
-	$effect(() => {
-		async function loadInitial() {
-			const result = await fetchFeed({ page: currentPage, pageSize });
-			blogPosts.set(result.items);
-			hasMore = result.hasMore;
-		}
-		loadInitial();
-	});
 
 	async function loadMore() {
 		if (isLoading || !hasMore) return;
-
 		isLoading = true;
-		currentPage++;
-
 		const result = await fetchFeed({ page: currentPage, pageSize });
 		blogPosts.update((posts: BlogPostType[]) => [...posts, ...result.items]);
 		hasMore = result.hasMore;
 		isLoading = false;
+		currentPage++;
 	}
+
+	loadMore();
 </script>
 
 <style>
