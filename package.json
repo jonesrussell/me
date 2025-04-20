@@ -56,8 +56,11 @@
 	},
 	"dependencies": {
 		"@iconify/svelte": "^4.2.0",
+		"@types/dompurify": "^3.0.5",
 		"@types/sanitize-html": "^2.15.0",
+		"dompurify": "^3.2.5",
 		"highlight.js": "^11.11.1",
+		"marked": "^15.0.8",
 		"sanitize-html": "^2.16.0",
 		"svelte-intersection-observer": "^1.0.0"
 	}

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { fetchPost, formatPostDate } from '$lib/services/blog-service';
-	import type { BlogPost } from '$lib/services/blog-service';
+	import type { BlogPost } from '$lib/types/blog';
 	import { fade } from 'svelte/transition';
 	import { elasticOut } from 'svelte/easing';
 	import 'highlight.js/styles/github-dark.css';
@@ -9,6 +9,7 @@
 	import php from 'highlight.js/lib/languages/php';
 	import xml from 'highlight.js/lib/languages/xml';
 	import typescript from 'highlight.js/lib/languages/typescript';
+	import SafeHtml from '$lib/components/SafeHtml.svelte';
 
 	hljs.registerLanguage('php', php);
 	hljs.registerLanguage('xml', xml);
@@ -260,11 +261,11 @@
 			<header class="post-header">
 				<h1>{post.title}</h1>
 				<div class="metadata">
-					<time datetime={post.published}>{formatPostDate(post.published)}</time>
+					<time datetime={post.pubDate}>{formatPostDate(post.pubDate)}</time>
 				</div>
 			</header>
 			<div class="content">
-				{@html post.description}
+				<SafeHtml content={post.content || ''} className="content" />
 			</div>
 		{:else}
 			<div class="loading">Loading...</div>
