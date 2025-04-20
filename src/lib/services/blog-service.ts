@@ -52,7 +52,15 @@ const FEED_URL = 'https://dev.to/api/articles?username=fullstackdev42';
 const FEED_CACHE_KEY = 'blog-feed-cache';
 
 // State
-const feedCache = new Map<string, { data: BlogPost[]; timestamp: number }>();
+const feedCache = new Map<
+	string,
+	{
+		data: BlogPost[];
+		timestamp: number;
+		etag?: string;
+		lastModified?: string;
+	}
+>();
 export const blogErrors = writable<BlogError[]>([]);
 
 // Utility Functions
@@ -81,8 +89,9 @@ function shouldInvalidateCache(cache: FeedCache, result: FetchResult): boolean {
 async function fetchXML(url: string): Promise<FetchResult> {
 	try {
 		const headers = new Headers();
-		if (feedCache?.etag) headers.set('If-None-Match', feedCache.etag);
-		if (feedCache?.lastModified) headers.set('If-Modified-Since', feedCache.lastModified);
+		const cached = feedCache.get('current');
+		if (cached?.etag) headers.set('If-None-Match', cached.etag);
+		if (cached?.lastModified) headers.set('If-Modified-Since', cached.lastModified);
 
 		const response = await fetch(url, { headers });
 
@@ -189,7 +198,10 @@ function generateSlug(title: string): string {
 		.replace(/(^-|-$)/g, '');
 }
 
-export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions): Promise<PaginatedResult<BlogPost>> {
+export async function fetchFeed({
+	page = 1,
+	pageSize = 5
+}: PaginationOptions): Promise<PaginatedResult<BlogPost>> {
 	const cacheKey = `${FEED_CACHE_KEY}-${page}-${pageSize}`;
 	const cached = feedCache.get(cacheKey);
 	const now = Date.now();
@@ -209,15 +221,22 @@ export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions): 
 			throw new Error('Invalid response format');
 		}
 
-		const posts = data.map((post: any) => ({
+		const posts: BlogPost[] = data.map((post: any) => ({
 			title: post.title,
 			link: post.url,
 			pubDate: new Date(post.published_at).toLocaleDateString(),
 			description: post.description,
-			categories: post.tags
+			categories: post.tags,
+			published: post.published_at,
+			slug: post.slug
 		}));
 
-		feedCache.set(cacheKey, { data: posts, timestamp: now });
+		feedCache.set(cacheKey, {
+			data: posts,
+			timestamp: now,
+			etag: response.headers.get('etag') || undefined,
+			lastModified: response.headers.get('last-modified') || undefined
+		});
 
 		return {
 			items: posts,
