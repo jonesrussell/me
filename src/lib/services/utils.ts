@@ -22,43 +22,25 @@ export const sanitizeText = memoize((text: string): string => {
 	if (!text) return '';
 
 	try {
+		console.log('Input:', text);
 		const options = {
-			allowedTags: [
-				'p',
-				'br',
-				'b',
-				'i',
-				'em',
-				'strong',
-				'a',
-				'ul',
-				'ol',
-				'li',
-				'h1',
-				'h2',
-				'h3',
-				'h4',
-				'h5',
-				'h6',
-				'blockquote',
-				'code',
-				'pre'
-			],
-			allowedAttributes: {
-				a: ['href', 'title', 'target'],
-				code: ['class'],
-				pre: ['class']
-			},
-			allowedSchemes: ['http', 'https', 'mailto'],
+			allowedTags: [], // Allow no tags
+			allowedAttributes: {}, // Allow no attributes
+			textFilter: (text: string) => text.trim(), // Trim whitespace
+			// Add a space before and after each tag
 			transformTags: {
-				a: (tagName: string, attribs: { [key: string]: string }) => ({
-					tagName,
-					attribs: { ...attribs, target: '_blank', rel: 'noopener noreferrer' }
-				})
-			}
+				'*': () => ' '
+			},
+			// Explicitly disallow script tags
+			disallowedTagsMode: 'discard' as const
 		};
 
-		return sanitizeHtml(text, options).trim();
+		const result = sanitizeHtml(text, options)
+			.replace(/\s+/g, ' ') // Normalize multiple spaces to single space
+			.trim();
+
+		console.log('Output:', result);
+		return result;
 	} catch (error) {
 		console.error('Error sanitizing text:', error);
 		return ''; // Return empty string on error
