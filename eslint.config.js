@@ -32,5 +32,11 @@ export default ts.config(
 				svelteConfig
 			}
 		}
+	},
+	{
+		files: ['src/lib/components/SafeHtml.svelte'],
+		rules: {
+			'svelte/no-at-html-tags': 'off'
+		}
 	}
 );

@@ -16,5 +16,4 @@
 
 <div class={className}>
 	{@html renderedContent}
-	<!-- eslint-disable-line svelte/no-at-html-tags -->
 </div>
