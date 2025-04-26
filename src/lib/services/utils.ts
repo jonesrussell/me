@@ -23,21 +23,30 @@ export const sanitizeText = memoize((text: string): string => {
 
 	try {
 		console.log('Input:', text);
+
+		// First pass: Remove script and style tags completely
+		const noScripts = text.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, '');
+
+		// Second pass: Handle remaining HTML with proper spacing
 		const options = {
-			allowedTags: [], // Allow no tags
-			allowedAttributes: {}, // Allow no attributes
-			textFilter: (text: string) => text.trim(), // Trim whitespace
-			disallowedTagsMode: 'discard' as const, // Completely remove disallowed tags
-			// Add a space before and after each tag
+			allowedTags: [], // Do not allow any tags
+			allowedAttributes: {}, // Disallow attributes
+			disallowedTagsMode: 'discard' as const,
+			textFilter: (text: string) => text.trim(), // Ensure trimmed content
 			transformTags: {
-				'*': () => ' ',
-				script: () => '', // Completely remove script tags
-				style: () => '' // Completely remove style tags
+				'*': () => ' ' // Replace tags with spaces to retain proper spacing
 			}
 		};
 
-		const result = sanitizeHtml(text, options)
-			.replace(/\s+/g, ' ') // Normalize multiple spaces to single space
+		// First sanitize to remove tags
+		const sanitized = sanitizeHtml(noScripts, options);
+
+		// Then ensure proper spacing around tag boundaries
+		const result = sanitized
+			.replace(/>\s*</g, '> <') // Ensure spaces between tags
+			.replace(/>\s+/g, '> ') // Ensure space after closing tag
+			.replace(/\s+</g, ' <') // Ensure space before opening tag
+			.replace(/\s+/g, ' ') // Normalize multiple spaces
 			.trim();
 
 		console.log('Output:', result);
