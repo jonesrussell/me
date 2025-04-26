@@ -1,4 +1,7 @@
 <script lang="ts">
+	import IntersectionObserver from 'svelte-intersection-observer';
+	import Specialty from './Specialty.svelte';
+
 	const { specialties } = $props<{
 		specialties: Array<{
 			title: string;
@@ -6,6 +9,25 @@
 			icon: string;
 		}>;
 	}>();
+
+	let elements = $state<HTMLElement[]>([]);
+	let activeIntersection = $state<number | null>(null);
+	let revealedStates = $state<boolean[]>([]);
+
+	$effect(() => {
+		revealedStates = specialties.map(() => false);
+	});
+
+	function handleIntersect(event: CustomEvent<IntersectionObserverEntry>, index: number) {
+		const entry = event.detail;
+
+		if (entry.isIntersecting) {
+			revealedStates[index] = true;
+			activeIntersection = index;
+		} else if (activeIntersection === index) {
+			activeIntersection = null;
+		}
+	}
 </script>
 
 <style>
@@ -41,71 +63,11 @@
 		margin-top: var(--space-2);
 	}
 
-	.specialty {
-		display: flex;
-		padding: var(--space-6);
-		text-align: center;
-		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-md);
-		transition: all var(--transition-duration) var(--transition-timing);
-		flex-direction: column;
-		align-items: center;
-		gap: var(--space-4);
-	}
-
-	.specialty:hover {
-		background: var(--color-mix-light);
-		transform: translateY(-0.125ch);
-	}
-
-	.specialty-icon {
-		font-size: var(--font-size-2xl);
-		line-height: var(--line-height-tight);
-	}
-
-	.specialty-content {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-1);
-	}
-
-	.specialty-title {
-		font-size: var(--font-size-lg);
-		font-weight: var(--font-weight-bold);
-		color: var(--text-color);
-		line-height: var(--line-height-tight);
-	}
-
-	.specialty-desc {
-		font-size: var(--font-size-base);
-		line-height: var(--line-height-base);
-		color: var(--text-muted);
-	}
-
-	@media (width >= 48ch) {
+	@media (width >= 80ch) {
 		.specialties {
 			display: grid;
 			grid-template-columns: repeat(2, 1fr);
-			gap: var(--space-2);
-		}
-
-		.specialty {
-			flex-direction: row;
-			text-align: left;
-			align-items: flex-start;
-			padding: var(--space-3);
-		}
-
-		.specialty-icon {
-			margin-right: var(--space-2);
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.specialty {
-			transition: none;
-			transform: none;
+			gap: var(--space-4);
 		}
 	}
 </style>
@@ -116,14 +78,22 @@
 		<p class="section-desc">Areas where I excel and bring value to projects</p>
 	</div>
 	<div class="specialties">
-		{#each specialties as specialty (specialty.title)}
-			<div class="specialty">
-				<div class="specialty-icon">{specialty.icon}</div>
-				<div class="specialty-content">
-					<div class="specialty-title">{specialty.title}</div>
-					<div class="specialty-desc">{specialty.description}</div>
+		{#each specialties as specialty, i (specialty.title)}
+			<IntersectionObserver
+				element={elements[i]}
+				on:observe={(e) => handleIntersect(e, i)}
+				threshold={0.1}
+				rootMargin="-50px"
+			>
+				<div bind:this={elements[i]}>
+					<Specialty
+						{specialty}
+						index={i}
+						isIntersecting={activeIntersection === i}
+						isRevealed={revealedStates[i]}
+					/>
 				</div>
-			</div>
+			</IntersectionObserver>
 		{/each}
 	</div>
 </div>

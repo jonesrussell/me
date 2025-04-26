@@ -18,19 +18,34 @@ function memoize<Args extends unknown[], Return>(
 	};
 }
 
+interface SanitizeFrame {
+	tag: string;
+	text: string;
+	attribs: Record<string, string>;
+}
+
 export const sanitizeText = memoize((text: string): string => {
 	if (!text) return '';
 
 	try {
+		console.log('Input:', text);
 		const options = {
-			allowedTags: [], // Remove all HTML tags
-			allowedAttributes: {} // Remove all attributes
+			allowedTags: [], // Allow no tags
+			allowedAttributes: {}, // Allow no attributes
+			textFilter: (text: string) => text.trim(), // Trim whitespace
+			disallowedTagsMode: 'discard' as const, // Completely remove disallowed tags
+			// Add a space before and after each tag
+			transformTags: {
+				'*': () => ' '
+			}
 		};
 
-		// Sanitize and normalize spaces
-		return sanitizeHtml(text, options)
-			.replace(/\s+/g, ' ') // Replace multiple spaces with single space
-			.trim(); // Remove leading/trailing spaces
+		const result = sanitizeHtml(text, options)
+			.replace(/\s+/g, ' ') // Normalize multiple spaces to single space
+			.trim();
+
+		console.log('Output:', result);
+		return result;
 	} catch (error) {
 		console.error('Error sanitizing text:', error);
 		return ''; // Return empty string on error

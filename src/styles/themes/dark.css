@@ -1,15 +1,24 @@
 [data-theme='dark'] {
-	--bg-color: rgb(15 23 42);
-	--bg-darker: rgb(30 41 59);
+	/* Base Colors */
+	--bg-color: rgb(12 20 28);
+	--bg-darker: rgb(20 30 40);
 	--text-color: rgb(248 250 252);
 	--text-muted: rgb(148 163 184);
-	--border-color: rgb(51 65 85);
-	--accent-color: rgb(96 165 250);
-	--accent-color-hover: rgb(147 197 253);
-	--secondary-accent: rgb(167 139 250);
-	--color-mix-light: rgb(96 165 250 / 10%);
-	--color-mix-medium: rgb(96 165 250 / 20%);
-	--color-mix-faint: rgb(96 165 250 / 5%);
+	--border-color: rgb(40 50 60);
+
+	/* Primary Accent - Emerald */
+	--accent-color: rgb(16 185 129);
+	--accent-color-hover: rgb(52 211 153);
+
+	/* Secondary Accent - Gold */
+	--secondary-accent: rgb(234 179 8);
+
+	/* Color Mixes - Using Emerald */
+	--color-mix-light: rgb(16 185 129 / 10%);
+	--color-mix-medium: rgb(16 185 129 / 20%);
+	--color-mix-faint: rgb(16 185 129 / 5%);
+
+	/* Status Colors */
 	--color-info: var(--color-blue-400);
 	--color-success: var(--color-green-400);
 	--color-warning: var(--color-yellow-400);
