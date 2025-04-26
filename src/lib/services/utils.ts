@@ -1,54 +1,20 @@
 import sanitizeHtml from 'sanitize-html';
+import { memoize, normalizeSpaces, removeUnwantedTags, SANITIZE_OPTIONS } from './utils/helpers';
 
-// Cache for memoized results
-const memoCache = new Map<string, string>();
-
-// Memoization helper
-function memoize<Args extends unknown[], Return>(
-	fn: (...args: Args) => Return
-): (...args: Args) => Return {
-	return (...args: Args): Return => {
-		const key = JSON.stringify(args);
-		if (memoCache.has(key)) {
-			return memoCache.get(key)! as Return;
-		}
-		const result = fn(...args);
-		memoCache.set(key, result as string);
-		return result;
-	};
-}
-
+/**
+ * Sanitizes text by removing HTML tags and normalizing spaces
+ */
 export const sanitizeText = memoize((text: string): string => {
 	if (!text) return '';
 
 	try {
 		console.log('Input:', text);
-
-		// First pass: Remove script and style tags completely
-		const noScripts = text.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, '');
-
-		// Second pass: Handle remaining HTML with proper spacing
-		const options = {
-			allowedTags: [], // Do not allow any tags
-			allowedAttributes: {}, // Disallow attributes
-			disallowedTagsMode: 'discard' as const,
-			textFilter: (text: string) => text.trim(), // Ensure trimmed content
-			transformTags: {
-				'*': () => ' ' // Replace tags with spaces to retain proper spacing
-			}
-		};
-
-		// First sanitize to remove tags
-		const sanitized = sanitizeHtml(noScripts, options);
-
-		// Then ensure proper spacing around tag boundaries
-		const result = sanitized
-			.replace(/>\s*</g, '> <') // Ensure spaces between tags
-			.replace(/>\s+/g, '> ') // Ensure space after closing tag
-			.replace(/\s+</g, ' <') // Ensure space before opening tag
-			.replace(/\s+/g, ' ') // Normalize multiple spaces
-			.trim();
-
+		// First remove unwanted tags
+		const withoutUnwantedTags = removeUnwantedTags(text);
+		// Then sanitize HTML
+		const sanitizedContent = sanitizeHtml(withoutUnwantedTags, SANITIZE_OPTIONS);
+		// Finally normalize spaces
+		const result = normalizeSpaces(sanitizedContent);
 		console.log('Output:', result);
 		return result;
 	} catch (error) {
@@ -102,7 +68,9 @@ export const formatDate = memoize((dateString: string): string => {
 	}
 });
 
-// Improved paragraph extraction with better HTML handling
+/**
+ * Extracts the first meaningful paragraph from HTML content
+ */
 export const extractFirstMeaningfulParagraph = memoize((content: string): string => {
 	if (!content) return '';
 
@@ -116,11 +84,3 @@ export const extractFirstMeaningfulParagraph = memoize((content: string): string
 		.filter(p => p.length > 0);
 	return paragraphs[0] || '';
 });
-
-// Clear cache periodically to prevent memory leaks
-setInterval(
-	() => {
-		memoCache.clear();
-	},
-	5 * 60 * 1000
-); // Clear every 5 minutes

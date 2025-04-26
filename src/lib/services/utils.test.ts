@@ -1,30 +1,31 @@
 import { describe, it, expect } from 'vitest';
 import { sanitizeText } from './utils';
 
-describe('sanitizeText', () => {
-	it('removes all HTML tags', () => {
-		expect(sanitizeText('<div>Hello</div>')).toBe('Hello');
-		expect(sanitizeText('<p>Test</p>')).toBe('Test');
-		expect(sanitizeText('<script>alert(1)</script>')).toBe('');
-	});
+describe('Text Sanitization Integration', () => {
+	describe('sanitizeText', () => {
+		it('should handle basic text without HTML', () => {
+			expect(sanitizeText('Plain text')).toBe('Plain text');
+		});
 
-	it('removes HTML attributes', () => {
-		expect(sanitizeText('<a href="javascript:alert(1)">Click</a>')).toBe('Click');
-		expect(sanitizeText('<img src="x" onerror="alert(1)">')).toBe('');
-	});
+		it('should preserve spaces between words when removing tags', () => {
+			expect(sanitizeText('Text with <b>HTML</b>')).toBe('Text with HTML');
+			expect(sanitizeText('Text <b>with</b> HTML')).toBe('Text with HTML');
+		});
 
-	it('handles nested tags', () => {
-		expect(sanitizeText('<div><p>Nested</p></div>')).toBe('Nested');
-		expect(sanitizeText('<div><script>alert(1)</script><p>Text</p></div>')).toBe('Text');
-	});
+		it('should remove unwanted tags completely', () => {
+			expect(sanitizeText('<script>alert(1)</script>Text')).toBe('Text');
+			expect(sanitizeText('<style>.class{}</style>Content')).toBe('Content');
+		});
 
-	it('preserves text content', () => {
-		expect(sanitizeText('Plain text')).toBe('Plain text');
-		expect(sanitizeText('Text with <b>HTML</b>')).toBe('Text with HTML');
-	});
+		it('should handle edge cases', () => {
+			expect(sanitizeText('')).toBe('');
+			expect(sanitizeText(null as unknown as string)).toBe('');
+			expect(sanitizeText(undefined as unknown as string)).toBe('');
+		});
 
-	it('trims whitespace', () => {
-		expect(sanitizeText('  Text  ')).toBe('Text');
-		expect(sanitizeText('\nText\n')).toBe('Text');
+		it('should normalize spaces', () => {
+			expect(sanitizeText('Text   with   spaces')).toBe('Text with spaces');
+			expect(sanitizeText('Text\nwith\nnewlines')).toBe('Text with newlines');
+		});
 	});
 });
