@@ -30,7 +30,9 @@ export const sanitizeText = memoize((text: string): string => {
 			disallowedTagsMode: 'discard' as const, // Completely remove disallowed tags
 			// Add a space before and after each tag
 			transformTags: {
-				'*': () => ' '
+				'*': () => ' ',
+				script: () => '', // Completely remove script tags
+				style: () => '' // Completely remove style tags
 			}
 		};
 
