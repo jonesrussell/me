@@ -18,6 +18,12 @@ function memoize<Args extends unknown[], Return>(
 	};
 }
 
+interface SanitizeFrame {
+	tag: string;
+	text: string;
+	attribs: Record<string, string>;
+}
+
 export const sanitizeText = memoize((text: string): string => {
 	if (!text) return '';
 
@@ -27,12 +33,11 @@ export const sanitizeText = memoize((text: string): string => {
 			allowedTags: [], // Allow no tags
 			allowedAttributes: {}, // Allow no attributes
 			textFilter: (text: string) => text.trim(), // Trim whitespace
+			disallowedTagsMode: 'discard' as const, // Completely remove disallowed tags
 			// Add a space before and after each tag
 			transformTags: {
 				'*': () => ' '
-			},
-			// Explicitly disallow script tags
-			disallowedTagsMode: 'discard' as const
+			}
 		};
 
 		const result = sanitizeHtml(text, options)
