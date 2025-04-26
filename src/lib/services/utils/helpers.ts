@@ -42,7 +42,12 @@ export const SANITIZE_OPTIONS = {
 		lowerCaseAttributeNames: true
 	},
 	transformTags: {
-		'*': (tagName: string, attribs: Record<string, string>) => {
+		'*': (
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			tagName: string,
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			attribs: Record<string, string>
+		) => {
 			// Replace tags with a space to preserve word boundaries
 			return {
 				tagName: '',
