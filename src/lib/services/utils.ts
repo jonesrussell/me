@@ -18,12 +18,6 @@ function memoize<Args extends unknown[], Return>(
 	};
 }
 
-interface SanitizeFrame {
-	tag: string;
-	text: string;
-	attribs: Record<string, string>;
-}
-
 export const sanitizeText = memoize((text: string): string => {
 	if (!text) return '';
 
