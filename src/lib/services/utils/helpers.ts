@@ -29,7 +29,12 @@ export function normalizeSpaces(input: string): string {
 
 // Helper: Remove Unwanted Tags
 export function removeUnwantedTags(input: string): string {
-	return input.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, '');
+	let previous;
+	do {
+		previous = input;
+		input = input.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, '');
+	} while (input !== previous);
+	return input;
 }
 
 // Sanitization Configuration
