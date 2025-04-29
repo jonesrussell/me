@@ -100,14 +100,12 @@ export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions = 
 	try {
 		console.log('Fetching blog feed from:', FEED_URL);
 		const controller = new AbortController();
-		const timeoutId = setTimeout(() => controller.abort(), 10000);
-
 		const response = await fetch(FEED_URL, {
 			headers: {
 				Accept: 'application/xml, text/xml, */*'
 			},
 			signal: controller.signal
-		}).finally(() => clearTimeout(timeoutId));
+		});
 
 		if (!response.ok) {
 			console.error('Failed to fetch blog feed:', response.status, response.statusText);
