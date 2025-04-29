@@ -239,7 +239,7 @@
 
 		{#if hasMore && !isLoading}
 			<div class="load-more">
-				<button class="load-more-button" on:click={loadMore}>Load More</button>
+				<button class="load-more-button" onclick={loadMore}>Load More</button>
 			</div>
 		{/if}
 	</div>
