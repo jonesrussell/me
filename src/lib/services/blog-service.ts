@@ -94,7 +94,6 @@ export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions = 
 	}
 
 	try {
-		console.log('Fetching feed from:', FEED_URL);
 		const response = await fetch(FEED_URL, {
 			headers: {
 				Accept: 'application/xml'
@@ -106,10 +105,6 @@ export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions = 
 		}
 
 		const text = await response.text();
-		console.log('Feed response received:', {
-			length: text.length,
-			firstChars: text.substring(0, 100)
-		});
 
 		if (!text.trim()) {
 			throw new Error('Empty response received from feed');

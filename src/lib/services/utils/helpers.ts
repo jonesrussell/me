@@ -1,4 +1,4 @@
-import sanitizeHtml from 'sanitize-html';
+import DOMPurify from 'dompurify';
 
 // Cache for memoized results
 const memoCache = new Map<string, unknown>();
@@ -32,15 +32,19 @@ export function normalizeSpaces(input: string): string {
 // Helper: Remove Unwanted Tags
 export function removeUnwantedTags(input: string): string {
 	// First pass: Remove script and style tags and their contents
-	const firstPass = sanitizeHtml(input, {
-		allowedTags: [],
-		allowedAttributes: {},
-		disallowedTagsMode: 'discard',
-		nonTextTags: ['script', 'style', 'textarea', 'option', 'noscript']
+	const firstPass = DOMPurify.sanitize(input, {
+		ALLOWED_TAGS: [],
+		ALLOWED_ATTR: [],
+		ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|ftp|tel):|#)/i,
+		FORBID_TAGS: ['script', 'style', 'textarea', 'option', 'noscript']
 	});
 
 	// Second pass: Clean up any remaining HTML and normalize spaces
-	return sanitizeHtml(firstPass, SANITIZE_OPTIONS);
+	return DOMPurify.sanitize(firstPass, {
+		ALLOWED_TAGS: [],
+		ALLOWED_ATTR: [],
+		ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|ftp|tel):|#)/i
+	});
 }
 
 // Sanitization Configuration
