@@ -2,9 +2,29 @@ import sanitizeHtml from 'sanitize-html';
 
 // Sanitization Configuration
 export const SANITIZE_OPTIONS = {
-	allowedTags: ['p', 'br', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'code', 'pre'],
+	allowedTags: [
+		'p',
+		'br',
+		'b',
+		'i',
+		'em',
+		'strong',
+		'a',
+		'ul',
+		'ol',
+		'li',
+		'h1',
+		'h2',
+		'h3',
+		'h4',
+		'h5',
+		'h6',
+		'blockquote',
+		'code',
+		'pre'
+	],
 	allowedAttributes: {
-		'a': ['href', 'title', 'target'],
+		a: ['href', 'title', 'target'],
 		'*': ['class']
 	},
 	allowedSchemes: ['http', 'https', 'mailto', 'tel'],
