@@ -35,6 +35,21 @@ type PaginatedResult<T> = {
 	hasMore: boolean;
 };
 
+interface AtomEntry {
+	title: string | { '#text': string };
+	link: Array<{ '@_rel': string; '@_href': string }> | { '@_href': string };
+	content: string | { '#text': string };
+	published?: string;
+	updated?: string;
+	category: Array<{ '@_term': string }> | { '@_term': string };
+}
+
+interface AtomFeed {
+	feed?: {
+		entry: AtomEntry[];
+	};
+}
+
 // Store
 export const blogStore = writable<{
 	posts: BlogPost[];
@@ -118,17 +133,17 @@ export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions = 
 			htmlEntities: true
 		});
 
-		const parsed = parser.parse(text);
+		const parsed = parser.parse(text) as AtomFeed;
 
 		// Handle Atom feed format
 		const entries = parsed.feed?.entry || [];
-		const posts: BlogPost[] = entries.map((entry: any) => {
+		const posts: BlogPost[] = entries.map((entry: AtomEntry) => {
 			// Extract title text
 			const title = typeof entry.title === 'string' ? entry.title : entry.title?.['#text'] || '';
 
 			// Extract link href
 			const link = Array.isArray(entry.link)
-				? entry.link.find((l: any) => l['@_rel'] === 'alternate')?.['@_href'] || ''
+				? entry.link.find(l => l['@_rel'] === 'alternate')?.['@_href'] || ''
 				: entry.link?.['@_href'] || '';
 
 			// Extract content and description
@@ -156,7 +171,7 @@ export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions = 
 
 			// Extract categories
 			const categories = Array.isArray(entry.category)
-				? entry.category.map((cat: any) => cat['@_term'] || '')
+				? entry.category.map(cat => cat['@_term'] || '')
 				: entry.category
 					? [entry.category['@_term'] || '']
 					: [];
