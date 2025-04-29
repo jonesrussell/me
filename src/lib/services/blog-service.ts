@@ -43,8 +43,6 @@ export const blogStore = writable<{
   error: null,
 });
 
-export const blogErrors = writable<BlogError[]>([]);
-
 // Utility Functions
 export const formatPostDate = (dateString: string): string =>
   formatDate(dateString) ?? dateString;
@@ -182,9 +180,8 @@ export const fetchFeed = async (
       timestamp: Date.now(),
     };
 
-    // Update both stores before throwing
+    // Update store with error
     blogStore.set({ posts: [], loading: false, error: blogError });
-    blogErrors.update(errors => [...errors, blogError]);
 
     // Re-throw the error to ensure it propagates
     throw error;

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { formatPostDate, generateSlug, fetchFeed, fetchPost, blogStore, blogErrors, resetFeedCache } from './blog-service';
+import { formatPostDate, generateSlug, fetchFeed, fetchPost, blogStore, resetFeedCache } from './blog-service';
 import { get } from 'svelte/store';
 
 // Mock global fetch
@@ -88,7 +88,6 @@ describe('API', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     blogStore.set({ posts: [], loading: false, error: null });
-    blogErrors.set([]);
     resetFeedCache(); // Reset cache before each test
     mockFetch.mockImplementation(() =>
       Promise.resolve({
@@ -139,7 +138,6 @@ describe('API', () => {
         type: 'FETCH_ERROR',
         message: 'Network error',
       });
-      expect(get(blogErrors)).toHaveLength(1);
     });
 
     it('should handle malformed XML', async () => {
@@ -202,7 +200,6 @@ describe('API', () => {
 describe('Stores', () => {
   beforeEach(() => {
     blogStore.set({ posts: [], loading: false, error: null });
-    blogErrors.set([]);
     mockFetch.mockImplementation(() =>
       Promise.resolve({
         ok: true,
@@ -231,37 +228,5 @@ describe('Stores', () => {
     expect(get(blogStore).loading).toBe(false);
     expect(get(blogStore).posts).toHaveLength(2);
     expect(get(blogStore).error).toBeNull();
-  });
-
-  it('should track errors in blogErrors store', async () => {
-    // Mock fetch to fail
-    mockFetch.mockRejectedValueOnce(new Error('Network error'));
-
-    // Subscribe to store changes
-    let errorCount = 0;
-    const unsubscribe = blogErrors.subscribe(errors => {
-      errorCount = errors.length;
-    });
-
-    // Start fetch and wait for it to complete
-    const fetchPromise = fetchFeed();
-
-    try {
-      await fetchPromise;
-    } catch (error) {
-      // Expected error
-    }
-
-    // Check error was tracked
-    const errors = get(blogErrors);
-    expect(errors).toHaveLength(1);
-    expect(errorCount).toBe(errors.length); // Compare with actual store value
-    expect(errors[0]).toMatchObject({
-      type: 'FETCH_ERROR',
-      message: 'Network error',
-    });
-
-    // Cleanup
-    unsubscribe();
   });
 });
