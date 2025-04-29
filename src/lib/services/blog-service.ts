@@ -103,7 +103,7 @@ export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions = 
 
 		const response = await fetch(FEED_URL, {
 			headers: {
-				'Accept': 'application/xml, text/xml, */*'
+				Accept: 'application/xml, text/xml, */*'
 			},
 			signal: controller.signal
 		}).finally(() => clearTimeout(timeoutId));
@@ -116,37 +116,43 @@ export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions = 
 		const text = await response.text();
 		console.log('Received feed content:', text.substring(0, 200) + '...');
 
-		const parser = new DOMParser();
-		const doc = parser.parseFromString(text, 'text/xml');
+		// Simple XML parsing using regex for server-side
+		const entries: Array<{
+			title: string;
+			link: string;
+			content: string;
+			published: string;
+			categories: string[];
+		}> = [];
 
-		// Handle parsing errors
-		const parserError = doc.querySelector('parsererror');
-		if (parserError) {
-			console.error('XML parsing error:', parserError.textContent);
-			throw new Error('Failed to parse XML feed');
-		}
+		const entryMatches = text.match(/<entry[^>]*>([\s\S]*?)<\/entry>/g) || [];
+		for (const entryMatch of entryMatches) {
+			const titleMatch = entryMatch.match(/<title[^>]*>([\s\S]*?)<\/title>/);
+			const linkMatch = entryMatch.match(/<link[^>]*href="([^"]*)"[^>]*rel="alternate"/);
+			const contentMatch = entryMatch.match(/<content[^>]*>([\s\S]*?)<\/content>/);
+			const publishedMatch = entryMatch.match(/<published[^>]*>([\s\S]*?)<\/published>/);
+			const updatedMatch = entryMatch.match(/<updated[^>]*>([\s\S]*?)<\/updated>/);
+			const categoryMatches = entryMatch.match(/<category[^>]*term="([^"]*)"[^>]*>/g) || [];
 
-		// Handle Atom feed format
-		const entries = Array.from(doc.querySelectorAll('entry')).map(entry => {
-			const title = entry.querySelector('title')?.textContent || '';
-			const link = entry.querySelector('link[rel="alternate"]')?.getAttribute('href') || '';
-			const content = entry.querySelector('content')?.textContent || '';
-			const published = entry.querySelector('published')?.textContent ||
-				entry.querySelector('updated')?.textContent || '';
-			const categories = Array.from(entry.querySelectorAll('category'))
-				.map(cat => cat.getAttribute('term') || '')
-				.filter(Boolean);
+			const title = titleMatch ? titleMatch[1].trim() : '';
+			const link = linkMatch ? linkMatch[1] : '';
+			const content = contentMatch ? contentMatch[1].trim() : '';
+			const published = publishedMatch ? publishedMatch[1] : (updatedMatch ? updatedMatch[1] : '');
+			const categories = categoryMatches.map(match => {
+				const termMatch = match.match(/term="([^"]*)"/);
+				return termMatch ? termMatch[1] : '';
+			}).filter(Boolean);
 
 			console.log('Parsed entry:', { title, link, published, categories });
 
-			return {
+			entries.push({
 				title,
 				link,
 				content,
 				published,
 				categories
-			};
-		});
+			});
+		}
 
 		console.log('Total entries found:', entries.length);
 
