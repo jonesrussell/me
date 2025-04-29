@@ -74,8 +74,15 @@ const feedCache = (() => {
     });
   };
 
-  return { getCache, updateCache };
+  const resetCache = () => {
+    cache.clear();
+  };
+
+  return { getCache, updateCache, resetCache };
 })();
+
+// Export resetCache for testing
+export const resetFeedCache = feedCache.resetCache;
 
 // XML Parsing Module
 const parseXMLFeed = (xml: string): BlogPost[] => {
@@ -177,10 +184,9 @@ export const fetchFeed = async (
 
     // Update both stores before throwing
     blogStore.set({ posts: [], loading: false, error: blogError });
-
-    // Update blogErrors store with a new array to ensure reactivity
     blogErrors.update(errors => [...errors, blogError]);
 
+    // Re-throw the error to ensure it propagates
     throw error;
   }
 };

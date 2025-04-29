@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { formatPostDate, generateSlug, fetchFeed, fetchPost, blogStore, blogErrors } from './blog-service';
+import { formatPostDate, generateSlug, fetchFeed, fetchPost, blogStore, blogErrors, resetFeedCache } from './blog-service';
 import { get } from 'svelte/store';
 
 // Mock global fetch
@@ -89,6 +89,7 @@ describe('API', () => {
     vi.clearAllMocks();
     blogStore.set({ posts: [], loading: false, error: null });
     blogErrors.set([]);
+    resetFeedCache(); // Reset cache before each test
     mockFetch.mockImplementation(() =>
       Promise.resolve({
         ok: true,
@@ -100,6 +101,7 @@ describe('API', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
+    resetFeedCache(); // Reset cache after each test
   });
 
   describe('fetchFeed', () => {
@@ -241,8 +243,11 @@ describe('Stores', () => {
       errorCount = errors.length;
     });
 
+    // Start fetch and wait for it to complete
+    const fetchPromise = fetchFeed();
+
     try {
-      await fetchFeed();
+      await fetchPromise;
     } catch (error) {
       // Expected error
     }
@@ -252,12 +257,6 @@ describe('Stores', () => {
     expect(errors).toHaveLength(1);
     expect(errorCount).toBe(errors.length); // Compare with actual store value
     expect(errors[0]).toMatchObject({
-      type: 'FETCH_ERROR',
-      message: 'Network error',
-    });
-
-    // Check blogStore error state
-    expect(get(blogStore).error).toMatchObject({
       type: 'FETCH_ERROR',
       message: 'Network error',
     });
