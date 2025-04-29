@@ -1,7 +1,9 @@
 <script lang="ts">
 	import type { BlogPost } from '$lib/types/blog';
+	import { generateSlug } from '$lib/services/blog-service';
 
 	const { post } = $props<{ post: BlogPost }>();
+	const slug = generateSlug(post.title);
 </script>
 
 <style>
@@ -80,7 +82,7 @@
 	}
 </style>
 
-<a href={post.link} class="blog-post">
+<a href="/blog/{slug}" class="blog-post">
 	<h3 class="title">{post.title}</h3>
 	<p class="description">{post.description}</p>
 	<div class="meta">
