@@ -5,7 +5,7 @@
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
-	"postCreateCommand": "curl https://bun.sh/install | bash",
+	"postCreateCommand": "npm i",
 	"features": {
 		"ghcr.io/devcontainers/features/common-utils:2": {
 			"installZsh": true,
@@ -48,7 +48,8 @@
 				"esbenp.prettier-vscode",
 				"ms-azuretools.vscode-docker",
 				"dbaeumer.vscode-eslint",
-				"christian-kohler.npm-intellisense"
+				"christian-kohler.npm-intellisense",
+				"ms-edgedevtools.vscode-edge-devtools"
 			],
 			"settings": {
 				"editor.formatOnSave": true,
