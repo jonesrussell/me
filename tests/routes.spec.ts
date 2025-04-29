@@ -11,7 +11,7 @@ test.describe('Route Navigation', () => {
 
 	test('navigates to blog page', async ({ page }) => {
 		// Wait for the blog link to be visible
-		const blogLink = page.locator('a[href="/blog"]');
+		const blogLink = page.getByRole('link', { name: '📝 Read my technical articles' });
 		await expect(blogLink).toBeVisible({ timeout: 10000 });
 
 		// Click the blog link and wait for navigation
