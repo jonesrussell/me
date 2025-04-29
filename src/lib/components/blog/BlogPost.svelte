@@ -86,9 +86,9 @@
 	<h3 class="title">{post.title}</h3>
 	<p class="description">{post.description}</p>
 	<div class="meta">
-		<span class="date">{post.pubDate}</span>
+		<span class="date">{post.published}</span>
 		<div class="tags">
-			{#each post.categories as category (category)}
+			{#each post.categories as category, i (slug + '-' + category + '-' + i)}
 				<span>{category}</span>
 			{/each}
 		</div>

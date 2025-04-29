@@ -1,7 +1,6 @@
 import { writable } from 'svelte/store';
 import { formatDate } from './utils';
 import type { BlogPost } from '$lib/types/blog';
-import { XMLParser } from 'fast-xml-parser';
 
 // Constants
 const FEED_URL = 'https://jonesrussell.github.io/blog/feed.xml';
@@ -34,21 +33,6 @@ type PaginatedResult<T> = {
 	items: T[];
 	hasMore: boolean;
 };
-
-interface AtomEntry {
-	title: string | { '#text': string };
-	link: Array<{ '@_rel': string; '@_href': string }> | { '@_href': string };
-	content: string | { '#text': string };
-	published?: string;
-	updated?: string;
-	category: Array<{ '@_term': string }> | { '@_term': string };
-}
-
-interface AtomFeed {
-	feed?: {
-		entry: AtomEntry[];
-	};
-}
 
 // Store
 export const blogStore = writable<{
@@ -97,122 +81,122 @@ export async function fetchPost(slug: string): Promise<BlogPost> {
 export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions = {}): Promise<
 	PaginatedResult<BlogPost>
 > {
+	console.log('fetchFeed called with:', { page, pageSize });
+	blogStore.update(state => ({ ...state, loading: true, error: null }));
+
 	const cacheKey = `${FEED_CACHE_KEY}-${page}-${pageSize}`;
 	const cached = feedCache.get(cacheKey);
-	const now = Date.now();
 
-	if (cached && now - cached.timestamp < CACHE_DURATION) {
+	if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+		console.log('Using cached data');
+		blogStore.update(state => ({ ...state, loading: false }));
 		return {
-			items: cached.data,
-			hasMore: cached.data.length === pageSize
+			items: cached.data.slice((page - 1) * pageSize, page * pageSize),
+			hasMore: cached.data.length > page * pageSize
 		};
 	}
 
 	try {
+		console.log('Fetching blog feed from:', FEED_URL);
+		const controller = new AbortController();
+		const timeoutId = setTimeout(() => controller.abort(), 10000);
+
 		const response = await fetch(FEED_URL, {
 			headers: {
-				Accept: 'application/xml'
-			}
-		});
+				'Accept': 'application/xml, text/xml, */*'
+			},
+			signal: controller.signal
+		}).finally(() => clearTimeout(timeoutId));
 
 		if (!response.ok) {
+			console.error('Failed to fetch blog feed:', response.status, response.statusText);
 			throw new Error(`HTTP error! status: ${response.status}`);
 		}
 
 		const text = await response.text();
+		console.log('Received feed content:', text.substring(0, 200) + '...');
 
-		if (!text.trim()) {
-			throw new Error('Empty response received from feed');
+		const parser = new DOMParser();
+		const doc = parser.parseFromString(text, 'text/xml');
+
+		// Handle parsing errors
+		const parserError = doc.querySelector('parsererror');
+		if (parserError) {
+			console.error('XML parsing error:', parserError.textContent);
+			throw new Error('Failed to parse XML feed');
 		}
 
-		const parser = new XMLParser({
-			ignoreAttributes: false,
-			attributeNamePrefix: '@_',
-			parseAttributeValue: true,
-			textNodeName: '#text',
-			htmlEntities: true
-		});
-
-		const parsed = parser.parse(text) as AtomFeed;
-
 		// Handle Atom feed format
-		const entries = parsed.feed?.entry || [];
-		const posts: BlogPost[] = entries.map((entry: AtomEntry) => {
-			// Extract title text
-			const title = typeof entry.title === 'string' ? entry.title : entry.title?.['#text'] || '';
+		const entries = Array.from(doc.querySelectorAll('entry')).map(entry => {
+			const title = entry.querySelector('title')?.textContent || '';
+			const link = entry.querySelector('link[rel="alternate"]')?.getAttribute('href') || '';
+			const content = entry.querySelector('content')?.textContent || '';
+			const published = entry.querySelector('published')?.textContent ||
+				entry.querySelector('updated')?.textContent || '';
+			const categories = Array.from(entry.querySelectorAll('category'))
+				.map(cat => cat.getAttribute('term') || '')
+				.filter(Boolean);
 
-			// Extract link href
-			const link = Array.isArray(entry.link)
-				? entry.link.find(l => l['@_rel'] === 'alternate')?.['@_href'] || ''
-				: entry.link?.['@_href'] || '';
-
-			// Extract content and description
-			const content =
-				typeof entry.content === 'string' ? entry.content : entry.content?.['#text'] || '';
-
-			// Extract first paragraph for description
-			const description = content
-				? content
-						.replace(/<[^>]*>/g, '') // Remove HTML tags
-						.split('\n')[0] // Get first line
-						.substring(0, 200) // Limit length
-						.trim()
-				: '';
-
-			// Extract and format date
-			const rawDate = entry.published || entry.updated || '';
-			const pubDate = rawDate
-				? new Date(rawDate).toLocaleDateString('en-US', {
-						year: 'numeric',
-						month: 'long',
-						day: 'numeric'
-					})
-				: '';
-
-			// Extract categories
-			const categories = Array.isArray(entry.category)
-				? entry.category.map(cat => cat['@_term'] || '')
-				: entry.category
-					? [entry.category['@_term'] || '']
-					: [];
+			console.log('Parsed entry:', { title, link, published, categories });
 
 			return {
 				title,
 				link,
-				pubDate,
-				description,
 				content,
+				published,
 				categories
 			};
 		});
 
+		console.log('Total entries found:', entries.length);
+
+		const posts: BlogPost[] = entries.map(entry => ({
+			title: entry.title,
+			link: entry.link,
+			content: entry.content,
+			published: entry.published,
+			categories: entry.categories,
+			slug: generateSlug(entry.title)
+		}));
+
+		// Update cache
 		feedCache.set(cacheKey, {
 			data: posts,
-			timestamp: now,
+			timestamp: Date.now(),
+			etag: response.headers.get('etag') || undefined,
+			lastModified: response.headers.get('last-modified') || undefined,
 			errorCount: 0
 		});
 
+		blogStore.update(state => ({ ...state, loading: false, posts }));
+
 		return {
-			items: posts,
-			hasMore: posts.length === pageSize
+			items: posts.slice((page - 1) * pageSize, page * pageSize),
+			hasMore: posts.length > page * pageSize
 		};
 	} catch (error) {
-		console.error('Error fetching blog feed:', {
-			error,
-			message: error instanceof Error ? error.message : 'Unknown error',
-			stack: error instanceof Error ? error.stack : undefined
+		console.error('Error fetching blog feed:', error);
+		const errorCount = (cached?.errorCount || 0) + 1;
+		const lastError = error instanceof Error ? error.message : 'Unknown error';
+
+		// Update cache with error
+		feedCache.set(cacheKey, {
+			data: cached?.data || [],
+			timestamp: Date.now(),
+			errorCount,
+			lastError
 		});
 
 		const blogError: BlogError = {
 			type: 'FETCH_ERROR',
-			message: error instanceof Error ? error.message : 'Unknown error occurred',
+			message: lastError,
 			details: error,
 			timestamp: Date.now()
 		};
+
+		blogStore.update(state => ({ ...state, loading: false, error: blogError }));
 		blogErrors.update(errors => [...errors, blogError]);
-		return {
-			items: [],
-			hasMore: false
-		};
+
+		throw error;
 	}
 }

@@ -1,10 +1,10 @@
 export interface BlogPost {
 	title: string;
 	link: string;
-	pubDate: string;
-	description: string;
-	content?: string;
+	content: string;
+	published: string;
 	categories: string[];
+	slug: string;
 }
 
 export interface BlogError {
