@@ -13,19 +13,15 @@
 	const pageSize = 5;
 
 	async function loadMore() {
-		console.log('loadMore called, current state:', { hasMore, currentPage });
 		if (!$blogStore.loading && hasMore) {
-			console.log('Fetching feed...');
 			try {
 				const result = await fetchFeed({ page: currentPage, pageSize });
-				console.log('Feed result:', result);
 				blogPosts.update((posts: BlogPostType[]) => [...posts, ...result.items]);
 				hasMore = result.hasMore;
 			} catch (error) {
 				console.error('Error loading blog posts:', error);
 			} finally {
 				currentPage++;
-				console.log('Load complete, new state:', { hasMore, currentPage });
 			}
 		} else {
 			console.log('Skipping loadMore:', { loading: $blogStore.loading, hasMore });
@@ -33,7 +29,6 @@
 	}
 
 	onMount(() => {
-		console.log('Component mounted, calling loadMore');
 		loadMore();
 	});
 </script>
