@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { fetchFeed } from '$lib/services/blog-service';
 	import { writable } from 'svelte/store';
 	import DevTo from '$lib/components/blog/DevTo.svelte';
@@ -8,21 +9,28 @@
 
 	const blogPosts = writable<BlogPostType[]>([]);
 	let currentPage = $state(1);
-	let isLoading = $state(false);
+	let isLoading = $state(true);
 	let hasMore = $state(true);
 	const pageSize = 5;
 
 	async function loadMore() {
 		if (isLoading || !hasMore) return;
 		isLoading = true;
-		const result = await fetchFeed({ page: currentPage, pageSize });
-		blogPosts.update((posts: BlogPostType[]) => [...posts, ...result.items]);
-		hasMore = result.hasMore;
-		isLoading = false;
-		currentPage++;
+		try {
+			const result = await fetchFeed({ page: currentPage, pageSize });
+			blogPosts.update((posts: BlogPostType[]) => [...posts, ...result.items]);
+			hasMore = result.hasMore;
+		} catch (error) {
+			console.error('Error loading blog posts:', error);
+		} finally {
+			isLoading = false;
+			currentPage++;
+		}
 	}
 
-	loadMore();
+	onMount(() => {
+		loadMore();
+	});
 </script>
 
 <style>
@@ -168,10 +176,30 @@
 		cursor: not-allowed;
 	}
 
+	.loading {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: var(--space-8);
+		font-family: var(--font-mono);
+		color: var(--text-muted);
+	}
+
 	@media (prefers-reduced-motion: reduce) {
 		.load-more-button {
 			transition: none;
 		}
+	}
+
+	.empty-state {
+		text-align: center;
+		padding: var(--space-8);
+		color: var(--text-muted);
+		font-family: var(--font-mono);
+	}
+
+	.empty-state p {
+		margin: var(--space-2) 0;
 	}
 </style>
 
@@ -192,21 +220,26 @@
 	<BlogError />
 
 	<div class="container">
-		<div class="posts">
+		<div class="posts" style:visibility={isLoading && currentPage === 1 ? 'hidden' : 'visible'}>
 			{#each $blogPosts as post (post.link)}
 				<BlogPost {post} />
+			{:else}
+				{#if !isLoading}
+					<div class="empty-state">
+						<p>No blog posts available at the moment.</p>
+						<p>Check back later for new content!</p>
+					</div>
+				{/if}
 			{/each}
 		</div>
 
-		{#if hasMore}
+		{#if isLoading}
+			<div class="loading">Loading posts...</div>
+		{/if}
+
+		{#if hasMore && !isLoading}
 			<div class="load-more">
-				<button onclick={loadMore} disabled={isLoading} class="load-more-button">
-					{#if isLoading}
-						Loading...
-					{:else}
-						Load More
-					{/if}
-				</button>
+				<button class="load-more-button" on:click={loadMore}>Load More</button>
 			</div>
 		{/if}
 	</div>
