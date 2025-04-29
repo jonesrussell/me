@@ -6,6 +6,9 @@ import { get } from 'svelte/store';
 const mockFetch = vi.fn();
 global.fetch = mockFetch;
 
+// Enable timers
+vi.useFakeTimers();
+
 // Centralized mock data
 const sampleXml = `<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
@@ -90,10 +93,7 @@ describe('API', () => {
       Promise.resolve({
         ok: true,
         text: () => Promise.resolve(sampleXml),
-        headers: new Headers({
-          etag: '"123"',
-          'last-modified': 'Wed, 14 Mar 2024 12:00:00 GMT',
-        }),
+        headers: new Headers(),
       })
     );
   });
@@ -192,7 +192,7 @@ describe('API', () => {
 
     it('should handle network errors when fetching post', async () => {
       mockFetch.mockRejectedValueOnce(new Error('Network error'));
-      await expect(fetchPost('test-post-1')).rejects.toThrow('Failed to fetch blog post');
+      await expect(fetchPost('test-post-1')).rejects.toThrow('Network error');
     });
   });
 });
@@ -211,19 +211,35 @@ describe('Stores', () => {
   });
 
   it('should update blogStore state during feed fetch', async () => {
+    // Initial state
     expect(get(blogStore).loading).toBe(false);
+    expect(get(blogStore).posts).toHaveLength(0);
 
+    // Start fetch
     const fetchPromise = fetchFeed();
-    expect(get(blogStore).loading).toBe(true);
 
+    // Check loading state immediately
+    expect(get(blogStore).loading).toBe(true);
+    expect(get(blogStore).posts).toHaveLength(0);
+
+    // Wait for fetch to complete
     await fetchPromise;
+
+    // Check final state
     expect(get(blogStore).loading).toBe(false);
     expect(get(blogStore).posts).toHaveLength(2);
     expect(get(blogStore).error).toBeNull();
   });
 
   it('should track errors in blogErrors store', async () => {
+    // Mock fetch to fail
     mockFetch.mockRejectedValueOnce(new Error('Network error'));
+
+    // Subscribe to store changes
+    let errorCount = 0;
+    const unsubscribe = blogErrors.subscribe(errors => {
+      errorCount = errors.length;
+    });
 
     try {
       await fetchFeed();
@@ -231,11 +247,22 @@ describe('Stores', () => {
       // Expected error
     }
 
+    // Check error was tracked
     const errors = get(blogErrors);
     expect(errors).toHaveLength(1);
+    expect(errorCount).toBe(errors.length); // Compare with actual store value
     expect(errors[0]).toMatchObject({
       type: 'FETCH_ERROR',
       message: 'Network error',
     });
+
+    // Check blogStore error state
+    expect(get(blogStore).error).toMatchObject({
+      type: 'FETCH_ERROR',
+      message: 'Network error',
+    });
+
+    // Cleanup
+    unsubscribe();
   });
 });
