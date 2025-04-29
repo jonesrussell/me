@@ -1,12 +1,13 @@
 import { writable } from 'svelte/store';
+import { BROWSER } from 'esm-env';
 
 export type Theme = 'auto' | 'light' | 'dark';
 
-function createThemeStore() {
+export function createThemeStore() {
 	const { subscribe, set } = writable<Theme>('auto');
 
-	// Initialize theme from localStorage or system preference
-	if (typeof window !== 'undefined') {
+	if (BROWSER) {
+		// Initialize theme
 		const savedTheme = localStorage.getItem('theme') as Theme | null;
 		const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
 			? 'dark'
@@ -36,7 +37,7 @@ function createThemeStore() {
 		subscribe,
 		set: (theme: Theme) => {
 			set(theme);
-			if (typeof window !== 'undefined') {
+			if (BROWSER) {
 				localStorage.setItem('theme', theme);
 				const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
 					? 'dark'

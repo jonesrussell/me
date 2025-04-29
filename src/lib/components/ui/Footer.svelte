@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { currentYear } from '$lib/stores/date';
+	const year = new Date().getFullYear();
 </script>
 
 <style>
@@ -57,7 +57,7 @@
 <footer class="footer">
 	<div class="container">
 		<p>
-			&copy; {$currentYear} Russell Jones |
+			&copy; {year} Russell Jones |
 			<a href="https://github.com/jonesrussell/me" target="_blank" rel="noopener noreferrer">
 				Source Code
 			</a>
