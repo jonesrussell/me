@@ -261,7 +261,7 @@
 			<header class="post-header">
 				<h1>{post.title}</h1>
 				<div class="metadata">
-					<time datetime={post.pubDate}>{formatPostDate(post.pubDate)}</time>
+					<time datetime={post.published}>{formatPostDate(post.published)}</time>
 				</div>
 			</header>
 			<div class="content">

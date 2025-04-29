@@ -1,0 +1,27 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Navigation Patterns
+
+## Link Structure
+Navigation links should follow these patterns:
+1. Primary navigation links should be in `.desktop-nav`
+2. Each link should have a unique, descriptive text or aria-label
+3. Blog link should use "📝 Read my technical articles" as text
+4. Projects link should use "Browse my open source projects" as text
+5. Contact link should use "Get in touch" as text
+
+## Navigation Testing
+When testing navigation in [tests/routes.spec.ts](mdc:tests/routes.spec.ts):
+1. Use `waitUntil: 'domcontentloaded'` for faster page loads
+2. Verify navigation links are visible before clicking
+3. Check for page-specific elements after navigation
+4. Handle loading states for dynamic content
+
+## Error Handling
+1. 404 pages should show `.error` class
+2. Include a link back to home page
+3. Display appropriate error message
+4. Maintain consistent navigation structure
