@@ -1,15 +1,43 @@
-import DOMPurify from 'dompurify';
+import sanitizeHtml from 'sanitize-html';
 
-// Initialize DOMPurify
-let dompurify: typeof DOMPurify;
-if (typeof window === 'undefined') {
-	// Server-side
-	const { JSDOM } = await import('jsdom');
-	const window = new JSDOM('').window;
-	dompurify = DOMPurify(window);
-} else {
-	// Client-side
-	dompurify = DOMPurify;
+// Sanitization Configuration
+export const SANITIZE_OPTIONS = {
+	allowedTags: ['p', 'br', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'code', 'pre'],
+	allowedAttributes: {
+		'a': ['href', 'title', 'target'],
+		'*': ['class']
+	},
+	allowedSchemes: ['http', 'https', 'mailto', 'tel'],
+	disallowedTagsMode: 'recursiveEscape' as const,
+	nonTextTags: ['script', 'style', 'textarea', 'option', 'noscript'],
+	parser: {
+		lowerCaseTags: true,
+		lowerCaseAttributeNames: true
+	},
+	transformTags: {
+		'*': (tagName: string, attribs: Record<string, string>) => {
+			return {
+				tagName,
+				attribs
+			};
+		}
+	}
+};
+
+// Helper: Remove Unwanted Tags
+export function removeUnwantedTags(input: string): string {
+	if (!input) return '';
+	return sanitizeHtml(input, {
+		...SANITIZE_OPTIONS,
+		allowedTags: [],
+		allowedAttributes: {}
+	});
+}
+
+// Helper: Sanitize HTML
+export function sanitizeHTML(input: string): string {
+	if (!input) return '';
+	return sanitizeHtml(input, SANITIZE_OPTIONS);
 }
 
 // Cache for memoized results
@@ -40,55 +68,6 @@ export function normalizeSpaces(input: string): string {
 			.trim()
 	);
 }
-
-// Helper: Remove Unwanted Tags
-export function removeUnwantedTags(input: string): string {
-	if (!input) return '';
-
-	// First pass: Remove script and style tags and their contents
-	const firstPass = dompurify.sanitize(input, {
-		ALLOWED_TAGS: [],
-		ALLOWED_ATTR: [],
-		ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|ftp|tel):|#)/i,
-		FORBID_TAGS: ['script', 'style', 'textarea', 'option', 'noscript']
-	});
-
-	// Second pass: Clean up any remaining HTML and normalize spaces
-	return dompurify.sanitize(firstPass, {
-		ALLOWED_TAGS: [],
-		ALLOWED_ATTR: [],
-		ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|ftp|tel):|#)/i
-	});
-}
-
-// Sanitization Configuration
-export const SANITIZE_OPTIONS = {
-	allowedTags: [],
-	allowedAttributes: {},
-	disallowedTagsMode: 'recursiveEscape' as const,
-	nonTextTags: ['script', 'style', 'textarea', 'option', 'noscript'],
-	parser: {
-		lowerCaseTags: true,
-		lowerCaseAttributeNames: true
-	},
-	exclusiveFilter: function (frame: { tag: string; text: string }) {
-		return frame.tag === 'script' || frame.tag === 'style';
-	},
-	transformTags: {
-		'*': (
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			tagName: string,
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			attribs: Record<string, string>
-		) => {
-			return {
-				tagName: '',
-				text: ' ',
-				attribs: {}
-			};
-		}
-	}
-};
 
 // Periodically Clear All Memoized Caches
 export function setupCacheCleanup(intervalMs: number = 5 * 60 * 1000): void {
