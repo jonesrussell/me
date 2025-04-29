@@ -137,11 +137,13 @@ export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions = 
 			const title = titleMatch ? titleMatch[1].trim() : '';
 			const link = linkMatch ? linkMatch[1] : '';
 			const content = contentMatch ? contentMatch[1].trim() : '';
-			const published = publishedMatch ? publishedMatch[1] : (updatedMatch ? updatedMatch[1] : '');
-			const categories = categoryMatches.map(match => {
-				const termMatch = match.match(/term="([^"]*)"/);
-				return termMatch ? termMatch[1] : '';
-			}).filter(Boolean);
+			const published = publishedMatch ? publishedMatch[1] : updatedMatch ? updatedMatch[1] : '';
+			const categories = categoryMatches
+				.map(match => {
+					const termMatch = match.match(/term="([^"]*)"/);
+					return termMatch ? termMatch[1] : '';
+				})
+				.filter(Boolean);
 
 			console.log('Parsed entry:', { title, link, published, categories });
 
