@@ -1,0 +1,59 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Development Standards
+
+## Core Principles
+- Use TypeScript for all new code
+- Document code thoroughly with JSDoc comments
+- Follow SOLID principles
+- Write pure functions when possible
+- Implement strict type checking
+- Validate props at runtime
+- Handle errors consistently
+
+## Code Style
+- Use semicolons consistently
+- Prefer `const` declarations
+- Limit lines to 100 characters
+- Use 2-space indentation
+- Follow naming conventions:
+  - Interface names start with "I"
+  - Type names end with "Type"
+  - Use descriptive names for tests
+
+## Architecture
+- Organize code by feature
+- Separate UI components from business logic
+- Keep services stateless
+- Use dependency injection
+- Minimize component logic
+- Maintain test independence
+
+## Type System
+- Store shared types in `src/types`
+- Prefer interfaces over type aliases
+- Document complex types
+- Export types separately from implementations
+
+## Services
+- Use factory patterns for services
+- Implement comprehensive error handling
+- Add request caching where appropriate
+- Include retry logic and timeouts
+- Use middleware for cross-cutting concerns
+
+## State Management
+- Use custom stores with subscriptions
+- Implement store persistence when needed
+- Keep stores focused and lightweight
+- Test state updates thoroughly
+
+## Svelte Patterns
+- Use runes (`$state`, `$derived`, `$effect`)
+- Keep components small and semantic
+- Use `{@render ...}` instead of slots
+- Implement error boundaries
+- Test component lifecycle thoroughly
