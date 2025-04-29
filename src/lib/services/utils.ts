@@ -1,4 +1,3 @@
-import DOMPurify from 'dompurify';
 import { memoize, normalizeSpaces, removeUnwantedTags } from './utils/helpers';
 
 /**
@@ -11,15 +10,8 @@ export const sanitizeText = memoize((text: string): string => {
 		console.log('Input:', text);
 		// First remove unwanted tags
 		const withoutUnwantedTags = removeUnwantedTags(text);
-		// Then sanitize HTML
-		const sanitizedContent = DOMPurify.sanitize(withoutUnwantedTags, {
-			ALLOWED_TAGS: [],
-			ALLOWED_ATTR: [],
-			ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|ftp|tel):|#)/i,
-			FORBID_TAGS: ['script', 'style', 'textarea', 'option', 'noscript']
-		});
-		// Finally normalize spaces
-		const result = normalizeSpaces(sanitizedContent);
+		// Then normalize spaces
+		const result = normalizeSpaces(withoutUnwantedTags);
 		console.log('Output:', result);
 		return result;
 	} catch (error) {
