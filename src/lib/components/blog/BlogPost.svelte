@@ -45,10 +45,28 @@
 
 	.meta {
 		display: flex;
-		align-items: center;
+		flex-direction: column;
 		gap: var(--space-2);
 		font-size: var(--font-size-sm);
-		color: var(--text-muted);
+	}
+
+	.date {
+		font-family: var(--font-mono);
+		color: var(--text-color);
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+	}
+
+	.tags span {
+		color: var(--accent-color);
+		background: var(--bg-darker);
+		padding: var(--space-1) var(--space-2);
+		border-radius: var(--radius-sm);
+		border: var(--border-width) solid var(--border-color);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
@@ -66,8 +84,11 @@
 	<h3 class="title">{post.title}</h3>
 	<p class="description">{post.description}</p>
 	<div class="meta">
-		<span>{post.pubDate}</span>
-		<span>•</span>
-		<span>{post.categories.join(', ')}</span>
+		<span class="date">{post.pubDate}</span>
+		<div class="tags">
+			{#each post.categories as category}
+				<span>{category}</span>
+			{/each}
+		</div>
 	</div>
 </a>
