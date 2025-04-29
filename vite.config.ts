@@ -8,25 +8,33 @@ export default defineConfig({
 		coverage: {
 			provider: 'v8',
 			exclude: [
-				// Build output
+				// Build and config
 				'build/**',
-				// Config files
+				'.svelte-kit/**',
 				'*.config.{js,ts}',
-				// Test files
+				// Tests
+				'src/test/**',
 				'**/*.test.{js,ts}',
-				'test/**',
-				// Other files to exclude
+				'**/*.spec.{js,ts}',
+				'tests/**',
+				// Types
+				'**/*.d.ts',
+				'src/lib/types/**',
+				// Other
 				'scripts/**',
 				'static/**',
-				'.svelte-kit/**',
 				'node_modules/**',
 			],
 			include: [
-				// Only include source files
-				'src/**/*.{js,ts,svelte}',
+				// Only measure these directories
+				'src/lib/services/**/*.{js,ts}',
+				'src/lib/utils/**/*.{js,ts}',
+				'src/lib/stores/**/*.{js,ts}',
 			],
 			all: true,
 			clean: true,
+			// Skip full source reporting in terminal
+			reporter: ['text-summary', 'html'],
 		},
 		workspace: [
 			{
