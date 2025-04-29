@@ -1,4 +1,4 @@
-import { writable, get } from 'svelte/store';
+import { writable } from 'svelte/store';
 import { formatDate } from './utils';
 import type { BlogPost } from '$lib/types/blog';
 
@@ -197,17 +197,12 @@ export const fetchFeed = async ({ page = 1, pageSize = 5 }: PaginationOptions = 
 
 // Blog Post Retrieval
 export const fetchPost = async (slug: string): Promise<BlogPost> => {
-	try {
-		const { items } = await fetchFeed();
-		const post = items.find(post => generateSlug(post.title) === slug);
+	const { items } = await fetchFeed();
+	const post = items.find(post => generateSlug(post.title) === slug);
 
-		if (!post) {
-			throw new Error('Post not found');
-		}
-
-		return post;
-	} catch (error) {
-		// Re-throw the error to ensure it propagates
-		throw error;
+	if (!post) {
+		throw new Error('Post not found');
 	}
+
+	return post;
 };
