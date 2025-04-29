@@ -52,7 +52,8 @@ const feedCache = new Map<string, FeedCache>();
 
 // Utility Functions
 export function formatPostDate(dateString: string): string {
-	return formatDate(dateString);
+	const formatted = formatDate(dateString);
+	return formatted ?? dateString; // Return original string if formatted is null or undefined
 }
 
 export function generateSlug(title: string): string {
