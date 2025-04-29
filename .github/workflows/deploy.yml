@@ -17,28 +17,7 @@ defaults:
     shell: bash
 
 jobs:
-  playwright:
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-      - name: Install dependencies
-        run: npm ci
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-      - name: Run Playwright tests
-        run: npx playwright test
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() && !env.ACT }}
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
-
-  test:
+  unit-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -55,31 +34,92 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
           cache: 'npm'
-      - name: Cache npm dependencies
+      - name: Cache dependencies and build
         uses: actions/cache@v4
-        id: npm-cache
+        id: cache
         with:
           path: |
             node_modules
-            .npm
-          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+            .svelte-kit
+            .vitest
+          key: ${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('svelte.config.js') }}
           restore-keys: |
-            npm-${{ runner.os }}-
+            ${{ runner.os }}-${{ hashFiles('package-lock.json') }}-
+            ${{ runner.os }}-
       - name: Install dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npm ci --prefer-offline --no-audit
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
       - name: Type check
         run: npm run check
       - name: Lint
         run: npm run lint
-      - name: Test
-        run: npm test
+      - name: Run unit tests
+        run: npm run test:unit:run
+      - name: Cache test results
+        uses: actions/cache@v4
+        with:
+          path: |
+            coverage
+            .vitest
+          key: ${{ runner.os }}-test-results-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-test-results-
+
+  e2e-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: read
+    env:
+      DEBIAN_FRONTEND: noninteractive
+      NODE_ENV: test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright system dependencies
+        run: npx playwright install-deps
+      - name: Cache dependencies and build
+        uses: actions/cache@v4
+        id: cache
+        with:
+          path: |
+            node_modules
+            .svelte-kit
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('svelte.config.js') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ hashFiles('package-lock.json') }}-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Install Playwright Browsers
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium firefox webkit
+      - name: Run E2E tests
+        run: npm run test:e2e
+      - name: Cache test results
+        uses: actions/cache@v4
+        with:
+          path: |
+            playwright-report
+            test-results
+          key: ${{ runner.os }}-e2e-results-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-e2e-results-
 
   build:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [test, playwright]
+    needs: [unit-tests, e2e-tests]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -90,31 +130,24 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
           cache: 'npm'
-      - name: Cache npm dependencies
+      - name: Cache dependencies and build
         uses: actions/cache@v4
-        id: npm-cache
+        id: cache
         with:
           path: |
             node_modules
-            .npm
-          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            npm-${{ runner.os }}-
-      - name: Cache build output
-        uses: actions/cache@v4
-        id: build-cache
-        with:
-          path: |
-            build
             .svelte-kit
-          key: build-${{ runner.os }}-${{ github.sha }}
+            build
+            node_modules/.cache
+          key: ${{ runner.os }}-build-${{ github.sha }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('svelte.config.js') }}
           restore-keys: |
-            build-${{ runner.os }}-
+            ${{ runner.os }}-build-${{ github.sha }}-
+            ${{ runner.os }}-build-
       - name: Install dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npm ci --prefer-offline --no-audit
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
       - name: Build
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'

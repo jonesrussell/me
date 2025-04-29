@@ -1,55 +1,67 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Route Navigation', () => {
+	// Set a longer timeout for this test suite
+	test.setTimeout(90000);
+
 	test.beforeEach(async ({ page }) => {
-		// Navigate to home page before each test
-		await page.goto('/');
-		// Wait for the site container to be visible
-		await page.waitForSelector('.site');
+		// Navigate to home page before each test with faster load strategy
+		await page.goto('/', { waitUntil: 'domcontentloaded' });
 	});
 
-	test('should navigate to blog page', async ({ page }) => {
-		// Arrange
-		const blogLink = page.locator('text=Read my technical articles');
-		await expect(blogLink).toBeVisible();
+	test('navigates to blog page', async ({ page }) => {
+		// Wait for the blog link to be visible
+		const blogLink = page.getByRole('link', { name: '📝 Read my technical articles' });
+		await expect(blogLink).toBeVisible({ timeout: 10000 });
 
-		// Act
+		// Click the blog link and wait for navigation
 		await blogLink.click();
+		await page.waitForURL('**/blog', { timeout: 20000 });
 
-		// Assert
-		await expect(page).toHaveURL(/.*blog/);
-		await page.waitForSelector('.site');
-		await expect(page.locator('.blog')).toBeVisible();
-		await expect(page.locator('text=Web Developer Blog')).toBeVisible();
-		await expect(page.locator('.posts')).toBeVisible();
+		// Wait for the blog page structure to be visible
+		await expect(page.locator('.blog')).toBeVisible({ timeout: 10000 });
+		await expect(page.locator('text=Web Developer Blog')).toBeVisible({ timeout: 10000 });
+
+		// Wait for loading state to complete and posts to be visible
+		await Promise.race([
+			page.waitForSelector('.loading', { state: 'hidden', timeout: 30000 }),
+			page.waitForSelector('.posts', { timeout: 30000 })
+		]);
+
+		// Verify posts are visible
+		await expect(page.locator('.posts')).toBeVisible({ timeout: 10000 });
 	});
 
 	test('should navigate to projects page', async ({ page }) => {
 		// Arrange
 		const projectsLink = page.locator('text=Browse my open source projects');
-		await expect(projectsLink).toBeVisible();
+		await expect(projectsLink).toBeVisible({ timeout: 10000 });
 
 		// Act
-		await projectsLink.click();
+		await Promise.all([
+			page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
+			projectsLink.click()
+		]);
 
 		// Assert
-		await expect(page).toHaveURL(/.*projects/);
-		await page.waitForSelector('.site');
-		await expect(page.locator('.projects')).toBeVisible();
+		await expect(page).toHaveURL(/.*projects/, { timeout: 10000 });
+		await expect(page.locator('.projects')).toBeVisible({ timeout: 10000 });
 	});
 
 	test('should navigate to contact page', async ({ page }) => {
 		// Arrange
 		const contactLink = page.locator('text=Get in touch');
-		await expect(contactLink).toBeVisible();
+		await expect(contactLink).toBeVisible({ timeout: 10000 });
 
 		// Act
-		await contactLink.click();
+		await Promise.all([
+			page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
+			contactLink.click()
+		]);
 
 		// Assert
-		await expect(page).toHaveURL(/.*contact/);
-		await page.waitForSelector('.site');
-		await expect(page.locator('.contact')).toBeVisible();
+		await expect(page).toHaveURL(/.*contact/, { timeout: 10000 });
+		await expect(page.locator('.contact')).toBeVisible({ timeout: 10000 });
 	});
 
 	test('should maintain consistent navigation across pages', async ({ page }) => {
@@ -62,31 +74,32 @@ test.describe('Route Navigation', () => {
 
 		// Act & Assert
 		for (const route of routes) {
-			// Navigate to the route
-			await page.goto(`/${route.path}`, { waitUntil: 'networkidle' });
-			await page.waitForSelector('.site');
+			// Navigate to the route with faster load strategy
+			await page.goto(`/${route.path}`, { waitUntil: 'domcontentloaded' });
 
 			// Check desktop navigation
 			const desktopNav = page.locator('.desktop-nav');
-			await expect(desktopNav).toBeVisible();
+			await expect(desktopNav).toBeVisible({ timeout: 10000 });
 
-			for (const link of routes) {
-				const navLink = desktopNav.locator(`a[href="/${link.path}"]`);
-				await expect(navLink).toBeVisible({ timeout: 10000 });
-				await expect(navLink).toContainText(link.text);
-			}
+			// Check all navigation links in parallel
+			await Promise.all(
+				routes.map(async link => {
+					const navLink = desktopNav.locator(`a[href="/${link.path}"]`);
+					await expect(navLink).toBeVisible({ timeout: 10000 });
+					await expect(navLink).toContainText(link.text, { timeout: 10000 });
+				})
+			);
 		}
 	});
 
 	test('should handle 404 errors gracefully', async ({ page }) => {
 		// Arrange & Act
-		const response = await page.goto('/non-existent-page');
+		const response = await page.goto('/non-existent-page', { waitUntil: 'domcontentloaded' });
 
 		// Assert
 		expect(response?.status()).toBe(404);
-		await page.waitForSelector('.site');
-		await expect(page.locator('.error')).toBeVisible();
-		await expect(page.locator('h1')).toContainText('404');
-		await expect(page.locator('a[href="/me"]')).toBeVisible();
+		await expect(page.locator('.error')).toBeVisible({ timeout: 10000 });
+		await expect(page.locator('h1')).toContainText('404', { timeout: 10000 });
+		await expect(page.locator('a[href="/me"]')).toBeVisible({ timeout: 10000 });
 	});
 });

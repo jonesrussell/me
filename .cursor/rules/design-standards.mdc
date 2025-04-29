@@ -1,0 +1,32 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Design Standards
+
+## Branding
+- Title: Russell Jones
+- Description: Crafting elegant solutions with modern web technologies
+
+## Typography
+- Use monospace fonts for consistent character width
+- Align text to character grids
+- Maintain consistent spacing
+- Implement clear visual hierarchy
+
+## Layout
+- Test responsive designs thoroughly
+- Validate typography scales
+- Check color contrast ratios
+- Ensure consistent spacing across breakpoints
+
+## Best Practices
+- Follow accessibility standards (WCAG)
+- Implement progressive enhancement
+- Monitor performance metrics
+- Use semantic HTML elements
+- Validate user input
+- Handle errors gracefully
+- Keep dependencies updated
+- Follow semantic versioning
