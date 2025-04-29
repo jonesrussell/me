@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { marked } from 'marked';
-	import { sanitizeHtml } from '$lib/utils/sanitize';
+	import { sanitizeHTML } from '$lib/services/utils/helpers';
 
 	export let content: string;
 	export let className = '';
 
-	$: renderedContent = marked(sanitizeHtml(content || ''));
+	$: renderedContent = marked(sanitizeHTML(content || ''));
 </script>
 
 <style>
