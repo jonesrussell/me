@@ -149,6 +149,16 @@ export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions = 
 						.trim()
 				: '';
 
+			// Extract and format date
+			const rawDate = entry.published || entry.updated || '';
+			const pubDate = rawDate
+				? new Date(rawDate).toLocaleDateString('en-US', {
+						year: 'numeric',
+						month: 'long',
+						day: 'numeric'
+					})
+				: '';
+
 			// Extract categories
 			const categories = Array.isArray(entry.category)
 				? entry.category.map((cat: any) => cat['@_term'] || '')
@@ -159,7 +169,7 @@ export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions = 
 			return {
 				title,
 				link,
-				pubDate: entry.published || entry.updated || '',
+				pubDate,
 				description,
 				content,
 				categories
