@@ -77,20 +77,28 @@ describe('Helper Functions', () => {
 	});
 
 	describe('removeUnwantedTags', () => {
-		it('should remove script tags', () => {
+		it('should remove script tags and their content', () => {
 			expect(removeUnwantedTags('<script>alert(1)</script>')).toBe('');
-			expect(removeUnwantedTags('<div><script>alert(1)</script>text</div>')).toBe(
-				'<div>text</div>'
-			);
+			expect(removeUnwantedTags('<div><script>alert(1)</script>text</div>')).toBe('text');
 		});
 
-		it('should remove style tags', () => {
+		it('should remove style tags and their content', () => {
 			expect(removeUnwantedTags('<style>.class { color: red; }</style>')).toBe('');
-			expect(removeUnwantedTags('<div><style>.class{}</style>text</div>')).toBe('<div>text</div>');
+			expect(removeUnwantedTags('<div><style>.class{}</style>text</div>')).toBe('text');
 		});
 
-		it('should preserve other content', () => {
-			expect(removeUnwantedTags('<div>text</div>')).toBe('<div>text</div>');
+		it('should remove all HTML tags but preserve content', () => {
+			expect(removeUnwantedTags('<div>text</div>')).toBe('text');
+			expect(removeUnwantedTags('<p>Hello <b>world</b>!</p>')).toBe('Hello world!');
+		});
+
+		it('should handle nested tags correctly', () => {
+			expect(removeUnwantedTags('<div><p><span>text</span></p></div>')).toBe('text');
+		});
+
+		it('should handle malformed tags', () => {
+			expect(removeUnwantedTags('<div>text<div>')).toBe('text');
+			expect(removeUnwantedTags('<div>text</div')).toBe('text');
 		});
 
 		it('should handle empty input', () => {
@@ -129,7 +137,8 @@ describe('Helper Functions', () => {
 			expect(SANITIZE_OPTIONS).toMatchObject({
 				allowedTags: [],
 				allowedAttributes: {},
-				disallowedTagsMode: 'discard'
+				disallowedTagsMode: 'recursiveEscape',
+				nonTextTags: ['script', 'style', 'textarea', 'option', 'noscript']
 			});
 		});
 
