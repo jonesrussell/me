@@ -94,12 +94,11 @@ export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions = 
 	}
 
 	try {
+		console.log('Fetching feed from:', FEED_URL);
 		const response = await fetch(FEED_URL, {
 			headers: {
-				Accept: 'application/xml',
-				'Cache-Control': 'no-cache'
-			},
-			signal: AbortSignal.timeout(5000)
+				Accept: 'application/xml'
+			}
 		});
 
 		if (!response.ok) {
@@ -107,29 +106,69 @@ export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions = 
 		}
 
 		const text = await response.text();
+		console.log('Feed response received:', {
+			length: text.length,
+			firstChars: text.substring(0, 100)
+		});
+
+		if (!text.trim()) {
+			throw new Error('Empty response received from feed');
+		}
+
 		const parser = new XMLParser({
 			ignoreAttributes: false,
 			attributeNamePrefix: '@_',
-			parseAttributeValue: true
+			parseAttributeValue: true,
+			textNodeName: '#text',
+			htmlEntities: true
 		});
 
 		const parsed = parser.parse(text);
-		const items = parsed.rss?.channel?.item || [];
 
-		const posts: BlogPost[] = items.map((item: any) => ({
-			title: item.title || '',
-			link: item.link || '',
-			pubDate: item.pubDate || '',
-			description: item.description || '',
-			content: item['content:encoded'] || '',
-			categories: Array.isArray(item.category) ? item.category : [item.category].filter(Boolean)
-		}));
+		// Handle Atom feed format
+		const entries = parsed.feed?.entry || [];
+		const posts: BlogPost[] = entries.map((entry: any) => {
+			// Extract title text
+			const title = typeof entry.title === 'string' ? entry.title : entry.title?.['#text'] || '';
+
+			// Extract link href
+			const link = Array.isArray(entry.link)
+				? entry.link.find((l: any) => l['@_rel'] === 'alternate')?.['@_href'] || ''
+				: entry.link?.['@_href'] || '';
+
+			// Extract content and description
+			const content =
+				typeof entry.content === 'string' ? entry.content : entry.content?.['#text'] || '';
+
+			// Extract first paragraph for description
+			const description = content
+				? content
+						.replace(/<[^>]*>/g, '') // Remove HTML tags
+						.split('\n')[0] // Get first line
+						.substring(0, 200) // Limit length
+						.trim()
+				: '';
+
+			// Extract categories
+			const categories = Array.isArray(entry.category)
+				? entry.category.map((cat: any) => cat['@_term'] || '')
+				: entry.category
+					? [entry.category['@_term'] || '']
+					: [];
+
+			return {
+				title,
+				link,
+				pubDate: entry.published || entry.updated || '',
+				description,
+				content,
+				categories
+			};
+		});
 
 		feedCache.set(cacheKey, {
 			data: posts,
 			timestamp: now,
-			etag: response.headers.get('etag') || undefined,
-			lastModified: response.headers.get('last-modified') || undefined,
 			errorCount: 0
 		});
 
@@ -138,7 +177,19 @@ export async function fetchFeed({ page = 1, pageSize = 5 }: PaginationOptions = 
 			hasMore: posts.length === pageSize
 		};
 	} catch (error) {
-		console.error('Error fetching blog feed:', error);
+		console.error('Error fetching blog feed:', {
+			error,
+			message: error instanceof Error ? error.message : 'Unknown error',
+			stack: error instanceof Error ? error.stack : undefined
+		});
+
+		const blogError: BlogError = {
+			type: 'FETCH_ERROR',
+			message: error instanceof Error ? error.message : 'Unknown error occurred',
+			details: error,
+			timestamp: Date.now()
+		};
+		blogErrors.update(errors => [...errors, blogError]);
 		return {
 			items: [],
 			hasMore: false
