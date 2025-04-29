@@ -1,3 +1,5 @@
+import sanitizeHtml from 'sanitize-html';
+
 // Cache for memoized results
 const memoCache = new Map<string, unknown>();
 
@@ -29,22 +31,31 @@ export function normalizeSpaces(input: string): string {
 
 // Helper: Remove Unwanted Tags
 export function removeUnwantedTags(input: string): string {
-	let previous;
-	do {
-		previous = input;
-		input = input.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, '');
-	} while (input !== previous);
-	return input;
+	// First pass: Remove script and style tags and their contents
+	const firstPass = sanitizeHtml(input, {
+		allowedTags: [],
+		allowedAttributes: {},
+		disallowedTagsMode: 'discard',
+		nonTextTags: ['script', 'style', 'textarea', 'option', 'noscript']
+	});
+
+	// Second pass: Clean up any remaining HTML and normalize spaces
+	return sanitizeHtml(firstPass, SANITIZE_OPTIONS);
 }
 
 // Sanitization Configuration
 export const SANITIZE_OPTIONS = {
 	allowedTags: [], // Disallow all tags
 	allowedAttributes: {}, // Disallow attributes
-	disallowedTagsMode: 'discard' as const,
+	disallowedTagsMode: 'recursiveEscape' as const, // Changed to recursiveEscape for better handling
+	nonTextTags: ['script', 'style', 'textarea', 'option', 'noscript'], // Ensure these tags and their contents are removed
 	parser: {
 		lowerCaseTags: true,
 		lowerCaseAttributeNames: true
+	},
+	exclusiveFilter: function (frame: { tag: string; text: string }) {
+		// Remove any remaining script-like content
+		return frame.tag === 'script' || frame.tag === 'style';
 	},
 	transformTags: {
 		'*': (
