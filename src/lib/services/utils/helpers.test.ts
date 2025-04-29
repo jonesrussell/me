@@ -137,7 +137,7 @@ describe('Helper Functions', () => {
 			expect(SANITIZE_OPTIONS).toMatchObject({
 				allowedTags: [],
 				allowedAttributes: {},
-				disallowedTagsMode: 'recursiveEscape',
+				disallowedTagsMode: 'discard',
 				nonTextTags: ['script', 'style', 'textarea', 'option', 'noscript']
 			});
 		});

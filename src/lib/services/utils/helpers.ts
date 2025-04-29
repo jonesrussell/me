@@ -1,57 +1,60 @@
 import sanitizeHtml from 'sanitize-html';
 
+// Extend the sanitize-html options type to include transformTags
+type SanitizeOptions = {
+	allowedTags: string[];
+	allowedAttributes: Record<string, string[]>;
+	disallowedTagsMode: 'recursiveEscape' | 'discard';
+	nonTextTags: string[];
+	parser?: {
+		lowerCaseTags: boolean;
+		lowerCaseAttributeNames: boolean;
+	};
+	transformTags: {
+		[key: string]: (
+			tagName: string,
+			attribs: Record<string, string>
+		) => { tagName: string; text: string; attribs: Record<string, string> };
+	};
+};
+
 // Sanitization Configuration
-export const SANITIZE_OPTIONS = {
-	allowedTags: [
-		'p',
-		'br',
-		'b',
-		'i',
-		'em',
-		'strong',
-		'a',
-		'ul',
-		'ol',
-		'li',
-		'h1',
-		'h2',
-		'h3',
-		'h4',
-		'h5',
-		'h6',
-		'blockquote',
-		'code',
-		'pre'
-	],
-	allowedAttributes: {
-		a: ['href', 'title', 'target'],
-		'*': ['class']
-	},
-	allowedSchemes: ['http', 'https', 'mailto', 'tel'],
-	disallowedTagsMode: 'recursiveEscape' as const,
+export const SANITIZE_OPTIONS: SanitizeOptions = {
+	allowedTags: [],
+	allowedAttributes: {},
+	disallowedTagsMode: 'discard',
 	nonTextTags: ['script', 'style', 'textarea', 'option', 'noscript'],
 	parser: {
 		lowerCaseTags: true,
 		lowerCaseAttributeNames: true
 	},
 	transformTags: {
-		'*': (tagName: string, attribs: Record<string, string>) => {
-			return {
-				tagName,
-				attribs
-			};
-		}
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		'*': (tagName: string, attribs: Record<string, string>) => ({
+			tagName: '',
+			text: ' ',
+			attribs: {}
+		})
 	}
 };
 
 // Helper: Remove Unwanted Tags
 export function removeUnwantedTags(input: string): string {
 	if (!input) return '';
-	return sanitizeHtml(input, {
+	const options: SanitizeOptions = {
 		...SANITIZE_OPTIONS,
-		allowedTags: [],
-		allowedAttributes: {}
-	});
+		transformTags: {
+			script: () => ({ tagName: '', text: '', attribs: {} }),
+			style: () => ({ tagName: '', text: '', attribs: {} }),
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			'*': (tagName: string, attribs: Record<string, string>) => ({
+				tagName: '',
+				text: ' ',
+				attribs: {}
+			})
+		}
+	};
+	return sanitizeHtml(input, options);
 }
 
 // Helper: Sanitize HTML
