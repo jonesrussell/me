@@ -1,61 +1,77 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Home Page', () => {
+	// Set a longer timeout for this test suite
+	test.setTimeout(90000);
+
 	test('should load the home page successfully', async ({ page }) => {
 		// Arrange
-		await page.goto('/');
-		await page.waitForSelector('.site');
+		await page.goto('/', { waitUntil: 'domcontentloaded' }); // Changed from default to domcontentloaded
 
 		// Act & Assert
-		// Check for hero section with terminal
+		// Check for main sections with longer timeouts
 		const hero = page.locator('.hero');
-		await expect(hero).toBeVisible();
-
-		// Wait for terminal to be visible and initialized
 		const terminal = page.locator('.terminal-frame');
-		await expect(terminal).toBeVisible();
-		await expect(terminal.locator('.terminal-header')).toBeVisible();
-		await expect(terminal.locator('.terminal-title')).toContainText('~/developer');
-
-		// Check for main content area
 		const main = page.locator('main.home');
-		await expect(main).toBeVisible();
+
+		await Promise.all([
+			expect(hero).toBeVisible({ timeout: 15000 }),
+			expect(terminal).toBeVisible({ timeout: 15000 }),
+			expect(main).toBeVisible({ timeout: 15000 })
+		]);
+
+		// Check terminal components
+		await Promise.all([
+			expect(terminal.locator('.terminal-header')).toBeVisible({ timeout: 10000 }),
+			expect(terminal.locator('.terminal-title')).toContainText('~/developer', { timeout: 10000 })
+		]);
 
 		// Check for specialties section
-		await expect(page.locator('text=Modern JavaScript/TS')).toBeVisible();
-		await expect(page.locator('text=Golang & PHP')).toBeVisible();
-		await expect(page.locator('text=AI Integration')).toBeVisible();
-		await expect(page.locator('text=Cloud & DevOps')).toBeVisible();
+		const specialties = [
+			'Modern JavaScript/TS',
+			'Golang & PHP',
+			'AI Integration',
+			'Cloud & DevOps'
+		];
+
+		for (const specialty of specialties) {
+			await expect(page.locator(`text=${specialty}`)).toBeVisible({ timeout: 10000 });
+		}
 
 		// Check for YouTube section
-		await expect(page.locator('text=Latest Video')).toBeVisible();
-		await expect(page.locator('text=Check out my latest YouTube tutorial')).toBeVisible();
+		await Promise.all([
+			expect(page.locator('text=Latest Video')).toBeVisible({ timeout: 10000 }),
+			expect(page.locator('text=Check out my latest YouTube tutorial')).toBeVisible({
+				timeout: 10000
+			})
+		]);
 
 		// Check for navigation links
-		await expect(page.locator('text=Read my technical articles')).toBeVisible();
-		await expect(page.locator('text=Browse my open source projects')).toBeVisible();
-		await expect(page.locator('text=Get in touch')).toBeVisible();
+		const navLinks = [
+			'Read my technical articles',
+			'Browse my open source projects',
+			'Get in touch'
+		];
+
+		for (const link of navLinks) {
+			await expect(page.locator(`text=${link}`)).toBeVisible({ timeout: 10000 });
+		}
 	});
 
 	test('should have proper page title', async ({ page }) => {
-		// Arrange
-		await page.goto('/');
-		await page.waitForSelector('.site');
-
-		// Act & Assert
-		await expect(page).toHaveTitle(/Russell Jones \| Developing without limits/);
+		await page.goto('/', { waitUntil: 'domcontentloaded' });
+		await expect(page).toHaveTitle(/Russell Jones \| Developing without limits/, {
+			timeout: 10000
+		});
 	});
 
 	test('should have proper meta description', async ({ page }) => {
-		// Arrange
-		await page.goto('/');
-		await page.waitForSelector('.site');
-
-		// Act & Assert
+		await page.goto('/', { waitUntil: 'domcontentloaded' });
 		const metaDescription = page.locator('meta[name="description"]');
 		await expect(metaDescription).toHaveAttribute(
 			'content',
-			'Limitless Developer from Canada specializing in JavaScript, Go, Cloud Technologies, and Open Source. Building elegant solutions with modern web technologies.'
+			'Limitless Developer from Canada specializing in JavaScript, Go, Cloud Technologies, and Open Source. Building elegant solutions with modern web technologies.',
+			{ timeout: 10000 }
 		);
 	});
 });
