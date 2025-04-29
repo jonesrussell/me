@@ -1,4 +1,9 @@
 import DOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
+
+// Initialize DOMPurify for server-side use
+const window = new JSDOM('').window;
+const dompurify = DOMPurify(window);
 
 // Cache for memoized results
 const memoCache = new Map<string, unknown>();
@@ -31,8 +36,10 @@ export function normalizeSpaces(input: string): string {
 
 // Helper: Remove Unwanted Tags
 export function removeUnwantedTags(input: string): string {
+	if (!input) return '';
+
 	// First pass: Remove script and style tags and their contents
-	const firstPass = DOMPurify.sanitize(input, {
+	const firstPass = dompurify.sanitize(input, {
 		ALLOWED_TAGS: [],
 		ALLOWED_ATTR: [],
 		ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|ftp|tel):|#)/i,
@@ -40,7 +47,7 @@ export function removeUnwantedTags(input: string): string {
 	});
 
 	// Second pass: Clean up any remaining HTML and normalize spaces
-	return DOMPurify.sanitize(firstPass, {
+	return dompurify.sanitize(firstPass, {
 		ALLOWED_TAGS: [],
 		ALLOWED_ATTR: [],
 		ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|ftp|tel):|#)/i
