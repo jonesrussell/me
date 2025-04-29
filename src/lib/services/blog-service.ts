@@ -9,74 +9,81 @@ const CACHE_DURATION = 1000 * 60 * 30; // 30 minutes
 
 // Types
 export interface BlogError {
-  type: 'FETCH_ERROR' | 'PARSE_ERROR' | 'VALIDATION_ERROR' | 'CACHE_ERROR';
-  message: string;
-  details?: unknown;
-  timestamp: number;
+	type: 'FETCH_ERROR' | 'PARSE_ERROR' | 'VALIDATION_ERROR' | 'CACHE_ERROR';
+	message: string;
+	details?: unknown;
+	timestamp: number;
 }
 
 interface FeedCache {
-  data: BlogPost[];
-  timestamp: number;
-  errorCount: number;
-  lastError?: string;
+	data: BlogPost[];
+	timestamp: number;
+	errorCount: number;
+	lastError?: string;
 }
 
 interface PaginationOptions {
-  page?: number;
-  pageSize?: number;
+	page?: number;
+	pageSize?: number;
 }
 
 type PaginatedResult<T> = {
-  items: T[];
-  hasMore: boolean;
+	items: T[];
+	hasMore: boolean;
 };
 
 // Store Management
 export const blogStore = writable<{
-  posts: BlogPost[];
-  loading: boolean;
-  error: BlogError | null;
+	posts: BlogPost[];
+	loading: boolean;
+	error: BlogError | null;
 }>({
-  posts: [],
-  loading: false,
-  error: null,
+	posts: [],
+	loading: false,
+	error: null
 });
 
 // Utility Functions
-export const formatPostDate = (dateString: string): string =>
-  formatDate(dateString) ?? dateString;
+export const formatPostDate = (dateString: string): string => formatDate(dateString) ?? dateString;
 
 export const generateSlug = (title: string): string =>
-  title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+	title
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/(^-|-$)/g, '');
 
 // Caching Module
 const feedCache = (() => {
-  const cache = new Map<string, FeedCache>();
+	const cache = new Map<string, FeedCache>();
 
-  const getCache = (key: string): FeedCache | null => {
-    const cached = cache.get(key);
-    if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
-      return cached;
-    }
-    cache.delete(key); // Remove expired cache
-    return null;
-  };
+	const getCache = (key: string): FeedCache | null => {
+		const cached = cache.get(key);
+		if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+			return cached;
+		}
+		cache.delete(key); // Remove expired cache
+		return null;
+	};
 
-  const updateCache = (key: string, data: BlogPost[], errorCount: number = 0, lastError?: string) => {
-    cache.set(key, {
-      data,
-      timestamp: Date.now(),
-      errorCount,
-      lastError,
-    });
-  };
+	const updateCache = (
+		key: string,
+		data: BlogPost[],
+		errorCount: number = 0,
+		lastError?: string
+	) => {
+		cache.set(key, {
+			data,
+			timestamp: Date.now(),
+			errorCount,
+			lastError
+		});
+	};
 
-  const resetCache = () => {
-    cache.clear();
-  };
+	const resetCache = () => {
+		cache.clear();
+	};
 
-  return { getCache, updateCache, resetCache };
+	return { getCache, updateCache, resetCache };
 })();
 
 // Export resetCache for testing
@@ -84,123 +91,123 @@ export const resetFeedCache = feedCache.resetCache;
 
 // XML Parsing Module
 const parseXMLFeed = (xml: string): BlogPost[] => {
-  const entries: BlogPost[] = [];
-  const entryMatches = xml.match(/<entry[^>]*>([\s\S]*?)<\/entry>/g) || [];
+	const entries: BlogPost[] = [];
+	const entryMatches = xml.match(/<entry[^>]*>([\s\S]*?)<\/entry>/g) || [];
 
-  for (const entryMatch of entryMatches) {
-    const titleMatch = entryMatch.match(/<title[^>]*>([\s\S]*?)<\/title>/);
-    const linkMatch = entryMatch.match(/<link[^>]*href="([^"]*)"[^>]*rel="alternate"/);
-    const contentMatch = entryMatch.match(/<content[^>]*>([\s\S]*?)<\/content>/);
-    const publishedMatch = entryMatch.match(/<published[^>]*>([\s\S]*?)<\/published>/);
-    const updatedMatch = entryMatch.match(/<updated[^>]*>([\s\S]*?)<\/updated>/);
-    const categoryMatches = entryMatch.match(/<category[^>]*term="([^"]*)"[^>]*>/g) || [];
+	for (const entryMatch of entryMatches) {
+		const titleMatch = entryMatch.match(/<title[^>]*>([\s\S]*?)<\/title>/);
+		const linkMatch = entryMatch.match(/<link[^>]*href="([^"]*)"[^>]*rel="alternate"/);
+		const contentMatch = entryMatch.match(/<content[^>]*>([\s\S]*?)<\/content>/);
+		const publishedMatch = entryMatch.match(/<published[^>]*>([\s\S]*?)<\/published>/);
+		const updatedMatch = entryMatch.match(/<updated[^>]*>([\s\S]*?)<\/updated>/);
+		const categoryMatches = entryMatch.match(/<category[^>]*term="([^"]*)"[^>]*>/g) || [];
 
-    const title = titleMatch ? titleMatch[1].trim() : '';
-    const link = linkMatch ? linkMatch[1] : '';
-    const content = contentMatch ? contentMatch[1].trim() : '';
-    const published = publishedMatch ? publishedMatch[1] : updatedMatch ? updatedMatch[1] : '';
-    const categories = categoryMatches
-      .map(match => {
-        const termMatch = match.match(/term="([^"]*)"/);
-        return termMatch ? termMatch[1] : '';
-      })
-      .filter(Boolean);
+		const title = titleMatch ? titleMatch[1].trim() : '';
+		const link = linkMatch ? linkMatch[1] : '';
+		const content = contentMatch ? contentMatch[1].trim() : '';
+		const published = publishedMatch ? publishedMatch[1] : updatedMatch ? updatedMatch[1] : '';
+		const categories = categoryMatches
+			.map(match => {
+				const termMatch = match.match(/term="([^"]*)"/);
+				return termMatch ? termMatch[1] : '';
+			})
+			.filter(Boolean);
 
-    entries.push({
-      title,
-      link,
-      content,
-      published,
-      categories,
-      slug: generateSlug(title),
-    });
-  }
+		entries.push({
+			title,
+			link,
+			content,
+			published,
+			categories,
+			slug: generateSlug(title)
+		});
+	}
 
-  return entries;
+	return entries;
 };
 
 // API Module
-export const fetchFeed = async (
-  { page = 1, pageSize = 5 }: PaginationOptions = {}
-): Promise<PaginatedResult<BlogPost>> => {
-  // Set loading state immediately
-  blogStore.set({ posts: [], loading: true, error: null });
+export const fetchFeed = async ({ page = 1, pageSize = 5 }: PaginationOptions = {}): Promise<
+	PaginatedResult<BlogPost>
+> => {
+	// Set loading state immediately
+	blogStore.set({ posts: [], loading: true, error: null });
 
-  const cacheKey = `${FEED_CACHE_KEY}-${page}-${pageSize}`;
-  const cached = feedCache.getCache(cacheKey);
+	const cacheKey = `${FEED_CACHE_KEY}-${page}-${pageSize}`;
+	const cached = feedCache.getCache(cacheKey);
 
-  if (cached) {
-    const cachedItems = cached.data.slice((page - 1) * pageSize, page * pageSize);
-    blogStore.set({
-      posts: cached.data,
-      loading: false,
-      error: null
-    });
-    return {
-      items: cachedItems,
-      hasMore: cached.data.length > page * pageSize,
-    };
-  }
+	if (cached) {
+		const cachedItems = cached.data.slice((page - 1) * pageSize, page * pageSize);
+		blogStore.set({
+			posts: cached.data,
+			loading: false,
+			error: null
+		});
+		return {
+			items: cachedItems,
+			hasMore: cached.data.length > page * pageSize
+		};
+	}
 
-  try {
-    const response = await fetch(FEED_URL, {
-      headers: { Accept: 'application/xml, text/xml, */*' },
-    });
+	try {
+		const response = await fetch(FEED_URL, {
+			headers: { Accept: 'application/xml, text/xml, */*' }
+		});
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
 
-    const text = await response.text();
-    const posts = parseXMLFeed(text);
-    feedCache.updateCache(cacheKey, posts);
+		const text = await response.text();
+		const posts = parseXMLFeed(text);
+		feedCache.updateCache(cacheKey, posts);
 
-    const paginatedItems = posts.slice((page - 1) * pageSize, page * pageSize);
-    blogStore.set({
-      posts,
-      loading: false,
-      error: null
-    });
+		const paginatedItems = posts.slice((page - 1) * pageSize, page * pageSize);
+		blogStore.set({
+			posts,
+			loading: false,
+			error: null
+		});
 
-    return {
-      items: paginatedItems,
-      hasMore: posts.length > page * pageSize,
-    };
-  } catch (error) {
-    const lastError = error instanceof Error ? error.message : 'Unknown error';
-    const cached = feedCache.getCache(cacheKey) as FeedCache | null;
-    const errorCount = (cached?.errorCount || 0) + 1;
+		return {
+			items: paginatedItems,
+			hasMore: posts.length > page * pageSize
+		};
+	} catch (error) {
+		const lastError = error instanceof Error ? error.message : 'Unknown error';
+		const cached = feedCache.getCache(cacheKey) as FeedCache | null;
+		const errorCount = (cached?.errorCount || 0) + 1;
 
-    feedCache.updateCache(cacheKey, cached?.data || [], errorCount, lastError);
+		feedCache.updateCache(cacheKey, cached?.data || [], errorCount, lastError);
 
-    const blogError: BlogError = {
-      type: 'FETCH_ERROR',
-      message: lastError,
-      details: error,
-      timestamp: Date.now(),
-    };
+		const blogError: BlogError = {
+			type: 'FETCH_ERROR',
+			message: lastError,
+			details: error,
+			timestamp: Date.now()
+		};
 
-    // Update store with error
-    blogStore.set({ posts: [], loading: false, error: blogError });
+		// Update store with error
+		blogStore.set({ posts: [], loading: false, error: blogError });
 
-    // Re-throw the error to ensure it propagates
-    throw error;
-  }
+		// Re-throw the error to ensure it propagates
+		throw error;
+	}
 };
 
 // Blog Post Retrieval
 export const fetchPost = async (slug: string): Promise<BlogPost> => {
-  try {
-    const { items } = await fetchFeed();
-    const post = items.find(post => generateSlug(post.title) === slug);
+	try {
+		const { items } = await fetchFeed();
+		const post = items.find(post => generateSlug(post.title) === slug);
 
-    if (!post) {
-      throw new Error('Post not found');
-    }
+		if (!post) {
+			throw new Error('Post not found');
+		}
 
-    return post;
-  } catch (error) {
-    // Re-throw the error to ensure it propagates
-    throw error;
-  }
+		return post;
+	} catch (error) {
+		// Re-throw the error to ensure it propagates
+		throw error;
+	}
 };
