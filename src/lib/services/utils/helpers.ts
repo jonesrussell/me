@@ -1,9 +1,16 @@
 import DOMPurify from 'dompurify';
-import { JSDOM } from 'jsdom';
 
-// Initialize DOMPurify for server-side use
-const window = new JSDOM('').window;
-const dompurify = DOMPurify(window);
+// Initialize DOMPurify
+let dompurify: typeof DOMPurify;
+if (typeof window === 'undefined') {
+	// Server-side
+	const { JSDOM } = await import('jsdom');
+	const window = new JSDOM('').window;
+	dompurify = DOMPurify(window);
+} else {
+	// Client-side
+	dompurify = DOMPurify;
+}
 
 // Cache for memoized results
 const memoCache = new Map<string, unknown>();

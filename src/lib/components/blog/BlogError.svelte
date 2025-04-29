@@ -77,7 +77,13 @@
 				</div>
 				<p class="message">{error.message}</p>
 				{#if error.details}
-					<pre class="details">{JSON.stringify(error.details, null, 2)}</pre>
+					<pre class="details">
+						{#if typeof error.details === 'string'}
+							{error.details}
+						{:else}
+							{JSON.stringify(error.details, null, 2)}
+						{/if}
+					</pre>
 				{/if}
 			</div>
 		{/each}

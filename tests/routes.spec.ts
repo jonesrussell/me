@@ -9,35 +9,27 @@ test.describe('Route Navigation', () => {
 		await page.goto('/', { waitUntil: 'domcontentloaded' });
 	});
 
-	test('should navigate to blog page', async ({ page }) => {
-		// Arrange
-		const blogLink = page.locator('text=Read my technical articles');
+	test('navigates to blog page', async ({ page }) => {
+		// Wait for the blog link to be visible
+		const blogLink = page.locator('a[href="/blog"]');
 		await expect(blogLink).toBeVisible({ timeout: 10000 });
 
-		// Act - Click and wait for navigation
+		// Click the blog link and wait for navigation
 		await blogLink.click();
+		await page.waitForURL('**/blog', { timeout: 20000 });
 
-		// Retry navigation if needed
-		await page.waitForURL(/.*blog/, { timeout: 30000 }).catch(async () => {
-			console.log('Retrying blog navigation...');
-			await blogLink.click();
-			await page.waitForURL(/.*blog/, { timeout: 30000 });
-		});
+		// Wait for the blog page structure to be visible
+		await expect(page.locator('.blog')).toBeVisible({ timeout: 10000 });
+		await expect(page.locator('text=Web Developer Blog')).toBeVisible({ timeout: 10000 });
 
-		// Assert - First check the basic page structure
-		await expect(page.locator('.blog')).toBeVisible({ timeout: 30000 });
-		await expect(page.locator('text=Web Developer Blog')).toBeVisible({ timeout: 30000 });
+		// Wait for loading state to complete and posts to be visible
+		await Promise.race([
+			page.waitForSelector('.loading', { state: 'hidden', timeout: 30000 }),
+			page.waitForSelector('.posts', { timeout: 30000 })
+		]);
 
-		// Wait for loading state to complete
-		const loading = page.locator('.loading');
-		if (await loading.isVisible()) {
-			await loading.waitFor({ state: 'hidden', timeout: 30000 });
-		}
-
-		// Then check for posts container (it should be visible even if empty)
-		await expect(page.locator('.posts')).toBeVisible({ timeout: 30000 });
-
-		// Note: We don't check for actual posts since the feed might be empty during testing
+		// Verify posts are visible
+		await expect(page.locator('.posts')).toBeVisible({ timeout: 10000 });
 	});
 
 	test('should navigate to projects page', async ({ page }) => {

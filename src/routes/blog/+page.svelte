@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { fetchFeed } from '$lib/services/blog-service';
+	import { fetchFeed, blogStore } from '$lib/services/blog-service';
 	import { writable } from 'svelte/store';
 	import DevTo from '$lib/components/blog/DevTo.svelte';
 	import BlogPost from '$lib/components/blog/BlogPost.svelte';
@@ -9,26 +9,31 @@
 
 	const blogPosts = writable<BlogPostType[]>([]);
 	let currentPage = $state(1);
-	let isLoading = $state(true);
 	let hasMore = $state(true);
 	const pageSize = 5;
 
 	async function loadMore() {
-		if (isLoading || !hasMore) return;
-		isLoading = true;
-		try {
-			const result = await fetchFeed({ page: currentPage, pageSize });
-			blogPosts.update((posts: BlogPostType[]) => [...posts, ...result.items]);
-			hasMore = result.hasMore;
-		} catch (error) {
-			console.error('Error loading blog posts:', error);
-		} finally {
-			isLoading = false;
-			currentPage++;
+		console.log('loadMore called, current state:', { hasMore, currentPage });
+		if (!$blogStore.loading && hasMore) {
+			console.log('Fetching feed...');
+			try {
+				const result = await fetchFeed({ page: currentPage, pageSize });
+				console.log('Feed result:', result);
+				blogPosts.update((posts: BlogPostType[]) => [...posts, ...result.items]);
+				hasMore = result.hasMore;
+			} catch (error) {
+				console.error('Error loading blog posts:', error);
+			} finally {
+				currentPage++;
+				console.log('Load complete, new state:', { hasMore, currentPage });
+			}
+		} else {
+			console.log('Skipping loadMore:', { loading: $blogStore.loading, hasMore });
 		}
 	}
 
 	onMount(() => {
+		console.log('Component mounted, calling loadMore');
 		loadMore();
 	});
 </script>
@@ -201,6 +206,36 @@
 	.empty-state p {
 		margin: var(--space-2) 0;
 	}
+
+	.error-state {
+		text-align: center;
+		padding: var(--space-8);
+		color: var(--text-error);
+		font-family: var(--font-mono);
+	}
+
+	.error-state p {
+		margin: var(--space-2) 0;
+	}
+
+	.retry-button {
+		padding: var(--space-4) var(--space-8);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		color: var(--text-color);
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
+		cursor: pointer;
+		transition: all var(--transition-duration) var(--transition-timing);
+		margin-top: var(--space-4);
+	}
+
+	.retry-button:hover {
+		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
+		transform: translateY(-2px);
+		border-color: var(--accent-color);
+	}
 </style>
 
 <svelte:head>
@@ -220,11 +255,14 @@
 	<BlogError />
 
 	<div class="container">
-		<div class="posts" style:visibility={isLoading && currentPage === 1 ? 'hidden' : 'visible'}>
-			{#each $blogPosts as post (post.link)}
+		<div
+			class="posts"
+			style:visibility={$blogStore.loading && currentPage === 1 ? 'hidden' : 'visible'}
+		>
+			{#each $blogPosts as post (post.slug)}
 				<BlogPost {post} />
 			{:else}
-				{#if !isLoading}
+				{#if !$blogStore.loading}
 					<div class="empty-state">
 						<p>No blog posts available at the moment.</p>
 						<p>Check back later for new content!</p>
@@ -233,11 +271,18 @@
 			{/each}
 		</div>
 
-		{#if isLoading}
+		{#if $blogStore.loading}
 			<div class="loading">Loading posts...</div>
 		{/if}
 
-		{#if hasMore && !isLoading}
+		{#if $blogStore.error}
+			<div class="error-state">
+				<p>Error loading blog posts: {$blogStore.error.message}</p>
+				<button class="retry-button" onclick={() => loadMore()}>Retry</button>
+			</div>
+		{/if}
+
+		{#if hasMore && !$blogStore.loading && !$blogStore.error}
 			<div class="load-more">
 				<button class="load-more-button" onclick={loadMore}>Load More</button>
 			</div>
