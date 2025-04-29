@@ -1,24 +1,4 @@
-import { memoize, normalizeSpaces, removeUnwantedTags } from './utils/helpers';
-
-/**
- * Sanitizes text by removing HTML tags and normalizing spaces
- */
-export const sanitizeText = memoize((text: string): string => {
-	if (!text) return '';
-
-	try {
-		console.log('Input:', text);
-		// First remove unwanted tags
-		const withoutUnwantedTags = removeUnwantedTags(text);
-		// Then normalize spaces
-		const result = normalizeSpaces(withoutUnwantedTags);
-		console.log('Output:', result);
-		return result;
-	} catch (error) {
-		console.error('Error sanitizing text:', error);
-		return ''; // Return empty string on error
-	}
-});
+import { memoize } from './utils/helpers';
 
 /**
  * Formats a date string into a more readable format
@@ -39,7 +19,7 @@ export const formatDate = (dateString: string | null | undefined): string | null
 			);
 
 			if (isNaN(utcDate.getTime())) {
-				throw new Error('Invalid date');
+				return input; // Return original string for invalid dates
 			}
 
 			return utcDate.toLocaleDateString('en-US', {
@@ -48,9 +28,8 @@ export const formatDate = (dateString: string | null | undefined): string | null
 				day: 'numeric',
 				timeZone: 'UTC'
 			});
-		} catch (error) {
-			console.error('Error formatting date:', error);
-			return input;
+		} catch {
+			return input; // Return original string on any error
 		}
 	})(dateString);
 };
