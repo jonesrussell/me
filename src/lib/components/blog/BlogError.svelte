@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { blogErrors } from '$lib/services/blog-service';
+	import { blogStore } from '$lib/services/blog-service';
 	import type { BlogError } from '$lib/types/blog';
 	import Box from '$lib/components/ui/Box.svelte';
 
@@ -52,13 +52,12 @@
 		}
 
 		.message {
-			margin: 0;
+			font-family: var(--font-mono);
 			font-size: var(--font-size-base);
 			color: var(--text-color);
 		}
 
 		.details {
-			margin: 0;
 			font-family: var(--font-mono);
 			font-size: var(--font-size-sm);
 			color: var(--text-muted);
@@ -67,25 +66,17 @@
 	}
 </style>
 
-{#if $blogErrors.length > 0}
-	<Box width={80}>
-		{#each $blogErrors as error (error.timestamp)}
-			<div class="error" role="alert">
-				<div class="header">
-					<span class="type">{formatErrorType(error.type)}</span>
-					<span class="timestamp">{formatTimestamp(error.timestamp)}</span>
-				</div>
-				<p class="message">{error.message}</p>
-				{#if error.details}
-					<pre class="details">
-						{#if typeof error.details === 'string'}
-							{error.details}
-						{:else}
-							{JSON.stringify(error.details, null, 2)}
-						{/if}
-					</pre>
-				{/if}
+{#if $blogStore.error}
+	<Box>
+		<div class="error">
+			<div class="header">
+				<span class="type">{formatErrorType($blogStore.error.type)}</span>
+				<span class="timestamp">{formatTimestamp($blogStore.error.timestamp)}</span>
 			</div>
-		{/each}
+			<p class="message">{$blogStore.error.message}</p>
+			{#if $blogStore.error.details}
+				<pre class="details">{JSON.stringify($blogStore.error.details, null, 2)}</pre>
+			{/if}
+		</div>
 	</Box>
 {/if}
