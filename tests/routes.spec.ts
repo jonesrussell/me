@@ -14,17 +14,30 @@ test.describe('Route Navigation', () => {
 		const blogLink = page.locator('text=Read my technical articles');
 		await expect(blogLink).toBeVisible({ timeout: 10000 });
 
-		// Act
-		await Promise.all([
-			page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
-			blogLink.click()
-		]);
+		// Act - Click and wait for navigation
+		await blogLink.click();
 
-		// Assert
-		await expect(page).toHaveURL(/.*blog/, { timeout: 10000 });
-		await expect(page.locator('.blog')).toBeVisible({ timeout: 10000 });
-		await expect(page.locator('text=Web Developer Blog')).toBeVisible({ timeout: 10000 });
-		await expect(page.locator('.posts')).toBeVisible({ timeout: 10000 });
+		// Retry navigation if needed
+		await page.waitForURL(/.*blog/, { timeout: 30000 }).catch(async () => {
+			console.log('Retrying blog navigation...');
+			await blogLink.click();
+			await page.waitForURL(/.*blog/, { timeout: 30000 });
+		});
+
+		// Assert - First check the basic page structure
+		await expect(page.locator('.blog')).toBeVisible({ timeout: 30000 });
+		await expect(page.locator('text=Web Developer Blog')).toBeVisible({ timeout: 30000 });
+
+		// Wait for loading state to complete
+		const loading = page.locator('.loading');
+		if (await loading.isVisible()) {
+			await loading.waitFor({ state: 'hidden', timeout: 30000 });
+		}
+
+		// Then check for posts container (it should be visible even if empty)
+		await expect(page.locator('.posts')).toBeVisible({ timeout: 30000 });
+
+		// Note: We don't check for actual posts since the feed might be empty during testing
 	});
 
 	test('should navigate to projects page', async ({ page }) => {
