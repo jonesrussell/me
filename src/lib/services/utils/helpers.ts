@@ -49,16 +49,15 @@ export function removeUnwantedTags(input: string): string {
 
 // Sanitization Configuration
 export const SANITIZE_OPTIONS = {
-	allowedTags: [], // Disallow all tags
-	allowedAttributes: {}, // Disallow attributes
-	disallowedTagsMode: 'recursiveEscape' as const, // Changed to recursiveEscape for better handling
-	nonTextTags: ['script', 'style', 'textarea', 'option', 'noscript'], // Ensure these tags and their contents are removed
+	allowedTags: [],
+	allowedAttributes: {},
+	disallowedTagsMode: 'recursiveEscape' as const,
+	nonTextTags: ['script', 'style', 'textarea', 'option', 'noscript'],
 	parser: {
 		lowerCaseTags: true,
 		lowerCaseAttributeNames: true
 	},
 	exclusiveFilter: function (frame: { tag: string; text: string }) {
-		// Remove any remaining script-like content
 		return frame.tag === 'script' || frame.tag === 'style';
 	},
 	transformTags: {
@@ -68,7 +67,6 @@ export const SANITIZE_OPTIONS = {
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			attribs: Record<string, string>
 		) => {
-			// Replace tags with a space to preserve word boundaries
 			return {
 				tagName: '',
 				text: ' ',

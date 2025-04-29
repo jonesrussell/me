@@ -88,7 +88,7 @@
 	<div class="meta">
 		<span class="date">{post.pubDate}</span>
 		<div class="tags">
-			{#each post.categories as category}
+			{#each post.categories as category (category)}
 				<span>{category}</span>
 			{/each}
 		</div>
