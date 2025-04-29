@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { writable, get } from 'svelte/store';
 import { formatDate } from './utils';
 import type { BlogPost } from '$lib/types/blog';
 
@@ -61,6 +61,7 @@ const feedCache = (() => {
     if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
       return cached;
     }
+    cache.delete(key); // Remove expired cache
     return null;
   };
 
@@ -117,19 +118,19 @@ const parseXMLFeed = (xml: string): BlogPost[] => {
 export const fetchFeed = async (
   { page = 1, pageSize = 5 }: PaginationOptions = {}
 ): Promise<PaginatedResult<BlogPost>> => {
-  blogStore.update(state => ({ ...state, loading: true, error: null }));
+  // Set loading state immediately
+  blogStore.set({ posts: [], loading: true, error: null });
 
   const cacheKey = `${FEED_CACHE_KEY}-${page}-${pageSize}`;
   const cached = feedCache.getCache(cacheKey);
 
   if (cached) {
     const cachedItems = cached.data.slice((page - 1) * pageSize, page * pageSize);
-    blogStore.update(state => ({
-      ...state,
-      loading: false,
+    blogStore.set({
       posts: cached.data,
+      loading: false,
       error: null
-    }));
+    });
     return {
       items: cachedItems,
       hasMore: cached.data.length > page * pageSize,
@@ -150,12 +151,11 @@ export const fetchFeed = async (
     feedCache.updateCache(cacheKey, posts);
 
     const paginatedItems = posts.slice((page - 1) * pageSize, page * pageSize);
-    blogStore.update(state => ({
-      ...state,
-      loading: false,
+    blogStore.set({
       posts,
+      loading: false,
       error: null
-    }));
+    });
 
     return {
       items: paginatedItems,
@@ -175,7 +175,10 @@ export const fetchFeed = async (
       timestamp: Date.now(),
     };
 
-    blogStore.update(state => ({ ...state, loading: false, error: blogError }));
+    // Update both stores before throwing
+    blogStore.set({ posts: [], loading: false, error: blogError });
+
+    // Update blogErrors store with a new array to ensure reactivity
     blogErrors.update(errors => [...errors, blogError]);
 
     throw error;
@@ -194,6 +197,7 @@ export const fetchPost = async (slug: string): Promise<BlogPost> => {
 
     return post;
   } catch (error) {
-    throw new Error('Failed to fetch blog post');
+    // Re-throw the error to ensure it propagates
+    throw error;
   }
 };
