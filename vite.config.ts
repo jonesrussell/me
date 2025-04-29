@@ -23,18 +23,18 @@ export default defineConfig({
 				// Other
 				'scripts/**',
 				'static/**',
-				'node_modules/**',
+				'node_modules/**'
 			],
 			include: [
 				// Only measure these directories
 				'src/lib/services/**/*.{js,ts}',
 				'src/lib/utils/**/*.{js,ts}',
-				'src/lib/stores/**/*.{js,ts}',
+				'src/lib/stores/**/*.{js,ts}'
 			],
 			all: true,
 			clean: true,
 			// Skip full source reporting in terminal
-			reporter: ['text-summary', 'html'],
+			reporter: ['text-summary', 'html']
 		},
 		workspace: [
 			{

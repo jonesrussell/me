@@ -34,11 +34,9 @@ export const formatDate = (dateString: string | null | undefined): string | null
 		try {
 			const date = new Date(input);
 			// Ensure we're using UTC to avoid timezone issues
-			const utcDate = new Date(Date.UTC(
-				date.getUTCFullYear(),
-				date.getUTCMonth(),
-				date.getUTCDate()
-			));
+			const utcDate = new Date(
+				Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+			);
 
 			if (isNaN(utcDate.getTime())) {
 				throw new Error('Invalid date');
