@@ -33,19 +33,21 @@ test.describe('Route Navigation', () => {
 	});
 
 	test('should navigate to projects page', async ({ page }) => {
-		// Arrange
-		const projectsLink = page.locator('text=Browse my open source projects');
+		// Wait for the projects link to be visible
+		const projectsLink = page.getByRole('link', { name: '🚀 Browse my open source projects' });
 		await expect(projectsLink).toBeVisible({ timeout: 10000 });
 
-		// Act
-		await Promise.all([
-			page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
-			projectsLink.click()
-		]);
+		// Click the link and wait for navigation
+		await projectsLink.click();
 
-		// Assert
+		// Wait for the projects page structure to be visible
+		await expect(page.locator('.projects')).toBeVisible({ timeout: 20000 });
+		await expect(page.getByRole('heading', { name: 'Open Source Projects' }).first()).toBeVisible({
+			timeout: 10000
+		});
+
+		// Verify URL after content is loaded
 		await expect(page).toHaveURL(/.*projects/, { timeout: 10000 });
-		await expect(page.locator('.projects')).toBeVisible({ timeout: 10000 });
 	});
 
 	test('should navigate to contact page', async ({ page }) => {
