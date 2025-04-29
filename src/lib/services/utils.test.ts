@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { sanitizeText } from './utils';
+import { sanitizeText, formatDate } from './utils';
 
 describe('Text Sanitization Integration', () => {
 	describe('sanitizeText', () => {
@@ -26,6 +26,30 @@ describe('Text Sanitization Integration', () => {
 		it('should normalize spaces', () => {
 			expect(sanitizeText('Text   with   spaces')).toBe('Text with spaces');
 			expect(sanitizeText('Text\nwith\nnewlines')).toBe('Text with newlines');
+		});
+	});
+});
+
+describe('Date Formatting', () => {
+	describe('formatDate', () => {
+		it('should format valid dates correctly', () => {
+			expect(formatDate('2024-03-14')).toBe('March 14, 2024');
+			expect(formatDate('2023-12-25')).toBe('December 25, 2023');
+		});
+
+		it('should handle different date formats', () => {
+			expect(formatDate('2024/03/14')).toBe('March 14, 2024');
+			expect(formatDate('2024.03.14')).toBe('March 14, 2024');
+		});
+
+		it('should return original string for invalid dates', () => {
+			expect(formatDate('invalid-date')).toBe('invalid-date');
+			expect(formatDate('')).toBe('');
+		});
+
+		it('should handle edge cases', () => {
+			expect(formatDate(null)).toBe(null);
+			expect(formatDate(undefined)).toBe(undefined);
 		});
 	});
 });
