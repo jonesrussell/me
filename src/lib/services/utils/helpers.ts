@@ -38,25 +38,6 @@ export const SANITIZE_OPTIONS: SanitizeOptions = {
 	}
 };
 
-// Helper: Remove Unwanted Tags
-export function removeUnwantedTags(input: string): string {
-	if (!input) return '';
-	const options: SanitizeOptions = {
-		...SANITIZE_OPTIONS,
-		transformTags: {
-			script: () => ({ tagName: '', text: '', attribs: {} }),
-			style: () => ({ tagName: '', text: '', attribs: {} }),
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			'*': (tagName: string, attribs: Record<string, string>) => ({
-				tagName: '',
-				text: ' ',
-				attribs: {}
-			})
-		}
-	};
-	return sanitizeHtml(input, options);
-}
-
 // Helper: Sanitize HTML
 export function sanitizeHTML(input: string): string {
 	if (!input) return '';
@@ -71,7 +52,19 @@ export function memoize<Args extends unknown[], Return>(
 	fn: (...args: Args) => Return
 ): (...args: Args) => Return {
 	return (...args: Args): Return => {
-		const key = JSON.stringify(args);
+		// Handle circular references by using a simple string representation
+		const key = args
+			.map(arg => {
+				try {
+					return JSON.stringify(arg);
+				} catch {
+					// For circular references or other non-serializable values,
+					// use a string representation of the type
+					return `[${typeof arg}]`;
+				}
+			})
+			.join('|');
+
 		if (memoCache.has(key)) {
 			return memoCache.get(key) as Return;
 		}
@@ -81,22 +74,17 @@ export function memoize<Args extends unknown[], Return>(
 	};
 }
 
-// Helper: Normalize Spaces
-export function normalizeSpaces(input: string): string {
-	return (
-		input
-			// First normalize all whitespace to single spaces
-			.replace(/\s+/g, ' ')
-			// Then trim leading/trailing spaces
-			.trim()
-	);
-}
-
 // Periodically Clear All Memoized Caches
 export function setupCacheCleanup(intervalMs: number = 5 * 60 * 1000): void {
-	setInterval(() => {
-		memoCache.clear();
-	}, intervalMs);
+	if (typeof window !== 'undefined') {
+		window.setInterval(() => {
+			memoCache.clear();
+		}, intervalMs);
+	} else {
+		setInterval(() => {
+			memoCache.clear();
+		}, intervalMs);
+	}
 }
 
 // Initialize Cache Cleanup

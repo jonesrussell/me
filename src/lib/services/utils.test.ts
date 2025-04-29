@@ -1,34 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { sanitizeText, formatDate } from './utils';
-
-describe('Text Sanitization Integration', () => {
-	describe('sanitizeText', () => {
-		it('should handle basic text without HTML', () => {
-			expect(sanitizeText('Plain text')).toBe('Plain text');
-		});
-
-		it('should preserve spaces between words when removing tags', () => {
-			expect(sanitizeText('Text with <b>HTML</b>')).toBe('Text with HTML');
-			expect(sanitizeText('Text <b>with</b> HTML')).toBe('Text with HTML');
-		});
-
-		it('should remove unwanted tags completely', () => {
-			expect(sanitizeText('<script>alert(1)</script>Text')).toBe('Text');
-			expect(sanitizeText('<style>.class{}</style>Content')).toBe('Content');
-		});
-
-		it('should handle edge cases', () => {
-			expect(sanitizeText('')).toBe('');
-			expect(sanitizeText(null as unknown as string)).toBe('');
-			expect(sanitizeText(undefined as unknown as string)).toBe('');
-		});
-
-		it('should normalize spaces', () => {
-			expect(sanitizeText('Text   with   spaces')).toBe('Text with spaces');
-			expect(sanitizeText('Text\nwith\nnewlines')).toBe('Text with newlines');
-		});
-	});
-});
+import { formatDate } from './utils';
 
 describe('Date Formatting', () => {
 	describe('formatDate', () => {
@@ -45,11 +16,23 @@ describe('Date Formatting', () => {
 		it('should return original string for invalid dates', () => {
 			expect(formatDate('invalid-date')).toBe('invalid-date');
 			expect(formatDate('')).toBe('');
+			expect(formatDate('2024-13-45')).toBe('2024-13-45');
+			expect(formatDate('not-a-date')).toBe('not-a-date');
 		});
 
 		it('should handle edge cases', () => {
 			expect(formatDate(null)).toBe(null);
 			expect(formatDate(undefined)).toBe(undefined);
+		});
+
+		it('should handle dates with time components', () => {
+			expect(formatDate('2024-03-14T12:00:00Z')).toBe('March 14, 2024');
+			expect(formatDate('2024-03-14T00:00:00.000Z')).toBe('March 14, 2024');
+		});
+
+		it('should handle dates with timezone offsets', () => {
+			expect(formatDate('2024-03-14T00:00:00+00:00')).toBe('March 14, 2024');
+			expect(formatDate('2024-03-14T00:00:00-05:00')).toBe('March 14, 2024');
 		});
 	});
 });
