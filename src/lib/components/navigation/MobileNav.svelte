@@ -12,11 +12,7 @@
 		toggleMenu: () => void;
 	}>();
 
-	let currentPath = $state(url.pathname);
-
-	$effect(() => {
-		currentPath = url.pathname;
-	});
+	let currentPath = $derived(url.pathname);
 
 	function isActive(path: string) {
 		const basePath = base || '';
