@@ -8,7 +8,7 @@
 	let boundaryError = $state<unknown>(null);
 	let resetBoundary = $state<(() => void) | null>(null);
 
-	function validateEmail() {
+	const validateEmail = $derived(() => {
 		if (!email) {
 			errorMessage = 'Email is required';
 			return false;
@@ -19,11 +19,11 @@
 		}
 		errorMessage = '';
 		return true;
-	}
+	});
 
 	async function handleSubmit(event: Event) {
 		event.preventDefault();
-		if (!validateEmail()) return;
+		if (!validateEmail) return;
 
 		submitStatus = 'loading';
 
