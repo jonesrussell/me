@@ -12,11 +12,7 @@
 
 	let elements = $state<HTMLElement[]>([]);
 	let activeIntersection = $state<number | null>(null);
-	let revealedStates = $state<boolean[]>([]);
-
-	$effect(() => {
-		revealedStates = specialties.map(() => false);
-	});
+	let revealedStates = $derived(specialties.map(() => false));
 
 	function handleIntersect(event: CustomEvent<IntersectionObserverEntry>, index: number) {
 		const entry = event.detail;

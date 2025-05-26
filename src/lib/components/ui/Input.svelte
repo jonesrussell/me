@@ -12,11 +12,7 @@
 		'aria-describedby'?: string;
 	}>();
 
-	let inputValue = $state(props.value ?? '');
-
-	$effect(() => {
-		inputValue = props.value ?? '';
-	});
+	let inputValue = $derived(props.value ?? '');
 </script>
 
 <style>

@@ -18,11 +18,7 @@
 	const fieldId = `field-${props.name || Math.random().toString(36).substring(2, 9)}`;
 	const isInvalid = $derived((props.error ?? '').length > 0);
 	const isTextarea = $derived(props.type === 'textarea');
-	let fieldValue = $state(props.value ?? '');
-
-	$effect(() => {
-		fieldValue = props.value ?? '';
-	});
+	let fieldValue = $derived(props.value ?? '');
 </script>
 
 <style>
