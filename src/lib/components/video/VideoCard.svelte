@@ -7,27 +7,14 @@
 
 <style>
 	.video-card {
-		width: 100%;
+		container-type: inline-size;
+		container-name: video-card;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-4);
 		padding: var(--space-4);
-	}
-
-	.video-container {
-		position: relative;
-		height: 0;
-		margin-bottom: var(--space-4);
-		padding-bottom: 56.25%;
-		background: var(--bg-darker);
-		border-radius: var(--radius-md);
-		overflow: hidden;
-	}
-
-	.video-container iframe {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		border: 0;
+		background: var(--color-surface-2);
+		border-radius: var(--radius-2);
 	}
 
 	.video-info {
@@ -37,70 +24,50 @@
 	}
 
 	.video-title {
-		margin: 0;
-		font-size: var(--font-size-base);
-		line-height: var(--line-height-tight);
-		color: var(--text-color);
-	}
-
-	.video-date {
-		font-size: var(--font-size-sm);
-		color: var(--text-muted);
+		font-size: var(--font-size-3);
+		font-weight: var(--font-weight-bold);
+		color: var(--color-text-1);
 	}
 
 	.description {
-		margin: var(--space-4) 0;
-		font-size: var(--font-size-sm);
-		line-height: var(--line-height-relaxed);
-		color: var(--text-muted);
+		font-size: var(--font-size-2);
+		color: var(--color-text-2);
+		max-width: var(--measure);
 	}
 
-	.topics {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-2);
-		margin-top: var(--space-4);
+	.video-container {
+		aspect-ratio: 16/9;
+		width: 100%;
+		border-radius: var(--radius-1);
+		overflow: hidden;
+		background: var(--color-surface-3);
 	}
 
-	.topic {
-		padding: var(--space-2) var(--space-3);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-xs);
-		color: var(--text-muted);
-		background: var(--bg-darker);
-		border-radius: var(--radius-md);
-		transition: all var(--transition-duration) var(--transition-timing);
+	iframe {
+		width: 100%;
+		height: 100%;
+		border: 0;
 	}
 
-	.topic:hover {
-		color: var(--text-color);
-		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
-	}
-
-	@media (width >= 30rem) {
+	@container video-card (width >= 30rem) {
 		.video-card {
 			flex-direction: row;
 			align-items: center;
 			gap: var(--space-4);
 		}
+
+		.video-container {
+			width: 40%;
+		}
 	}
 
-	@media (width >= 48rem) {
+	@container video-card (width >= 50rem) {
 		.video-card {
 			padding: var(--space-6);
 		}
 
-		.video-title {
-			font-size: var(--font-size-lg);
-		}
-
-		.description {
-			font-size: var(--font-size-base);
-		}
-
-		.topic {
-			padding: var(--space-2) var(--space-4);
-			font-size: var(--font-size-sm);
+		.video-container {
+			width: 30%;
 		}
 	}
 </style>

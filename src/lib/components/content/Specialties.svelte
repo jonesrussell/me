@@ -53,15 +53,33 @@
 	}
 
 	.specialties {
-		display: flex;
-		flex-direction: column;
+		container-type: inline-size;
+		container-name: specialties;
+		display: grid;
 		gap: var(--space-4);
-		margin-top: var(--space-2);
+		grid-template-columns: 1fr;
 	}
 
-	@media (width >= 50rem) {
+	.specialty {
+		width: 100%;
+	}
+
+	@container specialties (width >= 30rem) {
 		.specialties {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40rem), 1fr));
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@container specialties (width >= 50rem) {
+		.specialties {
+			grid-template-columns: repeat(3, 1fr);
+			gap: var(--space-6);
+		}
+	}
+
+	@container specialties (width >= 75rem) {
+		.specialties {
+			grid-template-columns: repeat(4, 1fr);
 		}
 	}
 </style>
