@@ -52,8 +52,28 @@ alwaysApply: false
 - Test state updates thoroughly
 
 ## Svelte Patterns
-- Use runes (`$state`, `$derived`, `$effect`)
+- Use runes for state management (`$state`, `$derived`, `$effect`)
+- Use `$props` for component props
 - Keep components small and semantic
-- Use `{@render ...}` instead of slots
+- Use container queries for responsive design
 - Implement error boundaries
 - Test component lifecycle thoroughly
+- Use CSS custom properties for theming
+- Follow mobile-first approach
+- Use modern CSS features (Grid, Flexbox, Container Queries)
+
+## Component Structure
+- Define clear component boundaries
+- Use semantic HTML elements
+- Implement proper accessibility attributes
+- Follow consistent prop naming
+- Use TypeScript for prop validation
+- Keep component logic minimal
+- Extract complex logic to services
+
+## File Organization
+- Group related components together
+- Separate UI components from business logic
+- Keep component files focused
+- Use consistent file naming
+- Maintain clear import structure

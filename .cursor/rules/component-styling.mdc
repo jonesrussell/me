@@ -1,0 +1,64 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Component Styling Standards
+
+## Core Principles
+- Use container queries for responsive design
+- Implement mobile-first approach
+- Follow CSS custom properties for theming
+- Maintain consistent spacing using design tokens
+
+## Layout Patterns
+- Use CSS Grid for complex layouts
+- Implement Flexbox for alignment
+- Define container queries for component-level responsiveness
+- Use `minmax()` for flexible grid layouts
+
+## Responsive Design
+- Start with mobile layout (min-width: 0)
+- Use container queries for component-level breakpoints
+- Implement fluid typography with `clamp()`
+- Use relative units (ch, cqi) for responsive sizing
+
+## CSS Best Practices
+- Use `:global()` for targeting child components
+- Implement CSS custom properties for dynamic values
+- Follow BEM-like naming conventions
+- Keep styles scoped to components
+- Use modern CSS features:
+  - Container queries
+  - CSS Grid
+  - Logical properties
+  - Custom properties
+
+## Component Structure
+- Define container type and name for queries
+- Use semantic class names
+- Implement consistent spacing with design tokens
+- Follow accessibility guidelines for styling
+
+## Example Patterns
+```css
+.component {
+  container-type: inline-size;
+  container-name: component-name;
+  width: 100%;
+  padding: var(--space-4);
+}
+
+@container component-name (width >= 48ch) {
+  .component {
+    /* Tablet and up styles */
+  }
+}
+```
+
+## Design Tokens
+- Use `--space-*` for consistent spacing
+- Implement `--font-*` for typography
+- Define `--color-*` for theming
+- Use `--radius-*` for border radius
+- Apply `--shadow-*` for elevation
