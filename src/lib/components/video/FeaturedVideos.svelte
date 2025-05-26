@@ -29,23 +29,6 @@
 	@container featured-videos (width >= 30rem) {
 		.featured-videos {
 			grid-template-columns: repeat(2, 1fr);
-		}
-	}
-
-	@container featured-videos (width >= 50rem) {
-		.featured-videos {
-			grid-template-columns: repeat(3, 1fr);
-		}
-	}
-
-	@container featured-videos (width >= 75rem) {
-		.featured-videos {
-			grid-template-columns: repeat(4, 1fr);
-		}
-	}
-
-	@media (width >= 48rem) {
-		.featured-videos {
 			margin: var(--space-8) 0;
 		}
 
@@ -58,14 +41,22 @@
 		}
 	}
 
-	@media (width >= 80rem) {
+	@container featured-videos (width >= 50rem) {
+		.featured-videos {
+			grid-template-columns: repeat(3, 1fr);
+		}
+
 		.video-grid {
 			grid-template-columns: repeat(auto-fit, minmax(45rem, 1fr));
 			gap: var(--space-6);
 		}
 	}
 
-	@media (width >= 120rem) {
+	@container featured-videos (width >= 75rem) {
+		.featured-videos {
+			grid-template-columns: repeat(4, 1fr);
+		}
+
 		.video-grid {
 			grid-template-columns: repeat(auto-fit, minmax(50rem, 1fr));
 			gap: var(--space-8);
