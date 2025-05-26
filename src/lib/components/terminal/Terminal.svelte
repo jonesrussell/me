@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { commands, terminal, terminalHeight } from '$lib/stores/terminal';
+	import { commands, terminal, terminalHeight, terminalMinHeight } from '$lib/stores/terminal';
 	import { get } from 'svelte/store';
 	const props = $props();
 	const title = props.title || '~/developer';
@@ -167,7 +167,7 @@
 	}
 </style>
 
-<div class="terminal-frame" style:height={$terminalHeight} style:min-height={$terminalHeight}>
+<div class="terminal-frame" style:height={$terminalHeight} style:min-height={$terminalMinHeight}>
 	<div class="terminal-header">
 		<span class="terminal-title">{title}</span>
 		<div class="terminal-buttons">
