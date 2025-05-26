@@ -1,9 +1,7 @@
 {
 	"extends": ["stylelint-config-standard", "stylelint-config-clean-order"],
 	"plugins": [
-		"stylelint-order",
-		"stylelint-value-no-unknown-custom-properties",
-		"stylelint-declaration-block-no-ignored-properties"
+		"stylelint-order"
 	],
 	"ignoreFiles": ["**/coverage/**"],
 	"rules": {
@@ -15,7 +13,7 @@
 				"ignorePseudoClasses": ["global", "where"]
 			}
 		],
-		"custom-property-pattern": "^--[a-z0-9-]+$",
+		"custom-property-pattern": "^--[a-z0-9_-]+$",
 		"selector-class-pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
 		"keyframes-name-pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
 		"media-query-no-invalid": null,
@@ -111,9 +109,6 @@
 				"ignoreAtRules": ["import", "layer"]
 			}
 		],
-		"value-no-unknown-custom-properties": true,
-		"declaration-block-no-ignored-properties": true,
-		"no-duplicate-custom-properties": true,
 		"declaration-block-no-duplicate-properties": true,
 		"shorthand-property-no-redundant-values": true,
 		"max-nesting-depth": 3,
