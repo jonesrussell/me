@@ -25,25 +25,25 @@
 		border-radius: var(--radius-2);
 	}
 
-	.content {
+	.specialty-content {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-2);
 	}
 
-	h3 {
+	.specialty-title {
 		font-size: var(--font-size-3);
 		font-weight: var(--font-weight-bold);
 		color: var(--color-text-1);
 	}
 
-	.description {
+	.specialty-desc {
 		font-size: var(--font-size-2);
 		color: var(--color-text-2);
-		max-width: 65ch;
+		max-width: var(--measure);
 	}
 
-	.icon {
+	.specialty-icon {
 		font-size: var(--font-size-4);
 		color: var(--accent-color);
 	}
@@ -55,7 +55,7 @@
 			gap: var(--space-4);
 		}
 
-		.icon {
+		.specialty-icon {
 			font-size: var(--font-size-5);
 		}
 	}
@@ -65,7 +65,7 @@
 			padding: var(--space-6);
 		}
 
-		h3 {
+		.specialty-title {
 			font-size: var(--font-size-4);
 		}
 	}
