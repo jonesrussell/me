@@ -26,7 +26,7 @@
 	}
 
 	@media (width >= 30rem) {
-		.resource-header {
+		.header {
 			flex-direction: row;
 			align-items: center;
 			justify-content: space-between;
@@ -34,7 +34,7 @@
 	}
 
 	@media (width >= 50rem) {
-		.resource-header {
+		.header {
 			padding: var(--space-8);
 		}
 	}
