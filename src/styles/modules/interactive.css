@@ -41,7 +41,7 @@
 		display: grid;
 		grid-template-columns: 1fr;
 		gap: var(--space-4);
-		margin: var(--space-16) 0;
+		margin: var(--space-4) 0;
 		container-type: inline-size;
 	}
 
