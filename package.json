@@ -63,7 +63,7 @@
 		"@iconify/svelte": "^4.2.0",
 		"fast-xml-parser": "^5.2.1",
 		"highlight.js": "^11.11.1",
-		"marked": "^15.0.8",
+		"marked": "^15.0.12",
 		"svelte-intersection-observer": "^1.0.0"
 	}
 }
