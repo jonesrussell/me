@@ -60,7 +60,7 @@
 		"vitest-localstorage-mock": "^0.1.2"
 	},
 	"dependencies": {
-		"@iconify/svelte": "^4.2.0",
+		"@iconify/svelte": "^5.0.0",
 		"fast-xml-parser": "^5.2.1",
 		"highlight.js": "^11.11.1",
 		"marked": "^15.0.8",
