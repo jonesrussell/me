@@ -73,7 +73,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: var(--space-4);
+		gap: var(--space-6);
 		padding: var(--space-6);
 		text-align: center;
 		text-decoration: none;
@@ -116,7 +116,7 @@
 			flex-direction: row !important;
 			justify-content: center;
 			text-align: left;
-			gap: var(--space-2);
+			gap: var(--space-4);
 			padding: var(--space-4);
 		}
 
