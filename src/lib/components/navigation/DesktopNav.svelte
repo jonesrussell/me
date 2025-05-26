@@ -63,6 +63,19 @@
 			transition: none;
 		}
 	}
+
+	@media (forced-colors: active) {
+		.desktop-nav a {
+			border: 1px solid CanvasText;
+		}
+
+		.desktop-nav a:hover,
+		.desktop-nav a.active {
+			background: Canvas;
+			color: CanvasText;
+			border-color: Highlight;
+		}
+	}
 </style>
 
 <nav class="desktop-nav" aria-label="Main navigation">

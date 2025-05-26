@@ -55,6 +55,33 @@
 			box-shadow: 0 0 0 var(--space-1) var(--error-color);
 		}
 	}
+
+	@media (forced-colors: active) {
+		.input {
+			border: 1px solid CanvasText;
+			background: Canvas;
+			color: CanvasText;
+		}
+
+		.input:focus {
+			border-color: Highlight;
+			box-shadow: none;
+		}
+
+		.input:disabled {
+			opacity: 1;
+			border-color: GrayText;
+		}
+
+		.input[aria-invalid='true'] {
+			border-color: Mark;
+		}
+
+		.input[aria-invalid='true']:focus {
+			border-color: Mark;
+			box-shadow: none;
+		}
+	}
 </style>
 
 <div class="input-container">
