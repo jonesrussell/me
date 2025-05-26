@@ -31,6 +31,11 @@ export default ts.config(
 				parser: ts.parser,
 				svelteConfig
 			}
+		},
+		rules: {
+			'svelte/valid-compile': 'error',
+			'svelte/no-dom-manipulating': 'error',
+			'svelte/no-reactive-reassign': 'error'
 		}
 	},
 	{

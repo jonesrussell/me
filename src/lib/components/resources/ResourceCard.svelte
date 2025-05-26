@@ -62,7 +62,7 @@
 	}
 
 	@media (min-width: 30rem) {
-		.resource-card {
+		.resource {
 			flex-direction: row;
 			align-items: center;
 			gap: var(--space-4);
