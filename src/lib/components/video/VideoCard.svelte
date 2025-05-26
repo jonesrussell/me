@@ -77,7 +77,15 @@
 		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
 	}
 
-	@media (width >= 48ch) {
+	@media (width >= 30rem) {
+		.video-card {
+			flex-direction: row;
+			align-items: center;
+			gap: var(--space-4);
+		}
+	}
+
+	@media (width >= 48rem) {
 		.video-card {
 			padding: var(--space-6);
 		}

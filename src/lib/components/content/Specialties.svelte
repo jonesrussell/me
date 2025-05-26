@@ -59,11 +59,9 @@
 		margin-top: var(--space-2);
 	}
 
-	@media (width >= 80ch) {
+	@media (width >= 50rem) {
 		.specialties {
-			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			gap: var(--space-4);
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40rem), 1fr));
 		}
 	}
 </style>
