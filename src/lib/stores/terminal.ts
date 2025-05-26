@@ -181,7 +181,8 @@ function createTerminal() {
 export const terminal = createTerminal();
 
 // Terminal height store
-export const terminalHeight = writable('35ch');
+export const terminalHeight = writable('auto');
+export const terminalMinHeight = writable('35ch');
 
 // Commands store - initialize with default commands
 export const commands = writable<Command[]>(defaultCommands);
