@@ -22,7 +22,10 @@ alwaysApply: false
 - Use container queries for component-level breakpoints
 - Implement fluid typography with `clamp()`
 - Use relative units for responsive sizing:
-  - Use `rem` for media query breakpoints
+  - Use `rem` for media query breakpoints:
+    - `30rem` (≈ 480px) for tablet
+    - `50rem` (≈ 800px) for small desktop
+    - `75rem` (≈ 1200px) for large desktop
   - Use `ch` for text layout and content width
   - Use `cqi` for container-based sizing
   - Use `%` for fluid layouts
@@ -53,9 +56,21 @@ alwaysApply: false
   padding: var(--space-4);
 }
 
-@container component-name (width >= 48ch) {
+@container component-name (width >= 30rem) {
   .component {
     /* Tablet and up styles */
+  }
+}
+
+@container component-name (width >= 50rem) {
+  .component {
+    /* Small desktop and up styles */
+  }
+}
+
+@container component-name (width >= 75rem) {
+  .component {
+    /* Large desktop styles */
   }
 }
 ```

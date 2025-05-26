@@ -3,105 +3,78 @@
 	import Badge from '$lib/components/ui/Badge.svelte';
 	import type { Resource } from '$lib/types';
 
-	const { resource } = $props<{ resource: Resource }>();
+	export let resource: Resource;
+	export let cta: boolean = false;
 </script>
 
 <style>
 	.resource {
-		width: 100%;
-		padding: var(--space-4);
 		container-type: inline-size;
 		container-name: resource-card;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-4);
+		padding: var(--space-4);
+		background: var(--color-surface-2);
+		border-radius: var(--radius-2);
 	}
 
-	:global(.box) {
-		width: 100%;
-		min-width: unset;
-		max-width: unset;
-	}
-
-	.resource-header {
+	.content {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-2);
-		margin-block-end: var(--space-4);
 	}
 
-	.resource-header h3 {
-		margin: 0;
-		font-size: var(--font-size-lg);
-		line-height: var(--line-height-tight);
-		color: var(--text-color);
+	h3 {
+		font-size: var(--font-size-3);
+		font-weight: var(--font-weight-bold);
+		color: var(--color-text-1);
 	}
 
 	.description {
-		margin: var(--space-4) 0;
-		font-size: var(--font-size-sm);
-		line-height: var(--line-height-relaxed);
-		color: var(--text-muted);
+		font-size: var(--font-size-2);
+		color: var(--color-text-2);
+		max-width: 65ch;
 	}
 
-	.category {
-		margin-block-start: var(--space-4);
+	.cta {
+		display: flex;
+		gap: var(--space-2);
 	}
 
-	.resource a {
-		text-decoration: none;
-		color: var(--link-color);
-		transition: all var(--transition-duration) var(--transition-timing);
-	}
-
-	.resource:hover {
-		background: var(--bg-darker);
-		transform: translateY(-2px);
-		box-shadow: var(--shadow-md);
-	}
-
-	.resource a:hover {
-		color: var(--link-hover);
-	}
-
-	@media (min-width: 30rem) {
+	@container resource-card (width >= 30rem) {
 		.resource {
 			flex-direction: row;
 			align-items: center;
 			gap: var(--space-4);
-		}
-	}
-
-	@media (min-width: 48ch) {
-		.resource {
-			padding: var(--space-6);
-		}
-
-		.resource-header {
-			flex-direction: row;
-			align-items: center;
-			justify-content: space-between;
-			gap: var(--space-4);
-		}
-
-		.description {
-			font-size: var(--font-size-base);
 		}
 	}
 </style>
 
 <Box>
 	<div class="resource">
-		<div class="resource-header">
+		<div class="content">
 			<h3>
 				<a href={resource.url} target="_blank" rel="noopener noreferrer">
 					{resource.title}
 				</a>
 			</h3>
+			{#if resource.description}
+				<p class="description">{resource.description}</p>
+			{/if}
 			{#if resource.stars}
-				<Badge type="info" children={() => `⭐ ${resource.stars.toLocaleString()}`} />
+				<div class="stars">
+					<span>⭐ {resource.stars}</span>
+				</div>
 			{/if}
 		</div>
-		<p class="description">{resource.description}</p>
 		<div class="category">
 			<Badge type="info" children={() => resource.category} />
 		</div>
+		{#if cta}
+			<div class="cta">
+				<slot name="cta" />
+			</div>
+		{/if}
 	</div>
 </Box>

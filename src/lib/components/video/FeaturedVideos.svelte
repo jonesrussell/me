@@ -7,7 +7,11 @@
 
 <style>
 	.featured-videos {
-		margin: var(--space-6) 0;
+		container-type: inline-size;
+		container-name: featured-videos;
+		display: grid;
+		gap: var(--space-4);
+		grid-template-columns: 1fr;
 	}
 
 	h2 {
@@ -22,21 +26,21 @@
 		gap: var(--space-3);
 	}
 
-	@media (width >= 30rem) {
+	@container featured-videos (width >= 30rem) {
 		.featured-videos {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
-	@media (width >= 50rem) {
+	@container featured-videos (width >= 50rem) {
 		.featured-videos {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40rem), 1fr));
+			grid-template-columns: repeat(3, 1fr);
 		}
 	}
 
-	@media (width >= 75rem) {
+	@container featured-videos (width >= 75rem) {
 		.featured-videos {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 50rem), 1fr));
+			grid-template-columns: repeat(4, 1fr);
 		}
 	}
 

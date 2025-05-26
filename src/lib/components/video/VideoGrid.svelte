@@ -14,16 +14,28 @@
 	}
 
 	.video-grid {
+		container-type: inline-size;
+		container-name: video-grid;
 		display: grid;
 		gap: var(--space-4);
-		width: 100%;
-		max-width: 160ch;
-		margin: 0 auto;
+		grid-template-columns: 1fr;
 	}
 
-	@media (min-width: 50rem) {
+	@container video-grid (width >= 30rem) {
 		.video-grid {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@container video-grid (width >= 50rem) {
+		.video-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	@container video-grid (width >= 75rem) {
+		.video-grid {
+			grid-template-columns: repeat(4, 1fr);
 		}
 	}
 
@@ -32,18 +44,13 @@
 			margin: var(--space-12) 0 var(--space-6) 0;
 			font-size: var(--font-size-xl);
 		}
-
-		.video-grid {
-			grid-template-columns: repeat(2, 1fr);
-			gap: var(--space-8);
-		}
 	}
 </style>
 
 <section aria-labelledby="video-grid-title" aria-label="Video grid">
 	<h2 id="video-grid-title">Featured Videos</h2>
 	<div class="video-grid">
-		{#each videos as video (video.embedId)}
+		{#each videos as video}
 			<VideoCard {video} />
 		{/each}
 	</div>
