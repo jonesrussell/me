@@ -1,6 +1,6 @@
 ---
 description:
-globs:
+globs: src/lib/components/**/*.svelte
 alwaysApply: false
 ---
 # Component Styling Standards
