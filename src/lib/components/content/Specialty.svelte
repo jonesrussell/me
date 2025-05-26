@@ -15,83 +15,58 @@
 
 <style>
 	.specialty {
+		container-type: inline-size;
+		container-name: specialty;
 		display: flex;
-		padding: var(--space-6);
-		text-align: center;
-		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-md);
 		flex-direction: column;
-		align-items: center;
 		gap: var(--space-4);
-		transition: background 0.3s ease-out;
-		opacity: 0;
-		transform: translateX(var(--initial-offset));
-		transition:
-			opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-			transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+		padding: var(--space-4);
+		background: var(--color-surface-2);
+		border-radius: var(--radius-2);
 	}
 
-	.specialty.visible {
-		opacity: 1;
-		transform: translateX(0);
+	.content {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
 	}
 
-	.specialty.intersecting {
-		background: var(--color-mix-medium);
-		border-color: var(--accent-color);
-		box-shadow: 0 0 0 1px var(--accent-color);
+	h3 {
+		font-size: var(--font-size-3);
+		font-weight: var(--font-weight-bold);
+		color: var(--color-text-1);
 	}
 
-	.specialty:hover {
-		background: var(--color-mix-light);
-		transform: translateY(-0.125ch);
+	.description {
+		font-size: var(--font-size-2);
+		color: var(--color-text-2);
+		max-width: 65ch;
 	}
 
-	.specialty-icon {
-		font-size: var(--font-size-2xl);
-		line-height: var(--line-height-tight);
+	.icon {
+		font-size: var(--font-size-4);
 		color: var(--accent-color);
 	}
 
-	.specialty-content {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-1);
-	}
-
-	.specialty-title {
-		font-size: var(--font-size-lg);
-		font-weight: var(--font-weight-bold);
-		color: var(--text-color);
-		line-height: var(--line-height-tight);
-	}
-
-	.specialty-desc {
-		font-size: var(--font-size-base);
-		line-height: var(--line-height-base);
-		color: var(--text-muted);
-	}
-
-	@media (width >= 50rem) {
+	@container specialty (width >= 30rem) {
 		.specialty {
 			flex-direction: row;
 			align-items: flex-start;
 			gap: var(--space-4);
 		}
+
+		.icon {
+			font-size: var(--font-size-5);
+		}
 	}
 
-	@media (prefers-reduced-motion: reduce) {
+	@container specialty (width >= 50rem) {
 		.specialty {
-			transition: none;
-			transform: none;
-			opacity: 1;
+			padding: var(--space-6);
 		}
 
-		.specialty.visible {
-			transition: none;
-			transform: none;
-			opacity: 1;
+		h3 {
+			font-size: var(--font-size-4);
 		}
 	}
 </style>

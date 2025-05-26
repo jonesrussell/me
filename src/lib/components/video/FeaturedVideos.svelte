@@ -24,6 +24,7 @@
 	.video-grid {
 		display: grid;
 		gap: var(--space-3);
+		grid-template-columns: 1fr;
 	}
 
 	@container featured-videos (width >= 30rem) {
@@ -47,7 +48,7 @@
 		}
 
 		.video-grid {
-			grid-template-columns: repeat(auto-fit, minmax(45rem, 1fr));
+			grid-template-columns: repeat(auto-fit, minmax(var(--measure), 1fr));
 			gap: var(--space-6);
 		}
 	}
@@ -58,7 +59,7 @@
 		}
 
 		.video-grid {
-			grid-template-columns: repeat(auto-fit, minmax(50rem, 1fr));
+			grid-template-columns: repeat(auto-fit, minmax(var(--measure), 1fr));
 			gap: var(--space-8);
 		}
 	}

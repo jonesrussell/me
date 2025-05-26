@@ -64,6 +64,8 @@
 
 <style>
 	.newsletter {
+		container-type: inline-size;
+		container-name: newsletter;
 		display: flex;
 		width: 100%;
 		padding: var(--space-16);
@@ -73,6 +75,77 @@
 		align-items: center;
 		position: relative;
 		overflow: hidden;
+	}
+
+	.newsletter-content {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-4);
+		width: 100%;
+		max-width: 60ch;
+		margin: 0 auto;
+	}
+
+	.newsletter-header {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		text-align: center;
+	}
+
+	.header-title {
+		display: flex;
+		gap: var(--space-2);
+		align-items: center;
+		justify-content: center;
+		font-size: var(--font-size-lg);
+	}
+
+	.bracket {
+		font-weight: var(--font-weight-bold);
+		color: var(--accent-color);
+	}
+
+	h3 {
+		margin: 0;
+		font-size: var(--font-size-lg);
+		line-height: var(--line-height-base);
+		color: var(--text-color);
+	}
+
+	.description {
+		font-size: var(--font-size-2);
+		color: var(--color-text-2);
+		max-width: 65ch;
+	}
+
+	.form {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+	}
+
+	@container newsletter (width >= 30rem) {
+		.newsletter {
+			padding: var(--space-8);
+		}
+
+		.form {
+			flex-direction: row;
+			align-items: center;
+		}
+	}
+
+	@container newsletter (width >= 50rem) {
+		.newsletter {
+			padding: var(--space-12);
+		}
+
+		h3 {
+			font-size: var(--font-size-4);
+		}
 	}
 
 	.newsletter::before {
@@ -147,18 +220,6 @@
 		font-size: var(--font-size-lg);
 		line-height: var(--line-height-base);
 		color: var(--text-color);
-	}
-
-	.description {
-		font-size: var(--font-size-base);
-		line-height: var(--line-height-relaxed);
-		color: var(--text-muted);
-	}
-
-	.form {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-4);
 	}
 
 	.form-group {
@@ -277,30 +338,6 @@
 		color: var(--color-error);
 		background: var(--color-mix-light);
 		border: var(--border-width) solid var(--color-error);
-	}
-
-	@media (width >= 30rem) {
-		.newsletter {
-			padding: var(--space-8);
-		}
-	}
-
-	@media (width >= calc(37.5 * var(--ch))) {
-		.form-group {
-			flex-direction: row;
-		}
-	}
-
-	@keyframes gradientShift {
-		0% {
-			background-position: 0% 0%;
-		}
-		50% {
-			background-position: 100% 100%;
-		}
-		100% {
-			background-position: 0% 0%;
-		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {

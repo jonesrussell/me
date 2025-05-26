@@ -31,18 +31,16 @@
 		.video-grid {
 			grid-template-columns: repeat(3, 1fr);
 		}
+
+		h2 {
+			margin: var(--space-12) 0 var(--space-6) 0;
+			font-size: var(--font-size-xl);
+		}
 	}
 
 	@container video-grid (width >= 75rem) {
 		.video-grid {
 			grid-template-columns: repeat(4, 1fr);
-		}
-	}
-
-	@media (min-width: 80ch) {
-		h2 {
-			margin: var(--space-12) 0 var(--space-6) 0;
-			font-size: var(--font-size-xl);
 		}
 	}
 </style>
