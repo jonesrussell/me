@@ -66,7 +66,7 @@
 	.newsletter {
 		display: flex;
 		width: 100%;
-		padding: var(--space-4);
+		padding: var(--space-16);
 		background: var(--color-mix-light);
 		flex-direction: column;
 		gap: var(--space-4);

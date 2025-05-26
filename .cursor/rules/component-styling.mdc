@@ -21,7 +21,11 @@ alwaysApply: false
 - Start with mobile layout (min-width: 0)
 - Use container queries for component-level breakpoints
 - Implement fluid typography with `clamp()`
-- Use relative units (ch, cqi) for responsive sizing
+- Use relative units for responsive sizing:
+  - Use `rem` for media query breakpoints
+  - Use `ch` for text layout and content width
+  - Use `cqi` for container-based sizing
+  - Use `%` for fluid layouts
 
 ## CSS Best Practices
 - Use `:global()` for targeting child components
