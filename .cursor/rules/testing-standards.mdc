@@ -1,0 +1,65 @@
+---
+description:
+globs: src/**/*.test.ts,src/**/*.spec.ts,src/**/*.test.svelte,src/**/*.spec.svelte
+alwaysApply: false
+---
+# Testing Standards
+
+## Core Principles
+- Write tests for all new features
+- Maintain high test coverage
+- Follow testing best practices
+- Use appropriate testing tools
+- Keep tests focused and maintainable
+
+## Unit Testing
+- Use Vitest for unit tests
+- Test components in isolation
+- Mock external dependencies
+- Test edge cases and error states
+- Keep tests fast and focused
+
+## Component Testing
+- Test component rendering
+- Verify component behavior
+- Test user interactions
+- Check accessibility
+- Validate component state
+
+## E2E Testing
+- Use Playwright for E2E tests
+- Test critical user flows
+- Verify cross-browser compatibility
+- Test responsive behavior
+- Validate integration points
+
+## Test Structure
+```typescript
+import { render, fireEvent } from '@testing-library/svelte';
+import { describe, it, expect } from 'vitest';
+import Component from './Component.svelte';
+
+describe('Component', () => {
+  it('should render correctly', () => {
+    const { getByRole } = render(Component);
+    expect(getByRole('button')).toBeInTheDocument();
+  });
+
+  it('should handle user interaction', async () => {
+    const { getByRole } = render(Component);
+    const button = getByRole('button');
+    await fireEvent.click(button);
+    // Assert expected behavior
+  });
+});
+```
+
+## Best Practices
+- Write descriptive test names
+- Follow AAA pattern (Arrange, Act, Assert)
+- Keep tests independent
+- Clean up after tests
+- Use appropriate assertions
+- Mock external services
+- Test error handling
+- Verify accessibility

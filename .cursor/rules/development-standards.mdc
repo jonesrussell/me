@@ -1,7 +1,7 @@
 ---
 description:
 globs:
-alwaysApply: false
+alwaysApply: true
 ---
 # Development Standards
 
@@ -51,29 +51,13 @@ alwaysApply: false
 - Keep stores focused and lightweight
 - Test state updates thoroughly
 
+## Svelte Development
+For Svelte-specific patterns and best practices, refer to:
+- [Svelte 5 Standards](mdc:svelte5-standards.mdc) for runes and modern features
+- [Component Styling Standards](mdc:component-styling.mdc) for styling patterns
+- [Svelte Restrictions](mdc:svelte-restrictions.mdc) for prohibited patterns
+- [Testing Standards](mdc:testing-standards.mdc) for testing practices
+
 ## Svelte Patterns
 - Use runes for state management (`$state`, `$derived`, `$effect`)
-- Use `$props` for component props
-- Keep components small and semantic
-- Use container queries for responsive design
-- Implement error boundaries
-- Test component lifecycle thoroughly
-- Use CSS custom properties for theming
-- Follow mobile-first approach
-- Use modern CSS features (Grid, Flexbox, Container Queries)
-
-## Component Structure
-- Define clear component boundaries
-- Use semantic HTML elements
-- Implement proper accessibility attributes
-- Follow consistent prop naming
-- Use TypeScript for prop validation
-- Keep component logic minimal
-- Extract complex logic to services
-
-## File Organization
-- Group related components together
-- Separate UI components from business logic
-- Keep component files focused
-- Use consistent file naming
-- Maintain clear import structure
+- Use `$props`

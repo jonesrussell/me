@@ -1,13 +1,29 @@
 ---
 description:
 globs:
-alwaysApply: false
+alwaysApply: true
 ---
 # Design Standards
 
 ## Branding
 - Title: Russell Jones
 - Description: Crafting elegant solutions with modern web technologies
+
+## Core Principles
+- Follow accessibility standards (WCAG)
+- Implement progressive enhancement
+- Monitor performance metrics
+- Use semantic HTML elements
+- Validate user input
+- Handle errors gracefully
+- Keep dependencies updated
+- Follow semantic versioning
+
+## Implementation
+For specific implementation details, refer to:
+- [Component Styling Standards](mdc:component-styling.mdc) for styling patterns
+- [Svelte 5 Standards](mdc:svelte5-standards.mdc) for Svelte-specific patterns
+- [Svelte Restrictions](mdc:svelte-restrictions.mdc) for prohibited patterns
 
 ## Typography
 - Use monospace fonts for consistent character width
