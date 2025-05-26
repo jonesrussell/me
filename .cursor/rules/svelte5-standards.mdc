@@ -1,0 +1,103 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# Svelte 5 Standards
+
+## Core Principles
+- Use runes for state management and reactivity
+- Follow TypeScript best practices
+- Maintain consistent component structure
+- Implement proper error handling
+- Follow accessibility guidelines
+
+## State Management
+- Use `$state` for reactive state
+- Use `$derived` for computed values
+- Use `$effect` for side effects
+- Use `$props` for component props
+- Avoid using deprecated store syntax
+
+## Component Structure
+```svelte
+<script lang="ts">
+  // Props with proper typing
+  const { prop1, prop2 } = $props<{
+    prop1: string;
+    prop2: number;
+  }>();
+
+  // State management with runes
+  let count = $state(0);
+  let doubled = $derived(count * 2);
+
+  // Side effects with runes
+  $effect(() => {
+    console.log('count changed:', count);
+  });
+</script>
+```
+
+## Deprecated Features to Avoid
+- `$:` reactive declarations (use runes instead)
+- `writable`/`readable` stores (use runes instead)
+- `each` block with index/key (use new syntax)
+- `bind:this` (use `use:` directive)
+- `onMount` (use `$effect` instead)
+- `beforeUpdate`/`afterUpdate` (use `$effect` instead)
+- `tick` (use `$effect` instead)
+- `setContext`/`getContext` (use runes instead)
+
+## TypeScript Integration
+- Use proper typing for runes
+- Define prop types with `$props`
+- Use type inference with `$derived`
+- Type effect callbacks properly
+- Use proper typing for state
+
+## Performance Considerations
+- Use `$derived` for expensive computations
+- Avoid unnecessary state updates
+- Use `$effect` cleanup properly
+- Optimize template rendering
+- Use proper memoization with runes
+
+## Example Patterns
+```svelte
+// State Management
+let count = $state(0);
+let doubled = $derived(count * 2);
+
+// Props with TypeScript
+const { name, age } = $props<{
+  name: string;
+  age: number;
+}>();
+
+// Side Effects
+$effect(() => {
+  console.log('count changed:', count);
+  return () => {
+    // cleanup
+  };
+});
+
+// Component Lifecycle
+$effect(() => {
+  // component mounted
+  return () => {
+    // component unmounted
+  };
+});
+```
+
+## Best Practices
+- Keep components small and focused
+- Use proper TypeScript types
+- Implement error boundaries
+- Follow accessibility guidelines
+- Use semantic HTML elements
+- Maintain consistent naming
+- Document complex logic
+- Test component behavior

@@ -14,6 +14,12 @@
 		container-name: resource-card;
 	}
 
+	:global(.box) {
+		width: 100%;
+		min-width: unset;
+		max-width: unset;
+	}
+
 	.resource-header {
 		display: flex;
 		flex-direction: column;

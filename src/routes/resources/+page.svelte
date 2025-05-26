@@ -306,6 +306,7 @@
 		grid-template-columns: minmax(min(100%, 30ch), 1fr);
 		gap: var(--space-8);
 		width: 100%;
+		justify-content: center;
 	}
 
 	/* Tablet and up */
@@ -316,6 +317,7 @@
 
 		.sections {
 			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30ch), 1fr));
+			justify-content: start;
 		}
 
 		h1 {
@@ -346,6 +348,10 @@
 		}
 	}
 
+	.featured-videos-section {
+		grid-column: 1 / -1;
+	}
+
 	@media (prefers-reduced-motion: reduce) {
 		* {
 			transition: none !important;
@@ -373,8 +379,9 @@
 			{#each Object.entries(groupedResources) as [category, resources] (category)}
 				<ResourceSection {category} {resources} />
 			{/each}
+			<div class="featured-videos-section">
+				<FeaturedVideos videos={youtubeChannel.featuredVideos} />
+			</div>
 		</div>
 	</div>
-
-	<FeaturedVideos videos={youtubeChannel.featuredVideos} />
 </div>
