@@ -71,9 +71,49 @@
 		flex-direction: column;
 		gap: var(--space-4);
 		align-items: center;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.newsletter::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(circle at center, var(--accent-color) 0%, transparent 70%);
+		opacity: 0.03;
+		z-index: 0;
+		animation: pulse 4s ease-in-out infinite;
+	}
+
+	.newsletter::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(circle at center, var(--accent-color) 0%, transparent 70%);
+		opacity: 0.02;
+		z-index: 0;
+		animation: pulse 4s ease-in-out infinite;
+		animation-delay: 2s;
+	}
+
+	@keyframes pulse {
+		0% {
+			transform: scale(0.8);
+			opacity: 0.02;
+		}
+		50% {
+			transform: scale(1.2);
+			opacity: 0.03;
+		}
+		100% {
+			transform: scale(0.8);
+			opacity: 0.02;
+		}
 	}
 
 	.newsletter-content {
+		position: relative;
+		z-index: 1;
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-4);
@@ -202,8 +242,17 @@
 	}
 
 	@keyframes pulse {
+		0% {
+			opacity: 0.05;
+			transform: scale(1);
+		}
 		50% {
-			opacity: 1;
+			opacity: 0.1;
+			transform: scale(1.02);
+		}
+		100% {
+			opacity: 0.05;
+			transform: scale(1);
 		}
 	}
 
@@ -233,6 +282,24 @@
 	@media (width >= calc(37.5 * var(--ch))) {
 		.form-group {
 			flex-direction: row;
+		}
+	}
+
+	@keyframes gradientShift {
+		0% {
+			background-position: 0% 0%;
+		}
+		50% {
+			background-position: 100% 100%;
+		}
+		100% {
+			background-position: 0% 0%;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.newsletter::before {
+			animation: none;
 		}
 	}
 </style>
