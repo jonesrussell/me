@@ -88,6 +88,23 @@
 			transition: none;
 		}
 	}
+
+	@media (forced-colors: active) {
+		.mobile-nav {
+			border: 1px solid CanvasText;
+		}
+
+		.mobile-nav a {
+			border: 1px solid CanvasText;
+		}
+
+		.mobile-nav a:hover,
+		.mobile-nav a.active {
+			background: Canvas;
+			color: CanvasText;
+			border-color: Highlight;
+		}
+	}
 </style>
 
 <nav class="mobile-nav" class:open={isOpen} aria-label="Main navigation">

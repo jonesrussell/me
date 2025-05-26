@@ -108,6 +108,40 @@
 		border-color: var(--error-color);
 		box-shadow: 0 0 0 1px var(--error-color);
 	}
+
+	@media (forced-colors: active) {
+		.textarea {
+			border: 1px solid CanvasText;
+			background: Canvas;
+			color: CanvasText;
+		}
+
+		.textarea:focus {
+			border-color: Highlight;
+			box-shadow: none;
+		}
+
+		.textarea[aria-invalid='true'] {
+			border-color: Mark;
+		}
+
+		.textarea[aria-invalid='true']:focus {
+			border-color: Mark;
+			box-shadow: none;
+		}
+
+		.required {
+			color: Mark;
+		}
+
+		.error {
+			color: Mark;
+		}
+
+		.helper {
+			color: GrayText;
+		}
+	}
 </style>
 
 <div class="form-field">
