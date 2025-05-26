@@ -101,3 +101,8 @@ $effect(() => {
 - Maintain consistent naming
 - Document complex logic
 - Test component behavior
+- Use `console.debug` for development logging
+- Implement proper cleanup in effects
+- Use descriptive debug messages
+- Group related debug information
+- Remove debug statements in production
