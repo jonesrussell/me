@@ -11,14 +11,14 @@
 </script>
 
 <style>
-	.navigation {
+	.action-nav-cards {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-4);
 		width: 100%;
 	}
 
-	.nav-link {
+	.action-card {
 		display: flex;
 		padding: var(--space-4);
 		text-decoration: none;
@@ -31,44 +31,44 @@
 		gap: var(--space-2);
 	}
 
-	.nav-link:hover {
+	.action-card:hover {
 		background: var(--color-mix-light);
 		transform: translateY(-0.125ch);
 	}
 
-	.nav-icon {
+	.action-icon {
 		font-size: var(--font-size-lg);
 	}
 
-	.nav-text {
+	.action-text {
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
 	}
 
 	@media (width >= 48ch) {
-		.navigation {
+		.action-nav-cards {
 			flex-direction: row;
 			justify-content: center;
 		}
 
-		.nav-link {
+		.action-card {
 			flex: 1;
 			justify-content: center;
 		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.nav-link {
+		.action-card {
 			transition: none;
 		}
 	}
 </style>
 
-<nav class="navigation">
+<nav class="action-nav-cards">
 	{#each links as link (link.href)}
-		<a href={`${base}${link.href}`} class="nav-link">
-			<span class="nav-icon">{link.icon}</span>
-			<span class="nav-text">{link.text}</span>
+		<a href={`${base}${link.href}`} class="action-card">
+			<span class="action-icon">{link.icon}</span>
+			<span class="action-text">{link.text}</span>
 		</a>
 	{/each}
 </nav>

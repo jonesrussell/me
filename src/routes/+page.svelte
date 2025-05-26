@@ -2,7 +2,7 @@
 	import Terminal from '$lib/components/terminal/Terminal.svelte';
 	import Specialties from '$lib/components/content/Specialties.svelte';
 	import YouTubeSection from '$lib/components/video/YouTubeSection.svelte';
-	import Navigation from '$lib/components/navigation/Navigation.svelte';
+	import ActionNavCards from '$lib/components/navigation/ActionNavCards.svelte';
 
 	const YOUTUBE_CHANNEL = 'https://youtube.com/@fullstackdev42';
 	const YOUTUBE_VIDEO_ID = 'B4v7ZDLxiS4';
@@ -105,6 +105,6 @@
 			sectionTitle={YOUTUBE_SECTION_TITLE}
 			sectionSubtitle={YOUTUBE_SECTION_SUBTITLE}
 		/>
-		<Navigation links={navLinks} />
+		<ActionNavCards links={navLinks} />
 	</div>
 </main>
