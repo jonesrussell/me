@@ -39,7 +39,7 @@
 		margin-bottom: var(--space-2);
 	}
 
-	h2 {
+	.section-title {
 		margin: 0;
 		font-size: var(--font-size-xl);
 		font-weight: var(--font-weight-bold);
@@ -58,10 +58,6 @@
 		display: grid;
 		gap: var(--space-4);
 		grid-template-columns: 1fr;
-	}
-
-	.specialty {
-		width: 100%;
 	}
 
 	@container specialties (width >= 30rem) {
@@ -86,8 +82,8 @@
 
 <div class="specialties-container">
 	<div class="section-header">
-		<h2>My Specialties</h2>
-		<p class="section-desc">Areas where I excel and bring value to projects</p>
+		<h2 class="section-title">Our Specialties</h2>
+		<p class="section-desc">Expert solutions for your unique challenges</p>
 	</div>
 	<div class="specialties">
 		{#each specialties as specialty, i (specialty.title)}
