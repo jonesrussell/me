@@ -89,7 +89,7 @@
 		color: var(--link-hover);
 	}
 
-	@media (width >= 48ch) {
+	@media (width >= 30rem) {
 		.project {
 			padding: var(--space-6);
 		}

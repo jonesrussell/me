@@ -123,6 +123,37 @@
 		color: var(--text-color);
 		background: var(--color-mix-light);
 	}
+
+	@media (width >= 30rem) {
+		.lead {
+			font-size: var(--font-size-xl);
+			line-height: var(--line-height-relaxed);
+		}
+
+		:global(h1) {
+			font-size: var(--font-size-5xl);
+		}
+
+		:global(h2) {
+			font-size: var(--font-size-4xl);
+		}
+
+		:global(h3) {
+			font-size: var(--font-size-3xl);
+		}
+
+		:global(h4) {
+			font-size: var(--font-size-2xl);
+		}
+
+		:global(h5) {
+			font-size: var(--font-size-xl);
+		}
+
+		:global(h6) {
+			font-size: var(--font-size-lg);
+		}
+	}
 }
 
 /* Typography styles */

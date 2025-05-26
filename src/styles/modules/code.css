@@ -1,8 +1,8 @@
 @layer components {
 	/* Container Queries */
-	@container (width > 48ch) {
+	@container (width > 30rem) {
 		.code-block {
-			margin: var(--space-12) 0;
+			margin: var(--space-8) 0;
 		}
 
 		.code-block-content {

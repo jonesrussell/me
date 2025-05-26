@@ -1,6 +1,13 @@
 @layer components {
 	/* Container Queries */
-	@container (width > 48ch) {
+	@container (width > 30rem) {
+		.layout {
+			grid-template-columns: 1fr;
+			gap: var(--space-8);
+		}
+	}
+
+	@container (width > 30rem) {
 		.container {
 			--container-padding: var(--space-8);
 		}

@@ -1,6 +1,14 @@
 @layer components {
 	/* Container Queries */
-	@container (width > 48ch) {
+	@container (width > 30rem) {
+		.form-group {
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: var(--space-4);
+		}
+	}
+
+	@container (width > 30rem) {
 		.form-group-row {
 			gap: var(--space-4);
 		}

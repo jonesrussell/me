@@ -22,7 +22,25 @@
 		gap: var(--space-3);
 	}
 
-	@media (width >= 48ch) {
+	@media (width >= 30rem) {
+		.featured-videos {
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
+		}
+	}
+
+	@media (width >= 50rem) {
+		.featured-videos {
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40rem), 1fr));
+		}
+	}
+
+	@media (width >= 75rem) {
+		.featured-videos {
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 50rem), 1fr));
+		}
+	}
+
+	@media (width >= 48rem) {
 		.featured-videos {
 			margin: var(--space-8) 0;
 		}
@@ -36,16 +54,16 @@
 		}
 	}
 
-	@media (width >= 80ch) {
+	@media (width >= 80rem) {
 		.video-grid {
-			grid-template-columns: repeat(auto-fit, minmax(45ch, 1fr));
+			grid-template-columns: repeat(auto-fit, minmax(45rem, 1fr));
 			gap: var(--space-6);
 		}
 	}
 
-	@media (width >= 120ch) {
+	@media (width >= 120rem) {
 		.video-grid {
-			grid-template-columns: repeat(auto-fit, minmax(50ch, 1fr));
+			grid-template-columns: repeat(auto-fit, minmax(50rem, 1fr));
 			gap: var(--space-8);
 		}
 	}

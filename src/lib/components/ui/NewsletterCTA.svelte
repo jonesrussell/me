@@ -279,6 +279,12 @@
 		border: var(--border-width) solid var(--color-error);
 	}
 
+	@media (width >= 30rem) {
+		.newsletter {
+			padding: var(--space-8);
+		}
+	}
+
 	@media (width >= calc(37.5 * var(--ch))) {
 		.form-group {
 			flex-direction: row;

@@ -239,6 +239,12 @@
 		font-weight: var(--font-weight-semibold);
 		text-align: start;
 	}
+
+	@container (width > 30rem) {
+		.container {
+			--container-padding: var(--space-8);
+		}
+	}
 }
 
 /* Base styles */
@@ -447,7 +453,7 @@ body {
 }
 
 /* Container Queries */
-@container (width > 48ch) {
+@container (width > 30rem) {
 	:global(.container) {
 		--container-padding: var(--space-8);
 	}
@@ -463,11 +469,11 @@ body {
 	:global(.surface),
 	:global(.surface-elevated),
 	:global(.surface-floating) {
-		border: 0.125ch solid CanvasText;
+		border: 0.125rem solid CanvasText;
 	}
 
 	:global(.nav-link) {
-		border: 0.125ch solid CanvasText;
+		border: 0.125rem solid CanvasText;
 	}
 }
 

@@ -61,6 +61,14 @@
 		color: var(--link-hover);
 	}
 
+	@media (min-width: 30rem) {
+		.resource-card {
+			flex-direction: row;
+			align-items: center;
+			gap: var(--space-4);
+		}
+	}
+
 	@media (min-width: 48ch) {
 		.resource {
 			padding: var(--space-6);

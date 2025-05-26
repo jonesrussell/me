@@ -25,6 +25,20 @@
 		color: var(--text-muted);
 	}
 
+	@media (width >= 30rem) {
+		.resource-header {
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+		}
+	}
+
+	@media (width >= 50rem) {
+		.resource-header {
+			padding: var(--space-8);
+		}
+	}
+
 	@media (width >= 48ch) {
 		.header {
 			margin-bottom: var(--space-8);
