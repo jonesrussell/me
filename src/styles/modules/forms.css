@@ -120,8 +120,8 @@
 	}
 
 	.form-check-input {
-		width: 1.5ch;
-		height: 1.5ch;
+		width: 1.5rem;
+		height: 1.5rem;
 
 		background: var(--bg-darker);
 		border: var(--border-width) solid var(--border-color);
@@ -133,12 +133,14 @@
 	.form-check-input:checked {
 		border-color: var(--accent-color);
 		background: var(--accent-color);
+		background-size: 1.5rem;
 	}
 
 	.form-check-input:focus {
 		border-color: var(--accent-color);
 		outline: none;
 		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
+		transform: translateY(-0.25rem);
 	}
 
 	/* Form validation */

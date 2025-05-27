@@ -30,12 +30,21 @@
 	.contact {
 		container-type: inline-size;
 		container-name: contact-page;
+		display: grid;
+		width: 100%;
+		padding: var(--space-16) 0;
+		grid-template-rows: auto 1fr;
+		gap: var(--space-16);
 	}
 
 	.container {
+		display: grid;
+		width: 100%;
+		margin-inline: auto;
+		padding-inline: var(--space-4);
 		max-width: min(var(--measure), 95cqi);
-		margin: 0 auto;
-		padding: var(--space-16);
+		gap: var(--space-16);
+		grid-template-columns: minmax(0, 1fr);
 	}
 
 	.success-message {
@@ -94,21 +103,38 @@
 		align-self: flex-start;
 	}
 
-	@container (min-width: 30rem) {
+	@container contact-page (min-width: 640px) {
 		.container {
-			padding: var(--space-24);
+			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-8);
 		}
 	}
 
-	@container (min-width: 50rem) {
+	@container contact-page (min-width: 768px) {
 		.container {
-			padding: var(--space-32);
+			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-12);
 		}
 	}
 
-	@container (min-width: 75rem) {
+	@container contact-page (min-width: 1024px) {
 		.container {
-			padding: var(--space-40);
+			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-16);
+		}
+	}
+
+	@container contact-page (min-width: 1280px) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-20);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			transition: none;
+			animation: none;
 		}
 	}
 </style>

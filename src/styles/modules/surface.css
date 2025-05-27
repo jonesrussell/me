@@ -10,13 +10,13 @@
 		}
 
 		.specialties {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30ch), 1fr));
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
 		}
 	}
 
 	@container (width > 50rem) {
 		.specialties {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40rem), 1fr));
 		}
 	}
 
@@ -99,7 +99,7 @@
 
 	.card:hover {
 		box-shadow: var(--shadow-lg);
-		transform: translateY(-0.25ch);
+		transform: translateY(-0.25rem);
 	}
 
 	.card-compact {

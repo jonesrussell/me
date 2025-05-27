@@ -11,9 +11,24 @@
 
 <style>
 	.error {
+		container-type: inline-size;
+		container-name: error-page;
 		display: grid;
-		gap: var(--space-4);
-		padding: var(--space-16);
+		width: 100%;
+		padding: var(--space-16) 0;
+		grid-template-rows: auto 1fr;
+		gap: var(--space-16);
+	}
+
+	.container {
+		display: grid;
+		width: 100%;
+		margin-inline: auto;
+		padding-inline: var(--space-4);
+		max-width: min(var(--measure), 95cqi);
+		gap: var(--space-16);
+		grid-template-columns: minmax(0, 1fr);
+		place-items: center;
 		text-align: center;
 	}
 
@@ -47,15 +62,46 @@
 		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
 	}
 
+	@container error-page (min-width: 640px) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-8);
+		}
+	}
+
+	@container error-page (min-width: 768px) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-12);
+		}
+	}
+
+	@container error-page (min-width: 1024px) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-16);
+		}
+	}
+
+	@container error-page (min-width: 1280px) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-20);
+		}
+	}
+
 	@media (prefers-reduced-motion: reduce) {
-		a {
+		* {
 			transition: none;
+			animation: none;
 		}
 	}
 </style>
 
 <div class="error">
-	<h1>{page.status}</h1>
-	<p>{errorMessage}</p>
-	<a href={`${base}`}>Return home</a>
+	<div class="container">
+		<h1>{page.status}</h1>
+		<p>{errorMessage}</p>
+		<a href={`${base}`}>Return home</a>
+	</div>
 </div>
