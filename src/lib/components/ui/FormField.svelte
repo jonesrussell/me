@@ -31,13 +31,13 @@
 	}
 
 	.label {
+		display: flex;
+		width: 100%;
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		color: var(--text-color);
-		display: flex;
 		align-items: center;
 		gap: var(--space-2);
-		width: 100%;
 	}
 
 	.required {
@@ -51,31 +51,31 @@
 	}
 
 	.error {
-		color: var(--error-color);
-		font-size: var(--font-size-sm);
 		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		color: var(--error-color);
 	}
 
 	.helper {
-		color: var(--text-muted);
-		font-size: var(--font-size-sm);
 		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
 	}
 
 	.textarea {
 		width: 100%;
-		min-width: 0;
 		padding: var(--space-4) var(--space-6);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
+		line-height: var(--line-height-relaxed);
 		color: var(--text-color);
 		background: var(--bg-darker);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
 		transition: all var(--transition-duration) var(--transition-timing);
+		min-width: 0;
 		resize: vertical;
 		min-height: 12ch;
-		line-height: var(--line-height-relaxed);
 		box-sizing: border-box;
 
 		&:focus {
@@ -111,9 +111,9 @@
 
 	@media (forced-colors: active) {
 		.textarea {
-			border: 1px solid CanvasText;
-			background: Canvas;
 			color: CanvasText;
+			background: Canvas;
+			border: 1px solid CanvasText;
 		}
 
 		.textarea:focus {

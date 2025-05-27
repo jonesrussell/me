@@ -65,11 +65,11 @@
 		padding: var(--space-4) 0;
 
 		& .container {
+			display: flex;
 			width: 100%;
-			max-width: min(160ch, 95cqi);
 			margin: 0 auto;
 			padding: 0 var(--space-4);
-			display: flex;
+			max-width: min(160ch, 95cqi);
 			flex-direction: column;
 			gap: var(--space-4);
 		}

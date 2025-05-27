@@ -15,7 +15,20 @@
 		".cache/**"
 	],
 	"rules": {
-		"unit-allowed-list": ["rem", "ch", "px", "%", "deg", "vh", "vw", "fr", "s", "cqi", "ms"],
+		"unit-allowed-list": [
+			"rem",
+			"ch",
+			"%",
+			"deg",
+			"vh",
+			"vw",
+			"fr",
+			"s",
+			"cqi",
+			"ms",
+			"vmin",
+			"vmax"
+		],
 		"unit-disallowed-list": ["em"],
 		"selector-pseudo-class-no-unknown": [
 			true,
@@ -27,6 +40,8 @@
 		"selector-class-pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
 		"keyframes-name-pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
 		"media-query-no-invalid": true,
+		"media-feature-name-no-unknown": true,
+		"media-feature-name-value-no-unknown": true,
 		"no-descending-specificity": null,
 		"declaration-block-no-redundant-longhand-properties": null,
 		"font-family-no-missing-generic-family-keyword": true,
@@ -118,7 +133,7 @@
 		],
 		"declaration-block-no-duplicate-properties": true,
 		"shorthand-property-no-redundant-values": true,
-		"max-nesting-depth": 3,
+		"max-nesting-depth": 2,
 		"selector-max-id": 0,
 		"selector-max-type": 2,
 		"selector-max-combinators": 2,
@@ -140,6 +155,9 @@
 		"at-rule-no-vendor-prefix": true,
 		"keyframe-declaration-no-important": true,
 		"comment-no-empty": true,
-		"comment-word-disallowed-list": ["/^TODO:/i", "/^FIXME:/i"]
+		"comment-word-disallowed-list": ["/^TODO:/i", "/^FIXME:/i"],
+		"declaration-block-single-line-max-declarations": 1,
+		"font-size-no-duplicate": true,
+		"font-size-max-limit": "80ch"
 	}
 }

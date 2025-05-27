@@ -39,11 +39,40 @@
 </script>
 
 <style>
+
+
+	@container blog-page (width >= 48ch) {
+		.post {
+			margin-top: var(--space-16);
+			padding: var(--space-8);
+			max-width: min(60ch, 95cqi);
+		}
+
+		h1 {
+			font-size: var(--font-size-2xl);
+		}
+
+		.content {
+			font-size: var(--font-size-lg);
+		}
+	}
+
+	@container blog-page (width >= 80ch) {
+		.post {
+			max-width: min(70ch, 95cqi);
+			padding: var(--space-12);
+		}
+
+		h1 {
+			font-size: var(--font-size-3xl);
+		}
+	}
+
 	.blog {
-		width: 100%;
-		padding: var(--space-8) 0;
 		container-type: inline-size;
 		container-name: blog-page;
+		width: 100%;
+		padding: var(--space-8) 0;
 	}
 
 	.post {
@@ -80,11 +109,11 @@
 	}
 
 	.content {
+		width: 100%;
+		font-family: var(--font-sans);
 		font-size: var(--font-size-base);
 		line-height: var(--line-height-relaxed);
 		color: var(--text-color);
-		width: 100%;
-		font-family: var(--font-sans);
 	}
 
 	.content :global(p) {
@@ -93,19 +122,19 @@
 	}
 
 	.content :global(h2) {
+		margin: var(--space-12) 0 var(--space-6);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-xl);
-		margin: var(--space-12) 0 var(--space-6);
-		color: var(--text-color);
 		line-height: var(--line-height-tight);
+		color: var(--text-color);
 	}
 
 	.content :global(h3) {
+		margin: var(--space-8) 0 var(--space-4);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-lg);
-		margin: var(--space-8) 0 var(--space-4);
-		color: var(--text-color);
 		line-height: var(--line-height-tight);
+		color: var(--text-color);
 	}
 
 	.content :global(ul),
@@ -119,59 +148,59 @@
 	}
 
 	.content :global(a) {
-		color: var(--accent-color);
 		text-decoration: none;
-		border-bottom: 1px solid transparent;
+		color: var(--accent-color);
 		transition: all var(--transition-duration) var(--transition-timing);
+		border-bottom: 1px solid transparent;
 	}
 
 	.content :global(a:hover) {
 		color: var(--accent-color-hover);
-		border-bottom-color: currentColor;
+		border-bottom-color: currentcolor;
 	}
 
 	.content :global(code) {
-		font-family: var(--font-mono);
-		background: var(--bg-darker);
 		padding: var(--space-1) var(--space-2);
-		border-radius: var(--radius-sm);
+		font-family: var(--font-mono);
 		font-size: 0.9em;
 		color: var(--accent-color);
+		background: var(--bg-darker);
+		border-radius: var(--radius-sm);
 	}
 
 	.content :global(pre) {
-		background: var(--bg-darker);
-		padding: var(--space-6);
-		border-radius: var(--radius-lg);
-		overflow-x: auto;
-		margin: var(--space-8) 0;
-		border: var(--border-width) solid var(--border-color);
 		position: relative;
-		box-shadow: inset 0 0 0 1px rgba(var(--accent-color-rgb), 0.1);
+		margin: var(--space-8) 0;
+		padding: var(--space-6);
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-lg);
+		box-shadow: inset 0 0 0 1px rgb(var(--accent-color-rgb), 0.1);
+		overflow-x: auto;
 	}
 
 	.content :global(pre code) {
+		display: block;
 		padding: 0;
-		background: none;
-		color: var(--text-color);
+		font-family: var(--font-mono);
 		font-size: calc(var(--font-size-base) * 0.95);
 		line-height: 1.75;
-		font-family: var(--font-mono);
+		color: var(--text-color);
+		background: none;
 		tab-size: 2;
-		display: block;
 		letter-spacing: -0.025em;
 	}
 
 	.content :global(pre code.hljs) {
-		background: transparent;
 		padding: 0;
+		background: transparent;
 	}
 
 	/* Enhance syntax highlighting colors */
 	:global(.hljs-keyword),
 	:global(.hljs-built_in) {
-		color: var(--accent-color);
 		font-weight: 600;
+		color: var(--accent-color);
 	}
 
 	:global(.hljs-string) {
@@ -185,13 +214,13 @@
 	}
 
 	:global(.hljs-function) {
-		color: #61afef;
 		font-weight: 500;
+		color: #61afef;
 	}
 
 	:global(.hljs-class) {
-		color: #e5c07b;
 		font-weight: 600;
+		color: #e5c07b;
 	}
 
 	:global(.hljs-variable) {
@@ -199,18 +228,18 @@
 	}
 
 	:global(.hljs-operator) {
-		color: #56b6c2;
 		font-weight: 500;
+		color: #56b6c2;
 	}
 
 	.content :global(blockquote) {
-		border-left: 4px solid var(--accent-color);
 		margin: var(--space-6) 0;
 		padding: var(--space-6) var(--space-8);
+		color: var(--text-muted);
 		background: var(--bg-darker);
 		border-radius: var(--radius-sm);
+		border-left: 4px solid var(--accent-color);
 		font-style: italic;
-		color: var(--text-muted);
 	}
 
 	.content :global(blockquote p) {
@@ -218,36 +247,9 @@
 	}
 
 	.content :global(hr) {
+		margin: var(--space-8) 0;
 		border: none;
 		border-top: var(--border-width) solid var(--border-color);
-		margin: var(--space-8) 0;
-	}
-
-	@container blog-page (width >= 48ch) {
-		.post {
-			max-width: min(60ch, 95cqi);
-			padding: var(--space-8);
-			margin-top: var(--space-16);
-		}
-
-		h1 {
-			font-size: var(--font-size-2xl);
-		}
-
-		.content {
-			font-size: var(--font-size-lg);
-		}
-	}
-
-	@container blog-page (width >= 80ch) {
-		.post {
-			max-width: min(70ch, 95cqi);
-			padding: var(--space-12);
-		}
-
-		h1 {
-			font-size: var(--font-size-3xl);
-		}
 	}
 </style>
 

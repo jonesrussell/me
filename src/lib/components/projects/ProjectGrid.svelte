@@ -18,13 +18,13 @@
 		gap: var(--space-4);
 	}
 
-	@media (min-width: 50rem) {
+	@media (width >= 50rem) {
 		.project-grid {
 			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
 		}
 	}
 
-	@media (min-width: 80rem) {
+	@media (width >= 80rem) {
 		h2 {
 			margin: var(--space-12) 0 var(--space-6) 0;
 			font-size: var(--font-size-xl);

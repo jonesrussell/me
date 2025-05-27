@@ -71,8 +71,8 @@
 
 		.desktop-nav a:hover,
 		.desktop-nav a.active {
-			background: Canvas;
 			color: CanvasText;
+			background: Canvas;
 			border-color: Highlight;
 		}
 	}

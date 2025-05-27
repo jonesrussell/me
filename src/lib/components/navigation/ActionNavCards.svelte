@@ -20,9 +20,7 @@
 
 	.action-card {
 		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: var(--space-6);
+		width: 100%;
 		padding: var(--space-6);
 		text-align: center;
 		text-decoration: none;
@@ -31,7 +29,9 @@
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
 		transition: all var(--transition-duration) var(--transition-timing);
-		width: 100%;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-6);
 	}
 
 	.action-card:hover {
@@ -40,33 +40,33 @@
 	}
 
 	:global(.action-icon) {
-		font-size: var(--font-size-2xl);
 		display: block;
-		text-align: center;
+		font-size: var(--font-size-2xl);
 		line-height: 1;
+		text-align: center;
 	}
 
 	:global(.action-text) {
+		display: block;
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
-		display: block;
 		text-align: center;
 		max-width: 20ch;
 	}
 
-	@media (min-width: 30rem) {
+	@media (width >= 30rem) {
 		.action-nav-cards {
 			flex-direction: row !important;
 			justify-content: center;
 		}
 
 		.action-card {
+			padding: var(--space-4);
+			text-align: left;
 			flex: 1;
 			flex-direction: row !important;
 			justify-content: center;
-			text-align: left;
 			gap: var(--space-4);
-			padding: var(--space-4);
 		}
 
 		:global(.action-icon) {

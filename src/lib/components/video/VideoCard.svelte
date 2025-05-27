@@ -36,11 +36,11 @@
 	}
 
 	.video-container {
-		aspect-ratio: 16/9;
 		width: 100%;
-		border-radius: var(--radius-1);
-		overflow: hidden;
 		background: var(--color-surface-3);
+		border-radius: var(--radius-1);
+		aspect-ratio: 16/9;
+		overflow: hidden;
 	}
 
 	iframe {

@@ -34,26 +34,7 @@
 </script>
 
 <style>
-	.blog {
-		width: 100%;
-		padding: var(--space-16) 0;
-		container-type: inline-size;
-		container-name: blog-page;
-	}
 
-	.container {
-		width: 100%;
-		max-width: min(40ch, 95cqi);
-		margin: 0 auto;
-		padding: 0 var(--space-4);
-	}
-
-	.posts {
-		display: grid;
-		grid-template-columns: minmax(min(100%, 30ch), 1fr);
-		gap: var(--space-8);
-		width: 100%;
-	}
 
 	/* Tablet and up */
 	@media (width >= 48ch) {
@@ -77,20 +58,67 @@
 		}
 	}
 
-	.hero {
+	@media (width >= 640px) {
+		h1 {
+			font-size: var(--font-size-6xl);
+		}
+
+		.subtitle {
+			font-size: var(--font-size-2xl);
+		}
+	}
+
+	@media (width >= 1024px) {
+		h1 {
+			font-size: var(--font-size-7xl);
+		}
+
+		.subtitle {
+			font-size: var(--font-size-3xl);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.load-more-button {
+			transition: none;
+		}
+	}
+
+	.blog {
+		container-type: inline-size;
+		container-name: blog-page;
 		width: 100%;
-		min-height: 50vh;
+		padding: var(--space-16) 0;
+	}
+
+	.container {
+		width: 100%;
+		max-width: min(40ch, 95cqi);
+		margin: 0 auto;
+		padding: 0 var(--space-4);
+	}
+
+	.posts {
+		display: grid;
+		grid-template-columns: minmax(min(100%, 30ch), 1fr);
+		gap: var(--space-8);
+		width: 100%;
+	}
+
+	.hero {
 		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
+		position: relative;
+		width: 100%;
+		margin: calc(-1 * var(--space-24)) 0 0;
+		padding: var(--space-24) 0;
 		text-align: center;
 		background: linear-gradient(to bottom, var(--surface-color) 0%, var(--bg-color) 100%);
 		border-radius: var(--radius-lg);
-		position: relative;
+		min-height: 50vh;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 		overflow: hidden;
-		padding: var(--space-24) 0;
-		margin: calc(-1 * var(--space-24)) 0 0 0;
 	}
 
 	.hero::before {
@@ -102,49 +130,29 @@
 	}
 
 	h1 {
+		margin: 0 0 var(--space-6) 0;
 		font-family: var(--font-mono);
 		font-size: var(--font-size-5xl);
 		font-weight: var(--font-weight-bold);
 		line-height: var(--line-height-tight);
-		letter-spacing: var(--letter-spacing-tight);
 		color: var(--text-color);
-		margin: 0 0 var(--space-6) 0;
-		text-shadow: 0 2px 4px var(--color-mix-faint);
 		background: linear-gradient(to right, var(--text-color), var(--text-muted));
-		-webkit-background-clip: text;
+		letter-spacing: var(--letter-spacing-tight);
+		text-shadow: 0 2px 4px var(--color-mix-faint);
+		background-clip: text;
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}
 
 	.subtitle {
+		margin: 0;
 		font-family: var(--font-mono);
 		font-size: var(--font-size-xl);
 		font-weight: var(--font-weight-normal);
 		line-height: var(--line-height-base);
-		letter-spacing: var(--letter-spacing-base);
 		color: var(--text-muted);
-		margin: 0;
+		letter-spacing: var(--letter-spacing-base);
 		max-width: var(--measure);
-	}
-
-	@media (min-width: 640px) {
-		h1 {
-			font-size: var(--font-size-6xl);
-		}
-
-		.subtitle {
-			font-size: var(--font-size-2xl);
-		}
-	}
-
-	@media (min-width: 1024px) {
-		h1 {
-			font-size: var(--font-size-7xl);
-		}
-
-		.subtitle {
-			font-size: var(--font-size-3xl);
-		}
 	}
 
 	.load-more {
@@ -185,17 +193,11 @@
 		color: var(--text-muted);
 	}
 
-	@media (prefers-reduced-motion: reduce) {
-		.load-more-button {
-			transition: none;
-		}
-	}
-
 	.empty-state {
-		text-align: center;
 		padding: var(--space-8);
-		color: var(--text-muted);
 		font-family: var(--font-mono);
+		text-align: center;
+		color: var(--text-muted);
 	}
 
 	.empty-state p {
@@ -203,10 +205,10 @@
 	}
 
 	.error-state {
-		text-align: center;
 		padding: var(--space-8);
-		color: var(--text-error);
 		font-family: var(--font-mono);
+		text-align: center;
+		color: var(--text-error);
 	}
 
 	.error-state p {
@@ -214,6 +216,7 @@
 	}
 
 	.retry-button {
+		margin-top: var(--space-4);
 		padding: var(--space-4) var(--space-8);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
@@ -221,9 +224,8 @@
 		background: var(--bg-darker);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
-		cursor: pointer;
 		transition: all var(--transition-duration) var(--transition-timing);
-		margin-top: var(--space-4);
+		cursor: pointer;
 	}
 
 	.retry-button:hover {

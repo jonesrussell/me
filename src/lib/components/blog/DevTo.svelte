@@ -28,12 +28,12 @@
 	}
 
 	.dev-to-image {
-		overflow: hidden;
-		width: 100%;
-		max-width: 24ch;
-		border-radius: var(--radius-md);
-		aspect-ratio: 1;
 		container-type: inline-size;
+		width: 100%;
+		border-radius: var(--radius-md);
+		overflow: hidden;
+		max-width: 24ch;
+		aspect-ratio: 1;
 	}
 
 	.dev-to-image a {
