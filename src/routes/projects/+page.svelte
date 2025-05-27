@@ -3,6 +3,7 @@
 	import ProjectGrid from '$lib/components/projects/ProjectGrid.svelte';
 	import type { Video } from '$lib/types/video';
 	import type { Project } from '$lib/types/project';
+	import Hero from '$lib/components/ui/Hero.svelte';
 
 	const projects: Project[] = [
 		{
@@ -73,41 +74,6 @@
 		padding: var(--space-16) 0;
 	}
 
-	.hero {
-		display: flex;
-		position: relative;
-		width: 100%;
-		margin-bottom: var(--space-16);
-		padding: var(--space-24) 0;
-		text-align: center;
-		background: linear-gradient(to bottom, var(--bg-color), var(--bg-darker));
-		border-radius: var(--radius-lg);
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		min-height: 50vh;
-		overflow: hidden;
-	}
-
-	.hero::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: radial-gradient(circle at center, var(--color-mix-faint) 0%, transparent 70%);
-		pointer-events: none;
-	}
-
-	.subtitle {
-		margin: 0;
-		font-family: var(--font-mono);
-		font-size: var(--font-size-xl);
-		font-weight: var(--font-weight-normal);
-		line-height: var(--line-height-base);
-		color: var(--text-muted);
-		letter-spacing: var(--letter-spacing-base);
-		max-width: var(--measure);
-	}
-
 	.container {
 		display: flex;
 		width: 100%;
@@ -175,10 +141,7 @@
 	/>
 </svelte:head>
 
-<section class="hero">
-	<h1>Projects & Content</h1>
-	<p class="subtitle">Open Source & Educational Content</p>
-</section>
+<Hero title="Projects & Content" subtitle="Open Source & Educational Content" />
 
 <main class="projects">
 	<div class="container">

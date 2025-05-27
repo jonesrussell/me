@@ -55,7 +55,6 @@ alwaysApply: true
 For Svelte-specific patterns and best practices, refer to:
 - [Svelte 5 Standards](mdc:svelte5-standards.mdc) for runes and modern features
 - [Component Styling Standards](mdc:component-styling.mdc) for styling patterns
-- [Svelte Restrictions](mdc:svelte-restrictions.mdc) for prohibited patterns
 - [Testing Standards](mdc:testing-standards.mdc) for testing practices
 
 ## Svelte Patterns

@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { fetchFeed, blogStore } from '$lib/services/blog-service';
 	import { writable } from 'svelte/store';
+	import Hero from '$lib/components/ui/Hero.svelte';
 	import DevTo from '$lib/components/blog/DevTo.svelte';
 	import BlogPost from '$lib/components/blog/BlogPost.svelte';
 	import BlogError from '$lib/components/blog/BlogError.svelte';
@@ -43,20 +44,6 @@
 		.posts {
 			grid-template-columns: repeat(auto-fit, minmax(min(100%, 35ch), 1fr));
 		}
-
-		.hero {
-			margin: calc(-1 * var(--space-20)) 0 0;
-			padding: var(--space-20) 0;
-			min-height: 45vh;
-		}
-
-		h1 {
-			font-size: var(--font-size-5xl);
-		}
-
-		.subtitle {
-			font-size: var(--font-size-xl);
-		}
 	}
 
 	/* Small desktop and up */
@@ -68,20 +55,6 @@
 		.posts {
 			grid-template-columns: repeat(auto-fit, minmax(min(100%, 45ch), 1fr));
 		}
-
-		.hero {
-			margin: calc(-1 * var(--space-24)) 0 0;
-			padding: var(--space-24) 0;
-			min-height: 50vh;
-		}
-
-		h1 {
-			font-size: var(--font-size-6xl);
-		}
-
-		.subtitle {
-			font-size: var(--font-size-2xl);
-		}
 	}
 
 	/* Large desktop */
@@ -92,14 +65,6 @@
 
 		.posts {
 			grid-template-columns: repeat(auto-fit, minmax(min(100%, 50ch), 1fr));
-		}
-
-		h1 {
-			font-size: var(--font-size-7xl);
-		}
-
-		.subtitle {
-			font-size: var(--font-size-3xl);
 		}
 	}
 
@@ -129,47 +94,6 @@
 		grid-template-columns: 1fr;
 		gap: var(--space-8);
 		width: 100%;
-	}
-
-	.hero {
-		display: flex;
-		position: relative;
-		width: 100%;
-		margin: calc(-1 * var(--space-16)) 0 0;
-		padding: var(--space-16) 0;
-		text-align: center;
-		background: linear-gradient(to bottom, var(--surface-color) 0%, var(--bg-color) 100%);
-		border-radius: var(--radius-lg);
-		min-height: 40vh;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		overflow: hidden;
-	}
-
-	h1 {
-		margin: 0 0 var(--space-4) 0;
-		font-family: var(--font-mono);
-		font-size: var(--font-size-4xl);
-		font-weight: var(--font-weight-bold);
-		line-height: var(--line-height-tight);
-		color: var(--text-color);
-		background: linear-gradient(to right, var(--text-color), var(--text-muted));
-		letter-spacing: var(--letter-spacing-tight);
-		text-shadow: 0 0.125rem 0.25rem var(--color-mix-faint);
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-
-	.subtitle {
-		margin: 0;
-		font-family: var(--font-mono);
-		font-size: var(--font-size-lg);
-		font-weight: var(--font-weight-normal);
-		line-height: var(--line-height-base);
-		color: var(--text-muted);
-		letter-spacing: var(--letter-spacing-base);
-		max-width: var(--measure);
 	}
 
 	.load-more {
@@ -266,12 +190,9 @@
 	/>
 </svelte:head>
 
-<main class="blog">
-	<div class="hero">
-		<h1>Web Developer Blog</h1>
-		<p class="subtitle">Open Source Enthusiast</p>
-	</div>
+<Hero title="Web Developer Blog" subtitle="Open Source Enthusiast" />
 
+<main class="blog">
 	<BlogError />
 
 	<div class="container">

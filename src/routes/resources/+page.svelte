@@ -3,6 +3,7 @@
 	import FeaturedVideos from '$lib/components/video/FeaturedVideos.svelte';
 	import type { Resource } from '$lib/types';
 	import type { YouTubeChannel } from '$lib/types/video';
+	import Hero from '$lib/components/ui/Hero.svelte';
 
 	// YouTube channel info
 	const youtubeChannel: YouTubeChannel = {
@@ -248,14 +249,6 @@
 			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30ch), 1fr));
 			justify-content: start;
 		}
-
-		h1 {
-			font-size: var(--font-size-6xl);
-		}
-
-		.subtitle {
-			font-size: var(--font-size-2xl);
-		}
 	}
 
 	/* Desktop */
@@ -266,14 +259,6 @@
 
 		.sections {
 			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
-		}
-
-		h1 {
-			font-size: var(--font-size-7xl);
-		}
-
-		.subtitle {
-			font-size: var(--font-size-3xl);
 		}
 	}
 
@@ -289,55 +274,6 @@
 		container-name: resources-page;
 		width: 100%;
 		padding: var(--space-16) 0;
-	}
-
-	.hero {
-		display: flex;
-		position: relative;
-		width: 100%;
-		margin: calc(-1 * var(--space-24)) 0 0;
-		padding: var(--space-24) 0;
-		text-align: center;
-		background: linear-gradient(to bottom, var(--surface-color) 0%, var(--bg-color) 100%);
-		border-radius: var(--radius-lg);
-		min-height: 50vh;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		overflow: hidden;
-	}
-
-	.hero::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: radial-gradient(circle at center, var(--color-mix-faint) 0%, transparent 70%);
-		pointer-events: none;
-	}
-
-	h1 {
-		margin: 0 0 var(--space-6) 0;
-		font-family: var(--font-mono);
-		font-size: var(--font-size-5xl);
-		font-weight: var(--font-weight-bold);
-		line-height: var(--line-height-tight);
-		color: var(--text-color);
-		background: linear-gradient(to right, var(--text-color), var(--text-muted));
-		letter-spacing: var(--letter-spacing-tight);
-		text-shadow: 0 0.125rem 0.25rem var(--color-mix-faint);
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-
-	.subtitle {
-		margin: 0;
-		font-family: var(--font-mono);
-		font-size: var(--font-size-xl);
-		font-weight: var(--font-weight-normal);
-		line-height: var(--line-height-base);
-		color: var(--text-muted);
-		letter-spacing: var(--letter-spacing-base);
-		max-width: var(--measure);
 	}
 
 	.container {
@@ -368,10 +304,7 @@
 	/>
 </svelte:head>
 
-<section class="hero">
-	<h1>Developer Resources</h1>
-	<p class="subtitle">Essential Tools & Learning Materials</p>
-</section>
+<Hero title="Developer Resources" subtitle="Essential Tools & Learning Materials" />
 
 <main class="resources">
 	<div class="container">
