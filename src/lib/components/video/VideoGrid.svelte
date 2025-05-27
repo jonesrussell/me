@@ -7,29 +7,30 @@
 
 <style>
 	.video-grid {
-		container-type: inline-size;
-		container-name: video-grid;
 		display: grid;
+		width: 100%;
+		margin-right: auto;
+		margin-left: auto;
 		gap: var(--space-4);
 		grid-template-columns: 1fr;
-		width: 100%;
+		justify-items: center;
 	}
 
-	@container video-grid (width >= 30rem) {
+	@container featured-videos (width >= 30rem) {
 		.video-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
-	@container video-grid (width >= 50rem) {
+	@container featured-videos (width >= 50rem) {
 		.video-grid {
-			grid-template-columns: repeat(3, 1fr);
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
-	@container video-grid (width >= 75rem) {
+	@container featured-videos (width >= 75rem) {
 		.video-grid {
-			grid-template-columns: repeat(4, 1fr);
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 </style>
