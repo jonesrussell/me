@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { BlogPost } from '$lib/types/blog';
-	import { generateSlug } from '$lib/services/blog-service';
+	import { generateSlug, formatPostDate } from '$lib/services/blog-service';
 
 	const { post } = $props<{ post: BlogPost }>();
 	const slug = generateSlug(post.title);
@@ -9,19 +9,22 @@
 <style>
 	.blog-post {
 		display: flex;
-		flex-direction: column;
-		gap: var(--space-2);
+		position: relative;
 		padding: var(--space-4);
 		background: var(--bg-darker);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
 		transition: all var(--transition-duration) var(--transition-timing);
+		transform: translateY(0);
+		flex-direction: column;
+		gap: var(--space-2);
 	}
 
 	.blog-post:hover {
 		background: var(--color-mix-light);
+		box-shadow: var(--shadow-md);
+		transform: translateY(calc(var(--space-2) * -1));
 		border-color: var(--accent-color);
-		transform: translateY(-0.125rem);
 	}
 
 	.title {
@@ -86,7 +89,7 @@
 	<h3 class="title">{post.title}</h3>
 	<p class="description">{post.description}</p>
 	<div class="meta">
-		<span class="date">{post.published}</span>
+		<span class="date">{formatPostDate(post.published)}</span>
 		<div class="tags">
 			{#each post.categories as category, i (slug + '-' + category + '-' + i)}
 				<span>{category}</span>
