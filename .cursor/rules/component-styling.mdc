@@ -107,3 +107,22 @@ alwaysApply: false
 - Use `--radius-*` for border radius
 - Apply `--shadow-*` for elevation
 - Use `--measure` for max-width constraints
+
+## Custom Media Queries & PostCSS
+
+- **All responsive breakpoints must be defined in `src/styles/custom-media.css`** using the [CSS Custom Media Queries spec](mdc:https:/drafts.csswg.org/mediaqueries-5/#custom-mq).
+- **Example:**
+  ```css
+  @custom-media --container-sm (width >= 40rem);
+  @custom-media --container-md (width >= 48rem);
+  @custom-media --container-lg (width >= 64rem);
+  @custom-media --container-xl (width >= 80rem);
+  ```
+- **Usage in component CSS:**
+  ```css
+  @media (--container-lg) { /* ... */ }
+  ```
+- **Do not** use hardcoded `min-width`/`max-width` in media queries. Always use the custom media variables.
+- The build system uses `postcss-custom-media` and `@csstools/postcss-global-data` (see `vite.config.ts`) to make these available everywhere.
+- **Stylelint** enforces this via the `media-feature-name-disallowed-list` rule in `.stylelintrc.json`.
+- To add or update breakpoints, edit only `src/styles/custom-media.css` and reference the new variable in your CSS.
