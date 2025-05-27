@@ -3,6 +3,7 @@
 	import YouTubeSection from '$lib/components/video/YouTubeSection.svelte';
 	import ActionNavCards from '$lib/components/navigation/ActionNavCards.svelte';
 	import SpecialtyGrid from '$lib/components/content/SpecialtyGrid.svelte';
+	import Hero from '$lib/components/ui/Hero.svelte';
 
 	const YOUTUBE_CHANNEL = 'https://youtube.com/@fullstackdev42';
 	const YOUTUBE_VIDEO_ID = 'B4v7ZDLxiS4';
@@ -42,24 +43,6 @@
 </script>
 
 <style>
-	.hero {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		min-height: 50vh;
-		padding: var(--space-12) var(--space-4);
-		background: linear-gradient(to bottom, var(--bg-color), var(--bg-darker));
-	}
-
-	@media (width >= 48ch) {
-		.hero {
-			min-height: 60vh;
-			padding: var(--space-20) var(--space-8);
-		}
-	}
-
 	.home {
 		width: 100%;
 		padding: var(--space-4) 0;
@@ -95,9 +78,9 @@
 	/>
 </svelte:head>
 
-<section class="hero">
+<Hero>
 	<Terminal command={TERMINAL_COMMAND} />
-</section>
+</Hero>
 
 <main class="home">
 	<div class="container">
