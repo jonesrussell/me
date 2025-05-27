@@ -72,7 +72,7 @@
 	}
 </style>
 
-<Box width={40}>
+<Box>
 	<article class="video-card">
 		<div class="video-container">
 			<iframe

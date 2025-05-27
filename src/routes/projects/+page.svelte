@@ -59,41 +59,6 @@
 </script>
 
 <style>
-	@media (width >= 48ch) {
-		.hero {
-			min-height: 60vh;
-			padding: var(--space-20) var(--space-8);
-		}
-	}
-
-	@container projects-page (width >= 48ch) {
-		.container {
-			max-width: min(var(--measure), 95%);
-		}
-
-		.section-title {
-			font-size: var(--font-size-3xl);
-		}
-	}
-
-	@container projects-page (width >= 80ch) {
-		.container {
-			max-width: min(var(--measure), 90%);
-		}
-
-		.section-title {
-			font-size: var(--font-size-4xl);
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		* {
-			transition: none;
-			animation: none;
-		}
-	}
-
-	/* Consistent container and hero styles */
 	.projects {
 		container-type: inline-size;
 		container-name: projects-page;
@@ -105,7 +70,7 @@
 		display: flex;
 		position: relative;
 		width: 100%;
-		padding: var(--space-12) var(--space-4);
+		padding: var(--space-24) 0;
 		text-align: center;
 		background: linear-gradient(to bottom, var(--bg-color), var(--bg-darker));
 		border-radius: var(--radius-lg);
@@ -124,12 +89,23 @@
 		pointer-events: none;
 	}
 
+	.subtitle {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: var(--font-size-xl);
+		font-weight: var(--font-weight-normal);
+		line-height: var(--line-height-base);
+		color: var(--text-muted);
+		letter-spacing: var(--letter-spacing-base);
+		max-width: var(--measure);
+	}
+
 	.container {
 		display: flex;
 		width: 100%;
 		margin: 0 auto;
 		padding: 0 var(--space-4);
-		max-width: min(var(--measure), 95%);
+		max-width: min(160ch, 95cqi);
 		flex-direction: column;
 		gap: var(--space-16);
 	}
@@ -137,6 +113,7 @@
 	.section {
 		display: flex;
 		width: 100%;
+		max-width: 100%;
 		flex-direction: column;
 		align-items: center;
 		margin-top: 0;
@@ -145,11 +122,28 @@
 	.section-title {
 		margin: 0 0 var(--space-8) 0;
 		font-family: var(--font-mono);
-		font-size: var(--font-size-2xl);
+		font-size: var(--font-size-3xl);
 		font-weight: var(--font-weight-bold);
 		line-height: var(--line-height-tight);
 		text-align: center;
 		color: var(--text-color);
+	}
+
+	@container projects-page (width >= 80ch) {
+		.container {
+			max-width: min(160ch, 90%);
+		}
+
+		.section-title {
+			font-size: var(--font-size-4xl);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			transition: none;
+			animation: none;
+		}
 	}
 </style>
 
@@ -169,7 +163,7 @@
 
 	<div class="container">
 		<section class="section" aria-label="Featured Videos">
-			<h2 class="section-title">Featured Videos</h2>
+			<h2 id="video-grid-title" class="section-title">Featured Videos</h2>
 			<VideoGrid {videos} />
 		</section>
 

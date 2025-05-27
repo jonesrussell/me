@@ -71,7 +71,7 @@
 	}
 </style>
 
-<Box width={40}>
+<Box>
 	<div class="project-card">
 		<div class="content">
 			<h3>

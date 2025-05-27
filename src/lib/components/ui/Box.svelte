@@ -25,12 +25,6 @@
 		overflow-wrap: break-word;
 	}
 
-	@media (width >= 50rem) {
-		.box {
-			max-width: 40ch;
-		}
-	}
-
 	.box:hover {
 		box-shadow: var(--shadow-md);
 		transform: translateY(-0.125rem);
