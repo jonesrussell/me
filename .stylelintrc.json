@@ -1,6 +1,11 @@
 {
-	"extends": ["stylelint-config-standard", "stylelint-config-clean-order"],
+	"extends": [
+		"stylelint-config-standard",
+		"stylelint-config-clean-order",
+		"stylelint-config-recommended"
+	],
 	"plugins": ["stylelint-order"],
+	"customSyntax": "postcss-html",
 	"ignoreFiles": [
 		"**/coverage/**",
 		"build/**",
@@ -18,13 +23,13 @@
 				"ignorePseudoClasses": ["global", "where"]
 			}
 		],
-		"custom-property-pattern": "^--[a-z0-9_-]+$",
+		"custom-property-pattern": "^[a-z0-9_-]+(?:-[0-9]+)?(?:-(xs|sm|md|lg|xl|xxl|xxxl))?$",
 		"selector-class-pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
 		"keyframes-name-pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
-		"media-query-no-invalid": null,
+		"media-query-no-invalid": true,
 		"no-descending-specificity": null,
 		"declaration-block-no-redundant-longhand-properties": null,
-		"font-family-no-missing-generic-family-keyword": null,
+		"font-family-no-missing-generic-family-keyword": true,
 		"value-keyword-case": ["lower", { "ignoreProperties": ["font-family"] }],
 		"order/order": ["custom-properties", "dollar-variables", "at-rules", "declarations", "rules"],
 		"order/properties-order": [
@@ -136,11 +141,5 @@
 		"keyframe-declaration-no-important": true,
 		"comment-no-empty": true,
 		"comment-word-disallowed-list": ["/^TODO:/i", "/^FIXME:/i"]
-	},
-	"overrides": [
-		{
-			"files": ["**/*.svelte"],
-			"customSyntax": "postcss-html"
-		}
-	]
+	}
 }
