@@ -15,9 +15,9 @@
 		},
 		{
 			title: 'Goforms',
-			description: 'Modern form management system with MariaDB backend.',
+			description: 'Quickly add forms to your web projects.',
 			tags: ['Go', 'Echo', 'MariaDB', 'REST API', 'Docker'],
-			url: 'https://github.com/jonesrussell/goforms',
+			url: 'https://goformx.com/',
 			status: 'active'
 		},
 		{
@@ -28,20 +28,27 @@
 			status: 'experimental'
 		},
 		{
-			title: 'Goprowl',
-			description: 'Go-based system monitoring and alerting tool.',
-			tags: ['Go', 'Metrics', 'Monitoring', 'CLI'],
-			url: 'https://github.com/jonesrussell/goprowl',
+			title: 'GoCrawl',
+			description:
+				'A simple web crawler built in Go that fetches and processes web pages, storing results in Elasticsearch. Demonstrates the use of Cobra for CLI, Colly for web scraping, Elasticsearch for storage, and Zap for logging.',
+			tags: ['Go', 'Web Crawler', 'Elasticsearch', 'CLI', 'Experimental'],
+			url: 'https://github.com/jonesrussell/gocrawl',
 			status: 'experimental'
 		}
 	];
 
 	const videos: Video[] = [
 		{
-			title: 'The Legend Reborn - AI Generated Trailer',
+			title: 'The Legend Reborn – Animated Trailer (Scripted, Voiced & AI-Enhanced)',
 			description:
-				'Journey with Nanabush and witness the story of the Anishinaabe in this AI-generated trailer celebrating Indigenous storytelling.',
-			tags: ['Generative AI', 'Indigenous', 'Anishinaabe'],
+				'Experience a trailer brought to life through original scriptwriting, voice acting, and creative direction. Each scene began as an image I generated with AI, then was animated using advanced tools. I edited and produced the entire trailer, blending technology and storytelling over several months.',
+			tags: [
+				'AI-Assisted Animation',
+				'Original Script',
+				'Voice Acting',
+				'Creative Direction',
+				'Anishinaabe'
+			],
 			url: 'https://www.youtube.com/watch?v=7Pvq7hQ3l84',
 			embedId: '7Pvq7hQ3l84',
 			date: 'Feb 2024'
@@ -49,8 +56,8 @@
 		{
 			title: 'Red Helmet - Stop Motion Trailer',
 			description:
-				'A wanderer comes across a red helmet, origin unknown. Little does he know, the helmet is imbued with a powerful entity that embarks on a journey of its own.',
-			tags: ['Stop Motion', 'Short Film', 'Indie Film', 'Original Story'],
+				'A wanderer comes across a red helmet, origin unknown. Little does he know, the helmet is imbued with a powerful entity that embarks on a journey of its own.\nThis project took days of work and taught me valuable lessons in stop motion production. Ultimately, I decided to halt production and film a quick exit, capturing the spirit of experimentation and learning.',
+			tags: ['Stop Motion', 'Short Film', 'Indie Film', 'Original Story', 'Experimental'],
 			url: 'https://www.youtube.com/watch?v=Bky1A8vNUjU',
 			embedId: 'Bky1A8vNUjU',
 			date: 'Dec 2023'
