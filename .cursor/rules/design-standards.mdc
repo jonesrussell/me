@@ -11,13 +11,10 @@ alwaysApply: true
 
 ## Core Principles
 - Follow accessibility standards (WCAG)
-- Implement progressive enhancement
 - Monitor performance metrics
 - Use semantic HTML elements
 - Validate user input
 - Handle errors gracefully
-- Keep dependencies updated
-- Follow semantic versioning
 
 ## Implementation
 For specific implementation details, refer to:
