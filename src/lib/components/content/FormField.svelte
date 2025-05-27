@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Input from './Input.svelte';
+	import Input from '../ui/Input.svelte';
 
 	const props = $props<{
 		label?: string;
