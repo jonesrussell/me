@@ -67,6 +67,7 @@
 		container-type: inline-size;
 		container-name: specialty;
 		display: flex;
+		height: 100%;
 		padding: var(--space-6);
 		background: var(--bg-darker);
 		border-radius: var(--radius-lg);
@@ -77,6 +78,7 @@
 		transform: translateY(var(--space-4));
 		flex-direction: column;
 		gap: var(--space-4);
+		min-height: var(--space-32);
 	}
 
 	.specialty.visible {
@@ -85,7 +87,7 @@
 	}
 
 	.specialty.intersecting {
-		background: var(--bg-lighter);
+		background: var(--bg-color);
 	}
 
 	.specialty:hover {
@@ -96,6 +98,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-4);
+		height: 100%;
 	}
 
 	.specialty-header {
@@ -112,6 +115,7 @@
 		height: var(--space-8);
 		font-size: var(--font-size-2xl);
 		color: var(--accent-color);
+		flex-shrink: 0;
 	}
 
 	.specialty-title {
@@ -124,6 +128,7 @@
 		font-size: var(--font-size-base);
 		line-height: var(--line-height-relaxed);
 		color: var(--text-muted);
+		flex: 1;
 	}
 
 	@container specialty-grid (width >= 30rem) {
