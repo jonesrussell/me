@@ -9,8 +9,7 @@ export default defineConfig({
 			define: {
 				global: 'globalThis'
 			}
-		},
-		include: ['sanitize-html']
+		}
 	},
 	build: {
 		commonjsOptions: {

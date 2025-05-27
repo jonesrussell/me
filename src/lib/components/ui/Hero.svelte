@@ -2,7 +2,7 @@
 	const { title, subtitle, children } = $props<{
 		title?: string;
 		subtitle?: string;
-		children?: () => any;
+		children?: () => unknown;
 	}>();
 </script>
 
