@@ -187,6 +187,13 @@
 		"keyframe-declaration-no-important": true,
 		"comment-no-empty": true,
 		"comment-word-disallowed-list": ["/^TODO:/i", "/^FIXME:/i"],
-		"declaration-block-single-line-max-declarations": 1
+		"declaration-block-single-line-max-declarations": 1,
+		"media-feature-name-disallowed-list": [
+			["min-width", "max-width"],
+			{
+				"severity": "error",
+				"message": "Use @custom-media queries (e.g. --container-sm) instead of hardcoded min-width/max-width."
+			}
+		]
 	}
 }

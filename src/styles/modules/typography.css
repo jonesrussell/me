@@ -222,7 +222,7 @@
 }
 
 /* Responsive typography */
-@media (width >= 48ch) {
+@media (--container-md) {
 	:global(h1) {
 		font-size: var(--font-size-5xl);
 	}

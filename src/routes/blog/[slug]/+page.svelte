@@ -45,7 +45,7 @@
 </script>
 
 <style>
-	@media (width >= 40rem) {
+	@media (--container-sm) {
 		.post {
 			margin-top: var(--space-16);
 			padding: var(--space-8);
@@ -61,7 +61,7 @@
 		}
 	}
 
-	@media (width >= 48rem) {
+	@media (--container-md) {
 		.post {
 			max-width: 48rem;
 			padding: var(--space-12);
@@ -72,7 +72,7 @@
 		}
 	}
 
-	@media (width >= 64rem) {
+	@media (--container-lg) {
 		.post {
 			max-width: 50rem;
 		}

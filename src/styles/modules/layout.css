@@ -135,25 +135,25 @@
 		padding-inline: var(--space-4);
 	}
 
-	@media (min-width: 640px) {
+	@media (--container-sm) {
 		.container {
 			max-width: var(--container-sm);
 		}
 	}
 
-	@media (min-width: 768px) {
+	@media (--container-md) {
 		.container {
 			max-width: var(--container-md);
 		}
 	}
 
-	@media (min-width: 1024px) {
+	@media (--container-lg) {
 		.container {
 			max-width: var(--container-lg);
 		}
 	}
 
-	@media (min-width: 1280px) {
+	@media (--container-xl) {
 		.container {
 			max-width: var(--container-xl);
 		}
