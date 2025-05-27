@@ -11,28 +11,32 @@
 				'A web app that helps constituents easily contact their MPs through email campaigns on important issues.',
 			tech: ['Go', 'Echo', 'MariaDB', 'Tailwind CSS', 'JWT'],
 			url: 'https://github.com/jonesrussell/mp-emailer',
-			status: 'active'
+			status: 'active',
+			image: '/images/projects/mp-emailer.png'
 		},
 		{
 			title: 'Goforms',
 			description: 'Modern form management system with MariaDB backend.',
 			tech: ['Go', 'Echo', 'MariaDB', 'REST API', 'Docker'],
 			url: 'https://github.com/jonesrussell/goforms',
-			status: 'active'
+			status: 'active',
+			image: '/images/projects/goforms.png'
 		},
 		{
 			title: 'Gimbal',
 			description: 'A Gyruss-inspired game built with Ebitengine.',
 			tech: ['Go', 'Ebitengine', 'Game Dev', 'WASM'],
 			url: 'https://github.com/jonesrussell/gimbal',
-			status: 'experimental'
+			status: 'experimental',
+			image: '/images/projects/gimbal.png'
 		},
 		{
 			title: 'Goprowl',
 			description: 'Go-based system monitoring and alerting tool.',
 			tech: ['Go', 'Metrics', 'Monitoring', 'CLI'],
 			url: 'https://github.com/jonesrussell/goprowl',
-			status: 'experimental'
+			status: 'experimental',
+			image: '/images/projects/goprowl.png'
 		}
 	];
 
