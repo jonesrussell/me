@@ -52,20 +52,20 @@
 		width: 100%;
 		margin: 0;
 		padding: var(--space-4);
-		font-size: var(--font-size-base);
+		font-size: var(--font-size-lg);
 		line-height: 1.5;
 		text-align: left;
 		color: var(--text);
-		background: var(--bg-darker);
+		background: color-mix(in srgb, var(--bg-darker) 85%, transparent);
 		box-shadow: var(--shadow-md);
-		backdrop-filter: blur(0.5rem);
+		backdrop-filter: blur(0.75rem);
 		box-sizing: border-box;
 	}
 
 	.heading {
 		margin-bottom: var(--space-4);
 		padding: var(--space-4);
-		font-size: var(--font-size-2xl);
+		font-size: var(--font-size-xl);
 		font-weight: 700;
 		text-align: center;
 		color: var(--text);
@@ -76,7 +76,7 @@
 	.source-note .second-line {
 		display: block;
 		margin-top: 0.5rem;
-		font-size: var(--font-size-xl);
+		font-size: var(--font-size-2xl);
 	}
 
 	.source-note a {
@@ -113,12 +113,12 @@
 
 		.source-note {
 			padding: var(--space-12);
-			font-size: var(--font-size-3xl);
+			font-size: var(--font-size-2xl);
 		}
 
 		.source-note .second-line {
 			margin-top: 1.5rem;
-			font-size: var(--font-size-5xl);
+			font-size: var(--font-size-4xl);
 		}
 	}
 
@@ -129,12 +129,12 @@
 
 		.source-note {
 			padding: var(--space-16);
-			font-size: var(--font-size-4xl);
+			font-size: var(--font-size-3xl);
 		}
 
 		.source-note .second-line {
 			margin-top: 2rem;
-			font-size: var(--font-size-6xl);
+			font-size: var(--font-size-5xl);
 		}
 	}
 </style>
@@ -144,7 +144,9 @@
 	<section>
 		<div class="dev-to-section">
 			<p class="source-note">
-				This page and <a href={devToUrl} target="_blank" rel="noopener noreferrer">DEV.to</a>
+				This page and <a href={devToUrl} target="_blank" rel="noopener noreferrer"
+					>DEV.to/jonesrussell</a
+				>
 				are syndicated
 				<span class="second-line">
 					from my
