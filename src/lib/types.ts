@@ -16,22 +16,6 @@ export interface Resource {
 	stars?: number;
 }
 
-export interface Video {
-	title: string;
-	url: string;
-	embedId: string;
-	description: string;
-	topics: string[];
-	date: string;
-}
-
-export interface YouTubeChannel {
-	name: string;
-	url: string;
-	description: string;
-	featuredVideos: Video[];
-}
-
 export interface Project {
 	title: string;
 	description: string;

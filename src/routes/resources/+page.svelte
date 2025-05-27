@@ -1,7 +1,8 @@
 <script lang="ts">
 	import ResourceSection from '$lib/components/resources/ResourceSection.svelte';
 	import FeaturedVideos from '$lib/components/video/FeaturedVideos.svelte';
-	import type { Resource, YouTubeChannel } from '$lib/types';
+	import type { Resource } from '$lib/types';
+	import type { YouTubeChannel } from '$lib/types/video';
 
 	// YouTube channel info
 	const youtubeChannel: YouTubeChannel = {
@@ -14,7 +15,7 @@
 				url: 'https://youtu.be/B4v7ZDLxiS4',
 				embedId: 'B4v7ZDLxiS4',
 				description: 'Learn how to integrate custom Google Fonts with Tailwind CSS',
-				topics: ['Tailwind CSS', 'Web Development', 'CSS', 'Frontend'],
+				tags: ['Tailwind CSS', 'Web Development', 'CSS', 'Frontend'],
 				date: 'Dec 2023'
 			}
 		]

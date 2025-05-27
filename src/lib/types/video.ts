@@ -1,7 +1,7 @@
 export interface Video {
 	title: string;
 	description: string;
-	topics: string[];
+	tags: string[];
 	url: string;
 	embedId: string;
 	date: string;

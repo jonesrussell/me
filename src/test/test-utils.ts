@@ -11,7 +11,7 @@
  */
 
 import { fireEvent } from '@testing-library/dom';
-import type { Video } from '$lib/types';
+import type { Video } from '$lib/types/video';
 
 /**
  * Creates a function that returns static content
@@ -99,7 +99,7 @@ export const mockVideos: Video[] = [
 		title: 'First Test Video',
 		description: 'Description for first video',
 		date: '2024-04-16',
-		topics: ['testing', 'svelte'],
+		tags: ['testing', 'svelte'],
 		url: 'https://youtube.com/watch?v=video1'
 	},
 	{
@@ -107,7 +107,7 @@ export const mockVideos: Video[] = [
 		title: 'Second Test Video',
 		description: 'Description for second video',
 		date: '2024-04-15',
-		topics: ['vitest', 'typescript'],
+		tags: ['vitest', 'typescript'],
 		url: 'https://youtube.com/watch?v=video2'
 	}
 ];

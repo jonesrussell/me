@@ -23,4 +23,8 @@
 	--color-success: rgb(34 197 94);
 	--color-warning: rgb(234 179 8);
 	--color-error: rgb(239 68 68);
+
+	/* Tag Colors */
+	--tag-bg: var(--color-green-100);
+	--tag-color: var(--color-green-900);
 }

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import VideoGrid from '$lib/components/video/VideoGrid.svelte';
 	import ProjectGrid from '$lib/components/projects/ProjectGrid.svelte';
-	import type { Video } from '$lib/types';
+	import type { Video } from '$lib/types/video';
 	import type { Project } from '$lib/types/project';
 
 	const projects: Project[] = [
@@ -41,7 +41,7 @@
 			title: 'The Legend Reborn - AI Generated Trailer',
 			description:
 				'Journey with Nanabush and witness the story of the Anishinaabe in this AI-generated trailer celebrating Indigenous storytelling.',
-			topics: ['AI Generated', 'Indigenous', 'Anishinaabe', 'Native American'],
+			tags: ['Generative AI', 'Indigenous', 'Anishinaabe'],
 			url: 'https://www.youtube.com/watch?v=7Pvq7hQ3l84',
 			embedId: '7Pvq7hQ3l84',
 			date: 'Feb 2024'
@@ -50,7 +50,7 @@
 			title: 'Red Helmet - Stop Motion Trailer',
 			description:
 				'A wanderer comes across a red helmet, origin unknown. Little does he know, the helmet is imbued with a powerful entity that embarks on a journey of its own.',
-			topics: ['Stop Motion', 'Short Film', 'Indie Film', 'Original Story'],
+			tags: ['Stop Motion', 'Short Film', 'Indie Film', 'Original Story'],
 			url: 'https://www.youtube.com/watch?v=Bky1A8vNUjU',
 			embedId: 'Bky1A8vNUjU',
 			date: 'Dec 2023'
@@ -70,6 +70,7 @@
 		display: flex;
 		position: relative;
 		width: 100%;
+		margin-bottom: var(--space-16);
 		padding: var(--space-24) 0;
 		text-align: center;
 		background: linear-gradient(to bottom, var(--bg-color), var(--bg-darker));

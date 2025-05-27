@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Box from '$lib/components/ui/Box.svelte';
+	import Tag from '$lib/components/ui/Tag.svelte';
 	import type { Video } from '$lib/types/video';
 
 	const { video } = $props<{ video: Video }>();
@@ -33,6 +34,13 @@
 		font-size: var(--font-size-2);
 		color: var(--color-text-2);
 		max-width: var(--measure);
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+		margin-top: var(--space-2);
 	}
 
 	.video-container {
@@ -90,9 +98,9 @@
 				<time class="video-date">{video.date}</time>
 			{/if}
 			<p class="description">{video.description}</p>
-			<div class="topics">
-				{#each video.topics as topic (topic)}
-					<span class="topic">{topic}</span>
+			<div class="tags">
+				{#each video.tags as tag (tag)}
+					<Tag>{tag}</Tag>
 				{/each}
 			</div>
 		</div>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import VideoCard from './VideoCard.svelte';
-	import type { Video } from '$lib/types';
+	import type { Video } from '$lib/types/video';
 
 	const { videos } = $props<{ videos: Video[] }>();
 </script>
