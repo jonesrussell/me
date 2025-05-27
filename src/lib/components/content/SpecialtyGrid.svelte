@@ -14,12 +14,15 @@
 	let elements = $state<HTMLElement[]>([]);
 	let activeIntersection = $state<number | null>(null);
 	let revealedStates = $derived(props.specialties.map(() => false));
+	let allRevealed = $derived(revealedStates.every((state: boolean) => state));
 
 	function handleIntersect(event: CustomEvent<IntersectionObserverEntry>, index: number) {
 		const entry = event.detail;
-		if (entry.isIntersecting) {
+		if (entry.isIntersecting && !revealedStates[index]) {
 			revealedStates[index] = true;
-			activeIntersection = index;
+			if (!allRevealed) {
+				activeIntersection = index;
+			}
 		}
 	}
 </script>
@@ -119,6 +122,7 @@
 	}
 
 	.specialty-title {
+		margin: 0;
 		font-size: var(--font-size-lg);
 		font-weight: var(--font-weight-bold);
 		color: var(--text-color);
@@ -151,7 +155,7 @@
 		}
 
 		.grid {
-			grid-template-columns: repeat(3, 1fr);
+			grid-template-columns: repeat(2, 1fr);
 			gap: var(--space-6);
 		}
 
@@ -162,7 +166,7 @@
 
 	@container specialty-grid (width >= 75rem) {
 		.grid {
-			grid-template-columns: repeat(4, 1fr);
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
@@ -212,7 +216,7 @@
 					<div
 						class="specialty"
 						class:visible={revealedStates[i]}
-						class:intersecting={activeIntersection === i}
+						class:intersecting={!revealedStates[i] && activeIntersection === i}
 					>
 						<div class="specialty-content">
 							<div class="specialty-header">
