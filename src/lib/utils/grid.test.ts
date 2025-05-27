@@ -1,15 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { alignToGrid, calculateWidth, getResponsiveValue } from './grid';
+import { calculateWidth, getResponsiveValue } from './grid';
 
 describe('grid utilities', () => {
-	describe('alignToGrid', () => {
-		it('aligns values to the nearest character unit', () => {
-			expect(alignToGrid(10)).toBe(10);
-			expect(alignToGrid(10.4)).toBe(10);
-			expect(alignToGrid(10.6)).toBe(11);
-		});
-	});
-
 	describe('calculateWidth', () => {
 		it('calculates the width of content in character units', () => {
 			expect(calculateWidth('test')).toBe(4);

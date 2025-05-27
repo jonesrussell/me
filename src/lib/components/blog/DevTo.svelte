@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { base } from '$app/paths';
-	import devToImage from '$lib/images/dev.to.jpeg';
 	export const devToUrl = 'https://dev.to/jonesrussell' as const;
 </script>
 
