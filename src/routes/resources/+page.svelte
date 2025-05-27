@@ -242,20 +242,26 @@
 	.resources {
 		container-type: inline-size;
 		container-name: resources-page;
+		display: grid;
 		width: 100%;
 		padding: var(--space-16) 0;
+		grid-template-rows: auto 1fr;
+		gap: var(--space-16);
 	}
 
 	.container {
+		display: grid;
 		width: 100%;
+		margin-inline: auto;
+		padding-inline: var(--space-4);
 		max-width: min(var(--measure), 95cqi);
-		margin: 0 auto;
-		padding: 0 var(--space-4);
+		gap: var(--space-16);
+		grid-template-columns: minmax(0, 1fr);
 	}
 
 	.sections {
 		display: grid;
-		grid-template-columns: minmax(min(100%, 30ch), 1fr);
+		grid-template-columns: minmax(min(100%, 30rem), 1fr);
 		gap: var(--space-8);
 		width: 100%;
 		justify-content: center;
@@ -265,30 +271,40 @@
 		grid-column: 1 / -1;
 	}
 
-	@container resources-page (width >= 30rem) {
+	@container resources-page (min-width: 640px) {
 		.container {
 			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-8);
 		}
 
 		.sections {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30ch), 1fr));
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
 			justify-content: start;
 		}
 	}
 
-	@container resources-page (width >= 50rem) {
+	@container resources-page (min-width: 768px) {
 		.container {
 			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-12);
 		}
 
 		.sections {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40rem), 1fr));
 		}
 	}
 
-	@container resources-page (width >= 75rem) {
+	@container resources-page (min-width: 1024px) {
 		.container {
 			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-16);
+		}
+	}
+
+	@container resources-page (min-width: 1280px) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-20);
 		}
 	}
 

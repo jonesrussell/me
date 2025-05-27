@@ -52,10 +52,10 @@
 
 	/* Inline code */
 	.code-inline {
-		padding: 0.2ch 0.4ch;
+		padding: 0.2rem 0.4rem;
 
 		font-family: var(--font-mono);
-		font-size: 0.9ch;
+		font-size: 0.9rem;
 		color: var(--text-color);
 
 		background: var(--bg-darker);
@@ -89,9 +89,9 @@
 	.code-block[data-line-numbers] .code-line::before {
 		display: inline-block;
 
-		width: 2ch;
-		margin-right: 1ch;
-		padding-right: 1ch;
+		width: 2rem;
+		margin-right: 1rem;
+		padding-right: 1rem;
 		text-align: right;
 
 		color: var(--text-muted);

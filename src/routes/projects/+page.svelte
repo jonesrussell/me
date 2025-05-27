@@ -70,18 +70,21 @@
 	.projects {
 		container-type: inline-size;
 		container-name: projects-page;
+		display: grid;
 		width: 100%;
 		padding: var(--space-16) 0;
+		grid-template-rows: auto 1fr;
+		gap: var(--space-16);
 	}
 
 	.container {
-		display: flex;
+		display: grid;
 		width: 100%;
-		margin: 0 auto;
-		padding: 0 var(--space-4);
+		margin-inline: auto;
+		padding-inline: var(--space-4);
 		max-width: min(var(--measure), 95cqi);
-		flex-direction: column;
 		gap: var(--space-16);
+		grid-template-columns: minmax(0, 1fr);
 	}
 
 	.section {
@@ -103,15 +106,17 @@
 		color: var(--text-color);
 	}
 
-	@container projects-page (width >= 30rem) {
+	@container projects-page (min-width: 640px) {
 		.container {
 			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-8);
 		}
 	}
 
-	@container projects-page (width >= 50rem) {
+	@container projects-page (min-width: 768px) {
 		.container {
 			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-12);
 		}
 
 		.section-title {
@@ -119,16 +124,17 @@
 		}
 	}
 
-	@container projects-page (width >= 75rem) {
+	@container projects-page (min-width: 1024px) {
 		.container {
 			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-16);
 		}
 	}
 
-	@media (prefers-reduced-motion: reduce) {
-		* {
-			transition: none;
-			animation: none;
+	@container projects-page (min-width: 1280px) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-20);
 		}
 	}
 
@@ -142,6 +148,13 @@
 		container-type: inline-size;
 		container-name: featured-videos;
 		width: 100%;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			transition: none;
+			animation: none;
+		}
 	}
 </style>
 
