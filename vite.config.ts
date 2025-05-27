@@ -1,9 +1,23 @@
 import { svelteTesting } from '@testing-library/svelte/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
+import postcssCustomMedia from 'postcss-custom-media';
+import postcssGlobalData from '@csstools/postcss-global-data';
 
 export default defineConfig({
 	plugins: [sveltekit()],
+	css: {
+		postcss: {
+			plugins: [
+				postcssGlobalData({
+					files: [
+						'./src/styles/custom-media.css'
+					]
+				}),
+				postcssCustomMedia()
+			]
+		}
+	},
 	optimizeDeps: {
 		esbuildOptions: {
 			define: {
