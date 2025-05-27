@@ -7,14 +7,7 @@ export interface BlogPost {
 	content?: string;
 }
 
-export interface Resource {
-	title: string;
-	url: string;
-	description: string;
-	category: string;
-	featured?: boolean;
-	stars?: number;
-}
+export type { Resource } from './types/resource';
 
 export interface Project {
 	title: string;
@@ -24,5 +17,3 @@ export interface Project {
 	topics: string[];
 	featured?: boolean;
 }
-
-// ... rest of the types ...
