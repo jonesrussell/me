@@ -63,19 +63,11 @@
 			align-items: center;
 			gap: var(--space-4);
 		}
-
-		.video-container {
-			width: 40%;
-		}
 	}
 
 	@container video-card (width >= 50rem) {
 		.video-card {
 			padding: var(--space-6);
-		}
-
-		.video-container {
-			width: 30%;
 		}
 	}
 </style>
