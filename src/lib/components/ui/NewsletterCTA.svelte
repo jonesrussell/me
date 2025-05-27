@@ -67,25 +67,25 @@
 		container-type: inline-size;
 		container-name: newsletter;
 		display: flex;
+		position: relative;
 		width: 100%;
 		padding: var(--space-16);
 		background: var(--color-mix-light);
 		flex-direction: column;
 		gap: var(--space-4);
 		align-items: center;
-		position: relative;
 		overflow: hidden;
 	}
 
 	.newsletter-content {
-		position: relative;
-		z-index: 1;
 		display: flex;
+		position: relative;
+		width: 100%;
+		margin: 0 auto;
+		z-index: 1;
 		flex-direction: column;
 		gap: var(--space-4);
-		width: 100%;
 		max-width: 60ch;
-		margin: 0 auto;
 	}
 
 	.newsletter-header {
@@ -171,28 +171,30 @@
 
 	@keyframes pulse {
 		0% {
-			transform: scale(0.8);
 			opacity: 0.02;
+			transform: scale(0.8);
 		}
+
 		50% {
-			transform: scale(1.2);
 			opacity: 0.03;
+			transform: scale(1.2);
 		}
+
 		100% {
-			transform: scale(0.8);
 			opacity: 0.02;
+			transform: scale(0.8);
 		}
 	}
 
 	.newsletter-content {
-		position: relative;
-		z-index: 1;
 		display: flex;
+		position: relative;
+		width: 100%;
+		margin: 0 auto;
+		z-index: 1;
 		flex-direction: column;
 		gap: var(--space-4);
-		width: 100%;
 		max-width: 60ch;
-		margin: 0 auto;
 	}
 
 	.newsletter-header {
@@ -232,12 +234,12 @@
 		position: absolute;
 		width: 1px;
 		height: 1px;
-		padding: 0;
 		margin: -1px;
+		padding: 0;
+		border: 0;
 		overflow: hidden;
 		clip: rect(0, 0, 0, 0);
 		white-space: nowrap;
-		border: 0;
 	}
 
 	button {
@@ -307,10 +309,12 @@
 			opacity: 0.05;
 			transform: scale(1);
 		}
+
 		50% {
 			opacity: 0.1;
 			transform: scale(1.02);
 		}
+
 		100% {
 			opacity: 0.05;
 			transform: scale(1);

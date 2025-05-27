@@ -100,8 +100,8 @@
 
 		.mobile-nav a:hover,
 		.mobile-nav a.active {
-			background: Canvas;
 			color: CanvasText;
+			background: Canvas;
 			border-color: Highlight;
 		}
 	}

@@ -17,22 +17,22 @@
 
 <style>
 	.input-container {
-		width: 100%;
 		position: relative;
+		width: 100%;
 	}
 
 	.input {
 		width: 100%;
-		min-width: 0;
 		padding: var(--space-4) var(--space-6);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-md);
-		background: var(--bg-darker);
-		color: var(--text-color);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
 		line-height: var(--line-height-base);
+		color: var(--text-color);
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
 		transition: all var(--transition-duration) var(--transition-timing);
+		min-width: 0;
 		box-sizing: border-box;
 
 		&:focus {
@@ -58,9 +58,9 @@
 
 	@media (forced-colors: active) {
 		.input {
-			border: 1px solid CanvasText;
-			background: Canvas;
 			color: CanvasText;
+			background: Canvas;
+			border: 1px solid CanvasText;
 		}
 
 		.input:focus {

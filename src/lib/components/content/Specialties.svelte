@@ -35,8 +35,8 @@
 	}
 
 	.section-header {
-		text-align: center;
 		margin-bottom: var(--space-2);
+		text-align: center;
 	}
 
 	.section-title {

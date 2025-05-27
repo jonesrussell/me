@@ -35,12 +35,12 @@
 	}
 
 	.header-main {
+		container-type: inline-size;
 		display: grid;
+		position: relative;
 		grid-template-columns: auto 1fr auto;
 		gap: var(--space-4);
 		align-items: center;
-		position: relative;
-		container-type: inline-size;
 	}
 
 	.header-right {

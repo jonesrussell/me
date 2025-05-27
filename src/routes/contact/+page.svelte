@@ -112,8 +112,8 @@
 	}
 
 	form {
-		width: 100%;
 		display: flex;
+		width: 100%;
 		flex-direction: column;
 		gap: var(--space-4);
 	}
@@ -121,6 +121,7 @@
 	.form-submit {
 		display: flex;
 		width: 100%;
+		margin-top: var(--space-4);
 		padding: var(--space-4) var(--space-6);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
@@ -134,7 +135,6 @@
 		gap: var(--space-2);
 		align-items: center;
 		justify-content: center;
-		margin-top: var(--space-4);
 	}
 
 	.form-submit:hover {
