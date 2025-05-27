@@ -56,6 +56,7 @@
 		align-items: center;
 		width: 100%;
 		padding: var(--space-8) 0;
+		padding-bottom: 0;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
