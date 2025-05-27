@@ -75,63 +75,6 @@
 		min-height: 100vh;
 	}
 
-	.newsletter-container {
-		container-type: inline-size;
-		container-name: newsletter;
-		display: grid;
-		width: 100%;
-		margin: 0 auto;
-		background: var(--bg-darker);
-		padding-block: var(--space-8) 0;
-		place-items: center;
-	}
-
-	:global(.newsletter-cta) {
-		width: 100%;
-		max-width: var(--container-xl);
-		padding-inline: var(--space-4);
-	}
-
-	@container site (width >= 30rem) {
-		.newsletter-container {
-			padding-block: var(--space-12) 0;
-		}
-
-		:global(.newsletter-cta) {
-			padding-inline: var(--space-8);
-		}
-	}
-
-	@container site (width >= 50rem) {
-		.newsletter-container {
-			padding-block: var(--space-16) 0;
-		}
-
-		:global(.newsletter-cta) {
-			padding-inline: var(--space-12);
-		}
-	}
-
-	@container site (width >= 75rem) {
-		.newsletter-container {
-			padding-block: var(--space-20) 0;
-		}
-
-		:global(.newsletter-cta) {
-			padding-inline: var(--space-16);
-		}
-	}
-
-	@container site (width >= 100rem) {
-		.newsletter-container {
-			padding-block: var(--space-24) 0;
-		}
-
-		:global(.newsletter-cta) {
-			padding-inline: var(--space-20);
-		}
-	}
-
 	@media (prefers-reduced-motion: reduce) {
 		* {
 			transition: none;
@@ -147,8 +90,7 @@
 
 	{@render children()}
 
-	<div class="newsletter-container">
-		<NewsletterCTA class="newsletter-cta" />
-	</div>
+	<NewsletterCTA class="newsletter-cta" />
+
 	<Footer />
 </div>

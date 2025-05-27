@@ -68,8 +68,6 @@
 
 <style>
 	.newsletter {
-		container-type: inline-size;
-		container-name: newsletter;
 		display: flex;
 		position: relative;
 		width: 100%;
@@ -89,7 +87,7 @@
 		z-index: 1;
 		flex-direction: column;
 		gap: var(--space-4);
-		max-width: 60ch;
+		max-width: 60rem;
 	}
 
 	.newsletter-header {
@@ -122,7 +120,7 @@
 	.description {
 		font-size: var(--font-size-2);
 		color: var(--color-text-2);
-		max-width: 65ch;
+		max-width: 65rem;
 	}
 
 	.form {
@@ -131,13 +129,13 @@
 		gap: var(--space-2);
 	}
 
-	@container newsletter (width >= 30rem) {
+	@media (--container-sm) {
 		.newsletter {
 			padding: var(--space-8);
 		}
 	}
 
-	@container newsletter (width >= 50rem) {
+	@media (--container-lg) {
 		.newsletter {
 			padding: var(--space-12);
 		}
