@@ -88,7 +88,7 @@
 			</div>
 		</div>
 		<div class="thumbnail">
-			<img src={project.image} alt={project.title} />
+			<img src={project.image || '/images/projects/placeholder.png'} alt={project.title} />
 		</div>
 	</div>
 </Box>

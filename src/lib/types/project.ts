@@ -4,4 +4,5 @@ export interface Project {
 	tech: string[];
 	url: string;
 	status: 'active' | 'stable' | 'experimental';
+	image?: string; // Optional image URL or path for thumbnail
 }
