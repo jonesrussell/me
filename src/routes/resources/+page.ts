@@ -119,33 +119,38 @@ export function load() {
 			title: 'Docker',
 			url: 'https://www.docker.com',
 			description: 'Container platform for modern applications',
-			category: 'DevOps'
+			category: 'DevOps',
+			tags: ['Containers', 'CI/CD', 'Microservices']
 		},
 		{
 			title: 'Docker Compose',
 			url: 'https://docs.docker.com/compose/',
 			description: 'Define and run multi-container applications',
 			stars: 8500,
-			category: 'DevOps'
+			category: 'DevOps',
+			tags: ['Orchestration', 'Development', 'Local Testing']
 		},
 		{
 			title: 'GitHub Actions',
 			url: 'https://github.com/features/actions',
 			description: 'Automate your software workflows',
-			category: 'DevOps'
+			category: 'DevOps',
+			tags: ['Automation', 'CI/CD', 'Workflows']
 		},
 		{
 			title: 'act',
 			url: 'https://github.com/nektos/act',
 			description: 'Run GitHub Actions locally',
 			stars: 43800,
-			category: 'DevOps'
+			category: 'DevOps',
+			tags: ['Local Development', 'Testing', 'Debugging']
 		},
 		{
 			title: '12 Factor App',
 			url: 'https://12factor.net',
 			description: 'Methodology for building modern, scalable, and maintainable software-as-a-service applications',
-			category: 'DevOps'
+			category: 'DevOps',
+			tags: ['Best Practices', 'Architecture', 'Cloud Native']
 		},
 
 		// Tools
