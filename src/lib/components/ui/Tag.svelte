@@ -1,5 +1,6 @@
 <script lang="ts">
 	export let as: string = 'span';
+	export let title: string | undefined;
 </script>
 
 <style>
@@ -32,4 +33,4 @@
 	}
 </style>
 
-<svelte:element this={as} class="tag"><slot /></svelte:element>
+<svelte:element this={as} class="tag" {title}><slot /></svelte:element>

@@ -1,11 +1,6 @@
 <script lang="ts">
-	const {
-		title = undefined,
-		width = undefined,
-		children
-	} = $props<{
+	const { title = undefined, children } = $props<{
 		title?: string;
-		width?: number;
 		children: () => string;
 	}>();
 </script>
