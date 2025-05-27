@@ -139,7 +139,7 @@
 
 	.form-submit:hover {
 		background: var(--accent-color-hover);
-		transform: translateY(-2px);
+		transform: translateY(-0.125rem);
 	}
 
 	.form-submit .contact-link-icon {

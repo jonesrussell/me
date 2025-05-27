@@ -46,7 +46,7 @@
 			opacity var(--transition-duration) var(--transition-timing),
 			transform var(--transition-duration) var(--transition-timing),
 			visibility var(--transition-duration) var(--transition-timing);
-		transform: translateY(-10px);
+		transform: translateY(-0.625rem);
 		flex-direction: column;
 		gap: var(--space-2);
 		z-index: 15;
@@ -104,6 +104,15 @@
 			background: Canvas;
 			border-color: Highlight;
 		}
+	}
+
+	.menu-icon {
+		width: 1.75rem;
+		height: 1.75rem;
+	}
+
+	.menu-item {
+		padding: 0.75rem 1rem;
 	}
 </style>
 

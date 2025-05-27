@@ -29,7 +29,7 @@
 			"vmin",
 			"vmax"
 		],
-		"unit-disallowed-list": ["em"],
+		"unit-disallowed-list": ["px", "em"],
 		"selector-pseudo-class-no-unknown": [
 			true,
 			{
@@ -156,8 +156,6 @@
 		"keyframe-declaration-no-important": true,
 		"comment-no-empty": true,
 		"comment-word-disallowed-list": ["/^TODO:/i", "/^FIXME:/i"],
-		"declaration-block-single-line-max-declarations": 1,
-		"font-size-no-duplicate": true,
-		"font-size-max-limit": "80ch"
+		"declaration-block-single-line-max-declarations": 1
 	}
 }

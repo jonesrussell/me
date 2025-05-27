@@ -59,8 +59,6 @@
 </script>
 
 <style>
-
-
 	/* Tablet and up */
 	@container projects-page (width >= 48ch) {
 		.container {
@@ -101,8 +99,8 @@
 
 	@media (prefers-reduced-motion: reduce) {
 		* {
-			transition: none !important;
-			animation: none !important;
+			transition: none;
+			animation: none;
 		}
 	}
 
@@ -146,8 +144,7 @@
 		color: var(--text-color);
 		background: linear-gradient(to right, var(--text-color), var(--text-muted));
 		letter-spacing: var(--letter-spacing-tight);
-		text-shadow: 0 2px 4px var(--color-mix-faint);
-		background-clip: text;
+		text-shadow: 0 0.125rem 0.25rem var(--color-mix-faint);
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}
