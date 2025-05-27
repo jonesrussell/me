@@ -266,7 +266,7 @@
 	/>
 </svelte:head>
 
-<div class="blog">
+<main class="blog">
 	<div class="hero">
 		<h1>Web Developer Blog</h1>
 		<p class="subtitle">Open Source Enthusiast</p>
@@ -312,4 +312,4 @@
 	<div class="dev-to-wrapper">
 		<DevTo />
 	</div>
-</div>
+</main>

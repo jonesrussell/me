@@ -175,12 +175,12 @@
 	/>
 </svelte:head>
 
-<main class="projects">
-	<div class="hero">
-		<h1>Projects & Content</h1>
-		<p class="subtitle">Open Source & Educational Content</p>
-	</div>
+<section class="hero">
+	<h1>Projects & Content</h1>
+	<p class="subtitle">Open Source & Educational Content</p>
+</section>
 
+<main class="projects">
 	<div class="container">
 		<section class="section featured-videos-container" aria-label="Featured Videos">
 			<h2 id="video-grid-title" class="section-title">Experimental Videos</h2>

@@ -167,7 +167,7 @@
 	/>
 </svelte:head>
 
-<div class="contact">
+<main class="contact">
 	<div class="container">
 		<div class="contact-grid">
 			<section class="contact-info" aria-label="Contact Information">
@@ -251,4 +251,4 @@
 			</section>
 		</div>
 	</div>
-</div>
+</main>
