@@ -29,10 +29,17 @@ For specific implementation details, refer to:
 - Implement clear visual hierarchy
 
 ## Layout
+- Use container queries for component-level responsiveness
+- Implement consistent breakpoints:
+  - `30rem` (≈ 480px) for tablet
+  - `50rem` (≈ 800px) for small desktop
+  - `75rem` (≈ 1200px) for large desktop
+- Use `var(--measure)` for max-width constraints
+- Apply `95cqi` for container-based sizing
+- Maintain consistent padding and spacing patterns
 - Test responsive designs thoroughly
 - Validate typography scales
 - Check color contrast ratios
-- Ensure consistent spacing across breakpoints
 
 ## Best Practices
 - Follow accessibility standards (WCAG)
@@ -43,3 +50,5 @@ For specific implementation details, refer to:
 - Handle errors gracefully
 - Keep dependencies updated
 - Follow semantic versioning
+- Use container queries over media queries
+- Maintain consistent responsive patterns across all pages

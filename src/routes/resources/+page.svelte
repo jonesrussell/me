@@ -239,36 +239,6 @@
 </script>
 
 <style>
-	/* Tablet and up */
-	@container resources-page (width >= 48ch) {
-		.container {
-			max-width: min(80ch, 95cqi);
-		}
-
-		.sections {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30ch), 1fr));
-			justify-content: start;
-		}
-	}
-
-	/* Desktop */
-	@container resources-page (width >= 80ch) {
-		.container {
-			max-width: min(160ch, 95cqi);
-		}
-
-		.sections {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		* {
-			transition: none;
-			animation: none;
-		}
-	}
-
 	.resources {
 		container-type: inline-size;
 		container-name: resources-page;
@@ -278,7 +248,7 @@
 
 	.container {
 		width: 100%;
-		max-width: min(40ch, 95cqi);
+		max-width: min(var(--measure), 95cqi);
 		margin: 0 auto;
 		padding: 0 var(--space-4);
 	}
@@ -293,6 +263,40 @@
 
 	.featured-videos-section {
 		grid-column: 1 / -1;
+	}
+
+	@container resources-page (width >= 30rem) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
+		}
+
+		.sections {
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30ch), 1fr));
+			justify-content: start;
+		}
+	}
+
+	@container resources-page (width >= 50rem) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
+		}
+
+		.sections {
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
+		}
+	}
+
+	@container resources-page (width >= 75rem) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			transition: none;
+			animation: none;
+		}
 	}
 </style>
 

@@ -10,12 +10,30 @@ alwaysApply: false
 - Implement mobile-first approach
 - Follow CSS custom properties for theming
 - Maintain consistent spacing using design tokens
+- Use `var(--measure)` for max-width constraints
+- Apply `95cqi` for container-based sizing
 
 ## Layout Patterns
 - Use CSS Grid for complex layouts
 - Implement Flexbox for alignment
 - Define container queries for component-level responsiveness
 - Use `minmax()` for flexible grid layouts
+- Maintain consistent container structure:
+  ```css
+  .component {
+    container-type: inline-size;
+    container-name: component-name;
+    width: 100%;
+    padding: var(--space-16) 0;
+  }
+
+  .container {
+    width: 100%;
+    max-width: min(var(--measure), 95cqi);
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+  }
+  ```
 
 ## Responsive Design
 - Start with mobile layout (min-width: 0)
@@ -26,7 +44,6 @@ alwaysApply: false
     - `30rem` (≈ 480px) for tablet
     - `50rem` (≈ 800px) for small desktop
     - `75rem` (≈ 1200px) for large desktop
-  - Use `ch` for text layout and content width
   - Use `cqi` for container-based sizing
   - Use `%` for fluid layouts
 
@@ -46,6 +63,7 @@ alwaysApply: false
 - Use semantic class names
 - Implement consistent spacing with design tokens
 - Follow accessibility guidelines for styling
+- Maintain consistent container structure across all pages
 
 ## Example Patterns
 ```css
@@ -53,24 +71,31 @@ alwaysApply: false
   container-type: inline-size;
   container-name: component-name;
   width: 100%;
-  padding: var(--space-4);
+  padding: var(--space-16) 0;
+}
+
+.container {
+  width: 100%;
+  max-width: min(var(--measure), 95cqi);
+  margin: 0 auto;
+  padding: 0 var(--space-4);
 }
 
 @container component-name (width >= 30rem) {
-  .component {
-    /* Tablet and up styles */
+  .container {
+    max-width: min(var(--measure), 95cqi);
   }
 }
 
 @container component-name (width >= 50rem) {
-  .component {
-    /* Small desktop and up styles */
+  .container {
+    max-width: min(var(--measure), 95cqi);
   }
 }
 
 @container component-name (width >= 75rem) {
-  .component {
-    /* Large desktop styles */
+  .container {
+    max-width: min(var(--measure), 95cqi);
   }
 }
 ```
@@ -81,3 +106,4 @@ alwaysApply: false
 - Define `--color-*` for theming
 - Use `--radius-*` for border radius
 - Apply `--shadow-*` for elevation
+- Use `--measure` for max-width constraints

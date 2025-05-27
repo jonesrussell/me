@@ -38,26 +38,27 @@
 	/* Tablet and up */
 	@container blog-page (width >= 30rem) {
 		.container {
-			max-width: min(var(--measure), 95%);
+			max-width: min(var(--measure), 95cqi);
 		}
 	}
 
 	/* Small desktop and up */
 	@container blog-page (width >= 50rem) {
 		.container {
-			max-width: min(var(--measure), 95%);
+			max-width: min(var(--measure), 95cqi);
 		}
 	}
 
 	/* Large desktop */
 	@container blog-page (width >= 75rem) {
 		.container {
-			max-width: min(var(--measure), 95%);
+			max-width: min(var(--measure), 95cqi);
 		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.load-more-button {
+		.load-more-button,
+		.retry-button {
 			transition: none;
 		}
 	}
@@ -71,12 +72,10 @@
 	}
 
 	.container {
-		container-type: inline-size;
-		container-name: blog-post-grid;
 		width: 100%;
+		max-width: min(var(--measure), 95cqi);
 		margin: 0 auto;
 		padding: 0 var(--space-4);
-		max-width: min(var(--measure), 95%);
 	}
 
 	.load-more {

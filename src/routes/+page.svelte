@@ -44,22 +44,42 @@
 
 <style>
 	.home {
+		container-type: inline-size;
+		container-name: home-page;
 		width: 100%;
-		padding: var(--space-4) 0;
+		padding: var(--space-16) 0;
+	}
 
-		& .container {
-			display: flex;
-			width: 100%;
-			margin: 0 auto;
-			padding: 0 var(--space-4);
-			max-width: min(160ch, 95cqi);
-			flex-direction: column;
-			gap: var(--space-16);
-		}
+	.container {
+		display: flex;
+		width: 100%;
+		margin: 0 auto;
+		padding: 0 var(--space-4);
+		max-width: min(var(--measure), 95cqi);
+		flex-direction: column;
+		gap: var(--space-16);
+	}
 
-		& :global(.youtube-section) {
-			margin-top: 0;
+	@container home-page (width >= 30rem) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
 		}
+	}
+
+	@container home-page (width >= 50rem) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
+		}
+	}
+
+	@container home-page (width >= 75rem) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
+		}
+	}
+
+	:global(.youtube-section) {
+		margin-top: 0;
 	}
 
 	@media (prefers-reduced-motion: reduce) {

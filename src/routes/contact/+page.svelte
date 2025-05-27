@@ -32,6 +32,8 @@
 
 <style>
 	.contact {
+		container-type: inline-size;
+		container-name: contact-page;
 		width: 100%;
 		padding: var(--space-16) 0;
 	}
@@ -49,10 +51,22 @@
 		gap: var(--space-8);
 	}
 
-	@media (width >= 48ch) {
+	@container contact-page (width >= 30rem) {
 		.contact-grid {
 			grid-template-columns: minmax(30ch, 35ch) minmax(45ch, 60ch);
 			align-items: start;
+		}
+	}
+
+	@container contact-page (width >= 50rem) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
+		}
+	}
+
+	@container contact-page (width >= 75rem) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
 		}
 	}
 
