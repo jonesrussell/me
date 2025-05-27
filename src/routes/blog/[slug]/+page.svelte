@@ -18,12 +18,18 @@
 	let post = $state<BlogPost | null>(null);
 	let error = $state<string | null>(null);
 
+	function stripCdata(content: string): string {
+		return content.replace(/^<!\[CDATA\[|\]\]>$/g, '');
+	}
+
 	$effect(() => {
 		const slug = $page.params.slug;
 		async function loadPost() {
 			try {
 				const result = await fetchPost(slug);
 				post = result;
+				console.debug('Loaded post:', post);
+				console.debug('Post content:', post?.content);
 				// Highlight code blocks after content is loaded
 				setTimeout(() => {
 					document.querySelectorAll('pre code').forEach((block) => {
@@ -265,7 +271,11 @@
 				</div>
 			</header>
 			<div class="content">
-				<SafeHtml content={post.content || ''} className="content" />
+				{#if post.content}
+					<SafeHtml content={stripCdata(post.content)} className="content" />
+				{:else}
+					<div>No content found for this post.</div>
+				{/if}
 			</div>
 		{:else}
 			<div class="loading">Loading...</div>
