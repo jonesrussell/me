@@ -137,6 +137,32 @@
 			font-size: var(--font-size-5xl);
 		}
 	}
+
+	.container {
+		width: 100%;
+		max-width: min(var(--measure), 95%);
+		margin: 0 auto;
+		padding: 0 var(--space-4);
+		text-align: center;
+	}
+
+	@container dev-to (width >= 30rem) {
+		.container {
+			max-width: min(var(--measure), 95%);
+		}
+	}
+
+	@container dev-to (width >= 50rem) {
+		.container {
+			max-width: min(var(--measure), 95%);
+		}
+	}
+
+	@container dev-to (width >= 75rem) {
+		.container {
+			max-width: min(var(--measure), 95%);
+		}
+	}
 </style>
 
 <div class="container">

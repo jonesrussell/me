@@ -4,14 +4,14 @@
 	import { writable } from 'svelte/store';
 	import Hero from '$lib/components/ui/Hero.svelte';
 	import DevTo from '$lib/components/blog/DevTo.svelte';
-	import BlogPost from '$lib/components/blog/BlogPost.svelte';
+	import BlogPostGrid from '$lib/components/blog/BlogPostGrid.svelte';
 	import BlogError from '$lib/components/blog/BlogError.svelte';
 	import type { BlogPost as BlogPostType } from '$lib/types/blog';
 
 	const blogPosts = writable<BlogPostType[]>([]);
 	let currentPage = $state(1);
 	let hasMore = $state(true);
-	const pageSize = 5;
+	const pageSize = 6;
 
 	async function loadMore() {
 		if (!$blogStore.loading && hasMore) {
@@ -40,10 +40,6 @@
 		.container {
 			max-width: min(var(--measure), 95%);
 		}
-
-		.posts {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 35ch), 1fr));
-		}
 	}
 
 	/* Small desktop and up */
@@ -51,20 +47,12 @@
 		.container {
 			max-width: min(var(--measure), 95%);
 		}
-
-		.posts {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 45ch), 1fr));
-		}
 	}
 
 	/* Large desktop */
 	@container blog-page (width >= 75rem) {
 		.container {
 			max-width: min(var(--measure), 95%);
-		}
-
-		.posts {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 50ch), 1fr));
 		}
 	}
 
@@ -83,17 +71,12 @@
 	}
 
 	.container {
+		container-type: inline-size;
+		container-name: blog-post-grid;
 		width: 100%;
-		max-width: min(var(--measure), 95%);
 		margin: 0 auto;
 		padding: 0 var(--space-4);
-	}
-
-	.posts {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: var(--space-8);
-		width: 100%;
+		max-width: min(var(--measure), 95%);
 	}
 
 	.load-more {
@@ -196,20 +179,15 @@
 	<BlogError />
 
 	<div class="container">
-		<div
-			class="posts"
-			style:visibility={$blogStore.loading && currentPage === 1 ? 'hidden' : 'visible'}
-		>
-			{#each $blogPosts as post (post.slug)}
-				<BlogPost {post} />
-			{:else}
-				{#if !$blogStore.loading}
-					<div class="empty-state">
-						<p>No blog posts available at the moment.</p>
-						<p>Check back later for new content!</p>
-					</div>
-				{/if}
-			{/each}
+		<div style:visibility={$blogStore.loading && currentPage === 1 ? 'hidden' : 'visible'}>
+			{#if $blogPosts.length > 0}
+				<BlogPostGrid posts={$blogPosts} />
+			{:else if !$blogStore.loading}
+				<div class="empty-state">
+					<p>No blog posts available at the moment.</p>
+					<p>Check back later for new content!</p>
+				</div>
+			{/if}
 		</div>
 
 		{#if $blogStore.loading}
