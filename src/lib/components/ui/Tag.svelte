@@ -1,6 +1,9 @@
 <script lang="ts">
-	export let as: string = 'span';
-	export let title: string | undefined;
+	import type { Snippet } from 'svelte';
+	const { title, children } = $props<{
+		title?: string;
+		children: Snippet;
+	}>();
 </script>
 
 <style>
@@ -33,4 +36,4 @@
 	}
 </style>
 
-<svelte:element this={as} class="tag" {title}><slot /></svelte:element>
+<span class="tag" {title}>{@render children()}</span>
