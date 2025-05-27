@@ -6,7 +6,6 @@
 	import DevTo from '$lib/components/blog/DevTo.svelte';
 	import BlogPostGrid from '$lib/components/blog/BlogPostGrid.svelte';
 	import BlogError from '$lib/components/blog/BlogError.svelte';
-	import type { BlogPost } from '$lib/types/blog';
 
 	const { data } = $props<{ data: PageData }>();
 
