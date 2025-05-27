@@ -28,7 +28,7 @@
 		flex-direction: column;
 	}
 
-	@media (min-width: var(--container-md)) {
+	@media (width >= 30rem) {
 		.terminal-frame {
 			max-width: min(var(--container-lg), 100%);
 		}
@@ -80,7 +80,7 @@
 		flex-direction: column;
 		gap: var(--space-2);
 		white-space: pre-wrap;
-		word-break: break-word;
+		overflow-wrap: anywhere;
 	}
 
 	.command-line {
@@ -105,7 +105,7 @@
 	.command {
 		font-weight: var(--font-weight-normal);
 		color: var(--text-color);
-		word-break: break-word;
+		overflow-wrap: anywhere;
 	}
 
 	.command-output {
@@ -117,9 +117,9 @@
 		line-height: var(--line-height-relaxed);
 		color: var(--text-color);
 		white-space: pre-wrap;
-		word-break: break-word;
+		overflow-wrap: anywhere;
 
-		animation: crt-reveal 50ms linear;
+		animation: crt-reveal 0.1s linear;
 	}
 
 	@keyframes crt-reveal {

@@ -36,12 +36,12 @@
 
 	.toggle-button {
 		display: flex;
-		width: 2.5rem;
+		width: 2.5ch;
 		height: 2.5rem;
 		padding: 0.5rem;
 		color: var(--text-color);
 		background: var(--bg-darker);
-		border: 1px solid var(--border-color);
+		border: 0.0625rem solid var(--border-color);
 		border-radius: var(--radius-full);
 		transition: all var(--transition-base);
 		align-items: center;
@@ -61,10 +61,10 @@
 		margin-top: 0.5rem;
 		padding: 0.5rem;
 		background: var(--bg-darker);
-		border: 1px solid var(--border-color);
+		border: 0.0625rem solid var(--border-color);
 		border-radius: var(--radius-md);
 		box-shadow: var(--shadow-lg);
-		min-width: 8rem;
+		min-width: 8ch;
 		z-index: 100;
 	}
 

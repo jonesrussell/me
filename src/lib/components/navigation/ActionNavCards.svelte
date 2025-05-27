@@ -36,7 +36,7 @@
 
 	.action-card:hover {
 		background: var(--color-mix-light);
-		transform: translateY(-0.125ch);
+		transform: translateY(-0.125rem);
 	}
 
 	:global(.action-icon) {
@@ -56,7 +56,7 @@
 
 	@media (width >= 30rem) {
 		.action-nav-cards {
-			flex-direction: row !important;
+			flex-direction: row;
 			justify-content: center;
 		}
 
@@ -64,7 +64,7 @@
 			padding: var(--space-4);
 			text-align: left;
 			flex: 1;
-			flex-direction: row !important;
+			flex-direction: row;
 			justify-content: center;
 			gap: var(--space-4);
 		}

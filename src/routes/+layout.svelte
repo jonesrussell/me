@@ -29,8 +29,8 @@
 
 	@media (prefers-reduced-motion: reduce) {
 		* {
-			transition: none !important;
-			animation: none !important;
+			transition: none;
+			animation: none;
 		}
 	}
 </style>

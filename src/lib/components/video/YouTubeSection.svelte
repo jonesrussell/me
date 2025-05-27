@@ -29,11 +29,11 @@
 	/* Add forced-colors support */
 	@media (forced-colors: active) {
 		.youtube-section {
-			border: 1px solid CanvasText;
+			border: 0.0625rem solid CanvasText;
 		}
 
 		.youtube-link {
-			border: 1px solid CanvasText;
+			border: 0.0625rem solid CanvasText;
 		}
 	}
 </style>

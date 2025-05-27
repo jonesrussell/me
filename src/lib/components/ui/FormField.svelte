@@ -75,7 +75,7 @@
 		transition: all var(--transition-duration) var(--transition-timing);
 		min-width: 0;
 		resize: vertical;
-		min-height: 12ch;
+		min-height: 12rem;
 		box-sizing: border-box;
 
 		&:focus {
@@ -106,14 +106,14 @@
 
 	:global(.input[aria-invalid='true']:focus) {
 		border-color: var(--error-color);
-		box-shadow: 0 0 0 1px var(--error-color);
+		box-shadow: 0 0 0 0.0625rem var(--error-color);
 	}
 
 	@media (forced-colors: active) {
 		.textarea {
 			color: CanvasText;
 			background: Canvas;
-			border: 1px solid CanvasText;
+			border: 0.0625rem solid CanvasText;
 		}
 
 		.textarea:focus {

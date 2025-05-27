@@ -66,7 +66,7 @@
 
 	@media (forced-colors: active) {
 		.desktop-nav a {
-			border: 1px solid CanvasText;
+			border: 0.0625rem solid CanvasText;
 		}
 
 		.desktop-nav a:hover,
