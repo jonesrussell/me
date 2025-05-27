@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Terminal from '$lib/components/terminal/Terminal.svelte';
-	import Specialties from '$lib/components/content/Specialties.svelte';
 	import YouTubeSection from '$lib/components/video/YouTubeSection.svelte';
 	import ActionNavCards from '$lib/components/navigation/ActionNavCards.svelte';
+	import SpecialtyGrid from '$lib/components/content/SpecialtyGrid.svelte';
 
 	const YOUTUBE_CHANNEL = 'https://youtube.com/@fullstackdev42';
 	const YOUTUBE_VIDEO_ID = 'B4v7ZDLxiS4';
@@ -101,7 +101,11 @@
 
 <main class="home">
 	<div class="container">
-		<Specialties {specialties} />
+		<SpecialtyGrid
+			{specialties}
+			title="My Specialties"
+			description="Expert solutions for your unique challenges"
+		/>
 		<YouTubeSection
 			channelUrl={YOUTUBE_CHANNEL}
 			videoId={YOUTUBE_VIDEO_ID}
