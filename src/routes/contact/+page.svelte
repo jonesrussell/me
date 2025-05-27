@@ -1,32 +1,28 @@
 <script lang="ts">
-	import FormField from '$lib/components/content/FormField.svelte';
+	import { enhance } from '$app/forms';
+	import type { ActionData, PageData } from './$types';
 
-	let name = $state('');
-	let email = $state('');
-	let message = $state('');
-	let errors = $state<Record<string, string>>({});
+	const { data, form } = $props<{ data: PageData; form: ActionData }>();
 
-	function validateForm() {
-		const newErrors: Record<string, string> = {};
+	let submitting = $state(false);
+	let success = $state(false);
+	let error = $state<string | null>(null);
+	let fieldErrors = $state<Record<string, string>>({});
 
-		if (!name) newErrors.name = 'Name is required';
-		if (!email) {
-			newErrors.email = 'Email is required';
-		} else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-			newErrors.email = 'Please enter a valid email address';
+	$effect(() => {
+		if (form) {
+			submitting = false;
+			success = form.success ?? false;
+			error = form.error ? form.message : null;
+			fieldErrors = form.errors ?? {};
 		}
-		if (!message) newErrors.message = 'Message is required';
+	});
 
-		errors = newErrors;
-		return Object.keys(newErrors).length === 0;
-	}
-
-	function handleSubmit(event: SubmitEvent) {
-		event.preventDefault();
-		if (!validateForm()) return;
-
-		// TODO: Implement form submission
-		console.log({ name, email, message });
+	function handleSubmit() {
+		submitting = true;
+		success = false;
+		error = null;
+		fieldErrors = {};
 	}
 </script>
 
@@ -34,235 +30,164 @@
 	.contact {
 		container-type: inline-size;
 		container-name: contact-page;
-		width: 100%;
-		padding: var(--space-16) 0;
 	}
 
 	.container {
-		width: 100%;
 		max-width: min(var(--measure), 95cqi);
 		margin: 0 auto;
-		padding: 0 var(--space-4);
+		padding: var(--space-16);
 	}
 
-	.contact-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: var(--space-8);
+	.success-message {
+		margin-bottom: var(--space-16);
+		padding: var(--space-8);
+		color: var(--color-success-dark);
+		background-color: var(--color-success-light);
+		border-radius: var(--radius-md);
 	}
 
-	@container contact-page (width >= 30rem) {
-		.contact-grid {
-			grid-template-columns: minmax(30ch, 35ch) minmax(45ch, 60ch);
-			align-items: start;
-		}
-	}
-
-	@container contact-page (width >= 50rem) {
-		.container {
-			max-width: min(var(--measure), 95cqi);
-		}
-	}
-
-	@container contact-page (width >= 75rem) {
-		.container {
-			max-width: min(var(--measure), 95cqi);
-		}
-	}
-
-	.contact-info {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-4);
-		width: 100%;
+	.error-message {
+		margin-bottom: var(--space-16);
+		padding: var(--space-8);
+		color: var(--color-error-dark);
+		background-color: var(--color-error-light);
+		border-radius: var(--radius-md);
 	}
 
 	.contact-form {
-		width: 100%;
-	}
-
-	.contact-text {
-		margin-bottom: var(--space-4);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-base);
-		line-height: var(--line-height-relaxed);
-		color: var(--text-muted);
-	}
-
-	.contact-links {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-2);
-	}
-
-	.contact-link {
-		display: flex;
-		padding: var(--space-4) var(--space-6);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
-		text-decoration: none;
-		color: var(--text-color);
-		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-md);
-		transition: all var(--transition-duration) var(--transition-timing);
-		gap: var(--space-2);
-		align-items: center;
-	}
-
-	.contact-link:hover {
-		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
-		transform: translateX(var(--space-2));
-		border-color: var(--accent-color);
-	}
-
-	.contact-link-icon {
-		font-size: var(--font-size-md);
-		color: var(--accent-color);
+		gap: var(--space-8);
 	}
 
 	.form-group {
-		width: 100%;
-	}
-
-	form {
 		display: flex;
-		width: 100%;
 		flex-direction: column;
-		gap: var(--space-4);
-	}
-
-	.form-submit {
-		display: flex;
-		width: 100%;
-		margin-top: var(--space-4);
-		padding: var(--space-4) var(--space-6);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-base);
-		font-weight: var(--font-weight-medium);
-		color: var(--bg-darker);
-		background: var(--accent-color);
-		border: none;
-		border-radius: var(--radius-md);
-		transition: all var(--transition-duration) var(--transition-timing);
-		cursor: pointer;
 		gap: var(--space-2);
-		align-items: center;
-		justify-content: center;
 	}
 
-	.form-submit:hover {
-		background: var(--accent-color-hover);
-		transform: translateY(-0.125rem);
+	label {
+		font-weight: 500;
 	}
 
-	.form-submit .contact-link-icon {
-		color: var(--bg-darker);
-		transition: transform var(--transition-duration) var(--transition-timing);
+	input,
+	textarea {
+		padding: var(--space-4);
+		font-size: var(--text-base);
+		border: 0.0625rem solid var(--color-border);
+		border-radius: var(--radius-sm);
 	}
 
-	.form-submit:hover .contact-link-icon {
-		transform: translateX(var(--space-2));
+	input:focus,
+	textarea:focus {
+		outline: none;
+		border-color: var(--color-primary);
+		box-shadow: 0 0 0 0.125rem var(--color-primary-light);
 	}
 
-	@media (prefers-reduced-motion: reduce) {
-		.contact-link,
-		.form-submit {
-			transition: none;
+	.error {
+		font-size: var(--text-sm);
+		color: var(--color-error);
+	}
+
+	.button {
+		align-self: flex-start;
+	}
+
+	@container (min-width: 30rem) {
+		.container {
+			padding: var(--space-24);
+		}
+	}
+
+	@container (min-width: 50rem) {
+		.container {
+			padding: var(--space-32);
+		}
+	}
+
+	@container (min-width: 75rem) {
+		.container {
+			padding: var(--space-40);
 		}
 	}
 </style>
 
 <svelte:head>
-	<title>Contact | Russell Jones - Web Development & Open Source</title>
-	<meta
-		name="description"
-		content="Get in touch with Russell Jones for web development projects, technical consulting, or collaboration opportunities."
-	/>
+	<title>{data.title}</title>
+	<meta name="description" content={data.description} />
 </svelte:head>
 
 <main class="contact">
 	<div class="container">
-		<div class="contact-grid">
-			<section class="contact-info" aria-label="Contact Information">
-				<h1>Get in Touch</h1>
-				<p class="contact-text">
-					Have a question or want to work together? I'd love to hear from you. Let's build something
-					amazing together.
-				</p>
+		<h1>Contact Me</h1>
+		<p class="lead">Get in touch with me for collaboration, questions, or just to say hello!</p>
 
-				<div class="contact-links">
-					<a
-						href="https://github.com/jonesrussell"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="contact-link"
-					>
-						<span class="contact-link-icon">⌘</span>
-						<span>GitHub: @jonesrussell</span>
-					</a>
-					<a
-						href="https://linkedin.com/in/jonesrussell42"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="contact-link"
-					>
-						<span class="contact-link-icon">≡</span>
-						<span>LinkedIn: jonesrussell42</span>
-					</a>
-					<a href="mailto:russell@web.ca" class="contact-link">
-						<span class="contact-link-icon">✉</span>
-						<span>Email: russell@web.ca</span>
-					</a>
+		{#if success && form}
+			<div class="success-message" role="alert">
+				<p>{form.message}</p>
+			</div>
+		{:else}
+			<form method="POST" use:enhance={handleSubmit} class="contact-form">
+				{#if error}
+					<div class="error-message" role="alert">
+						<p>{error}</p>
+					</div>
+				{/if}
+
+				<div class="form-group">
+					<label for="name">Name</label>
+					<input
+						type="text"
+						id="name"
+						name="name"
+						required
+						aria-invalid={fieldErrors.name ? 'true' : undefined}
+						aria-describedby={fieldErrors.name ? 'name-error' : undefined}
+					/>
+					{#if fieldErrors.name}
+						<span id="name-error" class="error">{fieldErrors.name}</span>
+					{/if}
 				</div>
-			</section>
 
-			<section class="contact-form" aria-label="Contact Form">
-				<h2 class="form-heading">Send a Message</h2>
-				<form onsubmit={handleSubmit}>
-					<div class="form-group">
-						<FormField
-							label="Name"
-							name="name"
-							type="text"
-							required
-							value={name}
-							onInput={(value) => (name = value)}
-							error={errors.name}
-							placeholder="Your name"
-						/>
-					</div>
-					<div class="form-group">
-						<FormField
-							label="Email"
-							name="email"
-							type="email"
-							required
-							value={email}
-							onInput={(value) => (email = value)}
-							error={errors.email}
-							placeholder="your.email@example.com"
-						/>
-					</div>
-					<div class="form-group">
-						<FormField
-							label="Message"
-							name="message"
-							type="textarea"
-							required
-							value={message}
-							onInput={(value) => (message = value)}
-							error={errors.message}
-							placeholder="Type your message here..."
-							rows={6}
-						/>
-					</div>
-					<button type="submit" class="form-submit">
-						<span>Send Message</span>
-						<span class="contact-link-icon">→</span>
-					</button>
-				</form>
-			</section>
-		</div>
+				<div class="form-group">
+					<label for="email">Email</label>
+					<input
+						type="email"
+						id="email"
+						name="email"
+						required
+						aria-invalid={fieldErrors.email ? 'true' : undefined}
+						aria-describedby={fieldErrors.email ? 'email-error' : undefined}
+					/>
+					{#if fieldErrors.email}
+						<span id="email-error" class="error">{fieldErrors.email}</span>
+					{/if}
+				</div>
+
+				<div class="form-group">
+					<label for="message">Message</label>
+					<textarea
+						id="message"
+						name="message"
+						required
+						rows="5"
+						aria-invalid={fieldErrors.message ? 'true' : undefined}
+						aria-describedby={fieldErrors.message ? 'message-error' : undefined}
+					></textarea>
+					{#if fieldErrors.message}
+						<span id="message-error" class="error">{fieldErrors.message}</span>
+					{/if}
+				</div>
+
+				<button type="submit" class="button" disabled={submitting}>
+					{#if submitting}
+						Sending...
+					{:else}
+						Send Message
+					{/if}
+				</button>
+			</form>
+		{/if}
 	</div>
 </main>
