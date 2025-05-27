@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { base } from '$app/paths';
-	import type { PageData } from './$types';
 
 	// Using $derived with page object directly
 	const isNotFound = $derived(page.status === 404);
