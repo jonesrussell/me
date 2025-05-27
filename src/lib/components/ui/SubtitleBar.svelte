@@ -19,7 +19,7 @@
 		top: 0;
 		left: 0;
 		width: 100%;
-		height: 2px;
+		height: 0.125rem;
 		background: linear-gradient(90deg, var(--accent-color), var(--secondary-accent));
 		opacity: 0.5;
 		content: '';

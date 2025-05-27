@@ -60,7 +60,7 @@
 		.input {
 			color: CanvasText;
 			background: Canvas;
-			border: 1px solid CanvasText;
+			border: 0.0625rem solid CanvasText;
 		}
 
 		.input:focus {

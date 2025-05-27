@@ -26,13 +26,12 @@
 		transition: all var(--transition-duration) var(--transition-timing);
 		min-width: var(--box-width);
 		max-width: var(--box-width);
-		word-break: break-word;
 		overflow-wrap: break-word;
 	}
 
 	.box:hover {
 		box-shadow: var(--shadow-md);
-		transform: translateY(-0.125ch);
+		transform: translateY(-0.125rem);
 	}
 
 	.box-frame {

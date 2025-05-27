@@ -21,7 +21,7 @@
 	.blog-post:hover {
 		background: var(--color-mix-light);
 		border-color: var(--accent-color);
-		transform: translateY(-0.125ch);
+		transform: translateY(-0.125rem);
 	}
 
 	.title {
