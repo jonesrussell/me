@@ -9,34 +9,30 @@
 			title: 'MP Emailer',
 			description:
 				'A web app that helps constituents easily contact their MPs through email campaigns on important issues.',
-			tech: ['Go', 'Echo', 'MariaDB', 'Tailwind CSS', 'JWT'],
+			tags: ['Go', 'Echo', 'MariaDB', 'Tailwind CSS', 'JWT'],
 			url: 'https://github.com/jonesrussell/mp-emailer',
-			status: 'active',
-			image: '/images/projects/mp-emailer.png'
+			status: 'active'
 		},
 		{
 			title: 'Goforms',
 			description: 'Modern form management system with MariaDB backend.',
-			tech: ['Go', 'Echo', 'MariaDB', 'REST API', 'Docker'],
+			tags: ['Go', 'Echo', 'MariaDB', 'REST API', 'Docker'],
 			url: 'https://github.com/jonesrussell/goforms',
-			status: 'active',
-			image: '/images/projects/goforms.png'
+			status: 'active'
 		},
 		{
 			title: 'Gimbal',
 			description: 'A Gyruss-inspired game built with Ebitengine.',
-			tech: ['Go', 'Ebitengine', 'Game Dev', 'WASM'],
+			tags: ['Go', 'Ebitengine', 'Game Dev', 'WASM'],
 			url: 'https://github.com/jonesrussell/gimbal',
-			status: 'experimental',
-			image: '/images/projects/gimbal.png'
+			status: 'experimental'
 		},
 		{
 			title: 'Goprowl',
 			description: 'Go-based system monitoring and alerting tool.',
-			tech: ['Go', 'Metrics', 'Monitoring', 'CLI'],
+			tags: ['Go', 'Metrics', 'Monitoring', 'CLI'],
 			url: 'https://github.com/jonesrussell/goprowl',
-			status: 'experimental',
-			image: '/images/projects/goprowl.png'
+			status: 'experimental'
 		}
 	];
 
@@ -150,6 +146,18 @@
 			animation: none;
 		}
 	}
+
+	.project-grid-container {
+		container-type: inline-size;
+		container-name: project-grid;
+		width: 100%;
+	}
+
+	.featured-videos-container {
+		container-type: inline-size;
+		container-name: featured-videos;
+		width: 100%;
+	}
 </style>
 
 <svelte:head>
@@ -160,21 +168,21 @@
 	/>
 </svelte:head>
 
-<div class="projects">
+<main class="projects">
 	<div class="hero">
 		<h1>Projects & Content</h1>
 		<p class="subtitle">Open Source & Educational Content</p>
 	</div>
 
 	<div class="container">
-		<section class="section" aria-label="Featured Videos">
-			<h2 id="video-grid-title" class="section-title">Featured Videos</h2>
+		<section class="section featured-videos-container" aria-label="Featured Videos">
+			<h2 id="video-grid-title" class="section-title">Experimental Videos</h2>
 			<VideoGrid {videos} />
 		</section>
 
-		<section class="section" aria-label="Open Source Projects">
+		<section class="section project-grid-container" aria-label="Open Source Projects">
 			<h2 class="section-title">Open Source Projects</h2>
 			<ProjectGrid {projects} />
 		</section>
 	</div>
-</div>
+</main>

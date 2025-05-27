@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Box from '$lib/components/ui/Box.svelte';
+	import Tag from '$lib/components/ui/Tag.svelte';
 	import type { Project } from '$lib/types/project';
 
 	const { project } = $props<{ project: Project }>();
@@ -48,6 +49,13 @@
 		object-fit: cover;
 	}
 
+	img.placeholder {
+		background: var(--bg-darker);
+		opacity: 0.7;
+		filter: grayscale(1);
+		object-fit: contain;
+	}
+
 	@container project-card (width >= 30rem) {
 		.project-card {
 			flex-direction: row;
@@ -69,6 +77,13 @@
 			width: 30%;
 		}
 	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+		margin-top: var(--space-2);
+	}
 </style>
 
 <Box>
@@ -81,14 +96,18 @@
 			</h3>
 			<span class="status status-{project.status}">{project.status}</span>
 			<p class="description">{project.description}</p>
-			<div class="tech-stack">
-				{#each project.tech as tech (tech)}
-					<span class="tech">{tech}</span>
+			<div class="tags">
+				{#each project.tags as tag (tag)}
+					<Tag title={tag}>{tag}</Tag>
 				{/each}
 			</div>
 		</div>
 		<div class="thumbnail">
-			<img src={project.image || '/images/projects/placeholder.png'} alt={project.title} />
+			<img
+				src={project.image || '/images/projects/placeholder.png'}
+				alt={project.image ? project.title : `No image available for ${project.title}`}
+				class:placeholder={!project.image}
+			/>
 		</div>
 	</div>
 </Box>

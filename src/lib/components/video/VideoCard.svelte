@@ -100,7 +100,7 @@
 			<p class="description">{video.description}</p>
 			<div class="tags">
 				{#each video.tags as tag (tag)}
-					<Tag>{tag}</Tag>
+					<Tag title={tag}>{tag}</Tag>
 				{/each}
 			</div>
 		</div>
