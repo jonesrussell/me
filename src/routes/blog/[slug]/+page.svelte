@@ -149,7 +149,7 @@
 		text-decoration: none;
 		color: var(--accent-color);
 		transition: all var(--transition-duration) var(--transition-timing);
-		border-bottom: 1px solid transparent;
+		border-bottom: 0.0625rem solid transparent;
 	}
 
 	.content :global(a:hover) {
@@ -160,7 +160,7 @@
 	.content :global(code) {
 		padding: var(--space-1) var(--space-2);
 		font-family: var(--font-mono);
-		font-size: 0.9em;
+		font-size: 0.9ch;
 		color: var(--accent-color);
 		background: var(--bg-darker);
 		border-radius: var(--radius-sm);
@@ -173,7 +173,7 @@
 		background: var(--bg-darker);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-lg);
-		box-shadow: inset 0 0 0 1px rgb(var(--accent-color-rgb), 0.1);
+		box-shadow: inset 0 0 0 0.0625rem rgb(var(--accent-color-rgb), 0.1);
 		overflow-x: auto;
 	}
 
@@ -185,8 +185,8 @@
 		line-height: 1.75;
 		color: var(--text-color);
 		background: none;
-		tab-size: 2;
-		letter-spacing: -0.025em;
+		tab-size: 0.125rem;
+		letter-spacing: -0.025ch;
 	}
 
 	.content :global(pre code.hljs) {
@@ -196,7 +196,7 @@
 
 	/* Enhance syntax highlighting colors */
 	:global(.hljs-keyword),
-	:global(.hljs-built_in) {
+	:global(.hljs-builtin) {
 		font-weight: 600;
 		color: var(--accent-color);
 	}
@@ -236,7 +236,7 @@
 		color: var(--text-muted);
 		background: var(--bg-darker);
 		border-radius: var(--radius-sm);
-		border-left: 4px solid var(--accent-color);
+		border-left: 0.25rem solid var(--accent-color);
 		font-style: italic;
 	}
 
