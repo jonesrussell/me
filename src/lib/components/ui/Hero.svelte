@@ -49,7 +49,7 @@
 		color: var(--text-muted);
 	}
 
-	@media (width >= 48ch) {
+	@media (--container-md) {
 		.hero {
 			min-height: 60vh;
 			padding: var(--space-20) var(--space-8);
