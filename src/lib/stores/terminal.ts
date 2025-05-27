@@ -48,8 +48,8 @@ const defaultCommands: Command[] = [
        russell [--build] [--innovate] [--ship] <solution>
 
 DESCRIPTION
-       A limitless developer crafting elegant solutions with modern web technologies.
-       Specializes in TypeScript, Go, and cloud architecture.`
+       No limits. An expert Software Developer crafting elegant solutions using modern technologies.
+       Specializes in PHP, TypeScript, Go, and Cloud Architecture.`
 	}
 ];
 
@@ -59,10 +59,10 @@ function createTerminal() {
 		commandVisible: '',
 		outputVisible: '',
 		isTyping: false,
-		loadCommands: () => {},
-		start: () => {},
-		stop: () => {},
-		reset: () => {}
+		loadCommands: () => { },
+		start: () => { },
+		stop: () => { },
+		reset: () => { }
 	});
 
 	function typeCommand(command: string, callback: () => void) {

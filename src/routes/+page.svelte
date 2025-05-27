@@ -8,8 +8,8 @@
 	const YOUTUBE_CHANNEL = 'https://youtube.com/@fullstackdev42';
 	const YOUTUBE_VIDEO_ID = 'B4v7ZDLxiS4';
 	const YOUTUBE_VIDEO_TITLE = 'Add a Google Font to Tailwind CSS | 2023';
-	const YOUTUBE_SECTION_TITLE = 'Latest Video';
-	const YOUTUBE_SECTION_SUBTITLE = 'Check out my latest YouTube tutorial';
+	const YOUTUBE_SECTION_TITLE = 'Tutorial';
+	const YOUTUBE_SECTION_SUBTITLE = 'Web Development';
 	const TERMINAL_COMMAND = 'npm run dev';
 
 	const specialties = [
