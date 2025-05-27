@@ -4,6 +4,19 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
 	plugins: [sveltekit()],
+	optimizeDeps: {
+		esbuildOptions: {
+			define: {
+				global: 'globalThis'
+			}
+		},
+		include: ['sanitize-html']
+	},
+	build: {
+		commonjsOptions: {
+			transformMixedEsModules: true
+		}
+	},
 	test: {
 		coverage: {
 			provider: 'v8',
@@ -64,7 +77,7 @@ export default defineConfig({
 	// Tell Vitest to use the `browser` entry points in `package.json` files, even though it's running in Node
 	resolve: process.env.VITEST
 		? {
-				conditions: ['browser']
-			}
+			conditions: ['browser']
+		}
 		: undefined
 });
