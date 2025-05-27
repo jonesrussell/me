@@ -79,7 +79,7 @@
 		width: 100%;
 		margin: 0 auto;
 		padding: 0 var(--space-4);
-		max-width: min(160ch, 95cqi);
+		max-width: min(var(--measure), 95cqi);
 		flex-direction: column;
 		gap: var(--space-16);
 	}
@@ -103,13 +103,25 @@
 		color: var(--text-color);
 	}
 
-	@container projects-page (width >= 80ch) {
+	@container projects-page (width >= 30rem) {
 		.container {
-			max-width: min(160ch, 90%);
+			max-width: min(var(--measure), 95cqi);
+		}
+	}
+
+	@container projects-page (width >= 50rem) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
 		}
 
 		.section-title {
 			font-size: var(--font-size-4xl);
+		}
+	}
+
+	@container projects-page (width >= 75rem) {
+		.container {
+			max-width: min(var(--measure), 95cqi);
 		}
 	}
 

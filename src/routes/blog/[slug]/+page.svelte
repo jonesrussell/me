@@ -45,11 +45,11 @@
 </script>
 
 <style>
-	@container blog-page (width >= 48ch) {
+	@media (width >= 40rem) {
 		.post {
 			margin-top: var(--space-16);
 			padding: var(--space-8);
-			max-width: min(60ch, 95cqi);
+			max-width: 40rem;
 		}
 
 		h1 {
@@ -61,9 +61,9 @@
 		}
 	}
 
-	@container blog-page (width >= 80ch) {
+	@media (width >= 48rem) {
 		.post {
-			max-width: min(70ch, 95cqi);
+			max-width: 48rem;
 			padding: var(--space-12);
 		}
 
@@ -72,16 +72,64 @@
 		}
 	}
 
+	@media (width >= 64rem) {
+		.post {
+			max-width: 50rem;
+		}
+	}
+
+	@container blog-page (width >= 30rem) {
+		.post {
+			margin-top: var(--space-16);
+			padding: var(--space-8);
+			max-width: min(var(--measure), 95cqi);
+		}
+
+		h1 {
+			font-size: var(--font-size-2xl);
+		}
+
+		.content {
+			font-size: var(--font-size-lg);
+		}
+	}
+
+	@container blog-page (width >= 50rem) {
+		.post {
+			max-width: min(var(--measure), 95cqi);
+			padding: var(--space-12);
+		}
+
+		h1 {
+			font-size: var(--font-size-3xl);
+		}
+	}
+
+	@container blog-page (width >= 75rem) {
+		.post {
+			max-width: min(var(--measure), 95cqi);
+		}
+	}
+
 	.blog {
 		container-type: inline-size;
 		container-name: blog-page;
 		width: 100%;
-		padding: var(--space-8) 0;
+		padding: var(--space-4) 0;
+	}
+
+	.container {
+		display: flex;
+		width: 100%;
+		margin: 0 auto;
+		padding: 0 var(--space-4);
+		max-width: min(var(--measure), 95cqi);
+		flex-direction: column;
 	}
 
 	.post {
 		width: 100%;
-		max-width: min(40ch, 95cqi);
+		max-width: 100%;
 		margin: var(--space-8) auto 0;
 		padding: var(--space-4);
 	}
@@ -258,27 +306,29 @@
 </style>
 
 <div class="blog">
-	<div class="post" in:fade={{ duration: 500, easing: elasticOut }}>
-		{#if error}
-			<div class="error" role="alert">
-				<p>{error}</p>
-			</div>
-		{:else if post}
-			<header class="post-header">
-				<h1>{post.title}</h1>
-				<div class="metadata">
-					<time datetime={post.published}>{formatPostDate(post.published)}</time>
+	<div class="container">
+		<div class="post" in:fade={{ duration: 500, easing: elasticOut }}>
+			{#if error}
+				<div class="error" role="alert">
+					<p>{error}</p>
 				</div>
-			</header>
-			<div class="content">
-				{#if post.content}
-					<SafeHtml content={stripCdata(post.content)} className="content" />
-				{:else}
-					<div>No content found for this post.</div>
-				{/if}
-			</div>
-		{:else}
-			<div class="loading">Loading...</div>
-		{/if}
+			{:else if post}
+				<header class="post-header">
+					<h1>{post.title}</h1>
+					<div class="metadata">
+						<time datetime={post.published}>{formatPostDate(post.published)}</time>
+					</div>
+				</header>
+				<div class="content">
+					{#if post.content}
+						<SafeHtml content={stripCdata(post.content)} className="content" />
+					{:else}
+						<div>No content found for this post.</div>
+					{/if}
+				</div>
+			{:else}
+				<div class="loading">Loading...</div>
+			{/if}
+		</div>
 	</div>
 </div>
