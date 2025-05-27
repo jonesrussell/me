@@ -1,5 +1,5 @@
 <script lang="ts">
-	import FormField from '$lib/components/ui/FormField.svelte';
+	import FormField from '$lib/components/content/FormField.svelte';
 
 	let name = $state('');
 	let email = $state('');
