@@ -39,18 +39,18 @@
 		margin-bottom: var(--space-4);
 		flex-direction: column;
 		gap: var(--space-2);
+		text-align: center;
 	}
 
 	.section-title {
 		font-size: var(--font-size-4xl);
 		font-weight: var(--font-weight-bold);
-		text-align: left;
 		color: var(--text-color);
 	}
 
 	.section-desc {
+		margin: 0 auto;
 		font-size: var(--font-size-base);
-		text-align: left;
 		color: var(--text-muted);
 		max-width: var(--measure);
 	}
