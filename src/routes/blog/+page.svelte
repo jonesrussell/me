@@ -1,37 +1,64 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { fetchFeed, blogStore } from '$lib/services/blog-service';
-	import { writable } from 'svelte/store';
+	import { blogStore, fetchFeed } from '$lib/services/blog-service';
+	import type { PageData } from './$types';
 	import Hero from '$lib/components/ui/Hero.svelte';
 	import DevTo from '$lib/components/blog/DevTo.svelte';
 	import BlogPostGrid from '$lib/components/blog/BlogPostGrid.svelte';
 	import BlogError from '$lib/components/blog/BlogError.svelte';
-	import type { BlogPost as BlogPostType } from '$lib/types/blog';
+	import type { BlogPost } from '$lib/types/blog';
 
-	const blogPosts = writable<BlogPostType[]>([]);
+	const { data } = $props<{ data: PageData }>();
+
+	let loading = $state(false);
+	let error = $state<string | null>(null);
 	let currentPage = $state(1);
 	let hasMore = $state(true);
-	const pageSize = 6;
-
-	async function loadMore() {
-		if (!$blogStore.loading && hasMore) {
-			try {
-				const result = await fetchFeed({ page: currentPage, pageSize });
-				blogPosts.update((posts: BlogPostType[]) => [...posts, ...result.items]);
-				hasMore = result.hasMore;
-			} catch (error) {
-				console.error('Error loading blog posts:', error);
-			} finally {
-				currentPage++;
-			}
-		} else {
-			console.log('Skipping loadMore:', { loading: $blogStore.loading, hasMore });
-		}
-	}
 
 	onMount(() => {
-		loadMore();
+		// Initialize store with server-side data
+		blogStore.set({
+			posts: data.initialPosts,
+			loading: false,
+			error: null
+		});
 	});
+
+	async function loadMore() {
+		if (loading) return;
+		loading = true;
+		error = null;
+
+		try {
+			const currentPosts = $blogStore.posts;
+			const result = await fetchFeed({
+				page: Math.floor(currentPosts.length / 6) + 1,
+				pageSize: 6
+			});
+
+			blogStore.update((store) => ({
+				...store,
+				posts: [...store.posts, ...result.items],
+				loading: false
+			}));
+			hasMore = result.hasMore;
+		} catch (e) {
+			error = e instanceof Error ? e.message : 'Failed to load more posts';
+			blogStore.update((store) => ({
+				...store,
+				loading: false,
+				error: error
+					? {
+							type: 'FETCH_ERROR',
+							message: error,
+							timestamp: Date.now()
+						}
+					: null
+			}));
+		} finally {
+			loading = false;
+		}
+	}
 </script>
 
 <style>
@@ -179,8 +206,8 @@
 
 	<div class="container">
 		<div style:visibility={$blogStore.loading && currentPage === 1 ? 'hidden' : 'visible'}>
-			{#if $blogPosts.length > 0}
-				<BlogPostGrid posts={$blogPosts} />
+			{#if $blogStore.posts.length > 0}
+				<BlogPostGrid posts={$blogStore.posts} />
 			{:else if !$blogStore.loading}
 				<div class="empty-state">
 					<p>No blog posts available at the moment.</p>
