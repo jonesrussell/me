@@ -59,18 +59,16 @@
 </script>
 
 <style>
-	/* Tablet and up */
+	@media (width >= 48ch) {
+		.hero {
+			min-height: 60vh;
+			padding: var(--space-20) var(--space-8);
+		}
+	}
+
 	@container projects-page (width >= 48ch) {
 		.container {
-			max-width: min(80ch, 95cqi);
-		}
-
-		h1 {
-			font-size: var(--font-size-6xl);
-		}
-
-		.subtitle {
-			font-size: var(--font-size-2xl);
+			max-width: min(var(--measure), 95%);
 		}
 
 		.section-title {
@@ -78,18 +76,9 @@
 		}
 	}
 
-	/* Desktop */
 	@container projects-page (width >= 80ch) {
 		.container {
-			max-width: min(160ch, 95cqi);
-		}
-
-		h1 {
-			font-size: var(--font-size-7xl);
-		}
-
-		.subtitle {
-			font-size: var(--font-size-3xl);
+			max-width: min(var(--measure), 90%);
 		}
 
 		.section-title {
@@ -104,6 +93,7 @@
 		}
 	}
 
+	/* Consistent container and hero styles */
 	.projects {
 		container-type: inline-size;
 		container-name: projects-page;
@@ -115,15 +105,14 @@
 		display: flex;
 		position: relative;
 		width: 100%;
-		margin: calc(-1 * var(--space-24)) 0 0;
-		padding: var(--space-24) 0;
+		padding: var(--space-12) var(--space-4);
 		text-align: center;
-		background: linear-gradient(to bottom, var(--surface-color) 0%, var(--bg-color) 100%);
+		background: linear-gradient(to bottom, var(--bg-color), var(--bg-darker));
 		border-radius: var(--radius-lg);
-		min-height: 50vh;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		min-height: 50vh;
 		overflow: hidden;
 	}
 
@@ -135,47 +124,22 @@
 		pointer-events: none;
 	}
 
-	h1 {
-		margin: 0 0 var(--space-6) 0;
-		font-family: var(--font-mono);
-		font-size: var(--font-size-5xl);
-		font-weight: var(--font-weight-bold);
-		line-height: var(--line-height-tight);
-		color: var(--text-color);
-		background: linear-gradient(to right, var(--text-color), var(--text-muted));
-		letter-spacing: var(--letter-spacing-tight);
-		text-shadow: 0 0.125rem 0.25rem var(--color-mix-faint);
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-
-	.subtitle {
-		margin: 0;
-		font-family: var(--font-mono);
-		font-size: var(--font-size-xl);
-		font-weight: var(--font-weight-normal);
-		line-height: var(--line-height-base);
-		color: var(--text-muted);
-		letter-spacing: var(--letter-spacing-base);
-		max-width: var(--measure);
-	}
-
 	.container {
 		display: flex;
 		width: 100%;
 		margin: 0 auto;
 		padding: 0 var(--space-4);
-		max-width: min(40ch, 95cqi);
+		max-width: min(var(--measure), 95%);
 		flex-direction: column;
-		align-items: center;
+		gap: var(--space-16);
 	}
 
 	.section {
 		display: flex;
 		width: 100%;
-		margin-top: var(--space-16);
 		flex-direction: column;
 		align-items: center;
+		margin-top: 0;
 	}
 
 	.section-title {

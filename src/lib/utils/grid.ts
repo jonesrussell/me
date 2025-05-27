@@ -6,13 +6,6 @@
  */
 
 /**
- * Aligns a value to the character grid
- */
-export function alignToGrid(value: number): number {
-	return Math.round(value);
-}
-
-/**
  * Calculates content width in character units
  */
 export function calculateWidth(content: string): number {
