@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { base } from '$app/paths';
+	import type { PageData } from './$types';
 
-	const isNotFound = $derived($page.status === 404);
+	// Using $derived with page object directly
+	const isNotFound = $derived(page.status === 404);
 	const errorMessage = $derived(
-		isNotFound ? 'Page not found' : $page.error?.message || 'Something went wrong'
+		isNotFound ? 'Page not found' : page.error?.message || 'Something went wrong'
 	);
 </script>
 
@@ -54,7 +56,7 @@
 </style>
 
 <div class="error">
-	<h1>{$page.status}</h1>
+	<h1>{page.status}</h1>
 	<p>{errorMessage}</p>
-	<a href={`${base}/me`}>Return home</a>
+	<a href={`${base}`}>Return home</a>
 </div>
