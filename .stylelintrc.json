@@ -1,9 +1,14 @@
 {
 	"extends": ["stylelint-config-standard", "stylelint-config-clean-order"],
-	"plugins": [
-		"stylelint-order"
+	"plugins": ["stylelint-order"],
+	"ignoreFiles": [
+		"**/coverage/**",
+		"build/**",
+		"dist/**",
+		".svelte-kit/**",
+		"node_modules/**",
+		".cache/**"
 	],
-	"ignoreFiles": ["**/coverage/**"],
 	"rules": {
 		"unit-allowed-list": ["rem", "ch", "px", "%", "deg", "vh", "vw", "fr", "s", "cqi", "ms"],
 		"unit-disallowed-list": ["em"],
@@ -25,10 +30,7 @@
 		"order/properties-order": [
 			{
 				"groupName": "Container",
-				"properties": [
-					"container-type",
-					"container-name"
-				]
+				"properties": ["container-type", "container-name"]
 			},
 			{
 				"groupName": "Box Model",
@@ -116,23 +118,16 @@
 		"selector-max-type": 2,
 		"selector-max-combinators": 2,
 		"selector-max-specificity": "0,3,0",
-		"color-hex-case": "lower",
-		"color-hex-length": "short",
-		"color-named": "never",
-		"color-no-invalid-hex": true,
+		"color-function-notation": "modern",
 		"font-family-name-quotes": "always-where-recommended",
 		"font-weight-notation": "numeric",
-		"number-leading-zero": "always",
-		"number-no-trailing-zeros": true,
-		"length-zero-no-unit": true,
-		"string-quotes": "double",
-		"unit-case": "lower",
+		"alpha-value-notation": "number",
+		"length-zero-no-unit": null,
 		"time-min-milliseconds": 100,
-		"function-calc-no-unspaced-operator": true,
+		"function-calc-no-unspaced-operator": null,
 		"function-linear-gradient-no-nonstandard-direction": true,
 		"function-name-case": "lower",
 		"function-url-quotes": "always",
-		"function-whitespace-after": "always",
 		"declaration-no-important": true,
 		"value-no-vendor-prefix": true,
 		"property-no-vendor-prefix": true,
