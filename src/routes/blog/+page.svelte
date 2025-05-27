@@ -35,7 +35,7 @@
 
 <style>
 	/* Tablet and up */
-	@media (width >= 40em) {
+	@media (width >= 30rem) {
 		.container {
 			max-width: min(80ch, 95cqi);
 		}
@@ -54,7 +54,7 @@
 	}
 
 	/* Desktop */
-	@media (width >= 64em) {
+	@media (width >= 50rem) {
 		.container {
 			max-width: min(160ch, 95cqi);
 		}
