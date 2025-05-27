@@ -1,10 +1,11 @@
 <script lang="ts">
 	import '../app.css';
 	import SkipToMain from '$lib/components/navigation/SkipToMain.svelte';
-	import Header from '$lib/components/ui/Header.svelte';
-	import Footer from '$lib/components/ui/Footer.svelte';
-	import NewsletterCTA from '$lib/components/ui/NewsletterCTA.svelte';
+	import Header from '$lib/components/layout/Header.svelte';
+	import Footer from '$lib/components/layout/Footer.svelte';
+	import NewsletterCTA from '$lib/components/content/NewsletterCTA.svelte';
 	import { page } from '$app/stores';
+	import { theme } from '$lib/stores/theme';
 
 	const { children } = $props<{
 		children: () => unknown;

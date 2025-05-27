@@ -131,11 +131,6 @@
 		.newsletter {
 			padding: var(--space-8);
 		}
-
-		.form {
-			flex-direction: row;
-			align-items: center;
-		}
 	}
 
 	@container newsletter (width >= 50rem) {
@@ -153,7 +148,7 @@
 		position: absolute;
 		inset: 0;
 		background: radial-gradient(circle at center, var(--accent-color) 0%, transparent 70%);
-		opacity: 0.03;
+		opacity: 0.08;
 		z-index: 0;
 		animation: pulse 4s ease-in-out infinite;
 	}
@@ -163,7 +158,7 @@
 		position: absolute;
 		inset: 0;
 		background: radial-gradient(circle at center, var(--accent-color) 0%, transparent 70%);
-		opacity: 0.02;
+		opacity: 0.05;
 		z-index: 0;
 		animation: pulse 4s ease-in-out infinite;
 		animation-delay: 2s;
@@ -171,17 +166,17 @@
 
 	@keyframes pulse {
 		0% {
-			opacity: 0.02;
+			opacity: 0.05;
 			transform: scale(0.8);
 		}
 
 		50% {
-			opacity: 0.03;
-			transform: scale(1.2);
+			opacity: 0.1;
+			transform: scale(1.4);
 		}
 
 		100% {
-			opacity: 0.02;
+			opacity: 0.05;
 			transform: scale(0.8);
 		}
 	}
