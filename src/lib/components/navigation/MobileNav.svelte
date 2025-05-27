@@ -91,11 +91,11 @@
 
 	@media (forced-colors: active) {
 		.mobile-nav {
-			border: 1px solid CanvasText;
+			border: 0.0625rem solid CanvasText;
 		}
 
 		.mobile-nav a {
-			border: 1px solid CanvasText;
+			border: 0.0625rem solid CanvasText;
 		}
 
 		.mobile-nav a:hover,
@@ -104,15 +104,6 @@
 			background: Canvas;
 			border-color: Highlight;
 		}
-	}
-
-	.menu-icon {
-		width: 1.75rem;
-		height: 1.75rem;
-	}
-
-	.menu-item {
-		padding: 0.75rem 1rem;
 	}
 </style>
 
