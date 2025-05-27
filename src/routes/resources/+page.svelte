@@ -368,12 +368,12 @@
 	/>
 </svelte:head>
 
-<div class="resources">
-	<div class="hero">
-		<h1>Developer Resources</h1>
-		<p class="subtitle">Essential Tools & Learning Materials</p>
-	</div>
+<section class="hero">
+	<h1>Developer Resources</h1>
+	<p class="subtitle">Essential Tools & Learning Materials</p>
+</section>
 
+<main class="resources">
 	<div class="container">
 		<div class="sections">
 			{#each Object.entries(groupedResources) as [category, resources] (category)}
@@ -384,4 +384,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</main>
