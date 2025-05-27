@@ -49,14 +49,14 @@
 		justify-content: center;
 		width: 100%;
 		min-height: 50vh;
-		padding: var(--space-8) var(--space-4);
+		padding: var(--space-12) var(--space-4);
 		background: linear-gradient(to bottom, var(--bg-color), var(--bg-darker));
 	}
 
 	@media (width >= 48ch) {
 		.hero {
 			min-height: 60vh;
-			padding: var(--space-16) var(--space-8);
+			padding: var(--space-20) var(--space-8);
 		}
 	}
 
@@ -72,6 +72,10 @@
 			max-width: min(160ch, 95cqi);
 			flex-direction: column;
 			gap: var(--space-4);
+		}
+
+		& :global(.youtube-section) {
+			margin-top: var(--space-4);
 		}
 	}
 

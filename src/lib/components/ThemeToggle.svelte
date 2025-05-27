@@ -36,7 +36,7 @@
 
 	.toggle-button {
 		display: flex;
-		width: 2.5ch;
+		width: 2.5rem;
 		height: 2.5rem;
 		padding: 0.5rem;
 		color: var(--text-color);
@@ -52,6 +52,11 @@
 	.toggle-button:hover {
 		background: var(--color-mix-light);
 		border-color: var(--accent-color);
+	}
+
+	.toggle-button :global(svg) {
+		width: 1.25rem;
+		height: 1.25rem;
 	}
 
 	.dropdown {

@@ -36,6 +36,15 @@
 			border: 0.0625rem solid CanvasText;
 		}
 	}
+
+	.youtube-section {
+		container-type: inline-size;
+		padding: var(--space-8);
+		background: var(--bg-color);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-lg);
+		box-shadow: var(--shadow-sm);
+	}
 </style>
 
 <section class="youtube-section">
