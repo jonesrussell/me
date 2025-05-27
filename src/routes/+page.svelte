@@ -86,8 +86,8 @@
 
 	@container home-page (min-width: 1280px) {
 		.home-container {
-			max-width: min(var(--measure), 95cqi);
-			padding-inline: var(--space-20);
+			max-width: 100%;
+			padding-inline: 0;
 		}
 	}
 

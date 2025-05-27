@@ -139,21 +139,14 @@
 		flex: 1;
 	}
 
-	@container specialty-grid (width >= var(--breakpoint-sm)) {
+	@container specialty-grid (width >= 40rem) {
 		.grid {
 			grid-template-columns: repeat(2, 1fr);
 			gap: var(--space-6);
 		}
 	}
 
-	@container specialty-grid (width >= var(--breakpoint-md)) {
-		.grid {
-			grid-template-columns: repeat(2, 1fr);
-			gap: var(--space-8);
-		}
-	}
-
-	@container specialty-grid (width >= var(--breakpoint-xl)) {
+	@container specialty-grid (width >= 80rem) {
 		.grid {
 			grid-template-columns: repeat(4, 1fr);
 			gap: var(--space-6);
