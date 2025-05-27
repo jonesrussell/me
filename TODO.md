@@ -6,9 +6,7 @@
     - [x] Resources page
     - [x] ResourceSection component
     - [ ] Apply to remaining components
-  - [x] Add CSS Container Queries for responsive layouts
-    - [x] Resources page container
-    - [x] ResourceSection component
+  - [ ] Implement CSS Container Queries for responsive layouts
     - [ ] Apply to remaining components
   - [ ] Use `:has()` selector for complex state styling
     - [ ] Add for resource card hover states
@@ -17,8 +15,7 @@
     - [ ] Define base layer
     - [ ] Define component layer
     - [ ] Define utility layer
-  - [x] Use CSS Logical Properties for RTL support
-    - [x] Add to resources layout
+  - [ ] Use CSS Logical Properties for RTL support
     - [ ] Apply to remaining components
   - [ ] Add CSS View Transitions for animations
     - [ ] Add page transitions
@@ -36,10 +33,12 @@
     - [x] Badge component
     - [x] NewsletterCTA component
     - [ ] Convert remaining components
+  - [ ] Convert remaining components to use runes
   - [x] Replace `let` with `$state`
     - [x] Badge component
     - [x] NewsletterCTA component
     - [ ] Convert remaining components
+  - [ ] Replace remaining `let` with `$state`
   - [ ] Use `$derived` for computed values
     - [ ] Add to form validation
     - [ ] Add to navigation state
@@ -58,7 +57,7 @@
   - [ ] Add proper error boundaries
     - [ ] Add to form submissions
     - [ ] Add to data fetching
-  - [ ] Implement component lifecycle hooks
+  - [ ] Implement component lifecycle hooks using `$effect`
     - [ ] Add cleanup for event listeners
     - [ ] Add cleanup for subscriptions
 
@@ -134,49 +133,49 @@
 
   - [ ] Create Reusable Components
     - [ ] FormField.svelte
-      - [ ] Create base component
+      - [ ] Create base component with runes
       - [ ] Add TypeScript types
       - [ ] Implement accessibility features
       - [ ] Add validation support
       - [ ] Create unit tests
     - [ ] Card.svelte
-      - [ ] Create base component
+      - [ ] Create base component with runes
       - [ ] Add TypeScript types
       - [ ] Implement responsive design
       - [ ] Add hover effects
       - [ ] Create unit tests
     - [ ] Icon.svelte
-      - [ ] Create base component
+      - [ ] Create base component with runes
       - [ ] Add TypeScript types
       - [ ] Implement icon set support
       - [ ] Add accessibility features
       - [ ] Create unit tests
     - [ ] Grid.svelte
-      - [ ] Create base component
+      - [ ] Create base component with runes
       - [ ] Add TypeScript types
       - [ ] Implement responsive columns
       - [ ] Add gap control
       - [ ] Create unit tests
     - [ ] Section.svelte
-      - [ ] Create base component
+      - [ ] Create base component with runes
       - [ ] Add TypeScript types
       - [ ] Implement spacing system
       - [ ] Add background variations
       - [ ] Create unit tests
     - [ ] Link.svelte
-      - [ ] Create base component
+      - [ ] Create base component with runes
       - [ ] Add TypeScript types
       - [ ] Implement active states
       - [ ] Add accessibility features
       - [ ] Create unit tests
     - [ ] Badge.svelte
-      - [ ] Create base component
+      - [ ] Create base component with runes
       - [ ] Add TypeScript types
       - [ ] Implement color variants
       - [ ] Add size options
       - [ ] Create unit tests
     - [ ] Tooltip.svelte
-      - [ ] Create base component
+      - [ ] Create base component with runes
       - [ ] Add TypeScript types
       - [ ] Implement positioning
       - [ ] Add accessibility features
