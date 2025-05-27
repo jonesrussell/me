@@ -20,8 +20,6 @@
 		if (entry.isIntersecting) {
 			revealedStates[index] = true;
 			activeIntersection = index;
-		} else if (activeIntersection === index) {
-			activeIntersection = null;
 		}
 	}
 </script>
@@ -32,24 +30,29 @@
 		flex-direction: column;
 		gap: var(--space-4);
 		width: 100%;
+		margin-top: var(--space-16);
 	}
 
 	.section-header {
-		margin-bottom: var(--space-2);
-		text-align: center;
+		display: flex;
+		width: 100%;
+		margin-bottom: var(--space-4);
+		flex-direction: column;
+		gap: var(--space-2);
 	}
 
 	.section-title {
-		margin: 0;
-		font-size: var(--font-size-xl);
+		font-size: var(--font-size-4xl);
 		font-weight: var(--font-weight-bold);
+		text-align: left;
 		color: var(--text-color);
 	}
 
 	.section-desc {
-		margin-top: var(--space-2);
 		font-size: var(--font-size-base);
+		text-align: left;
 		color: var(--text-muted);
+		max-width: var(--measure);
 	}
 
 	.specialties {
@@ -61,15 +64,31 @@
 	}
 
 	@container specialties (width >= 30rem) {
+		.specialties-container {
+			margin-top: var(--space-12);
+		}
+
 		.specialties {
 			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.section-title {
+			font-size: var(--font-size-3xl);
 		}
 	}
 
 	@container specialties (width >= 50rem) {
+		.specialties-container {
+			margin-top: var(--space-16);
+		}
+
 		.specialties {
 			grid-template-columns: repeat(3, 1fr);
 			gap: var(--space-6);
+		}
+
+		.section-title {
+			font-size: var(--font-size-4xl);
 		}
 	}
 
@@ -82,7 +101,7 @@
 
 <div class="specialties-container">
 	<div class="section-header">
-		<h2 class="section-title">Our Specialties</h2>
+		<h2 class="section-title">My Specialties</h2>
 		<p class="section-desc">Expert solutions for your unique challenges</p>
 	</div>
 	<div class="specialties">
