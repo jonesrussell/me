@@ -15,15 +15,15 @@
 	section {
 		--dev-to-bg: url('/images/dev.to.jpeg');
 
+		container-type: inline-size;
+		container-name: dev-to;
+
 		position: relative;
 		width: 100%;
 		height: 50vh;
-		min-height: 20rem;
-		max-height: 40rem;
-		margin: var(--space-16) auto;
+		min-height: 15rem;
 		text-align: center;
 		background: var(--bg-darker);
-		max-width: min(var(--measure), 95%);
 		overflow: hidden;
 	}
 
@@ -42,7 +42,7 @@
 		position: relative;
 		width: 100%;
 		height: 100%;
-		padding-bottom: var(--space-8);
+		padding: var(--space-4);
 		flex-direction: column;
 		align-items: stretch;
 		justify-content: flex-end;
@@ -53,9 +53,8 @@
 	.source-note {
 		width: 100%;
 		margin: 0;
-		margin-left: 0;
-		padding: var(--space-6) var(--space-8);
-		font-size: var(--font-size-lg);
+		padding: var(--space-4);
+		font-size: var(--font-size-base);
 		line-height: 1.5;
 		text-align: left;
 		color: var(--text);
@@ -66,10 +65,21 @@
 		box-sizing: border-box;
 	}
 
+	.heading {
+		margin-bottom: var(--space-4);
+		padding: var(--space-4);
+		font-size: var(--font-size-2xl);
+		font-weight: 700;
+		text-align: center;
+		color: var(--text);
+		max-width: 100%;
+		box-sizing: border-box;
+	}
+
 	.source-note .second-line {
 		display: block;
-		margin-top: 1rem;
-		font-size: var(--font-size-3xl);
+		margin-top: 0.5rem;
+		font-size: var(--font-size-xl);
 	}
 
 	.source-note a {
@@ -95,33 +105,39 @@
 	@container dev-to (width >= 30rem) {
 		section {
 			height: 40vh;
+			max-width: min(var(--measure), 95%);
 		}
 	}
 
 	@container dev-to (width >= 50rem) {
 		section {
-			height: 35vh;
+			height: 30vh;
+			max-width: min(var(--measure), 90%);
 		}
 	}
 
 	@container dev-to (width >= 75rem) {
 		section {
-			height: 30vh;
+			height: 25vh;
+			max-width: min(var(--measure), 85%);
 		}
 	}
 </style>
 
-<section>
-	<div class="dev-to-section">
-		<p class="source-note">
-			This page and <a href={devToUrl} target="_blank" rel="noopener noreferrer">DEV.to</a>
-			are syndicated
-			<span class="second-line">
-				from my
-				<a href="https://jonesrussell.github.io/blog/" target="_blank" rel="noopener noreferrer"
-					>Jekyll-powered blog</a
-				>
-			</span>
-		</p>
-	</div>
-</section>
+<div class="container">
+	<h2 class="heading">My Dev.to Posts</h2>
+	<section>
+		<div class="dev-to-section">
+			<p class="source-note">
+				This page and <a href={devToUrl} target="_blank" rel="noopener noreferrer">DEV.to</a>
+				are syndicated
+				<span class="second-line">
+					from my
+					<a href="https://jonesrussell.github.io/blog/" target="_blank" rel="noopener noreferrer"
+						>Jekyll-powered blog</a
+					>
+				</span>
+			</p>
+		</div>
+	</section>
+</div>
