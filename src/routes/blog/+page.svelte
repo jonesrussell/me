@@ -35,13 +35,44 @@
 
 <style>
 	/* Tablet and up */
-	@media (width >= 30rem) {
+	@container blog-page (width >= 30rem) {
 		.container {
-			max-width: min(80ch, 95cqi);
+			max-width: min(var(--measure), 95%);
 		}
 
 		.posts {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30ch), 1fr));
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 35ch), 1fr));
+		}
+
+		.hero {
+			margin: calc(-1 * var(--space-20)) 0 0;
+			padding: var(--space-20) 0;
+			min-height: 45vh;
+		}
+
+		h1 {
+			font-size: var(--font-size-5xl);
+		}
+
+		.subtitle {
+			font-size: var(--font-size-xl);
+		}
+	}
+
+	/* Small desktop and up */
+	@container blog-page (width >= 50rem) {
+		.container {
+			max-width: min(var(--measure), 95%);
+		}
+
+		.posts {
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 45ch), 1fr));
+		}
+
+		.hero {
+			margin: calc(-1 * var(--space-24)) 0 0;
+			padding: var(--space-24) 0;
+			min-height: 50vh;
 		}
 
 		h1 {
@@ -53,14 +84,14 @@
 		}
 	}
 
-	/* Desktop */
-	@media (width >= 50rem) {
+	/* Large desktop */
+	@container blog-page (width >= 75rem) {
 		.container {
-			max-width: min(160ch, 95cqi);
+			max-width: min(var(--measure), 95%);
 		}
 
 		.posts {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 50ch), 1fr));
 		}
 
 		h1 {
@@ -78,6 +109,7 @@
 		}
 	}
 
+	/* Mobile first */
 	.blog {
 		container-type: inline-size;
 		container-name: blog-page;
@@ -87,14 +119,14 @@
 
 	.container {
 		width: 100%;
-		max-width: min(40ch, 95cqi);
+		max-width: min(var(--measure), 95%);
 		margin: 0 auto;
 		padding: 0 var(--space-4);
 	}
 
 	.posts {
 		display: grid;
-		grid-template-columns: minmax(min(100%, 30ch), 1fr);
+		grid-template-columns: 1fr;
 		gap: var(--space-8);
 		width: 100%;
 	}
@@ -103,30 +135,22 @@
 		display: flex;
 		position: relative;
 		width: 100%;
-		margin: calc(-1 * var(--space-24)) 0 0;
-		padding: var(--space-24) 0;
+		margin: calc(-1 * var(--space-16)) 0 0;
+		padding: var(--space-16) 0;
 		text-align: center;
 		background: linear-gradient(to bottom, var(--surface-color) 0%, var(--bg-color) 100%);
 		border-radius: var(--radius-lg);
-		min-height: 50vh;
+		min-height: 40vh;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 		overflow: hidden;
 	}
 
-	.hero::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: radial-gradient(circle at center, var(--color-mix-faint) 0%, transparent 70%);
-		pointer-events: none;
-	}
-
 	h1 {
-		margin: 0 0 var(--space-6) 0;
+		margin: 0 0 var(--space-4) 0;
 		font-family: var(--font-mono);
-		font-size: var(--font-size-5xl);
+		font-size: var(--font-size-4xl);
 		font-weight: var(--font-weight-bold);
 		line-height: var(--line-height-tight);
 		color: var(--text-color);
@@ -140,7 +164,7 @@
 	.subtitle {
 		margin: 0;
 		font-family: var(--font-mono);
-		font-size: var(--font-size-xl);
+		font-size: var(--font-size-lg);
 		font-weight: var(--font-weight-normal);
 		line-height: var(--line-height-base);
 		color: var(--text-muted);
@@ -226,6 +250,12 @@
 		transform: translateY(-0.125rem);
 		border-color: var(--accent-color);
 	}
+
+	.dev-to-wrapper {
+		margin-top: var(--space-16);
+		padding-top: var(--space-16);
+		border-top: var(--border-width) solid var(--border-color);
+	}
 </style>
 
 <svelte:head>
@@ -279,5 +309,7 @@
 		{/if}
 	</div>
 
-	<DevTo />
+	<div class="dev-to-wrapper">
+		<DevTo />
+	</div>
 </div>
