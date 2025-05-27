@@ -23,7 +23,7 @@ alwaysApply: false
 - Test component rendering
 - Verify component behavior
 - Test user interactions
-- Check accessibility
+- Check accessibility (see [Design Standards](mdc:design-standards.mdc))
 - Validate component state
 
 ## E2E Testing
@@ -61,5 +61,5 @@ describe('Component', () => {
 - Clean up after tests
 - Use appropriate assertions
 - Mock external services
-- Test error handling
-- Verify accessibility
+- Test error handling (see [Development Standards](mdc:development-standards.mdc))
+- Verify accessibility (see [Design Standards](mdc:design-standards.mdc))
