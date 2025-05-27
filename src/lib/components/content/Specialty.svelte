@@ -76,7 +76,9 @@
 	class:visible={isRevealed}
 	class:intersecting={isIntersecting}
 	use:hoverScale
-	style="--initial-offset: {index % 2 === 0 ? '-100%' : '100%'}"
+	style="
+
+--initial-offset: {index % 2 === 0 ? '-100%' : '100%'}"
 >
 	<div class="specialty-icon">{specialty.icon}</div>
 	<div class="specialty-content">
