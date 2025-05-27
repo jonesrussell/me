@@ -61,7 +61,6 @@
 		background: var(--bg-darker);
 		box-shadow: var(--shadow-md);
 		backdrop-filter: blur(0.5rem);
-		white-space: nowrap;
 		box-sizing: border-box;
 	}
 
@@ -112,14 +111,32 @@
 	@container dev-to (width >= 50rem) {
 		section {
 			height: 30vh;
-			max-width: min(var(--measure), 90%);
+		}
+
+		.source-note {
+			padding: var(--space-12);
+			font-size: var(--font-size-3xl);
+		}
+
+		.source-note .second-line {
+			margin-top: 1.5rem;
+			font-size: var(--font-size-5xl);
 		}
 	}
 
 	@container dev-to (width >= 75rem) {
 		section {
 			height: 25vh;
-			max-width: min(var(--measure), 85%);
+		}
+
+		.source-note {
+			padding: var(--space-16);
+			font-size: var(--font-size-4xl);
+		}
+
+		.source-note .second-line {
+			margin-top: 2rem;
+			font-size: var(--font-size-6xl);
 		}
 	}
 </style>
