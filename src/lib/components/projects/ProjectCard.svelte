@@ -98,11 +98,7 @@
 			<p class="description">{project.description}</p>
 			<div class="tags">
 				{#each project.tags as tag (tag)}
-					<Tag title={tag}>
-						{#snippet children()}
-							{tag}
-						{/snippet}
-					</Tag>
+					<Tag title={tag}>{tag}</Tag>
 				{/each}
 			</div>
 		</div>
