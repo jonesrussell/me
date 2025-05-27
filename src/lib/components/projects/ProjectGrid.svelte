@@ -6,42 +6,36 @@
 </script>
 
 <style>
-	h2 {
-		margin: var(--space-8) 0 var(--space-4) 0;
-		font-size: var(--font-size-lg);
-		line-height: var(--line-height-tight);
-		color: var(--text-color);
-	}
-
 	.project-grid {
+		container-type: inline-size;
+		container-name: project-grid;
 		display: grid;
 		gap: var(--space-4);
+		grid-template-columns: 1fr;
+		width: 100%;
 	}
 
-	@media (width >= 50rem) {
-		.project-grid {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
-		}
-	}
-
-	@media (width >= 80rem) {
-		h2 {
-			margin: var(--space-12) 0 var(--space-6) 0;
-			font-size: var(--font-size-xl);
-		}
-
+	@container project-grid (width >= 30rem) {
 		.project-grid {
 			grid-template-columns: repeat(2, 1fr);
-			gap: var(--space-8);
+		}
+	}
+
+	@container project-grid (width >= 50rem) {
+		.project-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	@container project-grid (width >= 75rem) {
+		.project-grid {
+			grid-template-columns: repeat(4, 1fr);
 		}
 	}
 </style>
 
-<section>
-	<h2>Open Source Projects</h2>
-	<div class="project-grid">
-		{#each projects as project (project.title)}
-			<ProjectCard {project} />
-		{/each}
-	</div>
-</section>
+<div class="project-grid">
+	{#each projects as project (project.title)}
+		<ProjectCard {project} />
+	{/each}
+</div>

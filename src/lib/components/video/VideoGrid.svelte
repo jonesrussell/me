@@ -12,6 +12,7 @@
 		display: grid;
 		gap: var(--space-4);
 		grid-template-columns: 1fr;
+		width: 100%;
 	}
 
 	@container video-grid (width >= 30rem) {
@@ -33,10 +34,8 @@
 	}
 </style>
 
-<section aria-labelledby="video-grid-title" aria-label="Video grid">
-	<div class="video-grid">
-		{#each videos as video (video.embedId)}
-			<VideoCard {video} />
-		{/each}
-	</div>
-</section>
+<div class="video-grid">
+	{#each videos as video (video.embedId)}
+		<VideoCard {video} />
+	{/each}
+</div>
