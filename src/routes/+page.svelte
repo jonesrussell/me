@@ -46,35 +46,48 @@
 	.home {
 		container-type: inline-size;
 		container-name: home-page;
+		display: grid;
 		width: 100%;
 		padding: var(--space-16) 0;
-	}
-
-	.container {
-		display: flex;
-		width: 100%;
-		margin: 0 auto;
-		padding: 0 var(--space-4);
-		max-width: min(var(--measure), 95cqi);
-		flex-direction: column;
+		grid-template-rows: auto 1fr;
 		gap: var(--space-16);
 	}
 
-	@container home-page (width >= 30rem) {
-		.container {
+	.home-container {
+		display: grid;
+		width: 100%;
+		margin-inline: auto;
+		padding-inline: var(--space-4);
+		max-width: min(var(--measure), 95cqi);
+		gap: var(--space-16);
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	@container home-page (min-width: 640px) {
+		.home-container {
 			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-8);
 		}
 	}
 
-	@container home-page (width >= 50rem) {
-		.container {
+	@container home-page (min-width: 768px) {
+		.home-container {
 			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-12);
 		}
 	}
 
-	@container home-page (width >= 75rem) {
-		.container {
+	@container home-page (min-width: 1024px) {
+		.home-container {
 			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-16);
+		}
+	}
+
+	@container home-page (min-width: 1280px) {
+		.home-container {
+			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-20);
 		}
 	}
 
@@ -103,7 +116,7 @@
 </Hero>
 
 <main class="home">
-	<div class="container">
+	<div class="home-container">
 		<SpecialtyGrid
 			{specialties}
 			title="My Specialties"

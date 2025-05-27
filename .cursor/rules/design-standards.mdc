@@ -20,7 +20,7 @@ alwaysApply: true
 For specific implementation details, refer to:
 - [Component Styling Standards](mdc:component-styling.mdc) for styling patterns
 - [Svelte 5 Standards](mdc:svelte5-standards.mdc) for Svelte-specific patterns
-- [Svelte Restrictions](mdc:svelte-restrictions.mdc) for prohibited patterns
+- [Development Standards](mdc:development-standards.mdc) for coding practices
 
 ## Typography
 - Use monospace fonts for consistent character width

@@ -38,6 +38,13 @@
 		margin-top: var(--space-16);
 	}
 
+	.grid {
+		display: grid;
+		gap: var(--space-8);
+		grid-template-columns: 1fr;
+		width: 100%;
+	}
+
 	.section-header {
 		display: flex;
 		width: 100%;
@@ -58,12 +65,6 @@
 		font-size: var(--font-size-lg);
 		color: var(--text-muted);
 		max-width: var(--measure);
-	}
-
-	.grid {
-		display: grid;
-		gap: var(--space-8);
-		grid-template-columns: 1fr;
 	}
 
 	.specialty {
@@ -138,38 +139,36 @@
 		flex: 1;
 	}
 
-	@container specialty-grid (width >= 30rem) {
-		.specialty-grid {
-			margin-top: var(--space-12);
-		}
-
+	@container specialty-grid (width >= var(--breakpoint-sm)) {
 		.grid {
 			grid-template-columns: repeat(2, 1fr);
-		}
-
-		.section-title {
-			font-size: var(--font-size-3xl);
+			gap: var(--space-6);
 		}
 	}
 
-	@container specialty-grid (width >= 50rem) {
-		.specialty-grid {
-			margin-top: var(--space-16);
-		}
-
+	@container specialty-grid (width >= var(--breakpoint-md)) {
 		.grid {
 			grid-template-columns: repeat(2, 1fr);
 			gap: var(--space-8);
 		}
-
-		.section-title {
-			font-size: var(--font-size-4xl);
-		}
 	}
 
-	@container specialty-grid (width >= 75rem) {
+	@container specialty-grid (width >= var(--breakpoint-xl)) {
 		.grid {
-			grid-template-columns: repeat(2, 1fr);
+			grid-template-columns: repeat(4, 1fr);
+			gap: var(--space-6);
+		}
+
+		.specialty {
+			min-height: var(--space-48);
+		}
+
+		.specialty-title {
+			font-size: var(--font-size-lg);
+		}
+
+		.specialty-desc {
+			font-size: var(--font-size-base);
 		}
 	}
 
