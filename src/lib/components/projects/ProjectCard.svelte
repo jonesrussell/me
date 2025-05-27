@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import Box from '$lib/components/ui/Box.svelte';
 	import Tag from '$lib/components/ui/Tag.svelte';
 	import type { Project } from '$lib/types/project';
@@ -104,7 +105,7 @@
 		</div>
 		<div class="thumbnail">
 			<img
-				src={project.image || '/images/projects/placeholder.png'}
+				src={project.image || `${base}/images/projects/placeholder.png`}
 				alt={project.image ? project.title : `No image available for ${project.title}`}
 				class:placeholder={!project.image}
 			/>
