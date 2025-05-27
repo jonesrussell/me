@@ -34,10 +34,8 @@
 </script>
 
 <style>
-
-
 	/* Tablet and up */
-	@media (width >= 48ch) {
+	@media (width >= 40em) {
 		.container {
 			max-width: min(80ch, 95cqi);
 		}
@@ -45,20 +43,7 @@
 		.posts {
 			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30ch), 1fr));
 		}
-	}
 
-	/* Desktop */
-	@media (width >= 80ch) {
-		.container {
-			max-width: min(160ch, 95cqi);
-		}
-
-		.posts {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
-		}
-	}
-
-	@media (width >= 640px) {
 		h1 {
 			font-size: var(--font-size-6xl);
 		}
@@ -68,7 +53,16 @@
 		}
 	}
 
-	@media (width >= 1024px) {
+	/* Desktop */
+	@media (width >= 64em) {
+		.container {
+			max-width: min(160ch, 95cqi);
+		}
+
+		.posts {
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
+		}
+
 		h1 {
 			font-size: var(--font-size-7xl);
 		}
@@ -138,8 +132,7 @@
 		color: var(--text-color);
 		background: linear-gradient(to right, var(--text-color), var(--text-muted));
 		letter-spacing: var(--letter-spacing-tight);
-		text-shadow: 0 2px 4px var(--color-mix-faint);
-		background-clip: text;
+		text-shadow: 0 0.125rem 0.25rem var(--color-mix-faint);
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}
@@ -175,7 +168,7 @@
 
 	.load-more-button:hover:not(:disabled) {
 		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
-		transform: translateY(-2px);
+		transform: translateY(-0.125rem);
 		border-color: var(--accent-color);
 	}
 
@@ -230,7 +223,7 @@
 
 	.retry-button:hover {
 		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
-		transform: translateY(-2px);
+		transform: translateY(-0.125rem);
 		border-color: var(--accent-color);
 	}
 </style>

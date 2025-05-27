@@ -115,6 +115,18 @@
 			transition: none;
 		}
 	}
+
+	.visually-hidden {
+		position: absolute;
+		width: 0.0625rem;
+		height: 0.0625rem;
+		margin: -0.0625rem;
+		padding: 0;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
 </style>
 
 <header class="site-header">

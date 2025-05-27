@@ -39,8 +39,6 @@
 </script>
 
 <style>
-
-
 	@container blog-page (width >= 48ch) {
 		.post {
 			margin-top: var(--space-16);
