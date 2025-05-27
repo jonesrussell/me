@@ -54,11 +54,11 @@
 			padding: 0 var(--space-4);
 			max-width: min(160ch, 95cqi);
 			flex-direction: column;
-			gap: var(--space-4);
+			gap: var(--space-16);
 		}
 
 		& :global(.youtube-section) {
-			margin-top: var(--space-4);
+			margin-top: 0;
 		}
 	}
 

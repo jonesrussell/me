@@ -33,7 +33,7 @@
 		container-name: specialty-grid;
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-4);
+		gap: var(--space-8);
 		width: 100%;
 		margin-top: var(--space-16);
 	}
@@ -41,9 +41,9 @@
 	.section-header {
 		display: flex;
 		width: 100%;
-		margin-bottom: var(--space-4);
+		margin-bottom: var(--space-8);
 		flex-direction: column;
-		gap: var(--space-2);
+		gap: var(--space-4);
 		text-align: center;
 	}
 
@@ -55,14 +55,14 @@
 
 	.section-desc {
 		margin: 0 auto;
-		font-size: var(--font-size-base);
+		font-size: var(--font-size-lg);
 		color: var(--text-muted);
 		max-width: var(--measure);
 	}
 
 	.grid {
 		display: grid;
-		gap: var(--space-4);
+		gap: var(--space-8);
 		grid-template-columns: 1fr;
 	}
 
@@ -71,7 +71,7 @@
 		container-name: specialty;
 		display: flex;
 		height: 100%;
-		padding: var(--space-6);
+		padding: var(--space-8);
 		background: var(--bg-darker);
 		border-radius: var(--radius-lg);
 		opacity: 0;
@@ -80,7 +80,7 @@
 			opacity var(--transition-duration) var(--transition-timing);
 		transform: translateY(var(--space-4));
 		flex-direction: column;
-		gap: var(--space-4);
+		gap: var(--space-6);
 		min-height: var(--space-32);
 	}
 
@@ -100,36 +100,39 @@
 	.specialty-content {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-4);
+		gap: var(--space-6);
 		height: 100%;
 	}
 
 	.specialty-header {
 		display: flex;
 		align-items: center;
-		gap: var(--space-4);
+		gap: var(--space-6);
 	}
 
 	.specialty-icon {
 		display: flex;
+		width: var(--space-12);
+		height: var(--space-12);
+		padding: var(--space-2);
+		font-size: var(--font-size-3xl);
+		color: var(--accent-color);
+		background: var(--color-mix-light);
+		border-radius: var(--radius-lg);
 		align-items: center;
 		justify-content: center;
-		width: var(--space-8);
-		height: var(--space-8);
-		font-size: var(--font-size-2xl);
-		color: var(--accent-color);
 		flex-shrink: 0;
 	}
 
 	.specialty-title {
 		margin: 0;
-		font-size: var(--font-size-lg);
+		font-size: var(--font-size-xl);
 		font-weight: var(--font-weight-bold);
 		color: var(--text-color);
 	}
 
 	.specialty-desc {
-		font-size: var(--font-size-base);
+		font-size: var(--font-size-lg);
 		line-height: var(--line-height-relaxed);
 		color: var(--text-muted);
 		flex: 1;
@@ -156,7 +159,7 @@
 
 		.grid {
 			grid-template-columns: repeat(2, 1fr);
-			gap: var(--space-6);
+			gap: var(--space-8);
 		}
 
 		.section-title {
@@ -187,7 +190,7 @@
 		}
 
 		.specialty-title {
-			font-size: var(--font-size-xl);
+			font-size: var(--font-size-2xl);
 		}
 	}
 </style>
