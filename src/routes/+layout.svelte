@@ -1,5 +1,4 @@
 <script lang="ts">
-	import '../app.css';
 	import SkipToMain from '$lib/components/navigation/SkipToMain.svelte';
 	import Header from '$lib/components/layout/Header.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
@@ -7,6 +6,8 @@
 	import { page } from '$app/stores';
 	import { theme } from '$lib/stores/theme';
 	import { onMount } from 'svelte';
+
+	import '../app.css';
 
 	const { children } = $props<{
 		children: () => unknown;
@@ -30,26 +31,6 @@
 			document.documentElement.setAttribute('data-theme', systemTheme);
 		}
 
-		// Debug container widths
-		const debugContainerWidths = () => {
-			const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
-			const containerWidth = document
-				.querySelector('.newsletter-container')
-				?.getBoundingClientRect().width;
-			console.debug('Container Debug:', {
-				rootFontSize,
-				'30rem in px': 30 * rootFontSize,
-				containerWidth,
-				windowWidth: window.innerWidth
-			});
-		};
-
-		// Initial debug
-		debugContainerWidths();
-
-		// Debug on resize
-		window.addEventListener('resize', debugContainerWidths);
-
 		// Listen for system theme changes
 		const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 		const handleChange = (e: MediaQueryListEvent) => {
@@ -60,7 +41,6 @@
 		mediaQuery.addEventListener('change', handleChange);
 		return () => {
 			mediaQuery.removeEventListener('change', handleChange);
-			window.removeEventListener('resize', debugContainerWidths);
 		};
 	});
 </script>
