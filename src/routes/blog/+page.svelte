@@ -11,9 +11,13 @@
 
 	const { data } = $props<{ data: PageData }>();
 
+	// Constants
+	const POSTS_PER_PAGE = 6;
+	const INITIAL_PAGE = 1;
+
 	let loading = $state(false);
 	let error = $state<string | null>(null);
-	let currentPage = $state(1);
+	let currentPage = $state(INITIAL_PAGE);
 	let hasMore = $state(true);
 
 	onMount(() => {
@@ -32,9 +36,9 @@
 
 		try {
 			const currentPosts = $blogStore.posts;
-			const result = await fetchFeed({
-				page: Math.floor(currentPosts.length / 6) + 1,
-				pageSize: 6
+			const result = await fetchFeed(fetch, {
+				page: Math.floor(currentPosts.length / POSTS_PER_PAGE) + 1,
+				pageSize: POSTS_PER_PAGE
 			});
 
 			blogStore.update((store) => ({

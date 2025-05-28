@@ -121,9 +121,10 @@ const parseXMLFeed = (xml: string): BlogPost[] => {
 };
 
 // API Module
-export const fetchFeed = async ({ page = 1, pageSize = 5 }: PaginationOptions = {}): Promise<
-	PaginatedResult<BlogPost>
-> => {
+export const fetchFeed = async (
+	fetchFn: typeof fetch,
+	{ page = 1, pageSize = 5 }: PaginationOptions = {}
+): Promise<PaginatedResult<BlogPost>> => {
 	// Set loading state immediately
 	blogStore.set({ posts: [], loading: true, error: null });
 
@@ -144,7 +145,7 @@ export const fetchFeed = async ({ page = 1, pageSize = 5 }: PaginationOptions = 
 	}
 
 	try {
-		const response = await fetch(FEED_URL, {
+		const response = await fetchFn(FEED_URL, {
 			headers: { Accept: 'application/xml, text/xml, */*' }
 		});
 
@@ -190,8 +191,8 @@ export const fetchFeed = async ({ page = 1, pageSize = 5 }: PaginationOptions = 
 };
 
 // Blog Post Retrieval
-export const fetchPost = async (slug: string): Promise<BlogPost> => {
-	const { items } = await fetchFeed();
+export const fetchPost = async (fetchFn: typeof fetch, slug: string): Promise<BlogPost> => {
+	const { items } = await fetchFeed(fetchFn);
 	const post = items.find(post => generateSlug(post.title) === slug);
 
 	if (!post) {
