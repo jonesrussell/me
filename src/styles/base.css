@@ -160,6 +160,10 @@
 		--measure: 80rem;
 		--content-padding: var(--space-4);
 		--container-padding: var(--space-4);
+
+		/* New tag styles */
+		--tag-bg: var(--color-green-300);
+		--tag-color: var(--color-green-900);
 	}
 
 	/* Base element styles */

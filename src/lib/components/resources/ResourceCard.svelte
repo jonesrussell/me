@@ -1,10 +1,12 @@
 <script lang="ts">
 	import Box from '$lib/components/ui/Box.svelte';
-	import Badge from '$lib/components/ui/Badge.svelte';
+	import Tag from '$lib/components/ui/Tag.svelte';
 	import type { Resource } from '$lib/types';
 
 	export let resource: Resource;
 	export let cta: boolean = false;
+
+	console.log(resource);
 </script>
 
 <style>
@@ -37,6 +39,26 @@
 		max-width: 65ch;
 	}
 
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-1);
+		margin-top: var(--space-2);
+	}
+
+	:global(.tag) {
+		--tag-color: var(--text-muted);
+		--tag-bg: var(--bg-darker);
+
+		padding: var(--space-1) var(--space-2);
+		font-size: var(--font-size-1);
+	}
+
+	:global(.tag:hover) {
+		--tag-bg: var(--color-mix-light);
+		--tag-color: var(--text-color);
+	}
+
 	.cta {
 		display: flex;
 		gap: var(--space-2);
@@ -45,8 +67,12 @@
 	@container resource-card (width >= 30rem) {
 		.resource {
 			flex-direction: row;
-			align-items: center;
+			align-items: flex-start;
 			gap: var(--space-4);
+		}
+
+		.content {
+			flex: 1;
 		}
 	}
 </style>
@@ -67,9 +93,13 @@
 					<span>⭐ {resource.stars}</span>
 				</div>
 			{/if}
-		</div>
-		<div class="category">
-			<Badge type="info" children={() => resource.category} />
+			{#if resource.tags?.length}
+				<div class="tags">
+					{#each resource.tags as tag}
+						<Tag>{tag}</Tag>
+					{/each}
+				</div>
+			{/if}
 		</div>
 		{#if cta}
 			<div class="cta">
