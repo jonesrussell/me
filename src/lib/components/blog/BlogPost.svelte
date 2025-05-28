@@ -1,13 +1,14 @@
 <script lang="ts">
 	import type { BlogPost } from '$lib/types/blog';
-	import { generateSlug, formatPostDate } from '$lib/services/blog-service';
+	import Tag from '$lib/components/ui/Tag.svelte';
 
 	const { post } = $props<{ post: BlogPost }>();
-	const slug = generateSlug(post.title);
 </script>
 
 <style>
 	.blog-post {
+		container-type: inline-size;
+		container-name: blog-post;
 		display: flex;
 		position: relative;
 		padding: var(--space-4);
@@ -25,6 +26,13 @@
 		box-shadow: var(--shadow-md);
 		transform: translateY(calc(var(--space-2) * -1));
 		border-color: var(--accent-color);
+	}
+
+	.content {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		flex: 1;
 	}
 
 	.title {
@@ -66,14 +74,6 @@
 		gap: var(--space-2);
 	}
 
-	.tags span {
-		padding: var(--space-1) var(--space-2);
-		color: var(--accent-color);
-		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-sm);
-	}
-
 	@media (prefers-reduced-motion: reduce) {
 		.blog-post {
 			transition: none;
@@ -83,17 +83,31 @@
 			transform: none;
 		}
 	}
+
+	@container blog-post (--container-sm) {
+		.blog-post {
+			flex-direction: row;
+			align-items: flex-start;
+			gap: var(--space-4);
+		}
+
+		.content {
+			flex: 1;
+		}
+	}
 </style>
 
-<a href="/blog/{slug}" class="blog-post">
-	<h3 class="title">{post.title}</h3>
-	<p class="description">{post.description}</p>
-	<div class="meta">
-		<span class="date">{formatPostDate(post.published)}</span>
-		<div class="tags">
-			{#each post.categories as category, i (slug + '-' + category + '-' + i)}
-				<span>{category}</span>
-			{/each}
+<a href="/blog/{post.slug}" class="blog-post">
+	<div class="content">
+		<h3 class="title">{post.title}</h3>
+		<p class="description">{post.description}</p>
+		<div class="meta">
+			<span class="date">{post.formattedDate}</span>
+			<div class="tags">
+				{#each post.categories as category, i (post.slug + '-' + category + '-' + i)}
+					<Tag>{category}</Tag>
+				{/each}
+			</div>
 		</div>
 	</div>
 </a>

@@ -3,6 +3,7 @@ export interface BlogPost {
 	link: string;
 	content: string;
 	published: string;
+	formattedDate: string;
 	categories: string[];
 	slug: string;
 }

@@ -1,15 +1,20 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { fetchPost, formatPostDate } from '$lib/services/blog-service';
-	import type { BlogPost } from '$lib/types/blog';
 	import { fade } from 'svelte/transition';
 	import { elasticOut } from 'svelte/easing';
-	import 'highlight.js/styles/github-dark.css';
+
+	import { page } from '$app/stores';
+	import { fetchPost } from '$lib/services/blog-service';
+	import { formatPostDate } from '$lib/services/blog-service';
+
 	import hljs from 'highlight.js/lib/core';
 	import php from 'highlight.js/lib/languages/php';
 	import xml from 'highlight.js/lib/languages/xml';
 	import typescript from 'highlight.js/lib/languages/typescript';
 	import SafeHtml from '$lib/components/SafeHtml.svelte';
+
+	import type { BlogPost } from '$lib/types/blog';
+
+	import 'highlight.js/styles/github-dark.css';
 
 	hljs.registerLanguage('php', php);
 	hljs.registerLanguage('xml', xml);

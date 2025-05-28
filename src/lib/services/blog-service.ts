@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 import { formatDate } from './utils';
-import type { BlogPost } from '$lib/types/blog';
+import type { BlogPost, BlogError } from '$lib/types/blog';
 
 // Constants
 const FEED_URL = 'https://jonesrussell.github.io/blog/feed.xml';
@@ -8,13 +8,6 @@ const FEED_CACHE_KEY = 'blog-feed-cache';
 const CACHE_DURATION = 1000 * 60 * 30; // 30 minutes
 
 // Types
-export interface BlogError {
-	type: 'FETCH_ERROR' | 'PARSE_ERROR' | 'VALIDATION_ERROR' | 'CACHE_ERROR';
-	message: string;
-	details?: unknown;
-	timestamp: number;
-}
-
 interface FeedCache {
 	data: BlogPost[];
 	timestamp: number;
@@ -118,6 +111,7 @@ const parseXMLFeed = (xml: string): BlogPost[] => {
 			link,
 			content,
 			published,
+			formattedDate: formatPostDate(published),
 			categories,
 			slug: generateSlug(title)
 		});

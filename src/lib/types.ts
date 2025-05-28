@@ -1,12 +1,3 @@
-export interface BlogPost {
-	title: string;
-	link: string;
-	pubDate: string;
-	description: string;
-	categories: string[];
-	content?: string;
-}
-
 export type { Resource } from './types/resource';
 
 export interface Project {
