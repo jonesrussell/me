@@ -25,6 +25,13 @@
 	--color-error: var(--color-red-400);
 
 	/* Tag Colors */
-	--tag-bg: var(--color-green-300);
+	--tag-bg: var(--color-green-200);
 	--tag-color: var(--color-green-900);
+	--tag-border: 1px solid var(--color-green-400);
+
+	/* Selection */
+	::selection {
+		color: var(--text-color);
+		background: var(--color-mix-light);
+	}
 }
