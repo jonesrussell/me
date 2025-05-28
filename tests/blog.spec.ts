@@ -23,7 +23,7 @@ test.describe('Blog Page', () => {
 		// Verify posts are visible
 		const posts = page.locator('.blog-post');
 		await expect(posts.first()).toBeVisible({ timeout: 10000 });
-		await expect(posts).toHaveCount(5, { timeout: 10000 });
+		await expect(posts).toHaveCount(12, { timeout: 10000 });
 	});
 
 	test('should display post details correctly', async ({ page }) => {

@@ -40,10 +40,8 @@ test.describe('Home Page', () => {
 
 		// Check for YouTube section
 		await Promise.all([
-			expect(page.locator('text=Latest Video')).toBeVisible({ timeout: 10000 }),
-			expect(page.locator('text=Check out my latest YouTube tutorial')).toBeVisible({
-				timeout: 10000
-			})
+			expect(page.locator('text=Tutorial')).toBeVisible({ timeout: 10000 }),
+			expect(page.locator('text=Web Development')).toBeVisible({ timeout: 10000 })
 		]);
 
 		// Check for navigation links

@@ -25,11 +25,11 @@ test.describe('Route Navigation', () => {
 		// Wait for loading state to complete and posts to be visible
 		await Promise.race([
 			page.waitForSelector('.loading', { state: 'hidden', timeout: 30000 }),
-			page.waitForSelector('.posts', { timeout: 30000 })
+			page.waitForSelector('.blog-post-grid', { timeout: 30000 })
 		]);
 
 		// Verify posts are visible
-		await expect(page.locator('.posts')).toBeVisible({ timeout: 10000 });
+		await expect(page.locator('.blog-post-grid')).toBeVisible({ timeout: 10000 });
 	});
 
 	test('should navigate to projects page', async ({ page }) => {
