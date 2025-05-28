@@ -308,12 +308,24 @@
 			animation: none;
 		}
 	}
+
+	.newsletter-content-contained {
+		max-width: var(--measure);
+		margin-inline: auto;
+		padding-inline: var(--space-4);
+	}
+
+	.newsletter-inner {
+		max-width: var(--container-sm);
+		margin-inline: auto;
+		width: 100%;
+	}
 </style>
 
 <div class={className}>
 	<div class="newsletter">
-		<div class="newsletter-content">
-			<div class="newsletter-header">
+		<div class="newsletter-content newsletter-content-contained">
+			<div class="newsletter-header newsletter-inner">
 				<div class="header-title">
 					<span class="bracket">[</span>
 					<h3>Stay Updated</h3>
@@ -326,7 +338,7 @@
 			</div>
 
 			<svelte:boundary onerror={handleBoundaryError}>
-				<form class="form" onsubmit={handleSubmit}>
+				<form class="form newsletter-inner" onsubmit={handleSubmit}>
 					<div class="form-group">
 						<label for="field-email" class="visually-hidden">Email</label>
 						<FormField
