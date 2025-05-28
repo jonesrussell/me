@@ -155,7 +155,7 @@
 		line-height: var(--line-height-tight);
 		color: var(--bg-darker);
 		background: var(--accent-color);
-		border: 1px solid var(--accent-color);
+		border: 0.0625rem solid var(--accent-color);
 		border-radius: var(--radius-md);
 		transition: all var(--transition-base);
 		cursor: pointer;
