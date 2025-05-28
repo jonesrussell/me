@@ -95,7 +95,7 @@
 			{/if}
 			{#if resource.tags?.length}
 				<div class="tags">
-					{#each resource.tags as tag}
+					{#each resource.tags as tag (tag)}
 						<Tag>{tag}</Tag>
 					{/each}
 				</div>
