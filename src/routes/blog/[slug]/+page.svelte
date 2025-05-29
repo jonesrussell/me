@@ -31,7 +31,7 @@
 		const slug = $page.params.slug;
 		async function loadPost() {
 			try {
-				const result = await fetchPost(slug);
+				const result = await fetchPost(fetch, slug);
 				post = result;
 				console.debug('Loaded post:', post);
 				console.debug('Post content:', post?.content);
@@ -50,44 +50,13 @@
 </script>
 
 <style>
-	@media (--container-sm) {
-		.post {
-			margin-top: var(--space-16);
-			padding: var(--space-8);
-			max-width: 40rem;
-		}
-
-		h1 {
-			font-size: var(--font-size-2xl);
-		}
-
-		.content {
-			font-size: var(--font-size-lg);
-		}
-	}
-
-	@media (--container-md) {
-		.post {
-			max-width: 48rem;
-			padding: var(--space-12);
-		}
-
-		h1 {
-			font-size: var(--font-size-3xl);
-		}
-	}
-
-	@media (--container-lg) {
-		.post {
-			max-width: 50rem;
-		}
-	}
-
 	@container blog-page (width >= 30rem) {
+		.container {
+			padding: 0 var(--space-8);
+		}
+
 		.post {
-			margin-top: var(--space-16);
 			padding: var(--space-8);
-			max-width: min(var(--measure), 95cqi);
 		}
 
 		h1 {
@@ -100,8 +69,11 @@
 	}
 
 	@container blog-page (width >= 50rem) {
+		.container {
+			padding: 0 var(--space-12);
+		}
+
 		.post {
-			max-width: min(var(--measure), 95cqi);
 			padding: var(--space-12);
 		}
 
@@ -111,8 +83,19 @@
 	}
 
 	@container blog-page (width >= 75rem) {
+		.container {
+			padding: 0 var(--space-16);
+		}
+
 		.post {
 			max-width: min(var(--measure), 95cqi);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			transition: none;
+			animation: none;
 		}
 	}
 
@@ -120,16 +103,14 @@
 		container-type: inline-size;
 		container-name: blog-page;
 		width: 100%;
-		padding: var(--space-4) 0;
+		padding: var(--space-16) 0;
 	}
 
 	.container {
-		display: flex;
 		width: 100%;
+		max-width: min(var(--measure), 95cqi);
 		margin: 0 auto;
 		padding: 0 var(--space-4);
-		max-width: min(var(--measure), 95cqi);
-		flex-direction: column;
 	}
 
 	.post {
@@ -173,6 +154,7 @@
 		color: var(--text-color);
 	}
 
+	/* Content Styles */
 	.content :global(p) {
 		margin: var(--space-6) 0;
 		line-height: var(--line-height-relaxed);
@@ -253,7 +235,7 @@
 		background: transparent;
 	}
 
-	/* Enhance syntax highlighting colors */
+	/* Syntax Highlighting */
 	:global(.hljs-keyword),
 	:global(.hljs-builtin) {
 		font-weight: 600;

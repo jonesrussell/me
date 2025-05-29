@@ -10,45 +10,60 @@
 		container-type: inline-size;
 		container-name: blog-post-grid;
 		display: grid;
-		gap: var(--space-8);
-		grid-template-columns: minmax(min(100%, 30rem), 1fr);
+		gap: var(--space-6);
+		grid-template-columns: 1fr;
 		width: 100%;
-		padding: var(--space-2) 0;
-		justify-content: center;
+		padding: var(--space-4) 0;
+	}
+
+	@container blog-post-grid (width >= 48ch) {
+		.blog-post-grid {
+			gap: var(--space-8);
+		}
+	}
+
+	@container blog-post-grid (width >= 80ch) {
+		.blog-post-grid {
+			grid-template-columns: repeat(2, 1fr);
+			gap: var(--space-10);
+		}
+	}
+
+	@container blog-post-grid (width >= 120ch) {
+		.blog-post-grid {
+			gap: var(--space-12);
+		}
 	}
 
 	.container {
-		contain: layout style paint;
 		width: 100%;
-		max-width: var(--container-max-width);
+		max-width: min(var(--measure), 95cqi);
 		margin-inline: auto;
-		padding-inline: var(--container-padding);
+		padding-inline: var(--space-4);
 	}
 
-	@container blog-post-grid (min-width: 640px) {
-		:global(.blog-post-grid) {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
-			justify-content: start;
-		}
-	}
-
-	@container blog-post-grid (min-width: 768px) {
-		:global(.blog-post-grid) {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40rem), 1fr));
-		}
-	}
-
-	@container blog-post-grid (min-width: 1024px) {
+	@container blog-post-grid (width >= 48ch) {
 		.container {
-			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-8);
+		}
+	}
+
+	@container blog-post-grid (width >= 80ch) {
+		.container {
+			padding-inline: var(--space-12);
+		}
+	}
+
+	@container blog-post-grid (width >= 120ch) {
+		.container {
 			padding-inline: var(--space-16);
 		}
 	}
 
-	@container blog-post-grid (min-width: 1280px) {
-		.container {
-			max-width: min(var(--measure), 95cqi);
-			padding-inline: var(--space-20);
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			transition: none;
+			animation: none;
 		}
 	}
 </style>
