@@ -31,8 +31,6 @@
 	.specialty-grid {
 		container-type: inline-size;
 		container-name: specialty-grid;
-		display: flex;
-		flex-direction: column;
 		gap: var(--space-8);
 		width: 100%;
 		margin-top: var(--space-16);

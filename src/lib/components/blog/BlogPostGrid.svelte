@@ -2,6 +2,7 @@
 	import BlogPost from './BlogPost.svelte';
 	import type { BlogPost as BlogPostType } from '$lib/types/blog';
 
+	// Extracting props with proper typing
 	const { posts } = $props<{ posts: BlogPostType[] }>();
 </script>
 
@@ -10,28 +11,28 @@
 		container-type: inline-size;
 		container-name: blog-post-grid;
 		display: grid;
-		gap: var(--space-6);
+		gap: var(--space-4);
 		grid-template-columns: 1fr;
 		width: 100%;
 		padding: var(--space-4) 0;
 	}
 
-	@container blog-post-grid (width >= 48ch) {
+	@container blog-post-grid (width >= 40rem) {
 		.blog-post-grid {
+			gap: var(--space-6);
+		}
+	}
+
+	@container blog-post-grid (width >= 48rem) {
+		.blog-post-grid {
+			grid-template-columns: repeat(2, 1fr);
 			gap: var(--space-8);
 		}
 	}
 
-	@container blog-post-grid (width >= 80ch) {
+	@container blog-post-grid (width >= 64rem) {
 		.blog-post-grid {
-			grid-template-columns: repeat(2, 1fr);
 			gap: var(--space-10);
-		}
-	}
-
-	@container blog-post-grid (width >= 120ch) {
-		.blog-post-grid {
-			gap: var(--space-12);
 		}
 	}
 
@@ -42,19 +43,19 @@
 		padding-inline: var(--space-4);
 	}
 
-	@container blog-post-grid (width >= 48ch) {
+	@container blog-post-grid (width >= 40rem) {
 		.container {
 			padding-inline: var(--space-8);
 		}
 	}
 
-	@container blog-post-grid (width >= 80ch) {
+	@container blog-post-grid (width >= 48rem) {
 		.container {
 			padding-inline: var(--space-12);
 		}
 	}
 
-	@container blog-post-grid (width >= 120ch) {
+	@container blog-post-grid (width >= 64rem) {
 		.container {
 			padding-inline: var(--space-16);
 		}

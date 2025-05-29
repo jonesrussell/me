@@ -4,42 +4,20 @@
 	import ActionNavCards from '$lib/components/navigation/ActionNavCards.svelte';
 	import SpecialtyGrid from '$lib/components/content/SpecialtyGrid.svelte';
 	import Hero from '$lib/components/ui/Hero.svelte';
+	import type { Specialty } from '$lib/types/specialty';
 
-	const YOUTUBE_CHANNEL = 'https://youtube.com/@fullstackdev42';
-	const YOUTUBE_VIDEO_ID = 'B4v7ZDLxiS4';
-	const YOUTUBE_VIDEO_TITLE = 'Add a Google Font to Tailwind CSS | 2023';
-	const YOUTUBE_SECTION_TITLE = 'Tutorial';
-	const YOUTUBE_SECTION_SUBTITLE = 'Web Development';
-	const TERMINAL_COMMAND = 'npm run dev';
+	interface PageData {
+		terminalCommand: string;
+		specialties: Specialty[];
+		youtubeChannel: string;
+		youtubeVideoId: string;
+		youtubeVideoTitle: string;
+		youtubeSectionTitle: string;
+		youtubeSectionSubtitle: string;
+		navLinks: Array<{ href: string; icon: string; text: string }>;
+	}
 
-	const specialties = [
-		{
-			title: 'Modern JavaScript/TS',
-			description: 'Building the future with cutting-edge web technologies',
-			icon: '⚡'
-		},
-		{
-			title: 'Golang & PHP',
-			description: 'Crafting robust backend solutions with battle-tested technologies',
-			icon: '🔧'
-		},
-		{
-			title: 'AI Integration',
-			description: 'Harnessing artificial intelligence to solve complex problems',
-			icon: '🤖'
-		},
-		{
-			title: 'Cloud & DevOps',
-			description: 'Designing and automating scalable cloud-native solutions',
-			icon: '☁️'
-		}
-	];
-
-	const navLinks = [
-		{ href: '/blog', icon: '📝', text: 'Read my technical articles' },
-		{ href: '/projects', icon: '🚀', text: 'Browse my open source projects' },
-		{ href: '/contact', icon: '✉️', text: 'Get in touch' }
-	];
+	export let data: PageData;
 </script>
 
 <style>
@@ -112,23 +90,23 @@
 </svelte:head>
 
 <Hero>
-	<Terminal command={TERMINAL_COMMAND} />
+	<Terminal command={data.terminalCommand} />
 </Hero>
 
 <main class="home">
 	<div class="home-container">
 		<SpecialtyGrid
-			{specialties}
+			specialties={data.specialties}
 			title="My Specialties"
 			description="Expert solutions for your unique challenges"
 		/>
 		<YouTubeSection
-			channelUrl={YOUTUBE_CHANNEL}
-			videoId={YOUTUBE_VIDEO_ID}
-			videoTitle={YOUTUBE_VIDEO_TITLE}
-			sectionTitle={YOUTUBE_SECTION_TITLE}
-			sectionSubtitle={YOUTUBE_SECTION_SUBTITLE}
+			channelUrl={data.youtubeChannel}
+			videoId={data.youtubeVideoId}
+			videoTitle={data.youtubeVideoTitle}
+			sectionTitle={data.youtubeSectionTitle}
+			sectionSubtitle={data.youtubeSectionSubtitle}
 		/>
-		<ActionNavCards links={navLinks} />
+		<ActionNavCards links={data.navLinks} />
 	</div>
 </main>
