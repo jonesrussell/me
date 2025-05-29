@@ -1,8 +1,14 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import type { ActionData, PageData } from './$types';
+	import type { PageData } from './$types';
 
-	const { data, form } = $props<{ data: PageData; form: ActionData }>();
+	interface FormData {
+		success?: boolean;
+		error?: boolean;
+		message?: string;
+		errors?: Record<string, string>;
+	}
+
+	const { form } = $props<{ data: PageData; form: FormData }>();
 
 	let submitting = $state(false);
 	let success = $state(false);
@@ -18,11 +24,41 @@
 		}
 	});
 
-	function handleSubmit() {
+	async function handleSubmit(event: SubmitEvent) {
+		event.preventDefault();
 		submitting = true;
 		success = false;
 		error = null;
 		fieldErrors = {};
+
+		const formData = new FormData(event.target as HTMLFormElement);
+		const data = {
+			name: formData.get('name'),
+			email: formData.get('email'),
+			message: formData.get('message')
+		};
+
+		try {
+			// TODO: Replace with your actual form submission endpoint
+			const response = await fetch('https://formspree.io/f/your-form-id', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(data)
+			});
+
+			if (!response.ok) {
+				throw new Error('Failed to send message');
+			}
+
+			success = true;
+			(event.target as HTMLFormElement).reset();
+		} catch (err) {
+			error = err instanceof Error ? err.message : 'Something went wrong. Please try again later.';
+		} finally {
+			submitting = false;
+		}
 	}
 </script>
 
@@ -191,8 +227,11 @@
 </style>
 
 <svelte:head>
-	<title>{data.title}</title>
-	<meta name="description" content={data.description} />
+	<title>Contact Me | Russell Jones</title>
+	<meta
+		name="description"
+		content="Get in touch with me for collaboration, questions, or just to say ahnii!"
+	/>
 </svelte:head>
 
 <main class="contact">
@@ -215,7 +254,7 @@
 					<p>{form.message}</p>
 				</div>
 			{:else}
-				<form method="POST" use:enhance={handleSubmit} class="contact-form">
+				<form method="POST" onsubmit={handleSubmit} class="contact-form">
 					{#if error}
 						<div class="error-message" role="alert">
 							<p>{error}</p>
