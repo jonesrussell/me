@@ -1,14 +1,20 @@
-import { fetchFeed } from '$lib/services/blog-service';
-
 import type { PageLoad } from './$types';
-import type { BlogPost } from '$lib/types/blog';
+import { parseXMLFeed } from '$lib/services/blog-service';
 
-export const prerender = true;
+export const load: PageLoad = async ({ fetch }) => {
+	const response = await fetch('https://jonesrussell.github.io/blog/feed.xml', {
+		headers: { Accept: 'application/xml, text/xml, */*' }
+	});
 
-export const load: PageLoad = async ({ fetch }): Promise<{
-	initialPosts: BlogPost[];
-	hasMore: boolean;
-}> => {
-	const { items: initialPosts, hasMore } = await fetchFeed(fetch, { page: 1, pageSize: 10 });
-	return { initialPosts, hasMore };
+	if (!response.ok) {
+		throw new Error(`HTTP error! status: ${response.status}`);
+	}
+
+	const text = await response.text();
+	const posts = parseXMLFeed(text);
+
+	return {
+		initialPosts: posts.slice(0, 10),
+		hasMore: posts.length > 10
+	};
 };

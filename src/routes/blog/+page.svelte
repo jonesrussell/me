@@ -15,22 +15,17 @@
 	const POSTS_PER_PAGE = 6;
 	const INITIAL_PAGE = 1;
 
-	let loading = $state(false);
+	let loading = $state(true);
 	let error = $state<string | null>(null);
 	let currentPage = $state(INITIAL_PAGE);
-	let hasMore = $state(true);
+	let hasMore = $state(false);
 
+	// Initial load
 	onMount(() => {
-		// Initialize store with server-side data
-		blogStore.set({
-			posts: data.initialPosts,
-			loading: false,
-			error: null
-		});
+		loadMore();
 	});
 
 	async function loadMore() {
-		if (loading) return;
 		loading = true;
 		error = null;
 
@@ -47,6 +42,7 @@
 				loading: false
 			}));
 			hasMore = result.hasMore;
+			currentPage += 1;
 		} catch (e) {
 			error = e instanceof Error ? e.message : 'Failed to load more posts';
 			blogStore.update((store) => ({
@@ -152,13 +148,35 @@
 		cursor: not-allowed;
 	}
 
-	.loading {
+	.loading-container {
 		display: flex;
-		justify-content: center;
+		flex-direction: column;
 		align-items: center;
-		padding: var(--space-8);
+		justify-content: center;
+		min-height: 20rem;
+		gap: var(--space-8);
+		padding: var(--space-16);
+	}
+
+	.loading-spinner {
+		width: var(--space-12);
+		height: var(--space-12);
+		border: var(--border-width) solid var(--border-color);
+		border-top-color: var(--accent-color);
+		border-radius: var(--radius-full);
+		animation: spin 1s linear infinite;
+	}
+
+	.loading-text {
 		font-family: var(--font-mono);
+		text-align: center;
 		color: var(--text-muted);
+	}
+
+	@keyframes spin {
+		to {
+			transform: rotate(360deg);
+		}
 	}
 
 	.empty-state {
@@ -231,19 +249,21 @@
 
 	<div class="container">
 		<div class="sections">
-			<div style:visibility={$blogStore.loading && currentPage === 1 ? 'hidden' : 'visible'}>
-				{#if $blogStore.posts.length > 0}
-					<BlogPostsSection posts={$blogStore.posts} />
-				{:else if !$blogStore.loading}
-					<div class="empty-state">
-						<p>No blog posts available at the moment.</p>
-						<p>Check back later for new content!</p>
+			{#if loading && $blogStore.posts.length === 0}
+				<div class="loading-container">
+					<div class="loading-spinner"></div>
+					<div class="loading-text">
+						<p>Fetching latest blog posts...</p>
+						<p>This may take a moment</p>
 					</div>
-				{/if}
-			</div>
-
-			{#if $blogStore.loading}
-				<div class="loading">Loading posts...</div>
+				</div>
+			{:else if $blogStore.posts.length > 0}
+				<BlogPostsSection posts={$blogStore.posts} />
+			{:else if !loading}
+				<div class="empty-state">
+					<p>No blog posts available at the moment.</p>
+					<p>Check back later for new content!</p>
+				</div>
 			{/if}
 
 			{#if $blogStore.error}
