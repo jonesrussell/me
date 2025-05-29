@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { commands, terminal, terminalHeight, terminalMinHeight } from '$lib/stores/terminal';
 	import { get } from 'svelte/store';
-	const props = $props();
-	const title = props.title || '~/developer';
+
+	const { title = 'Terminal' } = $props<{
+		title?: string;
+	}>();
 
 	$effect(() => {
 		terminal.loadCommands(); // Will use default commands
