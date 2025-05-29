@@ -13,7 +13,7 @@ test.describe('Blog Page', () => {
 		await Promise.all([
 			expect(page.locator('h1')).toBeVisible(),
 			expect(page.locator('text=Web Developer Blog')).toBeVisible(),
-			expect(page.locator('.blog-post-grid')).toBeVisible()
+			expect(page.locator('.blog-section')).toBeVisible()
 		]);
 
 		// Check for loading state
