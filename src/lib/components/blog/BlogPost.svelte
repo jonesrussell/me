@@ -11,14 +11,15 @@
 		container-name: blog-post;
 		display: flex;
 		position: relative;
-		padding: var(--space-4);
+		height: 100%;
+		padding: var(--space-6);
 		background: var(--bg-darker);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
 		transition: all var(--transition-duration) var(--transition-timing);
 		transform: translateY(0);
 		flex-direction: column;
-		gap: var(--space-2);
+		gap: var(--space-4);
 	}
 
 	.blog-post:hover {
@@ -31,13 +32,13 @@
 	.content {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-2);
+		gap: var(--space-4);
 		flex: 1;
 	}
 
 	.title {
 		margin: 0;
-		font-size: var(--font-size-lg);
+		font-size: var(--font-size-xl);
 		font-weight: var(--font-weight-bold);
 		line-height: var(--line-height-tight);
 		color: var(--text-color);
@@ -54,13 +55,15 @@
 		-webkit-line-clamp: 3;
 		-webkit-box-orient: vertical;
 		line-clamp: 3;
+		flex: 1;
 	}
 
 	.meta {
 		display: flex;
-		flex-direction: column;
-		gap: var(--space-2);
+		margin-top: auto;
 		font-size: var(--font-size-sm);
+		flex-direction: column;
+		gap: var(--space-3);
 	}
 
 	.date {
@@ -84,15 +87,13 @@
 		}
 	}
 
-	@container blog-post (--container-sm) {
+	@container blog-post (min-width: 640px) {
 		.blog-post {
-			flex-direction: row;
-			align-items: flex-start;
-			gap: var(--space-4);
+			padding: var(--space-8);
 		}
 
-		.content {
-			flex: 1;
+		.title {
+			font-size: var(--font-size-2xl);
 		}
 	}
 </style>
