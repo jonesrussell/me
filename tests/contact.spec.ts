@@ -43,7 +43,7 @@ test.describe('Contact Page', () => {
 		const metaDescription = page.locator('meta[name="description"]');
 		await expect(metaDescription).toHaveAttribute(
 			'content',
-			'Get in touch with me for collaboration, questions, or just to say hello!',
+			'Get in touch with me for collaboration, questions, or just to say ahnii!',
 			{ timeout: 10000 }
 		);
 	});
