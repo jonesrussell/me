@@ -13,11 +13,19 @@
 
 	// Constants
 	const POSTS_PER_PAGE = 6;
-	const INITIAL_PAGE = 1;
 
-	let error = $state<string | null>(null);
-	let currentPage = $state(INITIAL_PAGE);
-	let hasMore = $state(false);
+	// Initialize store with data from server
+	$effect(() => {
+		if (data.initialPosts) {
+			blogStore.set({
+				posts: data.initialPosts,
+				loading: false,
+				error: null
+			});
+		}
+	});
+
+	let hasMore = $state(data.hasMore);
 
 	// Initial load
 	onMount(() => {
@@ -35,9 +43,16 @@
 			});
 
 			hasMore = result.hasMore;
-			currentPage += 1;
 		} catch (e) {
-			error = e instanceof Error ? e.message : 'Failed to load more posts';
+			blogStore.update((store) => ({
+				...store,
+				error: {
+					type: 'FETCH_ERROR',
+					message: e instanceof Error ? e.message : 'Failed to load more posts',
+					details: e,
+					timestamp: Date.now()
+				}
+			}));
 		}
 	}
 </script>
