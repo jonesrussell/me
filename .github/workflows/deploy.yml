@@ -17,8 +17,8 @@ defaults:
     shell: bash
 
 env:
-  RUNNING_IN_ACT: ${{ github.actor == 'nektos/act' }}
-
+  RUNNING_IN_ACT: ${{ github.actor == 'nektos/act' && 'true' || 'false' }}
+  
 jobs:
   build:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
