@@ -24,7 +24,7 @@ test.describe('Home Page', () => {
 		// Check terminal components
 		await Promise.all([
 			expect(terminal.locator('.terminal-header')).toBeVisible(),
-			expect(terminal.locator('.terminal-title')).toContainText('~/developer')
+			expect(terminal.locator('.terminal-title')).toContainText('~/dev')
 		]);
 
 		// Check for specialties section
