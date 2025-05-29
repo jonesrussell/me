@@ -1,12 +1,10 @@
 <script lang="ts">
 	import Box from '$lib/components/ui/Box.svelte';
 	import Tag from '$lib/components/ui/Tag.svelte';
+
 	import type { Resource } from '$lib/types';
 
 	export let resource: Resource;
-	export let cta: boolean = false;
-
-	console.log(resource);
 </script>
 
 <style>
@@ -59,11 +57,6 @@
 		--tag-color: var(--text-color);
 	}
 
-	.cta {
-		display: flex;
-		gap: var(--space-2);
-	}
-
 	@container resource-card (width >= 30rem) {
 		.resource {
 			flex-direction: row;
@@ -101,10 +94,5 @@
 				</div>
 			{/if}
 		</div>
-		{#if cta}
-			<div class="cta">
-				<slot name="cta" />
-			</div>
-		{/if}
 	</div>
 </Box>
