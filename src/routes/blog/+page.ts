@@ -1,6 +1,8 @@
 import type { PageLoad } from './$types';
 import { parseXMLFeed } from '$lib/services/blog-service';
 
+export const prerender = false;
+
 export const load: PageLoad = async ({ fetch }) => {
 	const response = await fetch('https://jonesrussell.github.io/blog/feed.xml', {
 		headers: { Accept: 'application/xml, text/xml, */*' }
