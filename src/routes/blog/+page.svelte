@@ -25,12 +25,6 @@
 	});
 
 	async function loadMore() {
-		console.log('loadMore called', {
-			currentPage,
-			loading: $blogStore.loading,
-			hasMore,
-			postsCount: $blogStore.posts.length
-		});
 		if ($blogStore.loading) return;
 
 		try {
@@ -40,43 +34,12 @@
 				pageSize: POSTS_PER_PAGE
 			});
 
-			console.log('fetchFeed result', {
-				itemsCount: result.items.length,
-				hasMore: result.hasMore,
-				totalPosts: currentPosts.length + result.items.length
-			});
-
 			hasMore = result.hasMore;
 			currentPage += 1;
-			console.log('State after update', {
-				currentPage,
-				hasMore,
-				postsCount: $blogStore.posts.length
-			});
 		} catch (e) {
-			console.error('Error in loadMore', e);
 			error = e instanceof Error ? e.message : 'Failed to load more posts';
 		}
 	}
-
-	// Debug store changes
-	$effect(() => {
-		console.log('Store updated', {
-			postsCount: $blogStore.posts.length,
-			loading: $blogStore.loading,
-			error: $blogStore.error
-		});
-	});
-
-	// Debug local state changes
-	$effect(() => {
-		console.log('Local state updated', {
-			loading: $blogStore.loading,
-			error,
-			currentPage,
-			hasMore
-		});
-	});
 </script>
 
 <style>
