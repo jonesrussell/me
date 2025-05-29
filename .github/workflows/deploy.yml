@@ -71,10 +71,9 @@ jobs:
         run: npm run build
       - name: Upload Pages artifact
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main' && fromJSON(env.RUNNING_IN_ACT) == false
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           path: build/
-          name: github-pages
           retention-days: 30
 
   # unit-tests:
@@ -181,7 +180,6 @@ jobs:
 
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    # needs: [build, unit-tests, e2e-tests]
     needs: [build]
     runs-on: ubuntu-latest
     timeout-minutes: 5
