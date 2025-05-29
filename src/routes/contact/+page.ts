@@ -1,2 +1,2 @@
-// Contact page has form actions, so it cannot be prerendered
-export const prerender = false;
+// Contact page can be prerendered since form submission is handled client-side
+export const prerender = true;
