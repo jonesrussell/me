@@ -16,9 +16,6 @@ defaults:
   run:
     shell: bash
 
-env:
-  RUNNING_IN_ACT: ${{ github.actor == 'nektos/act' && 'true' || 'false' }}
-
 jobs:
   build:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -50,27 +47,13 @@ jobs:
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
-      - name: Fetch blog feed
-        uses: FoxtrotPerry/fetch-file-action@v0-alpha
-        with:
-          url: ${{ vars.VITE_BLOG_FEED_URL }}
-          path: './static'
-          filename: 'feed.xml'
-      - name: Verify feed file
-        run: |
-          if [ ! -f "./static/feed.xml" ]; then
-            echo "Feed file not found!"
-            exit 1
-          fi
-          echo "Feed file exists and is ready for build"
       - name: Build
         env:
-          BASE_PATH: '/${{ github.event.repository.name }}'
+          BASE_PATH: '/me'
           NODE_ENV: production
-          VITE_BLOG_FEED_URL: '/feed.xml'
         run: npm run build
       - name: Upload Pages artifact
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main' && fromJSON(env.RUNNING_IN_ACT) == false
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
           path: build/
@@ -208,9 +191,6 @@ jobs:
       contents: read
       pull-requests: read
     steps:
-      - name: Debug Environment Variables
-        run: echo "RUNNING_IN_ACT=${RUNNING_IN_ACT}"
       - name: Deploy to GitHub Pages
-        if: ${{ fromJSON(env.RUNNING_IN_ACT) == false }}
         id: deployment
         uses: actions/deploy-pages@v4
