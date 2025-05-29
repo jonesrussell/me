@@ -15,7 +15,6 @@
 	const POSTS_PER_PAGE = 6;
 	const INITIAL_PAGE = 1;
 
-	let loading = $state(true);
 	let error = $state<string | null>(null);
 	let currentPage = $state(INITIAL_PAGE);
 	let hasMore = $state(false);
@@ -26,8 +25,13 @@
 	});
 
 	async function loadMore() {
-		loading = true;
-		error = null;
+		console.log('loadMore called', {
+			currentPage,
+			loading: $blogStore.loading,
+			hasMore,
+			postsCount: $blogStore.posts.length
+		});
+		if ($blogStore.loading) return;
 
 		try {
 			const currentPosts = $blogStore.posts;
@@ -36,30 +40,43 @@
 				pageSize: POSTS_PER_PAGE
 			});
 
-			blogStore.update((store) => ({
-				...store,
-				posts: [...store.posts, ...result.items],
-				loading: false
-			}));
+			console.log('fetchFeed result', {
+				itemsCount: result.items.length,
+				hasMore: result.hasMore,
+				totalPosts: currentPosts.length + result.items.length
+			});
+
 			hasMore = result.hasMore;
 			currentPage += 1;
+			console.log('State after update', {
+				currentPage,
+				hasMore,
+				postsCount: $blogStore.posts.length
+			});
 		} catch (e) {
+			console.error('Error in loadMore', e);
 			error = e instanceof Error ? e.message : 'Failed to load more posts';
-			blogStore.update((store) => ({
-				...store,
-				loading: false,
-				error: error
-					? {
-							type: 'FETCH_ERROR',
-							message: error,
-							timestamp: Date.now()
-						}
-					: null
-			}));
-		} finally {
-			loading = false;
 		}
 	}
+
+	// Debug store changes
+	$effect(() => {
+		console.log('Store updated', {
+			postsCount: $blogStore.posts.length,
+			loading: $blogStore.loading,
+			error: $blogStore.error
+		});
+	});
+
+	// Debug local state changes
+	$effect(() => {
+		console.log('Local state updated', {
+			loading: $blogStore.loading,
+			error,
+			currentPage,
+			hasMore
+		});
+	});
 </script>
 
 <style>
@@ -249,7 +266,7 @@
 
 	<div class="container">
 		<div class="sections">
-			{#if loading && $blogStore.posts.length === 0}
+			{#if $blogStore.loading && $blogStore.posts.length === 0}
 				<div class="loading-container">
 					<div class="loading-spinner"></div>
 					<div class="loading-text">
@@ -259,7 +276,7 @@
 				</div>
 			{:else if $blogStore.posts.length > 0}
 				<BlogPostsSection posts={$blogStore.posts} />
-			{:else if !loading}
+			{:else if !$blogStore.loading}
 				<div class="empty-state">
 					<p>No blog posts available at the moment.</p>
 					<p>Check back later for new content!</p>

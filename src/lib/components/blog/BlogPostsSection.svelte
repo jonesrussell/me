@@ -45,7 +45,7 @@
 
 <section class="blog-section">
 	<div class="blog-grid">
-		{#each posts as post (post.slug)}
+		{#each posts as post, index (post.slug + '-' + index)}
 			<BlogPost {post} />
 		{/each}
 	</div>

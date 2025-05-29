@@ -98,7 +98,7 @@
 	}
 </style>
 
-<a href="/blog/{post.slug}" class="blog-post">
+<a href="/blog/{post.slug}" data-sveltekit-preload-data="off" class="blog-post">
 	<div class="content">
 		<h3 class="title">{post.title}</h3>
 		<p class="description">{post.description}</p>
