@@ -6,8 +6,10 @@
 	import DevTo from '$lib/components/blog/DevTo.svelte';
 	import BlogPostGrid from '$lib/components/blog/BlogPostGrid.svelte';
 	import BlogError from '$lib/components/blog/BlogError.svelte';
+	import BlogPostsSection from '$lib/components/blog/BlogPostsSection.svelte';
 
 	import type { PageData } from './$types';
+	import type { BlogPost } from '$lib/types/blog';
 
 	const { data } = $props<{ data: PageData }>();
 
@@ -85,6 +87,14 @@
 		max-width: min(var(--measure), 95cqi);
 		gap: var(--space-16);
 		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.sections {
+		display: grid;
+		grid-template-columns: minmax(min(100%, 30rem), 1fr);
+		gap: var(--space-8);
+		width: 100%;
+		justify-content: center;
 	}
 
 	@container blog-page (min-width: 640px) {
@@ -222,33 +232,35 @@
 	<BlogError />
 
 	<div class="container">
-		<div style:visibility={$blogStore.loading && currentPage === 1 ? 'hidden' : 'visible'}>
-			{#if $blogStore.posts.length > 0}
-				<BlogPostGrid posts={$blogStore.posts} />
-			{:else if !$blogStore.loading}
-				<div class="empty-state">
-					<p>No blog posts available at the moment.</p>
-					<p>Check back later for new content!</p>
+		<div class="sections">
+			<div style:visibility={$blogStore.loading && currentPage === 1 ? 'hidden' : 'visible'}>
+				{#if $blogStore.posts.length > 0}
+					<BlogPostsSection posts={$blogStore.posts} />
+				{:else if !$blogStore.loading}
+					<div class="empty-state">
+						<p>No blog posts available at the moment.</p>
+						<p>Check back later for new content!</p>
+					</div>
+				{/if}
+			</div>
+
+			{#if $blogStore.loading}
+				<div class="loading">Loading posts...</div>
+			{/if}
+
+			{#if $blogStore.error}
+				<div class="error-state">
+					<p>Error loading blog posts: {$blogStore.error.message}</p>
+					<button class="retry-button" onclick={() => loadMore()}>Retry</button>
+				</div>
+			{/if}
+
+			{#if hasMore && !$blogStore.loading && !$blogStore.error}
+				<div class="load-more">
+					<button class="load-more-button" onclick={loadMore}>Load More</button>
 				</div>
 			{/if}
 		</div>
-
-		{#if $blogStore.loading}
-			<div class="loading">Loading posts...</div>
-		{/if}
-
-		{#if $blogStore.error}
-			<div class="error-state">
-				<p>Error loading blog posts: {$blogStore.error.message}</p>
-				<button class="retry-button" onclick={() => loadMore()}>Retry</button>
-			</div>
-		{/if}
-
-		{#if hasMore && !$blogStore.loading && !$blogStore.error}
-			<div class="load-more">
-				<button class="load-more-button" onclick={loadMore}>Load More</button>
-			</div>
-		{/if}
 	</div>
 
 	<div class="dev-to-wrapper">
