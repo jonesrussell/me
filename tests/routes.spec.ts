@@ -34,7 +34,7 @@ test.describe('Route Navigation', () => {
 		]);
 
 		// Verify posts are visible
-		await expect(page.locator('.blog-post-grid')).toBeVisible();
+		await expect(page.locator('.blog-section')).toBeVisible();
 	});
 
 	test('should navigate to projects page', async ({ page }) => {
