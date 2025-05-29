@@ -3,7 +3,7 @@ import { formatDate } from './utils';
 import type { BlogPost, BlogError } from '$lib/types/blog';
 
 // Constants
-const FEED_URL = 'https://jonesrussell.github.io/blog/feed.xml';
+const FEED_URL = import.meta.env.VITE_BLOG_FEED_URL || 'https://jonesrussell.github.io/blog/feed.xml';
 const FEED_CACHE_KEY = 'blog-feed-cache';
 const CACHE_DURATION = 1000 * 60 * 30; // 30 minutes
 
@@ -106,15 +106,17 @@ const parseXMLFeed = (xml: string): BlogPost[] => {
 			})
 			.filter(Boolean);
 
-		entries.push({
-			title,
-			link,
-			content,
-			published,
-			formattedDate: formatPostDate(published),
-			categories,
-			slug: generateSlug(title)
-		});
+		if (title) {
+			entries.push({
+				title,
+				link,
+				content,
+				published,
+				formattedDate: formatPostDate(published),
+				categories,
+				slug: generateSlug(title)
+			});
+		}
 	}
 
 	return entries;
