@@ -31,7 +31,7 @@
 			padding: var(--space-4);
 			background: var(--bg-darker);
 			border-radius: var(--radius-md);
-			border-left: 4px solid var(--error-color);
+			border-left: 0.25rem solid var(--error-color);
 		}
 
 		.header {

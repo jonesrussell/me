@@ -6,39 +6,37 @@
 </script>
 
 <style>
-	h2 {
-		margin: var(--space-8) 0 var(--space-4) 0;
-		font-size: var(--font-size-lg);
-		line-height: var(--line-height-tight);
-		color: var(--text-color);
-	}
-
 	.video-grid {
 		display: grid;
-		gap: var(--space-4);
 		width: 100%;
-		max-width: 160ch;
-		margin: 0 auto;
+		margin-right: auto;
+		margin-left: auto;
+		gap: var(--space-4);
+		grid-template-columns: 1fr;
+		justify-items: center;
 	}
 
-	@media (min-width: 80ch) {
-		h2 {
-			margin: var(--space-12) 0 var(--space-6) 0;
-			font-size: var(--font-size-xl);
-		}
-
+	@container featured-videos (width >= 30rem) {
 		.video-grid {
 			grid-template-columns: repeat(2, 1fr);
-			gap: var(--space-8);
+		}
+	}
+
+	@container featured-videos (width >= 50rem) {
+		.video-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@container featured-videos (width >= 75rem) {
+		.video-grid {
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 </style>
 
-<section aria-labelledby="video-grid-title" aria-label="Video grid">
-	<h2 id="video-grid-title">Featured Videos</h2>
-	<div class="video-grid">
-		{#each videos as video (video.embedId)}
-			<VideoCard {video} />
-		{/each}
-	</div>
-</section>
+<div class="video-grid">
+	{#each videos as video (video.embedId)}
+		<VideoCard {video} />
+	{/each}
+</div>

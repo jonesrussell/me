@@ -3,106 +3,65 @@ description:
 globs:
 alwaysApply: true
 ---
-# Svelte 5 Standards
+# **Svelte 5 Development Standards**
 
-## Core Principles
-- Use runes for state management and reactivity
-- Follow TypeScript best practices
-- Maintain consistent component structure
-- Implement proper error handling
-- Follow accessibility guidelines
+## **Core Principles**
+- Use **runes** for state management and reactivity
+- Follow **TypeScript best practices**
+- Maintain **consistent component structure**
+- Ensure **error handling and accessibility compliance**
 
-## State Management
-- Use `$state` for reactive state
-- Use `$derived` for computed values
-- Use `$effect` for side effects
-- Use `$props` for component props
-- Avoid using deprecated store syntax
+## **State Management**
+- `$state` → **Reactive state**
+- `$derived` → **Computed values**
+- `$effect` → **Side effects & lifecycle handling**
+- `$props` → **Component properties**
 
-## Component Structure
+### **Component Structure Example**
 ```svelte
 <script lang="ts">
-  // Props with proper typing
-  const { prop1, prop2 } = $props<{
-    prop1: string;
-    prop2: number;
-  }>();
+  // Typed props
+  const { prop1, prop2 } = $props<{ prop1: string; prop2: number }>();
 
-  // State management with runes
+  // State management
   let count = $state(0);
   let doubled = $derived(count * 2);
 
-  // Side effects with runes
+  // Lifecycle and side effects
   $effect(() => {
     console.log('count changed:', count);
+    return () => {
+      // Cleanup logic
+    };
   });
 </script>
 ```
 
-## Deprecated Features to Avoid
-- `$:` reactive declarations (use runes instead)
-- `writable`/`readable` stores (use runes instead)
-- `each` block with index/key (use new syntax)
-- `bind:this` (use `use:` directive)
-- `onMount` (use `$effect` instead)
-- `beforeUpdate`/`afterUpdate` (use `$effect` instead)
-- `tick` (use `$effect` instead)
-- `setContext`/`getContext` (use runes instead)
-
-## TypeScript Integration
-- Use proper typing for runes
-- Define prop types with `$props`
-- Use type inference with `$derived`
-- Type effect callbacks properly
-- Use proper typing for state
-
-## Performance Considerations
+## **Optimization Strategies**
 - Use `$derived` for expensive computations
 - Avoid unnecessary state updates
-- Use `$effect` cleanup properly
+- Ensure proper cleanup in `$effect`
 - Optimize template rendering
-- Use proper memoization with runes
+- Apply memoization when needed
 
-## Example Patterns
-```svelte
-// State Management
-let count = $state(0);
-let doubled = $derived(count * 2);
+## **Deprecated Features & Restrictions**
+🚫 **Avoid:**
+- `$:` reactive declarations _(use runes instead)_
+- `writable` / `readable` stores _(use runes instead)_
+- `bind:this` _(use `use:` directive)_
+- `onMount`, `beforeUpdate`, `afterUpdate`, `tick` _(use `$effect` instead)_
+- **JSX syntax, slot elements, inline styles, unscoped global styles**
 
-// Props with TypeScript
-const { name, age } = $props<{
-  name: string;
-  age: number;
-}>();
+✅ **Allowed Alternatives:**
+- **Use Svelte template syntax** instead of JSX
+- **Adopt modern Svelte features** _(runes-based reactivity)_
+- **Use CSS custom properties** for dynamic styles
+- **Scope global styles properly using `:global()`**
 
-// Side Effects
-$effect(() => {
-  console.log('count changed:', count);
-  return () => {
-    // cleanup
-  };
-});
-
-// Component Lifecycle
-$effect(() => {
-  // component mounted
-  return () => {
-    // component unmounted
-  };
-});
-```
-
-## Best Practices
-- Keep components small and focused
-- Use proper TypeScript types
-- Implement error boundaries
-- Follow accessibility guidelines
-- Use semantic HTML elements
-- Maintain consistent naming
-- Document complex logic
-- Test component behavior
-- Use `console.debug` for development logging
-- Implement proper cleanup in effects
-- Use descriptive debug messages
-- Group related debug information
-- Remove debug statements in production
+## **Best Practices**
+- Keep components **modular & focused**
+- Maintain **consistent naming & structure**
+- Implement **error boundaries**
+- Follow **accessibility & semantic HTML guidelines**
+- Document **complex logic for maintainability**
+- Use `console.debug` for **development logging**, but remove in production

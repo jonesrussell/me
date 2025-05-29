@@ -1,6 +1,6 @@
 @layer components {
 	/* Container Queries */
-	@container (width > 48ch) {
+	@container (width > 30rem) {
 		.card {
 			padding: var(--space-12);
 		}
@@ -10,17 +10,17 @@
 		}
 
 		.specialties {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30ch), 1fr));
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
 		}
 	}
 
-	@container (width > 80ch) {
+	@container (width > 50rem) {
 		.specialties {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40ch), 1fr));
+			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40rem), 1fr));
 		}
 	}
 
-	@container (width > 48ch) {
+	@container (width > 30rem) {
 		.specialty {
 			flex-direction: row;
 			align-items: flex-start;
@@ -99,7 +99,7 @@
 
 	.card:hover {
 		box-shadow: var(--shadow-lg);
-		transform: translateY(-0.25ch);
+		transform: translateY(-0.25rem);
 	}
 
 	.card-compact {

@@ -1,61 +1,40 @@
 <script lang="ts">
 	import VideoCard from './VideoCard.svelte';
-	import type { Video } from '$lib/types';
+	import type { Video } from '$lib/types/video';
 
 	const { videos } = $props<{ videos: Video[] }>();
 </script>
 
 <style>
-	.featured-videos {
-		margin: var(--space-6) 0;
-	}
-
-	h2 {
-		margin: 0 0 var(--space-3) 0;
-		font-size: var(--font-size-base);
-		line-height: var(--line-height-tight);
-		color: var(--text-color);
-	}
-
 	.video-grid {
 		display: grid;
-		gap: var(--space-3);
+		gap: var(--space-4);
+		grid-template-columns: 1fr;
+		width: 100%;
 	}
 
-	@media (width >= 48ch) {
-		.featured-videos {
-			margin: var(--space-8) 0;
-		}
-
-		h2 {
-			font-size: var(--font-size-lg);
-		}
-
+	@container featured-videos (width >= 30rem) {
 		.video-grid {
-			gap: var(--space-4);
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
-	@media (width >= 80ch) {
+	@container featured-videos (width >= 50rem) {
 		.video-grid {
-			grid-template-columns: repeat(auto-fit, minmax(45ch, 1fr));
-			gap: var(--space-6);
+			grid-template-columns: repeat(3, 1fr);
 		}
 	}
 
-	@media (width >= 120ch) {
+	@container featured-videos (width >= 75rem) {
 		.video-grid {
-			grid-template-columns: repeat(auto-fit, minmax(50ch, 1fr));
-			gap: var(--space-8);
+			grid-template-columns: repeat(4, 1fr);
 		}
 	}
 </style>
 
-<section class="featured-videos">
-	<h2>🎥 Featured Videos</h2>
-	<div class="video-grid">
-		{#each videos as video (video.embedId)}
-			<VideoCard {video} />
-		{/each}
-	</div>
-</section>
+<h2>🎥 Featured Videos</h2>
+<div class="video-grid">
+	{#each videos as video (video.embedId)}
+		<VideoCard {video} />
+	{/each}
+</div>

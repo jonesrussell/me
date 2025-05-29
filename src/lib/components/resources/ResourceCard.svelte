@@ -1,99 +1,98 @@
 <script lang="ts">
 	import Box from '$lib/components/ui/Box.svelte';
-	import Badge from '$lib/components/ui/Badge.svelte';
+	import Tag from '$lib/components/ui/Tag.svelte';
+
 	import type { Resource } from '$lib/types';
 
-	const { resource } = $props<{ resource: Resource }>();
+	export let resource: Resource;
 </script>
 
 <style>
 	.resource {
-		width: 100%;
-		padding: var(--space-4);
 		container-type: inline-size;
 		container-name: resource-card;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-4);
+		padding: var(--space-4);
+		background: var(--color-surface-2);
+		border-radius: var(--radius-2);
 	}
 
-	:global(.box) {
-		width: 100%;
-		min-width: unset;
-		max-width: unset;
-	}
-
-	.resource-header {
+	.content {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-2);
-		margin-block-end: var(--space-4);
 	}
 
-	.resource-header h3 {
-		margin: 0;
-		font-size: var(--font-size-lg);
-		line-height: var(--line-height-tight);
-		color: var(--text-color);
+	h3 {
+		font-size: var(--font-size-3);
+		font-weight: var(--font-weight-bold);
+		color: var(--color-text-1);
 	}
 
 	.description {
-		margin: var(--space-4) 0;
-		font-size: var(--font-size-sm);
-		line-height: var(--line-height-relaxed);
-		color: var(--text-muted);
+		font-size: var(--font-size-2);
+		color: var(--color-text-2);
+		max-width: 65ch;
 	}
 
-	.category {
-		margin-block-start: var(--space-4);
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-1);
+		margin-top: var(--space-2);
 	}
 
-	.resource a {
-		text-decoration: none;
-		color: var(--link-color);
-		transition: all var(--transition-duration) var(--transition-timing);
+	:global(.tag) {
+		--tag-color: var(--text-muted);
+		--tag-bg: var(--bg-darker);
+
+		padding: var(--space-1) var(--space-2);
+		font-size: var(--font-size-1);
 	}
 
-	.resource:hover {
-		background: var(--bg-darker);
-		transform: translateY(-2px);
-		box-shadow: var(--shadow-md);
+	:global(.tag:hover) {
+		--tag-bg: var(--color-mix-light);
+		--tag-color: var(--text-color);
 	}
 
-	.resource a:hover {
-		color: var(--link-hover);
-	}
-
-	@media (min-width: 48ch) {
+	@container resource-card (width >= 30rem) {
 		.resource {
-			padding: var(--space-6);
-		}
-
-		.resource-header {
 			flex-direction: row;
-			align-items: center;
-			justify-content: space-between;
+			align-items: flex-start;
 			gap: var(--space-4);
 		}
 
-		.description {
-			font-size: var(--font-size-base);
+		.content {
+			flex: 1;
 		}
 	}
 </style>
 
 <Box>
 	<div class="resource">
-		<div class="resource-header">
+		<div class="content">
 			<h3>
 				<a href={resource.url} target="_blank" rel="noopener noreferrer">
 					{resource.title}
 				</a>
 			</h3>
-			{#if resource.stars}
-				<Badge type="info" children={() => `⭐ ${resource.stars.toLocaleString()}`} />
+			{#if resource.description}
+				<p class="description">{resource.description}</p>
 			{/if}
-		</div>
-		<p class="description">{resource.description}</p>
-		<div class="category">
-			<Badge type="info" children={() => resource.category} />
+			{#if resource.stars}
+				<div class="stars">
+					<span>⭐ {resource.stars}</span>
+				</div>
+			{/if}
+			{#if resource.tags?.length}
+				<div class="tags">
+					{#each resource.tags as tag (tag)}
+						<Tag>{tag}</Tag>
+					{/each}
+				</div>
+			{/if}
 		</div>
 	</div>
 </Box>

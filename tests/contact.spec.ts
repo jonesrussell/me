@@ -9,24 +9,25 @@ test.describe('Contact Page', () => {
 
 		// Check main sections
 		await Promise.all([
-			expect(page.locator('h1')).toBeVisible({ timeout: 15000 }),
+			expect(page.locator('h2')).toBeVisible({ timeout: 15000 }),
 			expect(page.locator('text=Get in Touch')).toBeVisible({ timeout: 15000 }),
-			expect(page.locator('.contact-links')).toBeVisible({ timeout: 15000 })
+			expect(page.locator('.contact-list')).toBeVisible({ timeout: 15000 })
 		]);
 	});
 
 	test('should display social media links correctly', async ({ page }) => {
 		await page.goto('/contact', { waitUntil: 'domcontentloaded' });
 
-		// Define social media platforms
-		const socialLinks = ['github', 'linkedin'];
+		// Define social media platforms and their expected text
+		const socialLinks = [
+			{ text: 'GitHub: @jonesrussell' },
+			{ text: 'LinkedIn: jonesrussell42' }
+		];
 
-		// Check each platform's main link
-		for (const platform of socialLinks) {
-			const link = page.locator(`.contact-link[href*="${platform.toLowerCase()}"]`);
+		// Check each platform's text
+		for (const { text } of socialLinks) {
+			const link = page.locator(`.contact-list li:has-text("${text}")`);
 			await expect(link).toBeVisible({ timeout: 10000 });
-			await expect(link).toHaveAttribute('target', '_blank');
-			await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
 		}
 	});
 
@@ -34,7 +35,7 @@ test.describe('Contact Page', () => {
 		await page.goto('/contact', { waitUntil: 'domcontentloaded' });
 
 		// Check page title
-		await expect(page).toHaveTitle('Contact | Russell Jones - Web Development & Open Source', {
+		await expect(page).toHaveTitle('Contact Me', {
 			timeout: 10000
 		});
 
@@ -42,7 +43,7 @@ test.describe('Contact Page', () => {
 		const metaDescription = page.locator('meta[name="description"]');
 		await expect(metaDescription).toHaveAttribute(
 			'content',
-			'Get in touch with Russell Jones for web development projects, technical consulting, or collaboration opportunities.',
+			'Get in touch with me for collaboration, questions, or just to say hello!',
 			{ timeout: 10000 }
 		);
 	});

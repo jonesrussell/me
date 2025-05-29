@@ -1,4 +1,4 @@
-import sanitizeHtml from 'sanitize-html';
+import DOMPurify from 'dompurify';
 
 // Extend the sanitize-html options type to include transformTags
 type SanitizeOptions = {
@@ -41,7 +41,7 @@ export const SANITIZE_OPTIONS: SanitizeOptions = {
 // Helper: Sanitize HTML
 export function sanitizeHTML(input: string): string {
 	if (!input) return '';
-	return sanitizeHtml(input, SANITIZE_OPTIONS);
+	return DOMPurify.sanitize(input, { USE_PROFILES: { html: true } });
 }
 
 // Cache for memoized results

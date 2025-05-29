@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 import { formatDate } from './utils';
-import type { BlogPost } from '$lib/types/blog';
+import type { BlogPost, BlogError } from '$lib/types/blog';
 
 // Constants
 const FEED_URL = 'https://jonesrussell.github.io/blog/feed.xml';
@@ -8,13 +8,6 @@ const FEED_CACHE_KEY = 'blog-feed-cache';
 const CACHE_DURATION = 1000 * 60 * 30; // 30 minutes
 
 // Types
-export interface BlogError {
-	type: 'FETCH_ERROR' | 'PARSE_ERROR' | 'VALIDATION_ERROR' | 'CACHE_ERROR';
-	message: string;
-	details?: unknown;
-	timestamp: number;
-}
-
 interface FeedCache {
 	data: BlogPost[];
 	timestamp: number;
@@ -118,6 +111,7 @@ const parseXMLFeed = (xml: string): BlogPost[] => {
 			link,
 			content,
 			published,
+			formattedDate: formatPostDate(published),
 			categories,
 			slug: generateSlug(title)
 		});
@@ -127,9 +121,10 @@ const parseXMLFeed = (xml: string): BlogPost[] => {
 };
 
 // API Module
-export const fetchFeed = async ({ page = 1, pageSize = 5 }: PaginationOptions = {}): Promise<
-	PaginatedResult<BlogPost>
-> => {
+export const fetchFeed = async (
+	fetchFn: typeof fetch,
+	{ page = 1, pageSize = 5 }: PaginationOptions = {}
+): Promise<PaginatedResult<BlogPost>> => {
 	// Set loading state immediately
 	blogStore.set({ posts: [], loading: true, error: null });
 
@@ -150,7 +145,7 @@ export const fetchFeed = async ({ page = 1, pageSize = 5 }: PaginationOptions = 
 	}
 
 	try {
-		const response = await fetch(FEED_URL, {
+		const response = await fetchFn(FEED_URL, {
 			headers: { Accept: 'application/xml, text/xml, */*' }
 		});
 
@@ -196,8 +191,8 @@ export const fetchFeed = async ({ page = 1, pageSize = 5 }: PaginationOptions = 
 };
 
 // Blog Post Retrieval
-export const fetchPost = async (slug: string): Promise<BlogPost> => {
-	const { items } = await fetchFeed();
+export const fetchPost = async (fetchFn: typeof fetch, slug: string): Promise<BlogPost> => {
+	const { items } = await fetchFeed(fetchFn);
 	const post = items.find(post => generateSlug(post.title) === slug);
 
 	if (!post) {

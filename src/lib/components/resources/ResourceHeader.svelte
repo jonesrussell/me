@@ -1,53 +1,69 @@
 <script lang="ts">
-	const { title, description } = $props<{
-		title: string;
-		description: string;
-	}>();
+	export let title: string;
+	export let description: string | undefined = undefined;
+	export let cta: boolean = false;
 </script>
 
 <style>
 	.header {
-		margin-bottom: var(--space-6);
-		text-align: center;
+		container-type: inline-size;
+		container-name: resource-header;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-4);
+		padding: var(--space-4);
+		background: var(--color-surface-2);
+		border-radius: var(--radius-2);
+	}
+
+	.content {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
 	}
 
 	h1 {
-		margin: 0;
-		font-size: var(--font-size-lg);
-		line-height: var(--line-height-tight);
-		color: var(--text-color);
+		font-size: var(--font-size-4);
+		font-weight: var(--font-weight-bold);
+		color: var(--color-text-1);
 	}
 
-	.intro {
-		margin: var(--space-3) 0 0 0;
-		font-size: var(--font-size-base);
-		line-height: var(--line-height-relaxed);
-		color: var(--text-muted);
+	.description {
+		font-size: var(--font-size-2);
+		color: var(--color-text-2);
+		max-width: 65ch;
 	}
 
-	@media (width >= 48ch) {
+	.cta {
+		display: flex;
+		gap: var(--space-2);
+	}
+
+	@container resource-header (width >= 30rem) {
 		.header {
-			margin-bottom: var(--space-8);
-		}
-
-		h1 {
-			font-size: var(--font-size-xl);
-		}
-
-		.intro {
-			margin: var(--space-4) 0 0 0;
-			font-size: var(--font-size-lg);
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
 		}
 	}
 
-	@media (width >= 80ch) {
-		h1 {
-			font-size: var(--font-size-2xl);
+	@container resource-header (width >= 50rem) {
+		.header {
+			padding: var(--space-8);
 		}
 	}
 </style>
 
-<div class="header">
-	<h1>{title}</h1>
-	<p class="intro">{description}</p>
-</div>
+<header class="header">
+	<div class="content">
+		<h1>{title}</h1>
+		{#if description}
+			<p class="description">{description}</p>
+		{/if}
+	</div>
+	{#if cta}
+		<div class="cta">
+			<slot name="cta" />
+		</div>
+	{/if}
+</header>

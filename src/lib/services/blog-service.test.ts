@@ -112,7 +112,7 @@ describe('API', () => {
 
 	describe('fetchFeed', () => {
 		it('should fetch and parse the feed successfully', async () => {
-			const result = await fetchFeed();
+			const result = await fetchFeed(mockFetch);
 
 			expect(result.items).toHaveLength(2);
 			expect(result.items[0]).toMatchObject({
@@ -126,12 +126,12 @@ describe('API', () => {
 		});
 
 		it('should handle pagination correctly', async () => {
-			const page1 = await fetchFeed({ page: 1, pageSize: 1 });
+			const page1 = await fetchFeed(mockFetch, { page: 1, pageSize: 1 });
 			expect(page1.items).toHaveLength(1);
 			expect(page1.hasMore).toBe(true);
 			expect(page1.items[0].title).toBe('Test Post 1');
 
-			const page2 = await fetchFeed({ page: 2, pageSize: 1 });
+			const page2 = await fetchFeed(mockFetch, { page: 2, pageSize: 1 });
 			expect(page2.items).toHaveLength(1);
 			expect(page2.hasMore).toBe(false);
 			expect(page2.items[0].title).toBe('Test Post 2');
@@ -140,7 +140,7 @@ describe('API', () => {
 		it('should handle HTTP errors', async () => {
 			mockFetch.mockRejectedValueOnce(new Error('Network error'));
 
-			await expect(fetchFeed()).rejects.toThrow('Network error');
+			await expect(fetchFeed(mockFetch)).rejects.toThrow('Network error');
 			expect(get(blogStore).error).toMatchObject({
 				type: 'FETCH_ERROR',
 				message: 'Network error'
@@ -156,37 +156,37 @@ describe('API', () => {
 				})
 			);
 
-			const result = await fetchFeed();
+			const result = await fetchFeed(mockFetch);
 			expect(result.items).toHaveLength(2);
 		});
 
 		it('should use cache when available', async () => {
 			// First fetch to populate cache
-			await fetchFeed();
+			await fetchFeed(mockFetch);
 			expect(mockFetch).toHaveBeenCalledTimes(1);
 
 			// Second fetch should use cache
-			await fetchFeed();
+			await fetchFeed(mockFetch);
 			expect(mockFetch).toHaveBeenCalledTimes(1);
 		});
 
 		it('should handle cache expiration', async () => {
 			// First fetch to populate cache
-			await fetchFeed();
+			await fetchFeed(mockFetch);
 			expect(mockFetch).toHaveBeenCalledTimes(1);
 
 			// Simulate cache expiration
 			vi.advanceTimersByTime(1000 * 60 * 31); // 31 minutes
 
 			// Second fetch should hit the network again
-			await fetchFeed();
+			await fetchFeed(mockFetch);
 			expect(mockFetch).toHaveBeenCalledTimes(2);
 		});
 	});
 
 	describe('fetchPost', () => {
 		it('should fetch a post by slug', async () => {
-			const post = await fetchPost('test-post-1');
+			const post = await fetchPost(mockFetch, 'test-post-1');
 			expect(post).toMatchObject({
 				title: 'Test Post 1',
 				slug: 'test-post-1'
@@ -194,12 +194,12 @@ describe('API', () => {
 		});
 
 		it('should throw error for non-existent post', async () => {
-			await expect(fetchPost('non-existent')).rejects.toThrow('Post not found');
+			await expect(fetchPost(mockFetch, 'non-existent')).rejects.toThrow('Post not found');
 		});
 
 		it('should handle network errors when fetching post', async () => {
 			mockFetch.mockRejectedValueOnce(new Error('Network error'));
-			await expect(fetchPost('test-post-1')).rejects.toThrow('Network error');
+			await expect(fetchPost(mockFetch, 'test-post-1')).rejects.toThrow('Network error');
 		});
 	});
 });
@@ -222,7 +222,7 @@ describe('Stores', () => {
 		expect(get(blogStore).posts).toHaveLength(0);
 
 		// Start fetch
-		const fetchPromise = fetchFeed();
+		const fetchPromise = fetchFeed(mockFetch);
 
 		// Check loading state immediately
 		expect(get(blogStore).loading).toBe(true);

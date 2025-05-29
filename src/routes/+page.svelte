@@ -1,84 +1,82 @@
 <script lang="ts">
 	import Terminal from '$lib/components/terminal/Terminal.svelte';
-	import Specialties from '$lib/components/content/Specialties.svelte';
 	import YouTubeSection from '$lib/components/video/YouTubeSection.svelte';
 	import ActionNavCards from '$lib/components/navigation/ActionNavCards.svelte';
+	import SpecialtyGrid from '$lib/components/content/SpecialtyGrid.svelte';
+	import Hero from '$lib/components/ui/Hero.svelte';
+	import type { Specialty } from '$lib/types/specialty';
 
-	const YOUTUBE_CHANNEL = 'https://youtube.com/@fullstackdev42';
-	const YOUTUBE_VIDEO_ID = 'B4v7ZDLxiS4';
-	const YOUTUBE_VIDEO_TITLE = 'Add a Google Font to Tailwind CSS | 2023';
-	const YOUTUBE_SECTION_TITLE = 'Latest Video';
-	const YOUTUBE_SECTION_SUBTITLE = 'Check out my latest YouTube tutorial';
-	const TERMINAL_COMMAND = 'npm run dev';
+	interface PageData {
+		terminalCommand: string;
+		specialties: Specialty[];
+		youtubeChannel: string;
+		youtubeVideoId: string;
+		youtubeVideoTitle: string;
+		youtubeSectionTitle: string;
+		youtubeSectionSubtitle: string;
+		navLinks: Array<{ href: string; icon: string; text: string }>;
+	}
 
-	const specialties = [
-		{
-			title: 'Modern JavaScript/TS',
-			description: 'Building the future with cutting-edge web technologies',
-			icon: '⚡'
-		},
-		{
-			title: 'Golang & PHP',
-			description: 'Crafting robust backend solutions with battle-tested technologies',
-			icon: '🔧'
-		},
-		{
-			title: 'AI Integration',
-			description: 'Harnessing artificial intelligence to solve complex problems',
-			icon: '🤖'
-		},
-		{
-			title: 'Cloud & DevOps',
-			description: 'Designing and automating scalable cloud-native solutions',
-			icon: '☁️'
-		}
-	];
-
-	const navLinks = [
-		{ href: '/blog', icon: '📝', text: 'Read my technical articles' },
-		{ href: '/projects', icon: '🚀', text: 'Browse my open source projects' },
-		{ href: '/contact', icon: '✉️', text: 'Get in touch' }
-	];
+	export let data: PageData;
 </script>
 
 <style>
-	.hero {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		min-height: 50vh;
-		padding: var(--space-8) var(--space-4);
-		background: linear-gradient(to bottom, var(--bg-color), var(--bg-darker));
-	}
-
-	@media (width >= 48ch) {
-		.hero {
-			min-height: 60vh;
-			padding: var(--space-16) var(--space-8);
-		}
-	}
-
 	.home {
+		container-type: inline-size;
+		container-name: home-page;
+		display: grid;
 		width: 100%;
-		padding: var(--space-4) 0;
+		padding: var(--space-16) 0;
+		grid-template-rows: auto 1fr;
+		gap: var(--space-16);
+	}
 
-		& .container {
-			width: 100%;
-			max-width: min(160ch, 95cqi);
-			margin: 0 auto;
-			padding: 0 var(--space-4);
-			display: flex;
-			flex-direction: column;
-			gap: var(--space-4);
+	.home-container {
+		display: grid;
+		width: 100%;
+		margin-inline: auto;
+		padding-inline: var(--space-4);
+		max-width: min(var(--measure), 95cqi);
+		gap: var(--space-16);
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	@container home-page (min-width: 640px) {
+		.home-container {
+			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-8);
 		}
+	}
+
+	@container home-page (min-width: 768px) {
+		.home-container {
+			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-12);
+		}
+	}
+
+	@container home-page (min-width: 1024px) {
+		.home-container {
+			max-width: min(var(--measure), 95cqi);
+			padding-inline: var(--space-16);
+		}
+	}
+
+	@container home-page (min-width: 1280px) {
+		.home-container {
+			max-width: 100%;
+			padding-inline: 0;
+		}
+	}
+
+	:global(.youtube-section) {
+		margin-top: 0;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
 		* {
-			transition: none !important;
-			animation: none !important;
+			transition: none;
+			animation: none;
 		}
 	}
 </style>
@@ -91,20 +89,24 @@
 	/>
 </svelte:head>
 
-<section class="hero">
-	<Terminal command={TERMINAL_COMMAND} />
-</section>
+<Hero>
+	<Terminal command={data.terminalCommand} />
+</Hero>
 
 <main class="home">
-	<div class="container">
-		<Specialties {specialties} />
-		<YouTubeSection
-			channelUrl={YOUTUBE_CHANNEL}
-			videoId={YOUTUBE_VIDEO_ID}
-			videoTitle={YOUTUBE_VIDEO_TITLE}
-			sectionTitle={YOUTUBE_SECTION_TITLE}
-			sectionSubtitle={YOUTUBE_SECTION_SUBTITLE}
+	<div class="home-container">
+		<SpecialtyGrid
+			specialties={data.specialties}
+			title="My Specialties"
+			description="Expert solutions for your unique challenges"
 		/>
-		<ActionNavCards links={navLinks} />
+		<YouTubeSection
+			channelUrl={data.youtubeChannel}
+			videoId={data.youtubeVideoId}
+			videoTitle={data.youtubeVideoTitle}
+			sectionTitle={data.youtubeSectionTitle}
+			sectionSubtitle={data.youtubeSectionSubtitle}
+		/>
+		<ActionNavCards links={data.navLinks} />
 	</div>
 </main>
