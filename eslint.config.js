@@ -31,6 +31,33 @@ export default ts.config(
 				parser: ts.parser,
 				svelteConfig
 			}
+		},
+		rules: {
+			// Core Svelte rules
+			'svelte/valid-compile': 'error',
+			'svelte/no-dom-manipulating': 'error',
+			'svelte/no-reactive-reassign': 'error',
+
+			// Store rules
+			'svelte/no-store-async': 'error',
+			'svelte/require-store-callbacks-use-set-param': 'error',
+			'svelte/require-store-reactive-access': 'error',
+			'svelte/require-stores-init': 'error',
+
+			// Template rules
+			'svelte/no-at-html-tags': 'error',
+			'svelte/no-dupe-else-if-blocks': 'error',
+			'svelte/no-dynamic-slot-name': 'error',
+			'svelte/no-inner-declarations': 'error',
+			'svelte/no-not-function-handler': 'error',
+			'svelte/no-object-in-text-mustaches': 'error',
+			'svelte/no-useless-mustaches': 'error',
+			'svelte/valid-each-key': 'error',
+
+			// Style rules
+			'svelte/no-dupe-style-properties': 'error',
+			'svelte/no-shorthand-style-property-overrides': 'error',
+			'svelte/no-unused-svelte-ignore': 'error'
 		}
 	},
 	{

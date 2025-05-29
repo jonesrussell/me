@@ -1,22 +1,15 @@
 <script lang="ts">
-	import { alignToGrid } from '$lib/utils/grid';
-
-	const {
-		title = undefined,
-		width = 40,
-		style = '',
-		children
-	} = $props<{
+	import type { Snippet } from 'svelte';
+	const { title = undefined, children } = $props<{
 		title?: string;
-		width?: number;
-		style?: string;
-		children: () => string;
+		children: Snippet;
 	}>();
 </script>
 
 <style>
 	.box {
-		width: var(--box-width);
+		width: 100%;
+		max-width: 100%;
 		font-family: var(--font-mono);
 		line-height: var(--line-height-tight);
 		background: var(--bg-darker);
@@ -24,15 +17,13 @@
 		border-radius: var(--radius-md);
 		box-shadow: var(--shadow-sm);
 		transition: all var(--transition-duration) var(--transition-timing);
-		min-width: var(--box-width);
-		max-width: var(--box-width);
-		word-break: break-word;
+		min-width: 0;
 		overflow-wrap: break-word;
 	}
 
 	.box:hover {
 		box-shadow: var(--shadow-md);
-		transform: translateY(-0.125ch);
+		transform: translateY(-0.125rem);
 	}
 
 	.box-frame {
@@ -55,7 +46,7 @@
 	}
 </style>
 
-<div class="box" style="width: {alignToGrid(width)}ch; {style}">
+<div class="box">
 	<div class="box-frame">
 		{#if title}
 			<div class="header">

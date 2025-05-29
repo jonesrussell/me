@@ -46,18 +46,21 @@ alwaysApply: true
 - Use middleware for cross-cutting concerns
 
 ## State Management
-- Use custom stores with subscriptions
-- Implement store persistence when needed
-- Keep stores focused and lightweight
+- Use runes for state management (`$state`, `$derived`, `$effect`)
+- Keep state focused and lightweight
 - Test state updates thoroughly
+- Use `$props` for component properties
+- Implement proper cleanup in effects
 
 ## Svelte Development
 For Svelte-specific patterns and best practices, refer to:
 - [Svelte 5 Standards](mdc:svelte5-standards.mdc) for runes and modern features
 - [Component Styling Standards](mdc:component-styling.mdc) for styling patterns
-- [Svelte Restrictions](mdc:svelte-restrictions.mdc) for prohibited patterns
 - [Testing Standards](mdc:testing-standards.mdc) for testing practices
 
 ## Svelte Patterns
 - Use runes for state management (`$state`, `$derived`, `$effect`)
-- Use `$props`
+- Use `$props` for component properties
+- Follow accessibility guidelines
+- Implement error boundaries
+- Use proper TypeScript types

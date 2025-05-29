@@ -33,22 +33,6 @@
 
 <style>
 	.category-section {
-		margin: var(--space-6) 0;
-		container-type: inline-size;
-		container-name: resource-section;
-
-		& h2 {
-			margin: 0 0 var(--space-3) 0;
-			font-size: var(--font-size-base);
-			line-height: var(--line-height-tight);
-			color: var(--text-color);
-		}
-
-		& .resource-grid {
-			display: grid;
-			gap: var(--space-3);
-		}
-
 		@container resource-section (width >= 48ch) {
 			margin: var(--space-8) 0;
 
@@ -72,6 +56,22 @@
 			& .resource-grid {
 				gap: var(--space-8);
 			}
+		}
+
+		container-type: inline-size;
+		container-name: resource-section;
+		margin: var(--space-6) 0;
+
+		& h2 {
+			margin: 0 0 var(--space-3) 0;
+			font-size: var(--font-size-base);
+			line-height: var(--line-height-tight);
+			color: var(--text-color);
+		}
+
+		& .resource-grid {
+			display: grid;
+			gap: var(--space-3);
 		}
 	}
 </style>

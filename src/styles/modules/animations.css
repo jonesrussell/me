@@ -23,7 +23,7 @@
 	@keyframes slide-up {
 		from {
 			opacity: 0;
-			transform: translateY(1ch);
+			transform: translateY(1rem);
 		}
 
 		to {
@@ -35,7 +35,7 @@
 	@keyframes slide-down {
 		from {
 			opacity: 0;
-			transform: translateY(-1ch);
+			transform: translateY(-1rem);
 		}
 
 		to {
@@ -47,7 +47,7 @@
 	@keyframes slide-left {
 		from {
 			opacity: 0;
-			transform: translateX(1ch);
+			transform: translateX(-1rem);
 		}
 
 		to {
@@ -59,7 +59,7 @@
 	@keyframes slide-right {
 		from {
 			opacity: 0;
-			transform: translateX(-1ch);
+			transform: translateX(1rem);
 		}
 
 		to {

@@ -46,7 +46,7 @@
 			opacity var(--transition-duration) var(--transition-timing),
 			transform var(--transition-duration) var(--transition-timing),
 			visibility var(--transition-duration) var(--transition-timing);
-		transform: translateY(-10px);
+		transform: translateY(-0.625rem);
 		flex-direction: column;
 		gap: var(--space-2);
 		z-index: 15;
@@ -91,17 +91,17 @@
 
 	@media (forced-colors: active) {
 		.mobile-nav {
-			border: 1px solid CanvasText;
+			border: 0.0625rem solid CanvasText;
 		}
 
 		.mobile-nav a {
-			border: 1px solid CanvasText;
+			border: 0.0625rem solid CanvasText;
 		}
 
 		.mobile-nav a:hover,
 		.mobile-nav a.active {
-			background: Canvas;
 			color: CanvasText;
+			background: Canvas;
 			border-color: Highlight;
 		}
 	}

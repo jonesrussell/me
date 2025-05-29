@@ -1,0 +1,4 @@
+@custom-media --container-sm (width >= 40rem);
+@custom-media --container-md (width >= 48rem);
+@custom-media --container-lg (width >= 64rem);
+@custom-media --container-xl (width >= 80rem);

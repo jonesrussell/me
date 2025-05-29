@@ -35,12 +35,12 @@
 	}
 
 	.header-main {
+		container-type: inline-size;
 		display: grid;
+		position: relative;
 		grid-template-columns: auto 1fr auto;
 		gap: var(--space-4);
 		align-items: center;
-		position: relative;
-		container-type: inline-size;
 	}
 
 	.header-right {
@@ -57,7 +57,7 @@
 
 	.menu-toggle {
 		display: flex;
-		width: 2.5rem;
+		width: 2.5ch;
 		height: 2.5rem;
 		padding: var(--space-2);
 		color: var(--text-color);
@@ -80,9 +80,9 @@
 
 	.sr-only {
 		position: absolute;
-		width: 1px;
-		height: 1px;
-		margin: -1px;
+		width: 0.0625ch;
+		height: 0.0625rem;
+		margin: -0.0625rem;
 		padding: 0;
 		overflow: hidden;
 		clip: rect(0, 0, 0, 0);

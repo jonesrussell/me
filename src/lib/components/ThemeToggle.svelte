@@ -36,17 +36,17 @@
 
 	.toggle-button {
 		display: flex;
-		align-items: center;
-		justify-content: center;
 		width: 2.5rem;
 		height: 2.5rem;
 		padding: 0.5rem;
-		border-radius: var(--radius-full);
-		background: var(--bg-darker);
 		color: var(--text-color);
-		border: 1px solid var(--border-color);
-		cursor: pointer;
+		background: var(--bg-darker);
+		border: 0.0625rem solid var(--border-color);
+		border-radius: var(--radius-full);
 		transition: all var(--transition-base);
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
 	}
 
 	.toggle-button:hover {
@@ -54,32 +54,37 @@
 		border-color: var(--accent-color);
 	}
 
+	.toggle-button :global(svg) {
+		width: 1.25rem;
+		height: 1.25rem;
+	}
+
 	.dropdown {
 		position: absolute;
 		top: 100%;
 		right: 0;
 		margin-top: 0.5rem;
-		background: var(--bg-darker);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-md);
 		padding: 0.5rem;
-		min-width: 8rem;
+		background: var(--bg-darker);
+		border: 0.0625rem solid var(--border-color);
+		border-radius: var(--radius-md);
 		box-shadow: var(--shadow-lg);
+		min-width: 8ch;
 		z-index: 100;
 	}
 
 	.theme-option {
 		display: flex;
-		align-items: center;
-		gap: 0.5rem;
 		width: 100%;
 		padding: 0.5rem;
-		border-radius: var(--radius-sm);
 		color: var(--text-color);
 		background: transparent;
 		border: none;
-		cursor: pointer;
+		border-radius: var(--radius-sm);
 		transition: all var(--transition-base);
+		align-items: center;
+		gap: 0.5rem;
+		cursor: pointer;
 	}
 
 	.theme-option:hover {
@@ -87,8 +92,8 @@
 	}
 
 	.theme-option.active {
-		background: var(--color-mix-medium);
 		color: var(--accent-color);
+		background: var(--color-mix-medium);
 	}
 
 	@media (prefers-reduced-motion: reduce) {

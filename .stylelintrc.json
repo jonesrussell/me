@@ -1,30 +1,88 @@
 {
-	"extends": ["stylelint-config-standard", "stylelint-config-clean-order"],
-	"plugins": [
-		"stylelint-order",
-		"stylelint-value-no-unknown-custom-properties",
-		"stylelint-declaration-block-no-ignored-properties"
+	"extends": [
+		"stylelint-config-standard",
+		"stylelint-config-clean-order",
+		"stylelint-config-recommended"
 	],
-	"ignoreFiles": ["**/coverage/**"],
+	"plugins": ["stylelint-order"],
+	"customSyntax": "postcss-html",
+	"ignoreFiles": [
+		"**/coverage/**",
+		"build/**",
+		"dist/**",
+		".svelte-kit/**",
+		"node_modules/**",
+		".cache/**"
+	],
 	"rules": {
-		"unit-allowed-list": ["ch", "px", "%", "deg", "vh", "vw", "fr", "s", "cqi", "ms", "rem"],
-		"unit-disallowed-list": ["em"],
+		"unit-allowed-list": [
+			"rem",
+			"ch",
+			"%",
+			"deg",
+			"vh",
+			"vw",
+			"fr",
+			"s",
+			"cqi",
+			"ms",
+			"vmin",
+			"vmax"
+		],
+		"unit-disallowed-list": ["px", "em"],
+		"declaration-property-unit-allowed-list": {
+			"font-size": ["ch", "rem"],
+			"line-height": ["ch"],
+			"letter-spacing": ["ch"],
+			"width": ["ch", "%", "cqi", "rem"],
+			"max-width": ["ch", "%", "cqi", "rem"],
+			"min-width": ["ch", "%", "cqi", "rem"],
+			"height": ["rem", "%", "vh"],
+			"max-height": ["rem", "%", "vh"],
+			"min-height": ["rem", "%", "vh"],
+			"margin": ["rem", "ch"],
+			"margin-top": ["rem", "ch"],
+			"margin-right": ["rem", "ch"],
+			"margin-bottom": ["rem", "ch"],
+			"margin-left": ["rem", "ch"],
+			"padding": ["rem", "ch"],
+			"padding-top": ["rem", "ch"],
+			"padding-right": ["rem", "ch"],
+			"padding-bottom": ["rem", "ch"],
+			"padding-left": ["rem", "ch"],
+			"border-width": ["rem"],
+			"border-radius": ["rem"],
+			"gap": ["rem", "ch"],
+			"top": ["rem", "%"],
+			"right": ["rem", "%"],
+			"bottom": ["rem", "%"],
+			"left": ["rem", "%"],
+			"transform": ["rem", "deg"],
+			"transition": ["s", "ms"],
+			"animation": ["s", "ms"]
+		},
 		"selector-pseudo-class-no-unknown": [
 			true,
 			{
 				"ignorePseudoClasses": ["global", "where"]
 			}
 		],
-		"custom-property-pattern": "^--[a-z0-9-]+$",
-		"selector-class-pattern": null,
-		"keyframes-name-pattern": null,
-		"media-query-no-invalid": null,
+		"custom-property-pattern": "^[a-z0-9_-]+(?:-[0-9]+)?(?:-(xs|sm|md|lg|xl|xxl|xxxl))?$",
+		"selector-class-pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+		"keyframes-name-pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+		"media-query-no-invalid": true,
+		"media-feature-name-no-unknown": true,
+		"media-feature-name-value-no-unknown": true,
 		"no-descending-specificity": null,
 		"declaration-block-no-redundant-longhand-properties": null,
-		"font-family-no-missing-generic-family-keyword": null,
+		"font-family-no-missing-generic-family-keyword": true,
 		"value-keyword-case": ["lower", { "ignoreProperties": ["font-family"] }],
 		"order/order": ["custom-properties", "dollar-variables", "at-rules", "declarations", "rules"],
 		"order/properties-order": [
+			{
+				"groupName": "Container",
+				"properties": ["container-type", "container-name"]
+			},
 			{
 				"groupName": "Box Model",
 				"properties": [
@@ -104,33 +162,23 @@
 				"ignoreAtRules": ["import", "layer"]
 			}
 		],
-		"value-no-unknown-custom-properties": true,
-		"declaration-block-no-ignored-properties": true,
-		"no-duplicate-custom-properties": true,
 		"declaration-block-no-duplicate-properties": true,
 		"shorthand-property-no-redundant-values": true,
-		"max-nesting-depth": 3,
+		"max-nesting-depth": 2,
 		"selector-max-id": 0,
 		"selector-max-type": 2,
 		"selector-max-combinators": 2,
 		"selector-max-specificity": "0,3,0",
-		"color-hex-case": "lower",
-		"color-hex-length": "short",
-		"color-named": "never",
-		"color-no-invalid-hex": true,
+		"color-function-notation": "modern",
 		"font-family-name-quotes": "always-where-recommended",
 		"font-weight-notation": "numeric",
-		"number-leading-zero": "always",
-		"number-no-trailing-zeros": true,
-		"length-zero-no-unit": true,
-		"string-quotes": "double",
-		"unit-case": "lower",
+		"alpha-value-notation": "number",
+		"length-zero-no-unit": null,
 		"time-min-milliseconds": 100,
-		"function-calc-no-unspaced-operator": true,
+		"function-calc-no-unspaced-operator": null,
 		"function-linear-gradient-no-nonstandard-direction": true,
 		"function-name-case": "lower",
 		"function-url-quotes": "always",
-		"function-whitespace-after": "always",
 		"declaration-no-important": true,
 		"value-no-vendor-prefix": true,
 		"property-no-vendor-prefix": true,
@@ -138,12 +186,14 @@
 		"at-rule-no-vendor-prefix": true,
 		"keyframe-declaration-no-important": true,
 		"comment-no-empty": true,
-		"comment-word-disallowed-list": ["/^TODO:/i", "/^FIXME:/i"]
-	},
-	"overrides": [
-		{
-			"files": ["**/*.svelte"],
-			"customSyntax": "postcss-html"
-		}
-	]
+		"comment-word-disallowed-list": ["/^TODO:/i", "/^FIXME:/i"],
+		"declaration-block-single-line-max-declarations": 1,
+		"media-feature-name-disallowed-list": [
+			["min-width", "max-width"],
+			{
+				"severity": "error",
+				"message": "Use @custom-media queries (e.g. --container-sm) instead of hardcoded min-width/max-width."
+			}
+		]
+	}
 }

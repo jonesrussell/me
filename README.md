@@ -1,52 +1,54 @@
 # Personal Website
 
-A modern personal website built with SvelteKit 5, featuring a monospace-first design approach and cutting-edge web development practices.
+A modern personal website built with SvelteKit 5, featuring a clean and modern design approach with cutting-edge web development practices.
 
 Visit the website at https://jonesrussell.github.io/me/
 
 ## Features
 
+- Terminal emulation fun
 - Modern Svelte 5
   - Runes for state management
   - `$state` and `$derived` values
   - `$effect` for side effects
   - `{@render}` for component composition
   - TypeScript-first development
-- Monospace Design System
-  - Character-grid based layouts
-  - Precise character unit measurements
-  - Grid component for perfect alignment
-  - Terminal-style interfaces
-  - CSS Container Queries
+- Modern Design System
+  - Clean and consistent layouts
+  - Responsive design with container queries
+  - CSS Grid and Flexbox
   - CSS Nesting
-  - CSS View Transitions
+  - CSS Container Queries
+  - CSS Logical Properties
+  - CSS Cascade Layers
 - Interactive Guides
   - Go project setup walkthrough
   - Terminal command demonstrations
   - Step-by-step tutorials
 - Modern Development
   - SvelteKit with TypeScript
-  - Character-based CSS
-  - Responsive monospace layouts
+  - Responsive layouts
   - Performance optimizations
   - Accessibility first
 - Development Tools
-  - Grid alignment utilities
-  - Terminal animation system
-  - Character-based measurements
-  - Monospace validation
   - Testing infrastructure
+- (soon to be) Curated Resources
+  - Essential Tools & Platforms
+  - Documentation
+  - Go Resources
+  - Web Development
+  - DevOps
+  - Learning Paths
+  - Featured YouTube Content
 
 ## Tech Stack
 
 - SvelteKit 5
 - TypeScript 5
 - Modern CSS
-  - Character Units (ch)
-  - CSS Grid and Subgrid
+  - CSS Grid and Flexbox
   - CSS Container Queries
   - CSS Nesting
-  - CSS View Transitions
   - CSS Logical Properties
   - CSS Cascade Layers
 - Testing
@@ -56,7 +58,6 @@ Visit the website at https://jonesrussell.github.io/me/
 - Development
   - ESLint + Prettier
   - TypeScript strict mode
-  - Custom monospace utilities
   - Modern build tools
 
 ## Project Structure
@@ -65,19 +66,25 @@ Visit the website at https://jonesrussell.github.io/me/
 src/
 ├── lib/
 │   ├── components/     # Reusable components
-│   │   ├── Grid.svelte      # Monospace grid system
-│   │   ├── Terminal.svelte  # Terminal interface
+│   │   ├── content/    # Content components
+│   │   │   ├── SpecialtyGrid.svelte  # Specialties grid
+│   │   │   └── ...
+│   │   ├── resources/  # Resource components
+│   │   │   ├── ResourceSection.svelte # Resource sections
+│   │   │   └── ...
 │   │   └── ...
 │   ├── services/      # Business logic
 │   │   ├── blog.ts    # Blog service
 │   │   └── ...
 │   ├── utils/
-│   │   ├── grid.ts    # Grid alignment utilities
 │   │   └── ...
 │   └── stores/
-│       ├── terminal.ts # Terminal state management
 │       └── ...
 ├── routes/           # SvelteKit routes
+│   ├── resources/    # Resources page
+│   │   ├── +page.svelte
+│   │   └── +page.ts
+│   └── ...
 └── app.css          # Global CSS variables
 
 docs/
@@ -122,69 +129,52 @@ npm run lint         # Run ESLint and Prettier checks
 npm run workflow     # Test GitHub Actions locally
 ```
 
-## Modern Svelte 5 Example
+## Example: Creating a New Route (a new page)
 
-Using runes for state management:
+Here's how to create a new route using our codebase patterns:
 
 ```svelte
+<!-- src/routes/fraggle-friends/+page.svelte -->
 <script lang="ts">
-	const { count } = $props<{ count: number }>();
-	let doubled = $derived(count * 2);
+	import Hero from '$lib/components/ui/Hero.svelte';
 
-	$effect(() => {
-		console.log('Count changed:', count);
-	});
+	const fraggles = [
+		{
+			name: 'Gobo',
+			role: 'Explorer',
+			quote: 'The magic is in the journey!'
+		}
+	];
 </script>
 
-<div>Count: {count}</div><div>Doubled: {doubled}</div>
+<svelte:head>
+	<title>Fraggle Rock | Russell Jones</title>
+	<meta name="description" content="Meet the Fraggles - Yea!" />
+</svelte:head>
+
+<Hero title="Fraggle Rock Heros!" subtitle="Dance Your Cares Away" />
+
+<main class="fraggles">
+	<div class="container">
+		{#each fraggles as fraggle}
+			<article class="fraggle-card">
+				<h2>{fraggle.name}</h2>
+				<p class="role">{fraggle.role}</p>
+				<blockquote>{fraggle.quote}</blockquote>
+			</article>
+		{/each}
+	</div>
+</main>
 ```
 
-## Monospace Grid System
+## I welcome any improvements.
 
-The project uses a character-based grid system for precise layouts:
+Here are some ways you can help:
 
-```svelte
-<Grid cols={2} gap={2}>
-	<div>Perfectly</div>
-	<div>Aligned</div>
-</Grid>
-```
+- Rip apart the code, point out all the mistakes I've made.
+- Make the code better; Not worse is fine.
+- Do Everyday Good? Do Only Good EveryOtherEpoch. That's the one.
+- Bring Motley Crue.
+- Don't watch The Dirt.
 
-Grid utilities ensure proper alignment:
-
-```typescript
-import { alignToGrid, toCharUnit } from '$lib/utils/grid';
-
-const width = toCharUnit(alignToGrid(40)); // "40ch"
-```
-
-## Terminal Component
-
-Interactive terminal interface for command demonstrations:
-
-```typescript
-const commands = [
-	{
-		cmd: 'echo "Hello"',
-		output: 'Hello'
-	}
-];
-
-terminal.loadCommands(commands);
-```
-
-## Contributing
-
-Feel free to contribute! This is an open project and I welcome any improvements. Here are some ways you can help:
-
-- Fix bugs or improve existing features
-- Add new features or components
-- Improve documentation
-- Add tests
-- Suggest improvements
-
-Just fork the repository, make your changes, and submit a pull request. No formal process or guidelines - if it improves the project, aces!
-
-## License
-
-MIT - see [LICENSE](LICENSE)
+## License MIT - see [LICENSE](LICENSE)
