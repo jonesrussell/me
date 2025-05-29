@@ -1,5 +1,3 @@
-export const prerender = true;
-
 import type { Resource } from '$lib/types';
 
 export function load() {
