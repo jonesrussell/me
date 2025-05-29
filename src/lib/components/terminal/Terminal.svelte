@@ -2,7 +2,7 @@
 	import { commands, terminal, terminalHeight, terminalMinHeight } from '$lib/stores/terminal';
 	import { get } from 'svelte/store';
 
-	const { title = 'Terminal' } = $props<{
+	const { title = '~/dev' } = $props<{
 		title?: string;
 	}>();
 
