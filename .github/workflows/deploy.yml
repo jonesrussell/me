@@ -192,7 +192,9 @@ jobs:
       contents: read
       pull-requests: read
     steps:
+      - name: Debug Environment Variables
+        run: echo "RUNNING_IN_ACT=${RUNNING_IN_ACT}"
       - name: Deploy to GitHub Pages
-        if: ${{ !env.RUNNING_IN_ACT }}
+        if: ${{ fromJSON(env.RUNNING_IN_ACT) == false }}
         id: deployment
         uses: actions/deploy-pages@v4
