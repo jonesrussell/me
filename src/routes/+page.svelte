@@ -41,28 +41,28 @@
 		grid-template-columns: minmax(0, 1fr);
 	}
 
-	@container home-page (min-width: 640px) {
+	@container home-page (--container-sm) {
 		.home-container {
 			max-width: min(var(--measure), 95cqi);
 			padding-inline: var(--space-8);
 		}
 	}
 
-	@container home-page (min-width: 768px) {
+	@container home-page (--container-md) {
 		.home-container {
 			max-width: min(var(--measure), 95cqi);
 			padding-inline: var(--space-12);
 		}
 	}
 
-	@container home-page (min-width: 1024px) {
+	@container home-page (--container-lg) {
 		.home-container {
 			max-width: min(var(--measure), 95cqi);
 			padding-inline: var(--space-16);
 		}
 	}
 
-	@container home-page (min-width: 1280px) {
+	@container home-page (--container-xl) {
 		.home-container {
 			max-width: 100%;
 			padding-inline: 0;
