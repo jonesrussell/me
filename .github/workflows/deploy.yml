@@ -76,6 +76,22 @@ jobs:
           path: build/
           retention-days: 30
 
+      - name: Verify artifact for unsupported links
+        run: |
+          if find build/ -type l | read; then
+            echo "Error: Symlinks found in the build directory!"
+            exit 1
+          fi
+          echo "No symlinks found. Proceeding with deployment."
+
+      - name: Clean up build directory
+        run: |
+          rm -rf build/tests build/tmp
+          echo "Cleaned up build directory to reduce size."
+
+      - name: List artifact contents
+        run: du -sh build/* | sort -hr
+
   # unit-tests:
   #   needs: build
   #   runs-on: ubuntu-latest
