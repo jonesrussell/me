@@ -35,7 +35,7 @@ test.describe('Contact Page', () => {
 		await page.goto('/contact', { waitUntil: 'domcontentloaded' });
 
 		// Check page title
-		await expect(page).toHaveTitle('Contact Me', {
+		await expect(page).toHaveTitle('Contact Me | Russell Jones', {
 			timeout: 10000
 		});
 
