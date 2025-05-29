@@ -9,6 +9,6 @@ export const load: PageLoad = async ({ fetch }): Promise<{
 	initialPosts: BlogPost[];
 	hasMore: boolean;
 }> => {
-	const { items: initialPosts, hasMore } = await fetchFeed(fetch, { page: 1, pageSize: 12 });
+	const { items: initialPosts, hasMore } = await fetchFeed(fetch, { page: 1, pageSize: 10 });
 	return { initialPosts, hasMore };
 };
