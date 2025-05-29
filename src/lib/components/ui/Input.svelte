@@ -1,18 +1,29 @@
 <script lang="ts">
-	const props = $props<{
+	const {
+		type = 'text',
+		value = '',
+		placeholder = '',
+		disabled = false,
+		required = false,
+		name = '',
+		id = '',
+		onInput,
+		'aria-invalid': ariaInvalid = false,
+		'aria-describedby': ariaDescribedby
+	} = $props<{
 		type?: string;
+		value?: string;
 		placeholder?: string;
 		disabled?: boolean;
 		required?: boolean;
-		value?: string;
-		onInput?: (value: string) => void;
 		name?: string;
 		id?: string;
+		onInput?: (value: string) => void;
 		'aria-invalid'?: boolean;
 		'aria-describedby'?: string;
 	}>();
 
-	let inputValue = $derived(props.value ?? '');
+	let inputValue = $derived(value);
 </script>
 
 <style>
@@ -86,18 +97,18 @@
 
 <div class="input-container">
 	<input
-		type={props.type ?? 'text'}
-		placeholder={props.placeholder ?? ''}
-		disabled={props.disabled ?? false}
-		required={props.required ?? false}
+		{type}
+		{placeholder}
+		{disabled}
+		{required}
 		bind:value={inputValue}
-		oninput={() => props.onInput?.(inputValue)}
-		name={props.name ?? ''}
-		id={props.id ?? ''}
+		oninput={() => onInput?.(inputValue)}
+		{name}
+		{id}
 		class="input"
 		role="textbox"
-		aria-label={props.placeholder || 'Text input'}
-		aria-invalid={props['aria-invalid'] ?? false}
-		aria-describedby={props['aria-describedby']}
+		aria-label={placeholder || 'Text input'}
+		aria-invalid={ariaInvalid}
+		aria-describedby={ariaDescribedby}
 	/>
 </div>

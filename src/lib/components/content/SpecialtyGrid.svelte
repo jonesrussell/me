@@ -1,7 +1,7 @@
 <script lang="ts">
 	import IntersectionObserver from 'svelte-intersection-observer';
 
-	const props = $props<{
+	const { specialties, title, description } = $props<{
 		specialties: Array<{
 			title: string;
 			description: string;
@@ -13,7 +13,7 @@
 
 	let elements = $state<HTMLElement[]>([]);
 	let activeIntersection = $state<number | null>(null);
-	let revealedStates = $derived(props.specialties.map(() => false));
+	let revealedStates = $derived(specialties.map(() => false));
 	let allRevealed = $derived(revealedStates.every((state: boolean) => state));
 
 	function handleIntersect(event: CustomEvent<IntersectionObserverEntry>, index: number) {
@@ -186,19 +186,19 @@
 </style>
 
 <div class="specialty-grid">
-	{#if props.title || props.description}
+	{#if title || description}
 		<div class="section-header">
-			{#if props.title}
-				<h2 class="section-title">{props.title}</h2>
+			{#if title}
+				<h2 class="section-title">{title}</h2>
 			{/if}
-			{#if props.description}
-				<p class="section-desc">{props.description}</p>
+			{#if description}
+				<p class="section-desc">{description}</p>
 			{/if}
 		</div>
 	{/if}
 
 	<div class="grid">
-		{#each props.specialties as specialty, i (specialty.title)}
+		{#each specialties as specialty, i (specialty.title)}
 			<IntersectionObserver
 				element={elements[i]}
 				on:observe={(e) => handleIntersect(e, i)}

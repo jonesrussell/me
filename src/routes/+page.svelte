@@ -90,7 +90,7 @@
 </svelte:head>
 
 <Hero>
-	<Terminal command={data.terminalCommand} />
+	<Terminal />
 </Hero>
 
 <main class="home">
