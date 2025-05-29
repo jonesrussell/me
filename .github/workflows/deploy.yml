@@ -157,6 +157,13 @@ jobs:
           url: ${{ vars.VITE_BLOG_FEED_URL }}
           path: './static'
           filename: 'feed.xml'
+      - name: Verify feed file
+        run: |
+          if [ ! -f "./static/feed.xml" ]; then
+            echo "Feed file not found!"
+            exit 1
+          fi
+          echo "Feed file exists and is ready for build"
       - name: Build
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'

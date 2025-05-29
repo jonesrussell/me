@@ -147,15 +147,26 @@ export const fetchFeed = async (
 	}
 
 	try {
-		const response = await fetchFn(FEED_URL, {
-			headers: { Accept: 'application/xml, text/xml, */*' }
-		});
+		// Handle both remote and local file URLs
+		let text: string;
+		if (FEED_URL.startsWith('http')) {
+			const response = await fetchFn(FEED_URL, {
+				headers: { Accept: 'application/xml, text/xml, */*' }
+			});
 
-		if (!response.ok) {
-			throw new Error(`HTTP error! status: ${response.status}`);
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+			text = await response.text();
+		} else {
+			// For local files, use the fetch function to read the file
+			const response = await fetchFn(FEED_URL);
+			if (!response.ok) {
+				throw new Error(`Failed to read local feed file: ${response.status}`);
+			}
+			text = await response.text();
 		}
 
-		const text = await response.text();
 		const posts = parseXMLFeed(text);
 		feedCache.updateCache(cacheKey, posts);
 
