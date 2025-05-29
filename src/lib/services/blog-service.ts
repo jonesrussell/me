@@ -3,7 +3,7 @@ import { formatDate } from './utils';
 import type { BlogPost, BlogError } from '$lib/types/blog';
 
 // Constants
-const FEED_URL = import.meta.env.VITE_BLOG_FEED_URL || 'https://jonesrussell.github.io/blog/feed.xml';
+const FEED_URL = 'https://jonesrussell.github.io/blog/feed.xml';
 const FEED_CACHE_KEY = 'blog-feed-cache';
 const CACHE_DURATION = 1000 * 60 * 30; // 30 minutes
 
@@ -83,7 +83,7 @@ const feedCache = (() => {
 export const resetFeedCache = feedCache.resetCache;
 
 // XML Parsing Module
-const parseXMLFeed = (xml: string): BlogPost[] => {
+export const parseXMLFeed = (xml: string): BlogPost[] => {
 	const entries: BlogPost[] = [];
 	const entryMatches = xml.match(/<entry[^>]*>([\s\S]*?)<\/entry>/g) || [];
 
@@ -128,18 +128,19 @@ export const fetchFeed = async (
 	{ page = 1, pageSize = 5 }: PaginationOptions = {}
 ): Promise<PaginatedResult<BlogPost>> => {
 	// Set loading state immediately
-	blogStore.set({ posts: [], loading: true, error: null });
+	blogStore.update(store => ({ ...store, loading: true, error: null }));
 
 	const cacheKey = `${FEED_CACHE_KEY}-${page}-${pageSize}`;
 	const cached = feedCache.getCache(cacheKey);
 
 	if (cached) {
 		const cachedItems = cached.data.slice((page - 1) * pageSize, page * pageSize);
-		blogStore.set({
-			posts: cached.data,
+		blogStore.update(store => ({
+			...store,
+			posts: page === 1 ? cachedItems : [...store.posts, ...cachedItems],
 			loading: false,
 			error: null
-		});
+		}));
 		return {
 			items: cachedItems,
 			hasMore: cached.data.length > page * pageSize
@@ -147,35 +148,25 @@ export const fetchFeed = async (
 	}
 
 	try {
-		// Handle both remote and local file URLs
-		let text: string;
-		if (FEED_URL.startsWith('http')) {
-			const response = await fetchFn(FEED_URL, {
-				headers: { Accept: 'application/xml, text/xml, */*' }
-			});
+		const response = await fetchFn(FEED_URL, {
+			headers: { Accept: 'application/xml, text/xml, */*' }
+		});
 
-			if (!response.ok) {
-				throw new Error(`HTTP error! status: ${response.status}`);
-			}
-			text = await response.text();
-		} else {
-			// For local files, use the fetch function to read the file
-			const response = await fetchFn(FEED_URL);
-			if (!response.ok) {
-				throw new Error(`Failed to read local feed file: ${response.status}`);
-			}
-			text = await response.text();
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
 		}
 
+		const text = await response.text();
 		const posts = parseXMLFeed(text);
 		feedCache.updateCache(cacheKey, posts);
 
 		const paginatedItems = posts.slice((page - 1) * pageSize, page * pageSize);
-		blogStore.set({
-			posts,
+		blogStore.update(store => ({
+			...store,
+			posts: page === 1 ? paginatedItems : [...store.posts, ...paginatedItems],
 			loading: false,
 			error: null
-		});
+		}));
 
 		return {
 			items: paginatedItems,
@@ -196,7 +187,7 @@ export const fetchFeed = async (
 		};
 
 		// Update store with error
-		blogStore.set({ posts: [], loading: false, error: blogError });
+		blogStore.update(store => ({ ...store, loading: false, error: blogError }));
 
 		// Re-throw the error to ensure it propagates
 		throw error;
