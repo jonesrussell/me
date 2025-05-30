@@ -2,7 +2,8 @@
 	"extends": [
 		"stylelint-config-standard",
 		"stylelint-config-clean-order",
-		"stylelint-config-recommended"
+		"stylelint-config-recommended",
+		"stylelint-prettier/recommended"
 	],
 	"plugins": ["stylelint-order"],
 	"customSyntax": "postcss-html",
