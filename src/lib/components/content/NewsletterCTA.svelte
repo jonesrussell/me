@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import FormField from './FormField.svelte';
+	import { FormService } from '../../../js/services/form-service';
 
 	let email = $state('');
 	let submitStatus = $state<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -27,22 +28,13 @@
 
 	async function handleSubmit(event: Event) {
 		event.preventDefault();
-		if (!validateEmail) return;
+		if (!validateEmail()) return;
 
 		submitStatus = 'loading';
 
 		try {
-			const response = await fetch('/api/newsletter', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ email })
-			});
-
-			if (!response.ok) {
-				throw new Error('Failed to subscribe');
-			}
+			const formService = FormService.getInstance();
+			await formService.submitForm('61af2a0f-5b54-476f-9bf6-c2ee6ce5b822', { email });
 
 			submitStatus = 'success';
 			email = '';
@@ -58,10 +50,18 @@
 		console.error('Newsletter form error:', error);
 	}
 
-	onMount(() => {
+	onMount(async () => {
 		const form = document.querySelector('form');
 		if (form) {
 			form.setAttribute('novalidate', '');
+		}
+
+		try {
+			const formService = FormService.getInstance();
+			const schema = await formService.getSchema('61af2a0f-5b54-476f-9bf6-c2ee6ce5b822');
+			console.log('Form Schema:', schema);
+		} catch (error) {
+			console.error('Failed to fetch schema:', error);
 		}
 	});
 </script>
