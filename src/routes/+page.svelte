@@ -79,6 +79,13 @@
 			animation: none;
 		}
 	}
+
+	.gf-section--cta {
+		margin-top: var(--space-16);
+		padding: var(--space-8);
+		background: var(--color-background-alt);
+		border-radius: var(--radius-lg);
+	}
 </style>
 
 <svelte:head>
@@ -108,5 +115,6 @@
 			sectionSubtitle={data.youtubeSectionSubtitle}
 		/>
 		<ActionNavCards links={data.navLinks} />
+		<div id="cta-form-container" class="gf-section gf-section--cta"></div>
 	</div>
 </main>
