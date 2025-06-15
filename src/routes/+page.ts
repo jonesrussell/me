@@ -1,11 +1,17 @@
 import type { Specialty } from '$lib/types/specialty';
 
 export function load() {
-	const YOUTUBE_CHANNEL = 'https://youtube.com/@fullstackdev42';
-	const YOUTUBE_VIDEO_ID = 'B4v7ZDLxiS4';
-	const YOUTUBE_VIDEO_TITLE = 'Add a Google Font to Tailwind CSS | 2023';
-	const YOUTUBE_SECTION_TITLE = 'Tutorial';
-	const YOUTUBE_SECTION_SUBTITLE = 'Web Development';
+	// Organizing constants for better maintainability
+	const YOUTUBE = {
+		channel: 'https://youtube.com/@fullstackdev42',
+		videoId: 'B4v7ZDLxiS4',
+		videoTitle: 'Add a Google Font to Tailwind CSS | 2023',
+		section: {
+			title: 'Tutorial',
+			subtitle: 'Web Development'
+		}
+	} as const;
+
 	const TERMINAL_COMMAND = 'npm run dev';
 
 	const specialties: Specialty[] = [
@@ -37,12 +43,9 @@ export function load() {
 		{ href: '/contact', icon: '✉️', text: 'Get in touch' }
 	];
 
+	// Returning structured data for better readability
 	return {
-		youtubeChannel: YOUTUBE_CHANNEL,
-		youtubeVideoId: YOUTUBE_VIDEO_ID,
-		youtubeVideoTitle: YOUTUBE_VIDEO_TITLE,
-		youtubeSectionTitle: YOUTUBE_SECTION_TITLE,
-		youtubeSectionSubtitle: YOUTUBE_SECTION_SUBTITLE,
+		youtube: YOUTUBE,
 		terminalCommand: TERMINAL_COMMAND,
 		specialties,
 		navLinks
