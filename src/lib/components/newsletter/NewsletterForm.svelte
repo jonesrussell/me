@@ -2,7 +2,7 @@
 	import FormField from '../content/FormField.svelte';
 	import StatusMessages from './StatusMessages.svelte';
 	import SubmitButton from './SubmitButton.svelte';
-	import type { SubmitStatus } from '$lib/components/composables/useNewsletterForm';
+	import type { SubmitStatus } from '$lib/components/composables/useNewsletterForm.svelte';
 
 	interface Props {
 		email: string;

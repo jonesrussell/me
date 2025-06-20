@@ -4,7 +4,7 @@
 	import NewsletterHeader from './NewsletterHeader.svelte';
 	import NewsletterForm from './NewsletterForm.svelte';
 	import SchemaError from './SchemaError.svelte';
-	import { useNewsletterForm } from '$lib/components/composables/useNewsletterForm';
+	import { useNewsletterForm } from '$lib/components/composables/useNewsletterForm.svelte';
 
 	interface Props {
 		class?: string;
