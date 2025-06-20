@@ -1,5 +1,6 @@
 <script lang="ts">
 	import BlogPost from './BlogPost.svelte';
+	import ErrorBoundary from '../ErrorBoundary.svelte';
 	import type { BlogPost as BlogPostType } from '$lib/types/blog';
 
 	const { posts } = $props<{
@@ -46,7 +47,9 @@
 <section class="blog-section">
 	<div class="blog-grid">
 		{#each posts as post, index (post.slug + '-' + index)}
-			<BlogPost {post} />
+			<ErrorBoundary fallback="Post temporarily unavailable" component="BlogPost">
+				<BlogPost {post} />
+			</ErrorBoundary>
 		{/each}
 	</div>
 </section>

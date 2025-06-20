@@ -2,7 +2,7 @@
 	import SkipToMain from '$lib/components/navigation/SkipToMain.svelte';
 	import Header from '$lib/components/layout/Header.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
-	import NewsletterCTA from '$lib/components/content/NewsletterCTA.svelte';
+	import NewsletterCTA from '$lib/components/newsletter/NewsletterCTA.svelte';
 	import { page } from '$app/stores';
 	import { theme } from '$lib/stores/theme';
 	import { onMount } from 'svelte';

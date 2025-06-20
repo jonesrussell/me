@@ -1,15 +1,39 @@
 <script lang="ts">
 	import { commands, terminal, terminalHeight, terminalMinHeight } from '$lib/stores/terminal';
 	import { get } from 'svelte/store';
+	import ErrorBoundary from '../ErrorBoundary.svelte';
 
 	const { title = '~/dev' } = $props<{
 		title?: string;
 	}>();
 
+	let terminalError = $state(false);
+
 	$effect(() => {
-		terminal.loadCommands(); // Will use default commands
-		return () => terminal.stop();
+		try {
+			terminal.loadCommands(); // Will use default commands
+		} catch (error) {
+			console.error('Terminal error:', error);
+			terminalError = true;
+		}
+		return () => {
+			try {
+				terminal.stop();
+			} catch (error) {
+				console.error('Error stopping terminal:', error);
+			}
+		};
 	});
+
+	function handleRetry() {
+		terminalError = false;
+		try {
+			terminal.loadCommands();
+		} catch (error) {
+			console.error('Terminal retry error:', error);
+			terminalError = true;
+		}
+	}
 </script>
 
 <style>
@@ -158,6 +182,56 @@
 		}
 	}
 
+	.terminal-error {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: var(--space-8);
+		background: var(--bg-darker);
+		border-radius: var(--radius-md);
+		min-height: 8rem;
+	}
+
+	.terminal-error-content {
+		text-align: center;
+	}
+
+	.terminal-error-icon {
+		margin-bottom: var(--space-2);
+		font-size: var(--font-size-2xl);
+		color: var(--text-muted);
+		opacity: 0.6;
+	}
+
+	.terminal-error-message {
+		margin: 0 0 var(--space-2) 0;
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
+	}
+
+	.terminal-retry-button {
+		padding: var(--space-2) var(--space-4);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-xs);
+		color: var(--accent-color);
+		background: none;
+		border: var(--border-width) solid var(--accent-color);
+		border-radius: var(--radius-sm);
+		cursor: pointer;
+		transition: all var(--transition-duration) var(--transition-timing);
+	}
+
+	.terminal-retry-button:hover {
+		color: var(--bg-color);
+		background: var(--accent-color);
+	}
+
+	.terminal-retry-button:focus {
+		outline: none;
+		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
+	}
+
 	@media (prefers-reduced-motion: reduce) {
 		.command-output {
 			animation: none;
@@ -166,35 +240,51 @@
 		.cursor {
 			animation: none;
 		}
+
+		.terminal-retry-button {
+			transition: none;
+		}
 	}
 </style>
 
-<div class="terminal-frame" style:height={$terminalHeight} style:min-height={$terminalMinHeight}>
-	<div class="terminal-header">
-		<span class="terminal-title">{title}</span>
-		<div class="terminal-buttons">
-			<span></span>
-			<span></span>
-			<span></span>
+<ErrorBoundary fallback="Terminal temporarily unavailable" component="Terminal">
+	<div class="terminal-frame" style:height={$terminalHeight} style:min-height={$terminalMinHeight}>
+		<div class="terminal-header">
+			<span class="terminal-title">{title}</span>
+			<div class="terminal-buttons">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		<div class="terminal-body">
+			{#if terminalError}
+				<div class="terminal-error">
+					<div class="terminal-error-content">
+						<div class="terminal-error-icon" aria-hidden="true">$</div>
+						<p class="terminal-error-message">Terminal unavailable</p>
+						<button class="terminal-retry-button" onclick={handleRetry}> Restart terminal </button>
+					</div>
+				</div>
+			{:else}
+				{#each get(commands).filter((cmd) => cmd.completed) as command (command.cmd)}
+					<div class="command-line">
+						<span class="prompt">$</span>
+						<span class="command">{command.cmd}</span>
+					</div>
+					<div class="command-output">{command.output}</div>
+				{/each}
+				{#if $terminal.currentCommand < get(commands).length}
+					<div class="command-line">
+						<span class="prompt">$</span>
+						<span class="command">{$terminal.commandVisible}</span>
+						{#if $terminal.isTyping && $terminal.commandVisible.length === get(commands)[$terminal.currentCommand]?.cmd?.length && !$terminal.outputVisible}
+							<span class="cursor">▋</span>
+						{/if}
+					</div>
+					<div class="command-output">{$terminal.outputVisible}</div>
+				{/if}
+			{/if}
 		</div>
 	</div>
-	<div class="terminal-body">
-		{#each get(commands).filter((cmd) => cmd.completed) as command (command.cmd)}
-			<div class="command-line">
-				<span class="prompt">$</span>
-				<span class="command">{command.cmd}</span>
-			</div>
-			<div class="command-output">{command.output}</div>
-		{/each}
-		{#if $terminal.currentCommand < get(commands).length}
-			<div class="command-line">
-				<span class="prompt">$</span>
-				<span class="command">{$terminal.commandVisible}</span>
-				{#if $terminal.isTyping && $terminal.commandVisible.length === get(commands)[$terminal.currentCommand]?.cmd?.length && !$terminal.outputVisible}
-					<span class="cursor">▋</span>
-				{/if}
-			</div>
-			<div class="command-output">{$terminal.outputVisible}</div>
-		{/if}
-	</div>
-</div>
+</ErrorBoundary>
