@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { SubmitStatus } from '$lib/components/composables/useNewsletterForm';
+	import type { SubmitStatus } from '$lib/components/composables/useNewsletterForm.svelte';
 
 	interface Props {
 		submitStatus: SubmitStatus;
