@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ProjectCard from './ProjectCard.svelte';
+	import ErrorBoundary from '../ErrorBoundary.svelte';
 	import type { Project } from '$lib/types/project';
 
 	const { projects } = $props<{ projects: Project[] }>();
@@ -36,6 +37,8 @@
 
 <div class="project-grid">
 	{#each projects as project (project.title)}
-		<ProjectCard {project} />
+		<ErrorBoundary fallback="Project temporarily unavailable" component="ProjectCard">
+			<ProjectCard {project} />
+		</ErrorBoundary>
 	{/each}
 </div>

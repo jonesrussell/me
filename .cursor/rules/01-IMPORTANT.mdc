@@ -1,0 +1,661 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# Svelte 5 Development Guide
+
+Svelte 5 comes with a modern syntax and reactivity system built around **runes** - compiler instructions that inform Svelte about reactivity. Syntactically, runes are functions starting with a dollar-sign.
+
+## Reactivity with Runes
+
+### Creating Reactive State with $state
+
+Create reactive variables using the `$state` rune:
+
+```svelte
+<script>
+	let count = $state(0);
+</script>
+
+<button onclick={() => count++}>
+	clicks: {count}
+</button>
+```
+
+The variable `count` is the number itself - you read and write directly to it without any wrapper.
+
+### Derived State with $derived
+
+Create computed values that automatically update when their dependencies change:
+
+```svelte
+<script>
+	let count = $state(0);
+	let double = $derived(count * 2);
+</script>
+
+<p>Count: {count}</p>
+<p>Double: {double}</p>
+```
+
+### Side Effects with $effect
+
+Handle side effects that should run when reactive values change:
+
+```svelte
+<script>
+	let count = $state(0);
+
+	$effect(() => {
+		if (count > 5) {
+			alert('Count is too high!');
+		}
+	});
+</script>
+```
+
+### Component Properties with $props
+
+Define component properties using the `$props` rune with destructuring:
+
+```svelte
+<script>
+	let { optional = 'unset', required } = $props();
+</script>
+```
+
+For advanced use cases:
+
+```svelte
+<script>
+	// Renaming properties
+	let { class: klass } = $props();
+
+	// Rest properties
+	let { foo, bar, ...rest } = $props();
+
+	// All properties without destructuring
+	let props = $props();
+</script>
+
+<button class={klass} {...rest}>click me</button>
+```
+
+## Event Handling
+
+### Modern Event Handlers
+
+Event handlers are properties, not directives:
+
+```svelte
+<script>
+	let count = $state(0);
+</script>
+
+<button onclick={() => count++}>
+	clicks: {count}
+</button>
+```
+
+You can use shorthand syntax for named functions:
+
+```svelte
+<script>
+	let count = $state(0);
+
+	function handleClick() {
+		count++;
+	}
+</script>
+
+<button onclick={handleClick}>
+	clicks: {count}
+</button>
+```
+
+### Component Events as Callbacks
+
+Components accept callback props instead of emitting events:
+
+**App.svelte**
+```svelte
+<script>
+	import Pump from './Pump.svelte';
+
+	let size = $state(15);
+	let burst = $state(false);
+
+	function reset() {
+		size = 15;
+		burst = false;
+	}
+</script>
+
+<Pump
+	inflate={(power) => {
+		size += power;
+		if (size > 75) burst = true;
+	}}
+	deflate={(power) => {
+		if (size > 0) size -= power;
+	}}
+/>
+
+{#if burst}
+	<button onclick={reset}>new balloon</button>
+	<span class="boom">💥</span>
+{:else}
+	<span class="balloon" style="scale: {0.01 * size}">
+		🎈
+	</span>
+{/if}
+```
+
+**Pump.svelte**
+```svelte
+<script>
+	let { inflate, deflate } = $props();
+	let power = $state(5);
+</script>
+
+<button onclick={() => inflate(power)}>
+	inflate
+</button>
+<button onclick={() => deflate(power)}>
+	deflate
+</button>
+<button onclick={() => power--}>-</button>
+Pump power: {power}
+<button onclick={() => power++}>+</button>
+```
+
+### Event Forwarding
+
+Forward events by accepting callback props:
+
+```svelte
+<script>
+	let { onclick } = $props();
+</script>
+
+<button {onclick}>
+	click me
+</button>
+```
+
+Or spread all props:
+
+```svelte
+<script>
+	let props = $props();
+</script>
+
+<button {...props}>
+	click me
+</button>
+```
+
+### Event Modifiers
+
+Since event handlers are functions, create your own wrapper functions:
+
+```svelte
+<script>
+	function once(fn) {
+		return function (event) {
+			if (fn) fn.call(this, event);
+			fn = null;
+		};
+	}
+
+	function preventDefault(fn) {
+		return function (event) {
+			event.preventDefault();
+			fn.call(this, event);
+		};
+	}
+</script>
+
+<button onclick={once(preventDefault(handler))}>...</button>
+```
+
+For capture events, add the modifier to the event name:
+
+```svelte
+<button onclickcapture={handler}>...</button>
+```
+
+### Multiple Event Handlers
+
+Combine multiple handlers in a single function:
+
+```svelte
+<button
+	onclick={(e) => {
+		one(e);
+		two(e);
+	}}
+>
+	...
+</button>
+```
+
+When spreading props, local event handlers must come after the spread:
+
+```svelte
+<button
+	{...props}
+	onclick={(e) => {
+		doStuff(e);
+		props.onclick?.(e);
+	}}
+>
+	...
+</button>
+```
+
+## Snippets for Content Projection
+
+### Default Content with children
+
+Pass content to components using the special `children` prop:
+
+**Child.svelte**
+```svelte
+<script>
+	let { children } = $props();
+</script>
+
+<div class="wrapper">
+	{@render children?.()}
+</div>
+```
+
+**Parent.svelte**
+```svelte
+<script>
+	import Child from './Child.svelte';
+</script>
+
+<Child>
+	<p>This content goes inside the child</p>
+</Child>
+```
+
+### Multiple Content Areas
+
+Use named snippet props for multiple content areas:
+
+**Layout.svelte**
+```svelte
+<script>
+	let { header, main, footer } = $props();
+</script>
+
+<header>
+	{@render header?.()}
+</header>
+
+<main>
+	{@render main?.()}
+</main>
+
+<footer>
+	{@render footer?.()}
+</footer>
+```
+
+**App.svelte**
+```svelte
+<script>
+	import Layout from './Layout.svelte';
+</script>
+
+<Layout>
+	{#snippet header()}
+		<h1>My App</h1>
+	{/snippet}
+
+	{#snippet main()}
+		<p>Main content here</p>
+	{/snippet}
+
+	{#snippet footer()}
+		<p>&copy; 2024</p>
+	{/snippet}
+</Layout>
+```
+
+### Passing Data with Snippets
+
+Snippets can receive parameters:
+
+**List.svelte**
+```svelte
+<script>
+	let { items, item, empty } = $props();
+</script>
+
+{#if items.length}
+	<ul>
+		{#each items as entry}
+			<li>
+				{@render item(entry)}
+			</li>
+		{/each}
+	</ul>
+{:else}
+	{@render empty?.()}
+{/if}
+```
+
+**App.svelte**
+```svelte
+<script>
+	import List from './List.svelte';
+</script>
+
+<List items={['one', 'two', 'three']}>
+	{#snippet item(text)}
+		<span>{text}</span>
+	{/snippet}
+
+	{#snippet empty()}
+		<span>No items yet</span>
+	{/snippet}
+</List>
+```
+
+## Component Instantiation
+
+### Using mount and unmount
+
+Components are functions that should be instantiated with `mount`:
+
+```javascript
+import { mount, unmount } from 'svelte';
+import App from './App.svelte';
+
+const app = mount(App, {
+	target: document.getElementById("app"),
+	props: { message: 'hello' }
+});
+
+// Later, to unmount
+unmount(app);
+```
+
+### Reactive Props
+
+Create reactive props using `$state`:
+
+```javascript
+import { mount } from 'svelte';
+import App from './App.svelte';
+
+const props = $state({ foo: 'bar' });
+const app = mount(App, {
+	target: document.getElementById("app"),
+	props
+});
+
+// Update props reactively
+props.foo = 'baz';
+```
+
+### Event Handling
+
+Pass event handlers via the events option:
+
+```javascript
+import { mount } from 'svelte';
+import App from './App.svelte';
+
+const app = mount(App, {
+	target: document.getElementById("app"),
+	events: {
+		customEvent: (data) => console.log(data)
+	}
+});
+```
+
+### Server-Side Rendering
+
+Use the `render` function from `svelte/server`:
+
+```javascript
+import { render } from 'svelte/server';
+import App from './App.svelte';
+
+const { html, head } = render(App, {
+	props: { message: 'hello' }
+});
+```
+
+## TypeScript Support
+
+### Component Typing
+
+Define component types using the `Component` type:
+
+```typescript
+import type { Component } from 'svelte';
+
+export declare const MyComponent: Component<{
+	foo: string;
+}>;
+```
+
+### Component Variables
+
+Type component variables properly:
+
+```typescript
+import { ComponentA, ComponentB } from 'component-library';
+import type { Component } from 'svelte';
+
+let C: Component<{ foo: string }> = $state(
+	Math.random() ? ComponentA : ComponentB
+);
+```
+
+## Dynamic Components
+
+Components can be dynamic without special syntax:
+
+```svelte
+<script>
+	import A from './A.svelte';
+	import B from './B.svelte';
+
+	let Thing = $state(A);
+</script>
+
+<select bind:value={Thing}>
+	<option value={A}>Component A</option>
+	<option value={B}>Component B</option>
+</select>
+
+<!-- Dynamic component rendering -->
+<Thing />
+```
+
+Use dot notation for components in objects:
+
+```svelte
+{#each items as item}
+	<item.component {...item.props} />
+{/each}
+```
+
+## Bindings
+
+### Bindable Properties
+
+Properties must be explicitly marked as bindable using `$bindable()`:
+
+```svelte
+<script>
+	let { value = $bindable() } = $props();
+</script>
+
+<input bind:value />
+```
+
+### Component Binding
+
+Use `bind:this` to get component instances:
+
+```svelte
+<script>
+	let componentRef;
+</script>
+
+<MyComponent bind:this={componentRef} />
+
+<button onclick={() => componentRef.someExportedMethod()}>
+	Call method
+</button>
+```
+
+### Form Bindings
+
+Bindings now properly react to form resets:
+
+```svelte
+<form>
+	<input bind:value={name} />
+	<button type="reset">Reset</button>
+</form>
+```
+
+## Styling
+
+### Scoped CSS
+
+Svelte 5 uses `:where()` for scoped CSS selectors:
+
+```svelte
+<style>
+	.my-class {
+		color: blue;
+	}
+</style>
+```
+
+### Global Styles
+
+Use `:global()` for global styles:
+
+```svelte
+<style>
+	:global(.global-class) {
+		color: red;
+	}
+</style>
+```
+
+### CSS Custom Properties
+
+CSS custom properties work seamlessly:
+
+```svelte
+<script>
+	let color = $state('blue');
+</script>
+
+<div style:color />
+
+<style>
+	div {
+		background: var(--bg-color, white);
+	}
+</style>
+```
+
+## Modern Browser Features
+
+Svelte 5 leverages modern browser APIs:
+
+- **Proxies** for reactivity
+- **ResizeObserver** for element dimension bindings
+- **Modern event handling** for form inputs
+- **Native CSS** for styling
+
+## Best Practices
+
+### Component Structure
+
+```svelte
+<script>
+	// Props first
+	let { title, items = [] } = $props();
+
+	// State
+	let selected = $state(null);
+
+	// Derived state
+	let filteredItems = $derived(
+		items.filter(item => item.active)
+	);
+
+	// Effects
+	$effect(() => {
+		if (selected) {
+			console.log('Selected:', selected);
+		}
+	});
+
+	// Functions
+	function handleSelect(item) {
+		selected = item;
+	}
+</script>
+
+<!-- Template -->
+<h2>{title}</h2>
+{#each filteredItems as item}
+	<button onclick={() => handleSelect(item)}>
+		{item.name}
+	</button>
+{/each}
+
+<style>
+	/* Styles */
+</style>
+```
+
+### Error Handling
+
+```svelte
+<script>
+	let data = $state(null);
+	let error = $state(null);
+	let loading = $state(false);
+
+	async function fetchData() {
+		loading = true;
+		error = null;
+
+		try {
+			const response = await fetch('/api/data');
+			data = await response.json();
+		} catch (e) {
+			error = e.message;
+		} finally {
+			loading = false;
+		}
+	}
+</script>
+
+{#if loading}
+	<p>Loading...</p>
+{:else if error}
+	<p class="error">Error: {error}</p>
+{:else if data}
+	<pre>{JSON.stringify(data, null, 2)}</pre>
+{/if}
+```
+
+This guide covers the essential patterns and features of Svelte 5. The framework provides a clean, reactive approach to building web applications with minimal boilerplate and maximum developer experience.

@@ -7,7 +7,11 @@
 	},
 	"[svelte]": {
 		"editor.defaultFormatter": "svelte.svelte-vscode",
-		"editor.formatOnSave": true
+		"editor.formatOnSave": true,
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": "explicit",
+			"source.fixAll.stylelint": "explicit"
+		}
 	},
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"typescript.enablePromptUseWorkspaceTsdk": true,
@@ -39,11 +43,37 @@
 	"editor.fontSize": 14,
 	"editor.lineHeight": 1.5,
 	"editor.tabSize": 2,
-	"editor.insertSpaces": false,
+	"editor.insertSpaces": true,
 	"editor.renderWhitespace": "boundary",
 	"files.trimTrailingWhitespace": true,
 	"files.insertFinalNewline": true,
-	"files.associations": {
-		"*.svelte": "svelte"
+	"files.watcherExclude": {
+		"**/node_modules/**": true,
+		"**/dist/**": true,
+		"**/.svelte-kit/**": true
+	},
+	"editor.tokenColorCustomizations": {
+		"[Default Dark+]": {
+			"textMateRules": [
+				{
+					"settings": {
+						"foreground": "#569CD6"
+					},
+					"scope": "support.class.component.svelte"
+				},
+				{
+					"settings": {
+						"foreground": "#4EC9B0"
+					},
+					"scope": "entity.name.tag.svelte"
+				},
+				{
+					"settings": {
+						"foreground": "#DCDCAA"
+					},
+					"scope": "variable.other.property.svelte"
+				}
+			]
+		}
 	}
 }

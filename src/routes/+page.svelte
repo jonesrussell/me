@@ -80,7 +80,7 @@
 		}
 	}
 
-	.gf-section--cta {
+	.gf-section-cta {
 		margin-top: var(--space-16);
 		padding: var(--space-8);
 		background: var(--color-background-alt);
@@ -115,6 +115,6 @@
 			sectionSubtitle={data.youtubeSectionSubtitle}
 		/>
 		<ActionNavCards links={data.navLinks} />
-		<div id="cta-form-container" class="gf-section gf-section--cta"></div>
+		<div id="cta-form-container" class="gf-section gf-section-cta"></div>
 	</div>
 </main>
