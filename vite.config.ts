@@ -62,7 +62,7 @@ export default defineConfig({
 			// Skip full source reporting in terminal
 			reporter: ['text-summary', 'html']
 		},
-		workspace: [
+		projects: [
 			{
 				extends: './vite.config.ts',
 				plugins: [svelteTesting()],
