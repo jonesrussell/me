@@ -1,5 +1,5 @@
 <script lang="ts">
-	import BlogPost from './BlogPost.svelte';
+	import BlogPostCard from './BlogPostCard.svelte';
 	import type { BlogPost as BlogPostType } from '$lib/types/blog';
 
 	// Extracting props with proper typing
@@ -72,7 +72,7 @@
 <div class="container">
 	<div class="blog-post-grid">
 		{#each posts as post (post.slug)}
-			<BlogPost {post} />
+			<BlogPostCard {post} />
 		{/each}
 	</div>
 </div>

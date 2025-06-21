@@ -51,7 +51,7 @@
 
 	@media (--container-md) {
 		.hero {
-			min-height: 60vh;
+			min-height: 30vh;
 			padding: var(--space-20) var(--space-8);
 		}
 
