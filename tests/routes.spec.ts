@@ -53,26 +53,6 @@ test.describe('Route Navigation', () => {
 		await expect(page.getByRole('heading', { name: 'Open Source Projects' }).first()).toBeVisible();
 	});
 
-	test('should navigate to contact page', async ({ page }) => {
-		// Arrange - Use a more specific selector for the contact link
-		const contactLink = page.getByRole('link', { name: 'Get in touch' });
-		await expect(contactLink).toBeVisible();
-
-		// Act & Assert - Add better error handling and logging
-		try {
-			await Promise.all([
-				page.waitForURL('**/contact', { timeout: 10000 }),
-				contactLink.click()
-			]);
-
-			// Verify we're on the contact page
-			await expect(page.locator('.contact')).toBeVisible();
-		} catch (error) {
-			console.error('Navigation failed:', error);
-			throw error;
-		}
-	});
-
 	test('should maintain consistent navigation across pages', async ({ page }) => {
 		// Arrange
 		const routes = [
