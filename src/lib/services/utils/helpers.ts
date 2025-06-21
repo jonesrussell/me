@@ -1,48 +1,29 @@
-import DOMPurify from 'dompurify';
+import { sanitize } from '$lib/utils/sanitize';
 
-// Extend the sanitize-html options type to include transformTags
-type SanitizeOptions = {
-	allowedTags: string[];
-	allowedAttributes: Record<string, string[]>;
-	disallowedTagsMode: 'recursiveEscape' | 'discard';
-	nonTextTags: string[];
-	parser?: {
-		lowerCaseTags: boolean;
-		lowerCaseAttributeNames: boolean;
-	};
-	transformTags: {
-		[key: string]: (
-			tagName: string,
-			attribs: Record<string, string>
-		) => { tagName: string; text: string; attribs: Record<string, string> };
-	};
-};
+// Helper: Sanitize HTML
+export function sanitizeHTML(input: string): string {
+	if (!input) return '';
+	return sanitize(input);
+}
 
-// Sanitization Configuration
-export const SANITIZE_OPTIONS: SanitizeOptions = {
+// Restrictive sanitization options for testing and specific use cases
+export const SANITIZE_OPTIONS = {
 	allowedTags: [],
 	allowedAttributes: {},
-	disallowedTagsMode: 'discard',
+	disallowedTagsMode: 'discard' as const,
 	nonTextTags: ['script', 'style', 'textarea', 'option', 'noscript'],
 	parser: {
 		lowerCaseTags: true,
 		lowerCaseAttributeNames: true
 	},
 	transformTags: {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		'*': (tagName: string, attribs: Record<string, string>) => ({
+		'*': () => ({
 			tagName: '',
 			text: ' ',
 			attribs: {}
 		})
 	}
 };
-
-// Helper: Sanitize HTML
-export function sanitizeHTML(input: string): string {
-	if (!input) return '';
-	return DOMPurify.sanitize(input, { USE_PROFILES: { html: true } });
-}
 
 // Cache for memoized results
 const memoCache = new Map<string, unknown>();

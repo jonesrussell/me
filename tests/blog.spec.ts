@@ -19,38 +19,38 @@ test.describe('Blog Page', () => {
 		// Check for loading state
 		await Promise.race([
 			page.waitForSelector('.loading', { state: 'hidden' }),
-			page.waitForSelector('.blog-post')
+			page.waitForSelector('.card')
 		]);
 
 		// Verify posts are visible
-		const posts = page.locator('.blog-post');
+		const posts = page.locator('.card');
 		await expect(posts.first()).toBeVisible();
 	});
 
 	test('should display post details correctly', async ({ page }) => {
 		// Wait for posts to load
-		await page.waitForSelector('.blog-post');
+		await page.waitForSelector('.card');
 
 		// Check post content
-		const firstPost = page.locator('.blog-post').first();
+		const firstPost = page.locator('.card').first();
 		await Promise.all([
 			expect(firstPost.locator('.title')).toBeVisible(),
-			expect(firstPost.locator('.date')).toBeVisible(),
-			expect(firstPost.locator('.description')).toHaveText(/.*/),
-			expect(firstPost.locator('.tags')).toBeVisible()
+			expect(firstPost.locator('time')).toBeVisible(),
+			expect(firstPost.locator('.excerpt')).toHaveText(/.*/),
+			expect(firstPost.locator('.categories')).toBeVisible()
 		]);
 	});
 
 	test('should handle error state', async ({ page }) => {
 		// Wait for posts to load
-		await page.waitForSelector('.blog-post');
+		await page.waitForSelector('.card');
 
 		// Check if error state is not visible when there's no error
 		const errorState = page.locator('.error-state');
 		await expect(errorState).not.toBeVisible();
 
 		// Verify posts are still visible
-		const posts = page.locator('.blog-post');
+		const posts = page.locator('.card');
 		await expect(posts.first()).toBeVisible();
 	});
 });

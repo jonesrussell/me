@@ -1,5 +1,5 @@
 <script lang="ts">
-	import BlogPost from './BlogPost.svelte';
+	import BlogPostCard from './BlogPostCard.svelte';
 	import type { BlogPost as BlogPostType } from '$lib/types/blog';
 
 	// Extracting props with proper typing
@@ -32,7 +32,15 @@
 
 	@container blog-post-grid (width >= 64rem) {
 		.blog-post-grid {
+			grid-template-columns: repeat(3, 1fr);
 			gap: var(--space-10);
+		}
+	}
+
+	@container blog-post-grid (width >= 80rem) {
+		.blog-post-grid {
+			grid-template-columns: repeat(4, 1fr);
+			gap: var(--space-12);
 		}
 	}
 
@@ -72,7 +80,7 @@
 <div class="container">
 	<div class="blog-post-grid">
 		{#each posts as post (post.slug)}
-			<BlogPost {post} />
+			<BlogPostCard {post} />
 		{/each}
 	</div>
 </div>

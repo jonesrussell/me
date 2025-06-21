@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { SubmitStatus } from '$lib/components/composables/useNewsletterForm';
+	import type { SubmitStatus } from '$lib/types/newsletter';
 
 	interface Props {
 		submitStatus: SubmitStatus;

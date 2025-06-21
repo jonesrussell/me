@@ -132,7 +132,7 @@ describe('Helper Functions', () => {
 		});
 
 		it('should transform tags to preserve spaces', () => {
-			const result = SANITIZE_OPTIONS.transformTags['*']('div', {});
+			const result = SANITIZE_OPTIONS.transformTags['*']();
 			expect(result).toMatchObject({
 				tagName: '',
 				text: ' ',

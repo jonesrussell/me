@@ -23,6 +23,7 @@ interface PaginationOptions {
 type PaginatedResult<T> = {
 	items: T[];
 	hasMore: boolean;
+	totalPages?: number;
 };
 
 // Store Management
@@ -30,10 +31,16 @@ export const blogStore = writable<{
 	posts: BlogPost[];
 	loading: boolean;
 	error: BlogError | null;
+	hasMore: boolean;
+	currentPage: number;
+	totalPages: number;
 }>({
 	posts: [],
-	loading: false,
-	error: null
+	loading: true,
+	error: null,
+	hasMore: false,
+	currentPage: 1,
+	totalPages: 1
 });
 
 // Utility Functions
@@ -135,15 +142,22 @@ export const fetchFeed = async (
 
 	if (cached) {
 		const cachedItems = cached.data.slice((page - 1) * pageSize, page * pageSize);
+		const totalPages = Math.ceil(cached.data.length / pageSize);
+		const hasMore = cached.data.length > page * pageSize;
+
 		blogStore.update(store => ({
 			...store,
 			posts: page === 1 ? cachedItems : [...store.posts, ...cachedItems],
 			loading: false,
-			error: null
+			error: null,
+			hasMore,
+			currentPage: page,
+			totalPages
 		}));
 		return {
 			items: cachedItems,
-			hasMore: cached.data.length > page * pageSize
+			hasMore,
+			totalPages
 		};
 	}
 
@@ -161,16 +175,23 @@ export const fetchFeed = async (
 		feedCache.updateCache(cacheKey, posts);
 
 		const paginatedItems = posts.slice((page - 1) * pageSize, page * pageSize);
+		const totalPages = Math.ceil(posts.length / pageSize);
+		const hasMore = posts.length > page * pageSize;
+
 		blogStore.update(store => ({
 			...store,
 			posts: page === 1 ? paginatedItems : [...store.posts, ...paginatedItems],
 			loading: false,
-			error: null
+			error: null,
+			hasMore,
+			currentPage: page,
+			totalPages
 		}));
 
 		return {
 			items: paginatedItems,
-			hasMore: posts.length > page * pageSize
+			hasMore,
+			totalPages
 		};
 	} catch (error) {
 		const lastError = error instanceof Error ? error.message : 'Unknown error';

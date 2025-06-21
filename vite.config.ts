@@ -23,11 +23,14 @@ export default defineConfig({
 			define: {
 				global: 'globalThis'
 			}
-		}
+		},
+		include: ['sanitize-html'],
+		exclude: []
 	},
 	build: {
 		commonjsOptions: {
-			transformMixedEsModules: true
+			transformMixedEsModules: true,
+			include: [/sanitize-html/, /node_modules/]
 		}
 	},
 	test: {
@@ -62,7 +65,7 @@ export default defineConfig({
 			// Skip full source reporting in terminal
 			reporter: ['text-summary', 'html']
 		},
-		workspace: [
+		projects: [
 			{
 				extends: './vite.config.ts',
 				plugins: [svelteTesting()],

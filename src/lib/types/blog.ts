@@ -9,7 +9,7 @@ export interface BlogPost {
 }
 
 export interface BlogError {
-	type: 'FETCH_ERROR' | 'PARSE_ERROR' | 'VALIDATION_ERROR' | 'CACHE_ERROR';
+	type: 'FETCH_ERROR' | 'PARSE_ERROR' | 'VALIDATION_ERROR' | 'CACHE_ERROR' | 'SERVER_ERROR' | 'LOAD_MORE_ERROR';
 	message: string;
 	details?: unknown;
 	timestamp: number;

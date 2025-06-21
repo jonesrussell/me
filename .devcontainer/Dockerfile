@@ -9,7 +9,7 @@ RUN mkdir -p /home/node/.cache/ms-playwright && \
     chown -R node:node /home/node/.cache/ms-playwright
 
 # Install Playwright dependencies
-RUN npx playwright install --with-deps chromium firefox webkit
+RUN npx playwright install --with-deps chromium webkit
 
 # Set environment variables
 ENV NODE_ENV=development
