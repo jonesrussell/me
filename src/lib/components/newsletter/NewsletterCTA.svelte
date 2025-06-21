@@ -88,10 +88,6 @@
 		width: 100%;
 	}
 
-	.newsletter-header-wrapper {
-		/* Additional wrapper styles if needed */
-	}
-
 	/* Background animations */
 	.newsletter::before {
 		content: '';
@@ -119,7 +115,7 @@
 	<div class={className}>
 		<div class="newsletter">
 			<div class="newsletter-content newsletter-content-contained">
-				<div class="newsletter-header-wrapper newsletter-inner">
+				<div class="newsletter-inner">
 					<NewsletterHeader
 						title="Stay Updated"
 						description="Subscribe to my newsletter for updates on web development, tech insights, and open source projects."

@@ -103,10 +103,10 @@ export function useNewsletterForm() {
 		);
 
 		if (result) {
-			console.debug('Form Schema loaded:', result);
+			// Schema loaded successfully
 		} else {
 			schemaError = true;
-			console.debug('Schema loading failed - continuing without schema');
+			// Schema loading failed - continuing without schema
 		}
 	}
 
