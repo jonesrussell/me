@@ -32,7 +32,15 @@
 
 	@container blog-post-grid (width >= 64rem) {
 		.blog-post-grid {
+			grid-template-columns: repeat(3, 1fr);
 			gap: var(--space-10);
+		}
+	}
+
+	@container blog-post-grid (width >= 80rem) {
+		.blog-post-grid {
+			grid-template-columns: repeat(4, 1fr);
+			gap: var(--space-12);
 		}
 	}
 

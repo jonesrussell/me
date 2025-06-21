@@ -23,11 +23,14 @@ export default defineConfig({
 			define: {
 				global: 'globalThis'
 			}
-		}
+		},
+		include: ['sanitize-html'],
+		exclude: []
 	},
 	build: {
 		commonjsOptions: {
-			transformMixedEsModules: true
+			transformMixedEsModules: true,
+			include: [/sanitize-html/, /node_modules/]
 		}
 	},
 	test: {
