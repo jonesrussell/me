@@ -36,7 +36,7 @@ export const blogStore = writable<{
 	totalPages: number;
 }>({
 	posts: [],
-	loading: false,
+	loading: true,
 	error: null,
 	hasMore: false,
 	currentPage: 1,

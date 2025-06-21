@@ -164,7 +164,7 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npx playwright install chromium firefox webkit
+        run: npx playwright install chromium webkit
       - name: Run E2E tests
         run: npm run test:e2e
       - name: Cache test results

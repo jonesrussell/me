@@ -94,7 +94,14 @@ describe('Utilities', () => {
 describe('API', () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
-		blogStore.set({ posts: [], loading: false, error: null });
+		blogStore.set({
+			posts: [],
+			loading: true,
+			error: null,
+			hasMore: false,
+			currentPage: 1,
+			totalPages: 1
+		});
 		resetFeedCache(); // Reset cache before each test
 		mockFetch.mockImplementation(() =>
 			Promise.resolve({
@@ -206,7 +213,14 @@ describe('API', () => {
 
 describe('Stores', () => {
 	beforeEach(() => {
-		blogStore.set({ posts: [], loading: false, error: null });
+		blogStore.set({
+			posts: [],
+			loading: true,
+			error: null,
+			hasMore: false,
+			currentPage: 1,
+			totalPages: 1
+		});
 		mockFetch.mockImplementation(() =>
 			Promise.resolve({
 				ok: true,
@@ -218,7 +232,7 @@ describe('Stores', () => {
 
 	it('should update blogStore state during feed fetch', async () => {
 		// Initial state
-		expect(get(blogStore).loading).toBe(false);
+		expect(get(blogStore).loading).toBe(true);
 		expect(get(blogStore).posts).toHaveLength(0);
 
 		// Start fetch
