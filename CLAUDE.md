@@ -84,10 +84,10 @@ This project uses **Svelte 5 runes** exclusively. Do NOT use legacy Svelte 4 syn
 <script lang="ts">
   // Reactive state
   let count = $state(0);
-  
+
   // Derived values (auto-update when dependencies change)
   let doubled = $derived(count * 2);
-  
+
   // Side effects
   $effect(() => {
     console.log('Count changed:', count);
@@ -101,7 +101,7 @@ This project uses **Svelte 5 runes** exclusively. Do NOT use legacy Svelte 4 syn
 <script lang="ts">
   // Props with defaults
   let { title, items = [] } = $props();
-  
+
   // Bindable props
   let { value = $bindable() } = $props();
 </script>
@@ -115,7 +115,7 @@ This project uses **Svelte 5 runes** exclusively. Do NOT use legacy Svelte 4 syn
   {#snippet header()}
     <h1>Title</h1>
   {/snippet}
-  
+
   <p>Default content (children)</p>
 </Child>
 
