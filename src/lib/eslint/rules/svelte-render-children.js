@@ -12,6 +12,7 @@ export default {
 	},
 	create(context) {
 		return {
+			/** @param {import('estree').Node & { expression?: { type?: string; name?: string }; parent?: { type?: string } }} node */
 			SvelteMustacheTag(node) {
 				if (
 					node.expression?.type === 'Identifier' &&

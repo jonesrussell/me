@@ -1,6 +1,6 @@
 import { svelteTesting } from '@testing-library/svelte/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import postcssCustomMedia from 'postcss-custom-media';
 import postcssGlobalData from '@csstools/postcss-global-data';
 
@@ -60,7 +60,6 @@ export default defineConfig({
 				'src/lib/utils/**/*.{js,ts}',
 				'src/lib/stores/**/*.{js,ts}'
 			],
-			all: true,
 			clean: true,
 			// Skip full source reporting in terminal
 			reporter: ['text-summary', 'html']
