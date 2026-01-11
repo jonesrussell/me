@@ -32,4 +32,5 @@
 	}
 </style>
 
+<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 <a {href} class="skip-to-main"> Skip to main content </a>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { base } from '$app/paths';
+	import { resolve } from '$app/paths';
 
 	const { links } = $props<{
 		links: Array<{
@@ -88,7 +88,7 @@
 
 <nav class="action-nav-cards">
 	{#each links as link (link.href)}
-		<a href={`${base}${link.href}`} class="action-card">
+		<a href={resolve(link.href)} class="action-card">
 			<span class="action-icon">{link.icon}</span>
 			<span class="action-text">{link.text}</span>
 		</a>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { formatPostDate } from '$lib/services/blog-service';
 	import type { BlogPost } from '$lib/types/blog';
+	import { resolve } from '$app/paths';
 
 	const { post } = $props<{ post: BlogPost }>();
 </script>
@@ -79,7 +80,7 @@
 
 <header class="post-header">
 	<nav class="breadcrumb">
-		<a href="/blog">← Back to Blog</a>
+		<a href={resolve('/blog')}>← Back to Blog</a>
 	</nav>
 
 	<h1>{post.title}</h1>

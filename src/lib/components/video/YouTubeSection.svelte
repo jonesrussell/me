@@ -54,6 +54,7 @@
 	// Derived video URL with cache busting for retries
 	let videoSrc = $derived(() => {
 		const baseUrl = `https://www.youtube.com/embed/${videoId}`;
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const params = new URLSearchParams({
 			autoplay: '0',
 			rel: '0',
@@ -424,6 +425,7 @@
 			<figcaption class="video-caption">{videoTitle}</figcaption>
 		</figure>
 
+		<!-- eslint-disable svelte/no-navigation-without-resolve -->
 		<a
 			href={channelUrl}
 			class="youtube-link"

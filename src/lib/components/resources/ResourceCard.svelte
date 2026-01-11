@@ -74,6 +74,7 @@
 	<div class="resource">
 		<div class="content">
 			<h3>
+				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 				<a href={resource.url} target="_blank" rel="noopener noreferrer">
 					{resource.title}
 				</a>
