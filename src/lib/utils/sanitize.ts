@@ -33,6 +33,3 @@ export function sanitize(dirty: string, options = {}) {
 		...options
 	});
 }
-
-// Export the default options for customization
-export { defaultOptions };

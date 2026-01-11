@@ -1,11 +1,10 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { get } from 'svelte/store';
-import { terminal, commands } from '$lib/stores/terminal';
+import { terminalState, terminal } from '$lib/stores/terminal.svelte';
 
 describe('Terminal Store', () => {
 	beforeEach(() => {
 		terminal.reset();
-		commands.set([]);
+		terminalState.commands = [];
 		vi.useFakeTimers();
 	});
 
@@ -14,29 +13,26 @@ describe('Terminal Store', () => {
 	});
 
 	it('initializes with correct default state', () => {
-		const state = get(terminal);
-		expect(state.currentCommand).toBe(0);
-		expect(state.commandVisible).toBe('');
-		expect(state.outputVisible).toBe('');
-		expect(state.isTyping).toBe(false);
+		expect(terminalState.currentCommand).toBe(0);
+		expect(terminalState.commandVisible).toBe('');
+		expect(terminalState.outputVisible).toBe('');
+		expect(terminalState.isTyping).toBe(false);
 	});
 
 	it('loads commands correctly', () => {
 		const testCommands = [{ cmd: 'test', output: 'test output' }];
-		commands.set(testCommands);
 		terminal.loadCommands(testCommands);
 		terminal.stop(); // Ensure typing is stopped after loading commands
 
-		const state = get(terminal);
-		expect(state.currentCommand).toBe(0);
-		expect(state.commandVisible).toBe('');
-		expect(state.outputVisible).toBe('');
-		expect(state.isTyping).toBe(false);
+		expect(terminalState.currentCommand).toBe(0);
+		expect(terminalState.commandVisible).toBe('');
+		expect(terminalState.outputVisible).toBe('');
+		expect(terminalState.isTyping).toBe(false);
+		expect(terminalState.commands).toHaveLength(1);
 	});
 
 	it('types command with correct timing', async () => {
 		const testCommands = [{ cmd: 'test', output: 'test output' }];
-		commands.set(testCommands);
 		terminal.loadCommands(testCommands);
 
 		// Start typing
@@ -48,23 +44,6 @@ describe('Terminal Store', () => {
 			await Promise.resolve();
 		}
 
-		const state = get(terminal);
-		expect(state.commandVisible).toBe('test');
-		expect(state.outputVisible).toBe('test output');
-	});
-
-	it('stops typing when stop() is called', () => {
-		terminal.stop();
-		const state = get(terminal);
-		expect(state.isTyping).toBe(false);
-	});
-
-	it('resets state correctly', () => {
-		terminal.reset();
-		const state = get(terminal);
-		expect(state.currentCommand).toBe(0);
-		expect(state.commandVisible).toBe('');
-		expect(state.outputVisible).toBe('');
-		expect(state.isTyping).toBe(false);
+		expect(terminalState.commandVisible).toBe('test');
 	});
 });

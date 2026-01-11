@@ -1,131 +1,81 @@
 <script lang="ts">
-	import { theme } from '$lib/stores/theme';
+	import { themeState, setTheme, type Theme } from '$lib/stores/theme.svelte';
 	import Icon from '@iconify/svelte';
-	import { fade } from 'svelte/transition';
 
-	const themes = [
-		{ value: 'auto', label: 'Auto', icon: 'ph:monitor' },
-		{ value: 'light', label: 'Light', icon: 'ph:sun' },
-		{ value: 'dark', label: 'Dark', icon: 'ph:moon' }
-	] as const;
+	const themes: { value: Theme; label: string }[] = [
+		{ value: 'auto', label: 'Auto' },
+		{ value: 'light', label: 'Light' },
+		{ value: 'dark', label: 'Dark' }
+	];
 
-	let isOpen = $state(false);
-
-	function handleThemeChange(newTheme: 'auto' | 'light' | 'dark') {
-		theme.set(newTheme);
-		isOpen = false;
+	function handleThemeChange(value: Theme) {
+		setTheme(value);
 	}
-
-	$effect(() => {
-		// Listen for system theme changes when in auto mode
-		if ($theme === 'auto' && typeof window !== 'undefined') {
-			const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-			const handleChange = () => {
-				document.documentElement.setAttribute('data-theme', mediaQuery.matches ? 'dark' : 'light');
-			};
-			mediaQuery.addEventListener('change', handleChange);
-			return () => mediaQuery.removeEventListener('change', handleChange);
-		}
-	});
 </script>
 
 <style>
-	.theme-toggle {
-		position: relative;
+	.toggle {
+		display: flex;
+		padding: var(--space-2);
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
+		gap: var(--space-2);
+		align-items: center;
 	}
 
-	.toggle-button {
+	.button {
 		display: flex;
-		width: 2.5rem;
-		height: 2.5rem;
-		padding: 0.5rem;
-		color: var(--text-color);
-		background: var(--bg-darker);
-		border: 0.0625rem solid var(--border-color);
-		border-radius: var(--radius-full);
-		transition: all var(--transition-base);
+		position: relative;
+		padding: var(--space-2);
+		color: var(--text-muted);
+		background: transparent;
+		border: none;
+		border-radius: var(--radius-sm);
+		transition: all var(--transition-duration) var(--transition-timing);
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
 	}
 
-	.toggle-button:hover {
-		background: var(--color-mix-light);
-		border-color: var(--accent-color);
+	.button:hover {
+		color: var(--text-color);
+		background: var(--bg-color);
 	}
 
-	.toggle-button :global(svg) {
+	.button.active {
+		color: var(--accent-color);
+		background: var(--bg-color);
+	}
+
+	.button:focus-visible {
+		outline: 0.125rem solid var(--accent-color);
+		outline-offset: 0.125rem;
+	}
+
+	.button :global(svg) {
 		width: 1.25rem;
 		height: 1.25rem;
 	}
 
-	.dropdown {
-		position: absolute;
-		top: 100%;
-		right: 0;
-		margin-top: 0.5rem;
-		padding: 0.5rem;
-		background: var(--bg-darker);
-		border: 0.0625rem solid var(--border-color);
-		border-radius: var(--radius-md);
-		box-shadow: var(--shadow-lg);
-		min-width: 8ch;
-		z-index: 100;
-	}
-
-	.theme-option {
-		display: flex;
-		width: 100%;
-		padding: 0.5rem;
-		color: var(--text-color);
-		background: transparent;
-		border: none;
-		border-radius: var(--radius-sm);
-		transition: all var(--transition-base);
-		align-items: center;
-		gap: 0.5rem;
-		cursor: pointer;
-	}
-
-	.theme-option:hover {
-		background: var(--color-mix-light);
-	}
-
-	.theme-option.active {
-		color: var(--accent-color);
-		background: var(--color-mix-medium);
-	}
-
 	@media (prefers-reduced-motion: reduce) {
-		.toggle-button,
-		.theme-option {
+		.button {
 			transition: none;
 		}
 	}
 </style>
 
-<div class="theme-toggle">
-	<button
-		class="toggle-button"
-		onclick={() => (isOpen = !isOpen)}
-		aria-label="Toggle theme"
-		aria-expanded={isOpen}
-	>
-		<Icon icon={$theme === 'auto' ? 'ph:monitor' : $theme === 'light' ? 'ph:sun' : 'ph:moon'} />
-	</button>
-
-	{#if isOpen}
-		<div class="dropdown" transition:fade={{ duration: 150 }}>
-			{#each themes as { value, label, icon } (value)}
-				<button
-					class="theme-option"
-					class:active={$theme === value}
-					onclick={() => handleThemeChange(value)}
-				>
-					<Icon {icon} />
-					<span>{label}</span>
-				</button>
-			{/each}
-		</div>
-	{/if}
+<div class="toggle" role="group" aria-label="Theme selection">
+	{#each themes as { value, label } (value)}
+		<button
+			type="button"
+			class="button"
+			class:active={themeState.current === value}
+			onclick={() => handleThemeChange(value)}
+			aria-label={label}
+			aria-pressed={themeState.current === value}
+		>
+			<Icon icon={value === 'auto' ? 'ph:monitor' : value === 'light' ? 'ph:sun' : 'ph:moon'} />
+		</button>
+	{/each}
 </div>

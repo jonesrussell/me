@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ResourceCard from './ResourceCard.svelte';
-	import type { Resource } from '$lib/types';
+	import type { Resource } from '$lib/types/resource';
 
 	const { category, resources } = $props<{
 		category: string;

@@ -1,6 +1,5 @@
-import { writable } from 'svelte/store';
 import { formatDate } from './utils';
-import type { BlogPost, BlogError } from '$lib/types/blog';
+import type { BlogPost } from '$lib/types/blog';
 
 // Constants
 const FEED_URL = 'https://jonesrussell.github.io/blog/feed.xml';
@@ -15,33 +14,16 @@ interface FeedCache {
 	lastError?: string;
 }
 
-interface PaginationOptions {
+export interface PaginationOptions {
 	page?: number;
 	pageSize?: number;
 }
 
-type PaginatedResult<T> = {
+export type PaginatedResult<T> = {
 	items: T[];
 	hasMore: boolean;
 	totalPages?: number;
 };
-
-// Store Management
-export const blogStore = writable<{
-	posts: BlogPost[];
-	loading: boolean;
-	error: BlogError | null;
-	hasMore: boolean;
-	currentPage: number;
-	totalPages: number;
-}>({
-	posts: [],
-	loading: true,
-	error: null,
-	hasMore: false,
-	currentPage: 1,
-	totalPages: 1
-});
 
 // Utility Functions
 export const formatPostDate = (dateString: string): string => formatDate(dateString) ?? dateString;
@@ -90,7 +72,7 @@ const feedCache = (() => {
 export const resetFeedCache = feedCache.resetCache;
 
 // XML Parsing Module
-export const parseXMLFeed = (xml: string): BlogPost[] => {
+const parseXMLFeed = (xml: string): BlogPost[] => {
 	const entries: BlogPost[] = [];
 	const entryMatches = xml.match(/<entry[^>]*>([\s\S]*?)<\/entry>/g) || [];
 
@@ -129,14 +111,11 @@ export const parseXMLFeed = (xml: string): BlogPost[] => {
 	return entries;
 };
 
-// API Module
+// API Module - Pure functions (no store updates)
 export const fetchFeed = async (
 	fetchFn: typeof fetch,
 	{ page = 1, pageSize = 5 }: PaginationOptions = {}
 ): Promise<PaginatedResult<BlogPost>> => {
-	// Set loading state immediately
-	blogStore.update(store => ({ ...store, loading: true, error: null }));
-
 	const cacheKey = `${FEED_CACHE_KEY}-${page}-${pageSize}`;
 	const cached = feedCache.getCache(cacheKey);
 
@@ -145,15 +124,6 @@ export const fetchFeed = async (
 		const totalPages = Math.ceil(cached.data.length / pageSize);
 		const hasMore = cached.data.length > page * pageSize;
 
-		blogStore.update(store => ({
-			...store,
-			posts: page === 1 ? cachedItems : [...store.posts, ...cachedItems],
-			loading: false,
-			error: null,
-			hasMore,
-			currentPage: page,
-			totalPages
-		}));
 		return {
 			items: cachedItems,
 			hasMore,
@@ -178,16 +148,6 @@ export const fetchFeed = async (
 		const totalPages = Math.ceil(posts.length / pageSize);
 		const hasMore = posts.length > page * pageSize;
 
-		blogStore.update(store => ({
-			...store,
-			posts: page === 1 ? paginatedItems : [...store.posts, ...paginatedItems],
-			loading: false,
-			error: null,
-			hasMore,
-			currentPage: page,
-			totalPages
-		}));
-
 		return {
 			items: paginatedItems,
 			hasMore,
@@ -199,16 +159,6 @@ export const fetchFeed = async (
 		const errorCount = (cached?.errorCount || 0) + 1;
 
 		feedCache.updateCache(cacheKey, cached?.data || [], errorCount, lastError);
-
-		const blogError: BlogError = {
-			type: 'FETCH_ERROR',
-			message: lastError,
-			details: error,
-			timestamp: Date.now()
-		};
-
-		// Update store with error
-		blogStore.update(store => ({ ...store, loading: false, error: blogError }));
 
 		// Re-throw the error to ensure it propagates
 		throw error;

@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { commands, terminal, terminalHeight, terminalMinHeight } from '$lib/stores/terminal';
-	import { get } from 'svelte/store';
+	import { terminalState, terminal } from '$lib/stores/terminal.svelte';
 	import ErrorBoundary from '../ErrorBoundary.svelte';
 
 	const { title = '~/dev' } = $props<{
@@ -95,18 +94,19 @@
 	.terminal-body {
 		display: flex;
 		position: relative;
+		flex-direction: column;
+		gap: var(--space-2);
 
 		padding: var(--space-4);
 		overflow-x: auto;
-		-webkit-overflow-scrolling: touch;
+		overflow-y: auto;
 
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		line-height: var(--line-height-relaxed);
-		flex-direction: column;
-		gap: var(--space-2);
-		white-space: pre-wrap;
-		overflow-wrap: anywhere;
+
+		min-height: 10rem;
+		max-height: 30rem;
 	}
 
 	.command-line {
@@ -136,7 +136,7 @@
 
 	.command-output {
 		margin-top: var(--space-2);
-		padding-left: calc(var(--ch) * 3);
+		padding-left: 3ch;
 
 		font-size: var(--font-size-sm);
 		font-weight: var(--font-weight-normal);
@@ -173,63 +173,14 @@
 
 	@keyframes blink {
 		0%,
-		100% {
+		50% {
 			opacity: 1;
 		}
 
-		50% {
+		51%,
+		100% {
 			opacity: 0;
 		}
-	}
-
-	.terminal-error {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: var(--space-8);
-		background: var(--bg-darker);
-		border-radius: var(--radius-md);
-		min-height: 8rem;
-	}
-
-	.terminal-error-content {
-		text-align: center;
-	}
-
-	.terminal-error-icon {
-		margin-bottom: var(--space-2);
-		font-size: var(--font-size-2xl);
-		color: var(--text-muted);
-		opacity: 0.6;
-	}
-
-	.terminal-error-message {
-		margin: 0 0 var(--space-2) 0;
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
-		color: var(--text-muted);
-	}
-
-	.terminal-retry-button {
-		padding: var(--space-2) var(--space-4);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-xs);
-		color: var(--accent-color);
-		background: none;
-		border: var(--border-width) solid var(--accent-color);
-		border-radius: var(--radius-sm);
-		cursor: pointer;
-		transition: all var(--transition-duration) var(--transition-timing);
-	}
-
-	.terminal-retry-button:hover {
-		color: var(--bg-color);
-		background: var(--accent-color);
-	}
-
-	.terminal-retry-button:focus {
-		outline: none;
-		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
@@ -240,15 +191,67 @@
 		.cursor {
 			animation: none;
 		}
+	}
 
+	.terminal-error {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-4);
+		padding: var(--space-8);
+		min-height: 10rem;
+	}
+
+	.terminal-error-content {
+		text-align: center;
+	}
+
+	.terminal-error-icon {
+		margin-bottom: var(--space-2);
+		font-size: var(--font-size-2xl);
+	}
+
+	.terminal-error-message {
+		margin-bottom: var(--space-4);
+		color: var(--text-muted);
+	}
+
+	.terminal-retry-button {
+		padding: var(--space-3) var(--space-6);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		color: var(--text-color);
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
+		cursor: pointer;
+		transition: all var(--transition-duration) var(--transition-timing);
+	}
+
+	.terminal-retry-button:hover {
+		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
+		border-color: var(--accent-color);
+	}
+
+	.terminal-retry-button:focus {
+		outline: 0.125rem solid var(--accent-color);
+		outline-offset: 0.125rem;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
 		.terminal-retry-button {
 			transition: none;
 		}
 	}
 </style>
 
-<ErrorBoundary fallback="Terminal temporarily unavailable" component="Terminal">
-	<div class="terminal-frame" style:height={$terminalHeight} style:min-height={$terminalMinHeight}>
+<ErrorBoundary>
+	<div
+		class="terminal-frame"
+		style:height={terminalState.height}
+		style:min-height={terminalState.minHeight}
+	>
 		<div class="terminal-header">
 			<span class="terminal-title">{title}</span>
 			<div class="terminal-buttons">
@@ -267,22 +270,22 @@
 					</div>
 				</div>
 			{:else}
-				{#each get(commands).filter((cmd) => cmd.completed) as command (command.cmd)}
+				{#each terminalState.commands.filter((cmd) => cmd.completed) as command (command.cmd)}
 					<div class="command-line">
 						<span class="prompt">$</span>
 						<span class="command">{command.cmd}</span>
 					</div>
 					<div class="command-output">{command.output}</div>
 				{/each}
-				{#if $terminal.currentCommand < get(commands).length}
+				{#if terminalState.currentCommand < terminalState.commands.length}
 					<div class="command-line">
 						<span class="prompt">$</span>
-						<span class="command">{$terminal.commandVisible}</span>
-						{#if $terminal.isTyping && $terminal.commandVisible.length === get(commands)[$terminal.currentCommand]?.cmd?.length && !$terminal.outputVisible}
-							<span class="cursor">▋</span>
+						<span class="command">{terminalState.commandVisible}</span>
+						{#if terminalState.isTyping && terminalState.commandVisible.length === terminalState.commands[terminalState.currentCommand]?.cmd?.length && !terminalState.outputVisible}
+							<span class="cursor"></span>
 						{/if}
 					</div>
-					<div class="command-output">{$terminal.outputVisible}</div>
+					<div class="command-output">{terminalState.outputVisible}</div>
 				{/if}
 			{/if}
 		</div>

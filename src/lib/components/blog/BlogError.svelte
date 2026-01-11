@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { blogStore } from '$lib/services/blog-service';
+	import { blogState } from '$lib/stores/blog.svelte';
 	import type { BlogError } from '$lib/types/blog';
 	import Box from '$lib/components/ui/Box.svelte';
 
@@ -66,16 +66,16 @@
 	}
 </style>
 
-{#if $blogStore.error}
+{#if blogState.error}
 	<Box>
 		<div class="error">
 			<div class="header">
-				<span class="type">{formatErrorType($blogStore.error.type)}</span>
-				<span class="timestamp">{formatTimestamp($blogStore.error.timestamp)}</span>
+				<span class="type">{formatErrorType(blogState.error.type)}</span>
+				<span class="timestamp">{formatTimestamp(blogState.error.timestamp)}</span>
 			</div>
-			<p class="message">{$blogStore.error.message}</p>
-			{#if $blogStore.error.details}
-				<pre class="details">{JSON.stringify($blogStore.error.details, null, 2)}</pre>
+			<p class="message">{blogState.error.message}</p>
+			{#if blogState.error.details}
+				<pre class="details">{JSON.stringify(blogState.error.details, null, 2)}</pre>
 			{/if}
 		</div>
 	</Box>
