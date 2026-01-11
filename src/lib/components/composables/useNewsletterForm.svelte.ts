@@ -1,15 +1,11 @@
 // lib/composables/useNewsletterForm.ts
 import { tick } from 'svelte';
 import { FormService } from '$lib/services/form-service';
+import { config } from '$lib/config/env';
 import { createError, logErrorDebounced, withErrorHandling } from '$lib/utils/error-handler';
 import type { SubmitStatus } from '$lib/types/newsletter';
 
 export type { SubmitStatus };
-
-const FORM_IDS = {
-	SUBMIT: '61af2a0f-5b54-476f-9bf6-c2ee6ce5b822',
-	SCHEMA: '221ecaa5-c0c7-4e2a-a731-a7c78ddfa8bc'
-} as const;
 
 const TIMEOUTS = {
 	SUCCESS_RESET: 3000,
@@ -36,7 +32,13 @@ export function useNewsletterForm() {
 
 		try {
 			const formService = FormService.getInstance();
-			await formService.submitForm(FORM_IDS.SUBMIT, { email });
+			const formId = config.formIds.newsletter;
+
+			if (!formId) {
+				throw new Error('Newsletter form ID is not configured');
+			}
+
+			await formService.submitForm(formId, { email });
 
 			submitStatus = 'success';
 			email = '';
@@ -78,7 +80,13 @@ export function useNewsletterForm() {
 		const result = await withErrorHandling(
 			async () => {
 				const formService = FormService.getInstance();
-				return await formService.getSchema(FORM_IDS.SCHEMA);
+				const formId = config.formIds.newsletter;
+
+				if (!formId) {
+					throw new Error('Newsletter form ID is not configured');
+				}
+
+				return await formService.getSchema(formId);
 			},
 			{ component: 'NewsletterCTA', action: 'loadSchema' }
 		);
