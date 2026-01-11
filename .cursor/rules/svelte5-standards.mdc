@@ -44,10 +44,46 @@ alwaysApply: false
 - Optimize template rendering
 - Apply memoization when needed
 
+## **Store Patterns**
+
+Stores use `.svelte.ts` extension and `$state` runes:
+
+```typescript
+// stores/example.svelte.ts
+export const exampleState = $state({
+  value: 0,
+  items: []
+});
+```
+
+Components import and use state directly (no `$` prefix):
+
+```svelte
+<script lang="ts">
+  import { exampleState } from '$lib/stores/example.svelte';
+</script>
+
+<p>Value: {exampleState.value}</p>
+<button onclick={() => exampleState.value++}>Increment</button>
+```
+
+## **SvelteKit App State**
+
+Use `$app/state` (not `$app/stores`):
+
+```svelte
+<script lang="ts">
+  import { page } from '$app/state';
+</script>
+
+<p>Current URL: {page.url}</p>
+```
+
 ## **Deprecated Features & Restrictions**
 🚫 **Avoid:**
 - `$:` reactive declarations _(use runes instead)_
 - `writable` / `readable` stores _(use runes instead)_
+- `$app/stores` _(use `$app/state` instead)_
 - `bind:this` _(use `use:` directive)_
 - `onMount`, `beforeUpdate`, `afterUpdate`, `tick` _(use `$effect` instead)_
 - **JSX syntax, slot elements, inline styles, unscoped global styles**

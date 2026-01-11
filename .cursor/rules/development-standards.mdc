@@ -47,10 +47,14 @@ alwaysApply: true
 
 ## State Management
 - Use runes for state management (`$state`, `$derived`, `$effect`)
+- Stores use `.svelte.ts` extension (required for runes)
+- Stores export state objects directly using `$state`
+- Components access state directly (no `$` prefix needed)
 - Keep state focused and lightweight
 - Test state updates thoroughly
 - Use `$props` for component properties
 - Implement proper cleanup in effects
+- Services are pure functions - they return data, they don't manage state
 
 ## Svelte Development
 For Svelte-specific patterns and best practices, refer to:
