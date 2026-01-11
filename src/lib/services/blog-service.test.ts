@@ -4,10 +4,8 @@ import {
 	generateSlug,
 	fetchFeed,
 	fetchPost,
-	blogStore,
 	resetFeedCache
 } from './blog-service';
-import { get } from 'svelte/store';
 
 // Mock global fetch
 const mockFetch = vi.fn();
@@ -94,14 +92,6 @@ describe('Utilities', () => {
 describe('API', () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
-		blogStore.set({
-			posts: [],
-			loading: true,
-			error: null,
-			hasMore: false,
-			currentPage: 1,
-			totalPages: 1
-		});
 		resetFeedCache(); // Reset cache before each test
 		mockFetch.mockImplementation(() =>
 			Promise.resolve({
@@ -148,10 +138,6 @@ describe('API', () => {
 			mockFetch.mockRejectedValueOnce(new Error('Network error'));
 
 			await expect(fetchFeed(mockFetch)).rejects.toThrow('Network error');
-			expect(get(blogStore).error).toMatchObject({
-				type: 'FETCH_ERROR',
-				message: 'Network error'
-			});
 		});
 
 		it('should handle malformed XML', async () => {
@@ -208,46 +194,5 @@ describe('API', () => {
 			mockFetch.mockRejectedValueOnce(new Error('Network error'));
 			await expect(fetchPost(mockFetch, 'test-post-1')).rejects.toThrow('Network error');
 		});
-	});
-});
-
-describe('Stores', () => {
-	beforeEach(() => {
-		blogStore.set({
-			posts: [],
-			loading: true,
-			error: null,
-			hasMore: false,
-			currentPage: 1,
-			totalPages: 1
-		});
-		mockFetch.mockImplementation(() =>
-			Promise.resolve({
-				ok: true,
-				text: () => Promise.resolve(sampleXml),
-				headers: new Headers()
-			})
-		);
-	});
-
-	it('should update blogStore state during feed fetch', async () => {
-		// Initial state
-		expect(get(blogStore).loading).toBe(true);
-		expect(get(blogStore).posts).toHaveLength(0);
-
-		// Start fetch
-		const fetchPromise = fetchFeed(mockFetch);
-
-		// Check loading state immediately
-		expect(get(blogStore).loading).toBe(true);
-		expect(get(blogStore).posts).toHaveLength(0);
-
-		// Wait for fetch to complete
-		await fetchPromise;
-
-		// Check final state
-		expect(get(blogStore).loading).toBe(false);
-		expect(get(blogStore).posts).toHaveLength(2);
-		expect(get(blogStore).error).toBeNull();
 	});
 });

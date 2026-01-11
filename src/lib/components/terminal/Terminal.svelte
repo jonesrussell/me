@@ -128,13 +128,13 @@
 		margin-bottom: var(--space-4);
 		color: var(--text-color);
 		white-space: pre-wrap;
-		word-break: break-word;
+		overflow-wrap: anywhere;
 	}
 
 	.cursor {
 		display: inline-block;
 		width: 0.5rem;
-		height: 1em;
+		height: 100%;
 		margin-left: 0.125rem;
 		background: var(--text-color);
 		animation: blink 1s infinite;
@@ -213,7 +213,11 @@
 </style>
 
 <ErrorBoundary>
-	<div class="terminal-frame" style:height={terminalState.height} style:min-height={terminalState.minHeight}>
+	<div
+		class="terminal-frame"
+		style:height={terminalState.height}
+		style:min-height={terminalState.minHeight}
+	>
 		<div class="terminal-header">
 			<span class="terminal-title">{title}</span>
 			<div class="terminal-buttons">
