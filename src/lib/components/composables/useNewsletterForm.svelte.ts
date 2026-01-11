@@ -24,31 +24,12 @@ export function useNewsletterForm() {
 	let errorMessage = $state('');
 	let schemaError = $state(false);
 
-	// Validation
-	const isEmailValid = $derived(
-		email ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) : false
-	);
-
-	const isSubmitDisabled = $derived(submitStatus === 'loading' || !isEmailValid);
-
-	function validateEmail(): boolean {
-		if (!email) {
-			errorMessage = 'Email is required';
-			return false;
-		}
-		if (!isEmailValid) {
-			errorMessage = 'Please enter a valid email address';
-			return false;
-		}
-		errorMessage = '';
-		return true;
-	}
+	// Disable submit button while loading (browser handles email validation)
+	const isSubmitDisabled = $derived(submitStatus === 'loading');
 
 	// Form submission
 	async function handleSubmit(event: Event) {
 		event.preventDefault();
-
-		if (!validateEmail()) return;
 
 		submitStatus = 'loading';
 		errorMessage = '';
