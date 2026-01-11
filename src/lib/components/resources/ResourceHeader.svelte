@@ -1,7 +1,14 @@
 <script lang="ts">
-	export let title: string;
-	export let description: string | undefined = undefined;
-	export let cta: boolean = false;
+	import type { Snippet } from 'svelte';
+
+	interface Props {
+		title: string;
+		description?: string;
+		cta?: boolean;
+		ctaSlot?: Snippet;
+	}
+
+	const { title, description, cta = false, ctaSlot }: Props = $props();
 </script>
 
 <style>
@@ -61,9 +68,9 @@
 			<p class="description">{description}</p>
 		{/if}
 	</div>
-	{#if cta}
+	{#if cta && ctaSlot}
 		<div class="cta">
-			<slot name="cta" />
+			{@render ctaSlot()}
 		</div>
 	{/if}
 </header>
