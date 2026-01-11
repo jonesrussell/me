@@ -4,8 +4,9 @@
 	import type { Resource } from '$lib/types';
 	import type { YouTubeChannel } from '$lib/types/video';
 	import Hero from '$lib/components/ui/Hero.svelte';
+	import type { PageData } from './$types';
 
-	export let data;
+	const { data } = $props<{ data: PageData }>();
 
 	// YouTube channel info
 	const youtubeChannel: YouTubeChannel = {

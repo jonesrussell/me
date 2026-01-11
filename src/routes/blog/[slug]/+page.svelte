@@ -1,13 +1,8 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { blogPostStore } from '$lib/stores/blog-post.store';
 	import BlogPost from '$lib/components/blog/BlogPost.svelte';
-	import BlogLoadingSkeleton from '$lib/components/blog/BlogLoadingSkeleton.svelte';
-	import BlogErrorState from '$lib/components/blog/BlogErrorState.svelte';
+	import type { PageData } from './$types';
 
-	$: slug = $page.params.slug;
-	$: blogPostStore.loadPost(slug);
-	$: ({ post, isLoading, error } = $blogPostStore);
+	const { data } = $props<{ data: PageData }>();
 </script>
 
 <style>
@@ -18,11 +13,5 @@
 </style>
 
 <div class="blog-page">
-	{#if isLoading}
-		<BlogLoadingSkeleton />
-	{:else if error}
-		<BlogErrorState {error} />
-	{:else if post}
-		<BlogPost {post} />
-	{/if}
+	<BlogPost post={data.post} />
 </div>
