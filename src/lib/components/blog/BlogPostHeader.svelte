@@ -2,7 +2,7 @@
 	import { formatPostDate } from '$lib/services/blog-service';
 	import type { BlogPost } from '$lib/types/blog';
 
-	export let post: BlogPost;
+	const { post } = $props<{ post: BlogPost }>();
 </script>
 
 <style>
