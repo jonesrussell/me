@@ -56,17 +56,22 @@ export function memoize<Args extends unknown[], Return>(
 }
 
 // Periodically Clear All Memoized Caches
-export function setupCacheCleanup(intervalMs: number = 5 * 60 * 1000): void {
-	if (typeof window !== 'undefined') {
-		window.setInterval(() => {
-			memoCache.clear();
-		}, intervalMs);
-	} else {
-		setInterval(() => {
-			memoCache.clear();
-		}, intervalMs);
+// Call this function in your app initialization if you need periodic cache clearing
+export function setupCacheCleanup(intervalMs: number = 5 * 60 * 1000): () => void {
+	if (typeof window === 'undefined') {
+		// Skip on server
+		return () => {};
 	}
+
+	const intervalId = window.setInterval(() => {
+		memoCache.clear();
+	}, intervalMs);
+
+	// Return cleanup function
+	return () => window.clearInterval(intervalId);
 }
 
-// Initialize Cache Cleanup
-setupCacheCleanup();
+// Manual cache clear function
+export function clearMemoCache(): void {
+	memoCache.clear();
+}

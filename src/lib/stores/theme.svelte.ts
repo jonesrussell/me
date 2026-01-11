@@ -1,4 +1,5 @@
 import { BROWSER } from 'esm-env';
+import { writable } from 'svelte/store';
 
 export type Theme = 'auto' | 'light' | 'dark';
 
@@ -13,20 +14,23 @@ function applyTheme(theme: Theme) {
 	document.documentElement.setAttribute('data-theme', effectiveTheme);
 }
 
-function createThemeState() {
-	let current = $state<Theme>('auto');
+// Shared state holder
+const state = {
+	current: 'auto' as Theme
+};
 
+function createThemeState() {
 	// Initialize from localStorage on browser
 	if (BROWSER) {
 		const saved = localStorage.getItem('theme') as Theme | null;
 		if (saved && ['auto', 'light', 'dark'].includes(saved)) {
-			current = saved;
+			state.current = saved;
 		}
-		applyTheme(current);
+		applyTheme(state.current);
 
 		// Listen for system theme changes
 		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-			if (current === 'auto') {
+			if (state.current === 'auto') {
 				applyTheme('auto');
 			}
 		});
@@ -34,13 +38,13 @@ function createThemeState() {
 
 	return {
 		get current() {
-			return current;
+			return state.current;
 		},
 		get effective(): 'light' | 'dark' {
-			return current === 'auto' ? getSystemTheme() : current;
+			return state.current === 'auto' ? getSystemTheme() : state.current;
 		},
 		set(value: Theme) {
-			current = value;
+			state.current = value;
 			if (BROWSER) {
 				localStorage.setItem('theme', value);
 				applyTheme(value);
@@ -53,8 +57,6 @@ export const themeState = createThemeState();
 
 // Legacy store-compatible API for gradual migration
 // Components can use $theme syntax with this
-import { writable } from 'svelte/store';
-
 function createLegacyThemeStore() {
 	const { subscribe, set: internalSet } = writable<Theme>(themeState.current);
 
