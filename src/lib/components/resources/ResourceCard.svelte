@@ -4,7 +4,7 @@
 
 	import type { Resource } from '$lib/types';
 
-	export let resource: Resource;
+	const { resource } = $props<{ resource: Resource }>();
 </script>
 
 <style>
