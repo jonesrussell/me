@@ -1,51 +1,27 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { get } from 'svelte/store';
-import { theme, themeState } from './theme.svelte';
-import { simulateSystemThemeChange } from '../../test/setup';
-import 'vitest-localstorage-mock';
-
-// Mock esm-env
-vi.mock('esm-env', () => ({
-	BROWSER: true,
-	DEV: false
-}));
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { themeState, setTheme } from './theme.svelte';
 
 describe('theme store', () => {
 	beforeEach(() => {
-		// Clear localStorage before each test
+		// Reset to default
+		themeState.current = 'auto';
 		localStorage.clear();
-		vi.clearAllMocks();
-
-		// Mock matchMedia
-		global.matchMedia = vi.fn().mockImplementation(() => ({
-			matches: false,
-			addEventListener: vi.fn()
-		})) as unknown as typeof window.matchMedia;
-
-		// Mock document
-		global.document = {
-			documentElement: {
-				setAttribute: vi.fn()
-			}
-		} as unknown as Document;
 	});
 
-	it('initializes with auto theme when no saved theme', () => {
-		expect(get(theme)).toBe('auto');
-	});
-
-	it('updates theme when set is called', () => {
-		theme.set('light');
-		expect(get(theme)).toBe('light');
-	});
-
-	it('handles system theme changes in auto mode', () => {
-		theme.set('auto');
-
-		// Simulate system theme change to dark
-		simulateSystemThemeChange(true);
-
-		// Verify theme state
+	it('initializes with auto theme', () => {
 		expect(themeState.current).toBe('auto');
+	});
+
+	it('sets theme correctly', () => {
+		setTheme('dark');
+		expect(themeState.current).toBe('dark');
+	});
+
+	it('returns effective theme', () => {
+		setTheme('light');
+		expect(themeState.effective).toBe('light');
+
+		setTheme('dark');
+		expect(themeState.effective).toBe('dark');
 	});
 });

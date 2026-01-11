@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { commands, terminal, terminalHeight, terminalMinHeight } from '$lib/stores/terminal.svelte';
-	import { get } from 'svelte/store';
+	import { terminalState, terminal } from '$lib/stores/terminal.svelte';
 	import ErrorBoundary from '../ErrorBoundary.svelte';
 
 	const { title = '~/dev' } = $props<{
@@ -98,98 +97,76 @@
 
 		padding: var(--space-4);
 		overflow-x: auto;
-		-webkit-overflow-scrolling: touch;
+		overflow-y: auto;
 
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		line-height: var(--line-height-relaxed);
-		flex-direction: column;
-		gap: var(--space-2);
-		white-space: pre-wrap;
-		overflow-wrap: anywhere;
+
+		min-height: 10rem;
+		max-height: 30rem;
 	}
 
 	.command-line {
 		display: flex;
 		gap: var(--space-2);
-		flex-wrap: wrap;
-
-		margin-top: var(--space-2);
-
-		font-size: var(--font-size-sm);
-		font-weight: var(--font-weight-normal);
-		line-height: var(--line-height-base);
-		color: var(--text-muted);
+		align-items: baseline;
+		margin-bottom: var(--space-2);
 	}
 
 	.prompt {
-		font-weight: var(--font-weight-bold);
-		color: var(--accent-color);
-		white-space: nowrap;
+		color: var(--text-muted);
+		user-select: none;
 	}
 
 	.command {
-		font-weight: var(--font-weight-normal);
+		font-weight: var(--font-weight-medium);
 		color: var(--text-color);
-		overflow-wrap: anywhere;
 	}
 
 	.command-output {
-		margin-top: var(--space-2);
-		padding-left: calc(var(--ch) * 3);
-
-		font-size: var(--font-size-sm);
-		font-weight: var(--font-weight-normal);
-		line-height: var(--line-height-relaxed);
+		margin-bottom: var(--space-4);
 		color: var(--text-color);
 		white-space: pre-wrap;
-		overflow-wrap: anywhere;
-
-		animation: crt-reveal 0.1s linear;
-	}
-
-	@keyframes crt-reveal {
-		from {
-			opacity: 0.8;
-			clip-path: inset(0 0 100% 0);
-		}
-
-		to {
-			opacity: 1;
-			clip-path: inset(0 0 0 0);
-		}
+		word-break: break-word;
 	}
 
 	.cursor {
 		display: inline-block;
-
-		width: var(--space-2);
-		height: 100%;
-
-		color: var(--accent-color);
-
-		animation: blink 1s step-end infinite;
+		width: 0.5rem;
+		height: 1em;
+		margin-left: 0.125rem;
+		background: var(--text-color);
+		animation: blink 1s infinite;
 	}
 
 	@keyframes blink {
 		0%,
-		100% {
+		50% {
 			opacity: 1;
 		}
 
-		50% {
+		51%,
+		100% {
 			opacity: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.cursor {
+			opacity: 1;
+			animation: none;
 		}
 	}
 
 	.terminal-error {
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		gap: var(--space-4);
 		padding: var(--space-8);
-		background: var(--bg-darker);
-		border-radius: var(--radius-md);
-		min-height: 8rem;
+		min-height: 10rem;
 	}
 
 	.terminal-error-content {
@@ -199,56 +176,44 @@
 	.terminal-error-icon {
 		margin-bottom: var(--space-2);
 		font-size: var(--font-size-2xl);
-		color: var(--text-muted);
-		opacity: 0.6;
 	}
 
 	.terminal-error-message {
-		margin: 0 0 var(--space-2) 0;
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
+		margin-bottom: var(--space-4);
 		color: var(--text-muted);
 	}
 
 	.terminal-retry-button {
-		padding: var(--space-2) var(--space-4);
+		padding: var(--space-3) var(--space-6);
 		font-family: var(--font-mono);
-		font-size: var(--font-size-xs);
-		color: var(--accent-color);
-		background: none;
-		border: var(--border-width) solid var(--accent-color);
-		border-radius: var(--radius-sm);
+		font-size: var(--font-size-sm);
+		color: var(--text-color);
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
 		cursor: pointer;
 		transition: all var(--transition-duration) var(--transition-timing);
 	}
 
 	.terminal-retry-button:hover {
-		color: var(--bg-color);
-		background: var(--accent-color);
+		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
+		border-color: var(--accent-color);
 	}
 
 	.terminal-retry-button:focus {
-		outline: none;
-		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
+		outline: 0.125rem solid var(--accent-color);
+		outline-offset: 0.125rem;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.command-output {
-			animation: none;
-		}
-
-		.cursor {
-			animation: none;
-		}
-
 		.terminal-retry-button {
 			transition: none;
 		}
 	}
 </style>
 
-<ErrorBoundary fallback="Terminal temporarily unavailable" component="Terminal">
-	<div class="terminal-frame" style:height={$terminalHeight} style:min-height={$terminalMinHeight}>
+<ErrorBoundary>
+	<div class="terminal-frame" style:height={terminalState.height} style:min-height={terminalState.minHeight}>
 		<div class="terminal-header">
 			<span class="terminal-title">{title}</span>
 			<div class="terminal-buttons">
@@ -267,22 +232,22 @@
 					</div>
 				</div>
 			{:else}
-				{#each get(commands).filter((cmd) => cmd.completed) as command (command.cmd)}
+				{#each terminalState.commands.filter((cmd) => cmd.completed) as command (command.cmd)}
 					<div class="command-line">
 						<span class="prompt">$</span>
 						<span class="command">{command.cmd}</span>
 					</div>
 					<div class="command-output">{command.output}</div>
 				{/each}
-				{#if $terminal.currentCommand < get(commands).length}
+				{#if terminalState.currentCommand < terminalState.commands.length}
 					<div class="command-line">
 						<span class="prompt">$</span>
-						<span class="command">{$terminal.commandVisible}</span>
-						{#if $terminal.isTyping && $terminal.commandVisible.length === get(commands)[$terminal.currentCommand]?.cmd?.length && !$terminal.outputVisible}
-							<span class="cursor">▋</span>
+						<span class="command">{terminalState.commandVisible}</span>
+						{#if terminalState.isTyping && terminalState.commandVisible.length === terminalState.commands[terminalState.currentCommand]?.cmd?.length && !terminalState.outputVisible}
+							<span class="cursor"></span>
 						{/if}
 					</div>
-					<div class="command-output">{$terminal.outputVisible}</div>
+					<div class="command-output">{terminalState.outputVisible}</div>
 				{/if}
 			{/if}
 		</div>
