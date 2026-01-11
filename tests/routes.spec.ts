@@ -13,15 +13,19 @@ test.describe('Route Navigation', () => {
 	});
 
 	test('navigates to blog page', async ({ page }) => {
-		// Wait for the blog link to be visible
+		// Wait for the blog link to be visible and actionable
 		const blogLink = page.getByRole('link', { name: '📝 Read my technical articles' });
 		await expect(blogLink).toBeVisible();
+		await expect(blogLink).toBeEnabled();
 
 		// Click the blog link and wait for navigation
 		await Promise.all([
-			page.waitForURL('**/blog'),
+			page.waitForURL('**/blog', { timeout: 30000 }),
 			blogLink.click()
 		]);
+
+		// Wait for the page to be fully loaded
+		await page.waitForLoadState('domcontentloaded');
 
 		// Wait for the blog page structure to be visible
 		await expect(page.locator('.blog')).toBeVisible();
@@ -38,15 +42,19 @@ test.describe('Route Navigation', () => {
 	});
 
 	test('should navigate to projects page', async ({ page }) => {
-		// Wait for the projects link to be visible
+		// Wait for the projects link to be visible and actionable
 		const projectsLink = page.getByRole('link', { name: '🚀 Browse my open source projects' });
 		await expect(projectsLink).toBeVisible();
+		await expect(projectsLink).toBeEnabled();
 
 		// Click the link and wait for navigation
 		await Promise.all([
-			page.waitForURL('**/projects'),
+			page.waitForURL('**/projects', { timeout: 30000 }),
 			projectsLink.click()
 		]);
+
+		// Wait for the page to be fully loaded
+		await page.waitForLoadState('domcontentloaded');
 
 		// Wait for the projects page structure to be visible
 		await expect(page.locator('.projects')).toBeVisible();
