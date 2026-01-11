@@ -12,13 +12,14 @@ export default {
 	},
 	create(context) {
 		return {
+			/** @param {import('estree').Node & { name?: string; attributes?: Array<{ name: string; value?: Array<{ data: string }> }> }} node */
 			SvelteElement(node) {
 				if (node.name === 'slot') {
 					context.report({
 						node,
 						message: 'Using <slot> is deprecated in Svelte 5. Use {@render ...} instead.',
 						fix(fixer) {
-							const nameAttr = node.attributes.find(
+							const nameAttr = node.attributes?.find(
 								/** @type {(attr: { name: string; value?: Array<{ data: string }> }) => boolean} */
 								(attr) => attr.name === 'name'
 							);

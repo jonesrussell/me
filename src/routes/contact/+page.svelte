@@ -35,9 +35,9 @@
 
 		const formData = new FormData(event.target as HTMLFormElement);
 		const data = {
-			name: formData.get('name'),
-			email: formData.get('email'),
-			message: formData.get('message')
+			name: formData.get('name')?.toString(),
+			email: formData.get('email')?.toString(),
+			message: formData.get('message')?.toString()
 		};
 
 		try {
