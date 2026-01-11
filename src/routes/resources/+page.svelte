@@ -25,22 +25,22 @@
 		]
 	};
 
-	const resources: Resource[] = data.resources;
-
 	// Group resources by category with featured content first
-	const groupedResources = [
-		...new Set(['Essential Tools & Platforms', ...resources.map((r) => r.category)])
-	]
-		.sort((a, b) => {
+	const groupedResources = $derived.by(() => {
+		const resources = data.resources;
+		const categories = [
+			...new Set(['Essential Tools & Platforms', ...resources.map((r: Resource) => r.category)])
+		].sort((a, b) => {
 			if (a === 'Essential Tools & Platforms') return -1;
 			if (b === 'Essential Tools & Platforms') return 1;
 			return a.localeCompare(b);
-		})
-		.reduce(
+		});
+
+		return categories.reduce(
 			(acc, category) => {
 				acc[category] = resources
-					.filter((r) => r.category === category)
-					.sort((a, b) => {
+					.filter((r: Resource) => r.category === category)
+					.sort((a: Resource, b: Resource) => {
 						if (a.featured && !b.featured) return -1;
 						if (!a.featured && b.featured) return 1;
 						return (b.stars || 0) - (a.stars || 0);
@@ -49,6 +49,7 @@
 			},
 			{} as Record<string, Resource[]>
 		);
+	});
 </script>
 
 <style>
@@ -143,7 +144,7 @@
 	<div class="container">
 		<div class="sections">
 			{#each Object.entries(groupedResources) as [category, resources] (category)}
-				<ResourceSection {category} {resources} />
+				<ResourceSection {category} resources={resources as Resource[]} />
 			{/each}
 			<div class="featured-videos-section">
 				<FeaturedVideos videos={youtubeChannel.featuredVideos} />

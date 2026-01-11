@@ -170,12 +170,14 @@
 	<section>
 		<div class="dev-to-section">
 			<p class="source-note">
-				This page and <a href={devToUrl} target="_blank" rel="noopener noreferrer"
+				This page and <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
+				<a href={devToUrl} target="_blank" rel="noopener noreferrer"
 					>DEV.to/jonesrussell</a
 				>
 				are syndicated
 				<span class="second-line">
 					from my
+					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 					<a href="https://jonesrussell.github.io/blog/" target="_blank" rel="noopener noreferrer"
 						>Jekyll-powered blog</a
 					>

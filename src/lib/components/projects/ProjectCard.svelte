@@ -91,6 +91,7 @@
 	<div class="project-card">
 		<div class="content">
 			<h3>
+				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 				<a href={project.url} target="_blank" rel="noopener noreferrer">
 					{project.title}
 				</a>

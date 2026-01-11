@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { base } from '$app/paths';
+	import { resolve } from '$app/paths';
 
 	// Using $derived with page object directly
 	const isNotFound = $derived(page.status === 404);
@@ -102,6 +102,6 @@
 	<div class="container">
 		<h1>{page.status}</h1>
 		<p>{errorMessage}</p>
-		<a href={`${base}`}>Return home</a>
+		<a href={resolve('/')}>Return home</a>
 	</div>
 </div>

@@ -1,5 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import { FormService } from '$lib/services/form-service';
+	import { config } from '$lib/config/env';
 
 	interface FormData {
 		success?: boolean;
@@ -39,23 +41,33 @@
 		};
 
 		try {
-			// TODO: Replace with your actual form submission endpoint
-			const response = await fetch('https://formspree.io/f/your-form-id', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(data)
-			});
+			const formService = FormService.getInstance();
+			const formId = config.formIds.contact;
 
-			if (!response.ok) {
-				throw new Error('Failed to send message');
+			if (!formId) {
+				throw new Error('Contact form ID is not configured');
 			}
+
+			await formService.submitForm(formId, data);
 
 			success = true;
 			(event.target as HTMLFormElement).reset();
 		} catch (err) {
-			error = err instanceof Error ? err.message : 'Something went wrong. Please try again later.';
+			const errorMessage =
+				err instanceof Error ? err.message : 'Something went wrong. Please try again later.';
+			error = errorMessage;
+
+			// Try to extract field errors if available
+			if (err instanceof Error && err.message.includes('validation')) {
+				try {
+					const errorData = JSON.parse(err.message);
+					if (errorData.errors) {
+						fieldErrors = errorData.errors;
+					}
+				} catch {
+					// Ignore parsing errors
+				}
+			}
 		} finally {
 			submitting = false;
 		}
