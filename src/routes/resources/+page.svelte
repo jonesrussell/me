@@ -1,11 +1,12 @@
 <script lang="ts">
 	import ResourceSection from '$lib/components/resources/ResourceSection.svelte';
 	import FeaturedVideos from '$lib/components/video/FeaturedVideos.svelte';
-	import type { Resource } from '$lib/types';
+	import type { Resource } from '$lib/types/resource';
 	import type { YouTubeChannel } from '$lib/types/video';
 	import Hero from '$lib/components/ui/Hero.svelte';
+	import type { PageData } from './$types';
 
-	export let data;
+	const { data } = $props<{ data: PageData }>();
 
 	// YouTube channel info
 	const youtubeChannel: YouTubeChannel = {

@@ -27,7 +27,7 @@
 		rows?: number;
 	}>();
 
-	const fieldId = `field-${name || Math.random().toString(36).substring(2, 9)}`;
+	const fieldId = $derived(`field-${name || Math.random().toString(36).substring(2, 9)}`);
 	const isInvalid = $derived((error ?? '').length > 0);
 	const isTextarea = $derived(type === 'textarea');
 	let fieldValue = $derived(value ?? '');

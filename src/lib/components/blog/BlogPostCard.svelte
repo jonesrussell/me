@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { BlogPost } from '$lib/types/blog';
-	export let post: BlogPost;
+
+	const { post } = $props<{ post: BlogPost }>();
 
 	// Simple excerpt logic: first 200 chars, no HTML
 	function excerpt(content: string): string {

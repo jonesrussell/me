@@ -1,3 +1,5 @@
+import { config } from '$lib/config/env';
+
 export interface FormSchema {
   display: string;
   components: Array<{
@@ -18,7 +20,7 @@ export class FormService {
   private baseUrl: string;
 
   private constructor() {
-    this.baseUrl = 'http://localhost:8090';
+    this.baseUrl = config.formApiUrl;
   }
 
   public static getInstance(): FormService {

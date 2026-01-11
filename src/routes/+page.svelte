@@ -4,20 +4,9 @@
 	import ActionNavCards from '$lib/components/navigation/ActionNavCards.svelte';
 	import SpecialtyGrid from '$lib/components/content/SpecialtyGrid.svelte';
 	import Hero from '$lib/components/ui/Hero.svelte';
-	import type { Specialty } from '$lib/types/specialty';
+	import type { PageData } from './$types';
 
-	interface PageData {
-		terminalCommand: string;
-		specialties: Specialty[];
-		youtubeChannel: string;
-		youtubeVideoId: string;
-		youtubeVideoTitle: string;
-		youtubeSectionTitle: string;
-		youtubeSectionSubtitle: string;
-		navLinks: Array<{ href: string; icon: string; text: string }>;
-	}
-
-	export let data: PageData;
+	const { data } = $props<{ data: PageData }>();
 </script>
 
 <style>
@@ -108,11 +97,11 @@
 			description="Expert solutions for your unique challenges"
 		/>
 		<YouTubeSection
-			channelUrl={data.youtubeChannel}
-			videoId={data.youtubeVideoId}
-			videoTitle={data.youtubeVideoTitle}
-			sectionTitle={data.youtubeSectionTitle}
-			sectionSubtitle={data.youtubeSectionSubtitle}
+			channelUrl={data.youtube.channel}
+			videoId={data.youtube.videoId}
+			videoTitle={data.youtube.videoTitle}
+			sectionTitle={data.youtube.section.title}
+			sectionSubtitle={data.youtube.section.subtitle}
 		/>
 		<ActionNavCards links={data.navLinks} />
 		<div id="cta-form-container" class="gf-section gf-section-cta"></div>

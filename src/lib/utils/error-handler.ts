@@ -98,7 +98,7 @@ function isRecoverable(error?: unknown): boolean {
 /**
  * Log error with consistent formatting
  */
-export function logError(error: AppError, additionalContext?: Record<string, unknown>): void {
+function logError(error: AppError, additionalContext?: Record<string, unknown>): void {
 	const logData = {
 		message: error.message,
 		stack: error.stack,
@@ -147,64 +147,6 @@ export async function withErrorHandling<T>(
 	}
 }
 
-/**
- * Handle synchronous operations with error boundaries
- */
-export function withErrorHandlingSync<T>(
-	operation: () => T,
-	context?: Partial<ErrorContext>
-): T | null {
-	try {
-		return operation();
-	} catch (error) {
-		const appError = createError(
-			error instanceof Error ? error.message : 'Unknown error occurred',
-			error,
-			context
-		);
-
-		logError(appError);
-		return null;
-	}
-}
-
-/**
- * Retry operation with exponential backoff
- */
-export async function withRetry<T>(
-	operation: () => Promise<T>,
-	maxRetries: number = 3,
-	baseDelay: number = 1000,
-	context?: Partial<ErrorContext>
-): Promise<T | null> {
-	let lastError: unknown;
-
-	for (let attempt = 0; attempt <= maxRetries; attempt++) {
-		try {
-			return await operation();
-		} catch (error) {
-			lastError = error;
-
-			if (attempt === maxRetries) {
-				break;
-			}
-
-			// Exponential backoff
-			const delay = baseDelay * Math.pow(2, attempt);
-			await new Promise(resolve => setTimeout(resolve, delay));
-		}
-	}
-
-	// Log final error
-	const appError = createError(
-		lastError instanceof Error ? lastError.message : 'Operation failed after retries',
-		lastError,
-		{ ...context, action: 'retry' }
-	);
-
-	logError(appError);
-	return null;
-}
 
 /**
  * Debounce error logging to prevent spam

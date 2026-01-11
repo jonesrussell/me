@@ -1,9 +1,10 @@
 // lib/composables/useNewsletterForm.ts
 import { tick } from 'svelte';
-import { FormService } from '../../../js/services/form-service';
+import { FormService } from '$lib/services/form-service';
 import { createError, logErrorDebounced, withErrorHandling } from '$lib/utils/error-handler';
+import type { SubmitStatus } from '$lib/types/newsletter';
 
-export type SubmitStatus = 'idle' | 'loading' | 'success' | 'error';
+export type { SubmitStatus };
 
 const FORM_IDS = {
 	SUBMIT: '61af2a0f-5b54-476f-9bf6-c2ee6ce5b822',
@@ -23,32 +24,12 @@ export function useNewsletterForm() {
 	let errorMessage = $state('');
 	let schemaError = $state(false);
 
-	// Validation
-	const isEmailValid = $derived(() => {
-		if (!email) return false;
-		return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-	});
-
-	const isSubmitDisabled = $derived(submitStatus === 'loading' || !isEmailValid);
-
-	function validateEmail(): boolean {
-		if (!email) {
-			errorMessage = 'Email is required';
-			return false;
-		}
-		if (!isEmailValid) {
-			errorMessage = 'Please enter a valid email address';
-			return false;
-		}
-		errorMessage = '';
-		return true;
-	}
+	// Disable submit button while loading (browser handles email validation)
+	const isSubmitDisabled = $derived(submitStatus === 'loading');
 
 	// Form submission
 	async function handleSubmit(event: Event) {
 		event.preventDefault();
-
-		if (!validateEmail()) return;
 
 		submitStatus = 'loading';
 		errorMessage = '';
