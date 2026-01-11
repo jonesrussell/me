@@ -5,7 +5,7 @@
 	import BlogPostContent from './BlogPostContent.svelte';
 	import type { BlogPost } from '$lib/types/blog';
 
-	export let post: BlogPost;
+	const { post } = $props<{ post: BlogPost }>();
 </script>
 
 <style>

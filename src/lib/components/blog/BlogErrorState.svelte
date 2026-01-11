@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let error: string;
+	const { error } = $props<{ error: string }>();
 
 	function handleReload() {
 		window.location.reload();

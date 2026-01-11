@@ -2,10 +2,10 @@
 	import SafeHtml from '$lib/components/SafeHtml.svelte';
 	import { highlightCode } from '$lib/actions/highlight-code';
 
-	export let content: string;
+	const { content } = $props<{ content: string }>();
 
-	function stripCdata(content: string): string {
-		return content.replace(/^<!\[CDATA\[|\]\]>$/g, '');
+	function stripCdata(htmlContent: string): string {
+		return htmlContent.replace(/^<!\[CDATA\[|\]\]>$/g, '');
 	}
 </script>
 
