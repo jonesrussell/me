@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { base } from '$app/paths';
+	import { base, resolve } from '$app/paths';
 
 	const { url = page.url } = $props<{ url?: URL }>();
 
@@ -79,8 +79,8 @@
 </style>
 
 <nav class="desktop-nav" aria-label="Main navigation">
-	<a href={`${base}/blog`} class:active={isActive('/blog')}>Blog</a>
-	<a href={`${base}/projects`} class:active={isActive('/projects')}>Projects</a>
-	<a href={`${base}/resources`} class:active={isActive('/resources')}>Resources</a>
-	<a href={`${base}/contact`} class:active={isActive('/contact')}>Contact</a>
+	<a href={resolve('/blog')} class:active={isActive('/blog')}>Blog</a>
+	<a href={resolve('/projects')} class:active={isActive('/projects')}>Projects</a>
+	<a href={resolve('/resources')} class:active={isActive('/resources')}>Resources</a>
+	<a href={resolve('/contact')} class:active={isActive('/contact')}>Contact</a>
 </nav>

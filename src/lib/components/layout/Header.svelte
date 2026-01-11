@@ -3,7 +3,7 @@
 	import MobileNav from '$lib/components/navigation/MobileNav.svelte';
 	import SubtitleBar from './SubtitleBar.svelte';
 	import ThemeToggle from '../ThemeToggle.svelte';
-	import { base } from '$app/paths';
+	import { resolve } from '$app/paths';
 
 	const { url } = $props<{ url: URL }>();
 
@@ -85,7 +85,7 @@
 		margin: -0.0625rem;
 		padding: 0;
 		overflow: hidden;
-		clip: rect(0, 0, 0, 0);
+		clip-path: inset(50%);
 		white-space: nowrap;
 		border-width: 0;
 	}
@@ -120,7 +120,7 @@
 <header class="site-header">
 	<div class="header-content">
 		<div class="header-main">
-			<a href={base || '/'} class="title">Russell Jones</a>
+			<a href={resolve('/')} class="title">Russell Jones</a>
 			<div class="nav-container">
 				<DesktopNav {url} />
 			</div>
