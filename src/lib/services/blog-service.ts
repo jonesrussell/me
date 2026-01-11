@@ -1,5 +1,5 @@
 import { formatDate } from './utils';
-import type { BlogPost, BlogError } from '$lib/types/blog';
+import type { BlogPost } from '$lib/types/blog';
 
 // Constants
 const FEED_URL = 'https://jonesrussell.github.io/blog/feed.xml';
