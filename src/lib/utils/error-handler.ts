@@ -98,7 +98,7 @@ function isRecoverable(error?: unknown): boolean {
 /**
  * Log error with consistent formatting
  */
-export function logError(error: AppError, additionalContext?: Record<string, unknown>): void {
+function logError(error: AppError, additionalContext?: Record<string, unknown>): void {
 	const logData = {
 		message: error.message,
 		stack: error.stack,
@@ -150,7 +150,7 @@ export async function withErrorHandling<T>(
 /**
  * Handle synchronous operations with error boundaries
  */
-export function withErrorHandlingSync<T>(
+function withErrorHandlingSync<T>(
 	operation: () => T,
 	context?: Partial<ErrorContext>
 ): T | null {
@@ -171,7 +171,7 @@ export function withErrorHandlingSync<T>(
 /**
  * Retry operation with exponential backoff
  */
-export async function withRetry<T>(
+async function withRetry<T>(
 	operation: () => Promise<T>,
 	maxRetries: number = 3,
 	baseDelay: number = 1000,

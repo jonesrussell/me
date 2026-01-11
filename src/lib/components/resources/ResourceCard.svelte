@@ -2,7 +2,7 @@
 	import Box from '$lib/components/ui/Box.svelte';
 	import Tag from '$lib/components/ui/Tag.svelte';
 
-	import type { Resource } from '$lib/types';
+	import type { Resource } from '$lib/types/resource';
 
 	const { resource } = $props<{ resource: Resource }>();
 </script>
