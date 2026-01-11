@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { commands, terminal, terminalHeight, terminalMinHeight } from '$lib/stores/terminal';
+	import { commands, terminal, terminalHeight, terminalMinHeight } from '$lib/stores/terminal.svelte';
 	import { get } from 'svelte/store';
 	import ErrorBoundary from '../ErrorBoundary.svelte';
 
