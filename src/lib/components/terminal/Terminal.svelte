@@ -94,6 +94,8 @@
 	.terminal-body {
 		display: flex;
 		position: relative;
+		flex-direction: column;
+		gap: var(--space-2);
 
 		padding: var(--space-4);
 		overflow-x: auto;
@@ -105,39 +107,70 @@
 
 		min-height: 10rem;
 		max-height: 30rem;
+		white-space: pre-wrap;
+		overflow-wrap: anywhere;
 	}
 
 	.command-line {
 		display: flex;
 		gap: var(--space-2);
-		align-items: baseline;
-		margin-bottom: var(--space-2);
+		flex-wrap: wrap;
+
+		margin-top: var(--space-2);
+
+		font-size: var(--font-size-sm);
+		font-weight: var(--font-weight-normal);
+		line-height: var(--line-height-base);
+		color: var(--text-muted);
 	}
 
 	.prompt {
-		color: var(--text-muted);
-		user-select: none;
+		font-weight: var(--font-weight-bold);
+		color: var(--accent-color);
+		white-space: nowrap;
 	}
 
 	.command {
-		font-weight: var(--font-weight-medium);
+		font-weight: var(--font-weight-normal);
 		color: var(--text-color);
+		overflow-wrap: anywhere;
 	}
 
 	.command-output {
-		margin-bottom: var(--space-4);
+		margin-top: var(--space-2);
+		padding-left: calc(var(--ch) * 3);
+
+		font-size: var(--font-size-sm);
+		font-weight: var(--font-weight-normal);
+		line-height: var(--line-height-relaxed);
 		color: var(--text-color);
 		white-space: pre-wrap;
 		overflow-wrap: anywhere;
+
+		animation: crt-reveal 0.1s linear;
+	}
+
+	@keyframes crt-reveal {
+		from {
+			opacity: 0.8;
+			clip-path: inset(0 0 100% 0);
+		}
+
+		to {
+			opacity: 1;
+			clip-path: inset(0 0 0 0);
+		}
 	}
 
 	.cursor {
 		display: inline-block;
-		width: 0.5rem;
+
+		width: var(--space-2);
 		height: 100%;
-		margin-left: 0.125rem;
-		background: var(--text-color);
-		animation: blink 1s infinite;
+
+		color: var(--accent-color);
+
+		animation: blink 1s step-end infinite;
 	}
 
 	@keyframes blink {
@@ -153,8 +186,11 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
+		.command-output {
+			animation: none;
+		}
+
 		.cursor {
-			opacity: 1;
 			animation: none;
 		}
 	}
