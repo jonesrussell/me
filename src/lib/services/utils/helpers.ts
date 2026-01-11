@@ -70,8 +70,3 @@ export function setupCacheCleanup(intervalMs: number = 5 * 60 * 1000): () => voi
 	// Return cleanup function
 	return () => window.clearInterval(intervalId);
 }
-
-// Manual cache clear function (internal use only)
-function clearMemoCache(): void {
-	memoCache.clear();
-}
