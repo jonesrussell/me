@@ -15,7 +15,6 @@
 
 	let { email, submitStatus, errorMessage, isSubmitDisabled, onSubmit, onEmailInput }: Props =
 		$props();
-
 </script>
 
 <style>
