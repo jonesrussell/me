@@ -4,18 +4,18 @@ This file provides guidance for AI assistants working with this codebase.
 
 ## Project Overview
 
-Personal website for Russell Jones built with SvelteKit 5 and modern web technologies. Features a blog (via Dev.to integration), project showcase, resources section, and terminal emulation. Deployed to GitHub Pages as a static site.
+Personal website for Russell Jones built with SvelteKit 5 and modern web technologies. Features a blog (via Dev.to RSS integration), project showcase, resources section, and terminal emulation. Deployed to GitHub Pages as a static site.
 
 **Live site:** https://jonesrussell.github.io/me/
 
 ## Tech Stack
 
-- **Framework:** SvelteKit 5 with Svelte 5 runes
-- **Language:** TypeScript 5 (strict mode)
-- **Styling:** Modern CSS (nesting, container queries, logical properties, cascade layers)
-- **Build:** Vite 6, static adapter for GitHub Pages
-- **Testing:** Vitest (unit), Playwright (E2E), Testing Library
-- **Linting:** ESLint 9, Stylelint, Prettier
+- **Framework:** SvelteKit 2.49.4 with static adapter
+- **UI Library:** Svelte 5.46.1 (runes-based reactivity)
+- **Language:** TypeScript 5.9.3 (strict mode)
+- **Build Tool:** Vite 7.3.1
+- **Testing:** Vitest 4.0.16 (unit), Playwright 1.57.0 (E2E), Testing Library
+- **Linting:** ESLint 9.39.2, Stylelint 16.26.1, Prettier 3.7.4
 
 ## Quick Commands
 
@@ -55,10 +55,14 @@ src/
 │   │   ├── projects/    # Project showcase
 │   │   ├── resources/   # Resource cards/sections
 │   │   ├── terminal/    # Terminal emulation
-│   │   ├── ui/          # Reusable UI (Badge, Box, Hero, etc.)
+│   │   ├── ui/          # Reusable UI (Hero, Box, Input, etc.)
 │   │   └── video/       # YouTube/video components
-│   ├── services/        # Business logic (blog-service.ts)
-│   ├── stores/          # State management (theme, terminal)
+│   ├── services/        # Business logic (pure functions)
+│   │   └── blog-service.ts  # Blog API service (pure functions, no state)
+│   ├── stores/          # State management (runes-based, .svelte.ts files)
+│   │   ├── blog.svelte.ts      # Blog state
+│   │   ├── theme.svelte.ts     # Theme state
+│   │   └── terminal.svelte.ts  # Terminal state
 │   ├── types/           # TypeScript interfaces
 │   └── utils/           # Utility functions
 ├── routes/              # SvelteKit file-based routing
@@ -78,7 +82,7 @@ tests/                   # Playwright E2E tests
 
 This project uses **Svelte 5 runes** exclusively. Do NOT use legacy Svelte 4 syntax.
 
-### State Management
+### State Management with Runes
 
 ```svelte
 <script lang="ts">
@@ -138,6 +142,41 @@ This project uses **Svelte 5 runes** exclusively. Do NOT use legacy Svelte 4 syn
 <MyComponent onchange={(value) => handleChange(value)} />
 ```
 
+### Store Patterns (Runes-based)
+
+Stores use `.svelte.ts` extension and `$state` runes:
+
+```typescript
+// stores/example.svelte.ts
+export const exampleState = $state({
+  value: 0,
+  items: []
+});
+```
+
+Components import and use state directly (no `$` prefix):
+
+```svelte
+<script lang="ts">
+  import { exampleState } from '$lib/stores/example.svelte';
+</script>
+
+<p>Value: {exampleState.value}</p>
+<button onclick={() => exampleState.value++}>Increment</button>
+```
+
+### SvelteKit App State
+
+Use `$app/state` (not `$app/stores`):
+
+```svelte
+<script lang="ts">
+  import { page } from '$app/state';
+</script>
+
+<p>Current URL: {page.url}</p>
+```
+
 ## Coding Standards
 
 ### TypeScript
@@ -165,11 +204,23 @@ This project uses **Svelte 5 runes** exclusively. Do NOT use legacy Svelte 4 syn
 - Use Testing Library for component tests
 - Use `vi.mock()` for mocking
 
+### Services
+- Services are **pure functions** - they return data, they don't manage state
+- Services should not update stores or have side effects
+- State management happens in stores or components
+
+### Stores
+- Stores use `.svelte.ts` extension
+- Stores use `$state` runes (not `writable` stores)
+- Stores export state objects directly
+- Components access state directly (no `$` prefix)
+
 ## File Naming Conventions
 
 - Components: `PascalCase.svelte`
 - Component tests: `PascalCase.svelte.test.ts`
 - Services/utils: `kebab-case.ts`
+- Stores: `kebab-case.svelte.ts` (must use `.svelte.ts` for runes)
 - Types: `kebab-case.ts`
 - Routes: `+page.svelte`, `+page.ts`, `+page.server.ts`
 
@@ -182,10 +233,13 @@ Wrap components that may fail with `ErrorBoundary.svelte`.
 Use `SafeHtml.svelte` for rendering sanitized HTML content.
 
 ### Blog Integration
-Blog posts are fetched from Dev.to API via `blog-service.ts`.
+Blog posts are fetched from Dev.to RSS feed via `blog-service.ts`. The service contains pure functions that return data. State is managed in `stores/blog.svelte.ts`.
 
 ### Theme System
-Theme is managed via `stores/theme.ts` with light/dark modes and CSS custom properties.
+Theme is managed via `stores/theme.svelte.ts` with light/dark/auto modes. Use `themeState` and `setTheme()` function. CSS custom properties handle theming.
+
+### Terminal Emulation
+Terminal state is managed in `stores/terminal.svelte.ts`. The terminal component uses this state to display typed commands and outputs.
 
 ## Path Aliases
 

@@ -8,9 +8,8 @@ Visit the website at https://jonesrussell.github.io/me/
 
 - Terminal emulation fun
 - Modern Svelte 5
-  - Runes for state management
-  - `$state` and `$derived` values
-  - `$effect` for side effects
+  - Runes for state management (`$state`, `$derived`, `$effect`)
+  - `$props` for component properties
   - `{@render}` for component composition
   - TypeScript-first development
 - Modern Design System
@@ -26,13 +25,16 @@ Visit the website at https://jonesrussell.github.io/me/
   - Terminal command demonstrations
   - Step-by-step tutorials
 - Modern Development
-  - SvelteKit with TypeScript
+  - SvelteKit 2 with TypeScript 5.9
   - Responsive layouts
   - Performance optimizations
   - Accessibility first
 - Development Tools
-  - Testing infrastructure
-- (soon to be) Curated Resources
+  - Testing infrastructure (Vitest, Playwright)
+- Blog Integration
+  - Dev.to RSS feed integration
+  - Blog post showcase
+- Curated Resources
   - Essential Tools & Platforms
   - Documentation
   - Go Resources
@@ -43,22 +45,20 @@ Visit the website at https://jonesrussell.github.io/me/
 
 ## Tech Stack
 
-- SvelteKit 5
-- TypeScript 5
-- Modern CSS
-  - CSS Grid and Flexbox
-  - CSS Container Queries
-  - CSS Nesting
-  - CSS Logical Properties
-  - CSS Cascade Layers
-- Testing
-  - Vitest for unit tests
-  - Testing Library for component tests
-  - Playwright for E2E tests
-- Development
-  - ESLint + Prettier
+- **Framework:** SvelteKit 2.49.4
+- **UI Library:** Svelte 5.46.1 (runes-based reactivity)
+- **Language:** TypeScript 5.9.3 (strict mode)
+- **Build Tool:** Vite 7.3.1
+- **Testing:**
+  - Vitest 4.0.16 (unit tests)
+  - Testing Library (component tests)
+  - Playwright 1.57.0 (E2E tests)
+- **CSS:** Modern CSS (nesting, container queries, logical properties, cascade layers)
+- **Code Quality:**
+  - ESLint 9.39.2
+  - Stylelint 16.26.1
+  - Prettier 3.7.4
   - TypeScript strict mode
-  - Modern build tools
 
 ## Project Structure
 
@@ -66,31 +66,32 @@ Visit the website at https://jonesrussell.github.io/me/
 src/
 ├── lib/
 │   ├── components/     # Reusable components
-│   │   ├── content/    # Content components
-│   │   │   ├── SpecialtyGrid.svelte  # Specialties grid
-│   │   │   └── ...
-│   │   ├── resources/  # Resource components
-│   │   │   ├── ResourceSection.svelte # Resource sections
-│   │   │   └── ...
-│   │   └── ...
-│   ├── services/      # Business logic
-│   │   ├── blog.ts    # Blog service
-│   │   └── ...
-│   ├── utils/
-│   │   └── ...
-│   └── stores/
-│       └── ...
+│   │   ├── blog/      # Blog-related components
+│   │   ├── layout/    # Header, Footer, SubtitleBar
+│   │   ├── navigation/# Nav components
+│   │   ├── newsletter/# Newsletter form components
+│   │   ├── projects/  # Project showcase
+│   │   ├── resources/ # Resource cards/sections
+│   │   ├── terminal/  # Terminal emulation
+│   │   ├── ui/        # Reusable UI components
+│   │   └── video/     # YouTube/video components
+│   ├── services/      # Business logic (pure functions)
+│   │   └── blog-service.ts  # Blog API service
+│   ├── stores/        # State management (runes-based)
+│   │   ├── blog.svelte.ts   # Blog state
+│   │   ├── theme.svelte.ts  # Theme state
+│   │   └── terminal.svelte.ts # Terminal state
+│   ├── types/         # TypeScript interfaces
+│   └── utils/         # Utility functions
 ├── routes/           # SvelteKit routes
-│   ├── resources/    # Resources page
-│   │   ├── +page.svelte
-│   │   └── +page.ts
-│   └── ...
-└── app.css          # Global CSS variables
-
-docs/
-├── CONTRIBUTING.md   # Contribution guidelines
-├── TESTING.md       # Testing procedures
-└── STYLE.md        # Style guide
+│   ├── blog/        # Blog pages
+│   ├── contact/     # Contact page
+│   ├── projects/    # Projects page
+│   └── resources/   # Resources page
+└── styles/          # Global CSS
+    ├── modules/     # CSS modules
+    ├── themes/      # Theme variables
+    └── system/      # Color system
 ```
 
 ## Development
@@ -114,57 +115,68 @@ npm run check:watch    # Run type checking in watch mode
 npm run validate       # Run all validations (types, lint, tests)
 
 # Testing
-npm run test          # Run unit tests once
-npm run test:watch    # Run unit tests in watch mode
-npm run test:coverage # Run tests with coverage
-npm run test:unit     # Run unit tests
-npm run test:client   # Run client-side tests
-npm run test:server   # Run server-side tests
+npm run test:unit        # Run unit tests (watch mode)
+npm run test:unit:run    # Run unit tests once
+npm run test:e2e         # Run Playwright E2E tests
+npm run test             # Run all tests
 
 # Code quality
 npm run format        # Format code with Prettier
-npm run lint         # Run ESLint and Prettier checks
+npm run lint         # Run ESLint and Stylelint checks
+npm run lint:fix     # Auto-fix lint issues
 
-# GitHub Actions
-npm run workflow     # Test GitHub Actions locally
+# Utilities
+npm run knip         # Find unused exports/dependencies
 ```
 
-## Example: Creating a New Route (a new page)
+## Example: Creating a New Route
 
 Here's how to create a new route using our codebase patterns:
 
 ```svelte
-<!-- src/routes/fraggle-friends/+page.svelte -->
+<!-- src/routes/my-page/+page.svelte -->
 <script lang="ts">
 	import Hero from '$lib/components/ui/Hero.svelte';
 
-	const fraggles = [
-		{
-			name: 'Gobo',
-			role: 'Explorer',
-			quote: 'The magic is in the journey!'
-		}
-	];
+	const data = $state({ count: 0 });
 </script>
 
 <svelte:head>
-	<title>Fraggle Rock | Russell Jones</title>
-	<meta name="description" content="Meet the Fraggles - Yea!" />
+	<title>My Page | Russell Jones</title>
+	<meta name="description" content="Description of my page" />
 </svelte:head>
 
-<Hero title="Fraggle Rock Heros!" subtitle="Dance Your Cares Away" />
+<Hero title="My Page" subtitle="Subtitle" />
 
-<main class="fraggles">
+<main>
 	<div class="container">
-		{#each fraggles as fraggle}
-			<article class="fraggle-card">
-				<h2>{fraggle.name}</h2>
-				<p class="role">{fraggle.role}</p>
-				<blockquote>{fraggle.quote}</blockquote>
-			</article>
-		{/each}
+		<p>Count: {data.count}</p>
+		<button onclick={() => data.count++}>Increment</button>
 	</div>
 </main>
+```
+
+## State Management with Runes
+
+This project uses Svelte 5 runes exclusively. State is managed using rune-based stores:
+
+```typescript
+// stores/example.svelte.ts
+export const exampleState = $state({
+  value: 0,
+  items: []
+});
+```
+
+Components access state directly (no `$` prefix needed):
+
+```svelte
+<script lang="ts">
+  import { exampleState } from '$lib/stores/example.svelte';
+</script>
+
+<p>Value: {exampleState.value}</p>
+<button onclick={() => exampleState.value++}>Increment</button>
 ```
 
 ## I welcome any improvements.
