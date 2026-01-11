@@ -1,4 +1,4 @@
-import type { Resource } from '$lib/types';
+import type { Resource } from '$lib/types/resource';
 
 export function load() {
 	const resources: Resource[] = [

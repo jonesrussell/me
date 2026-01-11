@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { blogStore, fetchFeed } from '$lib/services/blog-service';
+	import { blogState } from '$lib/stores/blog.svelte';
+	import { fetchFeed } from '$lib/services/blog-service';
 	import { debounce } from '$lib/utils/debounce';
 
 	import Hero from '$lib/components/ui/Hero.svelte';
@@ -14,63 +15,56 @@
 
 	const POSTS_PER_PAGE = 6;
 
-	// Initialize store with server data
+	// Initialize state with server data
 	$effect(() => {
-		blogStore.set({
-			posts: data.initialPosts,
-			loading: false,
-			error: data.serverError
-				? {
-						type: 'SERVER_ERROR',
-						message: data.serverError,
-						details: null,
-						timestamp: Date.now()
-					}
-				: null,
-			hasMore: data.hasMore,
-			currentPage: data.currentPage,
-			totalPages: data.totalPages
-		});
+		blogState.posts = data.initialPosts;
+		blogState.loading = false;
+		blogState.error = data.serverError
+			? {
+					type: 'SERVER_ERROR',
+					message: data.serverError,
+					details: null,
+					timestamp: Date.now()
+				}
+			: null;
+		blogState.hasMore = data.hasMore;
+		blogState.currentPage = data.currentPage;
+		blogState.totalPages = data.totalPages;
 	});
 
 	// Debounced load more to prevent rapid clicks
 	const debouncedLoadMore = debounce(async () => {
-		const store = $blogStore;
+		if (blogState.loading || !blogState.hasMore) return;
 
-		if (store.loading || !store.hasMore) return;
-
-		blogStore.update((s) => ({ ...s, loading: true, error: null }));
+		blogState.loading = true;
+		blogState.error = null;
 
 		try {
 			const result = await fetchFeed(fetch, {
-				page: store.currentPage + 1,
+				page: blogState.currentPage + 1,
 				pageSize: POSTS_PER_PAGE
 			});
 
-			blogStore.update((s) => ({
-				...s,
-				posts: [...s.posts, ...result.items],
-				currentPage: s.currentPage + 1,
-				hasMore: result.hasMore,
-				totalPages: result.totalPages || s.totalPages,
-				loading: false
-			}));
+			blogState.posts = [...blogState.posts, ...result.items];
+			blogState.currentPage = blogState.currentPage + 1;
+			blogState.hasMore = result.hasMore;
+			if (result.totalPages) {
+				blogState.totalPages = result.totalPages;
+			}
+			blogState.loading = false;
 		} catch (e) {
-			blogStore.update((s) => ({
-				...s,
-				loading: false,
-				error: {
-					type: 'LOAD_MORE_ERROR',
-					message: e instanceof Error ? e.message : 'Failed to load more posts',
-					details: e,
-					timestamp: Date.now()
-				}
-			}));
+			blogState.loading = false;
+			blogState.error = {
+				type: 'LOAD_MORE_ERROR',
+				message: e instanceof Error ? e.message : 'Failed to load more posts',
+				details: e,
+				timestamp: Date.now()
+			};
 		}
 	}, 300);
 
 	async function retryLoad() {
-		blogStore.update((s) => ({ ...s, error: null }));
+		blogState.error = null;
 		await debouncedLoadMore();
 	}
 </script>
@@ -299,19 +293,19 @@
 
 	<div class="container">
 		<section class="posts-section" aria-label="Blog posts">
-			{#if $blogStore.posts.length > 0}
-				<BlogPostsSection posts={$blogStore.posts} />
+			{#if blogState.posts.length > 0}
+				<BlogPostsSection posts={blogState.posts} />
 
 				<!-- Load more section -->
-				{#if $blogStore.hasMore}
+				{#if blogState.hasMore}
 					<div class="load-more">
 						<button
 							class="load-more-button"
 							onclick={debouncedLoadMore}
-							disabled={$blogStore.loading}
-							aria-label={$blogStore.loading ? 'Loading more posts...' : 'Load more posts'}
+							disabled={blogState.loading}
+							aria-label={blogState.loading ? 'Loading more posts...' : 'Load more posts'}
 						>
-							{#if $blogStore.loading}
+							{#if blogState.loading}
 								<LoadingSpinner size="sm" />
 								Loading...
 							{:else}
@@ -319,21 +313,21 @@
 							{/if}
 						</button>
 					</div>
-				{:else if $blogStore.posts.length > POSTS_PER_PAGE}
+				{:else if blogState.posts.length > POSTS_PER_PAGE}
 					<div class="end-message">
 						<p>You've reached the end! 🎉</p>
-						<p>Thanks for reading all {$blogStore.posts.length} posts.</p>
+						<p>Thanks for reading all {blogState.posts.length} posts.</p>
 					</div>
 				{/if}
 
 				<!-- Load more error (separate from global errors) -->
-				{#if $blogStore.error?.type === 'LOAD_MORE_ERROR'}
+				{#if blogState.error?.type === 'LOAD_MORE_ERROR'}
 					<div class="load-more-error" role="alert">
-						<p>Failed to load more posts: {$blogStore.error.message}</p>
+						<p>Failed to load more posts: {blogState.error.message}</p>
 						<button class="retry-button" onclick={retryLoad}> Try Again </button>
 					</div>
 				{/if}
-			{:else if $blogStore.loading}
+			{:else if blogState.loading}
 				<div class="loading-container" aria-live="polite">
 					<LoadingSpinner />
 					<div class="loading-text">
@@ -341,7 +335,7 @@
 						<p>This may take a moment</p>
 					</div>
 				</div>
-			{:else if $blogStore.error?.type === 'SERVER_ERROR'}
+			{:else if blogState.error?.type === 'SERVER_ERROR'}
 				<div class="error-state" role="alert">
 					<h2>Unable to Load Blog Posts</h2>
 					<p>We're experiencing technical difficulties.</p>

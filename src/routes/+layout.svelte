@@ -3,7 +3,7 @@
 	import Header from '$lib/components/layout/Header.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
 	import NewsletterCTA from '$lib/components/newsletter/NewsletterCTA.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	// Theme initialization is handled by the theme store module
 
 	import '../app.css';
@@ -34,7 +34,7 @@
 <SkipToMain />
 
 <div class="site">
-	<Header url={$page.url} />
+	<Header url={page.url} />
 
 	{@render children()}
 
