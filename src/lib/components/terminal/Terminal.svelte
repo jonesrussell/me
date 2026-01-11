@@ -107,8 +107,6 @@
 
 		min-height: 10rem;
 		max-height: 30rem;
-		white-space: pre-wrap;
-		overflow-wrap: anywhere;
 	}
 
 	.command-line {
@@ -138,7 +136,7 @@
 
 	.command-output {
 		margin-top: var(--space-2);
-		padding-left: calc(var(--ch) * 3);
+		padding-left: 3ch;
 
 		font-size: var(--font-size-sm);
 		font-weight: var(--font-weight-normal);
