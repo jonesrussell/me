@@ -54,10 +54,8 @@
 		"prettier-plugin-svelte": "^3.4.1",
 		"stylelint": "^16.26.1",
 		"stylelint-config-clean-order": "^8.0.0",
-		"stylelint-config-html": "^1.1.0",
 		"stylelint-config-recommended": "^17.0.0",
 		"stylelint-config-standard": "^39.0.1",
-		"stylelint-declaration-block-no-ignored-properties": "^2.8.0",
 		"stylelint-order": "^7.0.1",
 		"stylelint-prettier": "^5.0.3",
 		"svelte": "^5.46.1",
@@ -71,10 +69,7 @@
 	},
 	"dependencies": {
 		"@iconify/svelte": "^5.2.1",
-		"dompurify": "^3.3.1",
-		"fast-xml-parser": "^5.3.3",
 		"highlight.js": "^11.11.1",
-		"marked": "^17.0.1",
 		"sanitize-html": "^2.17.0",
 		"svelte-intersection-observer": "^1.0.0"
 	}
