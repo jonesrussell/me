@@ -16,26 +16,26 @@
 <style>
 	.toggle {
 		display: flex;
-		gap: var(--space-2);
-		align-items: center;
 		padding: var(--space-2);
-		border-radius: var(--radius-md);
 		background: var(--bg-darker);
 		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
+		gap: var(--space-2);
+		align-items: center;
 	}
 
 	.button {
 		display: flex;
+		position: relative;
+		padding: var(--space-2);
+		color: var(--text-muted);
+		background: transparent;
+		border: none;
+		border-radius: var(--radius-sm);
+		transition: all var(--transition-duration) var(--transition-timing);
 		align-items: center;
 		justify-content: center;
-		padding: var(--space-2);
-		border: none;
-		background: transparent;
-		border-radius: var(--radius-sm);
 		cursor: pointer;
-		color: var(--text-muted);
-		transition: all var(--transition-duration) var(--transition-timing);
-		position: relative;
 	}
 
 	.button:hover {
@@ -53,7 +53,7 @@
 		outline-offset: 0.125rem;
 	}
 
-	.icon {
+	.button :global(svg) {
 		width: 1.25rem;
 		height: 1.25rem;
 	}
@@ -66,7 +66,7 @@
 </style>
 
 <div class="toggle" role="group" aria-label="Theme selection">
-	{#each themes as { value, label }}
+	{#each themes as { value, label } (value)}
 		<button
 			type="button"
 			class="button"
@@ -75,7 +75,7 @@
 			aria-label={label}
 			aria-pressed={themeState.current === value}
 		>
-			<Icon icon={themeState.current === 'auto' ? 'ph:monitor' : themeState.current === 'light' ? 'ph:sun' : 'ph:moon'} />
+			<Icon icon={value === 'auto' ? 'ph:monitor' : value === 'light' ? 'ph:sun' : 'ph:moon'} />
 		</button>
 	{/each}
 </div>
