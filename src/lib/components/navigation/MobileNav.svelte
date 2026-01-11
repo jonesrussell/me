@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { base } from '$app/paths';
+	import { base, resolve } from '$app/paths';
 
 	const {
 		url = page.url,
@@ -108,11 +108,11 @@
 </style>
 
 <nav class="mobile-nav" class:open={isOpen} aria-label="Main navigation">
-	<a href={`${base}/blog`} class:active={isActive('/blog')} onclick={toggleMenu}>Blog</a>
-	<a href={`${base}/projects`} class:active={isActive('/projects')} onclick={toggleMenu}>Projects</a
+	<a href={resolve('/blog')} class:active={isActive('/blog')} onclick={toggleMenu}>Blog</a>
+	<a href={resolve('/projects')} class:active={isActive('/projects')} onclick={toggleMenu}>Projects</a
 	>
-	<a href={`${base}/resources`} class:active={isActive('/resources')} onclick={toggleMenu}
+	<a href={resolve('/resources')} class:active={isActive('/resources')} onclick={toggleMenu}
 		>Resources</a
 	>
-	<a href={`${base}/contact`} class:active={isActive('/contact')} onclick={toggleMenu}>Contact</a>
+	<a href={resolve('/contact')} class:active={isActive('/contact')} onclick={toggleMenu}>Contact</a>
 </nav>

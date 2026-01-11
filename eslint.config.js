@@ -2,6 +2,7 @@ import prettier from 'eslint-config-prettier';
 import js from '@eslint/js';
 import { includeIgnoreFile } from '@eslint/compat';
 import svelte from 'eslint-plugin-svelte';
+import svelteParser from 'svelte-eslint-parser';
 import globals from 'globals';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
@@ -25,11 +26,15 @@ export default ts.config(
 	{
 		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
 		languageOptions: {
+			parser: svelteParser,
 			parserOptions: {
+				parser: ts.parser,
 				projectService: true,
 				extraFileExtensions: ['.svelte'],
-				parser: ts.parser,
-				svelteConfig
+				svelteConfig,
+				svelteFeatures: {
+					runes: true
+				}
 			}
 		},
 		rules: {

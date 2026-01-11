@@ -11,16 +11,25 @@ export interface FormSchema {
 }
 
 export interface FormData {
-  email: string;
+  email?: string;
   [key: string]: string | number | boolean | undefined;
+}
+
+export interface FormSubmissionResponse {
+  success: boolean;
+  message?: string;
+  submission_id?: string;
+  errors?: Record<string, string>;
 }
 
 export class FormService {
   private static instance: FormService;
   private baseUrl: string;
+  private apiKey: string;
 
   private constructor() {
-    this.baseUrl = config.formApiUrl;
+    this.baseUrl = config.goformsApiUrl;
+    this.apiKey = config.goformsApiKey;
   }
 
   public static getInstance(): FormService {
@@ -30,21 +39,36 @@ export class FormService {
     return FormService.instance;
   }
 
-  async getSchema(formId: string): Promise<FormSchema> {
-    const response = await fetch(`${this.baseUrl}/api/v1/forms/${formId}/schema`);
-    if (!response.ok) {
-      throw new Error("Failed to load form schema");
+  private getHeaders(): HeadersInit {
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    };
+
+    if (this.apiKey) {
+      headers['X-API-Key'] = this.apiKey;
     }
+
+    return headers;
+  }
+
+  async getSchema(formId: string): Promise<FormSchema> {
+    const response = await fetch(`${this.baseUrl}/api/v1/forms/${formId}/schema`, {
+      headers: this.getHeaders()
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ message: 'Failed to load form schema' }));
+      throw new Error(error.message || 'Failed to load form schema');
+    }
+
     return response.json();
   }
 
-  async submitForm(formId: string, data: FormData): Promise<Response> {
+  async submitForm(formId: string, data: FormData): Promise<FormSubmissionResponse> {
     const response = await fetch(`${this.baseUrl}/api/v1/forms/${formId}/submit`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
+      headers: this.getHeaders(),
       body: JSON.stringify(data)
     });
 
@@ -53,6 +77,6 @@ export class FormService {
       throw new Error(error.message || 'Failed to submit form');
     }
 
-    return response;
+    return response.json();
   }
 }

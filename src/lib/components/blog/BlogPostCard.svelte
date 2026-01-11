@@ -68,6 +68,7 @@
 </style>
 
 <article class="card">
+	<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 	<a class="title" href={post.link} target="_blank" rel="noopener noreferrer">{post.title}</a>
 	<div class="meta">
 		<time datetime={post.published}>{post.formattedDate || post.published}</time>
