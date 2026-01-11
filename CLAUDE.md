@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance for AI assistants working with this codebase.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
 
@@ -197,20 +197,49 @@ Use `$app/state` (not `$app/stores`):
 - Use CSS custom properties from theme files
 - Prefer `container` queries over `media` queries
 - Use logical properties (`inline`, `block`) over physical (`left`, `right`)
+- **All responsive breakpoints must be defined in `src/styles/custom-media.css`** using CSS Custom Media Queries
+- Do not use hardcoded `min-width`/`max-width` in media queries - always use custom media variables
+- Use `--measure` for max-width constraints and `95cqi` for container-based sizing
+
+### Responsive Design Pattern
+```css
+.component {
+  container-type: inline-size;
+  container-name: component-name;
+  width: 100%;
+  padding: var(--space-16) 0;
+}
+
+.container {
+  width: 100%;
+  max-width: min(var(--measure), 95cqi);
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+@container component-name (width >= 30rem) {
+  .container {
+    max-width: min(var(--measure), 95cqi);
+  }
+}
+```
 
 ### Testing
 - Unit tests: `*.test.ts` or `*.svelte.test.ts`
 - E2E tests: `tests/*.spec.ts`
 - Use Testing Library for component tests
 - Use `vi.mock()` for mocking
+- Follow AAA pattern (Arrange, Act, Assert)
+- Keep tests independent and fast
 
 ### Services
 - Services are **pure functions** - they return data, they don't manage state
 - Services should not update stores or have side effects
 - State management happens in stores or components
+- Example: `blog-service.ts` exports pure functions like `fetchFeed()` and `fetchPost()`
 
 ### Stores
-- Stores use `.svelte.ts` extension
+- Stores use `.svelte.ts` extension (required for runes)
 - Stores use `$state` runes (not `writable` stores)
 - Stores export state objects directly
 - Components access state directly (no `$` prefix)
@@ -251,3 +280,12 @@ Terminal state is managed in `stores/terminal.svelte.ts`. The terminal component
 - Static site deployment (no server runtime)
 - GitHub Pages with base path `/me/` in production
 - Local development on `http://localhost:5173`
+
+## Deprecated Features (Do NOT Use)
+
+- `$:` reactive declarations (use `$derived` instead)
+- `writable`/`readable` stores (use `$state` runes instead)
+- `$app/stores` (use `$app/state` instead)
+- `onMount`, `beforeUpdate`, `afterUpdate`, `tick` (use `$effect` instead)
+- JSX syntax (use Svelte template syntax)
+- Slot elements (use snippets instead)
