@@ -16,13 +16,6 @@
 	let { email, submitStatus, errorMessage, isSubmitDisabled, onSubmit, onEmailInput }: Props =
 		$props();
 
-	let formElement = $state<HTMLFormElement | null>(null);
-
-	$effect(() => {
-		if (formElement) {
-			formElement.setAttribute('novalidate', '');
-		}
-	});
 </script>
 
 <style>
@@ -51,7 +44,7 @@
 	}
 </style>
 
-<form class="form" onsubmit={onSubmit} bind:this={formElement}>
+<form class="form" onsubmit={onSubmit}>
 	<div class="form-group">
 		<label for="field-email" class="visually-hidden">Email</label>
 		<FormField
