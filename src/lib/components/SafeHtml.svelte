@@ -1,10 +1,14 @@
 <script lang="ts">
 	import { sanitizeHTML } from '$lib/services/utils/helpers';
 
-	export let content: string;
-	export let className = '';
+	interface Props {
+		content: string;
+		className?: string;
+	}
 
-	$: renderedContent = sanitizeHTML(content || '');
+	const { content, className = '' }: Props = $props();
+
+	const renderedContent = $derived(sanitizeHTML(content || ''));
 </script>
 
 <style>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { theme } from '$lib/stores/theme';
+	import { theme } from '$lib/stores/theme.svelte';
 	import Icon from '@iconify/svelte';
 	import { fade } from 'svelte/transition';
 
@@ -15,18 +15,6 @@
 		theme.set(newTheme);
 		isOpen = false;
 	}
-
-	$effect(() => {
-		// Listen for system theme changes when in auto mode
-		if ($theme === 'auto' && typeof window !== 'undefined') {
-			const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-			const handleChange = () => {
-				document.documentElement.setAttribute('data-theme', mediaQuery.matches ? 'dark' : 'light');
-			};
-			mediaQuery.addEventListener('change', handleChange);
-			return () => mediaQuery.removeEventListener('change', handleChange);
-		}
-	});
 </script>
 
 <style>
