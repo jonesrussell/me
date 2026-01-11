@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { get } from 'svelte/store';
-import { terminal, commands } from '$lib/stores/terminal';
+import { terminal, commands } from '$lib/stores/terminal.svelte';
 
 describe('Terminal Store', () => {
 	beforeEach(() => {
