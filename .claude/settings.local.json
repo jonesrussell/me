@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /home/jones/dev/me show ec47548 --stat)",
+      "Bash(git -C /home/jones/dev/me show d4d5825 --stat)",
+      "Bash(xargs cat:*)",
+      "Bash(git -C /home/jones/dev/me log --all --oneline --all -- \"*.go\")",
+      "Bash(git -C /home/jones/dev/me remote:*)",
+      "Bash(go mod graph:*)",
+      "Bash(go build:*)",
+      "Bash(ls:*)",
+      "Bash(sudo chown:*)",
+      "Bash(sudo chmod:*)",
+      "Bash(curl:*)",
+      "Bash(pgrep:*)",
+      "Bash(ps:*)",
+      "Bash(xargs:*)"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "svelte"
+  ],
+  "enableAllProjectMcpServers": true
+}
