@@ -52,7 +52,7 @@ PostCSS is also configured inline in `vite.config.ts` (no `postcss.config.js`).
 - All routes prerender by default (`+layout.server.ts` sets `prerender = true`)
 - Blog detail pages (`blog/[slug]/+page.server.ts`) disable prerendering for dynamic slugs
 - Data loading uses `+page.ts` (universal) for most routes, `+page.server.ts` for blog detail
-- Root layout (`+layout.svelte`) uses grid layout with SkipToMain, Header, children, NewsletterCTA, Footer
+- Root layout (`+layout.svelte`) uses grid layout with SkipToMain, Header, children, GoFormX placeholder (newsletter slot), Footer
 
 ### Deployment & Base Path
 
@@ -83,6 +83,8 @@ Stylelint **blocks** raw `min-width`/`max-width` in media queries — always use
 **Key design tokens** (in `src/styles/base.css`): `--space-{1..768}`, `--font-size-{xs..9xl}`, `--radius-{sm..full}`, `--shadow-{sm..xl}`, `--measure: 80rem`.
 
 ### Environment Config
+
+**Forms:** Form surfaces (newsletter, contact, home CTA) currently render a **GoFormX placeholder** (“Coming soon”). Real forms will use the existing FormService and the env below when GoFormX is integrated.
 
 GoForms API integration configured in `src/lib/config/env.ts`:
 ```
