@@ -36,6 +36,58 @@
 </script>
 
 <style>
+
+
+	@media (width >= 30rem) {
+		.terminal-frame {
+			max-width: min(var(--container-lg), 100%);
+		}
+	}
+
+	@keyframes crt-reveal {
+		from {
+			opacity: 0.8;
+			clip-path: inset(0 0 100% 0);
+		}
+
+		to {
+			opacity: 1;
+			clip-path: inset(0 0 0 0);
+		}
+	}
+
+	@keyframes blink {
+		0%,
+		50% {
+			opacity: 1;
+		}
+
+		51%,
+		100% {
+			opacity: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.command-output {
+			animation: none;
+		}
+
+		.cursor {
+			animation: none;
+		}
+
+		.terminal-body::after {
+			display: none;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.terminal-retry-button {
+			transition: none;
+		}
+	}
+
 	.terminal-frame {
 		display: flex;
 		position: relative;
@@ -45,18 +97,12 @@
 		margin-inline: auto;
 
 		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
+		border: 1px solid var(--border-color);
 		border-radius: var(--radius-lg);
 		box-shadow: var(--shadow-lg);
 
 		overflow: hidden;
 		flex-direction: column;
-	}
-
-	@media (width >= 30rem) {
-		.terminal-frame {
-			max-width: min(var(--container-lg), 100%);
-		}
 	}
 
 	.terminal-header {
@@ -66,7 +112,7 @@
 
 		height: var(--space-6);
 		padding: 0 var(--space-4);
-		border-bottom: var(--border-width) solid var(--border-color);
+		border-bottom: 1px solid var(--border-color);
 
 		background: var(--color-mix-light);
 	}
@@ -85,10 +131,19 @@
 	.terminal-buttons span {
 		width: var(--space-2);
 		height: var(--space-2);
-		background: var(--text-muted);
 		border-radius: var(--radius-full);
+	}
 
-		opacity: 0.5;
+	.terminal-buttons span:nth-child(1) {
+		background: rgb(255 95 87);
+	}
+
+	.terminal-buttons span:nth-child(2) {
+		background: rgb(255 189 46);
+	}
+
+	.terminal-buttons span:nth-child(3) {
+		background: rgb(39 201 63);
 	}
 
 	.terminal-body {
@@ -107,6 +162,22 @@
 
 		min-height: 10rem;
 		max-height: 30rem;
+	}
+
+	/* CRT scanline overlay */
+	.terminal-body::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: repeating-linear-gradient(
+			to bottom,
+			transparent 0,
+			transparent 0.125rem,
+			rgb(0 0 0 / 0.03) 0.125rem,
+			rgb(0 0 0 / 0.03) 0.25rem
+		);
+		pointer-events: none;
+		z-index: 1;
 	}
 
 	.command-line {
@@ -132,6 +203,7 @@
 		font-weight: var(--font-weight-normal);
 		color: var(--text-color);
 		overflow-wrap: anywhere;
+		text-shadow: 0 0 0.5rem color-mix(in srgb, var(--accent-color) 20%, transparent);
 	}
 
 	.command-output {
@@ -148,18 +220,6 @@
 		animation: crt-reveal 0.1s linear;
 	}
 
-	@keyframes crt-reveal {
-		from {
-			opacity: 0.8;
-			clip-path: inset(0 0 100% 0);
-		}
-
-		to {
-			opacity: 1;
-			clip-path: inset(0 0 0 0);
-		}
-	}
-
 	.cursor {
 		display: inline-block;
 
@@ -169,28 +229,6 @@
 		color: var(--accent-color);
 
 		animation: blink 1s step-end infinite;
-	}
-
-	@keyframes blink {
-		0%,
-		50% {
-			opacity: 1;
-		}
-
-		51%,
-		100% {
-			opacity: 0;
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.command-output {
-			animation: none;
-		}
-
-		.cursor {
-			animation: none;
-		}
 	}
 
 	.terminal-error {
@@ -223,10 +261,10 @@
 		font-size: var(--font-size-sm);
 		color: var(--text-color);
 		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
+		border: 1px solid var(--border-color);
 		border-radius: var(--radius-md);
 		cursor: pointer;
-		transition: all var(--transition-duration) var(--transition-timing);
+		transition: all var(--transition-base);
 	}
 
 	.terminal-retry-button:hover {
@@ -237,12 +275,6 @@
 	.terminal-retry-button:focus {
 		outline: 0.125rem solid var(--accent-color);
 		outline-offset: 0.125rem;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.terminal-retry-button {
-			transition: none;
-		}
 	}
 </style>
 

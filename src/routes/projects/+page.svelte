@@ -41,78 +41,7 @@
 </script>
 
 <style>
-	.projects {
-		container-type: inline-size;
-		container-name: projects-page;
-		display: grid;
-		width: 100%;
-		padding: var(--space-16) 0;
-		grid-template-rows: auto 1fr;
-		gap: var(--space-16);
-		position: relative;
-	}
 
-	/* Subtle atmospheric background behind projects section */
-	.projects::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background:
-			radial-gradient(
-				ellipse 120% 80% at 50% 20%,
-				var(--color-mix-faint) 0%,
-				transparent 50%
-			);
-		pointer-events: none;
-		z-index: 0;
-	}
-
-	.container {
-		display: grid;
-		width: 100%;
-		margin-inline: auto;
-		padding-inline: var(--space-4);
-		max-width: min(var(--measure), 95cqi);
-		gap: var(--space-16);
-		grid-template-columns: minmax(0, 1fr);
-		position: relative;
-		z-index: 1;
-	}
-
-	.section {
-		display: flex;
-		width: 100%;
-		max-width: 100%;
-		flex-direction: column;
-		align-items: center;
-		margin-top: 0;
-	}
-
-	.section-title {
-		margin: 0 0 var(--space-8) 0;
-		font-family: var(--font-mono);
-		font-size: var(--font-size-3xl);
-		font-weight: var(--font-weight-bold);
-		line-height: var(--line-height-tight);
-		text-align: center;
-		color: var(--text-color);
-		letter-spacing: var(--letter-spacing-tight);
-	}
-
-	.section-title::after {
-		content: '';
-		display: block;
-		width: 2.5rem;
-		height: 3px;
-		margin: var(--space-3) auto 0;
-		background: linear-gradient(
-			90deg,
-			transparent,
-			var(--accent-color),
-			transparent
-		);
-		border-radius: 2px;
-	}
 
 	@container projects-page (min-width: 640px) {
 		.container {
@@ -146,6 +75,96 @@
 		}
 	}
 
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			transition: none;
+			animation: none;
+		}
+	}
+
+	.projects {
+		container-type: inline-size;
+		container-name: projects-page;
+		display: grid;
+		position: relative;
+		width: 100%;
+		padding: var(--space-16) 0;
+		grid-template-rows: auto 1fr;
+		gap: var(--space-16);
+	}
+
+	/* Workshop grid-dot pattern + atmospheric gradient */
+	.projects::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background:
+			radial-gradient(
+				ellipse 120% 80% at 50% 20%,
+				var(--color-mix-faint) 0%,
+				transparent 50%
+			),
+			radial-gradient(
+				circle,
+				color-mix(in srgb, var(--text-muted) 15%, transparent) 1px,
+				transparent 1px
+			);
+		background-size:
+			100% 100%,
+			1.5rem 1.5rem;
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	.container {
+		display: grid;
+		position: relative;
+		width: 100%;
+		margin-inline: auto;
+		padding-inline: var(--space-4);
+		max-width: min(var(--measure), 95cqi);
+		gap: var(--space-16);
+		grid-template-columns: minmax(0, 1fr);
+		z-index: 1;
+	}
+
+	.section {
+		display: flex;
+		width: 100%;
+		max-width: 100%;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 0;
+	}
+
+	.section-title {
+		margin: 0 0 var(--space-8) 0;
+		font-family: var(--font-mono);
+		font-size: var(--font-size-3xl);
+		font-weight: var(--font-weight-bold);
+		line-height: var(--line-height-tight);
+		text-align: center;
+		color: var(--text-color);
+		letter-spacing: var(--letter-spacing-tight);
+	}
+
+	.section-title::after {
+		content: '';
+		display: block;
+		width: 8rem;
+		height: 0.125rem;
+		margin: var(--space-3) auto 0;
+		background:
+			repeating-linear-gradient(
+				90deg,
+				var(--accent-color) 0,
+				var(--accent-color) 0.5rem,
+				transparent 0.5rem,
+				transparent 0.75rem
+			);
+		border-radius: 0.0625rem;
+	}
+
 	.project-grid-container {
 		container-type: inline-size;
 		container-name: project-grid;
@@ -156,13 +175,6 @@
 		container-type: inline-size;
 		container-name: featured-videos;
 		width: 100%;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		* {
-			transition: none;
-			animation: none;
-		}
 	}
 </style>
 

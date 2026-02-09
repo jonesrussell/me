@@ -15,7 +15,8 @@
       "Bash(pgrep:*)",
       "Bash(ps:*)",
       "Bash(xargs:*)",
-      "Bash(npm run test:unit:run:*)"
+      "Bash(npm run test:unit:run:*)",
+      "Bash(npm run check:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

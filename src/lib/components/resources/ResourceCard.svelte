@@ -15,8 +15,20 @@
 		flex-direction: column;
 		gap: var(--space-4);
 		padding: var(--space-4);
-		background: var(--color-surface-2);
-		border-radius: var(--radius-2);
+		background: var(--bg-darker);
+		border-radius: var(--radius-md);
+		border-left: 3px solid transparent;
+		transition: border-color var(--transition-base);
+	}
+
+	.resource:hover {
+		border-left-color: var(--accent-color);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.resource {
+			transition: none;
+		}
 	}
 
 	.content {
@@ -26,14 +38,14 @@
 	}
 
 	h3 {
-		font-size: var(--font-size-3);
+		font-size: var(--font-size-xl);
 		font-weight: var(--font-weight-bold);
-		color: var(--color-text-1);
+		color: var(--text-color);
 	}
 
 	.description {
-		font-size: var(--font-size-2);
-		color: var(--color-text-2);
+		font-size: var(--font-size-base);
+		color: var(--text-muted);
 		max-width: 65ch;
 	}
 
@@ -49,7 +61,7 @@
 		--tag-bg: var(--bg-darker);
 
 		padding: var(--space-1) var(--space-2);
-		font-size: var(--font-size-1);
+		font-size: var(--font-size-xs);
 	}
 
 	:global(.tag:hover) {
