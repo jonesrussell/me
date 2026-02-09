@@ -5,6 +5,16 @@
 	import type { Project } from '$lib/types/project';
 
 	const { project } = $props<{ project: Project }>();
+
+	function getStatusLabel(status: Project['status']): string {
+		const labels: Record<Project['status'], string> = {
+			active: 'Active',
+			development: 'In development',
+			stable: 'Stable',
+			experimental: 'Experimental'
+		};
+		return labels[status];
+	}
 </script>
 
 <style>
@@ -31,19 +41,27 @@
 		color: var(--color-text-1);
 	}
 
-	.site-url {
+	.links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
 		font-size: var(--font-size-2);
 		color: var(--color-text-2);
 	}
 
-	.site-url a {
+	.links a {
 		color: var(--color-text-2);
 		text-decoration: underline;
 		text-underline-offset: 2px;
 	}
 
-	.site-url a:hover {
+	.links a:hover {
 		color: var(--color-text-1);
+	}
+
+	.status {
+		font-size: var(--font-size-2);
+		color: var(--color-text-2);
 	}
 
 	.description {
@@ -111,14 +129,23 @@
 					{project.title}
 				</a>
 			</h3>
-			{#if project.siteUrl}
-				<p class="site-url">
-					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-					<a href={project.siteUrl} target="_blank" rel="noopener noreferrer">
-						{new URL(project.siteUrl).hostname}
-					</a>
-				</p>
+			{#if project.siteUrl || project.githubUrl}
+				<div class="links">
+					{#if project.siteUrl}
+						<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
+						<a href={project.siteUrl} target="_blank" rel="noopener noreferrer">
+							{new URL(project.siteUrl).hostname}
+						</a>
+					{/if}
+					{#if project.githubUrl}
+						<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
+						<a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+							GitHub
+						</a>
+					{/if}
+				</div>
 			{/if}
+			<span class="status status-{project.status}">{getStatusLabel(project.status)}</span>
 			<p class="description">{project.description}</p>
 			<div class="tags">
 				{#each project.tags as tag (tag)}
