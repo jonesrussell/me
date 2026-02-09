@@ -22,6 +22,8 @@
 		container-type: inline-size;
 		container-name: project-card;
 		display: flex;
+		flex: 1;
+		min-height: 0;
 		padding: var(--space-4);
 		background: var(--bg-darker);
 		border: 1px solid var(--border-color);
