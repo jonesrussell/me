@@ -49,6 +49,22 @@
 		padding: var(--space-16) 0;
 		grid-template-rows: auto 1fr;
 		gap: var(--space-16);
+		position: relative;
+	}
+
+	/* Subtle atmospheric background behind projects section */
+	.projects::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background:
+			radial-gradient(
+				ellipse 120% 80% at 50% 20%,
+				var(--color-mix-faint) 0%,
+				transparent 50%
+			);
+		pointer-events: none;
+		z-index: 0;
 	}
 
 	.container {
@@ -59,6 +75,8 @@
 		max-width: min(var(--measure), 95cqi);
 		gap: var(--space-16);
 		grid-template-columns: minmax(0, 1fr);
+		position: relative;
+		z-index: 1;
 	}
 
 	.section {
@@ -78,6 +96,22 @@
 		line-height: var(--line-height-tight);
 		text-align: center;
 		color: var(--text-color);
+		letter-spacing: var(--letter-spacing-tight);
+	}
+
+	.section-title::after {
+		content: '';
+		display: block;
+		width: 2.5rem;
+		height: 3px;
+		margin: var(--space-3) auto 0;
+		background: linear-gradient(
+			90deg,
+			transparent,
+			var(--accent-color),
+			transparent
+		);
+		border-radius: 2px;
 	}
 
 	@container projects-page (min-width: 640px) {
@@ -133,19 +167,19 @@
 </style>
 
 <svelte:head>
-	<title>Projects & Content | Russell Jones - Go & Modern Web Development</title>
+	<title>Projects | Russell Jones - Go & Modern Web Development</title>
 	<meta
 		name="description"
-		content="Projects and content platform – North Cloud and consumer sites. Technical videos and educational content about Go, JavaScript, and modern web development."
+		content="Content platform and consumer sites – North Cloud and related projects. Technical videos and educational content about Go, JavaScript, and modern web development."
 	/>
 </svelte:head>
 
-<Hero title="Projects & Content" subtitle="Content platform and consumer sites" />
+<Hero title="Projects" />
 
 <main class="projects">
 	<div class="container">
-		<section class="section project-grid-container" aria-label="Projects">
-			<h2 class="section-title">Projects</h2>
+		<section class="section project-grid-container" aria-label="Content platform and consumer sites">
+			<h2 class="section-title">Content platform and consumer sites</h2>
 			<ProjectGrid {projects} />
 		</section>
 

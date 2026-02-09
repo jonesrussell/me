@@ -40,12 +40,9 @@ alwaysApply: false
 - Use container queries for component-level breakpoints
 - Implement fluid typography with `clamp()`
 - Use relative units for responsive sizing:
-  - Use `rem` for media query breakpoints:
-    - `30rem` (≈ 480px) for tablet
-    - `50rem` (≈ 800px) for small desktop
-    - `75rem` (≈ 1200px) for large desktop
-  - Use `cqi` for container-based sizing
-  - Use `%` for fluid layouts
+  - **@media only:** use custom media variables from `src/styles/custom-media.css` (`--container-sm`, `--container-md`, `--container-lg`, `--container-xl` — 40rem, 48rem, 64rem, 80rem). Do not use hardcoded min-width/max-width in media queries.
+  - **@container:** you may use `rem` widths (e.g. `width >= 30rem`) for component-scoped breakpoints; keep values consistent across components.
+  - Use `cqi` for container-based sizing and `%` for fluid layouts.
 
 ## CSS Best Practices
 - Use `:global()` for targeting child components
@@ -81,19 +78,13 @@ alwaysApply: false
   padding: 0 var(--space-4);
 }
 
-@container component-name (width >= 30rem) {
+@container component-name (width >= 40rem) {
   .container {
     max-width: min(var(--measure), 95cqi);
   }
 }
 
-@container component-name (width >= 50rem) {
-  .container {
-    max-width: min(var(--measure), 95cqi);
-  }
-}
-
-@container component-name (width >= 75rem) {
+@container component-name (width >= 64rem) {
   .container {
     max-width: min(var(--measure), 95cqi);
   }

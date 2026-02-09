@@ -1,6 +1,6 @@
 ---
 description:
-globs: src/**/*.test.ts,src/**/*.spec.ts,src/**/*.test.svelte,src/**/*.spec.svelte
+globs: src/**/*.test.ts,src/**/*.svelte.test.ts,tests/**/*.spec.ts
 alwaysApply: false
 ---
 # Testing Standards
@@ -14,8 +14,8 @@ alwaysApply: false
 
 ## Unit Testing
 - Use Vitest for unit tests
-- Test components in isolation
-- Mock external dependencies
+- Co-locate component tests next to components: `Component.svelte.test.ts` beside `Component.svelte`
+- Test components in isolation; mock external dependencies with `vi.mock()`
 - Test edge cases and error states
 - Keep tests fast and focused
 
@@ -27,9 +27,9 @@ alwaysApply: false
 - Validate component state
 
 ## E2E Testing
-- Use Playwright for E2E tests
+- Use Playwright for E2E tests; specs live in `tests/*.spec.ts`.
 - Test critical user flows
-- Verify cross-browser compatibility
+- Verify cross-browser compatibility (Chromium, WebKit)
 - Test responsive behavior
 - Validate integration points
 
