@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { terminalState, terminal } from '$lib/stores/terminal.svelte';
+	import type { Command } from '$lib/stores/terminal.svelte';
 	import ErrorBoundary from '../ErrorBoundary.svelte';
 
 	const { title = '~/dev' } = $props<{
@@ -7,6 +8,17 @@
 	}>();
 
 	let terminalError = $state(false);
+
+	const leftCommands = $derived(
+		terminalState.commands.filter((c: Command) => c.pane === 'left')
+	);
+	const rightCommands = $derived(
+		terminalState.commands.filter((c: Command) => c.pane === 'right')
+	);
+	const currentCommandData = $derived(
+		terminalState.commands[terminalState.currentCommand]
+	);
+	const currentIsRightPane = $derived(currentCommandData?.pane === 'right');
 
 	$effect(() => {
 		try {
@@ -91,6 +103,8 @@
 	.terminal-frame {
 		display: flex;
 		position: relative;
+		container-type: inline-size;
+		container-name: terminal;
 
 		width: 100%;
 		max-width: min(var(--measure), 95cqi);
@@ -162,6 +176,46 @@
 
 		min-height: 10rem;
 		max-height: 30rem;
+	}
+
+	.pane {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		min-width: 0;
+	}
+
+	.pane-divider {
+		display: none;
+		flex-shrink: 0;
+		width: 1px;
+		background: var(--border-color);
+		align-self: stretch;
+	}
+
+	/* Split layout only at tablet/desktop (≥48rem) to avoid squishing on small screens */
+	@container terminal (width >= 48rem) {
+		.terminal-body.terminal-body--split {
+			flex-direction: row;
+			gap: 0;
+		}
+
+		.terminal-body.terminal-body--split .pane {
+			flex: 1;
+			padding-inline: var(--space-2);
+		}
+
+		.terminal-body.terminal-body--split .pane:first-child {
+			padding-inline-start: 0;
+		}
+
+		.terminal-body.terminal-body--split .pane:last-child {
+			padding-inline-end: 0;
+		}
+
+		.terminal-body.terminal-body--split .pane-divider {
+			display: block;
+		}
 	}
 
 	/* CRT scanline overlay */
@@ -292,7 +346,10 @@
 				<span></span>
 			</div>
 		</div>
-		<div class="terminal-body">
+		<div
+			class="terminal-body"
+			class:terminal-body--split={terminalState.splitOpen}
+		>
 			{#if terminalError}
 				<div class="terminal-error">
 					<div class="terminal-error-content">
@@ -300,6 +357,36 @@
 						<p class="terminal-error-message">Terminal unavailable</p>
 						<button class="terminal-retry-button" onclick={handleRetry}> Restart terminal </button>
 					</div>
+				</div>
+			{:else if terminalState.splitOpen}
+				<div class="pane pane-left">
+					{#each leftCommands.filter((cmd) => cmd.completed) as command (command.cmd)}
+						<div class="command-line">
+							<span class="prompt">$</span>
+							<span class="command">{command.cmd}</span>
+						</div>
+						<div class="command-output">{command.output}</div>
+					{/each}
+				</div>
+				<div class="pane-divider" aria-hidden="true"></div>
+				<div class="pane pane-right">
+					{#each rightCommands.filter((cmd) => cmd.completed) as command (command.cmd)}
+						<div class="command-line">
+							<span class="prompt">$</span>
+							<span class="command">{command.cmd}</span>
+						</div>
+						<div class="command-output">{command.output}</div>
+					{/each}
+					{#if terminalState.currentCommand < terminalState.commands.length && currentIsRightPane && !currentCommandData?.completed}
+						<div class="command-line">
+							<span class="prompt">$</span>
+							<span class="command">{terminalState.commandVisible}</span>
+							{#if terminalState.isTyping && terminalState.commandVisible.length === currentCommandData?.cmd?.length && !terminalState.outputVisible}
+								<span class="cursor"></span>
+							{/if}
+						</div>
+						<div class="command-output">{terminalState.outputVisible}</div>
+					{/if}
 				</div>
 			{:else}
 				{#each terminalState.commands.filter((cmd) => cmd.completed) as command (command.cmd)}
@@ -309,7 +396,7 @@
 					</div>
 					<div class="command-output">{command.output}</div>
 				{/each}
-				{#if terminalState.currentCommand < terminalState.commands.length}
+				{#if terminalState.currentCommand < terminalState.commands.length && !currentCommandData?.completed}
 					<div class="command-line">
 						<span class="prompt">$</span>
 						<span class="command">{terminalState.commandVisible}</span>
