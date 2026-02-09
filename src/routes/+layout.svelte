@@ -2,7 +2,7 @@
 	import SkipToMain from '$lib/components/navigation/SkipToMain.svelte';
 	import Header from '$lib/components/layout/Header.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
-	import NewsletterCTA from '$lib/components/newsletter/NewsletterCTA.svelte';
+	import GoFormXPlaceholder from '$lib/components/forms/GoFormXPlaceholder.svelte';
 	import { page } from '$app/state';
 	// Theme initialization is handled by the theme store module
 
@@ -38,7 +38,12 @@
 
 	{@render children()}
 
-	<NewsletterCTA class="newsletter-cta" />
+	<GoFormXPlaceholder
+		title="Stay Updated"
+		description="Subscribe to my newsletter for updates on web development, tech insights, and open source projects."
+		variant="section"
+		class="newsletter-cta"
+	/>
 
 	<Footer />
 </div>

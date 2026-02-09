@@ -4,6 +4,7 @@
 	import ActionNavCards from '$lib/components/navigation/ActionNavCards.svelte';
 	import SpecialtyGrid from '$lib/components/content/SpecialtyGrid.svelte';
 	import Hero from '$lib/components/ui/Hero.svelte';
+	import GoFormXPlaceholder from '$lib/components/forms/GoFormXPlaceholder.svelte';
 	import type { PageData } from './$types';
 
 	const { data } = $props<{ data: PageData }>();
@@ -104,6 +105,12 @@
 			sectionSubtitle={data.youtube.section.subtitle}
 		/>
 		<ActionNavCards links={data.navLinks} />
-		<div id="cta-form-container" class="gf-section gf-section-cta"></div>
+		<div id="cta-form-container" class="gf-section gf-section-cta">
+			<GoFormXPlaceholder
+				title="Get in touch"
+				description="Contact form — launching soon."
+				variant="section"
+			/>
+		</div>
 	</div>
 </main>

@@ -1,7 +1,8 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { FormService } from '$lib/services/form-service';
-	import { config } from '$lib/config/env';
+	import GoFormXPlaceholder from '$lib/components/forms/GoFormXPlaceholder.svelte';
+
+	// reserved for GoFormX integration
 
 	interface FormData {
 		success?: boolean;
@@ -10,68 +11,7 @@
 		errors?: Record<string, string>;
 	}
 
-	const { form } = $props<{ data: PageData; form: FormData }>();
-
-	let submitting = $state(false);
-	let success = $state(false);
-	let error = $state<string | null>(null);
-	let fieldErrors = $state<Record<string, string>>({});
-
-	$effect(() => {
-		if (form) {
-			submitting = false;
-			success = form.success ?? false;
-			error = form.error ? form.message : null;
-			fieldErrors = form.errors ?? {};
-		}
-	});
-
-	async function handleSubmit(event: SubmitEvent) {
-		event.preventDefault();
-		submitting = true;
-		success = false;
-		error = null;
-		fieldErrors = {};
-
-		const formData = new FormData(event.target as HTMLFormElement);
-		const data = {
-			name: formData.get('name')?.toString(),
-			email: formData.get('email')?.toString(),
-			message: formData.get('message')?.toString()
-		};
-
-		try {
-			const formService = FormService.getInstance();
-			const formId = config.formIds.contact;
-
-			if (!formId) {
-				throw new Error('Contact form ID is not configured');
-			}
-
-			await formService.submitForm(formId, data);
-
-			success = true;
-			(event.target as HTMLFormElement).reset();
-		} catch (err) {
-			const errorMessage =
-				err instanceof Error ? err.message : 'Something went wrong. Please try again later.';
-			error = errorMessage;
-
-			// Try to extract field errors if available
-			if (err instanceof Error && err.message.includes('validation')) {
-				try {
-					const errorData = JSON.parse(err.message);
-					if (errorData.errors) {
-						fieldErrors = errorData.errors;
-					}
-				} catch {
-					// Ignore parsing errors
-				}
-			}
-		} finally {
-			submitting = false;
-		}
-	}
+	const {} = $props<{ data?: PageData; form?: FormData }>();
 </script>
 
 <style>
@@ -148,94 +88,6 @@
 		flex-direction: column;
 		gap: var(--space-8);
 	}
-
-	.contact-form {
-		display: flex;
-		padding: var(--space-8);
-		background: var(--bg-darker);
-		border-radius: var(--radius-md);
-		box-shadow: var(--shadow-md);
-		flex-direction: column;
-		gap: var(--space-6);
-	}
-
-	.form-group {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-2);
-	}
-
-	label {
-		font-size: var(--font-size-base);
-		font-weight: var(--font-weight-medium);
-		color: var(--text-color);
-	}
-
-	input,
-	textarea {
-		padding: var(--space-3) var(--space-4);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-base);
-		color: var(--text-color);
-		background: var(--bg-color);
-		border: 0.0625rem solid var(--border-color);
-		border-radius: var(--radius-sm);
-	}
-
-	input:focus,
-	textarea:focus {
-		outline: none;
-		border-color: var(--accent-color);
-		box-shadow: 0 0 0 0.125rem var(--color-mix-light);
-	}
-
-	.error {
-		font-size: var(--font-size-sm);
-		color: var(--color-error);
-	}
-
-	.button {
-		align-self: flex-start;
-		padding: var(--space-4) var(--space-6);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-base);
-		font-weight: var(--font-weight-bold);
-		line-height: var(--line-height-tight);
-		color: var(--bg-darker);
-		background: var(--accent-color);
-		border: 0.0625rem solid var(--accent-color);
-		border-radius: var(--radius-md);
-		transition: all var(--transition-base);
-		cursor: pointer;
-	}
-
-	.button:disabled {
-		cursor: not-allowed;
-		opacity: 0.7;
-	}
-
-	.button:hover:not(:disabled) {
-		background: var(--accent-color-hover);
-		border-color: var(--accent-color-hover);
-	}
-
-	.success-message {
-		margin-bottom: var(--space-8);
-		padding: var(--space-6);
-		font-size: var(--font-size-base);
-		color: var(--color-success);
-		background-color: var(--color-mix-light);
-		border-radius: var(--radius-md);
-	}
-
-	.error-message {
-		margin-bottom: var(--space-8);
-		padding: var(--space-6);
-		font-size: var(--font-size-base);
-		color: var(--color-error);
-		background-color: var(--color-mix-light);
-		border-radius: var(--radius-md);
-	}
 </style>
 
 <svelte:head>
@@ -261,72 +113,11 @@
 			</ul>
 		</div>
 		<div class="contact-form-col">
-			{#if success && form}
-				<div class="success-message" role="alert">
-					<p>{form.message}</p>
-				</div>
-			{:else}
-				<form method="POST" onsubmit={handleSubmit} class="contact-form">
-					{#if error}
-						<div class="error-message" role="alert">
-							<p>{error}</p>
-						</div>
-					{/if}
-
-					<div class="form-group">
-						<label for="name">Name</label>
-						<input
-							type="text"
-							id="name"
-							name="name"
-							required
-							aria-invalid={fieldErrors.name ? 'true' : undefined}
-							aria-describedby={fieldErrors.name ? 'name-error' : undefined}
-						/>
-						{#if fieldErrors.name}
-							<span id="name-error" class="error">{fieldErrors.name}</span>
-						{/if}
-					</div>
-
-					<div class="form-group">
-						<label for="email">Email</label>
-						<input
-							type="email"
-							id="email"
-							name="email"
-							required
-							aria-invalid={fieldErrors.email ? 'true' : undefined}
-							aria-describedby={fieldErrors.email ? 'email-error' : undefined}
-						/>
-						{#if fieldErrors.email}
-							<span id="email-error" class="error">{fieldErrors.email}</span>
-						{/if}
-					</div>
-
-					<div class="form-group">
-						<label for="message">Message</label>
-						<textarea
-							id="message"
-							name="message"
-							required
-							rows="5"
-							aria-invalid={fieldErrors.message ? 'true' : undefined}
-							aria-describedby={fieldErrors.message ? 'message-error' : undefined}
-						></textarea>
-						{#if fieldErrors.message}
-							<span id="message-error" class="error">{fieldErrors.message}</span>
-						{/if}
-					</div>
-
-					<button type="submit" class="button" disabled={submitting}>
-						{#if submitting}
-							Sending...
-						{:else}
-							Send Message
-						{/if}
-					</button>
-				</form>
-			{/if}
+			<GoFormXPlaceholder
+				title="Contact"
+				description="Get in touch form — launching soon."
+				variant="inline"
+			/>
 		</div>
 	</div>
 </main>
