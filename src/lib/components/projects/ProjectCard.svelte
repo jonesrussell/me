@@ -4,7 +4,7 @@
 	import Tag from '$lib/components/ui/Tag.svelte';
 	import type { Project } from '$lib/types/project';
 
-	const { project } = $props<{ project: Project }>();
+	const { project, featured = false } = $props<{ project: Project; featured?: boolean }>();
 
 	function getStatusLabel(status: Project['status']): string {
 		const labels: Record<Project['status'], string> = {
@@ -27,6 +27,36 @@
 		padding: var(--space-4);
 		background: var(--color-surface-2);
 		border-radius: var(--radius-2);
+		border: 1px solid var(--border-color);
+		transition:
+			transform var(--transition-base),
+			box-shadow var(--transition-base),
+			border-color var(--transition-base);
+	}
+
+	.project-card:hover {
+		transform: translateY(-0.25rem);
+		box-shadow:
+			0 0 0 1px var(--accent-color),
+			0 8px 24px rgb(0 0 0 / 0.15);
+		border-color: var(--accent-color);
+	}
+
+	.project-card.featured {
+		background: linear-gradient(
+			135deg,
+			var(--color-surface-2) 0%,
+			var(--color-mix-faint) 100%
+		);
+		border-color: var(--accent-color);
+		box-shadow: 0 0 0 1px var(--accent-color);
+	}
+
+	.project-card.featured:hover {
+		box-shadow:
+			0 0 0 1px var(--accent-color-hover),
+			0 12px 32px rgb(0 0 0 / 0.2);
+		border-color: var(--accent-color-hover);
 	}
 
 	.content {
@@ -39,6 +69,16 @@
 		font-size: var(--font-size-3);
 		font-weight: var(--font-weight-bold);
 		color: var(--color-text-1);
+	}
+
+	h3 a {
+		color: var(--accent-color);
+		text-decoration: none;
+		transition: color var(--transition-base);
+	}
+
+	h3 a:hover {
+		color: var(--accent-color-hover);
 	}
 
 	.links {
@@ -118,10 +158,20 @@
 		gap: var(--space-2);
 		margin-top: var(--space-2);
 	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.project-card {
+			transition: none;
+		}
+
+		.project-card:hover {
+			transform: none;
+		}
+	}
 </style>
 
 <Box>
-	<div class="project-card">
+	<div class="project-card" class:featured>
 		<div class="content">
 			<h3>
 				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
