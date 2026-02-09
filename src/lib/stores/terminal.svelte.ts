@@ -1,16 +1,21 @@
+export type Pane = 'left' | 'right';
+
 export type Command = {
 	cmd: string;
 	output: string;
 	completed?: boolean;
+	pane?: Pane;
 };
 
 const TYPING_SPEED = 50;
+const SPLIT_OPEN_DELAY_MS = 800;
 
-// Initial commands
+// Initial commands: whoami and man russell in left pane; cat skills.json in right (after split)
 const defaultCommands: Command[] = [
 	{
 		cmd: 'whoami',
-		output: 'russell'
+		output: 'russell',
+		pane: 'left'
 	},
 	{
 		cmd: 'man russell | grep -A5 "^SYNOPSIS"',
@@ -19,7 +24,8 @@ const defaultCommands: Command[] = [
 
 DESCRIPTION
        No limits. An expert Software Developer crafting elegant solutions using modern technologies.
-       Specializes in PHP, TypeScript, Go, and Cloud Architecture.`
+       Specializes in PHP, TypeScript, Go, and Cloud Architecture.`,
+		pane: 'left'
 	},
 	{
 		cmd: 'cat skills.json',
@@ -29,7 +35,8 @@ DESCRIPTION
   "backend":   ["REST APIs", "Microservices", "Event-Driven"],
   "devops":    ["Docker", "CI/CD", "Cloud (AWS/GCP)"],
   "status":    "always learning"
-}`
+}`,
+		pane: 'right'
 	}
 ];
 
@@ -39,6 +46,7 @@ export const terminalState = $state({
 	commandVisible: '',
 	outputVisible: '',
 	isTyping: false,
+	splitOpen: false,
 	height: 'auto',
 	minHeight: '35ch'
 });
@@ -71,29 +79,36 @@ function showOutput(output: string) {
 	terminalState.outputVisible = output;
 	terminalState.isTyping = false;
 
-	// Move to next command after a delay
+	const currentIndex = terminalState.currentCommand;
+	const nextIndex = currentIndex + 1;
+	const hasNext = nextIndex < terminalState.commands.length;
+	const nextCommandData = hasNext ? terminalState.commands[nextIndex] : null;
+	const nextIsRightPane = nextCommandData?.pane === 'right';
+
+	// Mark current command as completed (replace array for reactivity)
+	terminalState.commands = terminalState.commands.map((c, i) =>
+		i === currentIndex ? { ...c, completed: true } : c
+	);
+
+	// When moving to a right-pane command, open split first (delay), then type
+	const delayBeforeNext = nextIsRightPane ? SPLIT_OPEN_DELAY_MS : 1000;
+
 	setTimeout(() => {
-		if (terminalState.currentCommand < terminalState.commands.length - 1) {
-			const nextCommand = terminalState.currentCommand + 1;
-			const nextCommandData = terminalState.commands[nextCommand];
+		if (!hasNext || !nextCommandData) return;
 
-			// Mark current command as completed
-			terminalState.commands[terminalState.currentCommand] = {
-				...terminalState.commands[terminalState.currentCommand],
-				completed: true
-			};
-
-			// Start typing next command
-			typeCommand(nextCommandData.cmd, () => {
-				showOutput(nextCommandData.output);
-			});
-
-			terminalState.currentCommand = nextCommand;
-			terminalState.commandVisible = '';
-			terminalState.outputVisible = '';
-			terminalState.isTyping = true;
+		if (nextIsRightPane) {
+			terminalState.splitOpen = true;
 		}
-	}, 1000);
+
+		typeCommand(nextCommandData.cmd, () => {
+			showOutput(nextCommandData.output);
+		});
+
+		terminalState.currentCommand = nextIndex;
+		terminalState.commandVisible = '';
+		terminalState.outputVisible = '';
+		terminalState.isTyping = true;
+	}, delayBeforeNext);
 }
 
 export const terminal = {
@@ -104,6 +119,7 @@ export const terminal = {
 		terminalState.currentCommand = 0;
 		terminalState.commandVisible = '';
 		terminalState.outputVisible = '';
+		terminalState.splitOpen = false;
 		terminalState.isTyping = false;
 
 		if (commandsToLoad.length > 0) {
@@ -131,6 +147,7 @@ export const terminal = {
 		terminalState.currentCommand = 0;
 		terminalState.commandVisible = '';
 		terminalState.outputVisible = '';
+		terminalState.splitOpen = false;
 		terminalState.isTyping = false;
 	}
 };
