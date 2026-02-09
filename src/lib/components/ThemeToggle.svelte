@@ -16,6 +16,7 @@
 <style>
 	.toggle {
 		display: flex;
+		flex-shrink: 0;
 		padding: var(--space-2);
 		background: var(--bg-darker);
 		border: var(--border-width) solid var(--border-color);
@@ -26,7 +27,10 @@
 
 	.button {
 		display: flex;
+		flex-shrink: 0;
 		position: relative;
+		min-width: 2.5rem;
+		min-height: 2.5rem;
 		padding: var(--space-2);
 		color: var(--text-muted);
 		background: transparent;
@@ -54,6 +58,7 @@
 	}
 
 	.button :global(svg) {
+		flex-shrink: 0;
 		width: 1.25rem;
 		height: 1.25rem;
 	}
