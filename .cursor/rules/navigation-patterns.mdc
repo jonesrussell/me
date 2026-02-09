@@ -10,7 +10,7 @@ Navigation links should follow these patterns:
 1. Primary navigation links should be in `.desktop-nav`
 2. Each link should have a unique, descriptive text or aria-label
 3. Blog link should use "📝 Read my technical articles" as text
-4. Projects link should use "Browse my open source projects" as text
+4. Projects link should use "Browse my projects" as text
 5. Contact link should use "Get in touch" as text
 
 ## Navigation Testing

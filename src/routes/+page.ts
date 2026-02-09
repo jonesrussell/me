@@ -39,7 +39,7 @@ export function load() {
 
 	const navLinks = [
 		{ href: '/blog', icon: '📝', text: 'Read my technical articles' },
-		{ href: '/projects', icon: '🚀', text: 'Browse my open source projects' },
+		{ href: '/projects', icon: '🚀', text: 'Browse my projects' },
 		{ href: '/contact', icon: '✉️', text: 'Get in touch' }
 	];
 

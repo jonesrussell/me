@@ -50,7 +50,7 @@ test.describe('Home Page', () => {
 		// Check for navigation links
 		const navLinks = [
 			'Read my technical articles',
-			'Browse my open source projects',
+			'Browse my projects',
 			'Get in touch'
 		];
 
