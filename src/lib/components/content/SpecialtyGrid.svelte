@@ -13,7 +13,18 @@
 
 	let elements = $state<HTMLElement[]>([]);
 	let activeIntersection = $state<number | null>(null);
-	let revealedStates = $derived(specialties.map(() => false));
+	let revealedStates = $state<boolean[]>([]);
+
+	$effect(() => {
+		const len = specialties.length;
+		const prev = revealedStates;
+		if (prev.length === len) return;
+		revealedStates =
+			len > prev.length
+				? [...prev, ...Array.from({ length: len - prev.length }, () => false)]
+				: prev.slice(0, len);
+	});
+
 	let allRevealed = $derived(revealedStates.every((state: boolean) => state));
 
 	function handleIntersect(event: CustomEvent<IntersectionObserverEntry>, index: number) {
