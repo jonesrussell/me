@@ -17,7 +17,27 @@
 	}
 
 	.card-wrap {
+		display: flex;
+		flex-direction: column;
 		animation: card-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+	}
+
+	.card-wrap :global(> *) {
+		flex: 1;
+		min-height: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	:global(.card-wrap .box) {
+		height: 100%;
+	}
+
+	:global(.card-wrap .box .content) {
+		flex: 1;
+		min-height: 0;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.card-wrap.featured {
