@@ -31,6 +31,21 @@
 		color: var(--color-text-1);
 	}
 
+	.site-url {
+		font-size: var(--font-size-2);
+		color: var(--color-text-2);
+	}
+
+	.site-url a {
+		color: var(--color-text-2);
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+
+	.site-url a:hover {
+		color: var(--color-text-1);
+	}
+
 	.description {
 		font-size: var(--font-size-2);
 		color: var(--color-text-2);
@@ -96,7 +111,14 @@
 					{project.title}
 				</a>
 			</h3>
-			<span class="status status-{project.status}">{project.status}</span>
+			{#if project.siteUrl}
+				<p class="site-url">
+					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
+					<a href={project.siteUrl} target="_blank" rel="noopener noreferrer">
+						{new URL(project.siteUrl).hostname}
+					</a>
+				</p>
+			{/if}
 			<p class="description">{project.description}</p>
 			<div class="tags">
 				{#each project.tags as tag (tag)}

@@ -1,42 +1,16 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import VideoGrid from '$lib/components/video/VideoGrid.svelte';
 	import ProjectGrid from '$lib/components/projects/ProjectGrid.svelte';
+	import { projects as projectsData } from '$lib/data/projects';
 	import type { Video } from '$lib/types/video';
 	import type { Project } from '$lib/types/project';
 	import Hero from '$lib/components/ui/Hero.svelte';
 
-	const projects: Project[] = [
-		{
-			title: 'MP Emailer',
-			description:
-				'A web app that helps constituents easily contact their MPs through email campaigns on important issues.',
-			tags: ['Go', 'Echo', 'MariaDB', 'Tailwind CSS', 'JWT'],
-			url: 'https://github.com/jonesrussell/mp-emailer',
-			status: 'active'
-		},
-		{
-			title: 'Goforms',
-			description: 'Quickly add forms to your web projects.',
-			tags: ['Go', 'Echo', 'MariaDB', 'REST API', 'Docker'],
-			url: 'https://goformx.com/',
-			status: 'active'
-		},
-		{
-			title: 'Gimbal',
-			description: 'A Gyruss-inspired game built with Ebitengine.',
-			tags: ['Go', 'Ebitengine', 'Game Dev', 'WASM'],
-			url: 'https://github.com/jonesrussell/gimbal',
-			status: 'experimental'
-		},
-		{
-			title: 'GoCrawl',
-			description:
-				'A simple web crawler built in Go that fetches and processes web pages, storing results in Elasticsearch. Demonstrates the use of Cobra for CLI, Colly for web scraping, Elasticsearch for storage, and Zap for logging.',
-			tags: ['Go', 'Web Crawler', 'Elasticsearch', 'CLI', 'Experimental'],
-			url: 'https://github.com/jonesrussell/gocrawl',
-			status: 'experimental'
-		}
-	];
+	const projects: Project[] = projectsData.map((p) => ({
+		...p,
+		image: p.image ? `${base}/${p.image}` : undefined
+	}));
 
 	const videos: Video[] = [
 		{
@@ -162,22 +136,22 @@
 	<title>Projects & Content | Russell Jones - Go & Modern Web Development</title>
 	<meta
 		name="description"
-		content="Explore my open source projects, technical videos, and educational content about Go, JavaScript, and modern web development."
+		content="Projects and content platform – North Cloud and consumer sites. Technical videos and educational content about Go, JavaScript, and modern web development."
 	/>
 </svelte:head>
 
-<Hero title="Projects & Content" subtitle="Open Source & Educational Content" />
+<Hero title="Projects & Content" subtitle="Content platform and consumer sites" />
 
 <main class="projects">
 	<div class="container">
+		<section class="section project-grid-container" aria-label="Projects">
+			<h2 class="section-title">Projects</h2>
+			<ProjectGrid {projects} />
+		</section>
+
 		<section class="section featured-videos-container" aria-label="Featured Videos">
 			<h2 id="video-grid-title" class="section-title">Experimental Videos</h2>
 			<VideoGrid {videos} />
-		</section>
-
-		<section class="section project-grid-container" aria-label="Open Source Projects">
-			<h2 class="section-title">Open Source Projects</h2>
-			<ProjectGrid {projects} />
 		</section>
 	</div>
 </main>
