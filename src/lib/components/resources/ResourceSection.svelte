@@ -2,10 +2,13 @@
 	import ResourceCard from './ResourceCard.svelte';
 	import type { Resource } from '$lib/types/resource';
 
-	const { category, resources } = $props<{
+	const { category, resources, index = 0 } = $props<{
 		category: string;
 		resources: Resource[];
+		index?: number;
 	}>();
+
+	const indexLabel = $derived(String(index + 1).padStart(2, '0'));
 
 	function getCategoryIcon(category: string): string {
 		switch (category) {
@@ -63,10 +66,21 @@
 		margin: var(--space-6) 0;
 
 		& h2 {
+			display: flex;
+			align-items: center;
+			gap: var(--space-2);
 			margin: 0 0 var(--space-3) 0;
 			font-size: var(--font-size-base);
 			line-height: var(--line-height-tight);
 			color: var(--text-color);
+		}
+
+		& .index-marker {
+			font-family: var(--font-mono);
+			font-size: var(--font-size-xs);
+			font-weight: var(--font-weight-normal);
+			color: var(--accent-color);
+			opacity: 0.6;
 		}
 
 		& .resource-grid {
@@ -78,6 +92,7 @@
 
 <section class="category-section">
 	<h2>
+		<span class="index-marker">{indexLabel}</span>
 		{getCategoryIcon(category)}
 		{category}
 	</h2>

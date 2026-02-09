@@ -143,8 +143,8 @@
 <main class="resources">
 	<div class="container">
 		<div class="sections">
-			{#each Object.entries(groupedResources) as [category, resources] (category)}
-				<ResourceSection {category} resources={resources as Resource[]} />
+			{#each Object.entries(groupedResources) as [category, resources], i (category)}
+				<ResourceSection {category} resources={resources as Resource[]} index={i} />
 			{/each}
 			<div class="featured-videos-section">
 				<FeaturedVideos videos={youtubeChannel.featuredVideos} />

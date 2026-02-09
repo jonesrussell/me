@@ -1,17 +1,6 @@
 <script lang="ts">
-	import type { PageData } from './$types';
 	import GoFormXPlaceholder from '$lib/components/forms/GoFormXPlaceholder.svelte';
-
-	// reserved for GoFormX integration
-
-	interface FormData {
-		success?: boolean;
-		error?: boolean;
-		message?: string;
-		errors?: Record<string, string>;
-	}
-
-	const {} = $props<{ data?: PageData; form?: FormData }>();
+	import Hero from '$lib/components/ui/Hero.svelte';
 </script>
 
 <style>
@@ -67,19 +56,36 @@
 	.contact-list {
 		display: flex;
 		margin: var(--space-4) 0 0 0;
-		padding: 0;
-		font-size: var(--font-size-base);
+		padding: var(--space-4);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
 		color: var(--text-muted);
 		list-style: none;
 		flex-direction: column;
+		gap: var(--space-3);
+		background: var(--bg-darker);
+		border: 1px solid var(--border-color);
+		border-radius: var(--radius-md);
+	}
+
+	.contact-list li {
+		display: flex;
+		align-items: center;
 		gap: var(--space-2);
 	}
 
-	.contact-list span {
-		display: inline-block;
-		width: 2ch;
-		margin-right: var(--space-2);
-		text-align: center;
+	.contact-list a {
+		text-decoration: none;
+		color: var(--accent-color);
+	}
+
+	.contact-list a:hover {
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+
+	.terminal-prefix {
+		font-weight: var(--font-weight-bold);
 		color: var(--accent-color);
 	}
 
@@ -98,6 +104,8 @@
 	/>
 </svelte:head>
 
+<Hero title="Establish Connection" subtitle="// ready to receive" />
+
 <main class="contact">
 	<div class="container">
 		<div class="contact-info">
@@ -107,9 +115,9 @@
 				amazing together.
 			</p>
 			<ul class="contact-list">
-				<li><span aria-label="Command" title="Command">⌘</span> GitHub: @jonesrussell</li>
-				<li><span aria-label="Menu" title="Menu">≡</span> LinkedIn: jonesrussell42</li>
-				<li><span aria-label="Email" title="Email">✉</span> Email: russell@web.ca</li>
+				<li><span class="terminal-prefix" aria-label="Command">$</span> github <a href="https://github.com/jonesrussell" target="_blank" rel="noopener noreferrer">@jonesrussell</a></li>
+				<li><span class="terminal-prefix" aria-label="Command">$</span> linkedin <a href="https://linkedin.com/in/jonesrussell42" target="_blank" rel="noopener noreferrer">jonesrussell42</a></li>
+				<li><span class="terminal-prefix" aria-label="Command">$</span> email <a href="mailto:russell@web.ca">russell@web.ca</a></li>
 			</ul>
 		</div>
 		<div class="contact-form-col">

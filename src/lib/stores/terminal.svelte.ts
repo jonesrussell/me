@@ -20,6 +20,16 @@ const defaultCommands: Command[] = [
 DESCRIPTION
        No limits. An expert Software Developer crafting elegant solutions using modern technologies.
        Specializes in PHP, TypeScript, Go, and Cloud Architecture.`
+	},
+	{
+		cmd: 'cat skills.json',
+		output: `{
+  "languages": ["TypeScript", "Go", "PHP", "SQL"],
+  "frontend":  ["Svelte", "React", "CSS Architecture"],
+  "backend":   ["REST APIs", "Microservices", "Event-Driven"],
+  "devops":    ["Docker", "CI/CD", "Cloud (AWS/GCP)"],
+  "status":    "always learning"
+}`
 	}
 ];
 

@@ -89,6 +89,19 @@
 		}
 	}
 
+	@keyframes broadcast-pulse {
+		0%,
+		100% {
+			opacity: 0.4;
+			transform: translate(-50%, -50%) scale(1);
+		}
+
+		50% {
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(1.4);
+		}
+	}
+
 	/* Accessibility and performance */
 	@media (prefers-reduced-motion: reduce) {
 		.blog *,
@@ -98,6 +111,36 @@
 			animation: none;
 			transform: none;
 		}
+
+		.blog-hero-wrapper::before {
+			animation: none;
+			transform: translate(-50%, -50%);
+		}
+	}
+
+	/* Broadcast pulse on hero */
+	.blog-hero-wrapper {
+		position: relative;
+	}
+
+	.blog-hero-wrapper::before {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 12rem;
+		height: 12rem;
+		background: radial-gradient(
+			circle,
+			color-mix(in srgb, var(--accent-color) 15%, transparent) 0%,
+			color-mix(in srgb, var(--accent-color) 5%, transparent) 40%,
+			transparent 70%
+		);
+		border-radius: var(--radius-full);
+		animation: broadcast-pulse 3s ease-in-out infinite;
+		transform: translate(-50%, -50%);
+		content: '';
+		pointer-events: none;
+		z-index: 0;
 	}
 
 	.blog {
@@ -141,10 +184,10 @@
 		font-size: var(--font-size-sm);
 		color: var(--text-color);
 		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
+		border: 1px solid var(--border-color);
 		border-radius: var(--radius-md);
 		cursor: pointer;
-		transition: all var(--transition-duration) var(--transition-timing);
+		transition: all var(--transition-base);
 		min-height: 2.75rem;
 	}
 
@@ -166,7 +209,7 @@
 		padding: var(--space-8);
 		text-align: center;
 		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
+		border: 1px solid var(--border-color);
 		border-radius: var(--radius-lg);
 	}
 
@@ -208,7 +251,7 @@
 		padding: var(--space-8);
 		text-align: center;
 		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
+		border: 1px solid var(--border-color);
 		border-radius: var(--radius-lg);
 	}
 
@@ -230,8 +273,8 @@
 		padding: var(--space-6);
 		text-align: center;
 		color: var(--color-error);
-		background: var(--bg-error);
-		border: var(--border-width) solid var(--color-error);
+		background: color-mix(in srgb, var(--color-error) 10%, var(--bg-darker));
+		border: 1px solid var(--color-error);
 		border-radius: var(--radius-md);
 	}
 
@@ -245,9 +288,9 @@
 		font-size: var(--font-size-sm);
 		color: var(--text-color);
 		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
+		border: 1px solid var(--border-color);
 		border-radius: var(--radius-md);
-		transition: all var(--transition-duration) var(--transition-timing);
+		transition: all var(--transition-base);
 		cursor: pointer;
 	}
 
@@ -261,7 +304,7 @@
 	.dev-to-wrapper {
 		margin-top: var(--space-16);
 		padding-top: var(--space-16);
-		border-top: var(--border-width) solid var(--border-color);
+		border-top: 1px solid var(--border-color);
 	}
 
 	/* Focus management */
@@ -285,7 +328,9 @@
 	<meta property="og:url" content="https://yoursite.com/blog" />
 </svelte:head>
 
-<Hero title="Web Developer Blog" subtitle="Open Source Enthusiast" />
+<div class="blog-hero-wrapper">
+	<Hero title="Web Developer Blog" subtitle="Open Source Enthusiast" />
+</div>
 
 <main class="blog">
 	<!-- Global error handling -->

@@ -52,15 +52,15 @@
 <style>
 	.placeholder {
 		display: flex;
-		flex-direction: column;
-		gap: var(--space-4);
 		width: 100%;
 		padding: var(--space-6);
+		font-family: var(--font-mono);
+		text-align: center;
 		background: var(--color-mix-faint);
 		border: 1px solid var(--accent-color);
 		border-radius: var(--radius-md);
-		font-family: var(--font-mono);
-		text-align: center;
+		flex-direction: column;
+		gap: var(--space-4);
 	}
 
 	.placeholder.section {
@@ -77,15 +77,15 @@
 		margin: 0;
 		font-size: var(--font-size-lg);
 		font-weight: var(--font-weight-bold);
-		color: var(--text-color);
 		line-height: var(--line-height-tight);
+		color: var(--text-color);
 	}
 
 	.placeholder-description {
 		margin: 0;
 		font-size: var(--font-size-sm);
-		color: var(--text-muted);
 		line-height: var(--line-height-base);
+		color: var(--text-muted);
 	}
 
 	.placeholder-core {
@@ -99,37 +99,37 @@
 		margin: 0;
 		font-size: var(--font-size-xl);
 		font-weight: var(--font-weight-bold);
-		color: var(--accent-color);
 		line-height: var(--line-height-tight);
+		color: var(--accent-color);
 	}
 
 	.core-subline {
 		margin: 0;
 		font-size: var(--font-size-base);
-		color: var(--text-muted);
 		line-height: var(--line-height-base);
+		color: var(--text-muted);
 	}
 
 	.tagline {
 		margin: 0;
 		font-size: var(--font-size-sm);
+		line-height: var(--line-height-base);
 		color: var(--text-muted);
 		font-style: italic;
-		line-height: var(--line-height-base);
 	}
 
 	.placeholder-link {
 		display: inline-block;
-		margin-block-start: var(--space-2);
 		padding: var(--space-2) var(--space-4);
 		font-size: var(--font-size-sm);
 		font-weight: var(--font-weight-medium);
-		color: var(--accent-color);
 		text-decoration: none;
+		color: var(--accent-color);
 		border: 1px solid var(--accent-color);
 		border-radius: var(--radius-sm);
 		transition: color var(--transition-base), background-color var(--transition-base),
 			border-color var(--transition-base);
+		margin-block-start: var(--space-2);
 	}
 
 	.placeholder-link:hover {

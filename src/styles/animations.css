@@ -11,7 +11,19 @@
 @keyframes slide-up {
 	from {
 		opacity: 0;
-		transform: translateY(var(--ch2));
+		transform: translateY(1rem);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes stagger-in {
+	from {
+		opacity: 0;
+		transform: translateY(0.75rem);
 	}
 
 	to {
@@ -21,9 +33,49 @@
 }
 
 :global(.fade-in) {
-	animation: fade-in var(--transition-duration) var(--transition-timing) forwards;
+	animation: fade-in var(--transition-slow) cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 :global(.slide-up) {
-	animation: slide-up var(--transition-duration) var(--transition-timing) forwards;
+	animation: slide-up var(--transition-slow) cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+:global(.stagger-in) {
+	opacity: 0;
+	animation: stagger-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+:global(.stagger-in:nth-child(1)) {
+	animation-delay: 0.1s;
+}
+
+:global(.stagger-in:nth-child(2)) {
+	animation-delay: 0.2s;
+}
+
+:global(.stagger-in:nth-child(3)) {
+	animation-delay: 0.3s;
+}
+
+:global(.stagger-in:nth-child(4)) {
+	animation-delay: 0.4s;
+}
+
+:global(.stagger-in:nth-child(5)) {
+	animation-delay: 0.5s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	:global(.fade-in),
+	:global(.slide-up),
+	:global(.stagger-in),
+	:global(.stagger-in:nth-child(1)),
+	:global(.stagger-in:nth-child(2)),
+	:global(.stagger-in:nth-child(3)),
+	:global(.stagger-in:nth-child(4)),
+	:global(.stagger-in:nth-child(5)) {
+		animation: none;
+		opacity: 1;
+		transform: none;
+	}
 }
