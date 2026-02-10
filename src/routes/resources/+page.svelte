@@ -95,52 +95,52 @@
 		border-radius: var(--radius-md);
 	}
 
-	.northcloud-resource__title {
+	.northcloud-resource-title {
 		margin: 0;
 		font-size: var(--font-size-lg);
 		font-weight: var(--font-weight-bold);
 		color: var(--text-color);
 	}
 
-	.northcloud-resource__desc {
+	.northcloud-resource-desc {
 		margin: 0;
 		font-size: var(--font-size-sm);
 		color: var(--text-muted);
 	}
 
-	.northcloud-resource__list {
+	.northcloud-resource-list {
 		margin: 0;
 		padding: 0;
 		list-style: none;
 	}
 
-	.northcloud-resource__item {
+	.northcloud-resource-item {
 		padding: var(--space-1) 0;
 		border-block-end: var(--border-width) solid var(--border-color);
 	}
 
-	.northcloud-resource__item:last-of-type {
+	.northcloud-resource-item:last-of-type {
 		border-block-end: none;
 	}
 
-	.northcloud-resource__link {
+	.northcloud-resource-link {
 		font-size: var(--font-size-sm);
-		color: var(--accent-color);
 		text-decoration: none;
+		color: var(--accent-color);
 	}
 
-	.northcloud-resource__link:hover {
+	.northcloud-resource-link:hover {
 		text-decoration: underline;
 	}
 
-	.northcloud-resource__more {
+	.northcloud-resource-more {
 		margin-top: var(--space-2);
 		font-size: var(--font-size-xs);
-		color: var(--text-muted);
 		text-decoration: none;
+		color: var(--text-muted);
 	}
 
-	.northcloud-resource__more:hover {
+	.northcloud-resource-more:hover {
 		text-decoration: underline;
 		color: var(--accent-color);
 	}
@@ -208,27 +208,30 @@
 			{/each}
 			{#if data.northCloudArticles?.length}
 				<section class="northcloud-resource" aria-label="North Cloud pipeline feed">
-					<h2 class="northcloud-resource__title">North Cloud pipeline</h2>
-					<p class="northcloud-resource__desc">
+					<h2 class="northcloud-resource-title">North Cloud pipeline</h2>
+					<p class="northcloud-resource-desc">
 						Recent classified articles from the content platform.
 					</p>
-					<ul class="northcloud-resource__list">
-						{#each data.northCloudArticles as article}
-							<li class="northcloud-resource__item">
+					<ul class="northcloud-resource-list">
+						{#each data.northCloudArticles as article (article.id)}
+							<li class="northcloud-resource-item">
+								<!-- eslint-disable svelte/no-navigation-without-resolve -->
 								<a
 									href={article.url}
-									class="northcloud-resource__link"
+									class="northcloud-resource-link"
 									target="_blank"
 									rel="noopener noreferrer"
 								>
 									{article.title}
 								</a>
+								<!-- eslint-enable svelte/no-navigation-without-resolve -->
 							</li>
 						{/each}
 					</ul>
+					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 					<a
 						href="https://northcloud.biz"
-						class="northcloud-resource__more"
+						class="northcloud-resource-more"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
