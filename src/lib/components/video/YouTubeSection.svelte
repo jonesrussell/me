@@ -162,7 +162,7 @@
 
 	/* Accessibility and performance */
 	@media (prefers-reduced-motion: reduce) {
-		.youtube-link,
+		.youtube-section .youtube-link,
 		.video-retry-button {
 			transition: none;
 		}
@@ -171,7 +171,7 @@
 			animation: none;
 		}
 
-		.youtube-link:hover {
+		.youtube-section .youtube-link:hover {
 			transform: none;
 		}
 	}
@@ -182,7 +182,7 @@
 			border: 0.0625rem solid CanvasText;
 		}
 
-		.youtube-link {
+		.youtube-section .youtube-link {
 			border: 0.0625rem solid CanvasText;
 		}
 
@@ -207,7 +207,7 @@
 			content: 'Video: ' attr(title);
 		}
 
-		.youtube-link::after {
+		.youtube-section .youtube-link::after {
 			content: ' (' attr(href) ')';
 		}
 	}
@@ -347,13 +347,17 @@
 		font-style: italic;
 	}
 
-	.youtube-link {
+	/* Scoped to .youtube-section for higher specificity over surface.css .youtube-link */
+	.youtube-section .youtube-link {
 		display: flex;
+		flex-shrink: 0;
+		min-width: min-content;
 		padding: var(--space-3) var(--space-4);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		text-decoration: none;
 		color: var(--accent-color);
+		background: transparent;
 		border: var(--border-width) solid var(--accent-color);
 		border-radius: var(--radius-md);
 		transition: all var(--transition-duration) var(--transition-timing);
@@ -363,13 +367,28 @@
 		align-self: center;
 	}
 
-	.youtube-link:hover {
+	.youtube-section .youtube-link .youtube-link-text,
+	.youtube-section .youtube-link .youtube-icon {
+		color: var(--accent-color);
+	}
+
+	.youtube-section .youtube-link .youtube-link-text {
+		overflow: visible;
+		white-space: nowrap;
+	}
+
+	.youtube-section .youtube-link:hover .youtube-link-text,
+	.youtube-section .youtube-link:hover .youtube-icon {
+		color: var(--bg-color);
+	}
+
+	.youtube-section .youtube-link:hover {
 		color: var(--bg-color);
 		background: var(--accent-color);
 		transform: translateY(-0.125rem);
 	}
 
-	.youtube-link:focus {
+	.youtube-section .youtube-link:focus {
 		outline: none;
 		box-shadow: 0 0 0 var(--space-1) var(--accent-color-transparent);
 	}
@@ -435,7 +454,7 @@
 			aria-label="Subscribe to my YouTube channel (opens in new tab)"
 		>
 			<span class="youtube-icon" aria-hidden="true">▶</span>
-			<span>Subscribe to my channel</span>
+			<span class="youtube-link-text">Subscribe to my channel</span>
 		</a>
 	</section>
 </ErrorBoundary>
