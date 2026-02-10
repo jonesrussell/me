@@ -86,6 +86,20 @@
 	@container blog-page (min-width: 1024px) {
 		.container {
 			padding-inline: var(--space-16);
+			grid-template-columns: 1fr minmax(16rem, 20rem);
+		}
+	}
+
+	@keyframes broadcast-pulse {
+		0%,
+		100% {
+			opacity: 0.4;
+			transform: translate(-50%, -50%) scale(1);
+		}
+
+		50% {
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(1.4);
 		}
 	}
 
@@ -98,6 +112,36 @@
 			animation: none;
 			transform: none;
 		}
+
+		.blog-hero-wrapper::before {
+			animation: none;
+			transform: translate(-50%, -50%);
+		}
+	}
+
+	/* Broadcast pulse on hero */
+	.blog-hero-wrapper {
+		position: relative;
+	}
+
+	.blog-hero-wrapper::before {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 12rem;
+		height: 12rem;
+		background: radial-gradient(
+			circle,
+			color-mix(in srgb, var(--accent-color) 15%, transparent) 0%,
+			color-mix(in srgb, var(--accent-color) 5%, transparent) 40%,
+			transparent 70%
+		);
+		border-radius: var(--radius-full);
+		animation: broadcast-pulse 3s ease-in-out infinite;
+		transform: translate(-50%, -50%);
+		content: '';
+		pointer-events: none;
+		z-index: 0;
 	}
 
 	.blog {
@@ -117,6 +161,63 @@
 		margin-inline: auto;
 		padding-inline: var(--space-4);
 		max-width: min(var(--measure), 95cqi);
+		gap: var(--space-8);
+	}
+
+	.northcloud-sidebar {
+		display: flex;
+		flex-direction: column;
+		height: fit-content;
+		gap: var(--space-2);
+		padding: var(--space-4);
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
+	}
+
+	.northcloud-sidebar-title {
+		margin: 0;
+		font-size: var(--font-size-base);
+		font-weight: var(--font-weight-bold);
+		color: var(--text-color);
+	}
+
+	.northcloud-sidebar-list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.northcloud-sidebar-item {
+		margin: 0;
+		padding: var(--space-1) 0;
+		border-block-end: var(--border-width) solid var(--border-color);
+	}
+
+	.northcloud-sidebar-item:last-of-type {
+		border-block-end: none;
+	}
+
+	.northcloud-sidebar-link {
+		font-size: var(--font-size-sm);
+		text-decoration: none;
+		color: var(--accent-color);
+	}
+
+	.northcloud-sidebar-link:hover {
+		text-decoration: underline;
+	}
+
+	.northcloud-sidebar-more {
+		margin-top: var(--space-2);
+		font-size: var(--font-size-xs);
+		text-decoration: none;
+		color: var(--text-muted);
+	}
+
+	.northcloud-sidebar-more:hover {
+		text-decoration: underline;
+		color: var(--accent-color);
 	}
 
 	.posts-section {
@@ -141,10 +242,10 @@
 		font-size: var(--font-size-sm);
 		color: var(--text-color);
 		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
+		border: 1px solid var(--border-color);
 		border-radius: var(--radius-md);
 		cursor: pointer;
-		transition: all var(--transition-duration) var(--transition-timing);
+		transition: all var(--transition-base);
 		min-height: 2.75rem;
 	}
 
@@ -166,7 +267,7 @@
 		padding: var(--space-8);
 		text-align: center;
 		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
+		border: 1px solid var(--border-color);
 		border-radius: var(--radius-lg);
 	}
 
@@ -208,7 +309,7 @@
 		padding: var(--space-8);
 		text-align: center;
 		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
+		border: 1px solid var(--border-color);
 		border-radius: var(--radius-lg);
 	}
 
@@ -230,8 +331,8 @@
 		padding: var(--space-6);
 		text-align: center;
 		color: var(--color-error);
-		background: var(--bg-error);
-		border: var(--border-width) solid var(--color-error);
+		background: color-mix(in srgb, var(--color-error) 10%, var(--bg-darker));
+		border: 1px solid var(--color-error);
 		border-radius: var(--radius-md);
 	}
 
@@ -245,9 +346,9 @@
 		font-size: var(--font-size-sm);
 		color: var(--text-color);
 		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
+		border: 1px solid var(--border-color);
 		border-radius: var(--radius-md);
-		transition: all var(--transition-duration) var(--transition-timing);
+		transition: all var(--transition-base);
 		cursor: pointer;
 	}
 
@@ -261,7 +362,7 @@
 	.dev-to-wrapper {
 		margin-top: var(--space-16);
 		padding-top: var(--space-16);
-		border-top: var(--border-width) solid var(--border-color);
+		border-top: 1px solid var(--border-color);
 	}
 
 	/* Focus management */
@@ -285,7 +386,9 @@
 	<meta property="og:url" content="https://yoursite.com/blog" />
 </svelte:head>
 
-<Hero title="Web Developer Blog" subtitle="Open Source Enthusiast" />
+<div class="blog-hero-wrapper">
+	<Hero title="Web Developer Blog" subtitle="Open Source Enthusiast" />
+</div>
 
 <main class="blog">
 	<!-- Global error handling -->
@@ -349,6 +452,36 @@
 				</div>
 			{/if}
 		</section>
+		{#if data.northCloudArticles?.length}
+			<aside class="northcloud-sidebar" aria-label="From the North Cloud pipeline">
+				<h2 class="northcloud-sidebar-title">From the North Cloud pipeline</h2>
+				<ul class="northcloud-sidebar-list">
+					{#each data.northCloudArticles as article (article.id)}
+						<li class="northcloud-sidebar-item">
+							<!-- eslint-disable svelte/no-navigation-without-resolve -->
+							<a
+								href={article.url}
+								class="northcloud-sidebar-link"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								{article.title}
+							</a>
+							<!-- eslint-enable svelte/no-navigation-without-resolve -->
+						</li>
+					{/each}
+				</ul>
+				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
+				<a
+					href="https://northcloud.biz"
+					class="northcloud-sidebar-more"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					North Cloud
+				</a>
+			</aside>
+		{/if}
 	</div>
 
 	<!-- Dev.to section -->

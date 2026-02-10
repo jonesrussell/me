@@ -30,10 +30,11 @@ For specific implementation details, refer to:
 
 ## Layout
 - Use container queries for component-level responsiveness
-- Implement consistent breakpoints:
-  - `30rem` (≈ 480px) for tablet
-  - `50rem` (≈ 800px) for small desktop
-  - `75rem` (≈ 1200px) for large desktop
+- For **@media** breakpoints, use only the custom media variables from `src/styles/custom-media.css`:
+  - `--container-sm` (40rem ≈ 640px)
+  - `--container-md` (48rem ≈ 768px)
+  - `--container-lg` (64rem ≈ 1024px)
+  - `--container-xl` (80rem ≈ 1280px)
 - Use `var(--measure)` for max-width constraints
 - Apply `95cqi` for container-based sizing
 - Maintain consistent padding and spacing patterns

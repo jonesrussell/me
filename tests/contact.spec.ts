@@ -13,6 +13,9 @@ test.describe('Contact Page', () => {
 			expect(page.locator('text=Get in Touch')).toBeVisible({ timeout: 15000 }),
 			expect(page.locator('.contact-list')).toBeVisible({ timeout: 15000 })
 		]);
+
+		// Contact form is replaced by GoFormX placeholder until integration
+		await expect(page.locator('[data-goformx-placeholder]')).toBeVisible({ timeout: 5000 });
 	});
 
 	test('should display social media links correctly', async ({ page }) => {

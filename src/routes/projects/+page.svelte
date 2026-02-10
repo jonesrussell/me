@@ -1,42 +1,19 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import VideoGrid from '$lib/components/video/VideoGrid.svelte';
 	import ProjectGrid from '$lib/components/projects/ProjectGrid.svelte';
+	import { projects as projectsData } from '$lib/data/projects';
 	import type { Video } from '$lib/types/video';
 	import type { Project } from '$lib/types/project';
 	import Hero from '$lib/components/ui/Hero.svelte';
+	import type { PageData } from './$types';
 
-	const projects: Project[] = [
-		{
-			title: 'MP Emailer',
-			description:
-				'A web app that helps constituents easily contact their MPs through email campaigns on important issues.',
-			tags: ['Go', 'Echo', 'MariaDB', 'Tailwind CSS', 'JWT'],
-			url: 'https://github.com/jonesrussell/mp-emailer',
-			status: 'active'
-		},
-		{
-			title: 'Goforms',
-			description: 'Quickly add forms to your web projects.',
-			tags: ['Go', 'Echo', 'MariaDB', 'REST API', 'Docker'],
-			url: 'https://goformx.com/',
-			status: 'active'
-		},
-		{
-			title: 'Gimbal',
-			description: 'A Gyruss-inspired game built with Ebitengine.',
-			tags: ['Go', 'Ebitengine', 'Game Dev', 'WASM'],
-			url: 'https://github.com/jonesrussell/gimbal',
-			status: 'experimental'
-		},
-		{
-			title: 'GoCrawl',
-			description:
-				'A simple web crawler built in Go that fetches and processes web pages, storing results in Elasticsearch. Demonstrates the use of Cobra for CLI, Colly for web scraping, Elasticsearch for storage, and Zap for logging.',
-			tags: ['Go', 'Web Crawler', 'Elasticsearch', 'CLI', 'Experimental'],
-			url: 'https://github.com/jonesrussell/gocrawl',
-			status: 'experimental'
-		}
-	];
+	const { data } = $props<{ data: PageData }>();
+
+	const projects: Project[] = projectsData.map((p) => ({
+		...p,
+		image: p.image ? `${base}/${p.image}` : undefined
+	}));
 
 	const videos: Video[] = [
 		{
@@ -67,44 +44,7 @@
 </script>
 
 <style>
-	.projects {
-		container-type: inline-size;
-		container-name: projects-page;
-		display: grid;
-		width: 100%;
-		padding: var(--space-16) 0;
-		grid-template-rows: auto 1fr;
-		gap: var(--space-16);
-	}
 
-	.container {
-		display: grid;
-		width: 100%;
-		margin-inline: auto;
-		padding-inline: var(--space-4);
-		max-width: min(var(--measure), 95cqi);
-		gap: var(--space-16);
-		grid-template-columns: minmax(0, 1fr);
-	}
-
-	.section {
-		display: flex;
-		width: 100%;
-		max-width: 100%;
-		flex-direction: column;
-		align-items: center;
-		margin-top: 0;
-	}
-
-	.section-title {
-		margin: 0 0 var(--space-8) 0;
-		font-family: var(--font-mono);
-		font-size: var(--font-size-3xl);
-		font-weight: var(--font-weight-bold);
-		line-height: var(--line-height-tight);
-		text-align: center;
-		color: var(--text-color);
-	}
 
 	@container projects-page (min-width: 640px) {
 		.container {
@@ -138,6 +78,96 @@
 		}
 	}
 
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			transition: none;
+			animation: none;
+		}
+	}
+
+	.projects {
+		container-type: inline-size;
+		container-name: projects-page;
+		display: grid;
+		position: relative;
+		width: 100%;
+		padding: var(--space-16) 0;
+		grid-template-rows: auto 1fr;
+		gap: var(--space-16);
+	}
+
+	/* Workshop grid-dot pattern + atmospheric gradient */
+	.projects::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background:
+			radial-gradient(
+				ellipse 120% 80% at 50% 20%,
+				var(--color-mix-faint) 0%,
+				transparent 50%
+			),
+			radial-gradient(
+				circle,
+				color-mix(in srgb, var(--text-muted) 15%, transparent) 1px,
+				transparent 1px
+			);
+		background-size:
+			100% 100%,
+			1.5rem 1.5rem;
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	.container {
+		display: grid;
+		position: relative;
+		width: 100%;
+		margin-inline: auto;
+		padding-inline: var(--space-4);
+		max-width: min(var(--measure), 95cqi);
+		gap: var(--space-16);
+		grid-template-columns: minmax(0, 1fr);
+		z-index: 1;
+	}
+
+	.section {
+		display: flex;
+		width: 100%;
+		max-width: 100%;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 0;
+	}
+
+	.section-title {
+		margin: 0 0 var(--space-8) 0;
+		font-family: var(--font-mono);
+		font-size: var(--font-size-3xl);
+		font-weight: var(--font-weight-bold);
+		line-height: var(--line-height-tight);
+		text-align: center;
+		color: var(--text-color);
+		letter-spacing: var(--letter-spacing-tight);
+	}
+
+	.section-title::after {
+		content: '';
+		display: block;
+		width: 8rem;
+		height: 0.125rem;
+		margin: var(--space-3) auto 0;
+		background:
+			repeating-linear-gradient(
+				90deg,
+				var(--accent-color) 0,
+				var(--accent-color) 0.5rem,
+				transparent 0.5rem,
+				transparent 0.75rem
+			);
+		border-radius: 0.0625rem;
+	}
+
 	.project-grid-container {
 		container-type: inline-size;
 		container-name: project-grid;
@@ -150,34 +180,110 @@
 		width: 100%;
 	}
 
-	@media (prefers-reduced-motion: reduce) {
-		* {
-			transition: none;
-			animation: none;
-		}
+	.northcloud-recent {
+		margin-top: var(--space-8);
+		padding: var(--space-4);
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
+	}
+
+	.northcloud-recent-title {
+		margin: 0 0 var(--space-3) 0;
+		font-size: var(--font-size-lg);
+		font-weight: var(--font-weight-bold);
+		color: var(--text-color);
+	}
+
+	.northcloud-recent-list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.northcloud-recent-item {
+		padding: var(--space-1) 0;
+		border-block-end: var(--border-width) solid var(--border-color);
+	}
+
+	.northcloud-recent-item:last-of-type {
+		border-block-end: none;
+	}
+
+	.northcloud-recent-link {
+		font-size: var(--font-size-sm);
+		text-decoration: none;
+		color: var(--accent-color);
+	}
+
+	.northcloud-recent-link:hover {
+		text-decoration: underline;
+	}
+
+	.northcloud-recent-more {
+		display: inline-block;
+		margin-top: var(--space-2);
+		font-size: var(--font-size-xs);
+		text-decoration: none;
+		color: var(--text-muted);
+	}
+
+	.northcloud-recent-more:hover {
+		text-decoration: underline;
+		color: var(--accent-color);
 	}
 </style>
 
 <svelte:head>
-	<title>Projects & Content | Russell Jones - Go & Modern Web Development</title>
+	<title>Projects | Russell Jones - Go & Modern Web Development</title>
 	<meta
 		name="description"
-		content="Explore my open source projects, technical videos, and educational content about Go, JavaScript, and modern web development."
+		content="Content platform and consumer sites – North Cloud and related projects. Technical videos and educational content about Go, JavaScript, and modern web development."
 	/>
 </svelte:head>
 
-<Hero title="Projects & Content" subtitle="Open Source & Educational Content" />
+<Hero title="Projects" />
 
 <main class="projects">
 	<div class="container">
+		<section class="section project-grid-container" aria-label="Content platform and consumer sites">
+			<h2 class="section-title">Content platform and consumer sites</h2>
+			<ProjectGrid {projects} />
+			{#if data.northCloudArticles?.length}
+				<div class="northcloud-recent" aria-label="Recent pipeline articles">
+					<h3 class="northcloud-recent-title">Recent from North Cloud pipeline</h3>
+					<ul class="northcloud-recent-list">
+						{#each data.northCloudArticles as article (article.id)}
+							<li class="northcloud-recent-item">
+								<!-- eslint-disable svelte/no-navigation-without-resolve -->
+								<a
+									href={article.url}
+									class="northcloud-recent-link"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									{article.title}
+								</a>
+								<!-- eslint-enable svelte/no-navigation-without-resolve -->
+							</li>
+						{/each}
+					</ul>
+					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
+					<a
+						href="https://northcloud.biz"
+						class="northcloud-recent-more"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						North Cloud
+					</a>
+				</div>
+			{/if}
+		</section>
+
 		<section class="section featured-videos-container" aria-label="Featured Videos">
 			<h2 id="video-grid-title" class="section-title">Experimental Videos</h2>
 			<VideoGrid {videos} />
-		</section>
-
-		<section class="section project-grid-container" aria-label="Open Source Projects">
-			<h2 class="section-title">Open Source Projects</h2>
-			<ProjectGrid {projects} />
 		</section>
 	</div>
 </main>

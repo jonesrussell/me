@@ -4,288 +4,193 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal website for Russell Jones built with SvelteKit 5 and modern web technologies. Features a blog (via Dev.to RSS integration), project showcase, resources section, and terminal emulation. Deployed to GitHub Pages as a static site.
-
-**Live site:** https://jonesrussell.github.io/me/
-
-## Tech Stack
-
-- **Framework:** SvelteKit 2.49.4 with static adapter
-- **UI Library:** Svelte 5.46.1 (runes-based reactivity)
-- **Language:** TypeScript 5.9.3 (strict mode)
-- **Build Tool:** Vite 7.3.1
-- **Testing:** Vitest 4.0.16 (unit), Playwright 1.57.0 (E2E), Testing Library
-- **Linting:** ESLint 9.39.2, Stylelint 16.26.1, Prettier 3.7.4
+Personal website for Russell Jones built with SvelteKit and Svelte 5 (runes). Features a blog (Dev.to RSS integration), project showcase, resources section, and terminal emulation. Deployed to GitHub Pages as a static site at https://jonesrussell.github.io/me/.
 
 ## Quick Commands
 
 ```bash
-# Development
 npm run dev              # Start dev server (localhost:5173)
 npm run build            # Build for production
 npm run preview          # Preview production build
-
-# Testing
-npm run test:unit        # Run unit tests (watch mode)
-npm run test:unit:run    # Run unit tests once
-npm run test:e2e         # Run Playwright E2E tests
-npm run test             # Run all tests
-
-# Code Quality
 npm run check            # TypeScript type checking
 npm run lint             # ESLint + Stylelint
 npm run lint:fix         # Auto-fix lint issues
 npm run format           # Prettier formatting
 npm run validate         # Full validation (types + lint + tests)
-
-# Utilities
 npm run knip             # Find unused exports/dependencies
+
+# Testing
+npm run test:unit:run    # Run all unit tests once
+npm run test:unit        # Run unit tests (watch mode)
+npm run test:e2e         # Run Playwright E2E tests
+npm run test             # Run all tests
+
+# Run a single test file
+npm run test:unit:run -- src/lib/components/ui/Hero.svelte.test.ts
+
+# Run by test name pattern
+npm run test:unit:run -- --testNamePattern="should render title"
+
+# Run only client (Svelte component) or server tests
+npm run test:unit:run -- --project=client
+npm run test:unit:run -- --project=server
 ```
 
-## Project Structure
+## Architecture
 
+### Test Infrastructure
+
+Vitest is configured with **two projects** in `vite.config.ts` (no separate vitest config):
+
+- **`client` project**: Uses jsdom, runs `*.svelte.{test,spec}.ts` files, has `@testing-library/svelte` and `@testing-library/jest-dom` available. Setup: `vitest-setup-client.ts`.
+- **`server` project**: Uses Node environment, runs non-Svelte `*.{test,spec}.ts` files. Setup: `src/test/setup.ts` (mocks window, document, localStorage, matchMedia).
+
+PostCSS is also configured inline in `vite.config.ts` (no `postcss.config.js`).
+
+### Routing & Data Loading
+
+- All routes prerender by default (`+layout.server.ts` sets `prerender = true`)
+- Blog detail pages (`blog/[slug]/+page.server.ts`) disable prerendering for dynamic slugs
+- Data loading uses `+page.ts` (universal) for most routes, `+page.server.ts` for blog detail
+- Root layout (`+layout.svelte`) uses grid layout with SkipToMain, Header, children, GoFormX placeholder (newsletter slot), Footer
+
+### Deployment & Base Path
+
+- **Base path**: Set via `BASE_PATH` env var in `svelte.config.js`: `paths.base = process.env.BASE_PATH || ''`
+- Production build sets `BASE_PATH=/me` (configured in `.github/workflows/deploy.yml`)
+- Static adapter with `fallback: 'fallback.html'` for SPA fallback
+- CI pipeline: build → unit-tests + e2e-tests (parallel) → deploy to GitHub Pages
+
+### CSS Architecture
+
+**CSS Layers** (defined in `src/app.css`):
+```css
+@layer reset, base, components, utilities;
 ```
-src/
-├── lib/
-│   ├── components/      # Svelte components by feature
-│   │   ├── blog/        # Blog-related components
-│   │   ├── layout/      # Header, Footer, SubtitleBar
-│   │   ├── navigation/  # Nav components
-│   │   ├── newsletter/  # Newsletter form components
-│   │   ├── projects/    # Project showcase
-│   │   ├── resources/   # Resource cards/sections
-│   │   ├── terminal/    # Terminal emulation
-│   │   ├── ui/          # Reusable UI (Hero, Box, Input, etc.)
-│   │   └── video/       # YouTube/video components
-│   ├── services/        # Business logic (pure functions)
-│   │   └── blog-service.ts  # Blog API service (pure functions, no state)
-│   ├── stores/          # State management (runes-based, .svelte.ts files)
-│   │   ├── blog.svelte.ts      # Blog state
-│   │   ├── theme.svelte.ts     # Theme state
-│   │   └── terminal.svelte.ts  # Terminal state
-│   ├── types/           # TypeScript interfaces
-│   └── utils/           # Utility functions
-├── routes/              # SvelteKit file-based routing
-│   ├── blog/            # Blog pages
-│   ├── contact/         # Contact page
-│   ├── projects/        # Projects page
-│   └── resources/       # Resources page
-├── styles/              # Global CSS
-│   ├── modules/         # CSS modules (typography, forms, etc.)
-│   ├── themes/          # Light/dark theme variables
-│   └── system/          # Color system
-└── test/                # Test utilities and setup
-tests/                   # Playwright E2E tests
+
+**Custom Media Breakpoints** (defined in `src/styles/custom-media.css`, enforced by Stylelint):
+```css
+@custom-media --container-sm (width >= 40rem);   /* 640px */
+@custom-media --container-md (width >= 48rem);   /* 768px */
+@custom-media --container-lg (width >= 64rem);   /* 1024px */
+@custom-media --container-xl (width >= 80rem);   /* 1280px */
+```
+
+Stylelint **blocks** raw `min-width`/`max-width` in media queries — always use custom media variables. Stylelint also **blocks `px` and `em` units** — use `rem`, `ch`, `%`, `cqi`, etc.
+
+**Theme system**: `data-theme` attribute on `<html>` switches between light/dark CSS custom properties defined in `src/styles/themes/`.
+
+**Key design tokens** (in `src/styles/base.css`): `--space-{1..768}`, `--font-size-{xs..9xl}`, `--radius-{sm..full}`, `--shadow-{sm..xl}`, `--measure: 80rem`.
+
+### Environment Config
+
+**Forms:** Form surfaces (newsletter, contact, home CTA) currently render a **GoFormX placeholder** (“Coming soon”). Real forms will use the existing FormService and the env below when GoFormX is integrated.
+
+GoForms API integration configured in `src/lib/config/env.ts`:
+```
+VITE_GOFORMS_API_URL        # GoForms API endpoint
+VITE_GOFORMS_API_KEY        # API key
+VITE_GOFORMS_CONTACT_FORM_ID
+VITE_GOFORMS_NEWSLETTER_FORM_ID
 ```
 
 ## Svelte 5 Patterns
 
-This project uses **Svelte 5 runes** exclusively. Do NOT use legacy Svelte 4 syntax.
+This project uses **Svelte 5 runes exclusively**. Do NOT use legacy Svelte 4 syntax.
 
-### State Management with Runes
+### Store Pattern
 
-```svelte
-<script lang="ts">
-  // Reactive state
-  let count = $state(0);
+Stores use `.svelte.ts` extension and export `$state` objects directly. Components access properties directly (no `$` prefix):
 
-  // Derived values (auto-update when dependencies change)
-  let doubled = $derived(count * 2);
-
-  // Side effects
-  $effect(() => {
-    console.log('Count changed:', count);
-  });
-</script>
+```typescript
+// stores/example.svelte.ts
+export const exampleState = $state({ value: 0 });
 ```
 
-### Component Props
-
-```svelte
-<script lang="ts">
-  // Props with defaults
-  let { title, items = [] } = $props();
-
-  // Bindable props
-  let { value = $bindable() } = $props();
-</script>
+Theme store demonstrates the advanced pattern — computed getters + exported setter functions:
+```typescript
+export const themeState = $state({
+  current: 'auto' as Theme,
+  get effective(): 'light' | 'dark' { /* computed */ }
+});
+export function setTheme(value: Theme) { /* updates state + DOM */ }
 ```
+
+Terminal store separates state from API: `terminalState` (data) + `terminal` object (methods: `start`, `stop`, `reset`, `loadCommands`).
+
+### Service Pattern
+
+Services are **pure functions** — they accept `fetch` as a parameter, return data, and never update stores:
+```typescript
+export const fetchFeed = async (fetchFn: typeof fetch, options?: PaginationOptions): Promise<PaginatedResult<BlogPost>> => { ... };
+```
+
+Blog service uses an in-memory cache with 30-minute TTL. Call `resetFeedCache()` in tests.
+
+Form service (`form-service.ts`) is a singleton class: `FormService.getInstance()`.
 
 ### Content Projection (Snippets)
 
+Use `{#snippet}` and `{@render}` (not slots):
 ```svelte
-<!-- Parent.svelte -->
-<Child>
-  {#snippet header()}
-    <h1>Title</h1>
-  {/snippet}
+<!-- Parent -->
+<Child>{#snippet header()}<h1>Title</h1>{/snippet}</Child>
 
-  <p>Default content (children)</p>
-</Child>
-
-<!-- Child.svelte -->
+<!-- Child -->
 <script lang="ts">
   let { header, children } = $props();
 </script>
-
 {@render header?.()}
 {@render children?.()}
 ```
 
-### Event Handling
+### App State
 
+Use `$app/state` (NOT `$app/stores`):
 ```svelte
-<!-- Direct handlers (no on: directive) -->
-<button onclick={() => count++}>Click</button>
-
-<!-- Component callbacks -->
-<MyComponent onchange={(value) => handleChange(value)} />
-```
-
-### Store Patterns (Runes-based)
-
-Stores use `.svelte.ts` extension and `$state` runes:
-
-```typescript
-// stores/example.svelte.ts
-export const exampleState = $state({
-  value: 0,
-  items: []
-});
-```
-
-Components import and use state directly (no `$` prefix):
-
-```svelte
-<script lang="ts">
-  import { exampleState } from '$lib/stores/example.svelte';
-</script>
-
-<p>Value: {exampleState.value}</p>
-<button onclick={() => exampleState.value++}>Increment</button>
-```
-
-### SvelteKit App State
-
-Use `$app/state` (not `$app/stores`):
-
-```svelte
-<script lang="ts">
-  import { page } from '$app/state';
-</script>
-
-<p>Current URL: {page.url}</p>
+import { page } from '$app/state';
 ```
 
 ## Coding Standards
 
 ### TypeScript
-- Use strict mode
-- Define interfaces in `src/lib/types/`
-- Interface names start with "I", type names end with "Type"
-- Document complex types with JSDoc
-
-### Components
-- One component per file
-- Co-locate tests with components (`Component.svelte.test.ts`)
-- Use `<script lang="ts">` always
-- Props first, then state, then derived, then effects, then functions
+- Strict mode enabled
+- Interfaces in `src/lib/types/`, prefixed with "I"; type aliases suffixed with "Type"
+- Component script order: props → state → derived → effects → functions
 
 ### CSS
-- Use CSS nesting and container queries
-- Follow BEM-like naming for classes
-- Use CSS custom properties from theme files
-- Prefer `container` queries over `media` queries
-- Use logical properties (`inline`, `block`) over physical (`left`, `right`)
-- **All responsive breakpoints must be defined in `src/styles/custom-media.css`** using CSS Custom Media Queries
-- Do not use hardcoded `min-width`/`max-width` in media queries - always use custom media variables
-- Use `--measure` for max-width constraints and `95cqi` for container-based sizing
-
-### Responsive Design Pattern
-```css
-.component {
-  container-type: inline-size;
-  container-name: component-name;
-  width: 100%;
-  padding: var(--space-16) 0;
-}
-
-.container {
-  width: 100%;
-  max-width: min(var(--measure), 95cqi);
-  margin: 0 auto;
-  padding: 0 var(--space-4);
-}
-
-@container component-name (width >= 30rem) {
-  .container {
-    max-width: min(var(--measure), 95cqi);
-  }
-}
-```
+- Container queries preferred over media queries
+- Responsive pattern: `container-type: inline-size` + `max-width: min(var(--measure), 95cqi)`
+- Use CSS nesting, logical properties (`inline`/`block` not `left`/`right`), custom properties from theme files
+- BEM-like naming for classes
 
 ### Testing
-- Unit tests: `*.test.ts` or `*.svelte.test.ts`
-- E2E tests: `tests/*.spec.ts`
-- Use Testing Library for component tests
-- Use `vi.mock()` for mocking
-- Follow AAA pattern (Arrange, Act, Assert)
-- Keep tests independent and fast
+- Co-locate component tests: `Component.svelte.test.ts` next to `Component.svelte`
+- E2E tests in `tests/*.spec.ts` (Playwright, Chromium + WebKit)
+- Use Testing Library for component tests, `vi.mock()` for mocking
 
-### Services
-- Services are **pure functions** - they return data, they don't manage state
-- Services should not update stores or have side effects
-- State management happens in stores or components
-- Example: `blog-service.ts` exports pure functions like `fetchFeed()` and `fetchPost()`
-
-### Stores
-- Stores use `.svelte.ts` extension (required for runes)
-- Stores use `$state` runes (not `writable` stores)
-- Stores export state objects directly
-- Components access state directly (no `$` prefix)
-
-## File Naming Conventions
-
+### File Naming
 - Components: `PascalCase.svelte`
-- Component tests: `PascalCase.svelte.test.ts`
 - Services/utils: `kebab-case.ts`
-- Stores: `kebab-case.svelte.ts` (must use `.svelte.ts` for runes)
-- Types: `kebab-case.ts`
+- Stores: `kebab-case.svelte.ts` (`.svelte.ts` required for runes)
 - Routes: `+page.svelte`, `+page.ts`, `+page.server.ts`
 
-## Important Patterns
+## Key Utilities
 
-### Error Boundaries
-Wrap components that may fail with `ErrorBoundary.svelte`.
-
-### Safe HTML Rendering
-Use `SafeHtml.svelte` for rendering sanitized HTML content.
-
-### Blog Integration
-Blog posts are fetched from Dev.to RSS feed via `blog-service.ts`. The service contains pure functions that return data. State is managed in `stores/blog.svelte.ts`.
-
-### Theme System
-Theme is managed via `stores/theme.svelte.ts` with light/dark/auto modes. Use `themeState` and `setTheme()` function. CSS custom properties handle theming.
-
-### Terminal Emulation
-Terminal state is managed in `stores/terminal.svelte.ts`. The terminal component uses this state to display typed commands and outputs.
+- **`ErrorBoundary.svelte`**: Wrap components that may fail
+- **`SafeHtml.svelte`**: Render sanitized HTML (blog content). ESLint allows `{@html}` only in this file.
+- **`src/lib/utils/error-handler.ts`**: `createError()`, `withErrorHandling()`, `logErrorDebounced()` — structured error handling with severity levels
 
 ## Path Aliases
 
 - `$lib` → `src/lib`
 - `$app` → SvelteKit app modules
 
-## Environment
-
-- Static site deployment (no server runtime)
-- GitHub Pages with base path `/me/` in production
-- Local development on `http://localhost:5173`
-
 ## Deprecated Features (Do NOT Use)
 
-- `$:` reactive declarations (use `$derived` instead)
-- `writable`/`readable` stores (use `$state` runes instead)
-- `$app/stores` (use `$app/state` instead)
-- `onMount`, `beforeUpdate`, `afterUpdate`, `tick` (use `$effect` instead)
-- JSX syntax (use Svelte template syntax)
-- Slot elements (use snippets instead)
+- `$:` reactive declarations → use `$derived`
+- `writable`/`readable` stores → use `$state` runes
+- `$app/stores` → use `$app/state`
+- `onMount`, `beforeUpdate`, `afterUpdate`, `tick` → use `$effect`
+- `<slot>` elements → use snippets (`{#snippet}` + `{@render}`)
+- `on:` event directives → use `onclick`, `onchange`, etc.

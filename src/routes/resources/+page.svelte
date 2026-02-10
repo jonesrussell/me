@@ -85,6 +85,66 @@
 		grid-column: 1 / -1;
 	}
 
+	.northcloud-resource {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		padding: var(--space-6);
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
+	}
+
+	.northcloud-resource-title {
+		margin: 0;
+		font-size: var(--font-size-lg);
+		font-weight: var(--font-weight-bold);
+		color: var(--text-color);
+	}
+
+	.northcloud-resource-desc {
+		margin: 0;
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
+	}
+
+	.northcloud-resource-list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.northcloud-resource-item {
+		padding: var(--space-1) 0;
+		border-block-end: var(--border-width) solid var(--border-color);
+	}
+
+	.northcloud-resource-item:last-of-type {
+		border-block-end: none;
+	}
+
+	.northcloud-resource-link {
+		font-size: var(--font-size-sm);
+		text-decoration: none;
+		color: var(--accent-color);
+	}
+
+	.northcloud-resource-link:hover {
+		text-decoration: underline;
+	}
+
+	.northcloud-resource-more {
+		margin-top: var(--space-2);
+		font-size: var(--font-size-xs);
+		text-decoration: none;
+		color: var(--text-muted);
+	}
+
+	.northcloud-resource-more:hover {
+		text-decoration: underline;
+		color: var(--accent-color);
+	}
+
 	@container resources-page (min-width: 640px) {
 		.container {
 			max-width: min(var(--measure), 95cqi);
@@ -143,9 +203,42 @@
 <main class="resources">
 	<div class="container">
 		<div class="sections">
-			{#each Object.entries(groupedResources) as [category, resources] (category)}
-				<ResourceSection {category} resources={resources as Resource[]} />
+			{#each Object.entries(groupedResources) as [category, resources], i (category)}
+				<ResourceSection {category} resources={resources as Resource[]} index={i} />
 			{/each}
+			{#if data.northCloudArticles?.length}
+				<section class="northcloud-resource" aria-label="North Cloud pipeline feed">
+					<h2 class="northcloud-resource-title">North Cloud pipeline</h2>
+					<p class="northcloud-resource-desc">
+						Recent classified articles from the content platform.
+					</p>
+					<ul class="northcloud-resource-list">
+						{#each data.northCloudArticles as article (article.id)}
+							<li class="northcloud-resource-item">
+								<!-- eslint-disable svelte/no-navigation-without-resolve -->
+								<a
+									href={article.url}
+									class="northcloud-resource-link"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									{article.title}
+								</a>
+								<!-- eslint-enable svelte/no-navigation-without-resolve -->
+							</li>
+						{/each}
+					</ul>
+					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
+					<a
+						href="https://northcloud.biz"
+						class="northcloud-resource-more"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						North Cloud
+					</a>
+				</section>
+			{/if}
 			<div class="featured-videos-section">
 				<FeaturedVideos videos={youtubeChannel.featuredVideos} />
 			</div>
