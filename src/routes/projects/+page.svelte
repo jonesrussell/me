@@ -6,6 +6,9 @@
 	import type { Video } from '$lib/types/video';
 	import type { Project } from '$lib/types/project';
 	import Hero from '$lib/components/ui/Hero.svelte';
+	import type { PageData } from './$types';
+
+	const { data } = $props<{ data: PageData }>();
 
 	const projects: Project[] = projectsData.map((p) => ({
 		...p,
@@ -176,6 +179,59 @@
 		container-name: featured-videos;
 		width: 100%;
 	}
+
+	.northcloud-recent {
+		margin-top: var(--space-8);
+		padding: var(--space-4);
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
+	}
+
+	.northcloud-recent__title {
+		margin: 0 0 var(--space-3) 0;
+		font-size: var(--font-size-lg);
+		font-weight: var(--font-weight-bold);
+		color: var(--text-color);
+	}
+
+	.northcloud-recent__list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.northcloud-recent__item {
+		padding: var(--space-1) 0;
+		border-block-end: var(--border-width) solid var(--border-color);
+	}
+
+	.northcloud-recent__item:last-of-type {
+		border-block-end: none;
+	}
+
+	.northcloud-recent__link {
+		font-size: var(--font-size-sm);
+		color: var(--accent-color);
+		text-decoration: none;
+	}
+
+	.northcloud-recent__link:hover {
+		text-decoration: underline;
+	}
+
+	.northcloud-recent__more {
+		display: inline-block;
+		margin-top: var(--space-2);
+		font-size: var(--font-size-xs);
+		color: var(--text-muted);
+		text-decoration: none;
+	}
+
+	.northcloud-recent__more:hover {
+		text-decoration: underline;
+		color: var(--accent-color);
+	}
 </style>
 
 <svelte:head>
@@ -193,6 +249,33 @@
 		<section class="section project-grid-container" aria-label="Content platform and consumer sites">
 			<h2 class="section-title">Content platform and consumer sites</h2>
 			<ProjectGrid {projects} />
+			{#if data.northCloudArticles?.length}
+				<div class="northcloud-recent" aria-label="Recent pipeline articles">
+					<h3 class="northcloud-recent__title">Recent from North Cloud pipeline</h3>
+					<ul class="northcloud-recent__list">
+						{#each data.northCloudArticles as article}
+							<li class="northcloud-recent__item">
+								<a
+									href={article.url}
+									class="northcloud-recent__link"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									{article.title}
+								</a>
+							</li>
+						{/each}
+					</ul>
+					<a
+						href="https://northcloud.biz"
+						class="northcloud-recent__more"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						North Cloud
+					</a>
+				</div>
+			{/if}
 		</section>
 
 		<section class="section featured-videos-container" aria-label="Featured Videos">

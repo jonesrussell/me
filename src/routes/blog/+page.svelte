@@ -160,6 +160,69 @@
 		margin-inline: auto;
 		padding-inline: var(--space-4);
 		max-width: min(var(--measure), 95cqi);
+		gap: var(--space-8);
+	}
+
+	@container blog-page (min-width: 1024px) {
+		.container {
+			grid-template-columns: 1fr minmax(16rem, 20rem);
+		}
+	}
+
+	.northcloud-sidebar {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		padding: var(--space-4);
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
+		height: fit-content;
+	}
+
+	.northcloud-sidebar__title {
+		margin: 0;
+		font-size: var(--font-size-base);
+		font-weight: var(--font-weight-bold);
+		color: var(--text-color);
+	}
+
+	.northcloud-sidebar__list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.northcloud-sidebar__item {
+		margin: 0;
+		padding: var(--space-1) 0;
+		border-block-end: var(--border-width) solid var(--border-color);
+	}
+
+	.northcloud-sidebar__item:last-of-type {
+		border-block-end: none;
+	}
+
+	.northcloud-sidebar__link {
+		font-size: var(--font-size-sm);
+		color: var(--accent-color);
+		text-decoration: none;
+	}
+
+	.northcloud-sidebar__link:hover {
+		text-decoration: underline;
+	}
+
+	.northcloud-sidebar__more {
+		margin-top: var(--space-2);
+		font-size: var(--font-size-xs);
+		color: var(--text-muted);
+		text-decoration: none;
+	}
+
+	.northcloud-sidebar__more:hover {
+		text-decoration: underline;
+		color: var(--accent-color);
 	}
 
 	.posts-section {
@@ -394,6 +457,33 @@
 				</div>
 			{/if}
 		</section>
+		{#if data.northCloudArticles?.length}
+			<aside class="northcloud-sidebar" aria-label="From the North Cloud pipeline">
+				<h2 class="northcloud-sidebar__title">From the North Cloud pipeline</h2>
+				<ul class="northcloud-sidebar__list">
+					{#each data.northCloudArticles as article}
+						<li class="northcloud-sidebar__item">
+							<a
+								href={article.url}
+								class="northcloud-sidebar__link"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								{article.title}
+							</a>
+						</li>
+					{/each}
+				</ul>
+				<a
+					href="https://northcloud.biz"
+					class="northcloud-sidebar__more"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					North Cloud
+				</a>
+			</aside>
+		{/if}
 	</div>
 
 	<!-- Dev.to section -->

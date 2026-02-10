@@ -1,6 +1,7 @@
 import type { Specialty } from '$lib/types/specialty';
+import { fetchNorthCloudFeed } from '$lib/services/northcloud-service';
 
-export function load() {
+export async function load({ fetch }) {
 	// Organizing constants for better maintainability
 	const YOUTUBE = {
 		channel: 'https://youtube.com/@fullstackdev42',
@@ -43,11 +44,18 @@ export function load() {
 		{ href: '/contact', icon: '✉️', text: 'Get in touch' }
 	];
 
-	// Returning structured data for better readability
+	let northCloudArticles: Awaited<ReturnType<typeof fetchNorthCloudFeed>> = [];
+	try {
+		northCloudArticles = await fetchNorthCloudFeed(fetch);
+	} catch {
+		// Feed optional on homepage; continue with empty list
+	}
+
 	return {
 		youtube: YOUTUBE,
 		terminalCommand: TERMINAL_COMMAND,
 		specialties,
-		navLinks
+		navLinks,
+		northCloudArticles: northCloudArticles.slice(0, 5)
 	};
 }
