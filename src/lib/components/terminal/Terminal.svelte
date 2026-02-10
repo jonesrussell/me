@@ -198,19 +198,12 @@
 		.terminal-body.terminal-body--split {
 			flex-direction: row;
 			gap: 0;
+			padding: 0;
 		}
 
 		.terminal-body.terminal-body--split .pane {
 			flex: 1;
-			padding-inline: var(--space-2);
-		}
-
-		.terminal-body.terminal-body--split .pane:first-child {
-			padding-inline-start: 0;
-		}
-
-		.terminal-body.terminal-body--split .pane:last-child {
-			padding-inline-end: 0;
+			padding: var(--space-4);
 		}
 
 		.terminal-body.terminal-body--split .pane-divider {
