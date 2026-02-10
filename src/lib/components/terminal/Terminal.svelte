@@ -100,11 +100,29 @@
 		}
 	}
 
+	/* Split layout only at tablet/desktop (≥48rem) to avoid squishing on small screens */
+	@container terminal (width >= 48rem) {
+		.terminal-body.terminal-body-split {
+			flex-direction: row;
+			gap: 0;
+			padding: 0;
+		}
+
+		.terminal-body.terminal-body-split .pane {
+			flex: 1;
+			padding: var(--space-4);
+		}
+
+		.terminal-body.terminal-body-split .pane-divider {
+			display: block;
+		}
+	}
+
 	.terminal-frame {
-		display: flex;
-		position: relative;
 		container-type: inline-size;
 		container-name: terminal;
+		display: flex;
+		position: relative;
 
 		width: 100%;
 		max-width: min(var(--measure), 95cqi);
@@ -188,27 +206,9 @@
 	.pane-divider {
 		display: none;
 		flex-shrink: 0;
-		width: 1px;
+		width: 0.0625rem;
 		background: var(--border-color);
 		align-self: stretch;
-	}
-
-	/* Split layout only at tablet/desktop (≥48rem) to avoid squishing on small screens */
-	@container terminal (width >= 48rem) {
-		.terminal-body.terminal-body--split {
-			flex-direction: row;
-			gap: 0;
-			padding: 0;
-		}
-
-		.terminal-body.terminal-body--split .pane {
-			flex: 1;
-			padding: var(--space-4);
-		}
-
-		.terminal-body.terminal-body--split .pane-divider {
-			display: block;
-		}
 	}
 
 	/* CRT scanline overlay */
@@ -341,7 +341,7 @@
 		</div>
 		<div
 			class="terminal-body"
-			class:terminal-body--split={terminalState.splitOpen}
+			class:terminal-body-split={terminalState.splitOpen}
 		>
 			{#if terminalError}
 				<div class="terminal-error">

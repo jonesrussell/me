@@ -377,8 +377,8 @@
 		white-space: nowrap;
 	}
 
-	.youtube-section .youtube-link:hover .youtube-link-text,
-	.youtube-section .youtube-link:hover .youtube-icon {
+	.youtube-section .youtube-link:hover :where(.youtube-link-text),
+	.youtube-section .youtube-link:hover :where(.youtube-icon) {
 		color: var(--bg-color);
 	}
 
