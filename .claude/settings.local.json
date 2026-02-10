@@ -16,7 +16,12 @@
       "Bash(ps:*)",
       "Bash(xargs:*)",
       "Bash(npm run test:unit:run:*)",
-      "Bash(npm run check:*)"
+      "Bash(npm run check:*)",
+      "Bash(gh run:*)",
+      "Bash(npx svelte-check:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
