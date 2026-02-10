@@ -86,6 +86,7 @@
 	@container blog-page (min-width: 1024px) {
 		.container {
 			padding-inline: var(--space-16);
+			grid-template-columns: 1fr minmax(16rem, 20rem);
 		}
 	}
 
@@ -163,64 +164,58 @@
 		gap: var(--space-8);
 	}
 
-	@container blog-page (min-width: 1024px) {
-		.container {
-			grid-template-columns: 1fr minmax(16rem, 20rem);
-		}
-	}
-
 	.northcloud-sidebar {
 		display: flex;
 		flex-direction: column;
+		height: fit-content;
 		gap: var(--space-2);
 		padding: var(--space-4);
 		background: var(--bg-darker);
 		border: var(--border-width) solid var(--border-color);
 		border-radius: var(--radius-md);
-		height: fit-content;
 	}
 
-	.northcloud-sidebar__title {
+	.northcloud-sidebar-title {
 		margin: 0;
 		font-size: var(--font-size-base);
 		font-weight: var(--font-weight-bold);
 		color: var(--text-color);
 	}
 
-	.northcloud-sidebar__list {
+	.northcloud-sidebar-list {
 		margin: 0;
 		padding: 0;
 		list-style: none;
 	}
 
-	.northcloud-sidebar__item {
+	.northcloud-sidebar-item {
 		margin: 0;
 		padding: var(--space-1) 0;
 		border-block-end: var(--border-width) solid var(--border-color);
 	}
 
-	.northcloud-sidebar__item:last-of-type {
+	.northcloud-sidebar-item:last-of-type {
 		border-block-end: none;
 	}
 
-	.northcloud-sidebar__link {
+	.northcloud-sidebar-link {
 		font-size: var(--font-size-sm);
-		color: var(--accent-color);
 		text-decoration: none;
+		color: var(--accent-color);
 	}
 
-	.northcloud-sidebar__link:hover {
+	.northcloud-sidebar-link:hover {
 		text-decoration: underline;
 	}
 
-	.northcloud-sidebar__more {
+	.northcloud-sidebar-more {
 		margin-top: var(--space-2);
 		font-size: var(--font-size-xs);
-		color: var(--text-muted);
 		text-decoration: none;
+		color: var(--text-muted);
 	}
 
-	.northcloud-sidebar__more:hover {
+	.northcloud-sidebar-more:hover {
 		text-decoration: underline;
 		color: var(--accent-color);
 	}
@@ -459,24 +454,27 @@
 		</section>
 		{#if data.northCloudArticles?.length}
 			<aside class="northcloud-sidebar" aria-label="From the North Cloud pipeline">
-				<h2 class="northcloud-sidebar__title">From the North Cloud pipeline</h2>
-				<ul class="northcloud-sidebar__list">
-					{#each data.northCloudArticles as article}
-						<li class="northcloud-sidebar__item">
+				<h2 class="northcloud-sidebar-title">From the North Cloud pipeline</h2>
+				<ul class="northcloud-sidebar-list">
+					{#each data.northCloudArticles as article (article.id)}
+						<li class="northcloud-sidebar-item">
+							<!-- eslint-disable svelte/no-navigation-without-resolve -->
 							<a
 								href={article.url}
-								class="northcloud-sidebar__link"
+								class="northcloud-sidebar-link"
 								target="_blank"
 								rel="noopener noreferrer"
 							>
 								{article.title}
 							</a>
+							<!-- eslint-enable svelte/no-navigation-without-resolve -->
 						</li>
 					{/each}
 				</ul>
+				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 				<a
 					href="https://northcloud.biz"
-					class="northcloud-sidebar__more"
+					class="northcloud-sidebar-more"
 					target="_blank"
 					rel="noopener noreferrer"
 				>

@@ -87,68 +87,68 @@
 		border-radius: var(--radius-lg);
 	}
 
-	.northcloud-feed__title {
+	.northcloud-feed-title {
 		margin: 0;
 		font-size: var(--font-size-xl);
 		font-weight: var(--font-weight-bold);
 		color: var(--text-color);
 	}
 
-	.northcloud-feed__desc {
+	.northcloud-feed-desc {
 		margin: 0;
 		font-size: var(--font-size-sm);
 		color: var(--text-muted);
 	}
 
-	.northcloud-feed__list {
-		margin: 0;
-		padding: 0;
-		list-style: none;
+	.northcloud-feed-list {
 		display: flex;
 		flex-direction: column;
+		margin: 0;
+		padding: 0;
 		gap: var(--space-2);
+		list-style: none;
 	}
 
-	.northcloud-feed__item {
+	.northcloud-feed-item {
 		margin: 0;
 	}
 
-	.northcloud-feed__link {
+	.northcloud-feed-link {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-1);
 		padding: var(--space-2) 0;
-		color: var(--accent-color);
 		text-decoration: none;
+		color: var(--accent-color);
 		border-block-end: var(--border-width) solid var(--border-color);
 	}
 
-	.northcloud-feed__link:hover {
+	.northcloud-feed-link:hover {
 		text-decoration: underline;
 	}
 
-	.northcloud-feed__link-title {
+	.northcloud-feed-link-title {
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		font-weight: var(--font-weight-bold);
 	}
 
-	.northcloud-feed__snippet {
+	.northcloud-feed-snippet {
 		font-size: var(--font-size-xs);
-		color: var(--text-muted);
 		line-height: var(--line-height-relaxed);
+		color: var(--text-muted);
 	}
 
-	.northcloud-feed__more {
+	.northcloud-feed-more {
 		align-self: start;
 		margin-top: var(--space-2);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
-		color: var(--accent-color);
 		text-decoration: none;
+		color: var(--accent-color);
 	}
 
-	.northcloud-feed__more:hover {
+	.northcloud-feed-more:hover {
 		text-decoration: underline;
 	}
 </style>
@@ -181,28 +181,31 @@
 		/>
 		{#if data.northCloudArticles?.length}
 			<section class="northcloud-feed" aria-label="Recent from North Cloud pipeline">
-				<h2 class="northcloud-feed__title">Recent from North Cloud</h2>
-				<p class="northcloud-feed__desc">Classified articles from my content platform.</p>
-				<ul class="northcloud-feed__list">
-					{#each data.northCloudArticles as article}
-						<li class="northcloud-feed__item">
+				<h2 class="northcloud-feed-title">Recent from North Cloud</h2>
+				<p class="northcloud-feed-desc">Classified articles from my content platform.</p>
+				<ul class="northcloud-feed-list">
+					{#each data.northCloudArticles as article (article.id)}
+						<li class="northcloud-feed-item">
+							<!-- eslint-disable svelte/no-navigation-without-resolve -->
 							<a
 								href={article.url}
-								class="northcloud-feed__link"
+								class="northcloud-feed-link"
 								target="_blank"
 								rel="noopener noreferrer"
 							>
-								<span class="northcloud-feed__link-title">{article.title}</span>
+								<span class="northcloud-feed-link-title">{article.title}</span>
 								{#if article.snippet}
-									<span class="northcloud-feed__snippet">{article.snippet}</span>
+									<span class="northcloud-feed-snippet">{article.snippet}</span>
 								{/if}
 							</a>
+							<!-- eslint-enable svelte/no-navigation-without-resolve -->
 						</li>
 					{/each}
 				</ul>
+				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 				<a
 					href="https://northcloud.biz"
-					class="northcloud-feed__more"
+					class="northcloud-feed-more"
 					target="_blank"
 					rel="noopener noreferrer"
 				>

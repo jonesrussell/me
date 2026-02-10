@@ -188,47 +188,47 @@
 		border-radius: var(--radius-md);
 	}
 
-	.northcloud-recent__title {
+	.northcloud-recent-title {
 		margin: 0 0 var(--space-3) 0;
 		font-size: var(--font-size-lg);
 		font-weight: var(--font-weight-bold);
 		color: var(--text-color);
 	}
 
-	.northcloud-recent__list {
+	.northcloud-recent-list {
 		margin: 0;
 		padding: 0;
 		list-style: none;
 	}
 
-	.northcloud-recent__item {
+	.northcloud-recent-item {
 		padding: var(--space-1) 0;
 		border-block-end: var(--border-width) solid var(--border-color);
 	}
 
-	.northcloud-recent__item:last-of-type {
+	.northcloud-recent-item:last-of-type {
 		border-block-end: none;
 	}
 
-	.northcloud-recent__link {
+	.northcloud-recent-link {
 		font-size: var(--font-size-sm);
-		color: var(--accent-color);
 		text-decoration: none;
+		color: var(--accent-color);
 	}
 
-	.northcloud-recent__link:hover {
+	.northcloud-recent-link:hover {
 		text-decoration: underline;
 	}
 
-	.northcloud-recent__more {
+	.northcloud-recent-more {
 		display: inline-block;
 		margin-top: var(--space-2);
 		font-size: var(--font-size-xs);
-		color: var(--text-muted);
 		text-decoration: none;
+		color: var(--text-muted);
 	}
 
-	.northcloud-recent__more:hover {
+	.northcloud-recent-more:hover {
 		text-decoration: underline;
 		color: var(--accent-color);
 	}
@@ -251,24 +251,27 @@
 			<ProjectGrid {projects} />
 			{#if data.northCloudArticles?.length}
 				<div class="northcloud-recent" aria-label="Recent pipeline articles">
-					<h3 class="northcloud-recent__title">Recent from North Cloud pipeline</h3>
-					<ul class="northcloud-recent__list">
-						{#each data.northCloudArticles as article}
-							<li class="northcloud-recent__item">
+					<h3 class="northcloud-recent-title">Recent from North Cloud pipeline</h3>
+					<ul class="northcloud-recent-list">
+						{#each data.northCloudArticles as article (article.id)}
+							<li class="northcloud-recent-item">
+								<!-- eslint-disable svelte/no-navigation-without-resolve -->
 								<a
 									href={article.url}
-									class="northcloud-recent__link"
+									class="northcloud-recent-link"
 									target="_blank"
 									rel="noopener noreferrer"
 								>
 									{article.title}
 								</a>
+								<!-- eslint-enable svelte/no-navigation-without-resolve -->
 							</li>
 						{/each}
 					</ul>
+					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 					<a
 						href="https://northcloud.biz"
-						class="northcloud-recent__more"
+						class="northcloud-recent-more"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
