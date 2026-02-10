@@ -18,9 +18,7 @@ export default ts.config(
 	prettier,
 	...svelte.configs.prettier,
 	{
-		languageOptions: {
-			globals: { ...globals.browser, ...globals.node }
-		},
+		languageOptions: { globals: { ...globals.browser, ...globals.node } },
 		rules: { 'no-undef': 'off' }
 	},
 	{
@@ -32,9 +30,7 @@ export default ts.config(
 				projectService: true,
 				extraFileExtensions: ['.svelte'],
 				svelteConfig,
-				svelteFeatures: {
-					runes: true
-				}
+				svelteFeatures: { runes: true }
 			}
 		},
 		rules: {
@@ -42,13 +38,11 @@ export default ts.config(
 			'svelte/valid-compile': 'error',
 			'svelte/no-dom-manipulating': 'error',
 			'svelte/no-reactive-reassign': 'error',
-
 			// Store rules
 			'svelte/no-store-async': 'error',
 			'svelte/require-store-callbacks-use-set-param': 'error',
 			'svelte/require-store-reactive-access': 'error',
 			'svelte/require-stores-init': 'error',
-
 			// Template rules
 			'svelte/no-at-html-tags': 'error',
 			'svelte/no-dupe-else-if-blocks': 'error',
@@ -58,7 +52,6 @@ export default ts.config(
 			'svelte/no-object-in-text-mustaches': 'error',
 			'svelte/no-useless-mustaches': 'error',
 			'svelte/valid-each-key': 'error',
-
 			// Style rules
 			'svelte/no-dupe-style-properties': 'error',
 			'svelte/no-shorthand-style-property-overrides': 'error',
@@ -67,8 +60,6 @@ export default ts.config(
 	},
 	{
 		files: ['src/lib/components/SafeHtml.svelte'],
-		rules: {
-			'svelte/no-at-html-tags': 'off'
-		}
+		rules: { 'svelte/no-at-html-tags': 'off' }
 	}
 );

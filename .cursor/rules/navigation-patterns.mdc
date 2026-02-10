@@ -7,14 +7,13 @@ alwaysApply: false
 
 ## Link Structure
 Navigation links should follow these patterns:
-1. Primary navigation links should be in `.desktop-nav`
-2. Each link should have a unique, descriptive text or aria-label
-3. Blog link should use "📝 Read my technical articles" as text
-4. Projects link should use "Browse my open source projects" as text
-5. Contact link should use "Get in touch" as text
+1. Primary navigation links live in `.desktop-nav` (and mobile equivalent in `.mobile-nav`).
+2. Use concise, visible link text (e.g. "Blog", "Projects", "Resources", "Contact").
+3. Add `aria-label` or `aria-current` where they improve clarity (e.g. for icon-only or active state).
+4. Ensure each link has unique, descriptive text or an accessible name.
 
 ## Navigation Testing
-When testing navigation in [tests/routes.spec.ts](mdc:tests/routes.spec.ts):
+When testing navigation in `tests/routes.spec.ts`:
 1. Use `waitUntil: 'domcontentloaded'` for faster page loads
 2. Verify navigation links are visible before clicking
 3. Check for page-specific elements after navigation

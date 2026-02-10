@@ -1,6 +1,7 @@
 // +page.ts
 import type { PageLoad } from './$types';
 import { fetchFeed } from '$lib/services/blog-service';
+import { fetchNorthCloudFeed } from '$lib/services/northcloud-service';
 import type { BlogPost } from '$lib/types/blog';
 
 export const prerender = true;
@@ -44,13 +45,21 @@ export const load: PageLoad = async ({ fetch }) => {
 		process.env.NODE_ENV === 'development'
 	);
 
+	let northCloudArticles: Awaited<ReturnType<typeof fetchNorthCloudFeed>> = [];
+	try {
+		northCloudArticles = await fetchNorthCloudFeed(fetch);
+	} catch {
+		// Optional sidebar; continue without
+	}
+
 	if (isTestEnv) {
 		console.log('[blog/+page.ts] Using mockPosts for test/dev environment');
 		return {
 			initialPosts: mockPosts,
 			hasMore: false,
 			totalPages: 1,
-			currentPage: 1
+			currentPage: 1,
+			northCloudArticles: northCloudArticles.slice(0, 5)
 		};
 	}
 
@@ -68,7 +77,8 @@ export const load: PageLoad = async ({ fetch }) => {
 				initialPosts: result.items,
 				hasMore: result.hasMore,
 				totalPages: result.totalPages || 1,
-				currentPage: 1
+				currentPage: 1,
+				northCloudArticles: northCloudArticles.slice(0, 5)
 			};
 		}
 
@@ -78,7 +88,8 @@ export const load: PageLoad = async ({ fetch }) => {
 			initialPosts: mockPosts,
 			hasMore: false,
 			totalPages: 1,
-			currentPage: 1
+			currentPage: 1,
+			northCloudArticles: northCloudArticles.slice(0, 5)
 		};
 	} catch (error) {
 		console.error('[blog/+page.ts] Failed to load initial posts:', error);
@@ -89,7 +100,8 @@ export const load: PageLoad = async ({ fetch }) => {
 			hasMore: false,
 			totalPages: 1,
 			currentPage: 1,
-			serverError: error instanceof Error ? error.message : 'Failed to load posts'
+			serverError: error instanceof Error ? error.message : 'Failed to load posts',
+			northCloudArticles: northCloudArticles.slice(0, 5)
 		};
 	}
 };

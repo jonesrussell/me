@@ -28,9 +28,10 @@
 			"cqi",
 			"ms",
 			"vmin",
-			"vmax"
+			"vmax",
+			"px"
 		],
-		"unit-disallowed-list": ["px", "em"],
+		"unit-disallowed-list": ["em"],
 		"declaration-property-unit-allowed-list": {
 			"font-size": ["ch", "rem"],
 			"line-height": ["ch"],
@@ -52,13 +53,13 @@
 			"padding-bottom": ["rem", "ch"],
 			"padding-left": ["rem", "ch"],
 			"border-width": ["rem"],
-			"border-radius": ["rem"],
+			"border-radius": ["rem", "%"],
 			"gap": ["rem", "ch"],
 			"top": ["rem", "%"],
 			"right": ["rem", "%"],
 			"bottom": ["rem", "%"],
 			"left": ["rem", "%"],
-			"transform": ["rem", "deg"],
+			"transform": ["rem", "deg", "%"],
 			"transition": ["s", "ms"],
 			"animation": ["s", "ms"]
 		},
@@ -175,7 +176,7 @@
 		"font-weight-notation": "numeric",
 		"alpha-value-notation": "number",
 		"length-zero-no-unit": null,
-		"time-min-milliseconds": 100,
+		"time-min-milliseconds": 50,
 		"function-calc-no-unspaced-operator": null,
 		"function-linear-gradient-no-nonstandard-direction": true,
 		"function-name-case": "lower",

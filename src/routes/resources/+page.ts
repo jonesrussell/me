@@ -1,8 +1,26 @@
+import type { PageLoad } from './$types';
 import type { Resource } from '$lib/types/resource';
+import { fetchNorthCloudFeed } from '$lib/services/northcloud-service';
 
-export function load() {
+export const load: PageLoad = async ({ fetch }) => {
+	let northCloudArticles: Awaited<ReturnType<typeof fetchNorthCloudFeed>> = [];
+	try {
+		northCloudArticles = await fetchNorthCloudFeed(fetch);
+	} catch {
+		// Optional
+	}
+
 	const resources: Resource[] = [
 		// Featured Content
+		{
+			title: 'North Cloud',
+			url: 'https://northcloud.biz',
+			description:
+				'My content platform: crawl, classify, and publish to Redis. Pipeline of Go microservices, Elasticsearch, and Redis Pub/Sub.',
+			category: 'Essential Tools & Platforms',
+			featured: true,
+			tags: ['Content Pipeline', 'Go', 'Elasticsearch', 'Redis']
+		},
 		{
 			title: 'FullStack Dev YouTube',
 			url: 'https://www.youtube.com/@fullstackdev42',
@@ -226,5 +244,8 @@ export function load() {
 		}
 	];
 
-	return { resources };
-}
+	return {
+		resources,
+		northCloudArticles: northCloudArticles.slice(0, 5)
+	};
+};

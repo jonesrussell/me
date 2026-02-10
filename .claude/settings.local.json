@@ -14,11 +14,13 @@
       "Bash(curl:*)",
       "Bash(pgrep:*)",
       "Bash(ps:*)",
-      "Bash(xargs:*)"
+      "Bash(xargs:*)",
+      "Bash(npm run test:unit:run:*)",
+      "Bash(npm run check:*)"
     ]
   },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "svelte"
-  ],
-  "enableAllProjectMcpServers": true
+  ]
 }

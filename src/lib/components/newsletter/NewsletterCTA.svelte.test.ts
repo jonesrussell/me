@@ -3,7 +3,7 @@ import { render } from '@testing-library/svelte';
 import NewsletterCTA from './NewsletterCTA.svelte';
 
 // Mock the form service
-vi.mock('../../../js/services/form-service', () => ({
+vi.mock('$lib/services/form-service', () => ({
 	FormService: {
 		getInstance: vi.fn(() => ({
 			getSchema: vi.fn().mockResolvedValue({}),

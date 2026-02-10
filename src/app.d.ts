@@ -11,13 +11,6 @@ declare global {
 		}
 		// interface Platform {}
 		type ThemeMode = 'auto' | 'light' | 'dark';
-
-		interface TreeNode {
-			name: string;
-			url?: string;
-			description?: string;
-			children?: TreeNode[];
-		}
 	}
 
 	interface Window {
@@ -43,16 +36,6 @@ declare module '*.{jpeg,jpg,png,gif,webp,svg}?enhanced' {
 declare module '$lib/images/*.{jpeg,jpg,png,gif,webp,svg}?enhanced' {
 	const value: App.EnhancedImage;
 	export default value;
-}
-
-// Resource types
-declare module '$lib/types/resource' {
-	export interface TreeNode {
-		name: string;
-		url?: string;
-		description?: string;
-		children?: TreeNode[];
-	}
 }
 
 // SvelteKit types
