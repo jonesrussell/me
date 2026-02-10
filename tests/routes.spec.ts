@@ -59,7 +59,7 @@ test.describe('Route Navigation', () => {
 		// Wait for the projects page structure to be visible
 		await expect(page.locator('.projects')).toBeVisible();
 		await expect(page.getByRole('heading', { name: 'Projects' }).first()).toBeVisible();
-		await expect(page.getByText('North Cloud')).toBeVisible();
+		await expect(page.getByRole('link', { name: 'North Cloud' })).toBeVisible();
 	});
 
 	test('should maintain consistent navigation across pages', async ({ page }) => {

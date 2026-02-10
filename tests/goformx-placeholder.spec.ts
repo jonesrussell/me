@@ -32,7 +32,7 @@ test.describe('GoFormX placeholder surfaces', () => {
 	test('contact page shows placeholder in form column', async ({ page }) => {
 		await page.goto('/contact', { waitUntil: 'domcontentloaded' });
 
-		const placeholder = page.locator(PLACEHOLDER_SELECTOR);
+		const placeholder = page.locator(PLACEHOLDER_SELECTOR).first();
 		await expect(placeholder).toBeVisible();
 		await expect(placeholder).toContainText(CORE_TEXT);
 	});
