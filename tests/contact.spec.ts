@@ -23,8 +23,8 @@ test.describe('Contact Page', () => {
 
 		// Define social media platforms and their expected text
 		const socialLinks = [
-			{ text: 'GitHub: @jonesrussell' },
-			{ text: 'LinkedIn: jonesrussell42' }
+			{ text: 'github @jonesrussell' },
+			{ text: 'linkedin jonesrussell42' }
 		];
 
 		// Check each platform's text
