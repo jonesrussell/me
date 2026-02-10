@@ -29,12 +29,12 @@ test.describe('Projects Page', () => {
 		// Wait for projects to load
 		await page.waitForSelector('.project-grid > div', { timeout: 30000 });
 
-		// Check project content
+		// Check project content (each card has multiple links; assert first link visible)
 		const firstProject = page.locator('.project-grid > div').first();
 		await Promise.all([
 			expect(firstProject.locator('h3')).toBeVisible({ timeout: 10000 }),
 			expect(firstProject.locator('p')).toBeVisible({ timeout: 10000 }),
-			expect(firstProject.locator('a')).toBeVisible({ timeout: 10000 })
+			expect(firstProject.locator('a').first()).toBeVisible({ timeout: 10000 })
 		]);
 	});
 
@@ -44,13 +44,17 @@ test.describe('Projects Page', () => {
 		// Wait for projects to load
 		await page.waitForSelector('.project-grid > div', { timeout: 30000 });
 
-		// Check project links
+		// Each project card has multiple links (title, site, GitHub); assert all have target/rel
 		const projects = page.locator('.project-grid > div');
 		const count = await projects.count();
 		for (let i = 0; i < count; i++) {
-			const link = projects.nth(i).locator('a');
-			await expect(link).toHaveAttribute('target', '_blank');
-			await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+			const links = projects.nth(i).locator('a');
+			const linkCount = await links.count();
+			for (let j = 0; j < linkCount; j++) {
+				const link = links.nth(j);
+				await expect(link).toHaveAttribute('target', '_blank');
+				await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+			}
 		}
 	});
 });

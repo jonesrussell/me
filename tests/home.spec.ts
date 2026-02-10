@@ -36,7 +36,7 @@ test.describe('Home Page', () => {
 		];
 
 		for (const specialty of specialties) {
-			await expect(page.locator(`text=${specialty}`)).toBeVisible();
+			await expect(page.getByText(specialty).first()).toBeVisible();
 		}
 
 		// TODO: YouTube section test is temporarily disabled due to loading issues
@@ -55,7 +55,7 @@ test.describe('Home Page', () => {
 		];
 
 		for (const link of navLinks) {
-			await expect(page.locator(`text=${link}`)).toBeVisible();
+			await expect(page.getByText(link).first()).toBeVisible();
 		}
 	});
 

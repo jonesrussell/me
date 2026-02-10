@@ -9,13 +9,13 @@ test.describe('Contact Page', () => {
 
 		// Check main sections
 		await Promise.all([
-			expect(page.locator('h2')).toBeVisible({ timeout: 15000 }),
-			expect(page.locator('text=Get in Touch')).toBeVisible({ timeout: 15000 }),
+			expect(page.locator('h2').first()).toBeVisible({ timeout: 15000 }),
+			expect(page.getByRole('heading', { name: 'Get in Touch' })).toBeVisible({ timeout: 15000 }),
 			expect(page.locator('.contact-list')).toBeVisible({ timeout: 15000 })
 		]);
 
 		// Contact form is replaced by GoFormX placeholder until integration
-		await expect(page.locator('[data-goformx-placeholder]')).toBeVisible({ timeout: 5000 });
+		await expect(page.locator('[data-goformx-placeholder]').first()).toBeVisible({ timeout: 5000 });
 	});
 
 	test('should display social media links correctly', async ({ page }) => {
@@ -29,7 +29,7 @@ test.describe('Contact Page', () => {
 
 		// Check each platform's text
 		for (const { text } of socialLinks) {
-			const link = page.locator(`.contact-list li:has-text("${text}")`);
+			const link = page.locator('.contact-list li').filter({ hasText: text }).first();
 			await expect(link).toBeVisible({ timeout: 10000 });
 		}
 	});
@@ -49,5 +49,8 @@ test.describe('Contact Page', () => {
 			'Get in touch with me for collaboration, questions, or just to say ahnii!',
 			{ timeout: 10000 }
 		);
+	});
+});
+);
 	});
 });
