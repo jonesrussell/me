@@ -76,6 +76,81 @@
 		background: var(--color-background-alt);
 		border-radius: var(--radius-lg);
 	}
+
+	.northcloud-feed {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+		padding: var(--space-6);
+		background: var(--bg-color);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-lg);
+	}
+
+	.northcloud-feed__title {
+		margin: 0;
+		font-size: var(--font-size-xl);
+		font-weight: var(--font-weight-bold);
+		color: var(--text-color);
+	}
+
+	.northcloud-feed__desc {
+		margin: 0;
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
+	}
+
+	.northcloud-feed__list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+	}
+
+	.northcloud-feed__item {
+		margin: 0;
+	}
+
+	.northcloud-feed__link {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-1);
+		padding: var(--space-2) 0;
+		color: var(--accent-color);
+		text-decoration: none;
+		border-block-end: var(--border-width) solid var(--border-color);
+	}
+
+	.northcloud-feed__link:hover {
+		text-decoration: underline;
+	}
+
+	.northcloud-feed__link-title {
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		font-weight: var(--font-weight-bold);
+	}
+
+	.northcloud-feed__snippet {
+		font-size: var(--font-size-xs);
+		color: var(--text-muted);
+		line-height: var(--line-height-relaxed);
+	}
+
+	.northcloud-feed__more {
+		align-self: start;
+		margin-top: var(--space-2);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		color: var(--accent-color);
+		text-decoration: none;
+	}
+
+	.northcloud-feed__more:hover {
+		text-decoration: underline;
+	}
 </style>
 
 <svelte:head>
@@ -104,6 +179,37 @@
 			sectionTitle={data.youtube.section.title}
 			sectionSubtitle={data.youtube.section.subtitle}
 		/>
+		{#if data.northCloudArticles?.length}
+			<section class="northcloud-feed" aria-label="Recent from North Cloud pipeline">
+				<h2 class="northcloud-feed__title">Recent from North Cloud</h2>
+				<p class="northcloud-feed__desc">Classified articles from my content platform.</p>
+				<ul class="northcloud-feed__list">
+					{#each data.northCloudArticles as article}
+						<li class="northcloud-feed__item">
+							<a
+								href={article.url}
+								class="northcloud-feed__link"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<span class="northcloud-feed__link-title">{article.title}</span>
+								{#if article.snippet}
+									<span class="northcloud-feed__snippet">{article.snippet}</span>
+								{/if}
+							</a>
+						</li>
+					{/each}
+				</ul>
+				<a
+					href="https://northcloud.biz"
+					class="northcloud-feed__more"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					More on North Cloud
+				</a>
+			</section>
+		{/if}
 		<ActionNavCards links={data.navLinks} />
 		<div id="cta-form-container" class="gf-section gf-section-cta">
 			<GoFormXPlaceholder

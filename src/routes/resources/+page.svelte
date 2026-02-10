@@ -85,6 +85,66 @@
 		grid-column: 1 / -1;
 	}
 
+	.northcloud-resource {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		padding: var(--space-6);
+		background: var(--bg-darker);
+		border: var(--border-width) solid var(--border-color);
+		border-radius: var(--radius-md);
+	}
+
+	.northcloud-resource__title {
+		margin: 0;
+		font-size: var(--font-size-lg);
+		font-weight: var(--font-weight-bold);
+		color: var(--text-color);
+	}
+
+	.northcloud-resource__desc {
+		margin: 0;
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
+	}
+
+	.northcloud-resource__list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.northcloud-resource__item {
+		padding: var(--space-1) 0;
+		border-block-end: var(--border-width) solid var(--border-color);
+	}
+
+	.northcloud-resource__item:last-of-type {
+		border-block-end: none;
+	}
+
+	.northcloud-resource__link {
+		font-size: var(--font-size-sm);
+		color: var(--accent-color);
+		text-decoration: none;
+	}
+
+	.northcloud-resource__link:hover {
+		text-decoration: underline;
+	}
+
+	.northcloud-resource__more {
+		margin-top: var(--space-2);
+		font-size: var(--font-size-xs);
+		color: var(--text-muted);
+		text-decoration: none;
+	}
+
+	.northcloud-resource__more:hover {
+		text-decoration: underline;
+		color: var(--accent-color);
+	}
+
 	@container resources-page (min-width: 640px) {
 		.container {
 			max-width: min(var(--measure), 95cqi);
@@ -146,6 +206,36 @@
 			{#each Object.entries(groupedResources) as [category, resources], i (category)}
 				<ResourceSection {category} resources={resources as Resource[]} index={i} />
 			{/each}
+			{#if data.northCloudArticles?.length}
+				<section class="northcloud-resource" aria-label="North Cloud pipeline feed">
+					<h2 class="northcloud-resource__title">North Cloud pipeline</h2>
+					<p class="northcloud-resource__desc">
+						Recent classified articles from the content platform.
+					</p>
+					<ul class="northcloud-resource__list">
+						{#each data.northCloudArticles as article}
+							<li class="northcloud-resource__item">
+								<a
+									href={article.url}
+									class="northcloud-resource__link"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									{article.title}
+								</a>
+							</li>
+						{/each}
+					</ul>
+					<a
+						href="https://northcloud.biz"
+						class="northcloud-resource__more"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						North Cloud
+					</a>
+				</section>
+			{/if}
 			<div class="featured-videos-section">
 				<FeaturedVideos videos={youtubeChannel.featuredVideos} />
 			</div>
