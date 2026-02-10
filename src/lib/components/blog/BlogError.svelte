@@ -13,6 +13,10 @@
 				return 'Validation Error';
 			case 'CACHE_ERROR':
 				return 'Cache Error';
+			case 'SERVER_ERROR':
+				return 'Feed unavailable';
+			case 'LOAD_MORE_ERROR':
+				return 'Load more failed';
 			default:
 				return 'Unknown Error';
 		}

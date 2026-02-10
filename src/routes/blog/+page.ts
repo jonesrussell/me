@@ -94,13 +94,17 @@ export const load: PageLoad = async ({ fetch }) => {
 	} catch (error) {
 		console.error('[blog/+page.ts] Failed to load initial posts:', error);
 		console.warn('[blog/+page.ts] Using mockPosts due to error');
-		// Return mock data instead of empty state for better testing
+		const rawMessage = error instanceof Error ? error.message : 'Failed to load posts';
+		const is404 = rawMessage.includes('404');
+		const serverError = is404
+			? 'Blog feed temporarily unavailable. Showing sample posts—reload to try again.'
+			: rawMessage;
 		return {
 			initialPosts: mockPosts,
 			hasMore: false,
 			totalPages: 1,
 			currentPage: 1,
-			serverError: error instanceof Error ? error.message : 'Failed to load posts',
+			serverError,
 			northCloudArticles: northCloudArticles.slice(0, 5)
 		};
 	}
