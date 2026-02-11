@@ -10,15 +10,15 @@ test.describe('Home Page', () => {
 	});
 
 	test('should load the home page successfully', async ({ page }) => {
-		// Check for main sections
+		// Check for main sections (content is in div.home inside layout main)
 		const hero = page.locator('.hero');
 		const terminal = page.locator('.terminal-frame');
-		const main = page.locator('main.home');
+		const homeContent = page.locator('.home');
 
 		await Promise.all([
 			expect(hero).toBeVisible(),
 			expect(terminal).toBeVisible(),
-			expect(main).toBeVisible()
+			expect(homeContent).toBeVisible()
 		]);
 
 		// Check terminal components
