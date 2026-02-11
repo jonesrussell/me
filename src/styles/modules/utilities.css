@@ -1,4 +1,28 @@
 @layer utilities {
+	/* Skip to main content - first focusable element, visible on focus */
+	.skip-to-main {
+		position: absolute;
+		top: -100%;
+		left: var(--space-4);
+		padding: var(--space-4) var(--space-8);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-base);
+		font-weight: var(--font-weight-medium);
+		text-decoration: none;
+		color: var(--bg-color);
+		background: var(--accent-color);
+		border-radius: var(--radius-sm);
+		opacity: 0;
+		transition: opacity var(--transition-duration) var(--transition-timing);
+		z-index: 100;
+	}
+
+	.skip-to-main:focus,
+	.skip-to-main:focus-visible {
+		top: var(--space-4);
+		opacity: 1;
+	}
+
 	/* Keyframes */
 	@keyframes spin {
 		from {

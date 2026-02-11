@@ -379,18 +379,18 @@
 		name="description"
 		content="Articles and tutorials on web development, Go programming, cloud technologies, and open source software by Russell Jones. Practical insights and best practices."
 	/>
-	<link rel="canonical" href="https://yoursite.com/blog" />
+	<link rel="canonical" href={data.canonicalBlog} />
 	<meta property="og:title" content="Technical Blog | Russell Jones" />
 	<meta property="og:description" content="Web development articles and tutorials" />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://yoursite.com/blog" />
+	<meta property="og:url" content={data.canonicalBlog} />
 </svelte:head>
 
 <div class="blog-hero-wrapper">
 	<Hero title="Web Developer Blog" subtitle="Open Source Enthusiast" />
 </div>
 
-<main class="blog">
+<div class="blog">
 	<!-- Global error handling -->
 	<BlogError />
 
@@ -488,4 +488,4 @@
 	<section class="dev-to-wrapper" aria-label="Dev.to articles">
 		<DevTo />
 	</section>
-</main>
+</div>
