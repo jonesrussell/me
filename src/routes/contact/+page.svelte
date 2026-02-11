@@ -106,7 +106,7 @@
 
 <Hero title="Establish Connection" subtitle="// ready to receive" />
 
-<main class="contact">
+<div class="contact">
 	<div class="container">
 		<div class="contact-info">
 			<h2>Get in Touch</h2>
@@ -128,4 +128,4 @@
 			/>
 		</div>
 	</div>
-</main>
+</div>

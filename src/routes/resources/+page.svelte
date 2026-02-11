@@ -200,7 +200,7 @@
 
 <Hero title="Developer Resources" subtitle="Essential Tools & Learning Materials" />
 
-<main class="resources">
+<div class="resources">
 	<div class="container">
 		<div class="sections">
 			{#each Object.entries(groupedResources) as [category, resources], i (category)}
@@ -244,4 +244,4 @@
 			</div>
 		</div>
 	</div>
-</main>
+</div>

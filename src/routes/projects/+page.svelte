@@ -244,7 +244,7 @@
 
 <Hero title="Projects" />
 
-<main class="projects">
+<div class="projects">
 	<div class="container">
 		<section class="section project-grid-container" aria-label="Content platform and consumer sites">
 			<h2 class="section-title">Content platform and consumer sites</h2>
@@ -286,4 +286,4 @@
 			<VideoGrid {videos} />
 		</section>
 	</div>
-</main>
+</div>

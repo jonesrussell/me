@@ -165,7 +165,7 @@
 	<Terminal />
 </Hero>
 
-<main class="home">
+<div class="home">
 	<div class="home-container">
 		<SpecialtyGrid
 			specialties={data.specialties}
@@ -222,4 +222,4 @@
 			/>
 		</div>
 	</div>
-</main>
+</div>
