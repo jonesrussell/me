@@ -7,7 +7,19 @@
 	const errorMessage = $derived(
 		isNotFound ? 'Page not found' : page.error?.message || 'Something went wrong'
 	);
+	const pageTitle = $derived(isNotFound ? 'Page not found | Russell Jones' : 'Error | Russell Jones');
+	const headingText = $derived(isNotFound ? 'Page not found' : 'Error');
+	const pageDescription = $derived(
+		isNotFound
+			? 'The page you are looking for could not be found.'
+			: 'An error occurred while loading this page.'
+	);
 </script>
+
+<svelte:head>
+	<title>{pageTitle}</title>
+	<meta name="description" content={pageDescription} />
+</svelte:head>
 
 <style>
 	.error {
@@ -100,7 +112,7 @@
 
 <div class="error">
 	<div class="container">
-		<h1>{page.status}</h1>
+		<h1>{headingText}</h1>
 		<p>{errorMessage}</p>
 		<a href={resolve('/')}>Return home</a>
 	</div>
