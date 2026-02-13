@@ -72,7 +72,7 @@ const feedCache = (() => {
 export const resetFeedCache = feedCache.resetCache;
 
 // XML Parsing Module
-const parseXMLFeed = (xml: string): BlogPost[] => {
+const parseAtomFeed = (xml: string): BlogPost[] => {
 	const entries: BlogPost[] = [];
 	const entryMatches = xml.match(/<entry[^>]*>([\s\S]*?)<\/entry>/g) || [];
 
@@ -109,6 +109,54 @@ const parseXMLFeed = (xml: string): BlogPost[] => {
 	}
 
 	return entries;
+};
+
+const parseRSSFeed = (xml: string): BlogPost[] => {
+	const entries: BlogPost[] = [];
+	const itemMatches = xml.match(/<item>([\s\S]*?)<\/item>/g) || [];
+
+	for (const itemMatch of itemMatches) {
+		const titleMatch = itemMatch.match(/<title>([\s\S]*?)<\/title>/);
+		const linkMatch = itemMatch.match(/<link>([\s\S]*?)<\/link>/);
+		const contentMatch =
+			itemMatch.match(/<content:encoded><!\[CDATA\[([\s\S]*?)\]\]><\/content:encoded>/) ||
+			itemMatch.match(/<description>([\s\S]*?)<\/description>/);
+		const pubDateMatch = itemMatch.match(/<pubDate>([\s\S]*?)<\/pubDate>/);
+		const categoryMatches = itemMatch.match(/<category>([\s\S]*?)<\/category>/g) || [];
+
+		const title = titleMatch ? titleMatch[1].trim() : '';
+		const link = linkMatch ? linkMatch[1].trim() : '';
+		const content = contentMatch ? contentMatch[1].trim() : '';
+		const published = pubDateMatch ? pubDateMatch[1].trim() : '';
+		const categories = categoryMatches
+			.map(match => {
+				const catMatch = match.match(/<category>([\s\S]*?)<\/category>/);
+				return catMatch ? catMatch[1].trim() : '';
+			})
+			.filter(Boolean);
+
+		if (title) {
+			entries.push({
+				title,
+				link,
+				content,
+				published,
+				formattedDate: formatPostDate(published),
+				categories,
+				slug: generateSlug(title)
+			});
+		}
+	}
+
+	return entries;
+};
+
+const parseXMLFeed = (xml: string): BlogPost[] => {
+	// Detect feed format: Atom uses <entry>, RSS 2.0 uses <item>
+	if (xml.includes('<entry')) {
+		return parseAtomFeed(xml);
+	}
+	return parseRSSFeed(xml);
 };
 
 // API Module - Pure functions (no store updates)

@@ -34,6 +34,30 @@ const sampleXml = `<?xml version="1.0" encoding="UTF-8"?>
   </entry>
 </feed>`;
 
+const sampleRSSXml = `<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Test Blog</title>
+    <link>https://example.com/blog/</link>
+    <item>
+      <title>RSS Post 1</title>
+      <link>https://example.com/blog/rss-post-1/</link>
+      <pubDate>Tue, 10 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>https://example.com/blog/rss-post-1/</guid>
+      <description>Short description of RSS post 1</description>
+      <content:encoded><![CDATA[<p>Full content of RSS post 1</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>RSS Post 2</title>
+      <link>https://example.com/blog/rss-post-2/</link>
+      <pubDate>Mon, 09 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>https://example.com/blog/rss-post-2/</guid>
+      <description>Short description of RSS post 2</description>
+      <content:encoded><![CDATA[<p>Full content of RSS post 2</p>]]></content:encoded>
+    </item>
+  </channel>
+</rss>`;
+
 const malformedXml = `<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <entry>
@@ -174,6 +198,44 @@ describe('API', () => {
 			// Second fetch should hit the network again
 			await fetchFeed(mockFetch);
 			expect(mockFetch).toHaveBeenCalledTimes(2);
+		});
+	});
+
+	describe('fetchFeed with RSS 2.0 format', () => {
+		beforeEach(() => {
+			resetFeedCache();
+			mockFetch.mockImplementation(() =>
+				Promise.resolve({
+					ok: true,
+					text: () => Promise.resolve(sampleRSSXml),
+					headers: new Headers()
+				})
+			);
+		});
+
+		it('should fetch and parse RSS 2.0 feed successfully', async () => {
+			const result = await fetchFeed(mockFetch);
+
+			expect(result.items).toHaveLength(2);
+			expect(result.items[0]).toMatchObject({
+				title: 'RSS Post 1',
+				link: 'https://example.com/blog/rss-post-1/',
+				content: '<p>Full content of RSS post 1</p>',
+				slug: 'rss-post-1'
+			});
+		});
+
+		it('should parse pubDate from RSS 2.0 items', async () => {
+			const result = await fetchFeed(mockFetch);
+
+			expect(result.items[0].published).toBe('Tue, 10 Feb 2026 00:00:00 +0000');
+		});
+
+		it('should handle pagination with RSS 2.0 feed', async () => {
+			const page1 = await fetchFeed(mockFetch, { page: 1, pageSize: 1 });
+			expect(page1.items).toHaveLength(1);
+			expect(page1.hasMore).toBe(true);
+			expect(page1.items[0].title).toBe('RSS Post 1');
 		});
 	});
 
