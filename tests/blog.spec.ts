@@ -36,9 +36,15 @@ test.describe('Blog Page', () => {
 		await Promise.all([
 			expect(firstPost.locator('.title')).toBeVisible(),
 			expect(firstPost.locator('time')).toBeVisible(),
-			expect(firstPost.locator('.excerpt')).toHaveText(/.*/),
-			expect(firstPost.locator('.categories')).toBeVisible()
+			expect(firstPost.locator('.excerpt')).toHaveText(/.*/)
 		]);
+
+		// Categories are conditional — only rendered when the post has them
+		const categories = firstPost.locator('.categories');
+		const categoriesCount = await categories.count();
+		if (categoriesCount > 0) {
+			await expect(categories).toBeVisible();
+		}
 	});
 
 	test('should handle error state', async ({ page }) => {
