@@ -2,7 +2,7 @@
  * Error handling utilities for consistent error management across the application
  */
 
-export interface ErrorContext {
+interface ErrorContext {
 	component?: string;
 	action?: string;
 	userId?: string;
@@ -11,7 +11,7 @@ export interface ErrorContext {
 	url?: string;
 }
 
-export interface AppError extends Error {
+interface AppError extends Error {
 	context?: ErrorContext;
 	severity?: 'low' | 'medium' | 'high' | 'critical';
 	recoverable?: boolean;

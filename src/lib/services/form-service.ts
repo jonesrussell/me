@@ -1,6 +1,6 @@
 import { config } from '$lib/config/env';
 
-export interface FormSchema {
+interface FormSchema {
   display: string;
   components: Array<{
     type: string;
@@ -10,12 +10,12 @@ export interface FormSchema {
   }>;
 }
 
-export interface FormData {
+interface FormData {
   email?: string;
   [key: string]: string | number | boolean | undefined;
 }
 
-export interface FormSubmissionResponse {
+interface FormSubmissionResponse {
   success: boolean;
   message?: string;
   submission_id?: string;

@@ -44,8 +44,6 @@ const feedCache = (() => {
 	return { getCache, updateCache, resetCache };
 })();
 
-export const resetNorthCloudFeedCache = feedCache.resetCache;
-
 function normalizeArticle(
 	a: NorthCloudFeedResponse['articles'][number]
 ): NorthCloudArticle {
