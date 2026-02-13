@@ -121,11 +121,6 @@
 		}
 	}
 
-	// Handle channel link click for analytics
-	function handleChannelClick() {
-		// You can add analytics tracking here if needed
-		console.log('Channel link clicked:', channelUrl);
-	}
 </script>
 
 <style>
@@ -450,7 +445,6 @@
 			class="youtube-link"
 			target="_blank"
 			rel="noopener noreferrer"
-			onclick={handleChannelClick}
 			aria-label="Subscribe to my YouTube channel (opens in new tab)"
 		>
 			<span class="youtube-icon" aria-hidden="true">▶</span>

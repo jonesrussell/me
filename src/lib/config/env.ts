@@ -35,4 +35,3 @@ export const config = {
 	isProd: import.meta.env.PROD
 } as const;
 
-export type Config = typeof config;

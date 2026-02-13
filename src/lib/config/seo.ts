@@ -4,7 +4,7 @@
  */
 
 /** Public site origin (no trailing slash). */
-export const SITE_ORIGIN = 'https://jonesrussell.github.io';
+const SITE_ORIGIN = 'https://jonesrussell.github.io';
 
 /**
  * Build an absolute canonical URL for a path.

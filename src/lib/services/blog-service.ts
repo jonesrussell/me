@@ -14,12 +14,12 @@ interface FeedCache {
 	lastError?: string;
 }
 
-export interface PaginationOptions {
+interface PaginationOptions {
 	page?: number;
 	pageSize?: number;
 }
 
-export type PaginatedResult<T> = {
+type PaginatedResult<T> = {
 	items: T[];
 	hasMore: boolean;
 	totalPages?: number;

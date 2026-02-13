@@ -52,7 +52,7 @@ PostCSS is also configured inline in `vite.config.ts` (no `postcss.config.js`).
 - All routes prerender by default (`+layout.server.ts` sets `prerender = true`)
 - Blog detail pages (`blog/[slug]/+page.server.ts`) disable prerendering for dynamic slugs
 - Data loading uses `+page.ts` (universal) for most routes, `+page.server.ts` for blog detail
-- Root layout (`+layout.svelte`) uses grid layout with SkipToMain, Header, children, GoFormX placeholder (newsletter slot), Footer
+- Root layout (`+layout.svelte`) uses grid layout with Header, children, GoFormX placeholder (newsletter slot), Footer
 
 ### Deployment & Base Path
 
