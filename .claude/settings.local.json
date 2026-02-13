@@ -21,7 +21,13 @@
       "Bash(npx svelte-check:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "WebFetch(domain:jonesrussell.github.io)",
+      "Bash(npx vitest run:*)",
+      "Bash(npm install:*)",
+      "Bash(git -C /home/fsd42/dev/me status)",
+      "Bash(git -C /home/fsd42/dev/me diff)",
+      "Bash(git -C /home/fsd42/dev/me log --oneline -5)"
     ]
   },
   "enableAllProjectMcpServers": true,
