@@ -11,82 +11,108 @@
 </script>
 
 <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-<a {href} class="featured-series-card">
-	<div class="card-content">
-		<span class="card-label">Series</span>
-		<h2 class="card-title">{title}</h2>
-		<p class="card-description">{description}</p>
-		{#if completedCount(seriesId) > 0}
-			<p class="card-progress">{completedCount(seriesId)} of {totalEntries} completed</p>
-		{/if}
+<a {href} class="pinned-process">
+	<div class="process-header">
+		<span class="process-label">[SERIES]</span>
+		<span class="process-title">{title}</span>
+		<span class="process-dots" aria-hidden="true"></span>
+		<span class="process-progress">{completedCount(seriesId)}/{totalEntries} completed</span>
 	</div>
+	<p class="process-description">&gt; {description}</p>
 </a>
 
 <style>
-	.featured-series-card {
+	.pinned-process {
 		display: block;
-		padding: var(--space-8);
+		padding: var(--space-4);
 		text-decoration: none;
 		color: inherit;
 		background: var(--bg-darker);
 		border: 0.0625rem solid var(--border-color);
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-sm);
-		transition:
-			transform var(--transition-base),
-			box-shadow var(--transition-base),
-			border-color var(--transition-base);
+		border-radius: var(--radius-md);
+		transition: border-color var(--transition-base);
 	}
 
-	.featured-series-card:hover {
-		box-shadow: var(--shadow-md);
-		transform: translateY(-0.125rem);
+	.pinned-process:hover {
 		border-color: var(--accent-color);
 	}
 
-	.card-content {
+	.process-header {
 		display: flex;
-		flex-direction: column;
-		gap: var(--space-3);
+		flex-direction: row;
+		align-items: center;
+		gap: var(--space-2);
+		flex-wrap: wrap;
 	}
 
-	.card-label {
+	.process-label {
 		font-family: var(--font-mono);
 		font-size: var(--font-size-xs);
-		font-weight: 600;
+		font-weight: var(--font-weight-bold);
 		text-transform: uppercase;
 		color: var(--accent-color);
 		letter-spacing: 0.05ch;
 	}
 
-	.card-title {
-		margin: 0;
-		font-size: var(--font-size-2xl);
-		font-weight: 700;
+	.process-label::before {
+		content: '';
+		display: inline-block;
+		width: 0.5rem;
+		height: 0.5rem;
+		border-radius: var(--radius-full);
+		background: var(--accent-color);
+		margin-inline-end: var(--space-2);
+		vertical-align: middle;
+		animation: pulse 2s ease-in-out infinite;
+	}
+
+	@keyframes pulse {
+		0%,
+		100% {
+			opacity: 0.4;
+		}
+
+		50% {
+			opacity: 1;
+		}
+	}
+
+	.process-title {
+		font-family: var(--font-mono);
+		font-size: var(--font-size-base);
+		font-weight: var(--font-weight-bold);
 		color: var(--text-color);
 	}
 
-	.card-description {
-		margin: 0;
-		font-size: var(--font-size-base);
-		line-height: 1.6;
-		color: var(--text-muted);
+	.process-dots {
+		flex-grow: 1;
+		border-block-end: 0.0625rem dotted var(--border-color);
+		height: 0.0625rem;
+		min-width: var(--space-8);
 	}
 
-	.card-progress {
-		margin: 0;
+	.process-progress {
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
-		color: var(--accent-color);
+		color: var(--text-muted);
+		white-space: nowrap;
+	}
+
+	.process-description {
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		color: var(--text-muted);
+		margin-block-start: var(--space-2);
+		margin-block-end: 0;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.featured-series-card {
+		.pinned-process {
 			transition: none;
 		}
 
-		.featured-series-card:hover {
-			transform: none;
+		.process-label::before {
+			animation: none;
 		}
 	}
 </style>
