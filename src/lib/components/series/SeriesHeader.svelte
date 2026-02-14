@@ -15,6 +15,7 @@
 	<h1 class="series-title">{title}</h1>
 	<p class="series-description">{description}</p>
 	<div class="series-meta">
+		<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 		<a href={repoUrl} target="_blank" rel="noopener noreferrer" class="repo-link">
 			Companion Repository
 		</a>
@@ -36,15 +37,15 @@
 		margin: 0;
 		font-size: var(--font-size-3xl);
 		font-weight: 700;
-		color: var(--text-color);
 		line-height: 1.2;
+		color: var(--text-color);
 	}
 
 	.series-description {
 		margin: 0;
 		font-size: var(--font-size-lg);
-		color: var(--text-muted);
 		line-height: 1.6;
+		color: var(--text-muted);
 		max-inline-size: 60ch;
 	}
 
@@ -56,13 +57,13 @@
 
 	.repo-link {
 		display: inline-flex;
-		align-items: center;
-		gap: var(--space-2);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
-		color: var(--accent-color);
 		text-decoration: none;
+		color: var(--accent-color);
 		transition: color var(--transition-base);
+		align-items: center;
+		gap: var(--space-2);
 	}
 
 	.repo-link:hover {

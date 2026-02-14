@@ -111,8 +111,8 @@
 	}
 
 	.entry-info h3 a {
-		color: var(--text-color);
 		text-decoration: none;
+		color: var(--text-color);
 	}
 
 	.entry-info h3 a:hover {

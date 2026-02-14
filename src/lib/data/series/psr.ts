@@ -187,8 +187,8 @@ export const psrSeries: ISeries = {
 				},
 				{
 					psrNumber: 20,
-					slug: 'psr-20-clock-in-php',
-					title: 'PSR-20: Clock',
+					slug: 'psr-20-clock-interface-in-php',
+					title: 'PSR-20: Clock Interface',
 					summary: 'Interface for reading the current time.',
 					companionFiles: ['src/Clock/SystemClock.php', 'src/Clock/FrozenClock.php'],
 					testFiles: ['tests/Clock/FrozenClockTest.php'],
