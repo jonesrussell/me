@@ -11,6 +11,7 @@
 	.terminal-header {
 		container-type: inline-size;
 		position: relative;
+		width: 100%;
 		background: var(--bg-darker);
 		border: 1px solid var(--border-color);
 		border-radius: var(--radius-md);

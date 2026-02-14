@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { BlogPost } from '$lib/types/blog';
+	import { decodeEntities } from '$lib/utils/html-entities';
 
 	interface Props {
 		post: BlogPost;
@@ -8,7 +9,7 @@
 	const { post }: Props = $props();
 
 	function excerpt(content: string): string {
-		const text = content.replace(/<[^>]*>/g, '');
+		const text = decodeEntities(content.replace(/<[^>]*>/g, ''));
 		if (text.length <= 280) return text;
 		return text.slice(0, 280) + '...';
 	}
@@ -90,7 +91,7 @@
 	<span class="hero-post-badge">[LATEST]</span>
 	<h2 class="hero-post-title">{post.title}</h2>
 	<p class="hero-post-meta">
-		published: {post.published}{#if post.categories.length > 0}
+		published: {post.formattedDate}{#if post.categories.length > 0}
 			| tags: [{formatCategories(post.categories)}]{/if}
 	</p>
 	<p class="hero-post-excerpt">{excerpt(post.content)}</p>

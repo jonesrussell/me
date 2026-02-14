@@ -25,7 +25,7 @@ describe('BlogPostCard', () => {
 
 	it('should show published date', () => {
 		render(BlogPostCard, { props: { post: mockPost } });
-		expect(screen.getByText('2025-01-10')).toBeTruthy();
+		expect(screen.getByText('January 10, 2025')).toBeTruthy();
 	});
 
 	it('should render truncated excerpt', () => {
