@@ -29,16 +29,16 @@ test.describe('Route Navigation', () => {
 
 		// Wait for the blog page structure to be visible
 		await expect(page.locator('.blog')).toBeVisible();
-		await expect(page.locator('text=Web Developer Blog')).toBeVisible();
+		await expect(page.locator('.terminal-header')).toBeVisible();
 
 		// Wait for loading state to complete and posts to be visible
 		await Promise.race([
-			page.waitForSelector('.loading', { state: 'hidden' }),
-			page.waitForSelector('.blog-post-grid')
+			page.waitForSelector('.loading-container', { state: 'hidden' }),
+			page.waitForSelector('.hero-post')
 		]);
 
-		// Verify posts are visible
-		await expect(page.locator('.blog-section')).toBeVisible();
+		// Verify hero post is visible
+		await expect(page.locator('.hero-post')).toBeVisible();
 	});
 
 	test('should navigate to projects page', async ({ page }) => {
