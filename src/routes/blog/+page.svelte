@@ -148,7 +148,7 @@
 			transparent 3px
 		);
 		pointer-events: none;
-		z-index: 100;
+		z-index: 0;
 	}
 
 	.container {

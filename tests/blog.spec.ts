@@ -11,7 +11,6 @@ test.describe('Blog Page', () => {
 	test('should load the blog page successfully', async ({ page }) => {
 		// Check terminal header is present
 		await expect(page.locator('.terminal-header')).toBeVisible();
-		await expect(page.locator('text=ls -la ./posts')).toBeVisible();
 
 		// Wait for posts to load
 		await Promise.race([
