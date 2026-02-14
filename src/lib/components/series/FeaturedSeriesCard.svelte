@@ -26,12 +26,12 @@
 	.featured-series-card {
 		display: block;
 		padding: var(--space-8);
+		text-decoration: none;
+		color: inherit;
 		background: var(--bg-darker);
 		border: 0.0625rem solid var(--border-color);
 		border-radius: var(--radius-lg);
 		box-shadow: var(--shadow-sm);
-		text-decoration: none;
-		color: inherit;
 		transition:
 			transform var(--transition-base),
 			box-shadow var(--transition-base),
@@ -54,9 +54,9 @@
 		font-family: var(--font-mono);
 		font-size: var(--font-size-xs);
 		font-weight: 600;
-		color: var(--accent-color);
 		text-transform: uppercase;
-		letter-spacing: 0.05rem;
+		color: var(--accent-color);
+		letter-spacing: 0.05ch;
 	}
 
 	.card-title {
@@ -69,8 +69,8 @@
 	.card-description {
 		margin: 0;
 		font-size: var(--font-size-base);
-		color: var(--text-muted);
 		line-height: 1.6;
+		color: var(--text-muted);
 	}
 
 	.card-progress {

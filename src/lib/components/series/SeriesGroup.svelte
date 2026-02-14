@@ -41,9 +41,9 @@
 
 <style>
 	.series-group {
+		background: var(--bg-color);
 		border: 0.0625rem solid var(--border-color);
 		border-radius: var(--radius-lg);
-		background: var(--bg-color);
 		overflow: hidden;
 	}
 
