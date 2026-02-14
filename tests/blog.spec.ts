@@ -9,54 +9,70 @@ test.describe('Blog Page', () => {
 	});
 
 	test('should load the blog page successfully', async ({ page }) => {
-		// Check main sections
-		await Promise.all([
-			expect(page.locator('h1')).toBeVisible(),
-			expect(page.locator('text=Web Developer Blog')).toBeVisible(),
-			expect(page.locator('.blog-section')).toBeVisible()
-		]);
+		// Check terminal header is present
+		await expect(page.locator('.terminal-header')).toBeVisible();
+		await expect(page.locator('text=ls -la ./posts')).toBeVisible();
 
-		// Check for loading state
+		// Wait for posts to load
 		await Promise.race([
-			page.waitForSelector('.loading', { state: 'hidden' }),
-			page.waitForSelector('.card')
+			page.waitForSelector('.loading-container', { state: 'hidden' }),
+			page.waitForSelector('.hero-post')
 		]);
 
-		// Verify posts are visible
-		const posts = page.locator('.card');
-		await expect(posts.first()).toBeVisible();
+		// Verify hero post is visible
+		const heroPost = page.locator('.hero-post');
+		await expect(heroPost).toBeVisible();
 	});
 
-	test('should display post details correctly', async ({ page }) => {
-		// Wait for posts to load
+	test('should display hero post with LATEST badge', async ({ page }) => {
+		// Wait for hero post to load
+		await page.waitForSelector('.hero-post');
+
+		const heroPost = page.locator('.hero-post');
+		await Promise.all([
+			expect(heroPost.locator('.hero-post-badge')).toHaveText('[LATEST]'),
+			expect(heroPost.locator('.hero-post-title')).toBeVisible(),
+			expect(heroPost.locator('.hero-post-meta')).toBeVisible(),
+			expect(heroPost.locator('.hero-post-excerpt')).toBeVisible()
+		]);
+	});
+
+	test('should display post grid with correct details', async ({ page }) => {
+		// Wait for cards to load
 		await page.waitForSelector('.card');
 
-		// Check post content
-		const firstPost = page.locator('.card').first();
+		// Check post card content
+		const firstCard = page.locator('.card').first();
 		await Promise.all([
-			expect(firstPost.locator('.title')).toBeVisible(),
-			expect(firstPost.locator('time')).toBeVisible(),
-			expect(firstPost.locator('.excerpt')).toHaveText(/.*/)
+			expect(firstCard.locator('.title')).toBeVisible(),
+			expect(firstCard.locator('time')).toBeVisible(),
+			expect(firstCard.locator('.excerpt')).toHaveText(/.*/)
 		]);
 
-		// Categories are conditional — only rendered when the post has them
-		const categories = firstPost.locator('.categories');
-		const categoriesCount = await categories.count();
-		if (categoriesCount > 0) {
-			await expect(categories).toBeVisible();
+		// Categories are in bracket format now — check meta-tags
+		const metaTags = firstCard.locator('.meta-tags');
+		const metaTagsCount = await metaTags.count();
+		if (metaTagsCount > 0) {
+			await expect(metaTags).toBeVisible();
 		}
+	});
+
+	test('should display featured series as pinned process', async ({ page }) => {
+		const pinnedProcess = page.locator('.pinned-process');
+		await expect(pinnedProcess).toBeVisible();
+		await expect(pinnedProcess.locator('.process-label')).toHaveText('[SERIES]');
 	});
 
 	test('should handle error state', async ({ page }) => {
 		// Wait for posts to load
-		await page.waitForSelector('.card');
+		await page.waitForSelector('.hero-post');
 
 		// Check if error state is not visible when there's no error
 		const errorState = page.locator('.error-state');
 		await expect(errorState).not.toBeVisible();
 
-		// Verify posts are still visible
-		const posts = page.locator('.card');
-		await expect(posts.first()).toBeVisible();
+		// Verify hero post is still visible
+		const heroPost = page.locator('.hero-post');
+		await expect(heroPost).toBeVisible();
 	});
 });
