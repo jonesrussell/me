@@ -1,10 +1,11 @@
 <script lang="ts">
 	import type { BlogPost } from '$lib/types/blog';
+	import { decodeEntities } from '$lib/utils/html-entities';
 
 	const { post } = $props<{ post: BlogPost }>();
 
 	function excerpt(content: string): string {
-		const text = content.replace(/<[^>]+>/g, '');
+		const text = decodeEntities(content.replace(/<[^>]+>/g, ''));
 		return text.slice(0, 200) + (text.length > 200 ? '…' : '');
 	}
 </script>
@@ -69,7 +70,7 @@
 	<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 	<a class="title" href={post.link} target="_blank" rel="noopener noreferrer">{post.title}</a>
 	<p class="meta">
-		<time datetime={post.published}>{post.published}</time>
+		<time datetime={post.published}>{post.formattedDate}</time>
 		{#if post.categories.length > 0}
 			<span class="meta-separator">·</span>
 			<span class="meta-tags">[{post.categories.join(', ')}]</span>

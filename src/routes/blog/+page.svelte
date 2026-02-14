@@ -39,7 +39,7 @@
 	const heroPost = $derived(blogState.posts[0]);
 	const gridPosts = $derived(blogState.posts.slice(1));
 	const postCount = $derived(blogState.posts.length);
-	const lastUpdated = $derived(heroPost?.published ?? '');
+	const lastUpdated = $derived(heroPost?.formattedDate ?? '');
 
 	// Debounced load more to prevent rapid clicks
 	const debouncedLoadMore = debounce(async () => {

@@ -25,7 +25,7 @@ describe('BlogHeroPost', () => {
 
 	it('should show metadata with date and categories', () => {
 		render(BlogHeroPost, { props: { post: mockPost } });
-		expect(screen.getByText(/2025-01-15/)).toBeTruthy();
+		expect(screen.getByText(/January 15, 2025/)).toBeTruthy();
 		expect(screen.getByText(/go, cli/)).toBeTruthy();
 	});
 
