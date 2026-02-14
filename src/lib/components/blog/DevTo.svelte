@@ -10,8 +10,8 @@
 	}
 
 	.attribution a {
-		color: var(--accent-color);
 		text-decoration: none;
+		color: var(--accent-color);
 	}
 
 	.attribution a:hover {

@@ -9,13 +9,13 @@
 
 <style>
 	.terminal-header {
-		position: relative;
 		container-type: inline-size;
-		max-width: min(var(--measure), 95cqi);
-		margin-inline: auto;
+		position: relative;
 		background: var(--bg-darker);
 		border: 1px solid var(--border-color);
 		border-radius: var(--radius-md);
+		max-width: min(var(--measure), 95cqi);
+		margin-inline: auto;
 		overflow: hidden;
 	}
 
@@ -25,8 +25,8 @@
 		inset: 0;
 		background: repeating-linear-gradient(
 			0deg,
-			rgb(255 255 255 / 2%) 0,
-			rgb(255 255 255 / 2%) 1px,
+			rgb(255 255 255 / 0.02) 0,
+			rgb(255 255 255 / 0.02) 1px,
 			transparent 1px,
 			transparent 3px
 		);
@@ -67,8 +67,8 @@
 	}
 
 	.terminal-body {
-		padding: var(--space-4);
 		display: flex;
+		padding: var(--space-4);
 		flex-direction: column;
 		gap: var(--space-2);
 	}
