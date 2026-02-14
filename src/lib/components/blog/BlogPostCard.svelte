@@ -3,70 +3,58 @@
 
 	const { post } = $props<{ post: BlogPost }>();
 
-	// Simple excerpt logic: first 200 chars, no HTML
 	function excerpt(content: string): string {
-		return content.replace(/<[^>]+>/g, '').slice(0, 200) + (content.length > 200 ? '…' : '');
+		const text = content.replace(/<[^>]+>/g, '');
+		return text.slice(0, 200) + (text.length > 200 ? '…' : '');
 	}
 </script>
 
 <style>
 	.card {
 		display: flex;
-		padding: var(--space-6);
-		background: var(--bg-darker);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-sm);
-		transition:
-			transform var(--transition-base),
-			box-shadow var(--transition-base),
-			border-color var(--transition-base);
 		flex-direction: column;
-		gap: var(--space-4);
+		gap: var(--space-2);
+		padding: var(--space-4);
+		background: var(--bg-darker);
+		border-inline-start: 0.125rem solid var(--border-color);
+		transition:
+			border-color var(--transition-base),
+			background-color var(--transition-base);
 	}
 
 	.card:hover {
-		box-shadow: var(--shadow-md);
-		transform: translateY(-0.125rem);
-		border-color: var(--accent-color);
-		border-left: 3px solid var(--accent-color);
+		border-inline-start-color: var(--accent-color);
+		background-color: color-mix(in srgb, var(--bg-darker) 95%, var(--accent-color));
 	}
 
 	.title {
 		margin: 0;
-		font-size: var(--font-size-xl);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-lg);
 		font-weight: 700;
 		text-decoration: none;
 		color: var(--text-color);
 	}
 
 	.title:hover {
-		color: var(--accent-color);
+		text-decoration: underline;
 	}
 
 	.meta {
 		display: flex;
+		align-items: center;
+		gap: var(--space-2);
 		font-size: var(--font-size-sm);
 		color: var(--text-muted);
-		gap: var(--space-3);
-		flex-wrap: wrap;
-	}
-
-	.categories {
-		display: flex;
-		gap: var(--space-2);
-	}
-
-	.category {
-		padding: 0 var(--space-2);
-		font-size: var(--font-size-xs);
-		color: var(--text-color);
-		background: var(--color-mix-faint);
-		border-radius: var(--radius-sm);
 	}
 
 	.excerpt {
-		font-size: var(--font-size-base);
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		margin: 0;
+		font-size: var(--font-size-sm);
 		color: var(--text-muted);
 	}
 
@@ -74,25 +62,18 @@
 		.card {
 			transition: none;
 		}
-
-		.card:hover {
-			transform: none;
-		}
 	}
 </style>
 
 <article class="card">
 	<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 	<a class="title" href={post.link} target="_blank" rel="noopener noreferrer">{post.title}</a>
-	<div class="meta">
-		<time datetime={post.published}>{post.formattedDate || post.published}</time>
+	<p class="meta">
+		<time datetime={post.published}>{post.published}</time>
 		{#if post.categories.length > 0}
-			<div class="categories">
-				{#each post.categories as category, i (category + '-' + i)}
-					<span class="category">{category}</span>
-				{/each}
-			</div>
+			<span class="meta-separator">·</span>
+			<span class="meta-tags">[{post.categories.join(', ')}]</span>
 		{/if}
-	</div>
-	<div class="excerpt">{excerpt(post.content)}</div>
+	</p>
+	<p class="excerpt">{excerpt(post.content)}</p>
 </article>
