@@ -54,8 +54,8 @@
 	}
 
 	.terminal-dot {
-		width: 0.75rem;
-		height: 0.75rem;
+		width: var(--space-3);
+		height: var(--space-3);
 		background: var(--border-color);
 		border-radius: var(--radius-full);
 	}
@@ -90,7 +90,7 @@
 	}
 </style>
 
-<div class="terminal-header" role="banner">
+<div class="terminal-header">
 	<div class="terminal-chrome">
 		<div class="terminal-dots">
 			<span class="terminal-dot"></span>
