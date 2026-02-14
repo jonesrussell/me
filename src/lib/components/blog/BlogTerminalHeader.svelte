@@ -16,27 +16,6 @@
 		border-radius: var(--radius-md);
 		max-width: min(var(--measure), 95cqi);
 		margin-inline: auto;
-		overflow: hidden;
-	}
-
-	.terminal-header::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: repeating-linear-gradient(
-			0deg,
-			rgb(255 255 255 / 0.02) 0,
-			rgb(255 255 255 / 0.02) 1px,
-			transparent 1px,
-			transparent 3px
-		);
-		pointer-events: none;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.terminal-header::after {
-			display: none;
-		}
 	}
 
 	.terminal-chrome {
