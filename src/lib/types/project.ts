@@ -6,7 +6,12 @@ export interface Project {
 	tags: string[];
 	url: string;
 	status: 'active' | 'stable' | 'experimental' | 'development';
-	image?: string; // Optional image URL or path for thumbnail
+	/** Main image path (relative to site root). Prefer WebP for performance. */
+	image?: string;
+	/** Responsive image candidates for srcset (path + width in px). Used with image for modern responsive loading. */
+	imageSrcset?: { path: string; width: number }[];
+	/** Sizes attribute for responsive image (e.g. "(max-width: 30rem) 100vw, 40cqi"). */
+	imageSizes?: string;
 	type?: ProjectType;
 	/** Live site URL; when set, shown under the title (e.g. northcloud.biz). */
 	siteUrl?: string;
