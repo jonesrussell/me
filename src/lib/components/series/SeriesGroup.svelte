@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ISeriesGroup, ISeriesCodeFile } from '$lib/types/series';
+	import type { ISeriesEntry, ISeriesGroup, ISeriesCodeFile } from '$lib/types/series';
 	import { isCompleted } from '$lib/stores/series-progress.svelte';
 	import SeriesEntryCard from './SeriesEntryCard.svelte';
 
@@ -17,7 +17,7 @@
 	}>();
 
 	const groupCompleted = $derived(
-		group.entries.filter((entry) => isCompleted(seriesId, entry.slug)).length
+		group.entries.filter((entry: ISeriesEntry) => isCompleted(seriesId, entry.slug)).length
 	);
 </script>
 
