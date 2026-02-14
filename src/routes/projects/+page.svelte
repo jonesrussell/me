@@ -12,7 +12,12 @@
 
 	const projects: Project[] = projectsData.map((p) => ({
 		...p,
-		image: p.image ? `${base}/${p.image}` : undefined
+		image: p.image ? `${base}/${p.image}` : undefined,
+		imageSrcset: p.imageSrcset?.map(({ path, width }) => ({
+			path: `${base}/${path}`,
+			width
+		})),
+		imageSizes: p.imageSizes
 	}));
 
 	const videos: Video[] = [

@@ -236,8 +236,21 @@
 		<div class="thumbnail">
 			<img
 				src={project.image || `${base}/images/projects/placeholder.png`}
+				srcset={project.imageSrcset?.length
+					? project.imageSrcset
+							.map(
+								(entry: { path: string; width: number }) =>
+									`${entry.path} ${entry.width}w`
+							)
+							.join(', ')
+					: undefined}
+				sizes={project.imageSizes}
 				alt={project.image ? project.title : `No image available for ${project.title}`}
 				class:placeholder={!project.image}
+				loading="lazy"
+				decoding="async"
+				width={960}
+				height={540}
 			/>
 		</div>
 	</div>

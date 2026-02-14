@@ -15,6 +15,11 @@ export const projects: Project[] = [
 		githubUrl: 'https://github.com/jonesrussell/north-cloud',
 		status: 'active',
 		image: 'images/projects/north-cloud.webp',
+		imageSrcset: [
+			{ path: 'images/projects/north-cloud-480.webp', width: 480 },
+			{ path: 'images/projects/north-cloud-960.webp', width: 960 }
+		],
+		imageSizes: '(max-width: 30rem) 100vw, (max-width: 50rem) 40cqi, 30cqi',
 		type: 'platform'
 	},
 	{
@@ -92,7 +97,12 @@ export const projects: Project[] = [
 		url: 'https://github.com/jonesrussell/gimbal',
 		githubUrl: 'https://github.com/jonesrussell/gimbal',
 		status: 'development',
-		image: 'images/projects/placeholder.png',
+		image: 'images/projects/gimbal.webp',
+		imageSrcset: [
+			{ path: 'images/projects/gimbal-480.webp', width: 480 },
+			{ path: 'images/projects/gimbal-960.webp', width: 960 }
+		],
+		imageSizes: '(max-width: 30rem) 100vw, (max-width: 50rem) 40cqi, 30cqi',
 		type: 'tool'
 	}
 ];
