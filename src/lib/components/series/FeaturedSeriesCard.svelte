@@ -55,15 +55,15 @@
 	}
 
 	.process-label::before {
-		content: '';
 		display: inline-block;
 		width: var(--space-2);
 		height: var(--space-2);
-		border-radius: var(--radius-full);
 		background: var(--accent-color);
+		border-radius: var(--radius-full);
+		animation: pulse 2s ease-in-out infinite;
+		content: '';
 		margin-inline-end: var(--space-2);
 		vertical-align: middle;
-		animation: pulse 2s ease-in-out infinite;
 	}
 
 	@keyframes pulse {

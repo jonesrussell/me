@@ -85,6 +85,7 @@
 			opacity: 0;
 			transform: translateY(0.5rem);
 		}
+
 		to {
 			opacity: 1;
 			transform: translateY(0);
@@ -96,6 +97,7 @@
 		100% {
 			opacity: 1;
 		}
+
 		50% {
 			opacity: 0;
 		}
@@ -110,11 +112,23 @@
 		}
 	}
 
+	@container blog-page (min-width: 640px) {
+		.container {
+			padding-inline: var(--space-8);
+		}
+	}
+
+	@container blog-page (min-width: 768px) {
+		.container {
+			padding-inline: var(--space-12);
+		}
+	}
+
 	.blog {
 		container-type: inline-size;
 		container-name: blog-page;
-		position: relative;
 		display: grid;
+		position: relative;
 		width: 100%;
 		padding: var(--space-8) 0;
 		gap: var(--space-8);
@@ -128,8 +142,8 @@
 		inset: 0;
 		background: repeating-linear-gradient(
 			0deg,
-			rgb(255 255 255 / 2%) 0,
-			rgb(255 255 255 / 2%) 1px,
+			rgb(255 255 255 / 0.02) 0,
+			rgb(255 255 255 / 0.02) 1px,
 			transparent 1px,
 			transparent 3px
 		);
@@ -146,18 +160,6 @@
 		gap: var(--space-6);
 		animation: fade-in 0.4s ease-out both;
 		animation-delay: 0.1s;
-	}
-
-	@container blog-page (min-width: 640px) {
-		.container {
-			padding-inline: var(--space-8);
-		}
-	}
-
-	@container blog-page (min-width: 768px) {
-		.container {
-			padding-inline: var(--space-12);
-		}
 	}
 
 	.posts-section {
@@ -203,12 +205,12 @@
 
 	/* End message */
 	.end-message {
-		margin-block-start: var(--space-4);
 		padding: var(--space-4);
-		text-align: center;
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
+		text-align: center;
 		color: var(--text-muted);
+		margin-block-start: var(--space-4);
 	}
 
 	.end-message p {
@@ -242,8 +244,8 @@
 	.empty-state {
 		margin: var(--space-4) 0;
 		padding: var(--space-6);
-		text-align: center;
 		font-family: var(--font-mono);
+		text-align: center;
 		background: var(--bg-darker);
 		border: 1px solid var(--border-color);
 		border-radius: var(--radius-md);
@@ -264,15 +266,15 @@
 	}
 
 	.load-more-error {
-		margin-block-start: var(--space-4);
 		padding: var(--space-4);
-		text-align: center;
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
+		text-align: center;
 		color: var(--color-error);
 		background: color-mix(in srgb, var(--color-error) 10%, var(--bg-darker));
 		border: 1px solid var(--color-error);
 		border-radius: var(--radius-md);
+		margin-block-start: var(--space-4);
 	}
 
 	.load-more-error p {
@@ -319,10 +321,10 @@
 	}
 
 	.northcloud-list {
+		display: flex;
 		margin: 0;
 		padding: 0;
 		list-style: none;
-		display: flex;
 		flex-direction: column;
 		gap: var(--space-1);
 	}
@@ -339,8 +341,8 @@
 	}
 
 	.northcloud-link:hover {
-		color: var(--accent-color);
 		text-decoration: underline;
+		color: var(--accent-color);
 	}
 
 	.northcloud-more {
@@ -351,8 +353,8 @@
 	}
 
 	.northcloud-more:hover {
-		color: var(--accent-color);
 		text-decoration: underline;
+		color: var(--accent-color);
 	}
 
 	/* Focus */

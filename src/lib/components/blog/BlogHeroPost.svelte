@@ -21,19 +21,19 @@
 <style>
 	.hero-post {
 		display: flex;
-		flex-direction: column;
-		gap: var(--space-3);
 		padding: var(--space-8);
-		background: var(--bg-darker);
-		border: 1px solid var(--border-color);
-		border-inline-start: 0.25rem solid var(--accent-color);
-		border-radius: var(--radius-md);
-		box-shadow: inset 0.25rem 0 0 0 color-mix(in srgb, var(--accent-color) 20%, transparent);
 		text-decoration: none;
 		color: inherit;
+		background: var(--bg-darker);
+		border: 1px solid var(--border-color);
+		border-radius: var(--radius-md);
+		box-shadow: inset 0.25rem 0 0 0 color-mix(in srgb, var(--accent-color) 20%, transparent);
 		transition:
 			border-color var(--transition-base),
 			box-shadow var(--transition-base);
+		flex-direction: column;
+		gap: var(--space-3);
+		border-inline-start: 0.25rem solid var(--accent-color);
 	}
 
 	.hero-post:hover {
@@ -51,16 +51,16 @@
 		font-family: var(--font-mono);
 		font-size: var(--font-size-xs);
 		font-weight: var(--font-weight-bold);
-		color: var(--accent-color);
 		text-transform: uppercase;
+		color: var(--accent-color);
 		letter-spacing: 0.05ch;
 	}
 
 	.hero-post-title {
+		margin: 0;
 		font-family: var(--font-mono);
 		font-size: var(--font-size-2xl);
 		font-weight: var(--font-weight-bold);
-		margin: 0;
 	}
 
 	@container (min-width: 48rem) {
@@ -70,18 +70,18 @@
 	}
 
 	.hero-post-meta {
+		margin: 0;
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
 		color: var(--text-muted);
-		margin: 0;
 	}
 
 	.hero-post-excerpt {
+		margin: 0;
 		font-family: var(--font-mono);
 		font-size: var(--font-size-base);
-		color: var(--text-muted);
 		line-height: var(--line-height-relaxed);
-		margin: 0;
+		color: var(--text-muted);
 	}
 </style>
 
@@ -90,7 +90,8 @@
 	<span class="hero-post-badge">[LATEST]</span>
 	<h2 class="hero-post-title">{post.title}</h2>
 	<p class="hero-post-meta">
-		published: {post.published}{#if post.categories.length > 0}{' '}| tags: [{formatCategories(post.categories)}]{/if}
+		published: {post.published}{#if post.categories.length > 0}
+			| tags: [{formatCategories(post.categories)}]{/if}
 	</p>
 	<p class="hero-post-excerpt">{excerpt(post.content)}</p>
 </a>
