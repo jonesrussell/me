@@ -8,6 +8,9 @@
 	import BlogError from '$lib/components/blog/BlogError.svelte';
 	import BlogPostsSection from '$lib/components/blog/BlogPostsSection.svelte';
 	import LoadingSpinner from '$lib/components/ui/LoadingSpinner.svelte';
+	import FeaturedSeriesCard from '$lib/components/series/FeaturedSeriesCard.svelte';
+	import { psrSeries, getTotalEntries } from '$lib/data/series/psr';
+	import { base } from '$app/paths';
 
 	import type { PageData } from './$types';
 
@@ -220,6 +223,10 @@
 		color: var(--accent-color);
 	}
 
+	.series-section {
+		width: 100%;
+	}
+
 	.posts-section {
 		display: grid;
 		gap: var(--space-8);
@@ -395,6 +402,17 @@
 	<BlogError />
 
 	<div class="container">
+		<!-- Featured series -->
+		<section class="series-section" aria-label="Featured series">
+			<FeaturedSeriesCard
+				title={psrSeries.title}
+				description={psrSeries.description}
+				seriesId={psrSeries.id}
+				totalEntries={getTotalEntries()}
+				href="{base}/blog/series/psr"
+			/>
+		</section>
+
 		<section class="posts-section" aria-label="Blog posts">
 			{#if blogState.posts.length > 0}
 				<BlogPostsSection posts={blogState.posts} />
