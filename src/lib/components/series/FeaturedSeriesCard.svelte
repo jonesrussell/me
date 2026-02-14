@@ -57,8 +57,8 @@
 	.process-label::before {
 		content: '';
 		display: inline-block;
-		width: 0.5rem;
-		height: 0.5rem;
+		width: var(--space-2);
+		height: var(--space-2);
 		border-radius: var(--radius-full);
 		background: var(--accent-color);
 		margin-inline-end: var(--space-2);
