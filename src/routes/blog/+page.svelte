@@ -3,7 +3,8 @@
 	import { fetchFeed } from '$lib/services/blog-service';
 	import { debounce } from '$lib/utils/debounce';
 
-	import Hero from '$lib/components/ui/Hero.svelte';
+	import BlogTerminalHeader from '$lib/components/blog/BlogTerminalHeader.svelte';
+	import BlogHeroPost from '$lib/components/blog/BlogHeroPost.svelte';
 	import DevTo from '$lib/components/blog/DevTo.svelte';
 	import BlogError from '$lib/components/blog/BlogError.svelte';
 	import BlogPostsSection from '$lib/components/blog/BlogPostsSection.svelte';
@@ -34,6 +35,11 @@
 		blogState.currentPage = data.currentPage;
 		blogState.totalPages = data.totalPages;
 	});
+
+	const heroPost = $derived(blogState.posts[0]);
+	const gridPosts = $derived(blogState.posts.slice(1));
+	const postCount = $derived(blogState.posts.length);
+	const lastUpdated = $derived(heroPost?.published ?? '');
 
 	// Debounced load more to prevent rapid clicks
 	const debouncedLoadMore = debounce(async () => {
@@ -73,7 +79,75 @@
 </script>
 
 <style>
-	/* Responsive container */
+	/* Page animation */
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+			transform: translateY(0.5rem);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes cursor-blink {
+		0%,
+		100% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.blog *,
+		.blog *::before,
+		.blog *::after {
+			transition: none;
+			animation: none;
+		}
+	}
+
+	.blog {
+		container-type: inline-size;
+		container-name: blog-page;
+		position: relative;
+		display: grid;
+		width: 100%;
+		padding: var(--space-8) 0;
+		gap: var(--space-8);
+		min-height: 70vh;
+	}
+
+	/* Scanline overlay */
+	.blog::after {
+		content: '';
+		position: fixed;
+		inset: 0;
+		background: repeating-linear-gradient(
+			0deg,
+			rgb(255 255 255 / 2%) 0,
+			rgb(255 255 255 / 2%) 1px,
+			transparent 1px,
+			transparent 3px
+		);
+		pointer-events: none;
+		z-index: 100;
+	}
+
+	.container {
+		display: grid;
+		width: 100%;
+		margin-inline: auto;
+		padding-inline: var(--space-4);
+		max-width: min(var(--measure), 95cqi);
+		gap: var(--space-6);
+		animation: fade-in 0.4s ease-out both;
+		animation-delay: 0.1s;
+	}
+
 	@container blog-page (min-width: 640px) {
 		.container {
 			padding-inline: var(--space-8);
@@ -86,221 +160,75 @@
 		}
 	}
 
-	@container blog-page (min-width: 1024px) {
-		.container {
-			padding-inline: var(--space-16);
-			grid-template-columns: 1fr minmax(16rem, 20rem);
-		}
-	}
-
-	@keyframes broadcast-pulse {
-		0%,
-		100% {
-			opacity: 0.4;
-			transform: translate(-50%, -50%) scale(1);
-		}
-
-		50% {
-			opacity: 1;
-			transform: translate(-50%, -50%) scale(1.4);
-		}
-	}
-
-	/* Accessibility and performance */
-	@media (prefers-reduced-motion: reduce) {
-		.blog *,
-		.blog *::before,
-		.blog *::after {
-			transition: none;
-			animation: none;
-			transform: none;
-		}
-
-		.blog-hero-wrapper::before {
-			animation: none;
-			transform: translate(-50%, -50%);
-		}
-	}
-
-	/* Broadcast pulse on hero */
-	.blog-hero-wrapper {
-		position: relative;
-	}
-
-	.blog-hero-wrapper::before {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		width: 12rem;
-		height: 12rem;
-		background: radial-gradient(
-			circle,
-			color-mix(in srgb, var(--accent-color) 15%, transparent) 0%,
-			color-mix(in srgb, var(--accent-color) 5%, transparent) 40%,
-			transparent 70%
-		);
-		border-radius: var(--radius-full);
-		animation: broadcast-pulse 3s ease-in-out infinite;
-		transform: translate(-50%, -50%);
-		content: '';
-		pointer-events: none;
-		z-index: 0;
-	}
-
-	.blog {
-		container-type: inline-size;
-		container-name: blog-page;
-		display: grid;
-		width: 100%;
-		padding: var(--space-16) 0;
-		grid-template-rows: auto 1fr auto;
-		gap: var(--space-16);
-		min-height: 70vh;
-	}
-
-	.container {
-		display: grid;
-		width: 100%;
-		margin-inline: auto;
-		padding-inline: var(--space-4);
-		max-width: min(var(--measure), 95cqi);
-		gap: var(--space-8);
-	}
-
-	.northcloud-sidebar {
-		display: flex;
-		flex-direction: column;
-		height: fit-content;
-		gap: var(--space-2);
-		padding: var(--space-4);
-		background: var(--bg-darker);
-		border: var(--border-width) solid var(--border-color);
-		border-radius: var(--radius-md);
-	}
-
-	.northcloud-sidebar-title {
-		margin: 0;
-		font-size: var(--font-size-base);
-		font-weight: var(--font-weight-bold);
-		color: var(--text-color);
-	}
-
-	.northcloud-sidebar-list {
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
-
-	.northcloud-sidebar-item {
-		margin: 0;
-		padding: var(--space-1) 0;
-		border-block-end: var(--border-width) solid var(--border-color);
-	}
-
-	.northcloud-sidebar-item:last-of-type {
-		border-block-end: none;
-	}
-
-	.northcloud-sidebar-link {
-		font-size: var(--font-size-sm);
-		text-decoration: none;
-		color: var(--accent-color);
-	}
-
-	.northcloud-sidebar-link:hover {
-		text-decoration: underline;
-	}
-
-	.northcloud-sidebar-more {
-		margin-top: var(--space-2);
-		font-size: var(--font-size-xs);
-		text-decoration: none;
-		color: var(--text-muted);
-	}
-
-	.northcloud-sidebar-more:hover {
-		text-decoration: underline;
-		color: var(--accent-color);
-	}
-
-	.series-section {
-		width: 100%;
-	}
-
 	.posts-section {
 		display: grid;
-		gap: var(--space-8);
+		gap: var(--space-6);
 		width: 100%;
 	}
 
-	/* Load more button */
+	/* Load more */
 	.load-more {
 		display: flex;
 		justify-content: center;
-		margin-top: var(--space-8);
+		margin-block-start: var(--space-4);
 	}
 
 	.load-more-button {
 		display: flex;
 		align-items: center;
 		gap: var(--space-2);
-		padding: var(--space-4) var(--space-8);
+		padding: var(--space-3) var(--space-6);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
-		color: var(--text-color);
+		color: var(--accent-color);
 		background: var(--bg-darker);
 		border: 1px solid var(--border-color);
 		border-radius: var(--radius-md);
 		cursor: pointer;
-		transition: all var(--transition-base);
-		min-height: 2.75rem;
+		transition: border-color var(--transition-base);
 	}
 
 	.load-more-button:hover:not(:disabled) {
-		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
-		transform: translateY(-0.125rem);
 		border-color: var(--accent-color);
 	}
 
 	.load-more-button:disabled {
 		opacity: 0.7;
 		cursor: not-allowed;
-		transform: none;
+	}
+
+	.cursor-blink {
+		animation: cursor-blink 1s step-end infinite;
 	}
 
 	/* End message */
 	.end-message {
-		margin-top: var(--space-8);
-		padding: var(--space-8);
+		margin-block-start: var(--space-4);
+		padding: var(--space-4);
 		text-align: center;
-		background: var(--bg-darker);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-lg);
-	}
-
-	.end-message p {
-		margin: var(--space-2) 0;
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
 		color: var(--text-muted);
 	}
 
-	.end-message p:first-child {
-		font-size: var(--font-size-lg);
-		color: var(--text-color);
+	.end-message p {
+		margin: var(--space-1) 0;
 	}
 
-	/* Loading states */
+	/* Loading */
 	.loading-container {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		min-height: 20rem;
+		min-height: 15rem;
 		gap: var(--space-4);
-		padding: var(--space-16);
+		padding: var(--space-12);
 	}
 
 	.loading-text {
 		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
 		text-align: center;
 		color: var(--text-muted);
 	}
@@ -309,34 +237,38 @@
 		margin: var(--space-1) 0;
 	}
 
-	/* Error states */
+	/* Error & empty states */
 	.error-state,
 	.empty-state {
-		margin: var(--space-8) 0;
-		padding: var(--space-8);
+		margin: var(--space-4) 0;
+		padding: var(--space-6);
 		text-align: center;
+		font-family: var(--font-mono);
 		background: var(--bg-darker);
 		border: 1px solid var(--border-color);
-		border-radius: var(--radius-lg);
+		border-radius: var(--radius-md);
 	}
 
 	.error-state h2,
 	.empty-state h2 {
-		margin: 0 0 var(--space-4) 0;
-		font-size: var(--font-size-xl);
-		color: var(--text-color);
+		margin: 0 0 var(--space-3) 0;
+		font-size: var(--font-size-base);
+		color: var(--accent-color);
 	}
 
 	.error-state p,
 	.empty-state p {
-		margin: var(--space-2) 0;
+		margin: var(--space-1) 0;
+		font-size: var(--font-size-sm);
 		color: var(--text-muted);
 	}
 
 	.load-more-error {
-		margin-top: var(--space-4);
-		padding: var(--space-6);
+		margin-block-start: var(--space-4);
+		padding: var(--space-4);
 		text-align: center;
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
 		color: var(--color-error);
 		background: color-mix(in srgb, var(--color-error) 10%, var(--bg-darker));
 		border: 1px solid var(--color-error);
@@ -344,35 +276,86 @@
 	}
 
 	.load-more-error p {
-		margin: 0 0 var(--space-4) 0;
+		margin: 0 0 var(--space-3) 0;
 	}
 
 	.retry-button {
-		padding: var(--space-3) var(--space-6);
+		padding: var(--space-2) var(--space-4);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
-		color: var(--text-color);
+		color: var(--accent-color);
 		background: var(--bg-darker);
 		border: 1px solid var(--border-color);
 		border-radius: var(--radius-md);
-		transition: all var(--transition-base);
 		cursor: pointer;
+		transition: border-color var(--transition-base);
 	}
 
 	.retry-button:hover {
-		background: color-mix(in srgb, var(--bg-darker) 80%, var(--accent-color));
-		transform: translateY(-0.125rem);
 		border-color: var(--accent-color);
 	}
 
-	/* Dev.to wrapper */
-	.dev-to-wrapper {
-		margin-top: var(--space-16);
-		padding-top: var(--space-16);
-		border-top: 1px solid var(--border-color);
+	/* Footer zone */
+	.blog-footer {
+		display: grid;
+		gap: var(--space-4);
 	}
 
-	/* Focus management */
+	.footer-separator {
+		border-block-start: 1px dashed var(--border-color);
+	}
+
+	.northcloud-feed {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+	}
+
+	.northcloud-header {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		color: var(--accent-color);
+	}
+
+	.northcloud-list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-1);
+	}
+
+	.northcloud-item {
+		margin: 0;
+	}
+
+	.northcloud-link {
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		text-decoration: none;
+		color: var(--text-muted);
+	}
+
+	.northcloud-link:hover {
+		color: var(--accent-color);
+		text-decoration: underline;
+	}
+
+	.northcloud-more {
+		font-family: var(--font-mono);
+		font-size: var(--font-size-xs);
+		text-decoration: none;
+		color: var(--text-muted);
+	}
+
+	.northcloud-more:hover {
+		color: var(--accent-color);
+		text-decoration: underline;
+	}
+
+	/* Focus */
 	.load-more-button:focus-visible,
 	.retry-button:focus-visible {
 		outline: 0.125rem solid var(--accent-color);
@@ -393,31 +376,28 @@
 	<meta property="og:url" content={data.canonicalBlog} />
 </svelte:head>
 
-<div class="blog-hero-wrapper">
-	<Hero title="Web Developer Blog" subtitle="Open Source Enthusiast" />
-</div>
-
 <div class="blog">
-	<!-- Global error handling -->
+	<BlogTerminalHeader {postCount} {lastUpdated} />
+
 	<BlogError />
 
 	<div class="container">
-		<!-- Featured series -->
-		<section class="series-section" aria-label="Featured series">
-			<FeaturedSeriesCard
-				title={psrSeries.title}
-				description={psrSeries.description}
-				seriesId={psrSeries.id}
-				totalEntries={getTotalEntries()}
-				href="{base}/blog/series/psr"
-			/>
-		</section>
+		{#if heroPost}
+			<BlogHeroPost post={heroPost} />
+		{/if}
+
+		<FeaturedSeriesCard
+			title={psrSeries.title}
+			description={psrSeries.description}
+			seriesId={psrSeries.id}
+			totalEntries={getTotalEntries()}
+			href="{base}/blog/series/psr"
+		/>
 
 		<section class="posts-section" aria-label="Blog posts">
-			{#if blogState.posts.length > 0}
-				<BlogPostsSection posts={blogState.posts} />
+			{#if gridPosts.length > 0}
+				<BlogPostsSection posts={gridPosts} />
 
-				<!-- Load more section -->
 				{#if blogState.hasMore}
 					<div class="load-more">
 						<button
@@ -427,83 +407,79 @@
 							aria-label={blogState.loading ? 'Loading more posts...' : 'Load more posts'}
 						>
 							{#if blogState.loading}
-								<LoadingSpinner size="sm" />
-								Loading...
+								<span class="cursor-blink">$ loading...&#9608;</span>
 							{:else}
-								Load More Posts
+								$ load --more
 							{/if}
 						</button>
 					</div>
 				{:else if blogState.posts.length > POSTS_PER_PAGE}
 					<div class="end-message">
-						<p>You've reached the end! 🎉</p>
-						<p>Thanks for reading all {blogState.posts.length} posts.</p>
+						<p>$ echo "end of feed"</p>
+						<p>{blogState.posts.length} posts loaded.</p>
 					</div>
 				{/if}
 
-				<!-- Load more error (separate from global errors) -->
 				{#if blogState.error?.type === 'LOAD_MORE_ERROR'}
 					<div class="load-more-error" role="alert">
 						<p>Failed to load more posts: {blogState.error.message}</p>
-						<button class="retry-button" onclick={retryLoad}> Try Again </button>
+						<button class="retry-button" onclick={retryLoad}>$ retry</button>
 					</div>
 				{/if}
 			{:else if blogState.loading}
 				<div class="loading-container" aria-live="polite">
 					<LoadingSpinner />
 					<div class="loading-text">
-						<p>Fetching latest blog posts...</p>
-						<p>This may take a moment</p>
+						<p>$ fetching posts...</p>
 					</div>
 				</div>
 			{:else if blogState.error?.type === 'SERVER_ERROR'}
 				<div class="error-state" role="alert">
-					<h2>Unable to Load Blog Posts</h2>
-					<p>We're experiencing technical difficulties.</p>
-					<button class="retry-button" onclick={retryLoad}> Retry Loading </button>
+					<h2>$ error: connection failed</h2>
+					<p>Unable to load blog posts.</p>
+					<button class="retry-button" onclick={retryLoad}>$ retry</button>
 				</div>
 			{:else}
 				<div class="empty-state">
-					<h2>No Posts Yet</h2>
-					<p>Check back soon for new content!</p>
-					<p>In the meantime, check out my dev.to articles below.</p>
+					<h2>$ ls ./posts</h2>
+					<p>No entries found. Check back soon.</p>
 				</div>
 			{/if}
 		</section>
-		{#if data.northCloudArticles?.length}
-			<aside class="northcloud-sidebar" aria-label="From the North Cloud pipeline">
-				<h2 class="northcloud-sidebar-title">From the North Cloud pipeline</h2>
-				<ul class="northcloud-sidebar-list">
-					{#each data.northCloudArticles as article (article.id)}
-						<li class="northcloud-sidebar-item">
-							<!-- eslint-disable svelte/no-navigation-without-resolve -->
-							<a
-								href={article.url}
-								class="northcloud-sidebar-link"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								{article.title}
-							</a>
-							<!-- eslint-enable svelte/no-navigation-without-resolve -->
-						</li>
-					{/each}
-				</ul>
-				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-				<a
-					href="https://northcloud.biz"
-					class="northcloud-sidebar-more"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					North Cloud
-				</a>
-			</aside>
-		{/if}
-	</div>
 
-	<!-- Dev.to section -->
-	<section class="dev-to-wrapper" aria-label="Dev.to articles">
-		<DevTo />
-	</section>
+		<footer class="blog-footer">
+			<div class="footer-separator" aria-hidden="true"></div>
+			{#if data.northCloudArticles?.length}
+				<div class="northcloud-feed">
+					<p class="northcloud-header">$ pipe --from northcloud.biz</p>
+					<ul class="northcloud-list">
+						{#each data.northCloudArticles as article (article.id)}
+							<li class="northcloud-item">
+								<!-- eslint-disable svelte/no-navigation-without-resolve -->
+								<a
+									href={article.url}
+									class="northcloud-link"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									&gt; {article.title}
+								</a>
+								<!-- eslint-enable svelte/no-navigation-without-resolve -->
+							</li>
+						{/each}
+					</ul>
+					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
+					<a
+						href="https://northcloud.biz"
+						class="northcloud-more"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						... | more
+					</a>
+				</div>
+			{/if}
+			<DevTo />
+		</footer>
+	</div>
 </div>
