@@ -29,7 +29,7 @@ test.describe('Route Navigation', () => {
 
 		// Wait for the blog page structure to be visible
 		await expect(page.locator('.blog')).toBeVisible();
-		await expect(page.locator('.terminal-header')).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Blog', level: 1 })).toBeVisible();
 
 		// Wait for loading state to complete and posts to be visible
 		await Promise.race([
