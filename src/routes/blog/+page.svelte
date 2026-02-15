@@ -3,7 +3,7 @@
 	import { fetchFeed } from '$lib/services/blog-service';
 	import { debounce } from '$lib/utils/debounce';
 
-	import BlogTerminalHeader from '$lib/components/blog/BlogTerminalHeader.svelte';
+	import Hero from '$lib/components/ui/Hero.svelte';
 	import BlogHeroPost from '$lib/components/blog/BlogHeroPost.svelte';
 	import DevTo from '$lib/components/blog/DevTo.svelte';
 	import BlogError from '$lib/components/blog/BlogError.svelte';
@@ -38,8 +38,6 @@
 
 	const heroPost = $derived(blogState.posts[0]);
 	const gridPosts = $derived(blogState.posts.slice(1));
-	const postCount = $derived(blogState.posts.length);
-	const lastUpdated = $derived(heroPost?.formattedDate ?? '');
 
 	// Debounced load more to prevent rapid clicks
 	const debouncedLoadMore = debounce(async () => {
@@ -379,7 +377,7 @@
 </svelte:head>
 
 <div class="blog">
-	<BlogTerminalHeader {postCount} {lastUpdated} />
+	<Hero title="Blog" subtitle="Latest writing" />
 
 	<BlogError />
 
