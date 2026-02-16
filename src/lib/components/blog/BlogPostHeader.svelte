@@ -107,6 +107,7 @@
 			</div>
 		{/if}
 		{#if post.link}
+			<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 			<a class="original-link" href={post.link} target="_blank" rel="noopener noreferrer">View original</a>
 		{/if}
 	</div>
