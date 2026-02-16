@@ -96,12 +96,13 @@
 
 	:global(.prose pre) {
 		margin: var(--space-6) 0;
-		padding: var(--space-4);
+		padding: var(--space-5);
 		font-family: var(--font-mono);
 		font-size: var(--font-size-sm);
-		background: var(--color-surface-elevated);
-		border: 0.0625rem solid var(--color-border);
+		background: var(--bg-darker);
+		border: 0.0625rem solid var(--border-color);
 		border-radius: var(--radius-md);
+		box-shadow: var(--shadow-sm);
 		overflow-x: auto;
 	}
 
@@ -109,8 +110,8 @@
 		padding: var(--space-1) var(--space-2);
 		font-family: var(--font-mono);
 		font-size: 0.9rem;
-		color: var(--color-text);
-		background: var(--color-surface-elevated);
+		color: var(--text-color);
+		background: var(--bg-darker);
 		border-radius: var(--radius-sm);
 	}
 
@@ -158,7 +159,7 @@
 	:global(.prose th) {
 		font-weight: 600;
 		color: var(--color-heading);
-		background: var(--color-surface-elevated);
+		background: var(--bg-darker);
 	}
 
 	:global(.prose hr) {
@@ -167,40 +168,49 @@
 		border-top: 0.0625rem solid var(--color-border);
 	}
 
-	/* Syntax highlighting overrides */
+	/* Syntax highlighting token mapping - hljs uses underscores in class names */
+	/* stylelint-disable selector-class-pattern */
 	:global(.prose .hljs) {
 		padding: 0;
+		color: var(--text-color);
 		background: transparent;
 	}
 
-	:global(.prose .hljs-keyword) {
-		color: var(--color-primary);
+	:global(.prose .hljs-keyword),
+	:global(.prose .hljs-built_in) {
+		color: var(--accent-color);
+	}
+
+	:global(.prose .hljs-title),
+	:global(.prose .hljs-class) {
+		color: var(--accent-color);
 	}
 
 	:global(.prose .hljs-string) {
 		color: var(--color-success);
 	}
 
-	:global(.prose .hljs-comment) {
+	:global(.prose .hljs-number),
+	:global(.prose .hljs-literal) {
+		color: var(--color-warning);
+	}
+
+	:global(.prose .hljs-comment),
+	:global(.prose .hljs-meta) {
 		color: var(--color-text-muted);
 		font-style: italic;
 	}
 
-	:global(.prose .hljs-number) {
-		color: var(--color-warning);
+	:global(.prose .hljs-attr),
+	:global(.prose .hljs-params),
+	:global(.prose .hljs-variable) {
+		color: var(--color-info);
 	}
 
 	:global(.prose .hljs-function) {
 		color: var(--color-info);
 	}
-
-	:global(.prose .hljs-class) {
-		color: var(--color-primary);
-	}
-
-	:global(.prose .hljs-variable) {
-		color: var(--color-text);
-	}
+	/* stylelint-enable selector-class-pattern */
 </style>
 
 <main class="post-content" use:highlightCode>
