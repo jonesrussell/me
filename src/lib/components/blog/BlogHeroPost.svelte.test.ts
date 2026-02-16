@@ -34,9 +34,11 @@ describe('BlogHeroPost', () => {
 		expect(screen.getByText(/A deep dive into building CLI tools/)).toBeTruthy();
 	});
 
-	it('should link to the post', () => {
+	it('should link to the on-site blog post page', () => {
 		const { container } = render(BlogHeroPost, { props: { post: mockPost } });
-		const link = container.querySelector('a[href="https://example.com/go-cli"]');
+		const link = container.querySelector('a.hero-post');
 		expect(link).toBeTruthy();
+		expect(link?.getAttribute('href')).toBe('/blog/building-cli-tools-with-go');
+		expect(link?.getAttribute('target')).toBeNull();
 	});
 });

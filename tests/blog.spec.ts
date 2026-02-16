@@ -74,4 +74,21 @@ test.describe('Blog Page', () => {
 		const heroPost = page.locator('.hero-post');
 		await expect(heroPost).toBeVisible();
 	});
+
+	test('should navigate to on-site blog post when clicking hero post', async ({ page }) => {
+		await page.waitForSelector('.hero-post');
+
+		const heroLink = page.locator('a.hero-post');
+		await expect(heroLink).toBeVisible();
+
+		// Click should stay on-site (no target="_blank")
+		await heroLink.click();
+
+		// URL should be /blog/[slug] on this site, not external
+		await expect(page).toHaveURL(/\/blog\/.+/);
+
+		// Article content should be visible (on-site post page)
+		await expect(page.locator('.blog-post')).toBeVisible();
+		await expect(page.locator('.blog-post .post-content')).toBeVisible();
+	});
 });

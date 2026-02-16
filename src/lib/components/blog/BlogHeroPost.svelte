@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import type { BlogPost } from '$lib/types/blog';
 	import { decodeEntities } from '$lib/utils/html-entities';
 
@@ -86,8 +87,7 @@
 	}
 </style>
 
-<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-<a class="hero-post" href={post.link} target="_blank" rel="noopener noreferrer">
+<a class="hero-post" href={resolve(`/blog/${post.slug}`)}>
 	<span class="hero-post-badge">[LATEST]</span>
 	<h2 class="hero-post-title">{post.title}</h2>
 	<p class="hero-post-meta">

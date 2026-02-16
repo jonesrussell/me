@@ -33,9 +33,11 @@ describe('BlogPostCard', () => {
 		expect(screen.getByText(/Learn how to write effective tests/)).toBeTruthy();
 	});
 
-	it('should link to the post', () => {
+	it('should link to the on-site blog post page', () => {
 		const { container } = render(BlogPostCard, { props: { post: mockPost } });
-		const link = container.querySelector('a[href="https://example.com/testing-go"]');
+		const link = container.querySelector('a.title');
 		expect(link).toBeTruthy();
+		expect(link?.getAttribute('href')).toBe('/blog/testing-in-go');
+		expect(link?.getAttribute('target')).toBeNull();
 	});
 });
