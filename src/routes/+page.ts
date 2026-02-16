@@ -46,7 +46,7 @@ export async function load({ fetch }) {
 
 	let northCloudArticles: Awaited<ReturnType<typeof fetchNorthCloudFeed>> = [];
 	try {
-		northCloudArticles = await fetchNorthCloudFeed(fetch);
+		northCloudArticles = await fetchNorthCloudFeed(fetch, 'pipeline', 6);
 	} catch {
 		// Feed optional on homepage; continue with empty list
 	}
@@ -56,6 +56,6 @@ export async function load({ fetch }) {
 		terminalCommand: TERMINAL_COMMAND,
 		specialties,
 		navLinks,
-		northCloudArticles: northCloudArticles.slice(0, 5)
+		northCloudArticles
 	};
 }

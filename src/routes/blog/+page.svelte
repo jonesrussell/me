@@ -305,56 +305,6 @@
 		border-block-start: 1px dashed var(--border-color);
 	}
 
-	.northcloud-feed {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-2);
-	}
-
-	.northcloud-header {
-		margin: 0;
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
-		color: var(--accent-color);
-	}
-
-	.northcloud-list {
-		display: flex;
-		margin: 0;
-		padding: 0;
-		list-style: none;
-		flex-direction: column;
-		gap: var(--space-1);
-	}
-
-	.northcloud-item {
-		margin: 0;
-	}
-
-	.northcloud-link {
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
-		text-decoration: none;
-		color: var(--text-muted);
-	}
-
-	.northcloud-link:hover {
-		text-decoration: underline;
-		color: var(--accent-color);
-	}
-
-	.northcloud-more {
-		font-family: var(--font-mono);
-		font-size: var(--font-size-xs);
-		text-decoration: none;
-		color: var(--text-muted);
-	}
-
-	.northcloud-more:hover {
-		text-decoration: underline;
-		color: var(--accent-color);
-	}
-
 	/* Focus */
 	.load-more-button:focus-visible,
 	.retry-button:focus-visible {
@@ -449,36 +399,6 @@
 
 		<footer class="blog-footer">
 			<div class="footer-separator" aria-hidden="true"></div>
-			{#if data.northCloudArticles?.length}
-				<div class="northcloud-feed">
-					<p class="northcloud-header">$ pipe --from northcloud.biz</p>
-					<ul class="northcloud-list">
-						{#each data.northCloudArticles as article (article.id)}
-							<li class="northcloud-item">
-								<!-- eslint-disable svelte/no-navigation-without-resolve -->
-								<a
-									href={article.url}
-									class="northcloud-link"
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									&gt; {article.title}
-								</a>
-								<!-- eslint-enable svelte/no-navigation-without-resolve -->
-							</li>
-						{/each}
-					</ul>
-					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-					<a
-						href="https://northcloud.biz"
-						class="northcloud-more"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						... | more
-					</a>
-				</div>
-			{/if}
 			<DevTo />
 		</footer>
 	</div>

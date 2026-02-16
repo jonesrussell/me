@@ -225,18 +225,6 @@
 		text-decoration: underline;
 	}
 
-	.northcloud-recent-more {
-		display: inline-block;
-		margin-top: var(--space-2);
-		font-size: var(--font-size-xs);
-		text-decoration: none;
-		color: var(--text-muted);
-	}
-
-	.northcloud-recent-more:hover {
-		text-decoration: underline;
-		color: var(--accent-color);
-	}
 </style>
 
 <svelte:head>
@@ -254,11 +242,11 @@
 		<section class="section project-grid-container" aria-label="Content platform and consumer sites">
 			<h2 class="section-title">Content platform and consumer sites</h2>
 			<ProjectGrid {projects} />
-			{#if data.northCloudArticles?.length}
-				<div class="northcloud-recent" aria-label="Recent pipeline articles">
-					<h3 class="northcloud-recent-title">Recent from North Cloud pipeline</h3>
+			{#if data.crimeArticles?.length}
+				<div class="northcloud-recent" aria-label="Recent StreetCode articles">
+					<h3 class="northcloud-recent-title">StreetCode — Recent Crime</h3>
 					<ul class="northcloud-recent-list">
-						{#each data.northCloudArticles as article (article.id)}
+						{#each data.crimeArticles as article (article.id)}
 							<li class="northcloud-recent-item">
 								<!-- eslint-disable svelte/no-navigation-without-resolve -->
 								<a
@@ -273,15 +261,48 @@
 							</li>
 						{/each}
 					</ul>
-					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-					<a
-						href="https://northcloud.biz"
-						class="northcloud-recent-more"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						North Cloud
-					</a>
+				</div>
+			{/if}
+			{#if data.miningArticles?.length}
+				<div class="northcloud-recent" aria-label="Recent OreWire articles">
+					<h3 class="northcloud-recent-title">OreWire — Recent Mining</h3>
+					<ul class="northcloud-recent-list">
+						{#each data.miningArticles as article (article.id)}
+							<li class="northcloud-recent-item">
+								<!-- eslint-disable svelte/no-navigation-without-resolve -->
+								<a
+									href={article.url}
+									class="northcloud-recent-link"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									{article.title}
+								</a>
+								<!-- eslint-enable svelte/no-navigation-without-resolve -->
+							</li>
+						{/each}
+					</ul>
+				</div>
+			{/if}
+			{#if data.entertainmentArticles?.length}
+				<div class="northcloud-recent" aria-label="Recent Movies of War articles">
+					<h3 class="northcloud-recent-title">Movies of War — Recent Entertainment</h3>
+					<ul class="northcloud-recent-list">
+						{#each data.entertainmentArticles as article (article.id)}
+							<li class="northcloud-recent-item">
+								<!-- eslint-disable svelte/no-navigation-without-resolve -->
+								<a
+									href={article.url}
+									class="northcloud-recent-link"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									{article.title}
+								</a>
+								<!-- eslint-enable svelte/no-navigation-without-resolve -->
+							</li>
+						{/each}
+					</ul>
 				</div>
 			{/if}
 		</section>
