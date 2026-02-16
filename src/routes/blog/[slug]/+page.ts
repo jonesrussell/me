@@ -1,13 +1,13 @@
 import { error } from '@sveltejs/kit';
 import { base } from '$app/paths';
-import type { PageServerLoad } from './$types';
+import type { PageLoad } from './$types';
 import { fetchPost } from '$lib/services/blog-service';
 import { canonicalUrl } from '$lib/config/seo';
 import { stripHtmlExcerpt } from '$lib/utils/excerpt';
 
 export const prerender = false;
 
-export const load: PageServerLoad = async ({ params, fetch }) => {
+export const load: PageLoad = async ({ params, fetch }) => {
 	try {
 		const post = await fetchPost(fetch, params.slug);
 
