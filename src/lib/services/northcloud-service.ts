@@ -1,7 +1,6 @@
 import type { NorthCloudArticle, NorthCloudFeedResponse } from '$lib/types/northcloud';
 
-const FEED_URL = 'https://northcloud.biz/feed.json';
-const FEED_CACHE_KEY = 'northcloud-feed-cache';
+const FEED_BASE_URL = 'https://northcloud.biz/api/v1/feeds';
 const CACHE_DURATION = 1000 * 60 * 30; // 30 minutes
 
 interface FeedCache {
@@ -59,18 +58,24 @@ function normalizeArticle(
 }
 
 /**
- * Fetches the North Cloud public feed. Uses in-memory cache (30 min TTL).
- * For use in +page.ts load during prerender; keeps "me" static and SEO-friendly.
+ * Fetches a North Cloud topic feed. Uses in-memory cache (30 min TTL).
+ * @param fetchFn - SvelteKit fetch for SSR compatibility
+ * @param slug - Feed slug: 'pipeline', 'crime', 'mining', 'entertainment'
+ * @param limit - Max articles to return (default 10)
  */
 export async function fetchNorthCloudFeed(
-	fetchFn: typeof fetch
+	fetchFn: typeof fetch,
+	slug: string = 'pipeline',
+	limit: number = 10
 ): Promise<NorthCloudArticle[]> {
-	const cached = feedCache.getCache(FEED_CACHE_KEY);
+	const cacheKey = `nc-feed-${slug}-${limit}`;
+	const cached = feedCache.getCache(cacheKey);
 	if (cached) {
 		return cached.data;
 	}
 
-	const response = await fetchFn(FEED_URL, {
+	const url = `${FEED_BASE_URL}/${slug}?limit=${limit}`;
+	const response = await fetchFn(url, {
 		headers: { Accept: 'application/json' }
 	});
 
@@ -80,6 +85,6 @@ export async function fetchNorthCloudFeed(
 
 	const data = (await response.json()) as NorthCloudFeedResponse;
 	const articles = (data.articles ?? []).map(normalizeArticle);
-	feedCache.updateCache(FEED_CACHE_KEY, articles);
+	feedCache.updateCache(cacheKey, articles);
 	return articles;
 }

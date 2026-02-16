@@ -1,15 +1,7 @@
 import type { PageLoad } from './$types';
 import type { Resource } from '$lib/types/resource';
-import { fetchNorthCloudFeed } from '$lib/services/northcloud-service';
 
-export const load: PageLoad = async ({ fetch }) => {
-	let northCloudArticles: Awaited<ReturnType<typeof fetchNorthCloudFeed>> = [];
-	try {
-		northCloudArticles = await fetchNorthCloudFeed(fetch);
-	} catch {
-		// Optional
-	}
-
+export const load: PageLoad = async () => {
 	const resources: Resource[] = [
 		// Featured Content
 		{
@@ -179,7 +171,8 @@ export const load: PageLoad = async ({ fetch }) => {
 		{
 			title: '12 Factor App',
 			url: 'https://12factor.net',
-			description: 'Methodology for building modern, scalable, and maintainable software-as-a-service applications',
+			description:
+				'Methodology for building modern, scalable, and maintainable software-as-a-service applications',
 			category: 'DevOps',
 			tags: ['Best Practices', 'Architecture', 'Cloud Native']
 		},
@@ -223,7 +216,8 @@ export const load: PageLoad = async ({ fetch }) => {
 		{
 			title: 'roadmap.sh',
 			url: 'https://roadmap.sh',
-			description: 'Community-driven guides and paths to learn different tools and technologies',
+			description:
+				'Community-driven guides and paths to learn different tools and technologies',
 			stars: 25300,
 			category: 'Learning Paths',
 			tags: ['Learning', 'Career', 'Guides', 'Community']
@@ -245,7 +239,6 @@ export const load: PageLoad = async ({ fetch }) => {
 	];
 
 	return {
-		resources,
-		northCloudArticles: northCloudArticles.slice(0, 5)
+		resources
 	};
 };
