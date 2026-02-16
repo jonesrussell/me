@@ -215,7 +215,7 @@ export const fetchFeed = async (
 
 // Blog Post Retrieval
 export const fetchPost = async (fetchFn: typeof fetch, slug: string): Promise<BlogPost> => {
-	const { items } = await fetchFeed(fetchFn);
+	const { items } = await fetchFeed(fetchFn, { page: 1, pageSize: 200 });
 	const post = items.find(post => generateSlug(post.title) === slug);
 
 	if (!post) {
