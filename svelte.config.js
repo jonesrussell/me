@@ -10,7 +10,7 @@ const config = {
 			base: process.env.BASE_PATH || ''
 		},
 		adapter: adapter({
-			fallback: 'fallback.html',
+			fallback: '404.html',
 			strict: false
 		}),
 		prerender: {
