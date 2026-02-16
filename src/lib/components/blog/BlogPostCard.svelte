@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import type { BlogPost } from '$lib/types/blog';
 	import { decodeEntities } from '$lib/utils/html-entities';
 
@@ -67,8 +68,7 @@
 </style>
 
 <article class="card">
-	<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-	<a class="title" href={post.link} target="_blank" rel="noopener noreferrer">{post.title}</a>
+	<a class="title" href={resolve(`/blog/${post.slug}`)}>{post.title}</a>
 	<p class="meta">
 		<time datetime={post.published}>{post.formattedDate}</time>
 		{#if post.categories.length > 0}

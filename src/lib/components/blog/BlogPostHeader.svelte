@@ -76,6 +76,16 @@
 		background: var(--color-surface-elevated);
 		border-radius: var(--radius-sm);
 	}
+
+	.original-link {
+		text-decoration: none;
+		color: var(--color-text-muted);
+		transition: color 0.2s ease;
+	}
+
+	.original-link:hover {
+		color: var(--color-primary);
+	}
 </style>
 
 <header class="post-header">
@@ -95,6 +105,9 @@
 					<span class="category">{category}</span>
 				{/each}
 			</div>
+		{/if}
+		{#if post.link}
+			<a class="original-link" href={post.link} target="_blank" rel="noopener noreferrer">View original</a>
 		{/if}
 	</div>
 </header>
