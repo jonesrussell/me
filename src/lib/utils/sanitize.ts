@@ -24,7 +24,9 @@ const defaultOptions = {
 	},
 	allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'tel'],
 	allowProtocolRelative: true,
-	enforceHtmlBoundary: true
+	enforceHtmlBoundary: true,
+	// Disable style parsing in browser - PostCSS dependency fails client-side (sanitize-html#547)
+	parseStyleAttributes: false
 };
 
 export function sanitize(dirty: string, options = {}) {
