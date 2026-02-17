@@ -75,20 +75,19 @@ test.describe('Blog Page', () => {
 		await expect(heroPost).toBeVisible();
 	});
 
-	// Skips in CI: slug page fetches feed from jonesrussell.github.io; that request often fails from GitHub runners.
-	test.skip(!!process.env.CI)(
-		'should navigate to on-site blog post when clicking hero post',
-		async ({ page }) => {
-			await page.waitForSelector('.hero-post');
+	test('should navigate to on-site blog post when clicking hero post', async ({ page }, testInfo) => {
+		// Skip in CI: slug page fetches feed from jonesrussell.github.io; that request often fails from GitHub runners.
+		testInfo.skip(!!process.env.CI, 'External feed may be unavailable in CI');
 
-			const heroLink = page.locator('a.hero-post');
-			await expect(heroLink).toBeVisible();
+		await page.waitForSelector('.hero-post');
 
-			await heroLink.click();
+		const heroLink = page.locator('a.hero-post');
+		await expect(heroLink).toBeVisible();
 
-			await expect(page).toHaveURL(/\/blog\/.+/);
-			await expect(page.locator('.blog-post')).toBeVisible({ timeout: 15_000 });
-			await expect(page.locator('.blog-post .post-content')).toBeVisible();
-		}
-	);
+		await heroLink.click();
+
+		await expect(page).toHaveURL(/\/blog\/.+/);
+		await expect(page.locator('.blog-post')).toBeVisible({ timeout: 15_000 });
+		await expect(page.locator('.blog-post .post-content')).toBeVisible();
+	});
 });
