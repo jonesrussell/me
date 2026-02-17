@@ -87,8 +87,8 @@ test.describe('Blog Page', () => {
 		// URL should be /blog/[slug] on this site, not external
 		await expect(page).toHaveURL(/\/blog\/.+/);
 
-		// Article content should be visible (on-site post page)
-		await expect(page.locator('.blog-post')).toBeVisible();
+		// Article content loads async (fetchPost); allow time in CI
+		await expect(page.locator('.blog-post')).toBeVisible({ timeout: 15_000 });
 		await expect(page.locator('.blog-post .post-content')).toBeVisible();
 	});
 });
