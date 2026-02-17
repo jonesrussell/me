@@ -10,14 +10,8 @@ const defaultOptions = {
 	allowedAttributes: {
 		a: ['href', 'name', 'target'],
 		img: ['src', 'alt', 'title', 'width', 'height'],
-		'*': ['class', 'style']
-	},
-	allowedStyles: {
-		'*': {
-			'color': ['#000000', '#ffffff', 'rgb(0, 0, 0)', 'rgb(255, 255, 255)'],
-			'text-align': ['left', 'right', 'center'],
-			'font-size': ['12px', '14px', '16px', '18px', '20px', '24px', '28px', '32px', '36px', '48px', '64px']
-		}
+		// style omitted: parseStyleAttributes is false (PostCSS fails client-side), so we strip style attrs
+		'*': ['class']
 	},
 	allowedClasses: {
 		'*': ['*']
