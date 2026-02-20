@@ -66,6 +66,11 @@ export const projects: Project[] = [
 		githubUrl: 'https://github.com/jonesrussell/orewire-laravel',
 		status: 'active',
 		image: 'images/projects/orewire.webp',
+		imageSrcset: [
+			{ path: 'images/projects/orewire-480.webp', width: 480 },
+			{ path: 'images/projects/orewire-960.webp', width: 960 }
+		],
+		imageSizes: '(max-width: 30rem) 100vw, (max-width: 50rem) 40vw, 25vw',
 		type: 'consumer'
 	},
 	{
