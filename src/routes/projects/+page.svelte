@@ -235,7 +235,7 @@
 	/>
 </svelte:head>
 
-<Hero title="Projects" />
+<Hero title="Projects" variant="projects" />
 
 <div class="projects">
 	<div class="container">

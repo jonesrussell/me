@@ -327,7 +327,7 @@
 </svelte:head>
 
 <div class="blog">
-	<Hero title="Blog" subtitle="Latest writing" />
+	<Hero title="Blog" subtitle="Latest writing" variant="blog" />
 
 	<BlogError />
 
