@@ -1,3 +1,4 @@
+/// <reference types="@testing-library/jest-dom" />
 import { render } from '@testing-library/svelte';
 import { describe, it, expect } from 'vitest';
 import Hero from './Hero.svelte';
