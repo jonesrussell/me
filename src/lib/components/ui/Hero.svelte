@@ -1,14 +1,15 @@
 <script lang="ts">
-	const { title, subtitle, children } = $props<{
+	import type { Snippet } from 'svelte';
+
+	const { title, subtitle, variant, children } = $props<{
 		title?: string;
 		subtitle?: string;
-		children?: () => unknown;
+		variant?: 'blog' | 'projects' | 'resources' | 'contact';
+		children?: Snippet;
 	}>();
 </script>
 
 <style>
-
-
 	@keyframes hero-enter {
 		from {
 			opacity: 0;
@@ -24,11 +25,11 @@
 	@media (--container-md) {
 		.hero {
 			min-height: 30vh;
-			padding: var(--space-20) var(--space-8);
+			padding: var(--space-32) var(--space-12);
 		}
 
 		.hero-title {
-			font-size: var(--font-size-4xl);
+			font-size: var(--font-size-5xl);
 		}
 	}
 
@@ -42,7 +43,7 @@
 		display: flex;
 		position: relative;
 		width: 100%;
-		padding: var(--space-12) var(--space-4);
+		padding: var(--space-20) var(--space-8);
 		background: linear-gradient(to bottom, var(--bg-color), var(--bg-darker));
 		border-radius: var(--radius-lg);
 		flex-direction: column;
@@ -66,9 +67,10 @@
 		background:
 			radial-gradient(
 				ellipse 80% 60% at 50% 40%,
-				var(--color-mix-light) 0%,
+				var(--hero-accent, var(--color-mix-light)) 0%,
 				transparent 70%
 			);
+		opacity: 0.12;
 		pointer-events: none;
 	}
 
@@ -86,20 +88,38 @@
 	.hero-title {
 		margin: 0;
 		font-family: var(--font-mono);
-		font-size: var(--font-size-3xl);
+		font-size: var(--font-size-4xl);
 		font-weight: var(--font-weight-bold);
 		color: var(--text-color);
 	}
 
 	.hero-subtitle {
-		margin: var(--space-2) 0 0 0;
+		margin: var(--space-4) 0 0 0;
 		font-family: var(--font-mono);
-		font-size: var(--font-size-xl);
-		color: var(--text-muted);
+		font-size: var(--font-size-base);
+		letter-spacing: var(--letter-spacing-loose);
+		color: var(--hero-accent, var(--text-muted));
+	}
+
+	/* Per-variant accent tints */
+	.hero[data-variant='blog'] {
+		--hero-accent: rgb(101 130 95);
+	}
+
+	.hero[data-variant='projects'] {
+		--hero-accent: rgb(85 115 125);
+	}
+
+	.hero[data-variant='resources'] {
+		--hero-accent: rgb(130 120 80);
+	}
+
+	.hero[data-variant='contact'] {
+		--hero-accent: rgb(101 130 95);
 	}
 </style>
 
-<section class="hero">
+<section class="hero" data-variant={variant || undefined}>
 	<div class="hero-content">
 		<h1 class="hero-title">{title}</h1>
 		{#if subtitle}
