@@ -19,7 +19,7 @@ export const projects: Project[] = [
 			{ path: 'images/projects/north-cloud-480.webp', width: 480 },
 			{ path: 'images/projects/north-cloud-960.webp', width: 960 }
 		],
-		imageSizes: '(max-width: 30rem) 100vw, (max-width: 50rem) 40cqi, 30cqi',
+		imageSizes: '(max-width: 30rem) 100vw, (max-width: 50rem) 40vw, 25vw',
 		type: 'platform'
 	},
 	{
@@ -102,7 +102,7 @@ export const projects: Project[] = [
 			{ path: 'images/projects/gimbal-480.webp', width: 480 },
 			{ path: 'images/projects/gimbal-960.webp', width: 960 }
 		],
-		imageSizes: '(max-width: 30rem) 100vw, (max-width: 50rem) 40cqi, 30cqi',
+		imageSizes: '(max-width: 30rem) 100vw, (max-width: 50rem) 40vw, 25vw',
 		type: 'tool'
 	}
 ];

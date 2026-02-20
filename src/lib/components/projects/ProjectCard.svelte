@@ -141,11 +141,12 @@
 	}
 
 	.thumbnail {
-		aspect-ratio: 16/9;
 		width: 100%;
 		border-radius: var(--radius-sm);
+		aspect-ratio: 16/9;
 		overflow: hidden;
 	}
+
 
 	img {
 		width: 100%;
@@ -160,25 +161,9 @@
 		object-fit: contain;
 	}
 
-	@container project-card (width >= 30rem) {
-		.project-card {
-			flex-direction: row;
-			align-items: center;
-			gap: var(--space-4);
-		}
-
-		.thumbnail {
-			width: 40%;
-		}
-	}
-
 	@container project-card (width >= 50rem) {
 		.project-card {
 			padding: var(--space-6);
-		}
-
-		.thumbnail {
-			width: 30%;
 		}
 	}
 

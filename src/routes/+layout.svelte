@@ -14,7 +14,7 @@
 	}>();
 
 	const siteUrl = canonicalUrl(base, '/');
-	const jsonLd = $derived({
+	const jsonLdHtml = `<script type="application/ld+json">${JSON.stringify({
 		'@context': 'https://schema.org',
 		'@graph': [
 			{
@@ -29,12 +29,12 @@
 				url: siteUrl
 			}
 		]
-	});
+	})}</scr${''}ipt>`;
 </script>
 
 <svelte:head>
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -- JSON-LD from our config only -->
-	{@html `<script type="application/ld+json">${JSON.stringify(jsonLd)}</scr` + `ipt>`}
+	{@html jsonLdHtml}
 </svelte:head>
 
 <style>
