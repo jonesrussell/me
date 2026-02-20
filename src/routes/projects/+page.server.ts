@@ -1,9 +1,7 @@
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 import { fetchNorthCloudFeed } from '$lib/services/northcloud-service';
 
-export const prerender = true;
-
-export const load: PageLoad = async ({ fetch }) => {
+export const load: PageServerLoad = async ({ fetch }) => {
 	const feedLimit = 3;
 
 	const [crimeArticles, miningArticles, entertainmentArticles] = await Promise.all([
