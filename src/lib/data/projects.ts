@@ -83,6 +83,11 @@ export const projects: Project[] = [
 		githubUrl: 'https://github.com/jonesrussell/streetcode-laravel',
 		status: 'active',
 		image: 'images/projects/streetcode.webp',
+		imageSrcset: [
+			{ path: 'images/projects/streetcode-480.webp', width: 480 },
+			{ path: 'images/projects/streetcode-960.webp', width: 960 }
+		],
+		imageSizes: '(max-width: 30rem) 100vw, (max-width: 50rem) 40vw, 25vw',
 		type: 'consumer'
 	},
 	{
