@@ -6,17 +6,17 @@
 	--text-muted: rgb(148 163 184);
 	--border-color: rgb(40 50 60);
 
-	/* Primary Accent - Emerald */
-	--accent-color: rgb(16 185 129);
-	--accent-color-hover: rgb(52 211 153);
+	/* Primary Accent - Sage */
+	--accent-color: rgb(101 130 95);
+	--accent-color-hover: rgb(134 164 118);
 
 	/* Secondary Accent - Gold */
 	--secondary-accent: rgb(234 179 8);
 
-	/* Color Mixes - Using Emerald */
-	--color-mix-light: rgb(16 185 129 / 10%);
-	--color-mix-medium: rgb(16 185 129 / 20%);
-	--color-mix-faint: rgb(16 185 129 / 5%);
+	/* Color Mixes - Using Sage */
+	--color-mix-light: rgb(101 130 95 / 10%);
+	--color-mix-medium: rgb(101 130 95 / 20%);
+	--color-mix-faint: rgb(101 130 95 / 5%);
 
 	/* Status Colors */
 	--color-info: var(--color-blue-400);
@@ -25,9 +25,9 @@
 	--color-error: var(--color-red-400);
 
 	/* Tag Colors */
-	--tag-bg: var(--color-green-200);
-	--tag-color: var(--color-green-900);
-	--tag-border: 1px solid var(--color-green-400);
+	--tag-bg: rgb(101 130 95 / 20%);
+	--tag-color: rgb(200 218 195);
+	--tag-border: 1px solid rgb(101 130 95 / 50%);
 
 	/* Selection */
 	::selection {
