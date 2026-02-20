@@ -102,13 +102,18 @@ export const projects: Project[] = [
 		type: 'tool'
 	},
 	{
-		title: 'Goforms',
+		title: 'GoFormX',
 		description: 'Quickly add forms to your web projects.',
 		tags: ['Go', 'Echo', 'MariaDB', 'REST API', 'Docker'],
-		url: 'https://github.com/goformx/goforms',
-		githubUrl: 'https://github.com/goformx/goforms',
+		url: 'https://github.com/goformx/goformx',
+		githubUrl: 'https://github.com/goformx/goformx',
 		status: 'development',
-		image: 'images/projects/placeholder.png',
+		image: 'images/projects/goforms.webp',
+		imageSrcset: [
+			{ path: 'images/projects/goforms-480.webp', width: 480 },
+			{ path: 'images/projects/goforms-960.webp', width: 960 }
+		],
+		imageSizes: '(max-width: 30rem) 100vw, (max-width: 50rem) 40vw, 25vw',
 		type: 'tool'
 	},
 	{
