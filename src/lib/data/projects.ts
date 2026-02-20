@@ -32,6 +32,11 @@ export const projects: Project[] = [
 		githubUrl: 'https://github.com/jonesrussell/coforge',
 		status: 'development',
 		image: 'images/projects/coforge.webp',
+		imageSrcset: [
+			{ path: 'images/projects/coforge-480.webp', width: 480 },
+			{ path: 'images/projects/coforge-960.webp', width: 960 }
+		],
+		imageSizes: '(max-width: 30rem) 100vw, (max-width: 50rem) 40vw, 25vw',
 		type: 'consumer'
 	},
 	{
