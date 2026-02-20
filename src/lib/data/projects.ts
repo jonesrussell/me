@@ -49,6 +49,11 @@ export const projects: Project[] = [
 		githubUrl: 'https://github.com/jonesrussell/movies-of-war.com',
 		status: 'active',
 		image: 'images/projects/movies-of-war.webp',
+		imageSrcset: [
+			{ path: 'images/projects/movies-of-war-480.webp', width: 480 },
+			{ path: 'images/projects/movies-of-war-960.webp', width: 960 }
+		],
+		imageSizes: '(max-width: 30rem) 100vw, (max-width: 50rem) 40vw, 25vw',
 		type: 'consumer'
 	},
 	{
