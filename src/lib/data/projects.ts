@@ -105,7 +105,8 @@ export const projects: Project[] = [
 		title: 'Goforms',
 		description: 'Quickly add forms to your web projects.',
 		tags: ['Go', 'Echo', 'MariaDB', 'REST API', 'Docker'],
-		url: 'https://goformx.com/',
+		url: 'https://github.com/goformx/goforms',
+		githubUrl: 'https://github.com/goformx/goforms',
 		status: 'development',
 		image: 'images/projects/placeholder.png',
 		type: 'tool'
