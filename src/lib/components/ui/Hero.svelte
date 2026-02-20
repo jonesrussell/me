@@ -117,6 +117,16 @@
 	.hero[data-variant='contact'] {
 		--hero-accent: rgb(101 130 95);
 	}
+
+	.hero-topo {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		color: var(--hero-accent, var(--accent-color));
+		pointer-events: none;
+		z-index: 0;
+	}
 </style>
 
 <section class="hero" data-variant={variant || undefined}>
@@ -128,5 +138,22 @@
 	</div>
 	{#if children}
 		{@render children()}
+	{/if}
+	{#if variant}
+		<svg
+			class="hero-topo"
+			aria-hidden="true"
+			viewBox="0 0 800 400"
+			preserveAspectRatio="xMaxYMid slice"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<ellipse cx="650" cy="200" rx="50" ry="35" fill="none" stroke="currentColor" stroke-width="1" opacity="0.45" />
+			<ellipse cx="650" cy="200" rx="100" ry="72" fill="none" stroke="currentColor" stroke-width="1" opacity="0.32" />
+			<ellipse cx="650" cy="200" rx="155" ry="110" fill="none" stroke="currentColor" stroke-width="1" opacity="0.22" />
+			<ellipse cx="650" cy="200" rx="215" ry="155" fill="none" stroke="currentColor" stroke-width="1" opacity="0.15" />
+			<ellipse cx="650" cy="200" rx="280" ry="205" fill="none" stroke="currentColor" stroke-width="1" opacity="0.10" />
+			<ellipse cx="650" cy="200" rx="355" ry="260" fill="none" stroke="currentColor" stroke-width="1" opacity="0.06" />
+			<ellipse cx="650" cy="200" rx="440" ry="320" fill="none" stroke="currentColor" stroke-width="1" opacity="0.04" />
+		</svg>
 	{/if}
 </section>
