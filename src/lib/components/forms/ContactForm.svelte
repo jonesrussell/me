@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { FormService } from '$lib/services/form-service';
+	import { FormService, FormValidationError } from '$lib/services/form-service';
 	import { config } from '$lib/config/env';
 
 	type SubmitState = 'idle' | 'submitting' | 'success' | 'error';
@@ -36,8 +36,13 @@
 			});
 			state = 'success';
 		} catch (err) {
-			state = 'error';
-			errorMessage = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
+			if (err instanceof FormValidationError) {
+				state = 'idle';
+				fieldErrors = Object.fromEntries(err.fieldErrors.map((e) => [e.field, e.message]));
+			} else {
+				state = 'error';
+				errorMessage = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
+			}
 		}
 	}
 </script>

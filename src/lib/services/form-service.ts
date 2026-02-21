@@ -22,6 +22,21 @@ interface FormSubmissionResponse {
   errors?: Record<string, string>;
 }
 
+export interface ValidationError {
+  field: string;
+  message: string;
+  rule: string;
+}
+
+export class FormValidationError extends Error {
+  readonly fieldErrors: ValidationError[];
+
+  constructor(fieldErrors: ValidationError[]) {
+    super('Validation failed');
+    this.fieldErrors = fieldErrors;
+  }
+}
+
 export class FormService {
   private static instance: FormService;
   private baseUrl: string;
@@ -73,8 +88,11 @@ export class FormService {
     });
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: 'Failed to submit form' }));
-      throw new Error(error.message || 'Failed to submit form');
+      const body = await response.json().catch(() => ({ message: 'Failed to submit form' }));
+      if (response.status === 400 && Array.isArray(body?.data?.errors)) {
+        throw new FormValidationError(body.data.errors as ValidationError[]);
+      }
+      throw new Error(body.message || 'Failed to submit form');
     }
 
     return response.json();
