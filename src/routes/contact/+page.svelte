@@ -1,5 +1,5 @@
 <script lang="ts">
-	import GoFormXPlaceholder from '$lib/components/forms/GoFormXPlaceholder.svelte';
+	import ContactForm from '$lib/components/forms/ContactForm.svelte';
 	import Hero from '$lib/components/ui/Hero.svelte';
 </script>
 
@@ -121,11 +121,7 @@
 			</ul>
 		</div>
 		<div class="contact-form-col">
-			<GoFormXPlaceholder
-				title="Contact"
-				description="Get in touch form — launching soon."
-				variant="inline"
-			/>
+			<ContactForm />
 		</div>
 	</div>
 </div>

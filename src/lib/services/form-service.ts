@@ -53,7 +53,7 @@ export class FormService {
   }
 
   async getSchema(formId: string): Promise<FormSchema> {
-    const response = await fetch(`${this.baseUrl}/api/v1/forms/${formId}/schema`, {
+    const response = await fetch(`${this.baseUrl}/forms/${formId}/schema`, {
       headers: this.getHeaders()
     });
 
@@ -66,7 +66,7 @@ export class FormService {
   }
 
   async submitForm(formId: string, data: FormData): Promise<FormSubmissionResponse> {
-    const response = await fetch(`${this.baseUrl}/api/v1/forms/${formId}/submit`, {
+    const response = await fetch(`${this.baseUrl}/forms/${formId}/submit`, {
       method: 'POST',
       headers: this.getHeaders(),
       body: JSON.stringify(data)
