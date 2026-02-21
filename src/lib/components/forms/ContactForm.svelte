@@ -8,9 +8,7 @@
 	let errorMessage = $state('');
 	let fieldErrors = $state<Record<string, string>>({});
 
-	let name = $state('');
 	let email = $state('');
-	let subject = $state('');
 	let message = $state('');
 	let referral = $state('');
 
@@ -32,9 +30,7 @@
 		try {
 			const service = FormService.getInstance();
 			await service.submitForm(config.formIds.contact, {
-				name,
 				email,
-				subject,
 				message,
 				...(referral ? { referral } : {}),
 			});
@@ -54,20 +50,6 @@
 {:else}
 	<form class="contact-form" onsubmit={handleSubmit} novalidate>
 		<div class="form-group">
-			<label class="form-label" for="cf-name">Name</label>
-			<input
-				id="cf-name"
-				class="form-input"
-				type="text"
-				bind:value={name}
-				placeholder="Your name"
-				required
-				disabled={state === 'submitting'}
-			/>
-			{#if fieldErrors.name}<span class="form-error">{fieldErrors.name}</span>{/if}
-		</div>
-
-		<div class="form-group">
 			<label class="form-label" for="cf-email">Email</label>
 			<input
 				id="cf-email"
@@ -79,20 +61,6 @@
 				disabled={state === 'submitting'}
 			/>
 			{#if fieldErrors.email}<span class="form-error">{fieldErrors.email}</span>{/if}
-		</div>
-
-		<div class="form-group">
-			<label class="form-label" for="cf-subject">Subject</label>
-			<input
-				id="cf-subject"
-				class="form-input"
-				type="text"
-				bind:value={subject}
-				placeholder="What is this about?"
-				required
-				disabled={state === 'submitting'}
-			/>
-			{#if fieldErrors.subject}<span class="form-error">{fieldErrors.subject}</span>{/if}
 		</div>
 
 		<div class="form-group">
