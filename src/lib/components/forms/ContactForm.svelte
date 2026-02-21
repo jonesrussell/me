@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tick } from 'svelte';
 	import { FormService, FormValidationError } from '$lib/services/form-service';
 	import { config } from '$lib/config/env';
 
@@ -39,6 +40,8 @@
 			if (err instanceof FormValidationError) {
 				state = 'idle';
 				fieldErrors = Object.fromEntries(err.fieldErrors.map((e) => [e.field, e.message]));
+				await tick();
+				document.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
 			} else {
 				state = 'error';
 				errorMessage = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
@@ -63,9 +66,11 @@
 				bind:value={email}
 				placeholder="your@email.com"
 				required
+				aria-invalid={fieldErrors.email ? true : undefined}
+				aria-describedby={fieldErrors.email ? 'cf-email-error' : undefined}
 				disabled={state === 'submitting'}
 			/>
-			{#if fieldErrors.email}<span class="form-error">{fieldErrors.email}</span>{/if}
+			{#if fieldErrors.email}<span id="cf-email-error" class="form-error">{fieldErrors.email}</span>{/if}
 		</div>
 
 		<div class="form-group">
@@ -78,9 +83,11 @@
 				rows="5"
 				required
 				minlength="10"
+				aria-invalid={fieldErrors.message ? true : undefined}
+				aria-describedby={fieldErrors.message ? 'cf-message-error' : undefined}
 				disabled={state === 'submitting'}
 			></textarea>
-			{#if fieldErrors.message}<span class="form-error">{fieldErrors.message}</span>{/if}
+			{#if fieldErrors.message}<span id="cf-message-error" class="form-error">{fieldErrors.message}</span>{/if}
 		</div>
 
 		<div class="form-group">
@@ -123,6 +130,13 @@
 
 	.submit-error {
 		margin: 0;
+	}
+
+	/* Red border on invalid fields */
+	:global(.form-input[aria-invalid="true"]),
+	:global(.form-textarea[aria-invalid="true"]) {
+		border-color: var(--error-color);
+		box-shadow: 0 0 0 var(--space-1) color-mix(in srgb, var(--error-color) 20%, transparent);
 	}
 
 	.success-message {
