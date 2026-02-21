@@ -147,12 +147,12 @@
 	.form-input:invalid,
 	.form-textarea:invalid,
 	.form-select:invalid {
-		border-color: var(--error-color);
+		border-color: var(--color-error);
 	}
 
 	.form-error {
 		font-size: var(--font-size-sm);
-		color: var(--error-color);
+		color: var(--color-error);
 	}
 
 	/* Disabled states */

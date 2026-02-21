@@ -135,8 +135,8 @@
 	/* Red border on invalid fields */
 	:global(.form-input[aria-invalid="true"]),
 	:global(.form-textarea[aria-invalid="true"]) {
-		border-color: var(--error-color);
-		box-shadow: 0 0 0 var(--space-1) color-mix(in srgb, var(--error-color) 20%, transparent);
+		border-color: var(--color-error);
+		box-shadow: 0 0 0 var(--space-1) color-mix(in srgb, var(--color-error) 20%, transparent);
 	}
 
 	.success-message {
