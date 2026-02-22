@@ -51,6 +51,9 @@ jobs:
         env:
           BASE_PATH: '/me'
           NODE_ENV: production
+          VITE_GOFORMS_API_URL: 'https://api.goformx.com'
+          VITE_GOFORMS_CONTACT_FORM_ID: '442dd7f7-95a2-4709-91c9-3d4cd4996212'
+          VITE_GOFORMS_NEWSLETTER_FORM_ID: '3cfb8337-4885-4c3b-90b6-14c9aa116b20'
         run: npm run build
 
       - name: Verify no symlinks (Pages unsupported)
