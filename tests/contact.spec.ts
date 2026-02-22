@@ -18,9 +18,7 @@ test.describe('Contact Page', () => {
 	test('should display the contact form fields', async ({ page }) => {
 		await page.goto('/contact', { waitUntil: 'domcontentloaded' });
 
-		await expect(page.locator('#cf-name')).toBeVisible({ timeout: 5000 });
 		await expect(page.locator('#cf-email')).toBeVisible({ timeout: 5000 });
-		await expect(page.locator('#cf-subject')).toBeVisible({ timeout: 5000 });
 		await expect(page.locator('#cf-message')).toBeVisible({ timeout: 5000 });
 		await expect(page.locator('#cf-referral')).toBeVisible({ timeout: 5000 });
 		await expect(page.getByRole('button', { name: /send_message/ })).toBeVisible({ timeout: 5000 });

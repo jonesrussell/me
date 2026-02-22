@@ -1,9 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * Integration test: all three form surfaces (layout newsletter slot,
- * contact page form column, home CTA container) must render the same
- * GoFormX placeholder component. Prevents drift between surfaces.
+ * The GoFormX placeholder component is used on the home page CTA section.
+ * Other surfaces (layout newsletter slot, contact page) now use live form components.
  */
 test.describe('GoFormX placeholder surfaces', () => {
 	test.setTimeout(30000);
@@ -19,37 +18,5 @@ test.describe('GoFormX placeholder surfaces', () => {
 		const placeholder = ctaContainer.locator(PLACEHOLDER_SELECTOR);
 		await expect(placeholder).toBeVisible();
 		await expect(placeholder).toContainText(CORE_TEXT);
-	});
-
-	test('layout newsletter slot shows placeholder on every page', async ({ page }) => {
-		await page.goto('/projects', { waitUntil: 'domcontentloaded' });
-
-		const placeholder = page.locator(PLACEHOLDER_SELECTOR).first();
-		await expect(placeholder).toBeVisible();
-		await expect(placeholder).toContainText(CORE_TEXT);
-	});
-
-	test('contact page shows placeholder in form column', async ({ page }) => {
-		await page.goto('/contact', { waitUntil: 'domcontentloaded' });
-
-		const placeholder = page.locator(PLACEHOLDER_SELECTOR).first();
-		await expect(placeholder).toBeVisible();
-		await expect(placeholder).toContainText(CORE_TEXT);
-	});
-
-	test('all three surfaces render same placeholder content', async ({ page }) => {
-		const urls = ['/', '/contact', '/projects'];
-		const seenTexts: string[] = [];
-
-		for (const url of urls) {
-			await page.goto(url, { waitUntil: 'domcontentloaded' });
-			const placeholder = page.locator(PLACEHOLDER_SELECTOR).first();
-			await expect(placeholder).toBeVisible();
-			const subline = await placeholder.locator('text=A unified form engine').textContent();
-			if (subline) seenTexts.push(subline);
-		}
-
-		expect(seenTexts.length).toBeGreaterThanOrEqual(1);
-		expect(seenTexts.every((t) => t.includes('unified form engine'))).toBe(true);
 	});
 });
