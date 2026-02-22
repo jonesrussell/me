@@ -99,7 +99,7 @@
 				disabled={formState === 'submitting'}
 			>
 				<option value="">Select one</option>
-				{#each referralOptions as opt}
+				{#each referralOptions as opt (opt.value)}
 					<option value={opt.value}>{opt.label}</option>
 				{/each}
 			</select>
@@ -124,8 +124,8 @@
 
 	.optional {
 		font-size: var(--font-size-xs, 0.75rem);
-		color: var(--text-muted);
 		font-weight: var(--font-weight-normal);
+		color: var(--text-muted);
 	}
 
 	.submit-error {
