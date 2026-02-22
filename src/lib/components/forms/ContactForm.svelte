@@ -5,7 +5,7 @@
 
 	type SubmitState = 'idle' | 'submitting' | 'success' | 'error';
 
-	let state = $state<SubmitState>('idle');
+	let formState = $state<SubmitState>('idle');
 	let errorMessage = $state('');
 	let fieldErrors = $state<Record<string, string>>({});
 
@@ -24,7 +24,7 @@
 
 	async function handleSubmit(e: SubmitEvent) {
 		e.preventDefault();
-		state = 'submitting';
+		formState = 'submitting';
 		errorMessage = '';
 		fieldErrors = {};
 
@@ -35,22 +35,22 @@
 				message,
 				...(referral ? { referral } : {}),
 			});
-			state = 'success';
+			formState = 'success';
 		} catch (err) {
 			if (err instanceof FormValidationError) {
-				state = 'idle';
+				formState = 'idle';
 				fieldErrors = Object.fromEntries(err.fieldErrors.map((e) => [e.field, e.message]));
 				await tick();
 				document.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
 			} else {
-				state = 'error';
+				formState = 'error';
 				errorMessage = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
 			}
 		}
 	}
 </script>
 
-{#if state === 'success'}
+{#if formState === 'success'}
 	<div class="success-message" role="status">
 		<p class="success-heading">// message transmitted</p>
 		<p class="success-body">Thanks for reaching out! I'll get back to you soon.</p>
@@ -68,7 +68,7 @@
 				required
 				aria-invalid={fieldErrors.email ? true : undefined}
 				aria-describedby={fieldErrors.email ? 'cf-email-error' : undefined}
-				disabled={state === 'submitting'}
+				disabled={formState === 'submitting'}
 			/>
 			{#if fieldErrors.email}<span id="cf-email-error" class="form-error">{fieldErrors.email}</span>{/if}
 		</div>
@@ -85,7 +85,7 @@
 				minlength="10"
 				aria-invalid={fieldErrors.message ? true : undefined}
 				aria-describedby={fieldErrors.message ? 'cf-message-error' : undefined}
-				disabled={state === 'submitting'}
+				disabled={formState === 'submitting'}
 			></textarea>
 			{#if fieldErrors.message}<span id="cf-message-error" class="form-error">{fieldErrors.message}</span>{/if}
 		</div>
@@ -96,7 +96,7 @@
 				id="cf-referral"
 				class="form-select"
 				bind:value={referral}
-				disabled={state === 'submitting'}
+				disabled={formState === 'submitting'}
 			>
 				<option value="">Select one</option>
 				{#each referralOptions as opt}
@@ -105,12 +105,12 @@
 			</select>
 		</div>
 
-		{#if state === 'error'}
+		{#if formState === 'error'}
 			<p class="form-error submit-error" role="alert">{errorMessage}</p>
 		{/if}
 
-		<button type="submit" class="form-submit" disabled={state === 'submitting'}>
-			{state === 'submitting' ? '// transmitting...' : '// send_message()'}
+		<button type="submit" class="form-submit" disabled={formState === 'submitting'}>
+			{formState === 'submitting' ? '// transmitting...' : '// send_message()'}
 		</button>
 	</form>
 {/if}
