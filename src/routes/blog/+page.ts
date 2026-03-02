@@ -6,7 +6,7 @@ import { canonicalUrl } from '$lib/config/seo';
 
 const canonicalBlog = canonicalUrl(base, '/blog');
 
-export const prerender = true;
+export const prerender = false;
 
 export const load: PageLoad = async ({ fetch }) => {
 	try {
