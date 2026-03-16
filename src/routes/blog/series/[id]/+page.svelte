@@ -3,18 +3,17 @@
 	import SeriesHeader from '$lib/components/series/SeriesHeader.svelte';
 	import SeriesGroup from '$lib/components/series/SeriesGroup.svelte';
 	import { loadProgress, suggestedNext } from '$lib/stores/series-progress.svelte';
-	import { getAllEntries, getTotalEntries } from '$lib/data/series/psr';
 	import type { PageData } from './$types';
+	import type { SeriesGroup as SeriesGroupType } from '$lib/types/series';
 
 	const { data } = $props<{ data: PageData }>();
 
-	// Load progress from localStorage on mount (SSR-safe)
 	$effect(() => {
 		loadProgress();
 	});
 
-	const allEntries = getAllEntries();
-	const totalEntries = getTotalEntries();
+	const allEntries = $derived(data.series.groups.flatMap((g: SeriesGroupType) => g.entries));
+	const totalEntries = $derived(allEntries.length);
 	const suggested = $derived(suggestedNext(data.series.id, allEntries));
 </script>
 
@@ -26,7 +25,6 @@
 
 <div class="series-page">
 	<nav class="breadcrumb" aria-label="Breadcrumb">
-		<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 		<a href="{base}/blog">Blog</a>
 		<span aria-hidden="true">/</span>
 		<span>Series</span>
@@ -52,30 +50,20 @@
 		{/each}
 	</div>
 
-	<section class="getting-started" aria-label="Getting started">
-		<h2>Getting Started</h2>
-		<p>Clone the companion repository to follow along with working examples:</p>
-		<pre><code>git clone {data.series.repoUrl}.git
-cd php-fig-guide
+	{#if data.series.repoUrl}
+		<section class="getting-started" aria-label="Getting started">
+			<h2>Getting Started</h2>
+			<p>Clone the companion repository to follow along with working examples:</p>
+			<pre><code>git clone {data.series.repoUrl}.git
+cd {data.series.repoUrl.split('/').pop()}
 composer install</code></pre>
-		<p>Run the tests:</p>
-		<pre><code>composer test
-composer test -- --filter=PSR1
-composer check-style</code></pre>
-		<p class="getting-started-links">
-			<!-- eslint-disable svelte/no-navigation-without-resolve -->
-			<a href={data.series.repoUrl} target="_blank" rel="noopener noreferrer">
-				View on GitHub
-			</a>
-			<!-- eslint-enable svelte/no-navigation-without-resolve -->
-			&middot;
-			<!-- eslint-disable svelte/no-navigation-without-resolve -->
-			<a href="https://www.php-fig.org/psr/" target="_blank" rel="noopener noreferrer">
-				PHP-FIG PSR Index
-			</a>
-			<!-- eslint-enable svelte/no-navigation-without-resolve -->
-		</p>
-	</section>
+			<p class="getting-started-links">
+				<a href={data.series.repoUrl} target="_blank" rel="noopener noreferrer">
+					View on GitHub
+				</a>
+			</p>
+		</section>
+	{/if}
 </div>
 
 <style>

@@ -10,7 +10,6 @@
 	import BlogPostsSection from '$lib/components/blog/BlogPostsSection.svelte';
 	import LoadingSpinner from '$lib/components/ui/LoadingSpinner.svelte';
 	import FeaturedSeriesCard from '$lib/components/series/FeaturedSeriesCard.svelte';
-	import { psrSeries, getTotalEntries } from '$lib/data/series/psr';
 	import { base } from '$app/paths';
 
 	import type { PageData } from './$types';
@@ -336,13 +335,15 @@
 			<BlogHeroPost post={heroPost} />
 		{/if}
 
-		<FeaturedSeriesCard
-			title={psrSeries.title}
-			description={psrSeries.description}
-			seriesId={psrSeries.id}
-			totalEntries={getTotalEntries()}
-			href="{base}/blog/series/psr"
-		/>
+		{#each data.seriesIndex.series as series (series.id)}
+			<FeaturedSeriesCard
+				title={series.title}
+				description={series.description}
+				seriesId={series.id}
+				totalEntries={series.postCount}
+				href="{base}/blog/series/{series.id}"
+			/>
+		{/each}
 
 		<section class="posts-section" aria-label="Blog posts">
 			{#if gridPosts.length > 0}
