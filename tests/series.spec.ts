@@ -17,7 +17,8 @@ test.describe('Blog Series - PSR', () => {
 	});
 
 	test('should render all 6 groups', async ({ page }) => {
-		await page.goto('/blog/series/php-fig-standards', { waitUntil: 'domcontentloaded' });
+		await page.goto('/blog/series/php-fig-standards', { waitUntil: 'networkidle' });
+		await page.waitForSelector('.series-groups', { timeout: 30000 });
 		await expect(page.locator('text=Foundation')).toBeVisible();
 		await expect(page.locator('text=Core Infrastructure')).toBeVisible();
 		await expect(page.locator('text=HTTP Stack')).toBeVisible();
@@ -27,7 +28,8 @@ test.describe('Blog Series - PSR', () => {
 	});
 
 	test('should render PSR entry cards', async ({ page }) => {
-		await page.goto('/blog/series/php-fig-standards', { waitUntil: 'domcontentloaded' });
+		await page.goto('/blog/series/php-fig-standards', { waitUntil: 'networkidle' });
+		await page.waitForSelector('.series-groups', { timeout: 30000 });
 		await expect(page.getByText('PSR-1', { exact: true }).first()).toBeVisible();
 		await expect(
 			page.getByRole('link', { name: 'PSR-1: Basic Coding Standard' })
