@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import {
 	formatPostDate,
-	generateSlug,
 	fetchFeed,
 	fetchPost,
 	resetFeedCache
@@ -35,7 +34,7 @@ const sampleXml = `<?xml version="1.0" encoding="UTF-8"?>
 </feed>`;
 
 const sampleRSSXml = `<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:blog="https://jonesrussell.github.io/blog/">
   <channel>
     <title>Test Blog</title>
     <link>https://example.com/blog/</link>
@@ -46,6 +45,10 @@ const sampleRSSXml = `<?xml version="1.0" encoding="utf-8" standalone="yes"?>
       <guid>https://example.com/blog/rss-post-1/</guid>
       <description>Short description of RSS post 1</description>
       <content:encoded><![CDATA[<p>Full content of RSS post 1</p>]]></content:encoded>
+      <blog:series>php-fig-standards</blog:series>
+      <blog:seriesOrder>3</blog:seriesOrder>
+      <blog:tag>php</blog:tag>
+      <blog:tag>psr</blog:tag>
     </item>
     <item>
       <title>RSS Post 2</title>
@@ -92,25 +95,6 @@ describe('Utilities', () => {
 		});
 	});
 
-	describe('generateSlug', () => {
-		it('should convert titles to valid slugs', () => {
-			expect(generateSlug('Hello World')).toBe('hello-world');
-			expect(generateSlug('Test: Article 123')).toBe('test-article-123');
-			expect(generateSlug('Multiple   Spaces')).toBe('multiple-spaces');
-		});
-
-		it('should handle special characters', () => {
-			expect(generateSlug('Hello & World')).toBe('hello-world');
-			expect(generateSlug('Title with (parentheses)')).toBe('title-with-parentheses');
-			expect(generateSlug('Special @Chars!')).toBe('special-chars');
-		});
-
-		it('should handle edge cases', () => {
-			expect(generateSlug('')).toBe('');
-			expect(generateSlug('   ')).toBe('');
-			expect(generateSlug('!!!!')).toBe('');
-		});
-	});
 });
 
 describe('API', () => {
@@ -142,7 +126,10 @@ describe('API', () => {
 				content: 'Test content 1',
 				published: '2024-03-14T12:00:00Z',
 				categories: ['test', 'blog'],
-				slug: 'test-post-1'
+				tags: [],
+				series: [],
+				seriesOrder: 0,
+				slug: 'post-1'
 			});
 		});
 
@@ -221,8 +208,39 @@ describe('API', () => {
 				title: 'RSS Post 1',
 				link: 'https://example.com/blog/rss-post-1/',
 				content: '<p>Full content of RSS post 1</p>',
-				slug: 'rss-post-1'
+				slug: 'rss-post-1',
+				series: ['php-fig-standards'],
+				seriesOrder: 3,
+				tags: ['php', 'psr']
 			});
+		});
+
+		it('should parse blog:series from RSS items', async () => {
+			const result = await fetchFeed(mockFetch);
+			expect(result.items[0].series).toEqual(['php-fig-standards']);
+		});
+
+		it('should parse blog:tag from RSS items', async () => {
+			const result = await fetchFeed(mockFetch);
+			expect(result.items[0].tags).toEqual(['php', 'psr']);
+		});
+
+		it('should parse blog:seriesOrder from RSS items', async () => {
+			const result = await fetchFeed(mockFetch);
+			expect(result.items[0].seriesOrder).toBe(3);
+		});
+
+		it('should default to empty arrays when no series metadata', async () => {
+			const result = await fetchFeed(mockFetch);
+			expect(result.items[1].series).toEqual([]);
+			expect(result.items[1].seriesOrder).toBe(0);
+			expect(result.items[1].tags).toEqual([]);
+		});
+
+		it('should extract slug from permalink', async () => {
+			const result = await fetchFeed(mockFetch);
+			expect(result.items[0].slug).toBe('rss-post-1');
+			expect(result.items[1].slug).toBe('rss-post-2');
 		});
 
 		it('should parse pubDate from RSS 2.0 items', async () => {
@@ -241,10 +259,10 @@ describe('API', () => {
 
 	describe('fetchPost', () => {
 		it('should fetch a post by slug', async () => {
-			const post = await fetchPost(mockFetch, 'test-post-1');
+			const post = await fetchPost(mockFetch, 'post-1');
 			expect(post).toMatchObject({
 				title: 'Test Post 1',
-				slug: 'test-post-1'
+				slug: 'post-1'
 			});
 		});
 
@@ -254,7 +272,7 @@ describe('API', () => {
 
 		it('should handle network errors when fetching post', async () => {
 			mockFetch.mockRejectedValueOnce(new Error('Network error'));
-			await expect(fetchPost(mockFetch, 'test-post-1')).rejects.toThrow('Network error');
+			await expect(fetchPost(mockFetch, 'post-1')).rejects.toThrow('Network error');
 		});
 	});
 });

@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import { psrSeries } from './psr';
-import { generateSlug } from '$lib/services/blog-service';
 
 describe('PSR series data', () => {
 	it('should have the correct id and metadata', () => {
@@ -62,34 +61,31 @@ describe('PSR series data', () => {
 		}
 	});
 
-	it('slugs should match generateSlug output from actual post titles', () => {
+	it('slugs should match blog permalink slugs', () => {
 		const allEntries = psrSeries.groups.flatMap((g) => g.entries);
 
-		// Actual titles from Hugo blog post frontmatter in /home/fsd42/dev/blog/content/posts/
-		const titleMap: Record<number, string> = {
-			1: 'PSR-1: Basic Coding Standard in PHP',
-			3: 'PSR-3: Logger Interface in PHP',
-			4: 'PSR-4: Autoloading Standard in PHP',
-			6: 'PSR-6: Caching Interface in PHP',
-			7: 'PSR-7: HTTP Message Interfaces in PHP',
-			11: 'PSR-11: Container Interface in PHP',
-			12: 'PSR-12: Extended Coding Style Guide in PHP',
-			13: 'PSR-13: Hypermedia Links in PHP',
-			14: 'PSR-14: Event Dispatcher in PHP',
-			15: 'PSR-15: HTTP Handlers and Middleware in PHP',
-			16: 'PSR-16: Simple Cache in PHP',
-			17: 'PSR-17: HTTP Factories in PHP',
-			18: 'PSR-18: HTTP Client in PHP',
-			20: 'PSR-20: Clock Interface in PHP'
+		// Expected slugs from Hugo blog post frontmatter (permalink-derived)
+		const slugMap: Record<number, string> = {
+			1: 'psr-1-basic-coding-standard-in-php',
+			3: 'psr-3-logger-interface-in-php',
+			4: 'psr-4-autoloading-standard-in-php',
+			6: 'psr-6-caching-interface-in-php',
+			7: 'psr-7-http-message-interfaces-in-php',
+			11: 'psr-11-container-interface-in-php',
+			12: 'psr-12-extended-coding-style-guide-in-php',
+			13: 'psr-13-hypermedia-links-in-php',
+			14: 'psr-14-event-dispatcher-in-php',
+			15: 'psr-15-http-handlers-and-middleware-in-php',
+			16: 'psr-16-simple-cache-in-php',
+			17: 'psr-17-http-factories-in-php',
+			18: 'psr-18-http-client-in-php',
+			20: 'psr-20-clock-interface-in-php'
 		};
 
 		for (const entry of allEntries) {
-			const actualTitle = titleMap[entry.psrNumber];
-			expect(actualTitle).toBeDefined();
-			if (actualTitle) {
-				const expectedSlug = generateSlug(actualTitle);
-				expect(entry.slug).toBe(expectedSlug);
-			}
+			const expectedSlug = slugMap[entry.psrNumber];
+			expect(expectedSlug).toBeDefined();
+			expect(entry.slug).toBe(expectedSlug);
 		}
 	});
 });

@@ -28,11 +28,15 @@ type PaginatedResult<T> = {
 // Utility Functions
 export const formatPostDate = (dateString: string): string => formatDate(dateString) ?? dateString;
 
-export const generateSlug = (title: string): string =>
-	title
-		.toLowerCase()
-		.replace(/[^a-z0-9]+/g, '-')
-		.replace(/(^-|-$)/g, '');
+const extractSlugFromLink = (link: string): string => {
+	try {
+		const url = new URL(link);
+		const segments = url.pathname.split('/').filter(Boolean);
+		return segments[segments.length - 1] || '';
+	} catch {
+		return '';
+	}
+};
 
 // Caching Module
 const feedCache = (() => {
@@ -103,7 +107,10 @@ const parseAtomFeed = (xml: string): BlogPost[] => {
 				published,
 				formattedDate: formatPostDate(published),
 				categories,
-				slug: generateSlug(title)
+				tags: [],
+				series: [],
+				seriesOrder: 0,
+				slug: extractSlugFromLink(link)
 			});
 		}
 	}
@@ -135,6 +142,25 @@ const parseRSSFeed = (xml: string): BlogPost[] => {
 			})
 			.filter(Boolean);
 
+		const seriesMatches = itemMatch.match(/<blog:series>([\s\S]*?)<\/blog:series>/g) || [];
+		const series = seriesMatches
+			.map(match => {
+				const m = match.match(/<blog:series>([\s\S]*?)<\/blog:series>/);
+				return m ? m[1].trim() : '';
+			})
+			.filter(Boolean);
+
+		const seriesOrderMatch = itemMatch.match(/<blog:seriesOrder>([\s\S]*?)<\/blog:seriesOrder>/);
+		const seriesOrder = seriesOrderMatch ? parseInt(seriesOrderMatch[1].trim(), 10) : 0;
+
+		const tagMatches = itemMatch.match(/<blog:tag>([\s\S]*?)<\/blog:tag>/g) || [];
+		const tags = tagMatches
+			.map(match => {
+				const m = match.match(/<blog:tag>([\s\S]*?)<\/blog:tag>/);
+				return m ? m[1].trim() : '';
+			})
+			.filter(Boolean);
+
 		if (title) {
 			entries.push({
 				title,
@@ -143,7 +169,10 @@ const parseRSSFeed = (xml: string): BlogPost[] => {
 				published,
 				formattedDate: formatPostDate(published),
 				categories,
-				slug: generateSlug(title)
+				tags,
+				series,
+				seriesOrder,
+				slug: extractSlugFromLink(link)
 			});
 		}
 	}
@@ -216,7 +245,7 @@ export const fetchFeed = async (
 // Blog Post Retrieval
 export const fetchPost = async (fetchFn: typeof fetch, slug: string): Promise<BlogPost> => {
 	const { items } = await fetchFeed(fetchFn, { page: 1, pageSize: 200 });
-	const post = items.find(post => generateSlug(post.title) === slug);
+	const post = items.find(post => post.slug === slug);
 
 	if (!post) {
 		throw new Error('Post not found');
