@@ -23,7 +23,7 @@ export const load: PageLoad = async ({ fetch, params }) => {
 	const allEntries = series.groups.flatMap((g) => g.entries);
 
 	// Fetch companion code if series has a repo
-	let codeDataMap: Record<string, CodeDataType> = {};
+	const codeDataMap: Record<string, CodeDataType> = {};
 	if (series.repoUrl) {
 		const repoSlug = series.repoUrl.replace('https://github.com/', '');
 		const codeResults = await Promise.all(
