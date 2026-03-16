@@ -14,7 +14,7 @@ export const load: PageLoad = async ({ fetch }) => {
 	let initialPosts: BlogPost[] = [];
 	let serverError: string | null = null;
 	let hasMore = false;
-	let currentPage = 1;
+	const currentPage = 1;
 	let totalPages = 1;
 	let seriesIndex: SeriesIndex = { series: [] };
 

@@ -25,6 +25,7 @@
 
 <div class="series-page">
 	<nav class="breadcrumb" aria-label="Breadcrumb">
+		<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 		<a href="{base}/blog">Blog</a>
 		<span aria-hidden="true">/</span>
 		<span>Series</span>
@@ -58,6 +59,7 @@
 cd {data.series.repoUrl.split('/').pop()}
 composer install</code></pre>
 			<p class="getting-started-links">
+				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 				<a href={data.series.repoUrl} target="_blank" rel="noopener noreferrer">
 					View on GitHub
 				</a>
