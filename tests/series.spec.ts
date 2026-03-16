@@ -17,20 +17,18 @@ test.describe('Blog Series - PSR', () => {
 	});
 
 	test('should render all 6 groups', async ({ page }) => {
-		await page.goto('/blog/series/php-fig-standards', { waitUntil: 'networkidle' });
-		await page.waitForSelector('.series-groups', { timeout: 30000 });
-		await expect(page.locator('text=Foundation')).toBeVisible();
-		await expect(page.locator('text=Core Infrastructure')).toBeVisible();
-		await expect(page.locator('text=HTTP Stack')).toBeVisible();
-		await expect(page.locator('text=Data & Caching')).toBeVisible();
-		await expect(page.locator('text=Specialized')).toBeVisible();
-		await expect(page.locator('text=Index')).toBeVisible();
+		await page.goto('/blog/series/php-fig-standards', { waitUntil: 'domcontentloaded' });
+		await expect(page.getByRole('heading', { name: 'Foundation' })).toBeVisible({ timeout: 30000 });
+		await expect(page.getByRole('heading', { name: 'Core Infrastructure' })).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'HTTP Stack' })).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Data & Caching' })).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Specialized' })).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Index' })).toBeVisible();
 	});
 
 	test('should render PSR entry cards', async ({ page }) => {
-		await page.goto('/blog/series/php-fig-standards', { waitUntil: 'networkidle' });
-		await page.waitForSelector('.series-groups', { timeout: 30000 });
-		await expect(page.getByText('PSR-1', { exact: true }).first()).toBeVisible();
+		await page.goto('/blog/series/php-fig-standards', { waitUntil: 'domcontentloaded' });
+		await expect(page.getByRole('heading', { name: 'Foundation' })).toBeVisible({ timeout: 30000 });
 		await expect(
 			page.getByRole('link', { name: 'PSR-1: Basic Coding Standard' })
 		).toBeVisible();
