@@ -22,7 +22,7 @@ interface FormSubmissionResponse {
   errors?: Record<string, string>;
 }
 
-export interface ValidationError {
+interface ValidationError {
   field: string;
   message: string;
   rule: string;

@@ -7,7 +7,7 @@ import {
   ListToolsRequestSchema
 } from '@modelcontextprotocol/sdk/types.js';
 import { readdir, readFile } from 'node:fs/promises';
-import { join, basename } from 'node:path';
+import { join } from 'node:path';
 
 const SPECS_DIR = join(import.meta.dirname, '..', '..', 'docs', 'specs');
 

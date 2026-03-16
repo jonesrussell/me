@@ -4,7 +4,7 @@
 	import ActionNavCards from '$lib/components/navigation/ActionNavCards.svelte';
 	import SpecialtyGrid from '$lib/components/content/SpecialtyGrid.svelte';
 	import Hero from '$lib/components/ui/Hero.svelte';
-	import GoFormXPlaceholder from '$lib/components/forms/GoFormXPlaceholder.svelte';
+	import { resolve } from '$app/paths';
 	import type { PageData } from './$types';
 
 	const { data } = $props<{ data: PageData }>();
@@ -70,11 +70,46 @@
 		}
 	}
 
-	.gf-section-cta {
+	.cta-section {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-4);
 		margin-top: var(--space-16);
 		padding: var(--space-8);
-		background: var(--color-background-alt);
+		text-align: center;
+		background: var(--bg-darker);
 		border-radius: var(--radius-lg);
+	}
+
+	.cta-title {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: var(--font-size-2xl);
+		font-weight: 700;
+		color: var(--text-color);
+	}
+
+	.cta-description {
+		margin: 0;
+		font-size: var(--font-size-base);
+		color: var(--text-muted);
+	}
+
+	.cta-link {
+		display: inline-block;
+		padding: var(--space-2) var(--space-6);
+		font-family: var(--font-mono);
+		font-size: var(--font-size-sm);
+		text-decoration: none;
+		color: var(--bg-color);
+		background: var(--accent-color);
+		border-radius: var(--radius-md);
+		transition: opacity var(--transition-base);
+	}
+
+	.cta-link:hover {
+		opacity: 0.85;
 	}
 
 	.northcloud-feed {
@@ -214,12 +249,10 @@
 			</section>
 		{/if}
 		<ActionNavCards links={data.navLinks} />
-		<div id="cta-form-container" class="gf-section gf-section-cta">
-			<GoFormXPlaceholder
-				title="Get in touch"
-				description="Contact form — launching soon."
-				variant="section"
-			/>
-		</div>
+		<section class="cta-section">
+			<h2 class="cta-title">Get in touch</h2>
+			<p class="cta-description">Have a question or want to collaborate? I'd love to hear from you.</p>
+			<a href={resolve('/contact')} class="cta-link">Go to contact form &rarr;</a>
+		</section>
 	</div>
 </div>

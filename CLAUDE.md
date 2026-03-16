@@ -58,7 +58,7 @@ Vitest with **two projects** in `vite.config.ts`: **`client`** (jsdom, `*.svelte
 - All routes prerender by default (`+layout.server.ts` sets `prerender = true`)
 - Blog detail pages (`blog/[slug]/+page.server.ts`) disable prerendering for dynamic slugs
 - Data loading uses `+page.ts` (universal) for most routes, `+page.server.ts` for blog detail
-- Root layout (`+layout.svelte`) uses grid layout with Header, children, GoFormX placeholder (newsletter slot), Footer
+- Root layout (`+layout.svelte`) uses grid layout with Header, children, newsletter slot, Footer
 
 ### Deployment & Base Path
 
@@ -90,7 +90,7 @@ Stylelint **blocks** raw `min-width`/`max-width` in media queries — always use
 
 ### Environment Config
 
-**Forms:** Form surfaces (newsletter, contact, home CTA) currently render a **GoFormX placeholder** (“Coming soon”). Real forms will use the existing FormService and the env below when GoFormX is integrated.
+**Forms:** Contact form uses GoFormX via `ContactForm.svelte`. Newsletter forms will use the existing FormService and the env below when GoFormX newsletter integration is complete.
 
 GoForms API integration configured in `src/lib/config/env.ts`:
 ```

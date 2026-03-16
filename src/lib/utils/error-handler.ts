@@ -120,10 +120,6 @@ function logError(error: AppError, additionalContext?: Record<string, unknown>):
 		}
 	}
 
-	// TODO: Send to error reporting service in production
-	// if (import.meta.env.PROD) {
-	//   sendToErrorService(logData);
-	// }
 }
 
 /**

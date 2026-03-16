@@ -13,7 +13,6 @@
 | `src/lib/components/newsletter/StatusMessages.svelte` | Form submission status display |
 | `src/lib/components/newsletter/SubmitButton.svelte` | Styled submit button with loading state |
 | `src/lib/components/forms/ContactForm.svelte` | Contact page form |
-| `src/lib/components/forms/GoFormXPlaceholder.svelte` | Placeholder shown before GoFormX integration |
 | `src/lib/types/newsletter.ts` | SubmitStatus type |
 | `src/routes/contact/+page.svelte` | Contact page |
 
@@ -57,13 +56,12 @@ export function useNewsletterForm(): {
 
 ## Data Flow
 
-### Current state (GoFormX placeholder)
-1. All form surfaces render `GoFormXPlaceholder.svelte`
-2. Shows "Coming soon" message
-3. No API calls made
-4. FormService and composable exist but are not wired to UI yet
+### Current state
+1. Contact page renders `ContactForm.svelte` with GoFormX integration
+2. Home page CTA links to `/contact`
+3. Newsletter surfaces render placeholder (GoFormX not yet wired)
 
-### Future state (when GoFormX is integrated)
+### Data flow (GoFormX integrated)
 1. User fills form → composable manages reactive state
 2. On submit: `useNewsletterForm.handleSubmit()` called
 3. Composable calls `FormService.getInstance().submitForm(formId, data)`
@@ -73,8 +71,7 @@ export function useNewsletterForm(): {
 
 ### Root layout integration
 - `+layout.svelte` has a dedicated grid slot for newsletter CTA
-- Currently renders `GoFormXPlaceholder`
-- Will render `NewsletterCTA` when GoFormX is ready
+- Will render `NewsletterCTA` when GoFormX newsletter integration is ready
 
 ## Configuration
 
