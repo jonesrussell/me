@@ -1,28 +1,35 @@
-export interface ISeriesEntry {
-	psrNumber: number;
-	slug: string;
+export interface SeriesEntry {
 	title: string;
+	slug: string;
+	permalink: string;
+	date: string;
 	summary: string;
-	companionFiles: string[];
-	testFiles: string[];
-	prerequisites: number[];
+	seriesOrder: number;
+	companionFiles?: string[];
+	testFiles?: string[];
+	prerequisites?: number[];
 }
 
-export interface ISeriesGroup {
+export interface SeriesGroup {
 	name: string;
-	entries: ISeriesEntry[];
+	entries: SeriesEntry[];
 }
 
-export interface ISeriesCodeFile {
-	path: string;
-	content: string;
-	language: string;
-}
-
-export interface ISeries {
+export interface Series {
 	id: string;
 	title: string;
 	description: string;
-	repoUrl: string;
-	groups: ISeriesGroup[];
+	postCount: number;
+	repoUrl?: string;
+	groups: SeriesGroup[];
+}
+
+export interface SeriesIndex {
+	series: Series[];
+}
+
+export interface SeriesCodeFile {
+	path: string;
+	content: string;
+	language: string;
 }

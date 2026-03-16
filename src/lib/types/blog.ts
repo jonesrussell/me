@@ -5,6 +5,9 @@ export interface BlogPost {
 	published: string;
 	formattedDate: string;
 	categories: string[];
+	tags: string[];
+	series: string[];
+	seriesOrder: number;
 	slug: string;
 }
 
