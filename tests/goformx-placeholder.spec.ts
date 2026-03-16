@@ -10,7 +10,8 @@ test.describe('GoFormX placeholder surfaces', () => {
 	const PLACEHOLDER_SELECTOR = '[data-goformx-placeholder]';
 	const CORE_TEXT = 'GoFormX (Coming Soon)';
 
-	test('home page shows placeholder in CTA section', async ({ page }) => {
+	test('home page shows placeholder in CTA section', async ({ page }, testInfo) => {
+		testInfo.skip(true, 'GoFormX placeholder was replaced by live form components');
 		await page.goto('/', { waitUntil: 'domcontentloaded' });
 
 		const ctaContainer = page.locator('#cta-form-container');
