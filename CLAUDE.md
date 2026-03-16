@@ -36,16 +36,22 @@ npm run test:unit:run -- --project=client
 npm run test:unit:run -- --project=server
 ```
 
+## Orchestration
+
+| File pattern | Spec |
+|---|---|
+| `src/lib/services/blog*`, `src/lib/stores/blog*`, `src/lib/components/blog/`, `src/routes/blog/` | `docs/specs/blog.md` |
+| `src/lib/services/series*`, `src/lib/stores/series*`, `src/lib/components/series/`, `src/lib/data/series/` | `docs/specs/series.md` |
+| `src/lib/services/form*`, `src/lib/components/newsletter/`, `src/lib/components/forms/`, `src/lib/config/env*` | `docs/specs/forms.md` |
+| `src/styles/`, `src/lib/stores/theme*`, `src/lib/components/ThemeToggle*` | `docs/specs/theme-css.md` |
+| `src/lib/stores/terminal*`, `src/lib/components/terminal/` | `docs/specs/terminal.md` |
+| GitHub issues, milestones, new features, roadmap | `docs/specs/workflow.md` |
+
 ## Architecture
 
 ### Test Infrastructure
 
-Vitest is configured with **two projects** in `vite.config.ts` (no separate vitest config):
-
-- **`client` project**: Uses jsdom, runs `*.svelte.{test,spec}.ts` files, has `@testing-library/svelte` and `@testing-library/jest-dom` available. Setup: `vitest-setup-client.ts`.
-- **`server` project**: Uses Node environment, runs non-Svelte `*.{test,spec}.ts` files. Setup: `src/test/setup.ts` (mocks window, document, localStorage, matchMedia).
-
-PostCSS is also configured inline in `vite.config.ts` (no `postcss.config.js`).
+Vitest with **two projects** in `vite.config.ts`: **`client`** (jsdom, `*.svelte.{test,spec}.ts`, setup: `vitest-setup-client.ts`) and **`server`** (Node, non-Svelte tests, setup: `src/test/setup.ts`). PostCSS also inline in `vite.config.ts`.
 
 ### Routing & Data Loading
 
@@ -100,56 +106,19 @@ This project uses **Svelte 5 runes exclusively**. Do NOT use legacy Svelte 4 syn
 
 ### Store Pattern
 
-Stores use `.svelte.ts` extension and export `$state` objects directly. Components access properties directly (no `$` prefix):
-
-```typescript
-// stores/example.svelte.ts
-export const exampleState = $state({ value: 0 });
-```
-
-Theme store demonstrates the advanced pattern — computed getters + exported setter functions:
-```typescript
-export const themeState = $state({
-  current: 'auto' as Theme,
-  get effective(): 'light' | 'dark' { /* computed */ }
-});
-export function setTheme(value: Theme) { /* updates state + DOM */ }
-```
-
-Terminal store separates state from API: `terminalState` (data) + `terminal` object (methods: `start`, `stop`, `reset`, `loadCommands`).
+Stores use `.svelte.ts` extension, export `$state` objects. No `$` prefix in components. Theme store: computed getters + exported setters. Terminal store: separate state (`terminalState`) from API (`terminal` object with `start`, `stop`, `reset`, `loadCommands`).
 
 ### Service Pattern
 
-Services are **pure functions** — they accept `fetch` as a parameter, return data, and never update stores:
-```typescript
-export const fetchFeed = async (fetchFn: typeof fetch, options?: PaginationOptions): Promise<PaginatedResult<BlogPost>> => { ... };
-```
+Pure functions accepting `fetch` as parameter, return data, never update stores. Blog service: in-memory cache with 30-min TTL (`resetFeedCache()` for tests). Form service: singleton `FormService.getInstance()`.
 
-Blog service uses an in-memory cache with 30-minute TTL. Call `resetFeedCache()` in tests.
+### Content Projection
 
-Form service (`form-service.ts`) is a singleton class: `FormService.getInstance()`.
-
-### Content Projection (Snippets)
-
-Use `{#snippet}` and `{@render}` (not slots):
-```svelte
-<!-- Parent -->
-<Child>{#snippet header()}<h1>Title</h1>{/snippet}</Child>
-
-<!-- Child -->
-<script lang="ts">
-  let { header, children } = $props();
-</script>
-{@render header?.()}
-{@render children?.()}
-```
+Use `{#snippet}` + `{@render}` (not `<slot>`). Children via `let { header, children } = $props()`.
 
 ### App State
 
-Use `$app/state` (NOT `$app/stores`):
-```svelte
-import { page } from '$app/state';
-```
+Use `$app/state` (NOT `$app/stores`): `import { page } from '$app/state'`
 
 ## Coding Standards
 
@@ -185,6 +154,23 @@ import { page } from '$app/state';
 
 - `$lib` → `src/lib`
 - `$app` → SvelteKit app modules
+
+## GitHub Workflow
+
+1. All work begins with an issue — create one if missing
+2. Every issue belongs to a milestone — unassigned = incomplete triage
+3. Milestones define the roadmap — check before proposing work
+4. PRs reference issues — title format: `feat(#N): description`
+5. Read `bin/check-milestones` drift report before beginning work
+
+Details: `docs/specs/workflow.md`
+
+## Common Operations
+
+- **Add a component**: create `PascalCase.svelte` + co-located `.svelte.test.ts`, add to parent, use runes
+- **Add a route**: create `src/routes/name/+page.svelte` + `+page.ts`, prerender is on by default
+- **Add a service**: create `src/lib/services/kebab-case.ts`, accept `fetch` param, add types to `src/lib/types/`
+- **Update a subsystem**: change code, update relevant `docs/specs/` file if interfaces changed, run `tools/drift-detector.sh`
 
 ## Deprecated Features (Do NOT Use)
 

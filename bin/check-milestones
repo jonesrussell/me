@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Checks GitHub milestones and issues for triage gaps.
+# Output is informational — always exits 0.
+
+set -euo pipefail
+
+REPO="jonesrussell/me"
+
+if ! command -v gh &>/dev/null; then
+  echo "⚠ gh CLI not found — skipping milestone check"
+  exit 0
+fi
+
+if ! gh auth status &>/dev/null 2>&1; then
+  echo "⚠ gh not authenticated — skipping milestone check"
+  exit 0
+fi
+
+echo "── Milestone Drift Report ──"
+
+# Issues with no milestone
+NO_MILESTONE=$(gh api "repos/${REPO}/issues?state=open&per_page=100" \
+  --jq '[.[] | select(.milestone == null and .pull_request == null)] | length' 2>/dev/null || echo "?")
+
+if [ "$NO_MILESTONE" != "0" ] && [ "$NO_MILESTONE" != "?" ]; then
+  echo "⚠ ${NO_MILESTONE} open issue(s) have no milestone assigned"
+fi
+
+# Milestones with 0 open issues (possibly stale)
+EMPTY_MILESTONES=$(gh api "repos/${REPO}/milestones?state=open&per_page=100" \
+  --jq '[.[] | select(.open_issues == 0)] | .[].title' 2>/dev/null || echo "")
+
+if [ -n "$EMPTY_MILESTONES" ]; then
+  echo "⚠ Milestones with 0 open issues (possibly stale):"
+  echo "$EMPTY_MILESTONES" | while read -r m; do echo "  - $m"; done
+fi
+
+if [ "$NO_MILESTONE" = "0" ] && [ -z "$EMPTY_MILESTONES" ]; then
+  echo "✓ All issues have milestones, no empty milestones found"
+fi
+
+echo "────────────────────────────"
+exit 0
