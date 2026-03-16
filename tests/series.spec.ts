@@ -8,20 +8,26 @@ test.describe('Blog Series - PSR', () => {
 		const seriesCard = page.locator('text=PHP-FIG Standards Guide');
 		await expect(seriesCard).toBeVisible();
 		await seriesCard.click();
-		await expect(page).toHaveURL(/\/blog\/series\/psr/);
+		await expect(page).toHaveURL(/\/blog\/series\/php-fig-standards/);
 	});
 
-	test('should render all 5 groups', async ({ page }) => {
+	test('should redirect /blog/series/psr to /blog/series/php-fig-standards', async ({ page }) => {
 		await page.goto('/blog/series/psr', { waitUntil: 'domcontentloaded' });
+		await expect(page).toHaveURL(/\/blog\/series\/php-fig-standards/);
+	});
+
+	test('should render all 6 groups', async ({ page }) => {
+		await page.goto('/blog/series/php-fig-standards', { waitUntil: 'domcontentloaded' });
 		await expect(page.locator('text=Foundation')).toBeVisible();
 		await expect(page.locator('text=Core Infrastructure')).toBeVisible();
 		await expect(page.locator('text=HTTP Stack')).toBeVisible();
 		await expect(page.locator('text=Data & Caching')).toBeVisible();
 		await expect(page.locator('text=Specialized')).toBeVisible();
+		await expect(page.locator('text=Index')).toBeVisible();
 	});
 
 	test('should render PSR entry cards', async ({ page }) => {
-		await page.goto('/blog/series/psr', { waitUntil: 'domcontentloaded' });
+		await page.goto('/blog/series/php-fig-standards', { waitUntil: 'domcontentloaded' });
 		await expect(page.getByText('PSR-1', { exact: true }).first()).toBeVisible();
 		await expect(
 			page.getByRole('link', { name: 'PSR-1: Basic Coding Standard' })
@@ -29,26 +35,26 @@ test.describe('Blog Series - PSR', () => {
 	});
 
 	test('should have completion checkboxes for each entry', async ({ page }) => {
-		await page.goto('/blog/series/psr', { waitUntil: 'domcontentloaded' });
+		await page.goto('/blog/series/php-fig-standards', { waitUntil: 'domcontentloaded' });
 
-		// All 14 PSR entries should have checkboxes
+		// All 15 PSR entries (14 standards + 1 index) should have checkboxes
 		const checkboxes = page.locator('input[type="checkbox"]');
-		await expect(checkboxes).toHaveCount(14);
+		await expect(checkboxes).toHaveCount(15);
 
 		// First checkbox should have accessible label
 		const firstCheckbox = checkboxes.first();
-		await expect(firstCheckbox).toHaveAttribute('aria-label', /Mark PSR-\d+ as completed/);
+		await expect(firstCheckbox).toHaveAttribute('aria-label', /Mark .+ as completed/);
 		await expect(firstCheckbox).not.toBeChecked();
 	});
 
 	test('should show progress bar', async ({ page }) => {
-		await page.goto('/blog/series/psr', { waitUntil: 'domcontentloaded' });
+		await page.goto('/blog/series/php-fig-standards', { waitUntil: 'domcontentloaded' });
 		const progressBar = page.locator('[role="progressbar"]');
 		await expect(progressBar).toBeVisible();
 	});
 
 	test('should expand View Code section', async ({ page }) => {
-		await page.goto('/blog/series/psr', { waitUntil: 'domcontentloaded' });
+		await page.goto('/blog/series/php-fig-standards', { waitUntil: 'domcontentloaded' });
 		const viewCodeButton = page.locator('text=View Code').first();
 		await viewCodeButton.click();
 
@@ -56,7 +62,7 @@ test.describe('Blog Series - PSR', () => {
 	});
 
 	test('should have getting started section', async ({ page }) => {
-		await page.goto('/blog/series/psr', { waitUntil: 'domcontentloaded' });
+		await page.goto('/blog/series/php-fig-standards', { waitUntil: 'domcontentloaded' });
 		await expect(page.locator('text=Getting Started')).toBeVisible();
 		await expect(page.locator('text=composer install')).toBeVisible();
 	});

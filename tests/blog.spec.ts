@@ -57,9 +57,9 @@ test.describe('Blog Page', () => {
 	});
 
 	test('should display featured series as pinned process', async ({ page }) => {
-		const pinnedProcess = page.locator('.pinned-process');
-		await expect(pinnedProcess).toBeVisible();
-		await expect(pinnedProcess.locator('.process-label')).toHaveText('[SERIES]');
+		const pinnedProcesses = page.locator('.pinned-process');
+		await expect(pinnedProcesses.first()).toBeVisible();
+		await expect(pinnedProcesses.first().locator('.process-label')).toHaveText('[SERIES]');
 	});
 
 	test('should handle error state', async ({ page }) => {
