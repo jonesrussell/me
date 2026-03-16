@@ -11,7 +11,7 @@ interface CodeDataType {
 	testFiles: SeriesCodeFile[];
 }
 
-export const prerender = true;
+export const prerender = false;
 
 export const load: PageLoad = async ({ fetch, params }) => {
 	const series = await fetchSeries(fetch, params.id);

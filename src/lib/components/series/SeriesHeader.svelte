@@ -5,7 +5,7 @@
 	const { title, description, repoUrl, seriesId, totalEntries } = $props<{
 		title: string;
 		description: string;
-		repoUrl: string;
+		repoUrl?: string;
 		seriesId: string;
 		totalEntries: number;
 	}>();
@@ -14,12 +14,14 @@
 <header class="series-header">
 	<h1 class="series-title">{title}</h1>
 	<p class="series-description">{description}</p>
+	{#if repoUrl}
 	<div class="series-meta">
 		<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 		<a href={repoUrl} target="_blank" rel="noopener noreferrer" class="repo-link">
 			Companion Repository
 		</a>
 	</div>
+	{/if}
 	<SeriesProgressBar completed={completedCount(seriesId)} total={totalEntries} />
 </header>
 

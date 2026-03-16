@@ -1,17 +1,17 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/svelte';
 import SeriesCodeView from './SeriesCodeView.svelte';
-import type { ISeriesCodeFile } from '$lib/types/series';
+import type { SeriesCodeFile } from '$lib/types/series';
 
 // Mock the highlight-code action (it requires DOM APIs not in jsdom)
 vi.mock('$lib/actions/highlight-code', () => ({
 	highlightCode: () => ({ destroy() {} })
 }));
 
-const mockSourceFiles: ISeriesCodeFile[] = [
+const mockSourceFiles: SeriesCodeFile[] = [
 	{ path: 'src/PSR1/UserManager.php', content: '<?php\nclass UserManager {}', language: 'php' }
 ];
-const mockTestFiles: ISeriesCodeFile[] = [
+const mockTestFiles: SeriesCodeFile[] = [
 	{
 		path: 'tests/PSR1/UserManagerTest.php',
 		content: '<?php\nclass UserManagerTest {}',

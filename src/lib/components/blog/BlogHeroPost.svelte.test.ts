@@ -9,6 +9,9 @@ const mockPost = {
 	published: '2025-01-15',
 	formattedDate: 'January 15, 2025',
 	categories: ['go', 'cli'],
+	tags: ['go', 'cli'],
+	series: [],
+	seriesOrder: 0,
 	slug: 'building-cli-tools-with-go'
 };
 

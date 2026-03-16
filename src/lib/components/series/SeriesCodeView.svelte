@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { ISeriesCodeFile } from '$lib/types/series';
+	import type { SeriesCodeFile } from '$lib/types/series';
 	import { highlightCode } from '$lib/actions/highlight-code';
 
 	const { sourceFiles, testFiles, repoUrl } = $props<{
-		sourceFiles: ISeriesCodeFile[];
-		testFiles: ISeriesCodeFile[];
-		repoUrl: string;
+		sourceFiles: SeriesCodeFile[];
+		testFiles: SeriesCodeFile[];
+		repoUrl?: string;
 	}>();
 
 	let activeTab = $state<'source' | 'tests'>('source');
@@ -44,10 +44,12 @@
 			<div class="file-block">
 				<div class="file-header">
 					<span class="file-path">{file.path}</span>
+					{#if repoUrl}
 					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 					<a class="github-link" href={githubUrl(file.path)} target="_blank" rel="noopener noreferrer">
 						View on GitHub
 					</a>
+					{/if}
 				</div>
 				<pre><code class="language-{file.language}">{file.content}</code></pre>
 			</div>

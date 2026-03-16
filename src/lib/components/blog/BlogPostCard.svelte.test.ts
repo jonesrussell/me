@@ -9,6 +9,9 @@ const mockPost = {
 	published: '2025-01-10',
 	formattedDate: 'January 10, 2025',
 	categories: ['go', 'testing'],
+	tags: ['go', 'testing'],
+	series: [],
+	seriesOrder: 0,
 	slug: 'testing-in-go'
 };
 

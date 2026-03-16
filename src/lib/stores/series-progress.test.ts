@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+import type { SeriesEntry } from '$lib/types/series';
 
 // Mock localStorage before importing the store
 const mockStorage: Record<string, string> = {};
@@ -21,7 +22,33 @@ import {
 	suggestedNext,
 	resetProgress
 } from './series-progress.svelte';
-import { getAllEntries } from '$lib/data/series/psr';
+
+const mockEntries: SeriesEntry[] = [
+	{
+		slug: 'psr-1-basic-coding-standard-in-php',
+		title: 'PSR-1: Basic Coding Standard',
+		permalink: '/psr-1-basic-coding-standard-in-php/',
+		date: '2025-01-01',
+		summary: 'Fundamental coding standards for PHP interoperability.',
+		seriesOrder: 1
+	},
+	{
+		slug: 'psr-12-extended-coding-style-guide-in-php',
+		title: 'PSR-12: Extended Coding Style Guide',
+		permalink: '/psr-12-extended-coding-style-guide-in-php/',
+		date: '2025-01-02',
+		summary: 'Extended coding style guide building on PSR-1.',
+		seriesOrder: 2
+	},
+	{
+		slug: 'psr-4-autoloading-standard-in-php',
+		title: 'PSR-4: Autoloading Standard',
+		permalink: '/psr-4-autoloading-standard-in-php/',
+		date: '2025-01-03',
+		summary: 'Autoloading standard for PHP classes based on file paths.',
+		seriesOrder: 3
+	}
+];
 
 describe('series-progress store', () => {
 	beforeEach(() => {
@@ -58,16 +85,14 @@ describe('series-progress store', () => {
 	});
 
 	it('should return the suggested next entry', () => {
-		const allEntries = getAllEntries();
-		const next = suggestedNext('psr', allEntries);
-		expect(next?.slug).toBe(allEntries[0].slug);
+		const next = suggestedNext('psr', mockEntries);
+		expect(next?.slug).toBe(mockEntries[0].slug);
 	});
 
 	it('should skip completed entries for suggested next', () => {
-		const allEntries = getAllEntries();
-		toggleCompleted('psr', allEntries[0].slug);
-		const next = suggestedNext('psr', allEntries);
-		expect(next?.slug).toBe(allEntries[1].slug);
+		toggleCompleted('psr', mockEntries[0].slug);
+		const next = suggestedNext('psr', mockEntries);
+		expect(next?.slug).toBe(mockEntries[1].slug);
 	});
 
 	it('should persist to localStorage on toggle', () => {

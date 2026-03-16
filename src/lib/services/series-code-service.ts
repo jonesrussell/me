@@ -1,4 +1,4 @@
-import type { ISeriesCodeFile } from '$lib/types/series';
+import type { SeriesCodeFile } from '$lib/types/series';
 
 const RAW_BASE = 'https://raw.githubusercontent.com';
 
@@ -14,7 +14,7 @@ export async function fetchCodeFile(
 	repoSlug: string,
 	filePath: string,
 	branch = 'main'
-): Promise<ISeriesCodeFile> {
+): Promise<SeriesCodeFile> {
 	const url = `${RAW_BASE}/${repoSlug}/${branch}/${filePath}`;
 
 	try {
@@ -47,7 +47,7 @@ export async function fetchSeriesCode(
 	companionFiles: string[],
 	testFiles: string[],
 	branch = 'main'
-): Promise<{ sourceFiles: ISeriesCodeFile[]; testFiles: ISeriesCodeFile[] }> {
+): Promise<{ sourceFiles: SeriesCodeFile[]; testFiles: SeriesCodeFile[] }> {
 	const [sourceFiles, testResults] = await Promise.all([
 		Promise.all(companionFiles.map((f) => fetchCodeFile(fetchFn, repoSlug, f, branch))),
 		Promise.all(testFiles.map((f) => fetchCodeFile(fetchFn, repoSlug, f, branch)))

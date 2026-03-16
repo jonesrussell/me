@@ -14,13 +14,14 @@ vi.mock('$lib/actions/highlight-code', () => ({
 }));
 
 const mockEntry = {
-	psrNumber: 1,
 	slug: 'psr-1-basic-coding-standard-in-php',
-	title: 'Basic Coding Standard',
+	title: 'PSR-1: Basic Coding Standard',
+	permalink: '/psr-1-basic-coding-standard-in-php/',
+	date: '2025-01-01',
 	summary: 'The foundational coding standard for PHP.',
+	seriesOrder: 1,
 	companionFiles: ['src/PSR1/UserManager.php'],
-	testFiles: ['tests/PSR1/UserManagerTest.php'],
-	prerequisites: []
+	testFiles: ['tests/PSR1/UserManagerTest.php']
 };
 
 const mockCodeData = {

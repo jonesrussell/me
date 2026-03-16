@@ -1,4 +1,4 @@
-import type { ISeriesEntry } from '$lib/types/series';
+import type { SeriesEntry } from '$lib/types/series';
 
 const STORAGE_KEY = 'series-progress';
 
@@ -62,8 +62,8 @@ export function completionPercentage(seriesId: string, total: number): number {
 
 export function suggestedNext(
 	seriesId: string,
-	allEntries: ISeriesEntry[]
-): ISeriesEntry | null {
+	allEntries: SeriesEntry[]
+): SeriesEntry | null {
 	const completed = seriesProgressState.completed[seriesId] ?? [];
 	return allEntries.find((e) => !completed.includes(e.slug)) ?? null;
 }

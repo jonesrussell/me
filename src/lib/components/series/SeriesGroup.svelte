@@ -1,23 +1,23 @@
 <script lang="ts">
-	import type { ISeriesEntry, ISeriesGroup, ISeriesCodeFile } from '$lib/types/series';
+	import type { SeriesEntry, SeriesGroup as SeriesGroupType, SeriesCodeFile } from '$lib/types/series';
 	import { isCompleted } from '$lib/stores/series-progress.svelte';
 	import SeriesEntryCard from './SeriesEntryCard.svelte';
 
 	interface CodeData {
-		sourceFiles: ISeriesCodeFile[];
-		testFiles: ISeriesCodeFile[];
+		sourceFiles: SeriesCodeFile[];
+		testFiles: SeriesCodeFile[];
 	}
 
 	const { group, seriesId, repoUrl, codeDataMap, suggestedSlug } = $props<{
-		group: ISeriesGroup;
+		group: SeriesGroupType;
 		seriesId: string;
-		repoUrl: string;
+		repoUrl?: string;
 		codeDataMap: Record<string, CodeData>;
 		suggestedSlug: string | null;
 	}>();
 
 	const groupCompleted = $derived(
-		group.entries.filter((entry: ISeriesEntry) => isCompleted(seriesId, entry.slug)).length
+		group.entries.filter((entry: SeriesEntry) => isCompleted(seriesId, entry.slug)).length
 	);
 </script>
 

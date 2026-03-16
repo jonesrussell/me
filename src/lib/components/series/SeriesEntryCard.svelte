@@ -1,18 +1,18 @@
 <script lang="ts">
-	import type { ISeriesEntry, ISeriesCodeFile } from '$lib/types/series';
+	import type { SeriesEntry, SeriesCodeFile } from '$lib/types/series';
 	import { isCompleted, toggleCompleted } from '$lib/stores/series-progress.svelte';
 	import SeriesCodeView from './SeriesCodeView.svelte';
 	import { base } from '$app/paths';
 
 	interface CodeData {
-		sourceFiles: ISeriesCodeFile[];
-		testFiles: ISeriesCodeFile[];
+		sourceFiles: SeriesCodeFile[];
+		testFiles: SeriesCodeFile[];
 	}
 
 	const { entry, seriesId, repoUrl, codeData, isSuggested } = $props<{
-		entry: ISeriesEntry;
+		entry: SeriesEntry;
 		seriesId: string;
-		repoUrl: string;
+		repoUrl?: string;
 		codeData: CodeData | null;
 		isSuggested: boolean;
 	}>();
@@ -26,18 +26,14 @@
 			type="checkbox"
 			checked={isCompleted(seriesId, entry.slug)}
 			onchange={() => toggleCompleted(seriesId, entry.slug)}
-			aria-label="Mark PSR-{entry.psrNumber} as completed"
+			aria-label="Mark {entry.title} as completed"
 		/>
 		<div class="entry-info">
 			<h3>
-				<span class="psr-number">PSR-{entry.psrNumber}</span>
 				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 				<a href="{base}/blog/{entry.slug}">{entry.title}</a>
 			</h3>
 			<p class="summary">{entry.summary}</p>
-			{#if entry.prerequisites.length > 0}
-				<p class="prerequisites">Requires: PSR-{entry.prerequisites.join(', PSR-')}</p>
-			{/if}
 		</div>
 	</div>
 
@@ -103,13 +99,6 @@
 		line-height: 1.3;
 	}
 
-	.psr-number {
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
-		color: var(--accent-color);
-		margin-inline-end: var(--space-2);
-	}
-
 	.entry-info h3 a {
 		text-decoration: none;
 		color: var(--text-color);
@@ -122,13 +111,6 @@
 	.summary {
 		margin: var(--space-2) 0 0;
 		font-size: var(--font-size-base);
-		color: var(--text-muted);
-	}
-
-	.prerequisites {
-		margin: var(--space-2) 0 0;
-		font-family: var(--font-mono);
-		font-size: var(--font-size-xs);
 		color: var(--text-muted);
 	}
 
