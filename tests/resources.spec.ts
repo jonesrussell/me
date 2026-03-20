@@ -10,7 +10,7 @@ test.describe('Resources Page', () => {
 		// Check main sections
 		await Promise.all([
 			expect(page.locator('h1')).toBeVisible({ timeout: 15000 }),
-			expect(page.locator('text=Developer Resources')).toBeVisible({ timeout: 15000 }),
+			expect(page.locator('h1', { hasText: 'Resources' })).toBeVisible({ timeout: 15000 }),
 			expect(page.locator('.sections')).toBeVisible({ timeout: 15000 })
 		]);
 

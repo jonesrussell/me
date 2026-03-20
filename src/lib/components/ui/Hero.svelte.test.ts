@@ -30,4 +30,16 @@ describe('Hero', () => {
 		const section = container.querySelector('section');
 		expect(section).not.toHaveAttribute('data-variant');
 	});
+
+	it('does not render topo SVG when variant is set', () => {
+		const { container } = render(Hero, { props: { title: 'Blog', variant: 'blog' } });
+		const svg = container.querySelector('svg.hero-topo');
+		expect(svg).toBeNull();
+	});
+
+	it('does not render topo SVG when variant is omitted', () => {
+		const { container } = render(Hero, { props: { title: 'Home' } });
+		const svg = container.querySelector('svg.hero-topo');
+		expect(svg).toBeNull();
+	});
 });

@@ -235,7 +235,7 @@
 	/>
 </svelte:head>
 
-<Hero title="Projects" variant="projects" />
+<Hero title="Projects" subtitle="// ls ~/builds" variant="projects" />
 
 <div class="projects">
 	<div class="container">

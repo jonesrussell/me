@@ -325,7 +325,7 @@
 	<meta property="og:url" content={data.canonicalBlog} />
 </svelte:head>
 
-<Hero title="Blog" subtitle="Latest writing" variant="blog" />
+<Hero title="Blog" subtitle="// thoughts.log" variant="blog" />
 
 <div class="blog">
 	<BlogError />

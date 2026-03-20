@@ -138,7 +138,7 @@
 	/>
 </svelte:head>
 
-<Hero title="Developer Resources" subtitle="Essential Tools & Learning Materials" variant="resources" />
+<Hero title="Resources" subtitle="// cat bookmarks.md" variant="resources" />
 
 <div class="resources">
 	<div class="container">

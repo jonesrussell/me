@@ -104,7 +104,7 @@
 	/>
 </svelte:head>
 
-<Hero title="Establish Connection" subtitle="// ready to receive" variant="contact" />
+<Hero title="Contact" subtitle="// open for connections" variant="contact" />
 
 <div class="contact">
 	<div class="container">
