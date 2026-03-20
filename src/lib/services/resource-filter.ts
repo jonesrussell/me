@@ -21,12 +21,3 @@ export function filterResources(
 	});
 }
 
-export function collectTags(resources: Resource[]): string[] {
-	const tags = new Set<string>();
-	for (const r of resources) {
-		for (const t of r.tags) {
-			tags.add(t);
-		}
-	}
-	return [...tags].sort();
-}

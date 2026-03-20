@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { untrack } from 'svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import Hero from '$lib/components/ui/Hero.svelte';
@@ -14,16 +15,14 @@
 	let activeTags = $state<string[]>([]);
 	let searchQuery = $state('');
 
-	// Initialize filter state from URL params (client-side only)
+	// Initialize filter state from URL params (reactive to browser navigation)
 	$effect(() => {
-		if (typeof window === 'undefined') return;
-		const params = new URLSearchParams(window.location.search);
-		const cat = params.get('category');
-		const tags = params.getAll('tag');
-		const q = params.get('q');
-		if (cat) activeCategory = cat;
-		if (tags.length > 0) activeTags = tags;
-		if (q) searchQuery = q;
+		const params = page.url.searchParams;
+		untrack(() => {
+			activeCategory = params.get('category');
+			activeTags = params.getAll('tag');
+			searchQuery = params.get('q') ?? '';
+		});
 	});
 
 	const filtered = $derived(filterResources(data.resources, activeCategory, activeTags, searchQuery));

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { filterResources, collectTags } from './resource-filter';
+import { filterResources } from './resource-filter';
 import type { Resource } from '$lib/types/resource';
 
 const resources: Resource[] = [
@@ -80,12 +80,5 @@ describe('filterResources', () => {
 	it('returns empty array when nothing matches', () => {
 		const result = filterResources(resources, null, [], 'nonexistent');
 		expect(result).toHaveLength(0);
-	});
-});
-
-describe('collectTags', () => {
-	it('collects unique tags sorted alphabetically', () => {
-		const tags = collectTags(resources);
-		expect(tags).toEqual(['backend', 'cli', 'containers', 'frontend', 'ssr']);
 	});
 });
