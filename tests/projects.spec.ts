@@ -11,7 +11,7 @@ test.describe('Projects Page', () => {
 		await Promise.all([
 			expect(page.locator('h1')).toBeVisible({ timeout: 15000 }),
 			expect(page.locator('h2').first()).toBeVisible({ timeout: 15000 }),
-			expect(page.locator('.project-grid')).toBeVisible({ timeout: 15000 })
+			expect(page.locator('.project-grid').first()).toBeVisible({ timeout: 15000 })
 		]);
 
 		// Wait for projects to load
