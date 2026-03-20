@@ -20,6 +20,10 @@
 		imageSizes: p.imageSizes
 	}));
 
+	const frameworkProjects = projects.filter((p) => p.type === 'framework');
+	const pipelineProjects = projects.filter((p) => p.type === 'platform' || p.type === 'consumer');
+	const toolProjects = projects.filter((p) => p.type === 'tool');
+
 	const videos: Video[] = [
 		{
 			title: 'The Legend Reborn – Animated Trailer (Scripted, Voiced & AI-Enhanced)',
@@ -228,10 +232,10 @@
 </style>
 
 <svelte:head>
-	<title>Projects | Russell Jones - Go & Modern Web Development</title>
+	<title>Projects | Russell Jones - Waaseyaa, Go & Modern Web Development</title>
 	<meta
 		name="description"
-		content="Content platform and consumer sites – North Cloud and related projects. Technical videos and educational content about Go, JavaScript, and modern web development."
+		content="Waaseyaa PHP framework ecosystem, North Cloud content pipeline, developer tools, and experimental videos. Projects spanning Go, PHP, Laravel, and modern web development."
 	/>
 </svelte:head>
 
@@ -239,9 +243,14 @@
 
 <div class="projects">
 	<div class="container">
-		<section class="section project-grid-container" aria-label="Content platform and consumer sites">
-			<h2 class="section-title">Content platform and consumer sites</h2>
-			<ProjectGrid {projects} />
+		<section class="section project-grid-container" aria-label="Waaseyaa Ecosystem">
+			<h2 class="section-title">Waaseyaa Ecosystem</h2>
+			<ProjectGrid projects={frameworkProjects} />
+		</section>
+
+		<section class="section project-grid-container" aria-label="Content Pipeline">
+			<h2 class="section-title">Content Pipeline</h2>
+			<ProjectGrid projects={pipelineProjects} />
 			{#if data.crimeArticles?.length}
 				<div class="northcloud-recent" aria-label="Recent StreetCode articles">
 					<h3 class="northcloud-recent-title">StreetCode — Recent Crime</h3>
@@ -305,6 +314,11 @@
 					</ul>
 				</div>
 			{/if}
+		</section>
+
+		<section class="section project-grid-container" aria-label="Developer Tools">
+			<h2 class="section-title">Developer Tools</h2>
+			<ProjectGrid projects={toolProjects} />
 		</section>
 
 		<section class="section featured-videos-container" aria-label="Featured Videos">

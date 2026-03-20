@@ -1,4 +1,4 @@
-export type ProjectType = 'platform' | 'consumer' | 'tool' | 'video';
+export type ProjectType = 'platform' | 'consumer' | 'tool' | 'framework' | 'video';
 
 export interface Project {
 	title: string;
