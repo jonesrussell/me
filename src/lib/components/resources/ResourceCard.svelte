@@ -130,8 +130,9 @@
 	{#if resource.video}
 		<div class="video-embed">
 			<iframe
-				src="https://www.youtube.com/embed/{resource.video}"
+				src="https://www.youtube-nocookie.com/embed/{resource.video}"
 				title={resource.title}
+				loading="lazy"
 				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 				allowfullscreen
 			></iframe>

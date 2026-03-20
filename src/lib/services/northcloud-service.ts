@@ -75,9 +75,18 @@ export async function fetchNorthCloudFeed(
 	}
 
 	const url = `${FEED_BASE_URL}/${slug}?limit=${limit}`;
-	const response = await fetchFn(url, {
-		headers: { Accept: 'application/json' }
-	});
+	const controller = new AbortController();
+	const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+	let response: Response;
+	try {
+		response = await fetchFn(url, {
+			headers: { Accept: 'application/json' },
+			signal: controller.signal
+		});
+	} finally {
+		clearTimeout(timeoutId);
+	}
 
 	if (!response.ok) {
 		throw new Error(`NorthCloud feed error: ${response.status}`);

@@ -111,9 +111,11 @@ export function useNewsletterForm() {
 		}
 	}
 
-	// Initialize
+	// Only load schema if newsletter form is configured
 	$effect(() => {
-		loadSchema();
+		if (config.formIds.newsletter) {
+			loadSchema();
+		}
 	});
 
 	return {
