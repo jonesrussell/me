@@ -34,6 +34,7 @@
 				email,
 				message,
 				...(referral ? { referral } : {}),
+				source: 'jonesrussell.github.io/me',
 			});
 			formState = 'success';
 		} catch (err) {
