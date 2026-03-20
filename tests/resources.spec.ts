@@ -29,7 +29,7 @@ test.describe('Resources Page', () => {
 	});
 
 	test('should filter by category', async ({ page }) => {
-		await page.goto('/resources', { waitUntil: 'domcontentloaded' });
+		await page.goto('/resources', { waitUntil: 'networkidle' });
 
 		await page.waitForSelector('.resource-card', { timeout: 30000 });
 
@@ -37,9 +37,12 @@ test.describe('Resources Page', () => {
 
 		await page.getByRole('button', { name: 'Languages & Frameworks' }).click();
 
-		const filteredCount = await page.locator('.resource-card').count();
-		expect(filteredCount).toBeLessThan(allCount);
-		expect(filteredCount).toBeGreaterThan(0);
+		// Wait for filtering to take effect after hydration
+		await expect(async () => {
+			const filteredCount = await page.locator('.resource-card').count();
+			expect(filteredCount).toBeLessThan(allCount);
+			expect(filteredCount).toBeGreaterThan(0);
+		}).toPass({ timeout: 15000 });
 	});
 
 	test('should search resources', async ({ page }) => {
@@ -56,16 +59,19 @@ test.describe('Resources Page', () => {
 
 	test('should initialize filters from URL params', async ({ page }) => {
 		await page.goto('/resources?category=Languages+%26+Frameworks', {
-			waitUntil: 'domcontentloaded'
+			waitUntil: 'networkidle'
 		});
 
 		await page.waitForSelector('.resource-card', { timeout: 30000 });
 
-		const sections = page.locator('.category-section');
-		const count = await sections.count();
-		expect(count).toBe(1);
+		// Wait for hydration to apply URL param filters
+		await expect(async () => {
+			const sections = page.locator('.category-section');
+			const count = await sections.count();
+			expect(count).toBe(1);
+		}).toPass({ timeout: 15000 });
 
-		const sectionTitle = sections.first().locator('h2');
+		const sectionTitle = page.locator('.category-section').first().locator('h2');
 		await expect(sectionTitle).toHaveText('Languages & Frameworks');
 	});
 
