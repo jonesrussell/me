@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { untrack } from 'svelte';
-	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
 	import Hero from '$lib/components/ui/Hero.svelte';
 	import ResourceFilter from '$lib/components/resources/ResourceFilter.svelte';
 	import ResourceGrid from '$lib/components/resources/ResourceGrid.svelte';
@@ -15,29 +12,31 @@
 	let activeTags = $state<string[]>([]);
 	let searchQuery = $state('');
 
-	// Initialize filter state from URL params (reactive to browser navigation)
+	// Initialize filter state from URL params (client-side only, runs once on mount)
 	$effect(() => {
-		const params = page.url.searchParams;
-		untrack(() => {
-			activeCategory = params.get('category');
-			activeTags = params.getAll('tag');
-			searchQuery = params.get('q') ?? '';
-		});
+		if (typeof window === 'undefined') return;
+		const params = new URLSearchParams(window.location.search);
+		const cat = params.get('category');
+		const tags = params.getAll('tag');
+		const q = params.get('q');
+		if (cat) activeCategory = cat;
+		if (tags.length > 0) activeTags = tags;
+		if (q) searchQuery = q;
 	});
 
 	const filtered = $derived(filterResources(data.resources, activeCategory, activeTags, searchQuery));
 	const grouped = $derived(groupByCategory(filtered));
 
 	function updateUrl() {
-		const url = new URL(page.url);
+		if (typeof window === 'undefined') return;
+		const url = new URL(window.location.href);
 		url.searchParams.delete('category');
 		url.searchParams.delete('tag');
 		url.searchParams.delete('q');
 		if (activeCategory) url.searchParams.set('category', activeCategory);
 		for (const tag of activeTags) url.searchParams.append('tag', tag);
 		if (searchQuery) url.searchParams.set('q', searchQuery);
-		// eslint-disable-next-line svelte/no-navigation-without-resolve -- same-page query param update
-		goto(url.toString(), { replaceState: true, noScroll: true, keepFocus: true });
+		history.replaceState(history.state, '', url.toString());
 	}
 
 	function handleCategoryChange(category: string | null) {
