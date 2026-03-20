@@ -3,6 +3,17 @@ import { test, expect } from '@playwright/test';
 test.describe('Resources Page', () => {
 	test.setTimeout(90000);
 
+	/**
+	 * Wait for SvelteKit hydration by checking that the "All" button
+	 * has aria-pressed="true" — this attribute is only set by the
+	 * Svelte component after hydration completes.
+	 */
+	async function waitForHydration(page: import('@playwright/test').Page) {
+		await expect(
+			page.getByRole('button', { name: 'All' })
+		).toHaveAttribute('aria-pressed', 'true', { timeout: 15000 });
+	}
+
 	test('should load the resources page successfully', async ({ page }) => {
 		await page.goto('/resources', { waitUntil: 'domcontentloaded' });
 
@@ -29,45 +40,42 @@ test.describe('Resources Page', () => {
 	});
 
 	test('should filter by category', async ({ page }) => {
-		await page.goto('/resources', { waitUntil: 'networkidle' });
-
-		await page.waitForSelector('.resource-card', { timeout: 30000 });
+		await page.goto('/resources', { waitUntil: 'domcontentloaded' });
+		await waitForHydration(page);
 
 		const allCount = await page.locator('.resource-card').count();
 
 		await page.getByRole('button', { name: 'Languages & Frameworks' }).click();
 
-		// Wait for filtering to take effect after hydration
 		await expect(async () => {
 			const filteredCount = await page.locator('.resource-card').count();
 			expect(filteredCount).toBeLessThan(allCount);
 			expect(filteredCount).toBeGreaterThan(0);
-		}).toPass({ timeout: 15000 });
+		}).toPass({ timeout: 5000 });
 	});
 
 	test('should search resources', async ({ page }) => {
 		await page.goto('/resources', { waitUntil: 'domcontentloaded' });
-
-		await page.waitForSelector('.resource-card', { timeout: 30000 });
+		await waitForHydration(page);
 
 		await page.getByLabel('Search resources').fill('Go');
 
-		const results = page.locator('.resource-card');
-		const count = await results.count();
-		expect(count).toBeGreaterThan(0);
+		await expect(async () => {
+			const count = await page.locator('.resource-card').count();
+			expect(count).toBeGreaterThan(0);
+		}).toPass({ timeout: 5000 });
 	});
 
 	test('should initialize filters from URL params', async ({ page }) => {
 		await page.goto('/resources?category=Languages+%26+Frameworks', {
-			waitUntil: 'networkidle'
+			waitUntil: 'domcontentloaded'
 		});
 
 		await page.waitForSelector('.resource-card', { timeout: 30000 });
 
 		// Wait for hydration to apply URL param filters
 		await expect(async () => {
-			const sections = page.locator('.category-section');
-			const count = await sections.count();
+			const count = await page.locator('.category-section').count();
 			expect(count).toBe(1);
 		}).toPass({ timeout: 15000 });
 
