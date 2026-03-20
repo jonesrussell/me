@@ -1,55 +1,73 @@
 <script lang="ts">
-	import ResourceSection from '$lib/components/resources/ResourceSection.svelte';
-	import FeaturedVideos from '$lib/components/video/FeaturedVideos.svelte';
-	import type { Resource } from '$lib/types/resource';
-	import type { YouTubeChannel } from '$lib/types/video';
+	import { untrack } from 'svelte';
+	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
 	import Hero from '$lib/components/ui/Hero.svelte';
+	import ResourceFilter from '$lib/components/resources/ResourceFilter.svelte';
+	import ResourceGrid from '$lib/components/resources/ResourceGrid.svelte';
+	import { filterResources } from '$lib/services/resource-filter';
+	import { groupByCategory, CATEGORY_ORDER } from '$lib/services/resource-loader';
 	import type { PageData } from './$types';
 
 	const { data } = $props<{ data: PageData }>();
 
-	// YouTube channel info
-	const youtubeChannel: YouTubeChannel = {
-		name: 'Full Stack Dev',
-		url: 'https://www.youtube.com/@fullstackdev42',
-		description: 'Practical web development tutorials and coding insights',
-		featuredVideos: [
-			{
-				title: 'Add a Google Font to Tailwind CSS | 2023',
-				url: 'https://youtu.be/B4v7ZDLxiS4',
-				embedId: 'B4v7ZDLxiS4',
-				description: 'Learn how to integrate custom Google Fonts with Tailwind CSS',
-				tags: ['Tailwind CSS', 'Web Development', 'CSS', 'Frontend'],
-				date: 'Dec 2023'
-			}
-		]
-	};
+	let activeCategory = $state<string | null>(null);
+	let activeTags = $state<string[]>([]);
+	let searchQuery = $state('');
 
-	// Group resources by category with featured content first
-	const groupedResources = $derived.by(() => {
-		const resources = data.resources;
-		const categories = [
-			...new Set(['Essential Tools & Platforms', ...resources.map((r: Resource) => r.category)])
-		].sort((a, b) => {
-			if (a === 'Essential Tools & Platforms') return -1;
-			if (b === 'Essential Tools & Platforms') return 1;
-			return a.localeCompare(b);
+	// Initialize filter state from URL params (reactive to browser navigation)
+	$effect(() => {
+		const params = page.url.searchParams;
+		untrack(() => {
+			activeCategory = params.get('category');
+			activeTags = params.getAll('tag');
+			searchQuery = params.get('q') ?? '';
 		});
-
-		return categories.reduce(
-			(acc, category) => {
-				acc[category] = resources
-					.filter((r: Resource) => r.category === category)
-					.sort((a: Resource, b: Resource) => {
-						if (a.featured && !b.featured) return -1;
-						if (!a.featured && b.featured) return 1;
-						return (b.stars || 0) - (a.stars || 0);
-					});
-				return acc;
-			},
-			{} as Record<string, Resource[]>
-		);
 	});
+
+	const filtered = $derived(filterResources(data.resources, activeCategory, activeTags, searchQuery));
+	const grouped = $derived(groupByCategory(filtered));
+
+	function updateUrl() {
+		const url = new URL(page.url);
+		url.searchParams.delete('category');
+		url.searchParams.delete('tag');
+		url.searchParams.delete('q');
+		if (activeCategory) url.searchParams.set('category', activeCategory);
+		for (const tag of activeTags) url.searchParams.append('tag', tag);
+		if (searchQuery) url.searchParams.set('q', searchQuery);
+		// eslint-disable-next-line svelte/no-navigation-without-resolve -- same-page query param update
+		goto(url.toString(), { replaceState: true, noScroll: true, keepFocus: true });
+	}
+
+	function handleCategoryChange(category: string | null) {
+		activeCategory = category;
+		updateUrl();
+	}
+
+	function handleTagClick(tag: string) {
+		if (!activeTags.includes(tag)) {
+			activeTags = [...activeTags, tag];
+			updateUrl();
+		}
+	}
+
+	function handleTagRemove(tag: string) {
+		activeTags = activeTags.filter((t) => t !== tag);
+		updateUrl();
+	}
+
+	function handleSearchChange(query: string) {
+		searchQuery = query;
+		updateUrl();
+	}
+
+	function handleClearFilters() {
+		activeCategory = null;
+		activeTags = [];
+		searchQuery = '';
+		updateUrl();
+	}
 </script>
 
 <style>
@@ -59,8 +77,7 @@
 		display: grid;
 		width: 100%;
 		padding: var(--space-16) 0;
-		grid-template-rows: auto 1fr;
-		gap: var(--space-16);
+		gap: var(--space-8);
 	}
 
 	.container {
@@ -69,55 +86,29 @@
 		margin-inline: auto;
 		padding-inline: var(--space-4);
 		max-width: min(var(--measure), 95cqi);
-		gap: var(--space-16);
-		grid-template-columns: minmax(0, 1fr);
-	}
-
-	.sections {
-		display: grid;
-		grid-template-columns: minmax(min(100%, 30rem), 1fr);
 		gap: var(--space-8);
-		width: 100%;
-		justify-content: center;
 	}
 
-	.featured-videos-section {
-		grid-column: 1 / -1;
-	}
-
-	@container resources-page (min-width: 640px) {
+	@container resources-page (min-width: 40rem) {
 		.container {
-			max-width: min(var(--measure), 95cqi);
 			padding-inline: var(--space-8);
 		}
-
-		.sections {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
-			justify-content: start;
-		}
 	}
 
-	@container resources-page (min-width: 768px) {
+	@container resources-page (min-width: 48rem) {
 		.container {
-			max-width: min(var(--measure), 95cqi);
 			padding-inline: var(--space-12);
 		}
-
-		.sections {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 40rem), 1fr));
-		}
 	}
 
-	@container resources-page (min-width: 1024px) {
+	@container resources-page (min-width: 64rem) {
 		.container {
-			max-width: min(var(--measure), 95cqi);
 			padding-inline: var(--space-16);
 		}
 	}
 
-	@container resources-page (min-width: 1280px) {
+	@container resources-page (min-width: 80rem) {
 		.container {
-			max-width: min(var(--measure), 95cqi);
 			padding-inline: var(--space-20);
 		}
 	}
@@ -131,10 +122,10 @@
 </style>
 
 <svelte:head>
-	<title>Developer Resources | Russell Jones - Web Development & Open Source</title>
+	<title>Resources | Russell Jones - Curated Developer Toolkit</title>
 	<meta
 		name="description"
-		content="Curated collection of essential tools, documentation, and learning resources for web developers. From TypeScript to Go, DevOps to AI integration."
+		content="My opinionated picks for languages, tools, libraries, and learning resources. Go, SvelteKit, Docker, Neovim, and more — with context on why I use each one."
 	/>
 </svelte:head>
 
@@ -142,13 +133,23 @@
 
 <div class="resources">
 	<div class="container">
-		<div class="sections">
-			{#each Object.entries(groupedResources) as [category, resources], i (category)}
-				<ResourceSection {category} resources={resources as Resource[]} index={i} />
-			{/each}
-			<div class="featured-videos-section">
-				<FeaturedVideos videos={youtubeChannel.featuredVideos} />
-			</div>
-		</div>
+		<ResourceFilter
+			categories={CATEGORY_ORDER}
+			{activeCategory}
+			{activeTags}
+			{searchQuery}
+			resultCount={filtered.length}
+			totalCount={data.resources.length}
+			onCategoryChange={handleCategoryChange}
+			onTagRemove={handleTagRemove}
+			onSearchChange={handleSearchChange}
+			onClearFilters={handleClearFilters}
+		/>
+
+		<ResourceGrid
+			groupedResources={grouped}
+			onTagClick={handleTagClick}
+			onClearFilters={handleClearFilters}
+		/>
 	</div>
 </div>
