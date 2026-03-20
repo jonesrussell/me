@@ -1,7 +1,7 @@
 import { loadResources } from '$lib/services/resource-loader';
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 
-export const load: PageLoad = () => {
+export const load: PageServerLoad = () => {
 	const modules = import.meta.glob('$lib/data/resources/*.md', {
 		query: '?raw',
 		eager: true
