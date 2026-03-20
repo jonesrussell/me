@@ -4,14 +4,11 @@ test.describe('Resources Page', () => {
 	test.setTimeout(90000);
 
 	/**
-	 * Wait for SvelteKit hydration by checking that the "All" button
-	 * has aria-pressed="true" — this attribute is only set by the
-	 * Svelte component after hydration completes.
+	 * Wait for SvelteKit hydration by checking for data-hydrated attribute,
+	 * which is set by $effect after the component mounts client-side.
 	 */
 	async function waitForHydration(page: import('@playwright/test').Page) {
-		await expect(
-			page.getByRole('button', { name: 'All' })
-		).toHaveAttribute('aria-pressed', 'true', { timeout: 15000 });
+		await page.waitForSelector('[data-hydrated]', { timeout: 15000 });
 	}
 
 	test('should load the resources page successfully', async ({ page }) => {

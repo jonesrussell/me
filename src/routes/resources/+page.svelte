@@ -11,6 +11,7 @@
 	let activeCategory = $state<string | null>(null);
 	let activeTags = $state<string[]>([]);
 	let searchQuery = $state('');
+	let hydrated = $state(false);
 
 	// Initialize filter state from URL params (client-side only, runs once on mount)
 	$effect(() => {
@@ -22,6 +23,7 @@
 		if (cat) activeCategory = cat;
 		if (tags.length > 0) activeTags = tags;
 		if (q) searchQuery = q;
+		hydrated = true;
 	});
 
 	const filtered = $derived(filterResources(data.resources, activeCategory, activeTags, searchQuery));
@@ -130,7 +132,7 @@
 
 <Hero title="Resources" subtitle="// cat bookmarks.md" variant="resources" />
 
-<div class="resources">
+<div class="resources" data-hydrated={hydrated || undefined}>
 	<div class="container">
 		<ResourceFilter
 			categories={CATEGORY_ORDER}
