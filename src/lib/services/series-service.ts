@@ -1,6 +1,6 @@
 import type { SeriesIndex, Series } from '$lib/types/series';
 
-const SERIES_JSON_URL = 'https://jonesrussell.github.io/blog/series/index.json';
+export const SERIES_JSON_URL = 'https://jonesrussell.github.io/blog/series/index.json';
 
 function validateSeriesIndex(data: unknown): data is SeriesIndex {
 	if (!data || typeof data !== 'object') return false;
