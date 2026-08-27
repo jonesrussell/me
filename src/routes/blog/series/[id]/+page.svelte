@@ -26,7 +26,7 @@
 <div class="series-page">
 	<nav class="breadcrumb" aria-label="Breadcrumb">
 		<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-		<a href="{base}/blog">Blog</a>
+		<a href="{base}/blog">Build log</a>
 		<span aria-hidden="true">/</span>
 		<span>Series</span>
 	</nav>

@@ -90,7 +90,7 @@
 
 <header class="post-header">
 	<nav class="breadcrumb">
-		<a href={resolve('/blog')}>← Back to Blog</a>
+		<a href={resolve('/blog')}>← Back to build log</a>
 	</nav>
 
 	<h1>{post.title}</h1>

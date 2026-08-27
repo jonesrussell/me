@@ -200,7 +200,7 @@
 			</p>
 			<div class="studio-actions">
 				<a class="button button-primary" href={resolve('/contact')}>Start a conversation</a>
-				<a class="text-link" href={resolve('/blog')}>Read my thinking <span>↗</span></a>
+				<a class="text-link" href={resolve('/blog')}>Follow the build log <span>↗</span></a>
 			</div>
 		</div>
 	</section>

@@ -159,6 +159,28 @@
 		animation-delay: 0.1s;
 	}
 
+	.pipeline-intro {
+		display: grid;
+		gap: var(--space-3);
+		padding: var(--space-5) 0 var(--space-6);
+		border-bottom: 1px solid var(--border-color);
+	}
+
+	.pipeline-intro p {
+		margin: 0;
+		font-size: 1.1rem;
+		line-height: 1.75;
+		color: var(--text-muted);
+		max-width: 68ch;
+	}
+
+	.pipeline-status {
+		font-family: var(--font-mono);
+		font-size: var(--text-sm);
+		text-transform: uppercase;
+		color: var(--accent-color);
+	}
+
 	.posts-section {
 		display: grid;
 		gap: var(--space-6);
@@ -313,24 +335,36 @@
 </style>
 
 <svelte:head>
-	<title>Technical Blog | Russell Jones - Web Development & Open Source</title>
+	<title>Build Log | Russell Jones</title>
 	<meta
 		name="description"
-		content="Articles and tutorials on web development, Go programming, cloud technologies, and open source software by Russell Jones. Practical insights and best practices."
+		content="An evolving proof of concept for a fully automated writing pipeline, documenting the systems, products, and decisions Russell Jones is building in public."
 	/>
 	<link rel="canonical" href={data.canonicalBlog} />
-	<meta property="og:title" content="Technical Blog | Russell Jones" />
-	<meta property="og:description" content="Web development articles and tutorials" />
+	<meta property="og:title" content="Build Log | Russell Jones" />
+	<meta
+		property="og:description"
+		content="A fully automated writing pipeline documenting products and systems as they evolve."
+	/>
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content={data.canonicalBlog} />
 </svelte:head>
 
-<Hero title="Blog" subtitle="// thoughts.log" variant="blog" />
+<Hero title="Build Log" subtitle="// publishing_pipeline.status: evolving" variant="blog" />
 
 <div class="blog">
 	<BlogError />
 
 	<div class="container">
+		<section class="pipeline-intro" aria-label="About this build log">
+			<span class="pipeline-status">Automated · Experimental · In progress</span>
+			<p>
+				This is an evolving proof of concept for a fully automated writing pipeline. It acts as
+				an open build log—capturing what I’m making, the decisions behind it, and what I learn
+				as Waaseyaa, Anokii, and the surrounding ecosystem take shape.
+			</p>
+		</section>
+
 		{#if heroPost}
 			<BlogHeroPost post={heroPost} />
 		{/if}
@@ -345,7 +379,7 @@
 			/>
 		{/each}
 
-		<section class="posts-section" aria-label="Blog posts">
+		<section class="posts-section" aria-label="Build log entries">
 			{#if gridPosts.length > 0}
 				<BlogPostsSection posts={gridPosts} />
 

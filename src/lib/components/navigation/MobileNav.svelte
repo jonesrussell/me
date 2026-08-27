@@ -110,7 +110,7 @@
 <nav class="mobile-nav" class:open={isOpen} aria-label="Main navigation">
 	<a href={resolve('/projects')} class:active={isActive('/projects')} onclick={toggleMenu}>Work</a>
 	<a href="https://waaseyaa.org" onclick={toggleMenu}>Waaseyaa</a>
-	<a href={resolve('/blog')} class:active={isActive('/blog')} onclick={toggleMenu}>Writing</a>
+	<a href={resolve('/blog')} class:active={isActive('/blog')} onclick={toggleMenu}>Build log</a>
 	<a href={resolve('/resources')} class:active={isActive('/resources')} onclick={toggleMenu}
 		>Resources</a
 	>
