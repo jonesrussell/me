@@ -79,8 +79,9 @@
 </style>
 
 <nav class="desktop-nav" aria-label="Main navigation">
-	<a href={resolve('/blog')} class:active={isActive('/blog')}>Blog</a>
-	<a href={resolve('/projects')} class:active={isActive('/projects')}>Projects</a>
+	<a href={resolve('/projects')} class:active={isActive('/projects')}>Work</a>
+	<a href="https://waaseyaa.org">Waaseyaa</a>
+	<a href={resolve('/blog')} class:active={isActive('/blog')}>Writing</a>
 	<a href={resolve('/resources')} class:active={isActive('/resources')}>Resources</a>
-	<a href={resolve('/contact')} class:active={isActive('/contact')}>Contact</a>
+	<a href={resolve('/contact')} class:active={isActive('/contact')}>Studio</a>
 </nav>

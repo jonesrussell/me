@@ -14,6 +14,7 @@ const config = {
 			strict: false
 		}),
 		prerender: {
+			handleUnseenRoutes: 'warn',
 			// Process multiple pages simultaneously for better performance
 			concurrency: 4,
 			// Handle HTTP errors during prerendering

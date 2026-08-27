@@ -1,17 +1,17 @@
 [data-theme='dark'] {
 	/* Base Colors */
-	--bg-color: rgb(12 20 28);
-	--bg-darker: rgb(20 30 40);
-	--text-color: rgb(248 250 252);
-	--text-muted: rgb(168 185 205);
-	--border-color: rgb(55 70 85);
+	--bg-color: rgb(10 18 19);
+	--bg-darker: rgb(15 31 31);
+	--text-color: rgb(239 236 224);
+	--text-muted: rgb(169 181 174);
+	--border-color: rgb(46 67 64);
 
 	/* Primary Accent - Sage */
-	--accent-color: rgb(101 130 95);
-	--accent-color-hover: rgb(134 164 118);
+	--accent-color: rgb(79 177 160);
+	--accent-color-hover: rgb(121 207 190);
 
 	/* Secondary Accent - Gold */
-	--secondary-accent: rgb(234 179 8);
+	--secondary-accent: rgb(198 127 84);
 
 	/* Color Mixes - Using Sage */
 	--color-mix-light: rgb(101 130 95 / 10%);
