@@ -12,7 +12,7 @@ test.describe('Home Page', () => {
 	test('should load the home page successfully', async ({ page }) => {
 		// Check for the founder-led homepage and ecosystem.
 		const hero = page.locator('.hero');
-		const homeContent = page.locator('.home');
+		const homeContent = page.locator('.landing');
 
 		await Promise.all([expect(hero).toBeVisible(), expect(homeContent).toBeVisible()]);
 		await expect(page.getByRole('heading', { level: 1 })).toContainText(

@@ -80,7 +80,7 @@
 	<meta name="twitter:image" content="https://jonesrussell.github.io/me/og.png" />
 </svelte:head>
 
-<div class="home">
+<div class="landing">
 	<section class="hero" aria-labelledby="hero-title">
 		<div class="hero-grid">
 			<div class="hero-copy">
@@ -210,7 +210,7 @@
 	/* stylelint-disable -- this editorial landing page uses a self-contained fluid layout */
 	:global(main) { overflow: hidden; }
 
-	.home {
+	.landing {
 		--page-ink: var(--text-color);
 		--page-muted: var(--text-muted);
 		--page-line: var(--border-color);
@@ -222,7 +222,7 @@
 	}
 
 	.hero, .section { width: min(100% - 2rem, 80rem); margin-inline: auto; }
-	.hero { padding: clamp(4.5rem, 9vw, 8rem) 0 0; }
+	.hero { padding: clamp(1.5rem, 2.5vw, 2.5rem) 0 0; }
 	.hero-grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(19rem, 0.92fr); gap: clamp(3rem, 8vw, 8rem); align-items: center; min-height: 37rem; }
 	.hero-copy { position: relative; z-index: 2; }
 
@@ -305,7 +305,7 @@
 	}
 
 	@media (width <= 40rem) {
-		.hero { padding-top: 3.5rem; }
+		.hero { padding-top: 1.5rem; }
 		h1 { font-size: clamp(3.15rem, 16vw, 5rem); }
 		.system-map { min-height: 22rem; transform: scale(0.9); transform-origin: center; }
 		.map-core { left: calc(50% - 5.5rem); }
