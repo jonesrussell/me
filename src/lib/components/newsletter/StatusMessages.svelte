@@ -65,7 +65,7 @@
 {#if submitStatus === 'success'}
 	<div class="success-message" role="status" aria-live="polite">
 		<span aria-hidden="true">✓</span>
-		<span>Thanks for subscribing!</span>
+		<span>Thanks—your build-notes signup has been recorded.</span>
 	</div>
 {:else if submitStatus === 'error'}
 	<div class="error-message" role="alert" aria-live="assertive" id="error-message">
