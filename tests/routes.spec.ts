@@ -14,7 +14,7 @@ test.describe('Route Navigation', () => {
 
 	test('navigates to blog page', async ({ page }) => {
 		// Wait for the blog link to be visible and actionable
-		const blogLink = page.getByRole('link', { name: '📝 Read my technical articles' });
+		const blogLink = page.getByRole('link', { name: 'Follow the build log' });
 		await expect(blogLink).toBeVisible();
 		await expect(blogLink).toBeEnabled();
 
@@ -29,7 +29,7 @@ test.describe('Route Navigation', () => {
 
 		// Wait for the blog page structure to be visible
 		await expect(page.locator('.blog')).toBeVisible();
-		await expect(page.getByRole('heading', { name: 'Blog', level: 1 })).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Build Log', level: 1 })).toBeVisible();
 
 		// Wait for loading state to complete and posts to be visible
 		await Promise.race([
@@ -43,7 +43,7 @@ test.describe('Route Navigation', () => {
 
 	test('should navigate to projects page', async ({ page }) => {
 		// Wait for the projects link to be visible and actionable
-		const projectsLink = page.getByRole('link', { name: '🚀 Browse my projects' });
+		const projectsLink = page.getByRole('link', { name: 'View all work' });
 		await expect(projectsLink).toBeVisible();
 		await expect(projectsLink).toBeEnabled();
 
@@ -59,15 +59,15 @@ test.describe('Route Navigation', () => {
 		// Wait for the projects page structure to be visible
 		await expect(page.locator('.projects')).toBeVisible();
 		await expect(page.getByRole('heading', { name: 'Projects' }).first()).toBeVisible();
-		await expect(page.getByRole('link', { name: 'North Cloud' }).first()).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Waaseyaa Ecosystem' })).toBeVisible();
 	});
 
 	test('should maintain consistent navigation across pages', async ({ page }) => {
 		// Arrange
 		const routes = [
-			{ path: 'blog', text: 'Blog' },
-			{ path: 'projects', text: 'Projects' },
-			{ path: 'contact', text: 'Contact' }
+			{ path: 'blog', text: 'Build log' },
+			{ path: 'projects', text: 'Work' },
+			{ path: 'contact', text: 'Studio' }
 		];
 
 		// Act & Assert - Check each route sequentially

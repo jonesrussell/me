@@ -21,12 +21,14 @@
 				'@type': 'WebSite',
 				name: 'Russell Jones',
 				url: siteUrl,
-				description: 'Crafting elegant solutions with modern web technologies'
+				description: 'Building sovereign, AI-native content and operations platforms'
 			},
 			{
 				'@type': 'Person',
 				name: 'Russell Jones',
-				url: siteUrl
+				url: siteUrl,
+				jobTitle: 'Founder and Software Architect',
+				knowsAbout: ['Laravel', 'Drupal', 'PHP', 'Content architecture', 'AI-native systems']
 			}
 		]
 	})}</scr${''}ipt>`;

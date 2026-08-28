@@ -9,8 +9,8 @@ test.describe('Blog Page', () => {
 	});
 
 	test('should load the blog page successfully', async ({ page }) => {
-		// Check page hero (Blog heading) is present
-		await expect(page.getByRole('heading', { name: 'Blog', level: 1 })).toBeVisible();
+		// Check the build-log hero is present.
+		await expect(page.getByRole('heading', { name: 'Build Log', level: 1 })).toBeVisible();
 
 		// Wait for posts to load
 		await Promise.race([

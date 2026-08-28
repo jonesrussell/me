@@ -18,7 +18,6 @@ defaults:
 
 jobs:
   build:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -52,9 +51,17 @@ jobs:
           BASE_PATH: '/me'
           NODE_ENV: production
           VITE_GOFORMS_API_URL: 'https://api.goformx.com'
-          VITE_GOFORMS_CONTACT_FORM_ID: '442dd7f7-95a2-4709-91c9-3d4cd4996212'
-          VITE_GOFORMS_NEWSLETTER_FORM_ID: '3cfb8337-4885-4c3b-90b6-14c9aa116b20'
+          VITE_GOFORMS_CONTACT_PUBLIC_KEY: ${{ vars.GOFORMS_CONTACT_PUBLIC_KEY }}
+          VITE_GOFORMS_NEWSLETTER_PUBLIC_KEY: ${{ vars.GOFORMS_NEWSLETTER_PUBLIC_KEY }}
         run: npm run build
+
+      - name: Verify browser bundle contains no GoFormX credential
+        run: |
+          if grep -R -E 'VITE_GOFORMS_API_KEY|X-API-Key|Authorization: Bearer' build/; then
+            echo "A reusable GoFormX credential marker was found in the browser bundle."
+            exit 1
+          fi
+          echo "No GoFormX credential markers found."
 
       - name: Verify no symlinks (Pages unsupported)
         run: |

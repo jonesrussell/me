@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
+
 	const year = new Date().getFullYear();
 </script>
 
@@ -58,6 +60,8 @@
 	<div class="container">
 		<p>
 			&copy; {year} Russell Jones |
+			<a href={resolve('/resources')}>Resources</a>
+			|
 			<a href="https://github.com/jonesrussell/me" target="_blank" rel="noopener noreferrer">
 				Source Code
 			</a>

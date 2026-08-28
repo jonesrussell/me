@@ -73,6 +73,11 @@ export default defineConfig({
 	webServer: {
 		command: 'npm run dev',
 		url: 'http://localhost:5173',
+		env: {
+			...process.env,
+			VITE_GOFORMS_API_URL: 'https://api.goformx.test',
+			VITE_GOFORMS_CONTACT_PUBLIC_KEY: 'gfpk_1234567890abcdefghijkl'
+		},
 		// Reuse existing server in local development (when CI is not set)
 		reuseExistingServer: process.env.CI !== '1' && process.env.CI !== 'true',
 		timeout: 120 * 1000

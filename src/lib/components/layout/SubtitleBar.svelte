@@ -1,5 +1,5 @@
 <script lang="ts">
-	const { text = 'Building elegant solutions with modern web technologies' } = $props<{
+	const { text = 'Sovereign systems · AI-native platforms · Open-source infrastructure' } = $props<{
 		text?: string;
 	}>();
 </script>

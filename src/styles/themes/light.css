@@ -1,17 +1,17 @@
 [data-theme='light'] {
 	/* Base Colors */
-	--bg-color: rgb(255 255 255);
-	--bg-darker: rgb(248 249 250);
-	--text-color: rgb(26 26 26);
-	--text-muted: rgb(102 102 102);
-	--border-color: rgb(224 224 224);
+	--bg-color: rgb(247 244 235);
+	--bg-darker: rgb(237 233 220);
+	--text-color: rgb(20 34 32);
+	--text-muted: rgb(83 101 94);
+	--border-color: rgb(196 199 186);
 
 	/* Primary Accent - Deep Blue */
-	--accent-color: rgb(37 99 235);
-	--accent-color-hover: rgb(29 78 216);
+	--accent-color: rgb(13 100 91);
+	--accent-color-hover: rgb(9 78 72);
 
 	/* Secondary Accent - Purple */
-	--secondary-accent: rgb(124 58 237);
+	--secondary-accent: rgb(161 83 45);
 
 	/* Color Mixes - Using Blue */
 	--color-mix-light: rgb(37 99 235 / 10%);
