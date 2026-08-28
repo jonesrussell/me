@@ -1,120 +1,148 @@
 <script lang="ts">
 	import { tick } from 'svelte';
-	import { FormService, FormValidationError } from '$lib/services/form-service';
+	import {
+		createIdempotencyKey,
+		FormNetworkError,
+		FormService,
+		FormServiceError,
+		FormValidationError,
+		type FormData,
+		type FormSchemaProperty,
+		type PublishedFormSchema
+	} from '$lib/services/form-service';
 	import { config } from '$lib/config/env';
 
-	type SubmitState = 'idle' | 'submitting' | 'success' | 'error';
+	type FormState = 'loading' | 'idle' | 'submitting' | 'success' | 'error';
+	type Field = { key: string; definition: FormSchemaProperty; required: boolean };
 
-	let formState = $state<SubmitState>('idle');
+	let formState = $state<FormState>('loading');
+	let schemaResult = $state<PublishedFormSchema | null>(null);
 	let errorMessage = $state('');
 	let fieldErrors = $state<Record<string, string>>({});
+	let values = $state<Record<string, string>>({});
+	let pendingAttempt = $state<{ signature: string; key: string } | null>(null);
 
-	let email = $state('');
-	let message = $state('');
-	let referral = $state('');
+	const service = FormService.getInstance();
+	const publicKey = config.formPublicKeys.contact;
+	const fields = $derived.by<Field[]>(() => {
+		if (!schemaResult) return [];
+		const required = new Set(schemaResult.schema.required ?? []);
+		return Object.entries(schemaResult.schema.properties)
+			.filter(
+				([key, definition]) =>
+					key !== 'source' && (!definition.type || definition.type === 'string')
+			)
+			.map(([key, definition]) => ({ key, definition, required: required.has(key) }));
+	});
 
-	const referralOptions = [
-		{ value: 'github', label: 'GitHub' },
-		{ value: 'linkedin', label: 'LinkedIn' },
-		{ value: 'devto', label: 'Dev.to' },
-		{ value: 'search', label: 'Search engine' },
-		{ value: 'referral', label: 'Referral' },
-		{ value: 'other', label: 'Other' },
-	];
+	$effect(() => {
+		void loadSchema();
+	});
 
-	async function handleSubmit(e: SubmitEvent) {
-		e.preventDefault();
+	async function loadSchema() {
+		formState = 'loading';
+		errorMessage = '';
+		try {
+			schemaResult = await service.getSchema(publicKey);
+			const required = schemaResult.schema.required ?? [];
+			const unsupportedRequired = required.filter((key) => {
+				const definition = schemaResult?.schema.properties[key];
+				return key !== 'source' && definition?.type && definition.type !== 'string';
+			});
+			if (unsupportedRequired.length > 0) {
+				throw new Error('This form schema contains fields this client cannot render yet.');
+			}
+			formState = 'idle';
+		} catch (error) {
+			schemaResult = null;
+			formState = 'error';
+			errorMessage = error instanceof Error ? error.message : 'The contact form is unavailable.';
+		}
+	}
+
+	function labelFor(field: Field): string {
+		return (
+			field.definition.title ??
+			field.key.replaceAll(/[-_]/g, ' ').replace(/^./, (value) => value.toUpperCase())
+		);
+	}
+
+	function inputType(field: Field): string {
+		return field.definition.format === 'email' ? 'email' : 'text';
+	}
+
+	function isTextarea(field: Field): boolean {
+		return field.key === 'message' || (field.definition.maxLength ?? 0) > 200;
+	}
+
+	function setValue(key: string, value: string) {
+		values[key] = value;
+		if (fieldErrors[key]) {
+			delete fieldErrors[key];
+			fieldErrors = { ...fieldErrors };
+		}
+		if (formState === 'error') {
+			formState = 'idle';
+			errorMessage = '';
+		}
+	}
+
+	function submissionData(): FormData {
+		const data = Object.fromEntries(
+			fields
+				.map((field) => [field.key, values[field.key] ?? ''])
+				.filter(([, value]) => value !== '')
+		);
+		if (schemaResult?.schema.properties.source) data.source = 'jonesrussell.github.io/me';
+		return data;
+	}
+
+	async function handleSubmit(event: SubmitEvent) {
+		event.preventDefault();
+		if (!schemaResult || formState === 'submitting') return;
+
 		formState = 'submitting';
 		errorMessage = '';
 		fieldErrors = {};
 
+		const data = submissionData();
+		const signature = JSON.stringify(data);
+		if (pendingAttempt?.signature !== signature) {
+			pendingAttempt = { signature, key: createIdempotencyKey() };
+		}
+
 		try {
-			const service = FormService.getInstance();
-			await service.submitForm(config.formIds.contact, {
-				email,
-				message,
-				...(referral ? { referral } : {}),
-				source: 'jonesrussell.github.io/me',
-			});
+			await service.submitForm(publicKey, data, pendingAttempt.key, schemaResult.version);
+			pendingAttempt = null;
 			formState = 'success';
-		} catch (err) {
-			if (err instanceof FormValidationError) {
+		} catch (error) {
+			if (error instanceof FormValidationError) {
 				formState = 'idle';
-				fieldErrors = Object.fromEntries(err.fieldErrors.map((e) => [e.field, e.message]));
+				fieldErrors = Object.fromEntries(
+					error.fieldErrors.filter((item) => item.field).map((item) => [item.field, item.message])
+				);
 				await tick();
-				document.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+				const firstInvalid = fields.find((field) => fieldErrors[field.key]);
+				if (firstInvalid) document.getElementById(`cf-${firstInvalid.key}`)?.focus();
+				return;
+			}
+
+			formState = 'error';
+			if (error instanceof FormServiceError && error.status === 429 && error.retryAfterSeconds) {
+				errorMessage = `${error.message} Try again in about ${error.retryAfterSeconds} seconds.`;
+			} else if (
+				error instanceof FormNetworkError &&
+				typeof navigator !== 'undefined' &&
+				!navigator.onLine
+			) {
+				errorMessage = 'You appear to be offline. Reconnect and try sending again.';
 			} else {
-				formState = 'error';
-				errorMessage = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
+				errorMessage =
+					error instanceof Error ? error.message : 'Something went wrong. Please try again.';
 			}
 		}
 	}
 </script>
-
-{#if formState === 'success'}
-	<div class="success-message" role="status">
-		<p class="success-heading">// message transmitted</p>
-		<p class="success-body">Thanks for reaching out! I'll get back to you soon.</p>
-	</div>
-{:else}
-	<form class="contact-form" onsubmit={handleSubmit} novalidate>
-		<div class="form-group">
-			<label class="form-label" for="cf-email">Email</label>
-			<input
-				id="cf-email"
-				class="form-input"
-				type="email"
-				bind:value={email}
-				placeholder="your@email.com"
-				required
-				aria-invalid={fieldErrors.email ? true : undefined}
-				aria-describedby={fieldErrors.email ? 'cf-email-error' : undefined}
-				disabled={formState === 'submitting'}
-			/>
-			{#if fieldErrors.email}<span id="cf-email-error" class="form-error">{fieldErrors.email}</span>{/if}
-		</div>
-
-		<div class="form-group">
-			<label class="form-label" for="cf-message">Message</label>
-			<textarea
-				id="cf-message"
-				class="form-textarea"
-				bind:value={message}
-				placeholder="Your message..."
-				rows="5"
-				required
-				minlength="10"
-				aria-invalid={fieldErrors.message ? true : undefined}
-				aria-describedby={fieldErrors.message ? 'cf-message-error' : undefined}
-				disabled={formState === 'submitting'}
-			></textarea>
-			{#if fieldErrors.message}<span id="cf-message-error" class="form-error">{fieldErrors.message}</span>{/if}
-		</div>
-
-		<div class="form-group">
-			<label class="form-label" for="cf-referral">How did you find me? <span class="optional">(optional)</span></label>
-			<select
-				id="cf-referral"
-				class="form-select"
-				bind:value={referral}
-				disabled={formState === 'submitting'}
-			>
-				<option value="">Select one</option>
-				{#each referralOptions as opt (opt.value)}
-					<option value={opt.value}>{opt.label}</option>
-				{/each}
-			</select>
-		</div>
-
-		{#if formState === 'error'}
-			<p class="form-error submit-error" role="alert">{errorMessage}</p>
-		{/if}
-
-		<button type="submit" class="form-submit" disabled={formState === 'submitting'}>
-			{formState === 'submitting' ? '// transmitting...' : '// send_message()'}
-		</button>
-	</form>
-{/if}
 
 <style>
 	.contact-form {
@@ -129,13 +157,41 @@
 		color: var(--text-muted);
 	}
 
-	.submit-error {
+	.submit-error,
+	.form-status p {
 		margin: 0;
 	}
 
-	/* Red border on invalid fields */
-	:global(.form-input[aria-invalid="true"]),
-	:global(.form-textarea[aria-invalid="true"]) {
+	.form-status {
+		display: flex;
+		padding: var(--space-5);
+		font-family: var(--font-mono);
+		color: var(--text-muted);
+		background: var(--color-mix-faint);
+		border: 1px solid var(--border-color);
+		border-radius: var(--radius-md);
+		flex-direction: column;
+		gap: var(--space-3);
+	}
+
+	.form-status-error {
+		border-color: var(--color-error);
+	}
+
+	.form-retry {
+		align-self: flex-start;
+		padding: var(--space-2) var(--space-3);
+		font-family: var(--font-mono);
+		color: var(--accent-color);
+		background: transparent;
+		border: 1px solid var(--accent-color);
+		border-radius: var(--radius-sm);
+		cursor: pointer;
+	}
+
+	:global(.form-input[aria-invalid='true']),
+	:global(.form-textarea[aria-invalid='true']),
+	:global(.form-select[aria-invalid='true']) {
 		border-color: var(--color-error);
 		box-shadow: 0 0 0 var(--space-1) color-mix(in srgb, var(--color-error) 20%, transparent);
 	}
@@ -161,3 +217,97 @@
 		color: var(--text-muted);
 	}
 </style>
+
+{#if formState === 'success'}
+	<div class="success-message" role="status">
+		<p class="success-heading">// message transmitted</p>
+		<p class="success-body">Thanks for reaching out! I'll get back to you soon.</p>
+	</div>
+{:else if formState === 'loading'}
+	<div class="form-status" role="status">// loading secure contact channel...</div>
+{:else if !schemaResult}
+	<div class="form-status form-status-error" role="alert">
+		<p>{errorMessage}</p>
+		<button type="button" class="form-retry" onclick={loadSchema}>// retry_connection()</button>
+		<p>You can also email <a href="mailto:russell@web.ca">russell@web.ca</a>.</p>
+	</div>
+{:else}
+	<form class="contact-form" onsubmit={handleSubmit}>
+		{#each fields as field (field.key)}
+			<div class="form-group">
+				<label class="form-label" for={`cf-${field.key}`}>
+					{labelFor(field)}
+					{#if !field.required}<span class="optional">(optional)</span>{/if}
+				</label>
+
+				{#if field.definition.enum}
+					<select
+						id={`cf-${field.key}`}
+						class="form-select"
+						value={values[field.key] ?? ''}
+						required={field.required}
+						aria-invalid={fieldErrors[field.key] ? true : undefined}
+						aria-describedby={fieldErrors[field.key] ? `cf-${field.key}-error` : undefined}
+						disabled={formState === 'submitting'}
+						onchange={(event) => setValue(field.key, event.currentTarget.value)}
+					>
+						<option value="">Select one</option>
+						{#each field.definition.enum as option (option)}
+							<option value={option}>{option}</option>
+						{/each}
+					</select>
+				{:else if isTextarea(field)}
+					<textarea
+						id={`cf-${field.key}`}
+						class="form-textarea"
+						value={values[field.key] ?? ''}
+						placeholder={field.definition.description ?? `Your ${labelFor(field).toLowerCase()}...`}
+						rows="5"
+						required={field.required}
+						minlength={field.definition.minLength}
+						maxlength={field.definition.maxLength}
+						aria-invalid={fieldErrors[field.key] ? true : undefined}
+						aria-describedby={fieldErrors[field.key] ? `cf-${field.key}-error` : undefined}
+						disabled={formState === 'submitting'}
+						oninput={(event) => setValue(field.key, event.currentTarget.value)}
+					></textarea>
+				{:else}
+					<input
+						id={`cf-${field.key}`}
+						class="form-input"
+						type={inputType(field)}
+						value={values[field.key] ?? ''}
+						placeholder={field.definition.description ?? labelFor(field)}
+						required={field.required}
+						minlength={field.definition.minLength}
+						maxlength={field.definition.maxLength}
+						aria-invalid={fieldErrors[field.key] ? true : undefined}
+						aria-describedby={fieldErrors[field.key] ? `cf-${field.key}-error` : undefined}
+						disabled={formState === 'submitting'}
+						oninput={(event) => setValue(field.key, event.currentTarget.value)}
+					/>
+				{/if}
+
+				{#if fieldErrors[field.key]}
+					<span id={`cf-${field.key}-error`} class="form-error">{fieldErrors[field.key]}</span>
+				{/if}
+			</div>
+		{/each}
+
+		{#if formState === 'error'}
+			<p class="form-error submit-error" role="alert">{errorMessage}</p>
+		{/if}
+
+		<button type="submit" class="form-submit" disabled={formState === 'submitting'}>
+			{formState === 'submitting' ? '// transmitting...' : '// send_message()'}
+		</button>
+	</form>
+{/if}
+
+<noscript>
+	<p class="form-status">
+		JavaScript is required for the secure form. Email <a href="mailto:russell@web.ca"
+			>russell@web.ca</a
+		> instead.
+	</p>
+</noscript>

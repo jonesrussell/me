@@ -1,6 +1,6 @@
 // lib/composables/useNewsletterForm.ts
 import { tick } from 'svelte';
-import { FormService } from '$lib/services/form-service';
+import { createIdempotencyKey, FormService } from '$lib/services/form-service';
 import { config } from '$lib/config/env';
 import { createError, logErrorDebounced, withErrorHandling } from '$lib/utils/error-handler';
 import type { SubmitStatus } from '$lib/types/newsletter';
@@ -32,13 +32,13 @@ export function useNewsletterForm() {
 
 		try {
 			const formService = FormService.getInstance();
-			const formId = config.formIds.newsletter;
+			const publicKey = config.formPublicKeys.newsletter;
 
-			if (!formId) {
-				throw new Error('Newsletter form ID is not configured');
+			if (!publicKey) {
+				throw new Error('Newsletter form is not configured');
 			}
 
-			await formService.submitForm(formId, { email });
+			await formService.submitForm(publicKey, { email }, createIdempotencyKey());
 
 			submitStatus = 'success';
 			email = '';
@@ -47,7 +47,6 @@ export function useNewsletterForm() {
 			setTimeout(() => {
 				submitStatus = 'idle';
 			}, TIMEOUTS.SUCCESS_RESET);
-
 		} catch (error) {
 			submitStatus = 'error';
 
@@ -80,13 +79,13 @@ export function useNewsletterForm() {
 		const result = await withErrorHandling(
 			async () => {
 				const formService = FormService.getInstance();
-				const formId = config.formIds.newsletter;
+				const publicKey = config.formPublicKeys.newsletter;
 
-				if (!formId) {
-					throw new Error('Newsletter form ID is not configured');
+				if (!publicKey) {
+					throw new Error('Newsletter form is not configured');
 				}
 
-				return await formService.getSchema(formId);
+				return await formService.getSchema(publicKey);
 			},
 			{ component: 'NewsletterCTA', action: 'loadSchema' }
 		);
@@ -113,7 +112,7 @@ export function useNewsletterForm() {
 
 	// Only load schema if newsletter form is configured
 	$effect(() => {
-		if (config.formIds.newsletter) {
+		if (config.formPublicKeys.newsletter) {
 			loadSchema();
 		}
 	});
@@ -121,22 +120,34 @@ export function useNewsletterForm() {
 	return {
 		// State
 		email: {
-			get value() { return email; },
-			set value(v: string) { email = v; }
+			get value() {
+				return email;
+			},
+			set value(v: string) {
+				email = v;
+			}
 		},
 		submitStatus: {
-			get value() { return submitStatus; }
+			get value() {
+				return submitStatus;
+			}
 		},
 		errorMessage: {
-			get value() { return errorMessage; }
+			get value() {
+				return errorMessage;
+			}
 		},
 		schemaError: {
-			get value() { return schemaError; }
+			get value() {
+				return schemaError;
+			}
 		},
 
 		// Computed
 		isSubmitDisabled: {
-			get value() { return isSubmitDisabled; }
+			get value() {
+				return isSubmitDisabled;
+			}
 		},
 
 		// Methods
