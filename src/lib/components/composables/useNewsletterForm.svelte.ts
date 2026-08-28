@@ -1,6 +1,7 @@
 // lib/composables/useNewsletterForm.ts
 import { tick } from 'svelte';
 import { createIdempotencyKey, FormService } from '$lib/services/form-service';
+import type { PublishedFormSchema } from '$lib/services/form-service';
 import { config } from '$lib/config/env';
 import { createError, logErrorDebounced, withErrorHandling } from '$lib/utils/error-handler';
 import type { SubmitStatus } from '$lib/types/newsletter';
@@ -16,12 +17,14 @@ const TIMEOUTS = {
 export function useNewsletterForm() {
 	// State
 	let email = $state('');
+	let consent = $state(false);
 	let submitStatus = $state<SubmitStatus>('idle');
 	let errorMessage = $state('');
 	let schemaError = $state(false);
+	let schemaResult = $state<PublishedFormSchema | null>(null);
 
 	// Disable submit button while loading (browser handles email validation)
-	const isSubmitDisabled = $derived(submitStatus === 'loading');
+	const isSubmitDisabled = $derived(submitStatus === 'loading' || schemaResult === null);
 
 	// Form submission
 	async function handleSubmit(event: Event) {
@@ -31,6 +34,15 @@ export function useNewsletterForm() {
 		errorMessage = '';
 
 		try {
+			if (!schemaResult) {
+				throw new Error('Build-notes signup is not configured');
+			}
+			if (!consent) {
+				submitStatus = 'error';
+				errorMessage = 'Please confirm that you want to receive occasional build notes.';
+				return;
+			}
+
 			const formService = FormService.getInstance();
 			const publicKey = config.formPublicKeys.newsletter;
 
@@ -38,10 +50,22 @@ export function useNewsletterForm() {
 				throw new Error('Newsletter form is not configured');
 			}
 
-			await formService.submitForm(publicKey, { email }, createIdempotencyKey());
+			const noticeVersion = schemaResult.schema.properties.notice_version?.const;
+			await formService.submitForm(
+				publicKey,
+				{
+					email,
+					consent,
+					source: typeof window === 'undefined' ? '/me' : window.location.pathname,
+					notice_version: String(noticeVersion)
+				},
+				createIdempotencyKey(),
+				schemaResult.version
+			);
 
 			submitStatus = 'success';
 			email = '';
+			consent = false;
 
 			await tick();
 			setTimeout(() => {
@@ -75,6 +99,7 @@ export function useNewsletterForm() {
 	// Schema loading
 	async function loadSchema() {
 		schemaError = false;
+		schemaResult = null;
 
 		const result = await withErrorHandling(
 			async () => {
@@ -91,10 +116,22 @@ export function useNewsletterForm() {
 		);
 
 		if (result) {
-			// Schema loaded successfully
+			const required = result.schema.required ?? [];
+			const emailDefinition = result.schema.properties.email;
+			const consentDefinition = result.schema.properties.consent;
+			const noticeDefinition = result.schema.properties.notice_version;
+			const supportsSignup =
+				required.includes('email') &&
+				required.includes('consent') &&
+				required.includes('source') &&
+				required.includes('notice_version') &&
+				emailDefinition?.format === 'email' &&
+				consentDefinition?.const === true &&
+				typeof noticeDefinition?.const === 'string';
+			if (supportsSignup) schemaResult = result;
+			else schemaError = true;
 		} else {
 			schemaError = true;
-			// Schema loading failed - continuing without schema
 		}
 	}
 
@@ -110,10 +147,20 @@ export function useNewsletterForm() {
 		}
 	}
 
-	// Only load schema if newsletter form is configured
+	function handleConsentInput(value: boolean) {
+		consent = value;
+		if (submitStatus === 'error') {
+			submitStatus = 'idle';
+			errorMessage = '';
+		}
+	}
+
 	$effect(() => {
 		if (config.formPublicKeys.newsletter) {
-			loadSchema();
+			void loadSchema();
+		} else {
+			schemaError = true;
+			schemaResult = null;
 		}
 	});
 
@@ -125,6 +172,11 @@ export function useNewsletterForm() {
 			},
 			set value(v: string) {
 				email = v;
+			}
+		},
+		consent: {
+			get value() {
+				return consent;
 			}
 		},
 		submitStatus: {
@@ -153,6 +205,7 @@ export function useNewsletterForm() {
 		// Methods
 		handleSubmit,
 		handleRetry,
-		handleEmailInput
+		handleEmailInput,
+		handleConsentInput
 	};
 }

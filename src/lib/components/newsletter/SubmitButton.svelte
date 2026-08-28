@@ -104,7 +104,7 @@
 <button type="submit" {disabled} aria-describedby={ariaDescribedby}>
 	{#if submitStatus === 'loading'}
 		<div class="loading">
-			<span>Subscribing</span>
+			<span>Recording</span>
 			<div class="dots">
 				<span class="dot">.</span>
 				<span class="dot">.</span>
@@ -113,7 +113,7 @@
 		</div>
 	{:else}
 		<div class="button-content">
-			<span>Subscribe</span>
+			<span>Join the build notes</span>
 			<span class="button-icon">→</span>
 		</div>
 	{/if}

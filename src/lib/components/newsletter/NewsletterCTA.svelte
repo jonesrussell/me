@@ -117,8 +117,8 @@
 			<div class="newsletter-content newsletter-content-contained">
 				<div class="newsletter-inner">
 					<NewsletterHeader
-						title="Stay Updated"
-						description="Subscribe to my newsletter for updates on web development, tech insights, and open source projects."
+						title="Follow the build"
+						description="Occasional notes from the workbench: Laravel, Drupal, Waaseyaa, Anokii, and building GoFormX in public."
 					/>
 				</div>
 
@@ -129,11 +129,13 @@
 				<div class="newsletter-inner">
 					<NewsletterForm
 						email={form.email.value}
+						consent={form.consent.value}
 						submitStatus={form.submitStatus.value}
 						errorMessage={form.errorMessage.value}
 						isSubmitDisabled={form.isSubmitDisabled.value}
 						onSubmit={form.handleSubmit}
 						onEmailInput={form.handleEmailInput}
+						onConsentInput={form.handleConsentInput}
 					/>
 				</div>
 			</div>

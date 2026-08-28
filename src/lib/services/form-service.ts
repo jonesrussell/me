@@ -8,6 +8,7 @@ export interface FormSchemaProperty {
 	minLength?: number;
 	maxLength?: number;
 	enum?: string[];
+	const?: string | number | boolean;
 }
 
 export interface FormSchema {
