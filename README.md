@@ -96,6 +96,8 @@ src/
 
 ## Development
 
+Node.js 24 and npm 11 are the supported local and CI toolchain. Version managers can read `.node-version` directly.
+
 ```bash
 # Install dependencies
 npm install
