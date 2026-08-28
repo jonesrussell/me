@@ -29,16 +29,14 @@ test.describe('Blog Series - PSR', () => {
 	test('should render PSR entry cards', async ({ page }) => {
 		await page.goto('/blog/series/php-fig-standards', { waitUntil: 'domcontentloaded' });
 		await expect(page.getByRole('heading', { name: 'Foundation' })).toBeVisible({ timeout: 30000 });
-		await expect(
-			page.getByRole('link', { name: 'PSR-1: Basic Coding Standard' })
-		).toBeVisible();
+		await expect(page.getByRole('link', { name: 'PSR-1: Basic Coding Standard' })).toBeVisible();
 	});
 
 	test('should have completion checkboxes for each entry', async ({ page }) => {
 		await page.goto('/blog/series/php-fig-standards', { waitUntil: 'domcontentloaded' });
 
 		// All 15 PSR entries (14 standards + 1 index) should have checkboxes
-		const checkboxes = page.locator('input[type="checkbox"]');
+		const checkboxes = page.locator('input[type="checkbox"][aria-label^="Mark "]');
 		await expect(checkboxes).toHaveCount(15);
 
 		// First checkbox should have accessible label

@@ -146,7 +146,9 @@ test.describe('Contact Page', () => {
 
 		await page.getByRole('button', { name: /send_message/ }).click();
 
-		await expect(page.getByRole('alert')).toContainText('Please wait a moment and try again.');
+		await expect(page.locator('.contact-form .submit-error')).toContainText(
+			'Please wait a moment and try again.'
+		);
 		await expect(page.getByRole('button', { name: /send_message/ })).toBeEnabled();
 	});
 
@@ -157,7 +159,9 @@ test.describe('Contact Page', () => {
 
 		await page.getByRole('button', { name: /send_message/ }).click();
 
-		await expect(page.getByRole('alert')).toContainText('Check your connection and try again.');
+		await expect(page.locator('.contact-form .submit-error')).toContainText(
+			'Check your connection and try again.'
+		);
 		await expect(page.getByRole('button', { name: /send_message/ })).toBeEnabled();
 	});
 
@@ -188,7 +192,7 @@ test.describe('Contact Page', () => {
 		await fillValidSubmission(page);
 
 		await page.getByRole('button', { name: /send_message/ }).click();
-		await expect(page.getByRole('alert')).toBeVisible();
+		await expect(page.locator('.contact-form .submit-error')).toBeVisible();
 		await page.getByRole('button', { name: /send_message/ }).click();
 
 		await expect(page.getByText('// message transmitted')).toBeVisible();
