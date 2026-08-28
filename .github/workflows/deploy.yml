@@ -36,13 +36,10 @@ jobs:
         with:
           path: |
             node_modules
-            .svelte-kit
-            build
             node_modules/.cache
-          key: ${{ runner.os }}-build-${{ github.sha }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('svelte.config.js') }}
+          key: ${{ runner.os }}-dependencies-${{ hashFiles('package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ github.sha }}-
-            ${{ runner.os }}-build-
+            ${{ runner.os }}-dependencies-
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
