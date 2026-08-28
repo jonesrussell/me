@@ -76,7 +76,8 @@ export default defineConfig({
 		env: {
 			...process.env,
 			VITE_GOFORMS_API_URL: 'https://api.goformx.test',
-			VITE_GOFORMS_CONTACT_PUBLIC_KEY: 'gfpk_1234567890abcdefghijkl'
+			VITE_GOFORMS_CONTACT_PUBLIC_KEY: 'gfpk_1234567890abcdefghijkl',
+			VITE_GOFORMS_NEWSLETTER_PUBLIC_KEY: 'gfpk_newsletter_test'
 		},
 		// Reuse existing server in local development (when CI is not set)
 		reuseExistingServer: process.env.CI !== '1' && process.env.CI !== 'true',
