@@ -1,6 +1,6 @@
 # Site overhaul release review
 
-September 30, 2026. This change implements roadmap #270 through a reviewable local candidate. It is not a deployment record. The contact publication/receipt gate and explicit release authorization remain open in #276 and #277.
+September 30, 2026. This change implements roadmap #270. Russell approved publication and deployment on September 30. Contact publication and inbox qualification are complete; final CI and Pages verification must pass before closing #277.
 
 ## Review surfaces
 
@@ -15,7 +15,7 @@ September 30, 2026. This change implements roadmap #270 through a reviewable loc
 
 Type checking and lint pass. All changed Svelte files passed the required Svelte MCP autofixer with no remaining issues or suggestions. All **162 unit tests** pass across 27 files. They cover accepted-response confirmation and recovery after a failed Writing fetch, in addition to the existing service/store/component tests. All **80 browser tests** pass across Chromium and WebKit; **10 production static checks** pass under `/me`.
 
-Chromium and WebKit checks cover the shared shell, page content, current-route state, keyboard menu/Escape, skip link, 375px overflow, 200% CSS scaling, reduced motion, Resources filters, Writing pagination/empty/failure/retry, HTML sanitization, keyboard-focusable independently scrolling code blocks, and preserved series progress/code examples. WebKit uses explicit skip-link focus because its default Tab behavior differs from Chromium. Keyboard tests wait for initial page readiness, and responsive overflow assertions poll within a bounded window while the browser applies viewport changes.
+Chromium and WebKit checks cover the shared shell, page content, current-route state, keyboard menu/Escape, skip link, 375px overflow, 200% CSS scaling, reduced motion, Resources filters, Writing pagination/empty/failure/retry, HTML sanitization, keyboard-focusable independently scrolling code blocks, and preserved series progress/code examples. WebKit uses explicit skip-link focus because its default Tab behavior differs from Chromium. Keyboard tests wait for initial page readiness. Mobile checks load a fresh document after the separate CSS zoom check because WebKit retains stale media-query styles when zoom is reset before a viewport change. Overflow assertions remain bounded.
 
 Automated axe checks use WCAG 2 A/AA and WCAG 2.1 AA tags across the ten primary routes, a published article and the PHP-FIG series. Form fixture checks include the exact proposed three-field schema. This is supporting accessibility evidence, not a claim of complete manual conformance.
 
@@ -37,12 +37,13 @@ The build retains the existing gray-matter `eval` warning. There are no reusable
 
 ## Contact and release gate
 
-GoFormX account and owner workspace were created through normal supported public registration/login. A scoped, expiring draft connection created one site and one draft. No form has been published and no successful real public submission is claimed.
+GoFormX account and owner workspace were created through normal supported public registration/login. A scoped, expiring draft connection created one site and one draft. A separate one-day forms:read/forms:publish grant published the explicitly approved version 1.
 
 Publish review: **`russell-site-contact`, schema version 1**, form ID `a6a76b48-51a6-4bd8-9da4-70c79fc8158c`. Required name (1–100), email (email format, ≤254), message (10–5,000). Additional properties rejected. Allowed origin: `https://jonesrussell.github.io`. Public collection endpoint: `https://api.goformx.com/v1/public/forms/gfpk_VwPg3JMmBt2RodLc1ZjJBMUK0yhgXRMf/submissions`.
 
-After exact-form/version approval: obtain a separately deliberate publication grant, publish version 1, verify public schema and CORS headers, submit synthetic non-personal data, replay the same idempotency key, prove a single accepted receipt in the authorized account inbox, and only then configure the approved public key for the release. The preview without a key offers direct email; this does not authorize an email-only launch.
+Completed through supported APIs: version 1 publication, browser CORS preflight/response checks, pinned-version synthetic submission and identical-intent retry. Both calls returned accepted submission d0e0257f-a242-417a-9a2f-8c682c571288; authenticated account inbox detail confirmed that exact form, ID and version. The repository public-key variable is configured.
 
 Mail notifications are deferred in the GoFormX production record. Inbox collection and mail delivery are separate capabilities. Newsletter signup is absent; #257 remains open.
 
 After deployment approval: update the repository's public contact identifier, merge the reviewed candidate, wait for CI/Pages completion, verify live `/me` routes and the approved contact journey, then record the deployed revision, publication state, actual receipt and rollback reference. A failed synthetic check must be reported separately from the publication state.
+

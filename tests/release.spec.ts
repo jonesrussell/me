@@ -85,6 +85,9 @@ test('release routes retain metadata, links and responsive layouts at 200% scale
 			document.documentElement.style.zoom = '';
 		});
 		await page.setViewportSize({ width: 375, height: 812 });
+		// Check mobile on a fresh document: WebKit retains stale media-query styles
+		// when CSS zoom is reset immediately before changing the viewport.
+		await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
 		await expect
 			.poll(
 				() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1),

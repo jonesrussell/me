@@ -34,6 +34,7 @@ All production paths are rooted at `/me`. Metadata uses the absolute production 
 
 Account owner: Russell's user-supplied GoFormX account. Account creation used normal public registration/login. The account password, session and expiring scoped draft token are encrypted outside the repository and indexed in the local credential-location file.
 
-Prepared draft: `russell-site-contact`, form ID `a6a76b48-51a6-4bd8-9da4-70c79fc8158c`, schema version **1**. Name: 1–100 characters; email: email format, maximum 254 characters; message (“What are you working on?”): 10–5,000 characters. All three are required; extra properties rejected. Production browser origin: `https://jonesrussell.github.io`. Public endpoint origin: `https://api.goformx.com`. No management credential enters the website.
+Published form: `russell-site-contact`, form ID `a6a76b48-51a6-4bd8-9da4-70c79fc8158c`, schema version **1**. Name: 1–100 characters; email: email format, maximum 254 characters; message (“What are you working on?”): 10–5,000 characters. All three are required; extra properties rejected. Production browser origin: `https://jonesrussell.github.io`. Public endpoint origin: `https://api.goformx.com`. No management credential enters the website.
 
-Publication, synthetic submit/replay and authorized dashboard receipt remain pending. Receiving a submission in GoFormX does not prove email notification. The local preview without a configured key presents direct email; this is not approval to ship an email-only release.
+Version 1 publication, same-intent synthetic submit/retry and authenticated inbox receipt are verified. Receiving a submission in GoFormX does not prove email notification. The local preview without a configured key presents direct email; this is not approval to ship an email-only release.
+
