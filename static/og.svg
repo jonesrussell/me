@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#101218"/>
+  <g fill="none" stroke="#7295ff" stroke-width="2" opacity=".65">
+    <path d="M895 65 1090 180 895 295 700 180Z M895 175 1090 290 895 405 700 290Z M895 285 1090 400 895 515 700 400Z"/>
+    <path d="M700 180v220m390-220v220M895 295v220"/>
+  </g>
+  <text x="64" y="82" fill="#fafbff" font-family="Arial, sans-serif" font-weight="700" font-size="28">russell jones<tspan fill="#7295ff">.</tspan></text>
+  <g font-family="Arial, sans-serif" font-weight="700" font-size="64" letter-spacing="-2">
+    <text x="64" y="240" fill="#fafbff">Digital infrastructure</text>
+    <text x="64" y="320" fill="#7295ff">that stays in</text>
+    <text x="64" y="400" fill="#7295ff">your hands.</text>
+  </g>
+  <path d="M64 505H1136" stroke="#4e5668"/>
+  <text x="64" y="558" fill="#fafbff" font-family="monospace" font-size="20">ARCHITECTURE / PLATFORMS / PRACTICAL AI</text>
+</svg>

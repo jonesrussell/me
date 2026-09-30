@@ -1,5 +1,6 @@
 <script lang="ts">
 	import BlogPost from '$lib/components/blog/BlogPost.svelte';
+	import { resolve } from '$app/paths';
 	import type { PageData } from './$types';
 
 	const { data } = $props<{ data: PageData }>();
@@ -17,6 +18,13 @@
 	});
 </script>
 
+<style>
+	.blog-page {
+		min-height: 100vh;
+		background: var(--color-surface);
+	}
+</style>
+
 <svelte:head>
 	<title>{data.post.title} | Russell Jones</title>
 	<meta name="description" content={data.description} />
@@ -30,16 +38,13 @@
 	<meta name="twitter:title" content={data.post.title} />
 	<meta name="twitter:description" content={data.description} />
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -- JSON-LD from load data only -->
-	{@html `<script type="application/ld+json">${JSON.stringify(articleJsonLd)}</scr` + `ipt>`}
+	{@html `<script type="application/ld+json">${JSON.stringify(articleJsonLd).replaceAll('<', '\\u003c')}</scr` +
+		`ipt>`}
 </svelte:head>
-
-<style>
-	.blog-page {
-		min-height: 100vh;
-		background: var(--color-surface);
-	}
-</style>
 
 <div class="blog-page">
 	<BlogPost post={data.post} />
+	<div class="site-container section-space">
+		<a class="text-link" href={resolve('/blog')}>More writing <span aria-hidden="true">→</span></a>
+	</div>
 </div>

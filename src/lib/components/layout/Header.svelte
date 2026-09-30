@@ -1,143 +1,59 @@
 <script lang="ts">
-	import DesktopNav from '$lib/components/navigation/DesktopNav.svelte';
-	import MobileNav from '$lib/components/navigation/MobileNav.svelte';
-	import SubtitleBar from './SubtitleBar.svelte';
-	import ThemeToggle from '../ThemeToggle.svelte';
-	import { resolve } from '$app/paths';
-
+	import { afterNavigate } from '$app/navigation';
+	import { base, resolve } from '$app/paths';
 	const { url } = $props<{ url: URL }>();
-
-	let isMobileMenuOpen = $state(false);
-
-	function toggleMobileMenu() {
-		isMobileMenuOpen = !isMobileMenuOpen;
+	let isOpen = $state(false);
+	let toggle: HTMLButtonElement;
+	const links = [
+		{ path: '/projects', label: 'Work' },
+		{ path: '/services', label: 'Services' },
+		{ path: '/blog', label: 'Writing' },
+		{ path: '/about', label: 'About' },
+		{ path: '/contact', label: 'Contact' }
+	] as const;
+	const currentPath = $derived(url.pathname.slice(base.length));
+	afterNavigate(() => {
+		isOpen = false;
+	});
+	function onKeydown(event: KeyboardEvent) {
+		if (event.key === 'Escape' && isOpen) {
+			isOpen = false;
+			toggle?.focus();
+		}
 	}
 </script>
 
-<style>
-	.site-header {
-		position: sticky;
-		z-index: 10;
-		top: 0;
-		width: 100%;
-		padding-block-start: var(--space-4);
-		padding-block-end: 0;
-		border-bottom: var(--border-width) solid var(--border-color);
-		background: var(--bg-color);
-		box-shadow: var(--shadow-sm);
-	}
-
-	.header-content {
-		width: 100%;
-		max-width: min(var(--measure), 95cqi);
-		margin-inline: auto;
-		padding-inline: var(--space-4);
-	}
-
-	.header-main {
-		container-type: inline-size;
-		display: grid;
-		position: relative;
-		grid-template-columns: auto 1fr auto;
-		gap: var(--space-4);
-		align-items: center;
-	}
-
-	.header-right {
-		display: flex;
-		align-items: center;
-		gap: var(--space-4);
-		justify-self: end;
-	}
-
-	.nav-container {
-		justify-self: end;
-		margin-right: var(--space-4);
-	}
-
-	.menu-toggle {
-		display: flex;
-		width: 2.5ch;
-		height: 2.5rem;
-		padding: var(--space-2);
-		color: var(--text-color);
-		background: transparent;
-		border: none;
-		transition: all var(--transition-duration) var(--transition-timing);
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		z-index: 20;
-	}
-
-	.menu-toggle:hover {
-		color: var(--accent-color);
-	}
-
-	.menu-icon {
-		font-size: var(--font-size-xl);
-	}
-
-	.sr-only {
-		position: absolute;
-		width: 0.0625ch;
-		height: 0.0625rem;
-		margin: -0.0625rem;
-		padding: 0;
-		overflow: hidden;
-		clip-path: inset(50%);
-		white-space: nowrap;
-		border-width: 0;
-	}
-
-	.title {
-		font-family: var(--font-mono);
-		font-size: var(--font-size-xl);
-		font-weight: var(--font-weight-bold);
-		text-decoration: none;
-		color: var(--text-color);
-		transition: color var(--transition-duration) var(--transition-timing);
-	}
-
-	.title:hover {
-		color: var(--accent-color);
-	}
-
-	@container (width > 48ch) {
-		.menu-toggle {
-			display: none;
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.menu-toggle,
-		.title {
-			transition: none;
-		}
-	}
-</style>
-
+<svelte:window onkeydown={onKeydown} />
 <header class="site-header">
-	<div class="header-content">
-		<div class="header-main">
-			<a href={resolve('/')} class="title">Russell Jones</a>
-			<div class="nav-container">
-				<DesktopNav {url} />
-			</div>
-			<div class="header-right">
-				<ThemeToggle />
-				<button
-					class="menu-toggle"
-					type="button"
-					onclick={toggleMobileMenu}
-					aria-expanded={isMobileMenuOpen}
+	<div class="site-container header-content">
+		<a class="wordmark" href={resolve('/')} aria-label="Russell Jones, home"
+			>russell jones<span>.</span></a
+		>
+		<button
+			{@attach (element) => {
+				toggle = element;
+			}}
+			class="menu-toggle"
+			type="button"
+			aria-controls="site-navigation"
+			aria-expanded={isOpen}
+			onclick={() => {
+				isOpen = !isOpen;
+			}}>Menu <span aria-hidden="true">{isOpen ? '−' : '+'}</span></button
+		>
+		<nav id="site-navigation" class:open={isOpen} class="desktop-nav" aria-label="Main navigation">
+			{#each links as link (link.path)}
+				<a
+					class:nav-contact={link.path === '/contact'}
+					href={resolve(link.path)}
+					aria-current={currentPath === link.path || currentPath.startsWith(`${link.path}/`)
+						? 'page'
+						: undefined}
+					onclick={() => {
+						isOpen = false;
+					}}>{link.label}</a
 				>
-					<span class="menu-icon">☰</span>
-					<span class="sr-only">Toggle menu</span>
-				</button>
-			</div>
-			<MobileNav {url} isOpen={isMobileMenuOpen} toggleMenu={toggleMobileMenu} />
-		</div>
+			{/each}
+		</nav>
 	</div>
-	<SubtitleBar />
 </header>

@@ -1,78 +1,20 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-
 	const year = new Date().getFullYear();
 </script>
 
-<style>
-	.footer {
-		container-type: inline-size;
-		padding: var(--space-8) 0;
-		border-top: 0.0625rem solid var(--border-color);
-		font-size: var(--font-size-sm);
-		text-align: center;
-		background: var(--bg-darker);
-	}
-
-	.container {
-		width: 100%;
-		max-width: min(var(--measure), 95cqi);
-		margin-inline: auto;
-		padding-inline: var(--space-4);
-	}
-
-	@container (width < 40ch) {
-		.container {
-			padding-inline: var(--space-4);
-		}
-
-		p {
-			display: flex;
-			flex-direction: column;
-			gap: var(--space-2);
-		}
-	}
-
-	@container (width >= 40ch) {
-		.container {
-			padding-inline: var(--space-8);
-		}
-	}
-
-	a {
-		text-decoration: none;
-		color: var(--text-color);
-		transition: color var(--transition-duration) var(--transition-timing);
-	}
-
-	a:hover {
-		color: var(--accent-color);
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		a {
-			transition: none;
-		}
-	}
-</style>
-
-<footer class="footer">
-	<div class="container">
-		<p>
-			&copy; {year} Russell Jones |
+<footer class="site-footer">
+	<div class="site-container footer-content">
+		<div>
+			<a class="wordmark" href={resolve('/')}>russell jones<span>.</span></a>
+			<p>© {year} Russell Jones</p>
+		</div>
+		<nav aria-label="Footer navigation">
+			<a href="mailto:russell@web.ca">Email</a>
+			<a href="https://github.com/jonesrussell">GitHub</a>
+			<a href="https://linkedin.com/in/jonesrussell42">LinkedIn</a>
 			<a href={resolve('/resources')}>Resources</a>
-			|
-			<a href="https://github.com/jonesrussell/me" target="_blank" rel="noopener noreferrer">
-				Source Code
-			</a>
-			| Licensed under
-			<a
-				href="https://github.com/jonesrussell/me/blob/main/LICENSE"
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				MIT
-			</a>
-		</p>
+			<a href="https://github.com/jonesrussell/me">Site source</a>
+		</nav>
 	</div>
 </footer>

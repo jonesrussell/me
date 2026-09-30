@@ -15,7 +15,9 @@ test.describe('Resources Page', () => {
 		await page.goto('/resources', { waitUntil: 'domcontentloaded' });
 
 		await Promise.all([
-			expect(page.locator('h1', { hasText: 'Resources' })).toBeVisible({ timeout: 15000 }),
+			expect(page.getByRole('heading', { level: 1, name: /Useful tools/ })).toBeVisible({
+				timeout: 15000
+			}),
 			expect(page.locator('.filter-bar')).toBeVisible({ timeout: 15000 })
 		]);
 

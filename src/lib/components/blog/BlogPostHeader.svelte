@@ -89,14 +89,14 @@
 </style>
 
 <header class="post-header">
-	<nav class="breadcrumb">
-		<a href={resolve('/blog')}>← Back to build log</a>
+	<nav class="breadcrumb" aria-label="Breadcrumb">
+		<a href={resolve('/blog')}>← Back to writing</a>
 	</nav>
 
 	<h1>{post.title}</h1>
 
 	<div class="metadata">
-		<time datetime={post.published}>
+		<time datetime={new Date(post.published).toISOString()}>
 			{formatPostDate(post.published)}
 		</time>
 		{#if post.categories.length > 0}
@@ -108,7 +108,9 @@
 		{/if}
 		{#if post.link}
 			<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-			<a class="original-link" href={post.link} target="_blank" rel="noopener noreferrer">View original</a>
+			<a class="original-link" href={post.link} target="_blank" rel="noopener noreferrer"
+				>View original</a
+			>
 		{/if}
 	</div>
 </header>

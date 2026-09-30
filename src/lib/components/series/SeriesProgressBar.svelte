@@ -7,19 +7,6 @@
 	const percentage = $derived(total > 0 ? Math.round((completed / total) * 100) : 0);
 </script>
 
-<div
-	class="progress-container"
-	role="progressbar"
-	aria-valuenow={completed}
-	aria-valuemin={0}
-	aria-valuemax={total}
->
-	<span class="progress-text">{completed} of {total}</span>
-	<div class="progress-track">
-		<div class="progress-fill" style:width="{percentage}%"></div>
-	</div>
-</div>
-
 <style>
 	.progress-container {
 		display: flex;
@@ -49,3 +36,17 @@
 		color: var(--text-muted);
 	}
 </style>
+
+<div
+	class="progress-container"
+	role="progressbar"
+	aria-label="Series completion"
+	aria-valuenow={completed}
+	aria-valuemin={0}
+	aria-valuemax={total}
+>
+	<span class="progress-text">{completed} of {total}</span>
+	<div class="progress-track">
+		<div class="progress-fill" style:width="{percentage}%"></div>
+	</div>
+</div>

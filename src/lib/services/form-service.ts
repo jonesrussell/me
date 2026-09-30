@@ -189,6 +189,16 @@ export class FormService {
 			if (!response.ok) throw await this.responseError(response, 'The message could not be sent.');
 
 			const envelope = (await response.json()) as { data: FormSubmission };
+			if (
+				!envelope.data?.id ||
+				!['accepted', 'processing', 'completed'].includes(envelope.data.status)
+			) {
+				throw new FormServiceError(
+					'The message could not be confirmed. Please try again.',
+					response.status,
+					'unconfirmed_submission'
+				);
+			}
 			return {
 				submission: envelope.data,
 				replayed: response.headers.get(REPLAY_HEADER)?.toLowerCase() === 'true'

@@ -1,4 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+import { mkdir } from 'node:fs/promises';
+import { join } from 'node:path';
 
 const schema = {
 	$schema: 'https://json-schema.org/draft/2020-12/schema',
@@ -49,20 +52,88 @@ test.describe('Contact Page', () => {
 	test.setTimeout(90000);
 	test.describe.configure({ mode: 'serial' });
 
+	test('prepared version-one contact schema renders the exact proposed fields', async ({
+		page
+	}, testInfo) => {
+		const preparedSchema = {
+			...schema,
+			title: 'Russell Jones website enquiry',
+			properties: {
+				name: schema.properties.name,
+				email: { ...schema.properties.email, maxLength: 254 },
+				message: {
+					...schema.properties.message,
+					title: 'What are you working on?',
+					description: 'Your idea, current situation, constraints and rough timeline.'
+				}
+			}
+		};
+		await page.route('**/v1/public/forms/**/schema', route =>
+			route.fulfill({
+				status: 200,
+				contentType: 'application/schema+json',
+				headers: {
+					'X-GoFormX-Schema-Version': '1',
+					'Access-Control-Expose-Headers': 'X-GoFormX-Schema-Version'
+				},
+				body: JSON.stringify(preparedSchema)
+			})
+		);
+		await page.goto('/contact', { waitUntil: 'networkidle' });
+		await expect(page.locator('.contact-form input, .contact-form textarea')).toHaveCount(3);
+		await expect(page.locator('#cf-email')).toHaveRole('textbox');
+		await expect(page.locator('#cf-email')).toHaveAttribute('type', 'email');
+		await expect(page.locator('#cf-email')).toHaveAttribute('maxlength', '254');
+		await expect(page.getByLabel('What are you working on?', { exact: false })).toBeVisible();
+		const result = await new AxeBuilder({ page })
+			.withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+			.analyze();
+		expect(result.violations).toEqual([]);
+		if (process.env.RELEASE_EVIDENCE_DIR) {
+			await mkdir(process.env.RELEASE_EVIDENCE_DIR, { recursive: true });
+			await page.screenshot({
+				path: join(
+					process.env.RELEASE_EVIDENCE_DIR,
+					`${testInfo.project.name}-contact-draft-v1-desktop.png`
+				),
+				fullPage: true
+			});
+			await page.setViewportSize({ width: 375, height: 812 });
+			await page.screenshot({
+				path: join(
+					process.env.RELEASE_EVIDENCE_DIR,
+					`${testInfo.project.name}-contact-draft-v1-mobile.png`
+				),
+				fullPage: true
+			});
+		}
+	});
+
 	test('loads schema-driven fields and page metadata', async ({ page }) => {
 		await openContactForm(page);
 
-		await expect(page.getByRole('heading', { name: 'Get in Touch' })).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Let’s talk about it.' })).toBeVisible();
 		await expect(page.locator('#cf-name')).toHaveAttribute('required', '');
 		await expect(page.locator('#cf-email')).toHaveAttribute('type', 'email');
 		await expect(page.locator('#cf-message')).toHaveAttribute('minlength', '10');
 		await expect(page.locator('#cf-company')).not.toHaveAttribute('required', '');
 		await expect(page.locator('#cf-referral')).toHaveRole('combobox');
-		await expect(page).toHaveTitle('Contact Me | Russell Jones');
+		await expect(page).toHaveTitle('Contact | Russell Jones');
 		await expect(page.locator('meta[name="description"]')).toHaveAttribute(
 			'content',
-			'Get in touch with me for collaboration, questions, or just to say ahnii!'
+			'Tell Russell Jones about your project, existing system or software challenge. Email russell@web.ca or start an enquiry.'
 		);
+		const accessibility = await new AxeBuilder({ page })
+			.withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+			.analyze();
+		expect(accessibility.violations).toEqual([]);
+		if (process.env.RELEASE_EVIDENCE_DIR) {
+			await mkdir(process.env.RELEASE_EVIDENCE_DIR, { recursive: true });
+			await page.screenshot({
+				path: join(process.env.RELEASE_EVIDENCE_DIR, 'contact-fixture-preview.png'),
+				fullPage: true
+			});
+		}
 	});
 
 	test('submits the public v1 envelope without a credential', async ({ page }) => {
@@ -89,9 +160,9 @@ test.describe('Contact Page', () => {
 		await openContactForm(page);
 		await fillValidSubmission(page);
 
-		await page.getByRole('button', { name: /send_message/ }).click();
+		await page.getByRole('button', { name: /Send enquiry/ }).click();
 
-		await expect(page.getByText('// message transmitted')).toBeVisible();
+		await expect(page.getByText('Your enquiry has been received.')).toBeVisible();
 		expect(requestBody).toEqual({
 			data: {
 				name: 'Ada Lovelace',
@@ -123,7 +194,7 @@ test.describe('Contact Page', () => {
 		await openContactForm(page);
 		await fillValidSubmission(page);
 
-		await page.getByRole('button', { name: /send_message/ }).click();
+		await page.getByRole('button', { name: /Send enquiry/ }).click();
 
 		await expect(page.locator('#cf-email')).toBeFocused();
 		await expect(page.locator('#cf-email')).toHaveAttribute('aria-invalid', 'true');
@@ -144,12 +215,12 @@ test.describe('Contact Page', () => {
 		await openContactForm(page);
 		await fillValidSubmission(page);
 
-		await page.getByRole('button', { name: /send_message/ }).click();
+		await page.getByRole('button', { name: /Send enquiry/ }).click();
 
 		await expect(page.locator('.contact-form .submit-error')).toContainText(
 			'Please wait a moment and try again.'
 		);
-		await expect(page.getByRole('button', { name: /send_message/ })).toBeEnabled();
+		await expect(page.getByRole('button', { name: /Send enquiry/ })).toBeEnabled();
 	});
 
 	test('shows a recoverable network failure', async ({ page }) => {
@@ -157,12 +228,12 @@ test.describe('Contact Page', () => {
 		await openContactForm(page);
 		await fillValidSubmission(page);
 
-		await page.getByRole('button', { name: /send_message/ }).click();
+		await page.getByRole('button', { name: /Send enquiry/ }).click();
 
 		await expect(page.locator('.contact-form .submit-error')).toContainText(
 			'Check your connection and try again.'
 		);
-		await expect(page.getByRole('button', { name: /send_message/ })).toBeEnabled();
+		await expect(page.getByRole('button', { name: /Send enquiry/ })).toBeEnabled();
 	});
 
 	test('reuses the idempotency key when an uncertain submission is replayed', async ({ page }) => {
@@ -191,11 +262,11 @@ test.describe('Contact Page', () => {
 		await openContactForm(page);
 		await fillValidSubmission(page);
 
-		await page.getByRole('button', { name: /send_message/ }).click();
+		await page.getByRole('button', { name: /Send enquiry/ }).click();
 		await expect(page.locator('.contact-form .submit-error')).toBeVisible();
-		await page.getByRole('button', { name: /send_message/ }).click();
+		await page.getByRole('button', { name: /Send enquiry/ }).click();
 
-		await expect(page.getByText('// message transmitted')).toBeVisible();
+		await expect(page.getByText('Your enquiry has been received.')).toBeVisible();
 		expect(keys).toHaveLength(2);
 		expect(keys[1]).toBe(keys[0]);
 	});

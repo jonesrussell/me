@@ -14,6 +14,7 @@
 @import url('./styles/modules/forms.css') layer(components);
 @import url('./styles/modules/code.css') layer(components);
 @import url('./styles/modules/utilities.css') layer(utilities);
+@import url('./styles/overhaul.css');
 
 /* Define CSS layers */
 @layer reset, base, components, utilities;

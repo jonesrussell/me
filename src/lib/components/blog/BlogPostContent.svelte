@@ -42,7 +42,7 @@
 
 	/* Blog Content Styles */
 	:global(.prose) {
-		max-width: min(var(--measure), 95cqi);
+		max-width: 70ch;
 		margin: 0 auto;
 		line-height: 1.6;
 		color: var(--color-text);
@@ -50,7 +50,7 @@
 
 	:global(.prose p) {
 		margin-bottom: var(--space-4);
-		text-align: justify;
+		text-align: start;
 	}
 
 	:global(.prose h2) {
@@ -213,10 +213,10 @@
 	/* stylelint-enable selector-class-pattern */
 </style>
 
-<main class="post-content" use:highlightCode>
+<div class="post-content" use:highlightCode>
 	{#if content}
 		<SafeHtml content={stripCdata(content)} className="prose" />
 	{:else}
 		<div class="no-content">No content available for this post.</div>
 	{/if}
-</main>
+</div>

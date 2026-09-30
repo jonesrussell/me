@@ -1,90 +1,110 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Route Navigation', () => {
-	// Set a longer timeout for this test suite
-	test.setTimeout(90000);
+const routes = [
+	{ path: '/projects', label: 'Work' },
+	{ path: '/services', label: 'Services' },
+	{ path: '/blog', label: 'Writing' },
+	{ path: '/about', label: 'About' },
+	{ path: '/contact', label: 'Contact' }
+];
 
-	test.beforeEach(async ({ page }) => {
-		// Clear cookies only, skip localStorage
-		await page.context().clearCookies();
+test('shared navigation reaches every page and identifies the current route', async ({ page }) => {
+	await page.goto('/');
+	for (const route of routes) {
+		await page
+			.getByRole('navigation', { name: 'Main navigation' })
+			.getByRole('link', { name: route.label, exact: true })
+			.click();
+		await expect(page).toHaveURL(new RegExp(`${route.path}$`));
+		await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+		await expect(
+			page
+				.getByRole('navigation', { name: 'Main navigation' })
+				.getByRole('link', { name: route.label, exact: true })
+		).toHaveAttribute('aria-current', 'page');
+	}
+});
 
-		// Navigate to home page with faster load strategy
-		await page.goto('/', { waitUntil: 'domcontentloaded' });
-	});
+test('mobile menu works by keyboard, closes on Escape and after navigation', async ({ page }) => {
+	await page.setViewportSize({ width: 375, height: 812 });
+	await page.goto('/', { waitUntil: 'networkidle' });
+	const menu = page.getByRole('button', { name: 'Menu' });
+	await menu.focus();
+	await page.keyboard.press('Enter');
+	await expect(menu).toHaveAttribute('aria-expanded', 'true');
+	await page.keyboard.press('Escape');
+	await expect(menu).toHaveAttribute('aria-expanded', 'false');
+	await expect(menu).toBeFocused();
+	await menu.click();
+	await page
+		.getByRole('navigation', { name: 'Main navigation' })
+		.getByRole('link', { name: 'About', exact: true })
+		.click();
+	await expect(page).toHaveURL(/\/about$/);
+	await expect(menu).toHaveAttribute('aria-expanded', 'false');
+	await expect(page.getByRole('navigation', { name: 'Main navigation' })).not.toBeVisible();
+});
 
-	test('navigates to blog page', async ({ page }) => {
-		// Wait for the blog link to be visible and actionable
-		const blogLink = page.getByRole('link', { name: 'Follow the build log' });
-		await expect(blogLink).toBeVisible();
-		await expect(blogLink).toBeEnabled();
+test('375px layouts do not overflow across retained and new routes', async ({ page }) => {
+	await page.setViewportSize({ width: 375, height: 812 });
+	for (const path of [
+		'/',
+		...routes.map(route => route.path),
+		'/projects/goformx',
+		'/projects/waaseyaa',
+		'/projects/north-cloud',
+		'/resources'
+	]) {
+		await page.goto(path, { waitUntil: 'networkidle' });
+		await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+		expect(
+			await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1),
+			path
+		).toBe(true);
+	}
+});
 
-		// Click the blog link and wait for navigation
-		await Promise.all([
-			page.waitForURL('**/blog', { timeout: 30000 }),
-			blogLink.click()
-		]);
+test('skip link provides keyboard access to the main content', async ({ page, browserName }) => {
+	await page.goto('/services', { waitUntil: 'networkidle' });
+	if (browserName === 'webkit')
+		await page.getByRole('link', { name: 'Skip to main content' }).focus();
+	else await page.keyboard.press('Tab');
+	await expect(page.getByRole('link', { name: 'Skip to main content' })).toBeFocused();
+	await page.keyboard.press('Enter');
+	await expect(page.locator('#main')).toBeFocused();
+});
 
-		// Wait for the page to be fully loaded
-		await page.waitForLoadState('domcontentloaded');
+test('services and about explain scope and principles without placeholder claims', async ({
+	page
+}) => {
+	await page.goto('/services', { waitUntil: 'networkidle' });
+	for (const title of [
+		'Architecture & technical review',
+		'Platform development & modernization',
+		'Practical AI workflows',
+		'Three steps to momentum.'
+	]) {
+		await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
+	}
+	await page.goto('/about');
+	for (const title of [
+		'Start with the problem.',
+		'Keep decisions visible.',
+		'Build for ownership.'
+	]) {
+		await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
+	}
+});
 
-		// Wait for the blog page structure to be visible
-		await expect(page.locator('.blog')).toBeVisible();
-		await expect(page.getByRole('heading', { name: 'Build Log', level: 1 })).toBeVisible();
-
-		// Wait for loading state to complete and posts to be visible
-		await Promise.race([
-			page.waitForSelector('.loading-container', { state: 'hidden' }),
-			page.waitForSelector('.hero-post')
-		]);
-
-		// Verify hero post is visible
-		await expect(page.locator('.hero-post')).toBeVisible();
-	});
-
-	test('should navigate to projects page', async ({ page }) => {
-		// Wait for the projects link to be visible and actionable
-		const projectsLink = page.getByRole('link', { name: 'View all work' });
-		await expect(projectsLink).toBeVisible();
-		await expect(projectsLink).toBeEnabled();
-
-		// Click the link and wait for navigation
-		await Promise.all([
-			page.waitForURL('**/projects', { timeout: 30000 }),
-			projectsLink.click()
-		]);
-
-		// Wait for the page to be fully loaded
-		await page.waitForLoadState('domcontentloaded');
-
-		// Wait for the projects page structure to be visible
-		await expect(page.locator('.projects')).toBeVisible();
-		await expect(page.getByRole('heading', { name: 'Projects' }).first()).toBeVisible();
-		await expect(page.getByRole('heading', { name: 'Waaseyaa Ecosystem' })).toBeVisible();
-	});
-
-	test('should maintain consistent navigation across pages', async ({ page }) => {
-		// Arrange
-		const routes = [
-			{ path: 'blog', text: 'Build log' },
-			{ path: 'projects', text: 'Work' },
-			{ path: 'contact', text: 'Studio' }
-		];
-
-		// Act & Assert - Check each route sequentially
-		for (const route of routes) {
-			// Navigate to the route with faster load strategy
-			await page.goto(`/${route.path}`, { waitUntil: 'domcontentloaded' });
-
-			// Check desktop navigation
-			const desktopNav = page.locator('.desktop-nav');
-			await expect(desktopNav).toBeVisible();
-
-			// Check all navigation links
-			for (const link of routes) {
-				const navLink = desktopNav.locator(`a[href="/${link.path}"]`);
-				await expect(navLink).toBeVisible();
-				await expect(navLink).toContainText(link.text);
-			}
-		}
-	});
+test('error route offers home and contact', async ({ page }) => {
+	await page.goto('/missing-page');
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Page not found.');
+	await expect(page.getByRole('link', { name: 'Go home', exact: true })).toHaveAttribute(
+		'href',
+		'/'
+	);
+	await expect(page.getByRole('link', { name: 'Contact Russell', exact: true })).toHaveAttribute(
+		'href',
+		'/contact'
+	);
 });

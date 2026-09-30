@@ -1,5 +1,7 @@
 <script lang="ts">
-	import Hero from '$lib/components/ui/Hero.svelte';
+	import { onMount } from 'svelte';
+	import PageHero from '$lib/components/site/PageHero.svelte';
+	import Meta from '$lib/components/site/Meta.svelte';
 	import ResourceFilter from '$lib/components/resources/ResourceFilter.svelte';
 	import ResourceGrid from '$lib/components/resources/ResourceGrid.svelte';
 	import { filterResources } from '$lib/services/resource-filter';
@@ -14,7 +16,7 @@
 	let hydrated = $state(false);
 
 	// Initialize filter state from URL params (client-side only, runs once on mount)
-	$effect(() => {
+	onMount(() => {
 		if (typeof window === 'undefined') return;
 		const params = new URLSearchParams(window.location.search);
 		const cat = params.get('category');
@@ -26,7 +28,9 @@
 		hydrated = true;
 	});
 
-	const filtered = $derived(filterResources(data.resources, activeCategory, activeTags, searchQuery));
+	const filtered = $derived(
+		filterResources(data.resources, activeCategory, activeTags, searchQuery)
+	);
 	const grouped = $derived(groupByCategory(filtered));
 
 	function updateUrl() {
@@ -122,15 +126,17 @@
 	}
 </style>
 
-<svelte:head>
-	<title>Resources | Russell Jones - Curated Developer Toolkit</title>
-	<meta
-		name="description"
-		content="My opinionated picks for languages, tools, libraries, and learning resources. Go, SvelteKit, Docker, Neovim, and more — with context on why I use each one."
-	/>
-</svelte:head>
-
-<Hero title="Resources" subtitle="// cat bookmarks.md" variant="resources" />
+<Meta
+	title="Resources"
+	description="Tools, documentation and learning resources for software development, with context on why I use them."
+	path="/resources"
+/>
+<PageHero
+	label="Resources"
+	title="Useful tools."
+	accent="Worth sharing."
+	intro="An opinionated collection of documentation, developer tools and places to learn."
+/>
 
 <div class="resources" data-hydrated={hydrated || undefined}>
 	<div class="container">
