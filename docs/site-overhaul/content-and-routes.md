@@ -28,7 +28,7 @@ Project illustrations and flow diagrams are conceptual, labeled on detail pages.
 | `/contact` | Retained direct email and qualified public-schema client |
 | `/sitemap.xml`, `/robots.txt`, `/404.html` | Retained supporting routes/fallback |
 
-All production paths are rooted at `/me`. Metadata uses the absolute production origin, page-specific title/description and canonical path. The social image is shared. Header current-page state includes project/article descendants. Direct email is `russell@web.ca`; LinkedIn is `https://linkedin.com/in/jonesrussell42`.
+All production paths are rooted at `/me`. Metadata uses the absolute production origin, page-specific title/description and canonical path. The social image is shared. Header current-page state includes project/article descendants. Direct email is `jonesrussell42@gmail.com`; LinkedIn is `https://linkedin.com/in/jonesrussell42`.
 
 ## Contact scope
 

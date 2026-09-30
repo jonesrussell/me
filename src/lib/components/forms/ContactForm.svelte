@@ -239,7 +239,7 @@
 	<div class="form-status form-status-error" role="alert">
 		<p>{errorMessage}</p>
 		<button type="button" class="form-retry" onclick={loadSchema}>Try again</button>
-		<p>You can also email <a href="mailto:russell@web.ca">russell@web.ca</a>.</p>
+		<p>You can also email <a href="mailto:jonesrussell42@gmail.com">jonesrussell42@gmail.com</a>.</p>
 	</div>
 {:else}
 	<form class="contact-form" onsubmit={handleSubmit}>
@@ -321,8 +321,8 @@
 
 <noscript>
 	<p class="form-status">
-		JavaScript is required for the secure form. Email <a href="mailto:russell@web.ca"
-			>russell@web.ca</a
+		JavaScript is required for the secure form. Email <a href="mailto:jonesrussell42@gmail.com"
+			>jonesrussell42@gmail.com</a
 		> instead.
 	</p>
 </noscript>

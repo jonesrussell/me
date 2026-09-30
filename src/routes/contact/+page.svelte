@@ -7,7 +7,7 @@
 
 <Meta
 	title="Contact"
-	description="Tell Russell Jones about your project, existing system or software challenge. Email russell@web.ca or start an enquiry."
+	description="Tell Russell Jones about your project, existing system or software challenge. Email jonesrussell42@gmail.com or start an enquiry."
 	path="/contact"
 />
 <PageHero
@@ -27,8 +27,8 @@
 				through.
 			</p>
 			<h3>Email</h3>
-			<a class="text-link" href="mailto:russell@web.ca"
-				>russell@web.ca <span aria-hidden="true">↗</span></a
+			<a class="text-link" href="mailto:jonesrussell42@gmail.com"
+				>jonesrussell42@gmail.com <span aria-hidden="true">↗</span></a
 			>
 			<h3>LinkedIn</h3>
 			<a class="text-link" href="https://linkedin.com/in/jonesrussell42"
@@ -41,7 +41,7 @@
 				<p class="small-note">Please avoid sending passwords or sensitive information.</p>
 				<noscript
 					><p>
-						Email <a href="mailto:russell@web.ca">russell@web.ca</a> to send your enquiry.
+						Email <a href="mailto:jonesrussell42@gmail.com">jonesrussell42@gmail.com</a> to send your enquiry.
 					</p></noscript
 				>
 			</section>{/if}

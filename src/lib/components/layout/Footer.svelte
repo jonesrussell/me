@@ -10,7 +10,7 @@
 			<p>© {year} Russell Jones</p>
 		</div>
 		<nav aria-label="Footer navigation">
-			<a href="mailto:russell@web.ca">Email</a>
+			<a href="mailto:jonesrussell42@gmail.com">Email</a>
 			<a href="https://github.com/jonesrussell">GitHub</a>
 			<a href="https://linkedin.com/in/jonesrussell42">LinkedIn</a>
 			<a href={resolve('/resources')}>Resources</a>

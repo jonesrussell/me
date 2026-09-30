@@ -121,7 +121,7 @@ test.describe('Contact Page', () => {
 		await expect(page).toHaveTitle('Contact | Russell Jones');
 		await expect(page.locator('meta[name="description"]')).toHaveAttribute(
 			'content',
-			'Tell Russell Jones about your project, existing system or software challenge. Email russell@web.ca or start an enquiry.'
+			'Tell Russell Jones about your project, existing system or software challenge. Email jonesrussell42@gmail.com or start an enquiry.'
 		);
 		const accessibility = await new AxeBuilder({ page })
 			.withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
