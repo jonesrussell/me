@@ -1,93 +1,104 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Blog Page', () => {
-	test.setTimeout(90000);
+const feedUrl = '**/blog/feed.xml';
+const feed = (count: number) =>
+	`<rss><channel>${Array.from({ length: count }, (_, i) => `<item><title>Published article ${i + 1}</title><link>https://dev.to/jonesrussell/article-${i + 1}</link><pubDate>Tue, 23 Sep 2026 12:00:00 GMT</pubDate><description>Source-backed lessons &amp; practical decisions.</description><category>architecture</category></item>`).join('')}</channel></rss>`;
 
-	test.beforeEach(async ({ page }) => {
-		// Navigate to blog page before each test
-		await page.goto('/blog', { waitUntil: 'domcontentloaded' });
-	});
+test.beforeEach(async ({ page }) => {
+	await page.route('**/blog/series/index.json', route =>
+		route.fulfill({ contentType: 'application/json', body: '{"series":[]}' })
+	);
+});
 
-	test('should load the blog page successfully', async ({ page }) => {
-		// Check the build-log hero is present.
-		await expect(page.getByRole('heading', { name: 'Build Log', level: 1 })).toBeVisible();
+test('writing presents feed metadata and paginates without dropping articles', async ({ page }) => {
+	await page.route(feedUrl, route =>
+		route.fulfill({ contentType: 'application/xml', body: feed(8) })
+	);
+	await page.goto('/services', { waitUntil: 'networkidle' });
+	await page
+		.getByRole('navigation', { name: 'Main navigation' })
+		.getByRole('link', { name: 'Writing', exact: true })
+		.click();
+	await expect(page.getByRole('heading', { level: 1 })).toContainText('Notes from');
+	await expect(
+		page.getByRole('region', { name: 'Published articles' }).locator('.writing-row')
+	).toHaveCount(6);
+	await expect(
+		page
+			.getByRole('region', { name: 'Published articles' })
+			.locator('.writing-row')
+			.first()
+			.locator('time')
+	).toHaveAttribute('datetime', '2026-09-23T12:00:00.000Z');
+	await expect(page.getByRole('link', { name: 'Read on Dev.to' })).toHaveAttribute(
+		'href',
+		'https://dev.to/jonesrussell'
+	);
+	await page.getByRole('button', { name: 'Load more articles' }).click();
+	await expect(
+		page.getByRole('region', { name: 'Published articles' }).locator('.writing-row')
+	).toHaveCount(8);
+	await expect(page.getByRole('button', { name: 'Load more articles' })).toHaveCount(0);
+});
 
-		// Wait for posts to load
-		await Promise.race([
-			page.waitForSelector('.loading-container', { state: 'hidden' }),
-			page.waitForSelector('.hero-post')
-		]);
+test('failed initial load retries page one', async ({ page }) => {
+	let fail = true;
+	await page.route(feedUrl, route =>
+		route.fulfill(
+			fail
+				? { status: 503, body: 'Unavailable' }
+				: { contentType: 'application/xml', body: feed(2) }
+		)
+	);
+	await page.goto('/services', { waitUntil: 'networkidle' });
+	await page
+		.getByRole('navigation', { name: 'Main navigation' })
+		.getByRole('link', { name: 'Writing', exact: true })
+		.click();
+	await expect(page.locator('.error-state')).toBeVisible();
+	fail = false;
+	await page.getByRole('button', { name: 'Try again' }).click();
+	await expect(
+		page.getByRole('region', { name: 'Published articles' }).locator('.writing-row')
+	).toHaveCount(2);
+	await expect(page.getByRole('link', { name: 'Published article 1', exact: true })).toBeVisible();
+});
 
-		// Verify hero post is visible
-		const heroPost = page.locator('.hero-post');
-		await expect(heroPost).toBeVisible();
-	});
+test('an empty feed has an honest empty state', async ({ page }) => {
+	await page.route(feedUrl, route =>
+		route.fulfill({ contentType: 'application/xml', body: feed(0) })
+	);
+	await page.goto('/services', { waitUntil: 'networkidle' });
+	await page
+		.getByRole('navigation', { name: 'Main navigation' })
+		.getByRole('link', { name: 'Writing', exact: true })
+		.click();
+	await expect(page.getByText('No published articles are available yet.')).toBeVisible();
+});
 
-	test('should display hero post with LATEST badge', async ({ page }) => {
-		// Wait for hero post to load
-		await page.waitForSelector('.hero-post');
-
-		const heroPost = page.locator('.hero-post');
-		await Promise.all([
-			expect(heroPost.locator('.hero-post-badge')).toHaveText('[LATEST]'),
-			expect(heroPost.locator('.hero-post-title')).toBeVisible(),
-			expect(heroPost.locator('.hero-post-meta')).toBeVisible(),
-			expect(heroPost.locator('.hero-post-excerpt')).toBeVisible()
-		]);
-	});
-
-	test('should display post grid with correct details', async ({ page }) => {
-		// Wait for cards to load
-		await page.waitForSelector('.card');
-
-		// Check post card content
-		const firstCard = page.locator('.card').first();
-		await Promise.all([
-			expect(firstCard.locator('.title')).toBeVisible(),
-			expect(firstCard.locator('time')).toBeVisible(),
-			expect(firstCard.locator('.excerpt')).toHaveText(/.*/)
-		]);
-
-		// Categories are in bracket format now — check meta-tags
-		const metaTags = firstCard.locator('.meta-tags');
-		const metaTagsCount = await metaTags.count();
-		if (metaTagsCount > 0) {
-			await expect(metaTags).toBeVisible();
-		}
-	});
-
-	test('should display featured series as pinned process', async ({ page }) => {
-		const pinnedProcesses = page.locator('.pinned-process');
-		await expect(pinnedProcesses.first()).toBeVisible();
-		await expect(pinnedProcesses.first().locator('.process-label')).toHaveText('[SERIES]');
-	});
-
-	test('should handle error state', async ({ page }) => {
-		// Wait for posts to load
-		await page.waitForSelector('.hero-post');
-
-		// Check if error state is not visible when there's no error
-		const errorState = page.locator('.error-state');
-		await expect(errorState).not.toBeVisible();
-
-		// Verify hero post is still visible
-		const heroPost = page.locator('.hero-post');
-		await expect(heroPost).toBeVisible();
-	});
-
-	test('should navigate to on-site blog post when clicking hero post', async ({ page }, testInfo) => {
-		// Skip in CI: slug page fetches feed from jonesrussell.github.io; that request often fails from GitHub runners.
-		testInfo.skip(!!process.env.CI, 'External feed may be unavailable in CI');
-
-		await page.waitForSelector('.hero-post');
-
-		const heroLink = page.locator('a.hero-post');
-		await expect(heroLink).toBeVisible();
-
-		await heroLink.click();
-
-		await expect(page).toHaveURL(/\/blog\/.+/);
-		await expect(page.locator('.blog-post')).toBeVisible({ timeout: 15_000 });
-		await expect(page.locator('.blog-post .post-content')).toBeVisible();
-	});
+test('article rendering retains sanitization and an independently scrolling code block', async ({
+	page
+}) => {
+	const articleFeed = `<rss><channel><item><title>Article safety</title><link>https://dev.to/jonesrussell/article-safety</link><pubDate>Tue, 23 Sep 2026 12:00:00 GMT</pubDate><content:encoded><![CDATA[<p>Published body.</p><script>window.unsafeArticle = true</script><pre><code>${'long-code-line-'.repeat(80)}</code></pre>]]></content:encoded></item></channel></rss>`;
+	await page.route(feedUrl, route =>
+		route.fulfill({ contentType: 'application/xml', body: articleFeed })
+	);
+	await page.setViewportSize({ width: 375, height: 812 });
+	await page.goto('/services', { waitUntil: 'networkidle' });
+	await page.getByRole('button', { name: 'Menu' }).click();
+	await page
+		.getByRole('navigation', { name: 'Main navigation' })
+		.getByRole('link', { name: 'Writing', exact: true })
+		.click();
+	await page.getByRole('link', { name: 'Article safety', exact: true }).click();
+	await expect(page.getByRole('heading', { name: 'Article safety', level: 1 })).toBeVisible();
+	await expect(page.getByText('Published body.')).toBeVisible();
+	await expect(page.locator('.prose script')).toHaveCount(0);
+	await expect(page.locator('.prose pre')).toHaveAttribute('tabindex', '0');
+	expect(
+		await page.locator('.prose pre').evaluate(element => getComputedStyle(element).overflowX)
+	).toBe('auto');
+	expect(
+		await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)
+	).toBe(true);
 });

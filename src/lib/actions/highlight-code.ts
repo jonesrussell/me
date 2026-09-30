@@ -22,42 +22,47 @@ hljs.registerLanguage('typescript', typescript);
 hljs.registerLanguage('xml', xml);
 
 export function highlightCode(node: HTMLElement) {
-  async function highlight() {
-    await tick();
+	async function highlight() {
+		await tick();
 
-    const codeBlocks = node.querySelectorAll('pre code');
-    codeBlocks.forEach((block) => {
-      const htmlBlock = block as HTMLElement;
+		const codeBlocks = node.querySelectorAll('pre code');
+		codeBlocks.forEach(block => {
+			const htmlBlock = block as HTMLElement;
+			if (htmlBlock.parentElement?.tagName === 'PRE') {
+				htmlBlock.parentElement.tabIndex = 0;
+				htmlBlock.parentElement.setAttribute('aria-label', 'Code example');
+			}
+			if (htmlBlock.dataset.highlighted === 'yes') return;
 
-      if (htmlBlock.children.length > 0) {
-        htmlBlock.textContent = htmlBlock.textContent || '';
-      }
+			if (htmlBlock.children.length > 0) {
+				htmlBlock.textContent = htmlBlock.textContent || '';
+			}
 
-      const langMatch = htmlBlock.className.match(/language-(\w+)/);
-      const lang = langMatch?.[1];
-      if (!lang || !hljs.getLanguage(lang)) {
-        htmlBlock.className = 'language-plaintext';
-      }
+			const langMatch = htmlBlock.className.match(/language-(\w+)/);
+			const lang = langMatch?.[1];
+			if (!lang || !hljs.getLanguage(lang)) {
+				htmlBlock.className = 'language-plaintext';
+			}
 
-      if (!htmlBlock.classList.contains('hljs')) {
-        hljs.highlightElement(htmlBlock);
-      }
-    });
-  }
+			if (!htmlBlock.classList.contains('hljs')) {
+				hljs.highlightElement(htmlBlock);
+			}
+		});
+	}
 
-  // Initial highlight
-  highlight();
+	// Initial highlight
+	highlight();
 
-  // Re-highlight when content changes
-  const observer = new MutationObserver(highlight);
-  observer.observe(node, {
-    childList: true,
-    subtree: true
-  });
+	// Re-highlight when content changes
+	const observer = new MutationObserver(highlight);
+	observer.observe(node, {
+		childList: true,
+		subtree: true
+	});
 
-  return {
-    destroy() {
-      observer.disconnect();
-    }
-  };
+	return {
+		destroy() {
+			observer.disconnect();
+		}
+	};
 }

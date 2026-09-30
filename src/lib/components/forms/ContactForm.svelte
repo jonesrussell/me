@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { tick } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import {
 		createIdempotencyKey,
 		FormNetworkError,
@@ -35,7 +35,7 @@
 			.map(([key, definition]) => ({ key, definition, required: required.has(key) }));
 	});
 
-	$effect(() => {
+	onMount(() => {
 		void loadSchema();
 	});
 
@@ -44,14 +44,18 @@
 		errorMessage = '';
 		try {
 			schemaResult = await service.getSchema(publicKey);
+			if (!schemaResult.version)
+				throw new Error('The contact form is unavailable. Please use email or try again.');
 			const required = schemaResult.schema.required ?? [];
 			const unsupportedRequired = required.filter((key) => {
 				const definition = schemaResult?.schema.properties[key];
-				return key !== 'source' && definition?.type && definition.type !== 'string';
+				return !definition || (key !== 'source' && definition.type && definition.type !== 'string');
 			});
 			if (unsupportedRequired.length > 0) {
 				throw new Error('This form schema contains fields this client cannot render yet.');
 			}
+			if (!Object.keys(schemaResult.schema.properties).length)
+				throw new Error('The contact form is unavailable. Please use email.');
 			formState = 'idle';
 		} catch (error) {
 			schemaResult = null;
@@ -72,7 +76,10 @@
 	}
 
 	function isTextarea(field: Field): boolean {
-		return field.key === 'message' || (field.definition.maxLength ?? 0) > 200;
+		return (
+			!field.definition.format &&
+			(field.key === 'message' || (field.definition.maxLength ?? 0) > 200)
+		);
 	}
 
 	function setValue(key: string, value: string) {
@@ -93,7 +100,9 @@
 				.map((field) => [field.key, values[field.key] ?? ''])
 				.filter(([, value]) => value !== '')
 		);
-		if (schemaResult?.schema.properties.source) data.source = 'jonesrussell.github.io/me';
+		if (schemaResult?.schema.properties.source) {
+			data.source = schemaResult.schema.properties.source.const ?? 'jonesrussell.github.io/me';
+		}
 		return data;
 	}
 
@@ -117,7 +126,8 @@
 			formState = 'success';
 		} catch (error) {
 			if (error instanceof FormValidationError) {
-				formState = 'idle';
+				formState = 'error';
+				errorMessage = 'Please check the highlighted fields and try again.';
 				fieldErrors = Object.fromEntries(
 					error.fieldErrors.filter((item) => item.field).map((item) => [item.field, item.message])
 				);
@@ -220,15 +230,15 @@
 
 {#if formState === 'success'}
 	<div class="success-message" role="status">
-		<p class="success-heading">// message transmitted</p>
-		<p class="success-body">Thanks for reaching out! I'll get back to you soon.</p>
+		<p class="success-heading">Your enquiry has been received.</p>
+		<p class="success-body">Thanks for sharing what you’re working on.</p>
 	</div>
 {:else if formState === 'loading'}
-	<div class="form-status" role="status">// loading secure contact channel...</div>
+	<div class="form-status" role="status">Loading the contact form…</div>
 {:else if !schemaResult}
 	<div class="form-status form-status-error" role="alert">
 		<p>{errorMessage}</p>
-		<button type="button" class="form-retry" onclick={loadSchema}>// retry_connection()</button>
+		<button type="button" class="form-retry" onclick={loadSchema}>Try again</button>
 		<p>You can also email <a href="mailto:russell@web.ca">russell@web.ca</a>.</p>
 	</div>
 {:else}
@@ -275,6 +285,11 @@
 					<input
 						id={`cf-${field.key}`}
 						class="form-input"
+						autocomplete={field.definition.format === 'email'
+							? 'email'
+							: field.key === 'name'
+								? 'name'
+								: undefined}
 						type={inputType(field)}
 						value={values[field.key] ?? ''}
 						placeholder={field.definition.description ?? labelFor(field)}
@@ -299,7 +314,7 @@
 		{/if}
 
 		<button type="submit" class="form-submit" disabled={formState === 'submitting'}>
-			{formState === 'submitting' ? '// transmitting...' : '// send_message()'}
+			{formState === 'submitting' ? 'Sending…' : 'Send enquiry'}
 		</button>
 	</form>
 {/if}

@@ -4,7 +4,18 @@ import { fetchFeed } from '$lib/services/blog-service';
 
 export const prerender = true;
 
-const STATIC_PATHS = ['/', '/blog', '/projects', '/resources', '/contact'] as const;
+const STATIC_PATHS = [
+	'/',
+	'/blog',
+	'/projects',
+	'/projects/goformx',
+	'/projects/waaseyaa',
+	'/projects/north-cloud',
+	'/services',
+	'/about',
+	'/resources',
+	'/contact'
+] as const;
 
 export async function GET({ fetch }) {
 	const urls: { loc: string; lastmod?: string }[] = [];
@@ -29,7 +40,7 @@ export async function GET({ fetch }) {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls
 	.map(
-		(u) =>
+		u =>
 			`  <url>
     <loc>${escapeXml(u.loc)}</loc>${u.lastmod ? `\n    <lastmod>${u.lastmod}</lastmod>` : ''}
   </url>`

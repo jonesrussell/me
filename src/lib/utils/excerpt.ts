@@ -6,11 +6,15 @@
  * @param maxLength - Maximum character count (default 160)
  * @returns Plain text excerpt
  */
+import { decodeEntities } from './html-entities';
+
 export function stripHtmlExcerpt(html: string, maxLength: number = 160): string {
-	const stripped = html
-		.replace(/<[^>]+>/g, ' ')
-		.replace(/\s+/g, ' ')
-		.trim();
+	const stripped = decodeEntities(
+		html
+			.replace(/<[^>]+>/g, ' ')
+			.replace(/\s+/g, ' ')
+			.trim()
+	);
 	if (stripped.length <= maxLength) return stripped;
 	const cut = stripped.slice(0, maxLength);
 	const lastSpace = cut.lastIndexOf(' ');

@@ -29,6 +29,7 @@
 		"knip": "knip"
 	},
 	"devDependencies": {
+		"@axe-core/playwright": "^4.13.0",
 		"@csstools/postcss-global-data": "^3.1.0",
 		"@eslint/compat": "^2.0.2",
 		"@eslint/js": "^9.39.2",

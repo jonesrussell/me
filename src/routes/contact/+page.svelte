@@ -1,127 +1,56 @@
 <script lang="ts">
 	import ContactForm from '$lib/components/forms/ContactForm.svelte';
-	import Hero from '$lib/components/ui/Hero.svelte';
+	import Meta from '$lib/components/site/Meta.svelte';
+	import PageHero from '$lib/components/site/PageHero.svelte';
+	import { config } from '$lib/config/env';
 </script>
 
-<style>
-	.contact {
-		container-type: inline-size;
-		container-name: contact-page;
-		display: grid;
-		width: 100%;
-		padding: var(--space-16) 0;
-		grid-template-rows: auto 1fr;
-		gap: var(--space-16);
-		background: var(--color-mix-light);
-	}
-
-	.container {
-		display: grid;
-		width: 100%;
-		margin-inline: auto;
-		padding-inline: var(--space-4);
-		max-width: var(--container-lg);
-		gap: var(--space-16);
-		grid-template-columns: minmax(0, 1fr);
-	}
-
-	@container contact-page (min-width: 50rem) {
-		.container {
-			grid-template-columns: 1fr 1fr;
-			align-items: start;
-		}
-	}
-
-	.contact-info {
-		display: flex;
-		padding-right: var(--space-8);
-		flex-direction: column;
-		gap: var(--space-4);
-	}
-
-	.contact-info h2 {
-		margin: 0 0 var(--space-2) 0;
-		font-family: var(--font-mono);
-		font-size: var(--font-size-3xl);
-		font-weight: var(--font-weight-bold);
-		color: var(--text-color);
-	}
-
-	.contact-info p {
-		margin: 0 0 var(--space-4) 0;
-		font-size: var(--font-size-lg);
-		color: var(--text-muted);
-	}
-
-	.contact-list {
-		display: flex;
-		margin: var(--space-4) 0 0 0;
-		padding: var(--space-4);
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
-		color: var(--text-muted);
-		list-style: none;
-		flex-direction: column;
-		gap: var(--space-3);
-		background: var(--bg-darker);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-md);
-	}
-
-	.contact-list li {
-		display: flex;
-		align-items: center;
-		gap: var(--space-2);
-	}
-
-	.contact-list a {
-		text-decoration: none;
-		color: var(--accent-color);
-	}
-
-	.contact-list a:hover {
-		text-decoration: underline;
-		text-underline-offset: 2px;
-	}
-
-	.terminal-prefix {
-		font-weight: var(--font-weight-bold);
-		color: var(--accent-color);
-	}
-
-	.contact-form-col {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-8);
-	}
-</style>
-
-<svelte:head>
-	<title>Contact Me | Russell Jones</title>
-	<meta
-		name="description"
-		content="Get in touch with me for collaboration, questions, or just to say ahnii!"
-	/>
-</svelte:head>
-
-<Hero title="Contact" subtitle="// open for connections" variant="contact" />
-
-<div class="contact">
-	<div class="container">
-		<div class="contact-info">
-			<h2>Get in Touch</h2>
+<Meta
+	title="Contact"
+	description="Tell Russell Jones about your project, existing system or software challenge. Email russell@web.ca or start an enquiry."
+	path="/contact"
+/>
+<PageHero
+	label="Start a conversation"
+	title="What are you"
+	accent="working on?"
+	intro="Bring an idea, a question or a challenge. A little context is enough to start."
+	light
+/>
+<div class="contact site-container section-space">
+	<div class="contact-grid">
+		<section class="contact-info">
+			<p class="eyebrow">Get in touch</p>
+			<h2>Let’s talk about it.</h2>
 			<p>
-				Have a question or want to work together? I'd love to hear from you. Let's build something
-				amazing together.
+				I’m interested in useful software, thoughtful collaborations and problems worth working
+				through.
 			</p>
-			<ul class="contact-list">
-				<li><span class="terminal-prefix" aria-label="Command">$</span> github <a href="https://github.com/jonesrussell" target="_blank" rel="noopener noreferrer">@jonesrussell</a></li>
-				<li><span class="terminal-prefix" aria-label="Command">$</span> linkedin <a href="https://linkedin.com/in/jonesrussell42" target="_blank" rel="noopener noreferrer">jonesrussell42</a></li>
-				<li><span class="terminal-prefix" aria-label="Command">$</span> email <a href="mailto:russell@web.ca">russell@web.ca</a></li>
-			</ul>
-		</div>
-		<div class="contact-form-col">
-			<ContactForm />
-		</div>
+			<h3>Email</h3>
+			<a class="text-link" href="mailto:russell@web.ca"
+				>russell@web.ca <span aria-hidden="true">↗</span></a
+			>
+			<h3>LinkedIn</h3>
+			<a class="text-link" href="https://linkedin.com/in/jonesrussell42"
+				>jonesrussell42 <span aria-hidden="true">↗</span></a
+			>
+		</section>
+		{#if config.formPublicKeys.contact}<section class="contact-form-col">
+				<h2>Send an enquiry</h2>
+				<ContactForm />
+				<p class="small-note">Please avoid sending passwords or sensitive information.</p>
+				<noscript
+					><p>
+						Email <a href="mailto:russell@web.ca">russell@web.ca</a> to send your enquiry.
+					</p></noscript
+				>
+			</section>{/if}
 	</div>
+	<section class="contact-context">
+		<h2 class="eyebrow">A little context goes a long way.</h2>
+		<p>
+			Tell me about the problem, what you have today, any constraints and your rough timeline. You
+			do not need a polished brief.
+		</p>
+	</section>
 </div>

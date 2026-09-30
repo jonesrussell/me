@@ -18,19 +18,17 @@ function jsonResponse(body: unknown, status = 200, headers: Record<string, strin
 
 describe('FormService', () => {
 	it('fetches a published schema and captures its immutable version', async () => {
-		const fetcher = vi
-			.fn<typeof fetch>()
-			.mockResolvedValue(
-				jsonResponse(
-					{
-						$schema: 'https://json-schema.org/draft/2020-12/schema',
-						type: 'object',
-						properties: {}
-					},
-					200,
-					{ 'X-GoFormX-Schema-Version': '3' }
-				)
-			);
+		const fetcher = vi.fn<typeof fetch>().mockResolvedValue(
+			jsonResponse(
+				{
+					$schema: 'https://json-schema.org/draft/2020-12/schema',
+					type: 'object',
+					properties: {}
+				},
+				200,
+				{ 'X-GoFormX-Schema-Version': '3' }
+			)
+		);
 		const service = new FormService(API_URL, fetcher);
 
 		const result = await service.getSchema(PUBLIC_KEY);
@@ -131,5 +129,15 @@ describe('FormService', () => {
 		const service = new FormService(API_URL, fetcher);
 
 		await expect(service.getSchema(PUBLIC_KEY)).rejects.toBeInstanceOf(FormNetworkError);
+	});
+
+	it('does not announce success for an unconfirmed submission response', async () => {
+		const fetcher = vi
+			.fn<typeof fetch>()
+			.mockResolvedValue(jsonResponse({ data: { status: 'failed' } }, 202));
+		const service = new FormService(API_URL, fetcher);
+		await expect(
+			service.submitForm(PUBLIC_KEY, { email: 'ada@example.com' }, 'contact-submit-0001', 3)
+		).rejects.toMatchObject({ code: 'unconfirmed_submission' });
 	});
 });

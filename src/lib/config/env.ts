@@ -8,7 +8,7 @@ export const config = {
 	 * Base URL for the form API
 	 * Set VITE_GOFORMS_API_URL in your .env file to override.
 	 */
-	goformsApiUrl: import.meta.env.VITE_GOFORMS_API_URL ?? 'http://localhost:8090',
+	goformsApiUrl: import.meta.env.VITE_GOFORMS_API_URL ?? 'https://api.goformx.com',
 
 	/** Browser-safe published form identifiers. These are not credentials. */
 	formPublicKeys: {

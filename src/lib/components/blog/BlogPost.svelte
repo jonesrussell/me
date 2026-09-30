@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
-	import { elasticOut } from 'svelte/easing';
 	import BlogPostHeader from './BlogPostHeader.svelte';
 	import BlogPostContent from './BlogPostContent.svelte';
 	import type { BlogPost } from '$lib/types/blog';
@@ -20,13 +18,13 @@
 		container-type: inline-size;
 		container-name: blog-post;
 		width: 100%;
-		max-width: min(var(--measure), 95cqi);
+		max-width: 55rem;
 		margin: 0 auto;
 		padding: var(--space-8);
 	}
 </style>
 
-<article class="blog-post" in:fade={{ duration: 500, easing: elasticOut }}>
+<article class="blog-post">
 	<BlogPostHeader {post} />
 	<BlogPostContent content={post.content} />
 </article>

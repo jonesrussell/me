@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+	import { onMount } from 'svelte';
 	import SeriesHeader from '$lib/components/series/SeriesHeader.svelte';
 	import SeriesGroup from '$lib/components/series/SeriesGroup.svelte';
 	import { loadProgress, suggestedNext } from '$lib/stores/series-progress.svelte';
@@ -8,65 +9,12 @@
 
 	const { data } = $props<{ data: PageData }>();
 
-	$effect(() => {
-		loadProgress();
-	});
+	onMount(loadProgress);
 
 	const allEntries = $derived(data.series.groups.flatMap((g: SeriesGroupType) => g.entries));
 	const totalEntries = $derived(allEntries.length);
 	const suggested = $derived(suggestedNext(data.series.id, allEntries));
 </script>
-
-<svelte:head>
-	<title>{data.series.title} | Russell Jones</title>
-	<meta name="description" content={data.series.description} />
-	<link rel="canonical" href={data.canonical} />
-</svelte:head>
-
-<div class="series-page">
-	<nav class="breadcrumb" aria-label="Breadcrumb">
-		<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-		<a href="{base}/blog">Build log</a>
-		<span aria-hidden="true">/</span>
-		<span>Series</span>
-	</nav>
-
-	<SeriesHeader
-		title={data.series.title}
-		description={data.series.description}
-		repoUrl={data.series.repoUrl}
-		seriesId={data.series.id}
-		{totalEntries}
-	/>
-
-	<div class="series-groups">
-		{#each data.series.groups as group (group.name)}
-			<SeriesGroup
-				{group}
-				seriesId={data.series.id}
-				repoUrl={data.series.repoUrl}
-				codeDataMap={data.codeDataMap}
-				suggestedSlug={suggested?.slug ?? null}
-			/>
-		{/each}
-	</div>
-
-	{#if data.series.repoUrl}
-		<section class="getting-started" aria-label="Getting started">
-			<h2>Getting Started</h2>
-			<p>Clone the companion repository to follow along with working examples:</p>
-			<pre><code>git clone {data.series.repoUrl}.git
-cd {data.series.repoUrl.split('/').pop()}
-composer install</code></pre>
-			<p class="getting-started-links">
-				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-				<a href={data.series.repoUrl} target="_blank" rel="noopener noreferrer">
-					View on GitHub
-				</a>
-			</p>
-		</section>
-	{/if}
-</div>
 
 <style>
 	.series-page {
@@ -151,3 +99,54 @@ composer install</code></pre>
 		text-decoration: underline;
 	}
 </style>
+
+<svelte:head>
+	<title>{data.series.title} | Russell Jones</title>
+	<meta name="description" content={data.series.description} />
+	<link rel="canonical" href={data.canonical} />
+</svelte:head>
+
+<div class="series-page">
+	<nav class="breadcrumb" aria-label="Breadcrumb">
+		<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
+		<a href="{base}/blog">Writing</a>
+		<span aria-hidden="true">/</span>
+		<span>Series</span>
+	</nav>
+
+	<SeriesHeader
+		title={data.series.title}
+		description={data.series.description}
+		repoUrl={data.series.repoUrl}
+		seriesId={data.series.id}
+		{totalEntries}
+	/>
+
+	<div class="series-groups">
+		{#each data.series.groups as group (group.name)}
+			<SeriesGroup
+				{group}
+				seriesId={data.series.id}
+				repoUrl={data.series.repoUrl}
+				codeDataMap={data.codeDataMap}
+				suggestedSlug={suggested?.slug ?? null}
+			/>
+		{/each}
+	</div>
+
+	{#if data.series.repoUrl}
+		<section class="getting-started" aria-label="Getting started">
+			<h2>Getting Started</h2>
+			<p>Clone the companion repository to follow along with working examples:</p>
+			<pre><code
+					>git clone {data.series.repoUrl}.git
+cd {data.series.repoUrl.split('/').pop()}
+composer install</code
+				></pre>
+			<p class="getting-started-links">
+				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
+				<a href={data.series.repoUrl} target="_blank" rel="noopener noreferrer"> View on GitHub </a>
+			</p>
+		</section>
+	{/if}
+</div>

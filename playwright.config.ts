@@ -26,7 +26,7 @@ export default defineConfig({
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
-		baseURL: 'http://localhost:5173',
+		baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:5174',
 
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: 'on-first-retry',
@@ -70,19 +70,21 @@ export default defineConfig({
 	],
 
 	/* Run your local dev server before starting the tests */
-	webServer: {
-		command: 'npm run dev',
-		url: 'http://localhost:5173',
-		env: {
-			...process.env,
-			VITE_GOFORMS_API_URL: 'https://api.goformx.test',
-			VITE_GOFORMS_CONTACT_PUBLIC_KEY: 'gfpk_1234567890abcdefghijkl',
-			VITE_GOFORMS_NEWSLETTER_PUBLIC_KEY: 'gfpk_newsletter_test'
-		},
-		// Reuse existing server in local development (when CI is not set)
-		reuseExistingServer: process.env.CI !== '1' && process.env.CI !== 'true',
-		timeout: 120 * 1000
-	},
+	webServer: process.env.PLAYWRIGHT_BASE_URL
+		? undefined
+		: {
+				command: 'npm run dev -- --port 5174 --strictPort',
+				url: 'http://localhost:5174',
+				env: {
+					...process.env,
+					VITE_GOFORMS_API_URL: 'https://api.goformx.test',
+					VITE_GOFORMS_CONTACT_PUBLIC_KEY: 'gfpk_1234567890abcdefghijkl',
+					VITE_GOFORMS_NEWSLETTER_PUBLIC_KEY: 'gfpk_newsletter_test'
+				},
+				// Reuse existing server in local development (when CI is not set)
+				reuseExistingServer: false,
+				timeout: 120 * 1000
+			},
 
 	/* Global timeout for the entire test run */
 	globalTimeout: 60 * 60 * 1000 // 1 hour

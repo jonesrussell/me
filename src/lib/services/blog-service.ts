@@ -196,7 +196,7 @@ export const fetchFeed = async (
 	const cacheKey = `${FEED_CACHE_KEY}-${page}-${pageSize}`;
 	const cached = feedCache.getCache(cacheKey);
 
-	if (cached) {
+	if (cached && cached.errorCount === 0) {
 		const cachedItems = cached.data.slice((page - 1) * pageSize, page * pageSize);
 		const totalPages = Math.ceil(cached.data.length / pageSize);
 		const hasMore = cached.data.length > page * pageSize;

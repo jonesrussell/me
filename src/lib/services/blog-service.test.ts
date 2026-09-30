@@ -1,10 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import {
-	formatPostDate,
-	fetchFeed,
-	fetchPost,
-	resetFeedCache
-} from './blog-service';
+import { formatPostDate, fetchFeed, fetchPost, resetFeedCache } from './blog-service';
 
 // Mock global fetch
 const mockFetch = vi.fn();
@@ -94,7 +89,6 @@ describe('Utilities', () => {
 			expect(formatPostDate('')).toBe('');
 		});
 	});
-
 });
 
 describe('API', () => {
@@ -149,6 +143,14 @@ describe('API', () => {
 			mockFetch.mockRejectedValueOnce(new Error('Network error'));
 
 			await expect(fetchFeed(mockFetch)).rejects.toThrow('Network error');
+		});
+
+		it('retries the network after an initial failure instead of treating it as an empty feed', async () => {
+			mockFetch.mockRejectedValueOnce(new Error('Network error'));
+			await expect(fetchFeed(mockFetch)).rejects.toThrow('Network error');
+			const result = await fetchFeed(mockFetch);
+			expect(mockFetch).toHaveBeenCalledTimes(2);
+			expect(result.items).toHaveLength(2);
 		});
 
 		it('should handle malformed XML', async () => {

@@ -4,7 +4,7 @@ test.describe('Blog Series - PSR', () => {
 	test.setTimeout(90000);
 
 	test('should navigate to series page from blog', async ({ page }) => {
-		await page.goto('/blog', { waitUntil: 'domcontentloaded' });
+		await page.goto('/blog', { waitUntil: 'networkidle' });
 		const seriesCard = page.locator('text=PHP-FIG Standards Guide');
 		await expect(seriesCard).toBeVisible();
 		await seriesCard.click();
