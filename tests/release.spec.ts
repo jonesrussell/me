@@ -28,13 +28,18 @@ test('public pages pass automated WCAG AA accessibility checks', async ({ page }
 		const result = await new AxeBuilder({ page })
 			.withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
 			.analyze();
-		expect.soft(
-			result.violations.map(violation => ({
-				id: violation.id,
-				nodes: violation.nodes.map(node => ({ target: node.target, summary: node.failureSummary }))
-			})),
-			route
-		).toEqual([]);
+		expect
+			.soft(
+				result.violations.map(violation => ({
+					id: violation.id,
+					nodes: violation.nodes.map(node => ({
+						target: node.target,
+						summary: node.failureSummary
+					}))
+				})),
+				route
+			)
+			.toEqual([]);
 	}
 });
 
@@ -80,10 +85,12 @@ test('release routes retain metadata, links and responsive layouts at 200% scale
 			document.documentElement.style.zoom = '';
 		});
 		await page.setViewportSize({ width: 375, height: 812 });
-		expect(
-			await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1),
-			`${route} at 375px`
-		).toBe(true);
+		await expect
+			.poll(
+				() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1),
+				{ message: `${route} at 375px` }
+			)
+			.toBe(true);
 		if (evidence)
 			await page.screenshot({
 				path: join(

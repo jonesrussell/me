@@ -27,7 +27,7 @@ test('shared navigation reaches every page and identifies the current route', as
 
 test('mobile menu works by keyboard, closes on Escape and after navigation', async ({ page }) => {
 	await page.setViewportSize({ width: 375, height: 812 });
-	await page.goto('/');
+	await page.goto('/', { waitUntil: 'networkidle' });
 	const menu = page.getByRole('button', { name: 'Menu' });
 	await menu.focus();
 	await page.keyboard.press('Enter');
