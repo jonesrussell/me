@@ -3,6 +3,7 @@
 	import Meta from '$lib/components/site/Meta.svelte';
 	import PageHero from '$lib/components/site/PageHero.svelte';
 	import ProjectArt from '$lib/components/site/ProjectArt.svelte';
+	import GoFormXScreenshot from '$lib/components/site/GoFormXScreenshot.svelte';
 	import EnquiryCTA from '$lib/components/site/EnquiryCTA.svelte';
 	import { caseStudies } from '$lib/data/site';
 </script>
@@ -33,8 +34,12 @@
 				>
 			</div>
 			<div class="project-visual">
-				<ProjectArt variant={i} />
-				<p class="eyebrow">Conceptual artwork</p>
+				{#if project.slug === 'goformx'}
+					<GoFormXScreenshot sizes="(max-width: 639px) 90vw, 36vw" />
+				{:else}
+					<ProjectArt variant={i} />
+					<p class="eyebrow">Conceptual artwork</p>
+				{/if}
 			</div>
 		</article>
 	{/each}

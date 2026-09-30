@@ -2,6 +2,7 @@
 	import { resolve } from '$app/paths';
 	import Meta from '$lib/components/site/Meta.svelte';
 	import ProjectArt from '$lib/components/site/ProjectArt.svelte';
+	import GoFormXScreenshot from '$lib/components/site/GoFormXScreenshot.svelte';
 	import EnquiryCTA from '$lib/components/site/EnquiryCTA.svelte';
 	import { services, caseStudies } from '$lib/data/site';
 	import { stripHtmlExcerpt } from '$lib/utils/excerpt';
@@ -75,7 +76,11 @@
 							>View {project.name} <span aria-hidden="true">→</span></a
 						>
 					</div>
-					<ProjectArt variant={i} />
+					{#if project.slug === 'goformx'}
+						<GoFormXScreenshot sizes="(max-width: 639px) 90vw, 36vw" />
+					{:else}
+						<ProjectArt variant={i} />
+					{/if}
 				</article>
 			{/each}
 		</div>
