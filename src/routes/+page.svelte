@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import Meta from '$lib/components/site/Meta.svelte';
+	import RussellPortrait from '$lib/components/site/RussellPortrait.svelte';
 	import ProjectArt from '$lib/components/site/ProjectArt.svelte';
 	import GoFormXScreenshot from '$lib/components/site/GoFormXScreenshot.svelte';
 	import EnquiryCTA from '$lib/components/site/EnquiryCTA.svelte';
@@ -33,7 +34,7 @@
 					>
 				</div>
 			</div>
-			<ProjectArt />
+			<RussellPortrait />
 		</div>
 	</section>
 	<section class="site-container section-space">
