@@ -40,7 +40,7 @@
 			height="825"
 			{loading}
 			decoding="async"
-			alt="NorthCloud homepage with the headline Less noise. A clearer view. and an illustrative source-linked reader for Go and Kubernetes news."
+			alt="NorthCloud homepage with the headline Follow what matters. and illustrative requests about arts, community and research."
 		/>
 	</a>
 	<figcaption class="eyebrow">Live homepage / October 1, 2026</figcaption>
