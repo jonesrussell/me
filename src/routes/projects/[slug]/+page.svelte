@@ -3,6 +3,7 @@
 	import Meta from '$lib/components/site/Meta.svelte';
 	import EnquiryCTA from '$lib/components/site/EnquiryCTA.svelte';
 	import GoFormXScreenshot from '$lib/components/site/GoFormXScreenshot.svelte';
+	import NorthCloudScreenshot from '$lib/components/site/NorthCloudScreenshot.svelte';
 	import { caseStudies } from '$lib/data/site';
 	import type { PageData } from './$types';
 	const { data } = $props<{ data: PageData }>();
@@ -31,6 +32,9 @@
 		<p class="lead">{project.summary}</p>
 		<p class="technology-list">{project.technologies.join(' / ')}</p>
 	</header>
+	{#if project.slug === 'north-cloud'}
+		<NorthCloudScreenshot sizes="(max-width: 1102px) 90vw, 992px" loading="eager" />
+	{/if}
 	{#if project.slug === 'goformx'}
 		<GoFormXScreenshot sizes="(max-width: 1102px) 90vw, 992px" loading="eager" />
 	{:else}

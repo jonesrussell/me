@@ -4,6 +4,7 @@
 	import PageHero from '$lib/components/site/PageHero.svelte';
 	import ProjectArt from '$lib/components/site/ProjectArt.svelte';
 	import GoFormXScreenshot from '$lib/components/site/GoFormXScreenshot.svelte';
+	import NorthCloudScreenshot from '$lib/components/site/NorthCloudScreenshot.svelte';
 	import EnquiryCTA from '$lib/components/site/EnquiryCTA.svelte';
 	import { caseStudies } from '$lib/data/site';
 </script>
@@ -36,6 +37,8 @@
 			<div class="project-visual">
 				{#if project.slug === 'goformx'}
 					<GoFormXScreenshot sizes="(max-width: 639px) 90vw, 36vw" />
+				{:else if project.slug === 'north-cloud'}
+					<NorthCloudScreenshot sizes="(max-width: 639px) 90vw, 36vw" />
 				{:else}
 					<ProjectArt variant={i} />
 					<p class="eyebrow">Conceptual artwork</p>
