@@ -2,6 +2,7 @@
 	import { resolve } from '$app/paths';
 	import Meta from '$lib/components/site/Meta.svelte';
 	import EnquiryCTA from '$lib/components/site/EnquiryCTA.svelte';
+	import GoFormXScreenshot from '$lib/components/site/GoFormXScreenshot.svelte';
 	import { caseStudies } from '$lib/data/site';
 	import type { PageData } from './$types';
 	const { data } = $props<{ data: PageData }>();
@@ -30,14 +31,18 @@
 		<p class="lead">{project.summary}</p>
 		<p class="technology-list">{project.technologies.join(' / ')}</p>
 	</header>
-	<figure class="flow-diagram">
-		<figcaption class="eyebrow">Conceptual flow</figcaption>
-		<ol>
-			{#each project.flow as step, i (step)}<li>
-					<span class="number">0{i + 1}</span><span>{step}</span>
-				</li>{/each}
-		</ol>
-	</figure>
+	{#if project.slug === 'goformx'}
+		<GoFormXScreenshot sizes="(max-width: 1102px) 90vw, 992px" loading="eager" />
+	{:else}
+		<figure class="flow-diagram">
+			<figcaption class="eyebrow">Conceptual flow</figcaption>
+			<ol>
+				{#each project.flow as step, i (step)}<li>
+						<span class="number">0{i + 1}</span><span>{step}</span>
+					</li>{/each}
+			</ol>
+		</figure>
+	{/if}
 	{#each sections as section, i (section.title)}<section class="case-section">
 			<p class="eyebrow"><span class="number">0{i + 1}</span> / {section.title}</p>
 			<h2>{section.title}</h2>
