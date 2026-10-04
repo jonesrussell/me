@@ -5,6 +5,7 @@
 	import { stripHtmlExcerpt } from '$lib/utils/excerpt';
 	import PageHero from '$lib/components/site/PageHero.svelte';
 	import Meta from '$lib/components/site/Meta.svelte';
+	import EditorialStatus from '$lib/components/blog/EditorialStatus.svelte';
 	import type { PageData } from './$types';
 	import type { BlogPost } from '$lib/types/blog';
 	const { data } = $props<{ data: PageData }>();
@@ -42,19 +43,20 @@
 </script>
 
 <Meta
-	title="Writing"
-	description="Practical lessons in software, architecture and AI. Published articles and series by Russell Jones."
+	title="Content pipeline experiments"
+	description="An experimental AI content pipeline. Russell Jones is building a Claudriel dashboard to bring personal writing and editorial review back into the workflow."
 	path="/blog"
 />
 <PageHero
-	label="Writing"
-	title="Notes from"
-	accent="the work."
-	intro="Practical lessons in software, architecture and AI."
+	label="Content experiments"
+	title="A pipeline"
+	accent="in progress."
+	intro="AI-generated content experiments, with a personal editorial workflow still being built."
 />
 <div class="blog site-container section-space">
+	<EditorialStatus />
 	<section aria-label="Published articles" aria-busy={loading}>
-		<p class="eyebrow">Published writing</p>
+		<p class="eyebrow">Pipeline output</p>
 		{#each visiblePosts as post (post.slug)}
 			<article class="writing-row">
 				<div>

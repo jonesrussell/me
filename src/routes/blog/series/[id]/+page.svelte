@@ -2,6 +2,7 @@
 	import { base } from '$app/paths';
 	import { onMount } from 'svelte';
 	import SeriesHeader from '$lib/components/series/SeriesHeader.svelte';
+	import EditorialStatus from '$lib/components/blog/EditorialStatus.svelte';
 	import SeriesGroup from '$lib/components/series/SeriesGroup.svelte';
 	import { loadProgress, suggestedNext } from '$lib/stores/series-progress.svelte';
 	import type { PageData } from './$types';
@@ -114,6 +115,7 @@
 		<span>Series</span>
 	</nav>
 
+	<EditorialStatus />
 	<SeriesHeader
 		title={data.series.title}
 		description={data.series.description}
