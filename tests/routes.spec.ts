@@ -15,7 +15,8 @@ test('shared navigation reaches every page and identifies the current route', as
 			.getByRole('navigation', { name: 'Main navigation' })
 			.getByRole('link', { name: route.label, exact: true })
 			.click();
-		await expect(page).toHaveURL(new RegExp(`${route.path}$`));
+		const canonicalPath = route.path === '/blog' ? '/blog/' : route.path;
+		await expect(page).toHaveURL(new RegExp(`${canonicalPath}$`));
 		await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 		await expect(
 			page

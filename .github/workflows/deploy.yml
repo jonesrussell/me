@@ -49,6 +49,11 @@ jobs:
           VITE_GOFORMS_NEWSLETTER_PUBLIC_KEY: ${{ vars.GOFORMS_NEWSLETTER_PUBLIC_KEY }}
         run: npm run build
 
+      - name: Verify blog has a static entry document
+        run: |
+          test -f build/blog/index.html
+          grep -q 'Experimental AI content pipeline' build/blog/index.html
+
       - name: Verify browser bundle contains no GoFormX credential
         run: |
           if grep -R -E 'VITE_GOFORMS_API_KEY|X-API-Key|Authorization: Bearer' build/; then
