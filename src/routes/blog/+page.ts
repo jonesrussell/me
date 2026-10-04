@@ -1,8 +1,10 @@
 import { base } from '$app/paths';
+import { building } from '$app/environment';
 import type { PageLoad } from './$types';
 import { fetchFeed } from '$lib/services/blog-service';
 import { fetchSeriesIndex } from '$lib/services/series-service';
 import { canonicalUrl } from '$lib/config/seo';
+import { stripHtmlExcerpt } from '$lib/utils/excerpt';
 import type { BlogPost } from '$lib/types/blog';
 import type { SeriesIndex } from '$lib/types/series';
 
@@ -21,8 +23,15 @@ export const load: PageLoad = async ({ fetch }) => {
 	let seriesIndex: SeriesIndex = { series: [] };
 
 	try {
-		const result = await fetchFeed(fetch, { page: 1, pageSize: POSTS_PER_PAGE });
-		initialPosts = result.items;
+		// Do not serialize the full external RSS response into the static document.
+		const result = await fetchFeed(building ? globalThis.fetch : fetch, {
+			page: 1,
+			pageSize: POSTS_PER_PAGE
+		});
+		initialPosts = result.items.map(post => ({
+			...post,
+			content: stripHtmlExcerpt(post.content, 220)
+		}));
 		hasMore = result.hasMore;
 		totalPages = result.totalPages ?? 1;
 	} catch (e) {
