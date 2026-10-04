@@ -60,27 +60,31 @@ export const caseStudies = [
 		name: 'Waaseyaa',
 		kind: 'Open-source framework',
 		headline: 'A foundation for software you own.',
-		summary: 'An entity-first PHP framework for content management and data-driven applications.',
+		summary:
+			'An open-source PHP framework for structured content, explicit permissions and publishing workflows.',
 		technologies: ['PHP 8.5', 'Symfony', 'SQLite', 'Nuxt'],
-		status: 'Active development',
+		status: 'Alpha · website running alpha.305',
 		problem:
-			'Content systems need reusable foundations without forcing every application into the same product. Waaseyaa explores how entities, access and content workflows can share a clear, modular engine.',
+			'Content applications need a model, clear permissions and a publishing process that fits their work. I am building Waaseyaa so those foundations can be reused in software people own and host themselves.',
 		constraints:
 			'Package boundaries must be explicit. Applications need predictable persistence, access control and extension contracts, with support claims tied to evidence.',
 		contribution:
-			'I develop the framework architecture, package contracts and application integrations, including the foundations used by GoFormX.',
+			'I develop the framework architecture, package contracts and application integrations, including the foundations used by GoFormX. I also build and operate waaseyaa.org as a working Framework application.',
 		decisions:
-			'Independent Composer packages expose interfaces instead of hidden global coupling. Entity definitions feed the API and assistant tools. The current S1 profile targets one application node with an authoritative local SQLite database.',
+			'Framework is the reusable engine, delivered through Composer packages. Studio is a separate open-source builder distribution that composes it. Applications can use Framework independently, with explicit access rules and publishing contracts. The S1 profile targets one application node with an authoritative local SQLite database.',
 		result:
-			'The public repository includes modular entity, field, configuration, access and API systems, a project skeleton, in-memory implementations for testing and a Nuxt administration interface.',
+			'Waaseyaa.org runs alpha.305 and publishes Git-authored content through HTML, Markdown and read-only MCP. Its developer-first site connects a four-part build guide, a tested Todo walkthrough and curated framework documentation. The October 4, 2026 deployment passed all 27 public smoke checks.',
 		limitations:
-			'The complete builder journey and named downstream S1 certification remain pending. These are development capabilities, not a claim of universal production support.',
+			'Waaseyaa remains alpha. The website deployment demonstrates one application, not universal production support or a completed Studio builder journey. The homepage Fieldnotes interaction is a browser-only simulation; the Todo walkthrough is the maintained starting point.',
 		flow: ['Entity definitions', 'Framework packages', 'Your application'],
 		links: [
 			{ label: 'Explore Waaseyaa', href: 'https://waaseyaa.org' },
+			{ label: 'Build guide', href: 'https://waaseyaa.org/build' },
+			{ label: 'Framework docs', href: 'https://waaseyaa.org/docs' },
 			{ label: 'Framework source', href: 'https://github.com/waaseyaa/framework' }
 		],
-		evidence: 'Framework README and support contracts reviewed September 30, 2026.'
+		evidence:
+			'Framework/Studio product boundaries and waaseyaa.org deployment verified October 4, 2026.'
 	},
 	{
 		slug: 'north-cloud',

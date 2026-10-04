@@ -60,7 +60,7 @@
 				<a class="text-link" href={link.href}>{link.label} <span aria-hidden="true">↗</span></a
 				>{/each}
 		</div>
-		<p class="evidence-note">Status reviewed September 30, 2026. {project.evidence}</p>
+		<p class="evidence-note">{project.evidence}</p>
 	</section>
 	<nav class="related-work" aria-label="Related work">
 		<p class="eyebrow">Related work</p>

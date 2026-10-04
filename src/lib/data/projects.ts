@@ -9,8 +9,8 @@ export const projects: Project[] = [
 	{
 		title: 'Waaseyaa Framework',
 		description:
-			'PHP CMS framework: a 43-package monorepo powering multiple sites with content management, authentication, and a Nuxt 3 admin dashboard.',
-		tags: ['PHP 8.4+', 'Symfony 7.x', 'Nuxt 3', 'Doctrine'],
+			'Open-source PHP framework for structured content, explicit permissions and publishing workflows. The developer-first waaseyaa.org site runs alpha.305.',
+		tags: ['PHP 8.5', 'Symfony', 'SQLite', 'Nuxt'],
 		url: 'https://github.com/waaseyaa/framework',
 		siteUrl: 'https://waaseyaa.org',
 		githubUrl: 'https://github.com/waaseyaa/framework',
@@ -44,8 +44,8 @@ export const projects: Project[] = [
 	{
 		title: 'waaseyaa.org',
 		description:
-			'Framework marketing site and Discord community hub for the Waaseyaa ecosystem.',
-		tags: ['PHP', 'Caddy'],
+			'Framework-powered developer site with a build guide, tested Todo walkthrough and documentation delivered through HTML, Markdown and read-only MCP.',
+		tags: ['PHP 8.5', 'Waaseyaa', 'SQLite', 'MCP'],
 		url: 'https://waaseyaa.org',
 		siteUrl: 'https://waaseyaa.org',
 		status: 'active',
