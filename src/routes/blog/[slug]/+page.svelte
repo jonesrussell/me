@@ -1,5 +1,6 @@
 <script lang="ts">
 	import BlogPost from '$lib/components/blog/BlogPost.svelte';
+	import EditorialStatus from '$lib/components/blog/EditorialStatus.svelte';
 	import { resolve } from '$app/paths';
 	import type { PageData } from './$types';
 
@@ -43,6 +44,7 @@
 </svelte:head>
 
 <div class="blog-page">
+	<div class="site-container section-space"><EditorialStatus /></div>
 	<BlogPost post={data.post} />
 	<div class="site-container section-space">
 		<a class="text-link" href={resolve('/blog')}>More writing <span aria-hidden="true">→</span></a>

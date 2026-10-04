@@ -111,13 +111,17 @@
 	<section class="site-container section-space writing-preview">
 		<div class="section-heading heading-with-link">
 			<div>
-				<p class="eyebrow">04 / Writing</p>
-				<h2>Notes from the work.</h2>
+				<p class="eyebrow">04 / Content experiments</p>
+				<h2>An experimental AI content pipeline.</h2>
 			</div>
 			<a class="text-link" href={resolve('/blog')}
-				>Read my writing <span aria-hidden="true">→</span></a
+				>Explore the experiment <span aria-hidden="true">→</span></a
 			>
 		</div>
+		<p>
+			The blog currently contains AI-generated pipeline output. I’m building a Claudriel operator
+			dashboard to bring my writing and editorial review back into the workflow.
+		</p>
 		{#each data.posts as post (post.slug)}
 			<article class="writing-row">
 				<div>

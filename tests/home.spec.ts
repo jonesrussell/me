@@ -13,7 +13,7 @@ test('homepage connects the offer, evidenced work and writing', async ({ page })
 		'href',
 		'/contact'
 	);
-	await expect(page.getByRole('link', { name: 'Read my writing' })).toHaveAttribute(
+	await expect(page.getByRole('link', { name: 'Explore the experiment' })).toHaveAttribute(
 		'href',
 		'/blog'
 	);
