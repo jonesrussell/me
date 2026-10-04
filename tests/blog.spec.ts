@@ -19,7 +19,13 @@ test('writing presents feed metadata and paginates without dropping articles', a
 		.getByRole('navigation', { name: 'Main navigation' })
 		.getByRole('link', { name: 'Writing', exact: true })
 		.click();
-	await expect(page.getByRole('heading', { level: 1 })).toContainText('Notes from');
+	await expect(page.getByRole('heading', { level: 1 })).toContainText('A pipeline');
+	await expect(page.getByRole('complementary', { name: 'Editorial status' })).toContainText(
+		'Experimental AI content pipeline'
+	);
+	await expect(page.getByRole('complementary', { name: 'Editorial status' })).toContainText(
+		'Claudriel'
+	);
 	await expect(
 		page.getByRole('region', { name: 'Published articles' }).locator('.writing-row')
 	).toHaveCount(6);
