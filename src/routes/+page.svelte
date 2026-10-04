@@ -5,6 +5,7 @@
 	import ProjectArt from '$lib/components/site/ProjectArt.svelte';
 	import GoFormXScreenshot from '$lib/components/site/GoFormXScreenshot.svelte';
 	import NorthCloudScreenshot from '$lib/components/site/NorthCloudScreenshot.svelte';
+	import WaaseyaaScreenshot from '$lib/components/site/WaaseyaaScreenshot.svelte';
 	import EnquiryCTA from '$lib/components/site/EnquiryCTA.svelte';
 	import { services, caseStudies } from '$lib/data/site';
 	import { stripHtmlExcerpt } from '$lib/utils/excerpt';
@@ -80,6 +81,8 @@
 					</div>
 					{#if project.slug === 'goformx'}
 						<GoFormXScreenshot sizes="(max-width: 639px) 90vw, 36vw" />
+					{:else if project.slug === 'waaseyaa'}
+						<WaaseyaaScreenshot sizes="(max-width: 639px) 90vw, 36vw" />
 					{:else if project.slug === 'north-cloud'}
 						<NorthCloudScreenshot sizes="(max-width: 639px) 90vw, 36vw" />
 					{:else}
