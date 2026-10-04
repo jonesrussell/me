@@ -6,7 +6,9 @@ import { canonicalUrl } from '$lib/config/seo';
 import type { BlogPost } from '$lib/types/blog';
 import type { SeriesIndex } from '$lib/types/series';
 
-export const prerender = false;
+// GitHub Pages needs a real document for direct visits, rather than its 404 fallback.
+export const prerender = true;
+export const trailingSlash = 'always';
 
 export const load: PageLoad = async ({ fetch }) => {
 	const POSTS_PER_PAGE = 6;
